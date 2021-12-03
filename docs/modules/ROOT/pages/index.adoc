@@ -1,0 +1,5 @@
+= Quarkus Amazon Services
+
+This set of extensions expose AWS services through configuration properties and CDI injection.
+
+You can find the full set of supported services and documentation for each of them in the navigation on the left.
