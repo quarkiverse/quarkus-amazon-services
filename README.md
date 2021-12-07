@@ -1,6 +1,6 @@
 # Quarkus Amazon Services
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/maven-central/v/io.quarkiverse.amazonservices/quarkus-amazon-services-bom?logo=apache-maven&style=flat-square)](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom)
@@ -38,6 +38,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/marcinczeczko"><img src="https://avatars.githubusercontent.com/u/4218395?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Marcin Czeczko</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=marcinczeczko" title="Code">💻</a> <a href="#maintenance-marcinczeczko" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://lesincroyableslivres.fr/"><img src="https://avatars.githubusercontent.com/u/1279749?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Guillaume Smet</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=gsmet" title="Code">💻</a> <a href="#maintenance-gsmet" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/corentinarnaud"><img src="https://avatars.githubusercontent.com/u/15332003?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Corentin Arnaud</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=corentinarnaud" title="Code">💻</a></td>
   </tr>
 </table>
 
