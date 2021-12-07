@@ -51,6 +51,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "famod",
+      "name": "Falko Modler",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22860528?v=4",
+      "profile": "https://github.com/famod",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
