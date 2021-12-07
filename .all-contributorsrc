@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "marcinczeczko",
+      "name": "Marcin Czeczko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4218395?v=4",
+      "profile": "https://github.com/marcinczeczko",
+      "contributions": [
+        "code",
+        "maintenance"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "quarkus-amazon-services",
+  "projectOwner": "quarkiverse",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
