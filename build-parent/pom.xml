@@ -15,6 +15,13 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
                 <artifactId>quarkus-amazon-services-bom</artifactId>
                 <version>${project.version}</version>
