@@ -9,6 +9,7 @@ metadata:
   guide: "https://quarkus.io/guides/amazon-sns"
   categories:
     - "data"
+  guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-sns.html
   status: "stable"
   config:
   - "quarkus.sns."

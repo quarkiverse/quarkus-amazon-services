@@ -9,6 +9,7 @@ metadata:
   guide: "https://quarkus.io/guides/amazon-s3"
   categories:
     - "data"
+  guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-s3.html
   status: "stable"
   config:
   - "quarkus.s3."
