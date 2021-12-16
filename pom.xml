@@ -70,7 +70,4 @@
         </pluginManagement>
     </build>
 
-  <scm>
-    <tag>1.0.0</tag>
-  </scm>
 </project>
