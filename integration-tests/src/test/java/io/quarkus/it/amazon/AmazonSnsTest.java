@@ -1,8 +1,11 @@
 package io.quarkus.it.amazon;
 
 import static org.hamcrest.Matchers.any;
-import static org.hamcrest.Matchers.containsString;
 
+import java.time.Duration;
+import java.util.concurrent.Callable;
+
+import org.awaitility.Awaitility;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,11 +13,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
 
 @QuarkusTest
 public class AmazonSnsTest {
 
-    private final static String TOPIC_NAME = "quakrus-sns";
+    private final static String TOPIC_NAME = "quarkus-sns";
 
     @BeforeEach
     public void before() {
@@ -29,7 +33,7 @@ public class AmazonSnsTest {
     @ParameterizedTest
     @ValueSource(strings = { "sync", "async" })
     public void testPublishAndReceive(String endpoint) {
-        String message = "Quarkus is awsome";
+        String message = "Quarkus is awesome";
         //Publish message
         RestAssured.given()
                 .pathParam("endpoint", endpoint)
@@ -38,11 +42,16 @@ public class AmazonSnsTest {
                 .when().post("/test/sns/{endpoint}/publish/{topicName}")
                 .then().body(any(String.class));
 
-        //Receive messages
-        RestAssured.given()
-                .pathParam("topicName", TOPIC_NAME)
-                .when().get("/test/sns/topics/{topicName}")
-                .then()
-                .body(containsString("Quarkus is awsome"));
+        Awaitility.await().atMost(Duration.ofSeconds(10))
+                .pollInterval(Duration.ofSeconds(1))
+                .until(new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Response response = RestAssured.given()
+                                .pathParam("topicName", TOPIC_NAME)
+                                .when().get("/test/sns/topics/{topicName}").andReturn();
+                        return response.getBody().asString().contains(message);
+                    }
+                });
     }
 }
