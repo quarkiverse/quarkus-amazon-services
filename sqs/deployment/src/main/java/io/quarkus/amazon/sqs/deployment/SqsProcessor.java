@@ -135,6 +135,8 @@ public class SqsProcessor extends AbstractAmazonServiceProcessor {
                 (syncTransport) -> recorder.createSyncBuilder(syncTransport),
                 SqsAsyncClientBuilder.class,
                 (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport),
+                null,
+                null,
                 syntheticBeans);
     }
 }

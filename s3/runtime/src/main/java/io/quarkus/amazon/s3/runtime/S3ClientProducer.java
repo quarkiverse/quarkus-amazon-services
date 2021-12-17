@@ -9,16 +9,20 @@ import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3AsyncClientBuilder;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3ClientBuilder;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 @ApplicationScoped
 public class S3ClientProducer {
     private final S3Client syncClient;
     private final S3AsyncClient asyncClient;
+    private final S3Presigner presigner;
 
     S3ClientProducer(Instance<S3ClientBuilder> syncClientBuilderInstance,
-            Instance<S3AsyncClientBuilder> asyncClientBuilderInstance) {
+            Instance<S3AsyncClientBuilder> asyncClientBuilderInstance,
+            Instance<S3Presigner.Builder> presignerBuilder) {
         this.syncClient = syncClientBuilderInstance.isResolvable() ? syncClientBuilderInstance.get().build() : null;
         this.asyncClient = asyncClientBuilderInstance.isResolvable() ? asyncClientBuilderInstance.get().build() : null;
+        this.presigner = presignerBuilder.isResolvable() ? presignerBuilder.get().build() : null;
     }
 
     @Produces
@@ -39,6 +43,15 @@ public class S3ClientProducer {
         return asyncClient;
     }
 
+    @Produces
+    @ApplicationScoped
+    public S3Presigner presigner() {
+        if (presigner == null) {
+            throw new IllegalStateException("The S3Presigner is required but has not been detected/configured.");
+        }
+        return presigner;
+    }
+
     @PreDestroy
     public void destroy() {
         if (syncClient != null) {
@@ -46,6 +59,9 @@ public class S3ClientProducer {
         }
         if (asyncClient != null) {
             asyncClient.close();
+        }
+        if (presigner != null) {
+            presigner.close();
         }
     }
 }

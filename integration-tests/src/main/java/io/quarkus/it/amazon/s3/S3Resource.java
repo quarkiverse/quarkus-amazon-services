@@ -3,6 +3,7 @@ package io.quarkus.it.amazon.s3;
 import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
 import java.io.ByteArrayOutputStream;
+import java.time.Duration;
 import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 
@@ -20,6 +21,8 @@ import software.amazon.awssdk.core.sync.ResponseTransformer;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
 @Path("/s3")
 public class S3Resource {
@@ -34,6 +37,9 @@ public class S3Resource {
 
     @Inject
     S3AsyncClient s3AsyncClient;
+
+    @Inject
+    S3Presigner s3Presigner;
 
     @GET
     @Path("async")
@@ -77,6 +83,29 @@ public class S3Resource {
                     }
                 }
             }
+        } catch (Exception ex) {
+            LOG.error("Error during S3 operations.", ex);
+            return "ERROR";
+        }
+        return result;
+    }
+
+    @GET
+    @Path("presign")
+    @Produces(TEXT_PLAIN)
+    public String testPresigner() {
+        LOG.info("Testing S3 presigner with bucket: " + SYNC_BUCKET);
+
+        String keyValue = UUID.randomUUID().toString();
+        String result = null;
+
+        try {
+            result = s3Presigner.presignGetObject(GetObjectPresignRequest.builder()
+                    .getObjectRequest(S3Utils.createGetRequest(SYNC_BUCKET, keyValue))
+                    .signatureDuration(Duration.ofSeconds(30))
+                    .build())
+                    .url()
+                    .toString();
         } catch (Exception ex) {
             LOG.error("Error during S3 operations.", ex);
             return "ERROR";

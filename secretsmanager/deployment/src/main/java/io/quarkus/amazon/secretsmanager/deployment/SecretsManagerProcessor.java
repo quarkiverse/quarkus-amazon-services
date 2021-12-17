@@ -136,6 +136,8 @@ public class SecretsManagerProcessor extends AbstractAmazonServiceProcessor {
                 (syncTransport) -> recorder.createSyncBuilder(runtimeConfig, syncTransport),
                 SecretsManagerAsyncClientBuilder.class,
                 (asyncTransport) -> recorder.createAsyncBuilder(runtimeConfig, asyncTransport),
+                null,
+                null,
                 syntheticBeans);
     }
 }

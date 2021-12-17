@@ -135,6 +135,8 @@ public class SnsProcessor extends AbstractAmazonServiceProcessor {
                 (syncTransport) -> recorder.createSyncBuilder(syncTransport),
                 SnsAsyncClientBuilder.class,
                 (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport),
+                null,
+                null,
                 syntheticBeans);
     }
 }

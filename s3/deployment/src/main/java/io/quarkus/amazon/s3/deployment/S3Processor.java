@@ -31,6 +31,7 @@ import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3AsyncClientBuilder;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3ClientBuilder;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 public class S3Processor extends AbstractAmazonServiceProcessor {
 
@@ -136,6 +137,8 @@ public class S3Processor extends AbstractAmazonServiceProcessor {
                 (syncTransport) -> recorder.createSyncBuilder(syncTransport),
                 S3AsyncClientBuilder.class,
                 (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport),
+                S3Presigner.Builder.class,
+                recorder.createPresignerBuilder(),
                 syntheticBeans);
     }
 }
