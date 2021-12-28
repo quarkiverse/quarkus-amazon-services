@@ -20,6 +20,7 @@
         <ses.url>http://localhost:4566</ses.url>
         <iam.url>http://localhost:4566</iam.url>
         <ssm.url>http://localhost:4566</ssm.url>
+        <sts.url>http://localhost:4566</sts.url>
         <secretsmanager.url>http://localhost:4566</secretsmanager.url>
     </properties>
 
@@ -67,6 +68,10 @@
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-ssm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-sts</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
