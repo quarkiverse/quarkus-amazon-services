@@ -136,6 +136,8 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
                 (syncTransport) -> recorder.createSyncBuilder(syncTransport),
                 SesAsyncClientBuilder.class,
                 (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport),
+                null,
+                null,
                 syntheticBeans);
     }
 }

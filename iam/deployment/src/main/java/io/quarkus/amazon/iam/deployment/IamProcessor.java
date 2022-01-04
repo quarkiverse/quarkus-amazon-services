@@ -134,6 +134,8 @@ public class IamProcessor extends AbstractAmazonServiceProcessor {
                 (syncTransport) -> recorder.createSyncBuilder(syncTransport),
                 IamAsyncClientBuilder.class,
                 (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport),
+                null,
+                null,
                 syntheticBeans);
     }
 }

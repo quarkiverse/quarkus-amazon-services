@@ -30,6 +30,7 @@ import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.runtime.RuntimeValue;
 import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder;
+import software.amazon.awssdk.awscore.presigner.SdkPresigner;
 import software.amazon.awssdk.http.SdkHttpClient;
 import software.amazon.awssdk.http.async.SdkAsyncHttpClient;
 
@@ -162,6 +163,8 @@ abstract public class AbstractAmazonServiceProcessor {
             Function<RuntimeValue<SdkHttpClient.Builder>, RuntimeValue<AwsClientBuilder>> syncClientBuilderFunction,
             Class<?> asyncClientBuilderClass,
             Function<RuntimeValue<SdkAsyncHttpClient.Builder>, RuntimeValue<AwsClientBuilder>> asyncClientBuilderFunction,
+            Class<?> presignerBuilderClass,
+            RuntimeValue<SdkPresigner.Builder> presignerBuilder,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans) {
         String configName = configName();
 
@@ -201,6 +204,15 @@ abstract public class AbstractAmazonServiceProcessor {
                     .setRuntimeInit()
                     .scope(ApplicationScoped.class)
                     .runtimeValue(asyncClientBuilder)
+                    .done());
+        }
+        if (presignerBuilder != null) {
+            presignerBuilder = recorder.configurePresigner(presignerBuilder, awsConfigRuntime, sdkConfigRuntime,
+                    configName());
+            syntheticBeans.produce(SyntheticBeanBuildItem.configure(presignerBuilderClass)
+                    .setRuntimeInit()
+                    .scope(ApplicationScoped.class)
+                    .runtimeValue(presignerBuilder)
                     .done());
         }
     }

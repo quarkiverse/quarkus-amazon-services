@@ -134,6 +134,8 @@ public class KmsProcessor extends AbstractAmazonServiceProcessor {
                 (syncTransport) -> recorder.createSyncBuilder(syncTransport),
                 KmsAsyncClientBuilder.class,
                 (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport),
+                null,
+                null,
                 syntheticBeans);
     }
 }

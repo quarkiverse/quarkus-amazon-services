@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder;
+import software.amazon.awssdk.awscore.presigner.SdkPresigner;
 import software.amazon.awssdk.core.client.builder.SdkClientBuilder;
 import software.amazon.awssdk.core.client.config.ClientOverrideConfiguration;
 import software.amazon.awssdk.core.interceptor.ExecutionInterceptor;
@@ -59,6 +60,38 @@ public class AmazonClientRecorder {
                 .filter(Objects::nonNull)
                 .forEach(overrides::addExecutionInterceptor);
         builder.overrideConfiguration(overrides.build());
+    }
+
+    public RuntimeValue<SdkPresigner.Builder> configurePresigner(
+            RuntimeValue<? extends SdkPresigner.Builder> clientBuilder,
+            RuntimeValue<AwsConfig> awsConfig, RuntimeValue<SdkConfig> sdkConfig,
+            String awsServiceName) {
+        SdkPresigner.Builder builder = clientBuilder.getValue();
+
+        initAwsPresigner(builder, awsServiceName, awsConfig.getValue());
+        initSdkPresigner(builder, awsServiceName, sdkConfig.getValue());
+
+        return new RuntimeValue<>(builder);
+    }
+
+    public void initAwsPresigner(SdkPresigner.Builder builder, String extension, AwsConfig config) {
+        config.region.ifPresent(builder::region);
+
+        builder.credentialsProvider(config.credentials.type.create(config.credentials, "quarkus." + extension));
+    }
+
+    public void initSdkPresigner(SdkPresigner.Builder builder, String extension, SdkConfig config) {
+        if (config.endpointOverride.isPresent()) {
+            URI endpointOverride = config.endpointOverride.get();
+            if (StringUtils.isBlank(endpointOverride.getScheme())) {
+                throw new RuntimeConfigurationError(
+                        String.format("quarkus.%s.endpoint-override (%s) - scheme must be specified",
+                                extension,
+                                endpointOverride.toString()));
+            }
+        }
+
+        config.endpointOverride.filter(URI::isAbsolute).ifPresent(builder::endpointOverride);
     }
 
     private ExecutionInterceptor createInterceptor(String interceptorClassName) {

@@ -136,6 +136,8 @@ public class SsmProcessor extends AbstractAmazonServiceProcessor {
                 (syncTransport) -> recorder.createSyncBuilder(runtimeConfig, syncTransport),
                 SsmAsyncClientBuilder.class,
                 (asyncTransport) -> recorder.createAsyncBuilder(runtimeConfig, asyncTransport),
+                null,
+                null,
                 syntheticBeans);
     }
 }
