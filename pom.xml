@@ -36,7 +36,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.version>2.6.1.Final</quarkus.version>
 
-        <awssdk.version>2.17.103</awssdk.version>
+        <awssdk.version>2.17.109</awssdk.version>
     </properties>
     <build>
         <pluginManagement>
