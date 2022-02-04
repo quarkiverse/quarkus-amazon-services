@@ -2,13 +2,12 @@ package io.quarkus.amazon.common.deployment;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.enterprise.inject.spi.DeploymentException;
 
 import org.jboss.jandex.DotName;
-
-import com.google.common.base.Predicate;
 
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig.SyncClientType;
