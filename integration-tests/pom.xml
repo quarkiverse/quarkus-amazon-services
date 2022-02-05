@@ -21,6 +21,7 @@
         <iam.url>http://localhost:4566</iam.url>
         <ssm.url>http://localhost:4566</ssm.url>
         <secretsmanager.url>http://localhost:4566</secretsmanager.url>
+        <cognitoidentity.url>http://localhost:5000</cognitoidentity.url>
     </properties>
 
     <dependencies>
@@ -71,6 +72,10 @@
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-secretsmanager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-cognito-user-pools</artifactId>
         </dependency>
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
