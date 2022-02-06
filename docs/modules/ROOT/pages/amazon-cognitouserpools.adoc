@@ -1,0 +1,276 @@
+= Amazon Cognito User Pools Client
+
+include::./includes/attributes.adoc[]
+
+Service client for accessing Amazon Cognito user pools (Identity Provider).
+
+Using the Amazon Cognito user pools API, you can create a user pool to manage directories and users.
+You can authenticate a user to obtain tokens related to user identity and access policies.
+
+For more information, see the https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html[Amazon Cognito user pools] (https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/services/cognitoidentityprovider/package-frame.html[AWS Java SDK 2.x docs]).
+
+
+NOTE: The Cognito User Pools extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
+
+The Quarkus extension supports two programming models:
+
+* Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
+* https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client.
+
+In this guide, we see how you can get your REST services to use Cognito User Pool locally and on AWS.
+
+== Prerequisites
+
+To complete this guide, you need:
+
+* JDK 11+ installed with `JAVA_HOME` configured appropriately
+* an IDE
+* Apache Maven {maven-version}
+* One of:
+** An AWS Account to access the Cognito service
+** Or Docker for your system to run Cognito locally for testing purposes
+
+=== Set up Cognito locally
+
+The easiest way to start working with Cognito is to run a local mock instance as a container.
+
+[source,bash,subs="verbatim,attributes"]
+----
+docker run --rm --name moto -p 5000:5000 -d motoserver/moto:3.0.2
+----
+This starts a Cognito mock instance that is accessible on port `5000`.
+
+Create an AWS profile for your local instance using AWS CLI:
+[source,shell,subs="verbatim,attributes"]
+----
+$ aws configure --profile moto
+AWS Access Key ID [None]: test-key
+AWS Secret Access Key [None]: test-secret
+Default region name [None]: us-east-1
+Default output format [None]: test
+----
+
+=== Create a Cognito User Pool
+
+Create a Cognito user pool using AWS CLI.
+
+[source,bash,subs="verbatim,attributes"]
+----
+aws --profile moto --endpoint-url=http://localhost:5000 cognito-idp create-user-pool --pool-name quarkus-users-dev
+----
+
+Or, if you want to use your Cognito user pool on your AWS account create a user pool using your default profile
+[source,bash,subs="verbatim,attributes"]
+----
+aws cognito-user-pools cognito-idp --pool-name quarkus-users-dev
+----
+
+== Solution
+The application built here shows the count of Cognito User Pools in the current region.
+
+We recommend that you follow the instructions in the next sections and create the application step by step.
+
+== Creating the Maven project
+
+First, we need a new project. Create a new project with the following command:
+
+[source,bash,subs=attributes+]
+----
+mvn io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:create \
+    -DprojectGroupId=org.acme \
+    -DprojectArtifactId=amazon-cognito-user-pools-quickstart \
+    -DclassName="org.acme.cognitouserpools.CognitoExampleResource" \
+    -Dpath="/cognito-example" \
+    -Dextensions="resteasy,resteasy-jackson,amazon-cognito-user-pools,resteasy-mutiny"
+cd amazon-cognito-user-pools-quickstart
+----
+
+This command generates a Maven structure importing the RESTEasy/JAX-RS, Mutiny and Amazon Cognito User Pool extensions.
+After this, the `amazon-cognito-user-pools` extension has been added to your `pom.xml` as well as the Mutiny support for RESTEasy.
+
+== Creating JSON REST service
+
+Edit a `org.acme.cognitouserpools.CognitoExampleResource` that will provide an API return count of Cognito User Pools using the synchronous client.
+
+[source,java]
+----
+package org.acme.cognitouserpools;
+
+import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient;
+import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUserPoolsRequest;
+import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUserPoolsResponse;
+
+@Path("/cognito-example")
+public class CognitoExampleResource {
+    @Inject
+    CognitoIdentityProviderClient cognitoClient;
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        ListUserPoolsRequest request = ListUserPoolsRequest.builder().build();
+        ListUserPoolsResponse response = cognitoClient.listUserPools(request);
+        return String.format("You have %d user pools", response.userPools().size());
+    }
+}
+----
+
+And update test class:
+
+[source,java]
+----
+package org.acme.cognitouserpools;
+
+import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+
+@QuarkusTest
+public class CognitoExampleResourceTest {
+
+    @Test
+    public void testHelloEndpoint() {
+        given()
+          .when().get("/cognito-example")
+          .then()
+             .statusCode(200)
+             .body(is("You have 1 user pools"));
+    }
+
+}
+----
+
+== Configuring Cognito User Pools clients
+
+Both Cognito clients (sync and async) are configurable via the `application.properties` file that
+can be provided in the `src/main/resources` directory.
+
+Additionally, you need to add to the classpath a proper implementation of the sync client.
+By default the extension uses the URL connection HTTP client, so you need to add a URL connection
+client dependency to the `pom.xml` file:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>url-connection-client</artifactId>
+</dependency>
+----
+
+If you want to use Apache HTTP client instead, configure it as follows:
+[source,properties]
+----
+quarkus.cognito-user-pools.sync-client.type=apache
+----
+
+And add the following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>apache-client</artifactId>
+</dependency>
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-apache-httpclient</artifactId>
+</dependency>
+----
+
+
+If you're going to use a local Cognito mock instance, configure it as follows:
+[source,properties]
+----
+quarkus.cognito-user-pools.endpoint-override=http://localhost:5000
+
+quarkus.cognito-user-pools.aws.region=eu-west-1
+quarkus.cognito-user-pools.aws.credentials.type=static
+quarkus.cognito-user-pools.aws.credentials.static-provider.access-key-id=test-key
+quarkus.cognito-user-pools.aws.credentials.static-provider.secret-access-key=test-secret
+----
+
+- `quarkus.cognito-user-pools.aws.region` - It's required by the client, but since you're using a local Cognito mock instance use `us-east-1` as it's a default region of moto.
+- `quarkus.cognito-user-pools.aws.credentials` - Set `static` credentials provider with any values for `access-key-id` and `secret-access-key`
+- `quarkus.cognito-user-pools.endpoint-override` - Override the Cognito User Pools client to use a local instance instead of an AWS service
+
+If you want to work with an AWS account, you can simply remove or comment out all Cognito User Pools
+related properties. By default, the Cognito User Pools client extension will use the `default`
+credentials provider chain that looks for credentials in this order:
+
+include::./amazon-credentials.adoc[]
+
+And the region from your AWS CLI profile will be used.
+
+== Next steps
+
+=== Packaging
+
+Packaging your application is as simple as `./mvnw clean package`.
+It can be run with `java -jar target/quarkus-app/quarkus-run.jar`.
+
+With GraalVM installed, you can also create a native executable binary: `./mvnw clean package -Dnative`.
+Depending on your system, that will take some time.
+
+=== Going asynchronous
+
+Thanks to the AWS SDK v2.x used by the Quarkus extension, you can use the asynchronous programming model out of the box.
+
+Create a `org.acme.cognitouserpools.CognitoAsyncExampleResource` REST resource that will be similar to our
+`CognitoExampleResource` but using an asynchronous programming model.
+
+[source,java]
+----
+package org.acme.cognitouserpools;
+
+import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import io.smallrye.mutiny.Uni;
+import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderAsyncClient;
+import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUserPoolsRequest;
+
+@Path("/cognito-async-example")
+public class CognitoAsyncExampleResource {
+    @Inject
+    CognitoIdentityProviderAsyncClient cognitoAsyncClient;
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public Uni<String> hello() {
+        ListUserPoolsRequest request = ListUserPoolsRequest.builder().build();
+        return Uni
+            .createFrom()
+            .completionStage(cognitoAsyncClient.listUserPools(request))
+            .map(response -> {
+                return String.format("You have %d user pools", response.userPools().size());
+            });
+    }
+}
+----
+We create `Uni` instances from the `CompletionStage` objects returned by the asynchronous Cognito
+Identity Provider client, and then transform the emitted item.
+
+And we need to add the Netty HTTP client dependency to the `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>netty-nio-client</artifactId>
+</dependency>
+----
+
+== Configuration Reference
+
+include::./includes/quarkus-amazon-cognitouserpools.adoc[]
