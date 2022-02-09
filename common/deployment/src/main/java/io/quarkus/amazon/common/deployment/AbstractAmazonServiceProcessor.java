@@ -177,7 +177,7 @@ abstract public class AbstractAmazonServiceProcessor {
                 .map(c -> c.getClientBuilder())
                 .findFirst();
 
-        if (!syncSdkHttpClientBuilder.isPresent() && !asyncSdkAsyncHttpClientBuilder.isPresent()) {
+        if (!syncSdkHttpClientBuilder.isPresent() && !asyncSdkAsyncHttpClientBuilder.isPresent() && presignerBuilder == null) {
             return;
         }
 
