@@ -98,11 +98,11 @@ mvn io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:create \
     -DprojectArtifactId=amazon-ses-quickstart \
     -DclassName="org.acme.ses.QuarkusSesSyncResource" \
     -Dpath="/sync" \
-    -Dextensions="resteasy,resteasy-jackson,amazon-ses,resteasy-mutiny"
+    -Dextensions="resteasy-reactive-jackson,amazon-ses"
 cd amazon-ses-quickstart
 ----
 
-This command generates a Maven structure importing the RESTEasy/JAX-RS, Mutiny and Amazon SES Client extensions.
+This command generates a Maven structure importing the RESTEasy Reactive/JAX-RS and Amazon SES Client extensions.
 After this, the `amazon-ses` extension has been added to your `pom.xml` as well as the Mutiny support for RESTEasy.
 
 == Creating JSON REST service

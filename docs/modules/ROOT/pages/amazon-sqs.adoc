@@ -87,11 +87,11 @@ mvn io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:create \
     -DprojectArtifactId=amazon-sqs-quickstart \
     -DclassName="org.acme.sqs.QuarksCannonSyncResource" \
     -Dpath="/sync-cannon" \
-    -Dextensions="resteasy,resteasy-jackson,amazon-sqs,resteasy-mutiny"
+    -Dextensions="resteasy-reactive-jackson,amazon-sqs"
 cd amazon-sqs-quickstart
 ----
 
-This command generates a Maven structure importing the RESTEasy/JAX-RS, Mutiny and Amazon SQS Client extensions.
+This command generates a Maven structure importing the RESTEasy Reactive and Amazon SQS Client extensions.
 After this, the `amazon-sqs` extension has been added to your `pom.xml` as well as the Mutiny support for RESTEasy.
 
 == Creating JSON REST service
