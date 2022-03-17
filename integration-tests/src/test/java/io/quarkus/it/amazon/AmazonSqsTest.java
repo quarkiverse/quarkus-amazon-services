@@ -43,7 +43,7 @@ public class AmazonSqsTest {
             RestAssured.given()
                     .pathParam("endpoint", endpoint)
                     .pathParam("queueName", QUEUE_NAME)
-                    .queryParam("msg", msg)
+                    .queryParam("message", msg)
                     .when().post("/test/sqs/{endpoint}/{queueName}")
                     .then().body(any(String.class));
         });
