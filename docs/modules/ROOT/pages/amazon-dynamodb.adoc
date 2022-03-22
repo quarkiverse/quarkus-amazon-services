@@ -279,7 +279,6 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 @Path("/fruits")
@@ -295,7 +294,7 @@ public class FruitResource {
 
     @GET
     @Path("{name}")
-    public Fruit getSingle(@PathParam("name") String name) {
+    public Fruit getSingle(String name) {
         return service.get(name);
     }
 
@@ -453,7 +452,7 @@ public class FruitAsyncResource {
 
     @GET
     @Path("{name}")
-    public Uni<Fruit> getSingle(@PathParam("name") String name) {
+    public Uni<Fruit> getSingle(String name) {
         return service.get(name);
     }
 

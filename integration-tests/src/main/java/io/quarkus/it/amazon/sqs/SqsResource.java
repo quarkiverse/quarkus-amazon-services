@@ -10,9 +10,9 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+
+import org.jboss.resteasy.reactive.RestQuery;
 
 @Path("/sqs")
 public class SqsResource {
@@ -28,42 +28,42 @@ public class SqsResource {
 
     @Path("queue/{queueName}")
     @POST
-    public void createQueue(@PathParam("queueName") String queueName) {
+    public void createQueue(String queueName) {
         queueMngr.createQueue(queueName);
     }
 
     @Path("queue/{queueName}")
     @DELETE
-    public void deleteQueue(@PathParam("queueName") String queueName) {
+    public void deleteQueue(String queueName) {
         queueMngr.deleteQueue(queueName);
     }
 
     @Path("sync/{queueName}")
     @POST
     @Produces(TEXT_PLAIN)
-    public String sendSyncMessage(@PathParam("queueName") String queueName, @QueryParam("msg") String message) {
+    public String sendSyncMessage(String queueName, @RestQuery String message) {
         return producer.sendSync(queueName, message);
     }
 
     @Path("sync/{queueName}")
     @GET
     @Produces(TEXT_PLAIN)
-    public String getSyncMessages(@PathParam("queueName") String queueName) {
+    public String getSyncMessages(String queueName) {
         return consumer.receiveSync(queueName).stream().collect(Collectors.joining(" "));
     }
 
     @Path("async/{queueName}")
     @POST
     @Produces(TEXT_PLAIN)
-    public CompletionStage<String> sendAsyncMessage(@PathParam("queueName") String queueName,
-            @QueryParam("msg") String message) {
+    public CompletionStage<String> sendAsyncMessage(String queueName,
+            @RestQuery String message) {
         return producer.sendAsync(queueName, message);
     }
 
     @Path("async/{queueName}")
     @GET
     @Produces(TEXT_PLAIN)
-    public CompletionStage<String> getAsyncMessages(@PathParam("queueName") String queueName) {
+    public CompletionStage<String> getAsyncMessages(String queueName) {
         return consumer.receiveAsync(queueName).thenApply(l -> l.stream().collect(Collectors.joining(" ")));
     }
 }

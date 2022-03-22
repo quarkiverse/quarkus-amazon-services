@@ -38,7 +38,7 @@ public class AmazonSnsTest {
         RestAssured.given()
                 .pathParam("endpoint", endpoint)
                 .pathParam("topicName", TOPIC_NAME)
-                .queryParam("msg", message)
+                .queryParam("message", message)
                 .when().post("/test/sns/{endpoint}/publish/{topicName}")
                 .then().body(any(String.class));
 
