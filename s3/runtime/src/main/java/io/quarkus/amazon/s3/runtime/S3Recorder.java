@@ -8,6 +8,7 @@ import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder;
 import software.amazon.awssdk.awscore.presigner.SdkPresigner;
+import software.amazon.awssdk.core.client.config.SdkAdvancedAsyncClientOption;
 import software.amazon.awssdk.http.SdkHttpClient.Builder;
 import software.amazon.awssdk.http.async.SdkAsyncHttpClient;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
@@ -60,6 +61,10 @@ public class S3Recorder {
 
         if (transport != null) {
             builder.httpClientBuilder(transport.getValue());
+        }
+        if (!config.asyncClient.advanced.useFutureCompletionThreadPool) {
+            builder.asyncConfiguration(asyncConfigBuilder -> asyncConfigBuilder
+                    .advancedOption(SdkAdvancedAsyncClientOption.FUTURE_COMPLETION_EXECUTOR, Runnable::run));
         }
         return new RuntimeValue<>(builder);
     }

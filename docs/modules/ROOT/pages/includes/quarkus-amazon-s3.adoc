@@ -844,6 +844,16 @@ The thread name prefix for threads created by this thread factory used by event 
 --|string 
 |
 
+
+a| [[quarkus-amazon-s3_quarkus.s3.async-client.advanced.use-future-completion-thread-pool]]`link:#quarkus-amazon-s3_quarkus.s3.async-client.advanced.use-future-completion-thread-pool[quarkus.s3.async-client.advanced.use-future-completion-thread-pool]`
+
+[.description]
+--
+Whether the default thread pool should be used to complete the futures returned from the HTTP client request. 
+ When disabled, futures will be completed on the Netty event loop thread.
+--|boolean 
+|`true`
+
 |===
 ifndef::no-duration-note[]
 [NOTE]
