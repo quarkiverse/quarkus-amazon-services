@@ -180,6 +180,15 @@ AWS Secret access key
 |
 
 
+a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.static-provider.session-token]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.static-provider.session-token[quarkus.dynamodb.aws.credentials.static-provider.session-token]`
+
+[.description]
+--
+AWS Session token
+--|string 
+|
+
+
 h|[[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.profile-provider-aws-profile-credentials-provider-configuration]]link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.profile-provider-aws-profile-credentials-provider-configuration[AWS Profile credentials provider configuration]
 
 h|Type

@@ -3,7 +3,9 @@ package io.quarkus.amazon.common.runtime;
 import io.quarkus.amazon.common.runtime.AwsCredentialsProviderConfig.ProfileCredentialsProviderConfig;
 import software.amazon.awssdk.auth.credentials.AnonymousCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.AwsSessionCredentials;
 import software.amazon.awssdk.auth.credentials.ContainerCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
@@ -32,9 +34,14 @@ public enum AwsCredentialsProviderType {
                                 + "%1$s.aws.credentials.static-provider.secret-access-key cannot be empty if STATIC credentials provider used.",
                                 configKeyRoot));
             }
+            var accessKeyId = config.staticProvider.accessKeyId.get();
+            var secretAccessKey = config.staticProvider.secretAccessKey.get();
             return StaticCredentialsProvider.create(
-                    AwsBasicCredentials.create(config.staticProvider.accessKeyId.get(),
-                            config.staticProvider.secretAccessKey.get()));
+                    config.staticProvider.sessionToken
+                            .map(sessionToken -> (AwsCredentials) AwsSessionCredentials
+                                    .create(accessKeyId, secretAccessKey, sessionToken))
+                            .orElseGet(() -> AwsBasicCredentials
+                                    .create(accessKeyId, secretAccessKey)));
         }
     },
 

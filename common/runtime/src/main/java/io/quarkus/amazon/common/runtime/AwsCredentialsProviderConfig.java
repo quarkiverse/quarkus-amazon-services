@@ -106,6 +106,12 @@ public class AwsCredentialsProviderConfig {
          */
         @ConfigItem
         public Optional<String> secretAccessKey;
+
+        /**
+         * AWS Session token
+         */
+        @ConfigItem
+        public Optional<String> sessionToken;
     }
 
     @ConfigGroup
