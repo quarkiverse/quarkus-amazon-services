@@ -1,4 +1,5 @@
 * xref:index.adoc[Quarkus Amazon Services]
+* xref:amazon-cognitouserpools.adoc[Cognito User Pools]
 * xref:amazon-dynamodb.adoc[DynamoDB]
 * xref:amazon-iam.adoc[IAM]
 * xref:amazon-kms.adoc[KMS]

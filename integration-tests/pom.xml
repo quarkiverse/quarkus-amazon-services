@@ -21,6 +21,7 @@
         <iam.url>http://localhost:4566</iam.url>
         <ssm.url>http://localhost:4566</ssm.url>
         <secretsmanager.url>http://localhost:4566</secretsmanager.url>
+        <cognitoidentity.url>http://localhost:5000</cognitoidentity.url>
     </properties>
 
     <dependencies>
@@ -71,6 +72,10 @@
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-secretsmanager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-cognito-user-pools</artifactId>
         </dependency>
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
@@ -155,6 +160,22 @@
                                 <wait>
                                     <time>30000</time>
                                     <log>^Ready\.$</log>
+                                </wait>
+                            </run>
+                        </image>
+                        <image>
+                            <name>motoserver/moto:3.0.2</name>
+                            <alias>aws-moto</alias>
+                            <run>
+                                <env>
+                                </env>
+                                <ports>
+                                    <port>5000:5000</port>
+                                </ports>
+                                <log />
+                                <wait>
+                                    <time>30000</time>
+                                    <log>^ \* Running on</log>
                                 </wait>
                             </run>
                         </image>
