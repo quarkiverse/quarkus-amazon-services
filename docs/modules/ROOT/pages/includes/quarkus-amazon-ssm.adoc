@@ -171,6 +171,15 @@ AWS Secret access key
 |
 
 
+a| [[quarkus-amazon-ssm_quarkus.ssm.aws.credentials.static-provider.session-token]]`link:#quarkus-amazon-ssm_quarkus.ssm.aws.credentials.static-provider.session-token[quarkus.ssm.aws.credentials.static-provider.session-token]`
+
+[.description]
+--
+AWS Session token
+--|string 
+|
+
+
 h|[[quarkus-amazon-ssm_quarkus.ssm.aws.credentials.profile-provider-aws-profile-credentials-provider-configuration]]link:#quarkus-amazon-ssm_quarkus.ssm.aws.credentials.profile-provider-aws-profile-credentials-provider-configuration[AWS Profile credentials provider configuration]
 
 h|Type
