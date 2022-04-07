@@ -126,6 +126,12 @@ public class NettyHttpClientConfig {
     @ConfigItem
     public SdkEventLoopGroupConfig eventLoop;
 
+    /**
+     * Async client advanced options
+     */
+    @ConfigItem
+    public Advanced advanced;
+
     @ConfigGroup
     public static class Http2Config {
         /**
@@ -209,6 +215,18 @@ public class NettyHttpClientConfig {
          */
         @ConfigItem
         public Optional<List<String>> nonProxyHosts;
+    }
+
+    @ConfigGroup
+    public static class Advanced {
+
+        /**
+         * Whether the default thread pool should be used to complete the futures returned from the HTTP client request.
+         * <p>
+         * When disabled, futures will be completed on the Netty event loop thread.
+         */
+        @ConfigItem(defaultValue = "true")
+        public boolean useFutureCompletionThreadPool;
     }
 
     //TODO: additionalChannelOptions

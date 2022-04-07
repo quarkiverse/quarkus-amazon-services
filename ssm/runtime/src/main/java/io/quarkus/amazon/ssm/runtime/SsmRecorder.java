@@ -7,6 +7,7 @@ import io.quarkus.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder;
+import software.amazon.awssdk.core.client.config.SdkAdvancedAsyncClientOption;
 import software.amazon.awssdk.http.SdkHttpClient;
 import software.amazon.awssdk.http.async.SdkAsyncHttpClient;
 import software.amazon.awssdk.services.ssm.SsmAsyncClient;
@@ -47,6 +48,10 @@ public class SsmRecorder {
         SsmAsyncClientBuilder builder = SsmAsyncClient.builder();
         if (transport != null) {
             builder.httpClientBuilder(transport.getValue());
+        }
+        if (!config.asyncClient.advanced.useFutureCompletionThreadPool) {
+            builder.asyncConfiguration(asyncConfigBuilder -> asyncConfigBuilder
+                    .advancedOption(SdkAdvancedAsyncClientOption.FUTURE_COMPLETION_EXECUTOR, Runnable::run));
         }
         return new RuntimeValue<>(builder);
     }
