@@ -34,6 +34,9 @@ jobs:
         with:
           distribution: temurin
           java-version: 11
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
 
       - name: Cache local Maven repository
         uses: actions/cache@v2
@@ -50,13 +53,15 @@ jobs:
 
       - name: Maven release ${{steps.metadata.outputs.current-version}}
         run: |
-          gpg --quiet --batch --yes --decrypt --passphrase="${{secrets.GPG_PASSPHRASE}}" --output /tmp/maven-settings.xml .github/release/maven-settings.xml.gpg
           git checkout -b release
-          mvn -B release:prepare -Prelease -DreleaseVersion=${{steps.metadata.outputs.current-version}} -DdevelopmentVersion=${{steps.metadata.outputs.next-version}} -s /tmp/maven-settings.xml
+          mvn -B release:prepare -Prelease -DreleaseVersion=${{steps.metadata.outputs.current-version}} -DdevelopmentVersion=${{steps.metadata.outputs.next-version}}
           git commit -am "Update stable version for documentation"
           git checkout ${{github.base_ref}}
           git rebase release
-          mvn -B release:perform -Darguments=-DperformRelease -DperformRelease -Prelease -s /tmp/maven-settings.xml
+          mvn -B release:perform -Darguments=-DperformRelease -DperformRelease -Prelease
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
 
       - name: Adjust tag for documentation changes
         run: |
