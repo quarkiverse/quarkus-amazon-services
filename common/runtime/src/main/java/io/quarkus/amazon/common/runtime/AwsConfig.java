@@ -23,7 +23,7 @@ public class AwsConfig {
      * * Instance profile file
      *
      * See `software.amazon.awssdk.regions.Region` for available regions.
-     * 
+     *
      * @asciidoclet
      */
     // @formatter:on
