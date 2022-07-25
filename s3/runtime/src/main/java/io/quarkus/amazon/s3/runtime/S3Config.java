@@ -16,7 +16,7 @@ public class S3Config {
 
     /**
      * Enable using the accelerate endpoint when accessing S3.
-     * 
+     *
      * <p>
      * Accelerate endpoints allow faster transfer of objects by using Amazon CloudFront's globally distributed edge locations.
      */
