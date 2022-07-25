@@ -48,6 +48,9 @@ public class AmazonServicesClientsProcessor {
         // FullJitterBackoffStrategy uses j.u.Ramdom, so needs to be runtime-initialized
         producer.produce(
                 new RuntimeInitializedClassBuildItem("software.amazon.awssdk.core.retry.backoff.FullJitterBackoffStrategy"));
+        // CachedSupplier uses j.u.Ramdom, so needs to be runtime-initialized
+        producer.produce(
+                new RuntimeInitializedClassBuildItem("software.amazon.awssdk.utils.cache.CachedSupplier"));
     }
 
     @BuildStep
