@@ -28,9 +28,20 @@ To complete this guide, you need:
 * An AWS Account to access the S3 service. Before you can use the AWS SDKs with Amazon S3, you must get an AWS access key ID and secret access key.
 * Optionally, Docker for your system to run S3 locally for testing purposes
 
-=== Provision S3 locally
+=== Provision S3 locally via Dev Services
 
-The easiest way to start working with S3 is to run a local instance as a container.
+The easiest way to start working with S3 is to run a local instance using Dev Services. This will automatically start a S3 enabled localstack
+instance when running in dev or test mode. Unlike other dev services S3 dev services must be explicitly enabled by setting the `quarkus.s3.devservices.enabled=true`
+config property.
+
+When this property is set Quarkus will automatically start and configure a local S3 instance for you, with no other config required. You can optionally configure
+the buckets that are created on startup with the `quarkus.s3.devservices.buckets` config property.
+
+Note that data will persist between restarts, so tests must be careful to clean up after themselves.
+
+==== Provision S3 locally manually
+
+You can also setup a local version of S3 manually, first start a localstack container:
 
 [source,bash,subs="verbatim,attributes"]
 ----

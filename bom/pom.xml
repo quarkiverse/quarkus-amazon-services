@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <properties>
+        <aws-java-sdk-s3.version>1.12.169</aws-java-sdk-s3.version>
+    </properties>
 
     <parent>
         <groupId>io.quarkiverse.amazonservices</groupId>
@@ -131,6 +134,11 @@
                 <groupId>io.quarkiverse.amazonservices</groupId>
                 <artifactId>quarkus-amazon-cognito-user-pools-deployment</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-s3</artifactId>
+                <version>${aws-java-sdk-s3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

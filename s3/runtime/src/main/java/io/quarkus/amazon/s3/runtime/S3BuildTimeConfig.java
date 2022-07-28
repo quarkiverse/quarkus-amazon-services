@@ -23,4 +23,10 @@ public class S3BuildTimeConfig {
      */
     @ConfigItem
     public SyncHttpClientBuildTimeConfig syncClient;
+
+    /**
+     * Config for dev services
+     */
+    @ConfigItem
+    public S3DevServicesBuildTimeConfig devservices;
 }
