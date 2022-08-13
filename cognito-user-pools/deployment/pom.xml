@@ -32,6 +32,10 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-cognito-user-pools</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-devservices-cognito-user-pools</artifactId>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>

@@ -34,6 +34,42 @@ Environment variable: `+++QUARKUS_DYNAMODB_SYNC_CLIENT_TYPE+++`
 |`url`
 
 
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.enabled]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.enabled[quarkus.dynamodb.devservices.enabled]`
+
+[.description]
+--
+If local stack based dev services should be used. This requires expliect config rather than being activated by a lack of config for dev services, as AWS is a singleton and does not seen to be configured in the same way as other services. If this is true then a localstack S3 container will be started and will be used instead of AWS.
+
+Environment variable: `+++QUARKUS_DYNAMODB_DEVSERVICES_ENABLED+++`
+--|boolean 
+|
+
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.shared]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.shared[quarkus.dynamodb.devservices.shared]`
+
+[.description]
+--
+Indicates if the localstack managed by Quarkus Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services for Kafka starts a new container. 
+ The discovery uses the `quarkus-dev-service-localstack-s3` label. The value is configured using the `service-name` property. 
+ Container sharing is only used in dev mode.
+
+Environment variable: `+++QUARKUS_DYNAMODB_DEVSERVICES_SHARED+++`
+--|boolean 
+|`true`
+
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.service-name]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.service-name[quarkus.dynamodb.devservices.service-name]`
+
+[.description]
+--
+The value of the `quarkus-dev-service-localstack-s3` label attached to the started container. This property is used when `shared` is set to `true`. In this case, before starting a container, Dev Services for S3 looks for a container with the `quarkus-dev-service-localstack-s3` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise it starts a new container with the `quarkus-dev-service-localstack-s3` label set to the specified value. 
+ This property is used when you need multiple shared S3 instances.
+
+Environment variable: `+++QUARKUS_DYNAMODB_DEVSERVICES_SERVICE_NAME+++`
+--|string 
+|`localstack`
+
+
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.enable-endpoint-discovery]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.enable-endpoint-discovery[quarkus.dynamodb.enable-endpoint-discovery]`
 
 [.description]
@@ -43,6 +79,17 @@ Enable DynamoDB service endpoint discovery.
 Environment variable: `+++QUARKUS_DYNAMODB_ENABLE_ENDPOINT_DISCOVERY+++`
 --|boolean 
 |`false`
+
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.container-properties-container-properties]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.container-properties-container-properties[quarkus.dynamodb.devservices.container-properties]`
+
+[.description]
+--
+Generic properties that are pass for additional container configuration.
+
+Environment variable: `+++QUARKUS_DYNAMODB_DEVSERVICES_CONTAINER_PROPERTIES+++`
+--|`Map<String,String>` 
+|
 
 
 h|[[quarkus-amazon-dynamodb_quarkus.dynamodb.sdk-aws-sdk-client-configurations]]link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sdk-aws-sdk-client-configurations[AWS SDK client configurations]

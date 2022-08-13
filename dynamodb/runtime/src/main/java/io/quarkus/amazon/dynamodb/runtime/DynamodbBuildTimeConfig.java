@@ -1,5 +1,6 @@
 package io.quarkus.amazon.dynamodb.runtime;
 
+import io.quarkus.amazon.common.runtime.DevServicesBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
 import io.quarkus.runtime.annotations.ConfigItem;
@@ -23,4 +24,10 @@ public class DynamodbBuildTimeConfig {
      */
     @ConfigItem
     public SyncHttpClientBuildTimeConfig syncClient;
+
+    /**
+     * Config for dev services
+     */
+    @ConfigItem
+    public DevServicesBuildTimeConfig devservices;
 }

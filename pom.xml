@@ -16,6 +16,7 @@
         <module>build-parent</module>
         <module>cognito-user-pools</module>
         <module>common</module>
+        <module>devservices</module>
         <module>dynamodb</module>
         <module>iam</module>
         <module>s3</module>

@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -11,6 +12,9 @@ import io.restassured.RestAssured;
 
 @QuarkusTest
 public class AmazonS3Test {
+
+    @ConfigProperty(name = "quarkus.s3.endpoint-override")
+    String s3EndpointOverride;
 
     @Test
     public void testS3Async() {
@@ -25,7 +29,7 @@ public class AmazonS3Test {
     @Test
     public void testS3Presign() {
         RestAssured.when().get("/test/s3/presign").then()
-                .body(startsWith("http://localhost:4566/sync-"))
+                .body(startsWith(s3EndpointOverride + "/sync-"))
                 .body(containsString("X-Amz-Algorithm"))
                 .body(containsString("X-Amz-Date"))
                 .body(containsString("X-Amz-SignedHeaders"))

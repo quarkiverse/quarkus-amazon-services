@@ -25,7 +25,8 @@ public class S3DevServicesTest {
     @RegisterExtension
     static final QuarkusUnitTest config = new QuarkusUnitTest()
             .withApplicationRoot((jar) -> jar
-                    .addAsResource(new StringAsset("quarkus.s3.devservices.enabled=true"), "application.properties"));
+                    .addAsResource(new StringAsset("quarkus.aws.devservices.localstack.image-name=localstack/localstack:1.0"),
+                            "application.properties"));
 
     @Test
     public void test() {
