@@ -16,7 +16,7 @@ public class TlsKeyManagersProviderConfig {
      * * `system-property` - Provider checks the standard `javax.net.ssl.keyStore`, `javax.net.ssl.keyStorePassword`, and
      *                       `javax.net.ssl.keyStoreType` properties defined by the
      *                        https://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html[JSSE].
-     * * `file-store` - Provider that loads a the key store from a file.
+     * * `file-store` - Provider that loads the key store from a file.
      *
      * @asciidoclet
      */
