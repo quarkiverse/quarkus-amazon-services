@@ -42,8 +42,8 @@ public class AmazonClientApacheTransportRecorder extends AbstractAmazonClientTra
 
             builder.proxyConfiguration(proxyBuilder.build());
         }
-        getTlsKeyManagersProvider(syncConfig.tlsKeyManagersProvider).ifPresent(builder::tlsKeyManagersProvider);
-        getTlsTrustManagersProvider(syncConfig.tlsTrustManagersProvider).ifPresent(builder::tlsTrustManagersProvider);
+        builder.tlsKeyManagersProvider(getTlsKeyManagersProvider(syncConfig.tlsKeyManagersProvider));
+        builder.tlsTrustManagersProvider(getTlsTrustManagersProvider(syncConfig.tlsTrustManagersProvider));
         return new RuntimeValue<>(builder);
     }
 

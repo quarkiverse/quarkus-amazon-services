@@ -1,7 +1,6 @@
 package io.quarkus.amazon.common.runtime;
 
 import java.net.URI;
-import java.util.Optional;
 
 import io.quarkus.runtime.RuntimeValue;
 import software.amazon.awssdk.http.SdkHttpClient;
@@ -24,18 +23,12 @@ public abstract class AbstractAmazonClientTransportRecorder {
         throw new IllegalStateException("Configuring an async client is not supported by " + this.getClass().getName());
     }
 
-    protected Optional<TlsKeyManagersProvider> getTlsKeyManagersProvider(TlsKeyManagersProviderConfig config) {
-        if (config.fileStore != null && config.fileStore.path.isPresent() && config.fileStore.type.isPresent()) {
-            return Optional.of(config.type.create(config));
-        }
-        return Optional.empty();
+    protected TlsKeyManagersProvider getTlsKeyManagersProvider(TlsKeyManagersProviderConfig config) {
+        return config.type.create(config);
     }
 
-    protected Optional<TlsTrustManagersProvider> getTlsTrustManagersProvider(TlsTrustManagersProviderConfig config) {
-        if (config.fileStore != null && config.fileStore.path.isPresent() && config.fileStore.type.isPresent()) {
-            return Optional.of(config.type.create(config));
-        }
-        return Optional.empty();
+    protected TlsTrustManagersProvider getTlsTrustManagersProvider(TlsTrustManagersProviderConfig config) {
+        return config.type.create(config);
     }
 
     protected void validateProxyEndpoint(String extension, URI endpoint, String clientType) {

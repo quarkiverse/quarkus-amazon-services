@@ -54,8 +54,8 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
             builder.proxyConfiguration(proxyBuilder.build());
         }
 
-        getTlsKeyManagersProvider(asyncConfig.tlsKeyManagersProvider).ifPresent(builder::tlsKeyManagersProvider);
-        getTlsTrustManagersProvider(asyncConfig.tlsTrustManagersProvider).ifPresent(builder::tlsTrustManagersProvider);
+        builder.tlsKeyManagersProvider(getTlsKeyManagersProvider(asyncConfig.tlsKeyManagersProvider));
+        builder.tlsTrustManagersProvider(getTlsTrustManagersProvider(asyncConfig.tlsTrustManagersProvider));
 
         if (asyncConfig.eventLoop.override) {
             SdkEventLoopGroup.Builder eventLoopBuilder = SdkEventLoopGroup.builder();

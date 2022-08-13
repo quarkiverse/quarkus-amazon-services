@@ -18,8 +18,8 @@ public class AmazonClientUrlConnectionTransportRecorder extends AbstractAmazonCl
         UrlConnectionHttpClient.Builder builder = UrlConnectionHttpClient.builder();
         builder.connectionTimeout(syncConfig.connectionTimeout);
         builder.socketTimeout(syncConfig.socketTimeout);
-        getTlsKeyManagersProvider(syncConfig.tlsKeyManagersProvider).ifPresent(builder::tlsKeyManagersProvider);
-        getTlsTrustManagersProvider(syncConfig.tlsTrustManagersProvider).ifPresent(builder::tlsTrustManagersProvider);
+        builder.tlsKeyManagersProvider(getTlsKeyManagersProvider(syncConfig.tlsKeyManagersProvider));
+        builder.tlsTrustManagersProvider(getTlsTrustManagersProvider(syncConfig.tlsTrustManagersProvider));
         return new RuntimeValue<>(builder);
     }
 }
