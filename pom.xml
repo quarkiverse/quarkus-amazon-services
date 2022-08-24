@@ -8,7 +8,7 @@
     </parent>
     <groupId>io.quarkiverse.amazonservices</groupId>
     <artifactId>quarkus-amazon-services-parent</artifactId>
-    <version>1.2.0</version>
+    <version>999-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Quarkus - Amazon Services - Parent</name>
     <modules>
@@ -70,8 +70,4 @@
             </plugins>
         </pluginManagement>
     </build>
-
-  <scm>
-    <tag>1.2.0</tag>
-  </scm>
 </project>
