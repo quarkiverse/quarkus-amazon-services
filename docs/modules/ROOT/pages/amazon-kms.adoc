@@ -33,9 +33,9 @@ The easiest way to start working with KMS is to run a local instance as a contai
 
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run --rm --name local-kms --publish 8011:4599 -e SERVICES=kms -e START_WEB=0 -d localstack/localstack:0.11.1
+docker run --rm --name local-kms --publish 4566:4599 -e SERVICES=kms -e START_WEB=0 -d localstack/localstack:0.11.1
 ----
-This starts a KMS instance that is accessible on port `8011`.
+This starts a KMS instance that is accessible on port `4566`.
 
 Create an AWS profile for your local instance using AWS CLI:
 [source,shell,subs="verbatim,attributes"]
@@ -53,12 +53,12 @@ Create a KMS master key queue using AWS CLI and store in `MASTER_KEY_ARN` enviro
 
 [source,bash,subs="verbatim,attributes"]
 ----
-MASTER_KEY_ARN=`aws kms create-key --profile localstack --endpoint-url=http://localhost:8011 | cut -f3`
+MASTER_KEY_ARN=`aws kms create-key --profile localstack --endpoint-url=http://localhost:4566 | cut -f3`
 ----
 Generate a key data as 256-bit symmetric key (AES 256)
 [source,bash,subs="verbatim,attributes"]
 ----
-aws kms generate-data-key --key-id $MASTER_KEY_ARN --key-spec AES_256 --profile localstack --endpoint-url=http://localhost:8011
+aws kms generate-data-key --key-id $MASTER_KEY_ARN --key-spec AES_256 --profile localstack --endpoint-url=http://localhost:4566
 ----
 
 Or, if you want to use your AWS account create a key using your default profile
@@ -188,7 +188,7 @@ If you're going to use a local KMS instance, configure it as follows:
 
 [source,properties]
 ----
-quarkus.kms.endpoint-override=http://localhost:8011
+quarkus.kms.endpoint-override=http://localhost:4566
 
 quarkus.kms.aws.region=us-east-1
 quarkus.kms.aws.credentials.type=static
