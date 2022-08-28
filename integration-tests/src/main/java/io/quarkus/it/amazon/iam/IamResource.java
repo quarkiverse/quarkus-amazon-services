@@ -33,7 +33,7 @@ public class IamResource {
     @Produces(TEXT_PLAIN)
     public String testSync() {
         LOG.info("Testing Sync IAM client");
-        CreateUserResponse user = iamClient.createUser(CreateUserRequest.builder().userName("quarkus").build());
+        CreateUserResponse user = iamClient.createUser(CreateUserRequest.builder().userName("quarkus-sync").build());
 
         return String.valueOf(user.sdkHttpResponse().statusCode());
     }
@@ -45,7 +45,7 @@ public class IamResource {
         LOG.info("Testing Async IAM client");
 
         CompletableFuture<CreateUserResponse> user = iamAsyncClient
-                .createUser(CreateUserRequest.builder().userName("quarkus").build());
+                .createUser(CreateUserRequest.builder().userName("quarkus-async").build());
 
         return String.valueOf(user.get().sdkHttpResponse().statusCode());
     }
