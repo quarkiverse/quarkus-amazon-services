@@ -51,9 +51,11 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-devservices-deployment</artifactId>
         </dependency>
+        <!-- required by testcontainer localstack -->
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-core</artifactId>
+            <version>${awssdk.v1.version}</version>
         </dependency>
     </dependencies>
 
