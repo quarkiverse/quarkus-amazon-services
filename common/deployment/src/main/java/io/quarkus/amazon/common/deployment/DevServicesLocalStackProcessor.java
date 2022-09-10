@@ -1,6 +1,8 @@
 package io.quarkus.amazon.common.deployment;
 
 import java.io.Closeable;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +19,7 @@ import org.testcontainers.containers.localstack.LocalStackContainer.EnabledServi
 import org.testcontainers.utility.DockerImageName;
 
 import io.quarkus.amazon.common.deployment.spi.DevServicesLocalStackProviderBuildItem;
+import io.quarkus.amazon.common.deployment.spi.SharedLocalStackContainer;
 import io.quarkus.amazon.common.runtime.LocalStackDevServicesBuildTimeConfig;
 import io.quarkus.deployment.IsNormal;
 import io.quarkus.deployment.annotations.BuildProducer;
@@ -32,6 +35,8 @@ import io.quarkus.deployment.console.StartupLogCompressor;
 import io.quarkus.deployment.dev.devservices.GlobalDevServicesConfig;
 import io.quarkus.deployment.logging.LoggingSetupBuildItem;
 import io.quarkus.devservices.common.ConfigureUtil;
+import io.quarkus.devservices.common.ContainerAddress;
+import io.quarkus.devservices.common.ContainerLocator;
 import io.quarkus.devservices.common.ContainerShutdownCloseable;
 import io.quarkus.runtime.LaunchMode;
 
@@ -44,6 +49,11 @@ public class DevServicesLocalStackProcessor {
     static volatile boolean first = true;
 
     static final String DEV_SERVICE_LABEL = "quarkus-dev-service-localstack";
+
+    // Since version 0.11, LocalStack exposes all services on the same port
+    private static final int PORT = EnabledService.named("whatever").getPort();
+
+    private static final ContainerLocator containerLocator = new ContainerLocator(DEV_SERVICE_LABEL, PORT);
 
     @BuildStep(onlyIfNot = IsNormal.class, onlyIf = GlobalDevServicesConfig.Enabled.class)
     public void startLocalStackDevService(
@@ -64,10 +74,10 @@ public class DevServicesLocalStackProcessor {
 
         Map<String, List<DevServicesLocalStackProviderBuildItem>> requestedServicesBySharedServiceName;
         if (launchMode.isTest()) {
-            // reuse same container for service with same shared name
+            // reuse same container for service with same service name
+            // the value of the label is the service name (eg. "default")
             requestedServicesBySharedServiceName = requestedServices
                     .stream()
-                    .filter(rs -> rs.getSharedConfig().isShared())
                     .collect(Collectors.toMap(r -> r.getSharedConfig().getServiceName(),
                             Collections::singletonList,
                             (requestedService1, requestedService2) -> {
@@ -76,14 +86,13 @@ public class DevServicesLocalStackProcessor {
                                 ret.addAll(requestedService2);
                                 return ret;
                             }));
-
-            // collect non shared services in one separate container
-            requestedServicesBySharedServiceName.put("aws",
-                    requestedServices.stream().filter(rs -> !rs.getSharedConfig().isShared())
-                            .collect(Collectors.toList()));
         } else {
+            // in dev mode, each shared service will be instanciated in one container
+            // so that it is easier to reuse a container accross different applications
+            // the value of the label is service-name property dash service name (eg. "default-s3")
             requestedServicesBySharedServiceName = requestedServices
                     .stream()
+                    .filter(rs -> rs.getSharedConfig().isShared())
                     .collect(Collectors.toMap(
                             r -> String.format("%s-%s", r.getSharedConfig().getServiceName(), r.getService().getName()),
                             Collections::singletonList,
@@ -93,14 +102,28 @@ public class DevServicesLocalStackProcessor {
                                 ret.addAll(requestedService2);
                                 return ret;
                             }));
+
+            // group non shared service by service name
+            requestedServicesBySharedServiceName = requestedServices
+                    .stream()
+                    .filter(rs -> !rs.getSharedConfig().isShared())
+                    .collect(Collectors.toMap(r -> r.getSharedConfig().getServiceName(),
+                            Collections::singletonList,
+                            (requestedService1, requestedService2) -> {
+                                List<DevServicesLocalStackProviderBuildItem> ret = new ArrayList<>();
+                                ret.addAll(requestedService1);
+                                ret.addAll(requestedService2);
+                                return ret;
+                            }));
+
         }
 
         List<RunningDevService> runningDevServices = new ArrayList<>();
 
-        requestedServicesBySharedServiceName.forEach((key, value) -> {
-            RunningDevService namedDevService = startLocalStack(key,
+        requestedServicesBySharedServiceName.forEach((devServiceName, requestedServicesGroup) -> {
+            RunningDevService namedDevService = startLocalStack(devServiceName,
                     dockerStatusBuildItem, launchMode.getLaunchMode(),
-                    localStackDevServicesBuildTimeConfig, value,
+                    localStackDevServicesBuildTimeConfig, requestedServicesGroup,
                     !devServicesSharedNetworkBuildItem.isEmpty(),
                     devServicesConfig.timeout,
                     consoleInstalledBuildItem,
@@ -148,17 +171,17 @@ public class DevServicesLocalStackProcessor {
         devServices = null;
     }
 
-    private RunningDevService startLocalStack(String serviceName, DockerStatusBuildItem dockerStatusBuildItem,
+    private RunningDevService startLocalStack(String devServiceName, DockerStatusBuildItem dockerStatusBuildItem,
             LaunchMode launchMode,
             LocalStackDevServicesBuildTimeConfig localStackDevServicesBuildTimeConfig,
-            List<DevServicesLocalStackProviderBuildItem> requestedServices,
+            List<DevServicesLocalStackProviderBuildItem> requestedServicesGroup,
             boolean useSharedNetwork,
             Optional<Duration> timeout,
             Optional<ConsoleInstalledBuildItem> consoleInstalledBuildItem,
             LoggingSetupBuildItem loggingSetupBuildItem) {
 
         // no service requested
-        if (requestedServices.size() == 0)
+        if (requestedServicesGroup.size() == 0)
             return null;
 
         if (!dockerStatusBuildItem.isDockerAvailable()) {
@@ -173,41 +196,86 @@ public class DevServicesLocalStackProcessor {
         }
 
         String prettyRequestServicesName = String.join(", ",
-                requestedServices.stream().map(ds -> ds.getService().getName()).toArray(String[]::new));
-        String containerFriendlyName = serviceName + " (" + prettyRequestServicesName + ")";
+                requestedServicesGroup.stream().map(ds -> ds.getService().getName()).toArray(String[]::new));
+        String containerFriendlyName = devServiceName + " (" + prettyRequestServicesName + ")";
         StartupLogCompressor compressor = new StartupLogCompressor(
                 (launchMode == LaunchMode.TEST ? "(test) " : "") + "Amazon Dev Services for " + containerFriendlyName
                         + " starting:",
                 consoleInstalledBuildItem,
                 loggingSetupBuildItem);
-
+        Map<String, String> config = new HashMap<>();
         try {
-            LocalStackContainer container = new LocalStackContainer(
-                    DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName))
-                    .withEnv(
-                            Stream.concat(
-                                    requestedServices.stream().map(ds -> ds.getEnv())
-                                            .flatMap(ds -> ds.entrySet().stream()),
-                                    localStackDevServicesBuildTimeConfig.containerProperties.entrySet().stream())
-                                    .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue())))
-                    .withServices(requestedServices.stream().map(ds -> ds.getService()).toArray(EnabledService[]::new))
-                    .withLabel(DEV_SERVICE_LABEL, serviceName);
-            ConfigureUtil.configureSharedNetwork(container, serviceName);
 
-            timeout.ifPresent(container::withStartupTimeout);
+            final Optional<ContainerAddress> maybeContainerAddress = containerLocator.locateContainer(devServiceName,
+                    requestedServicesGroup.get(0).getSharedConfig().isShared(), launchMode);
 
-            container.start();
+            var devService = maybeContainerAddress.map(containerAddress -> {
+                // LocalStack default values are not statically exposed
+                // create an instance just to get those value
+                LocalStackContainer defaultValueContainerNotStarted = new LocalStackContainer(
+                        DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName));
 
-            Map<String, String> map = new HashMap<>();
-            requestedServices.forEach(ds -> {
-                map.putAll(ds.getDevProvider().prepareLocalStack(container));
-            });
+                requestedServicesGroup.forEach(ds -> {
+                    config.putAll(ds.getDevProvider().reuseLocalStack(new SharedLocalStackContainer() {
+                        public URI getEndpointOverride(EnabledService enabledService) {
+                            try {
+                                return new URI("http://" + containerAddress.getHost() + ":" + containerAddress.getPort());
+                            } catch (URISyntaxException e) {
+                                throw new IllegalStateException("Cannot obtain endpoint URL", e);
+                            }
+                        }
+
+                        public String getRegion() {
+                            // DEFAULT_REGION env var can override default value and this is not supported
+                            return defaultValueContainerNotStarted.getRegion();
+                        }
+
+                        public String getAccessKey() {
+                            return defaultValueContainerNotStarted.getAccessKey();
+                        }
+
+                        public String getSecretKey() {
+                            return defaultValueContainerNotStarted.getSecretKey();
+                        }
+                    }));
+                });
+
+                return new RunningDevService(devServiceName, containerAddress.getId(), null, config);
+            }).orElseGet(
+                    () -> {
+                        LocalStackContainer container = new LocalStackContainer(
+                                DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName))
+                                .withEnv(
+                                        Stream.concat(
+                                                requestedServicesGroup.stream().map(ds -> ds.getEnv())
+                                                        .flatMap(ds -> ds.entrySet().stream()),
+                                                localStackDevServicesBuildTimeConfig.containerProperties.entrySet()
+                                                        .stream())
+                                                .collect(Collectors.toMap(entry -> entry.getKey(),
+                                                        entry -> entry.getValue())))
+                                .withServices(requestedServicesGroup.stream().map(ds -> ds.getService())
+                                        .toArray(EnabledService[]::new))
+                                .withLabel(DEV_SERVICE_LABEL, devServiceName);
+                        ConfigureUtil.configureSharedNetwork(container, devServiceName);
+
+                        timeout.ifPresent(container::withStartupTimeout);
+
+                        container.start();
+
+                        requestedServicesGroup.forEach(ds -> {
+                            config.putAll(ds.getDevProvider().prepareLocalStack(container));
+                        });
+
+                        log.info("Amazon Dev Services for " + containerFriendlyName
+                                + " started. Other Quarkus applications in dev mode will find "
+                                + "the LocalStack automatically.");
+
+                        return new RunningDevService(devServiceName, container.getContainerId(),
+                                new ContainerShutdownCloseable(container, containerFriendlyName), config);
+                    });
 
             compressor.close();
-            log.info("Amazon Dev Services for " + containerFriendlyName + " started.");
-
-            return new RunningDevService(serviceName, container.getContainerId(),
-                    new ContainerShutdownCloseable(container, containerFriendlyName), map);
+            return devService;
 
         } catch (Throwable t) {
             compressor.closeAndDumpCaptured();

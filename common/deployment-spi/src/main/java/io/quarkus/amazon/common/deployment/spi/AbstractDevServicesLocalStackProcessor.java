@@ -63,6 +63,20 @@ public abstract class AbstractDevServicesLocalStackProcessor {
                                 String.format(AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY, enabledService.getName()),
                                 localstack.getSecretKey());
                     }
+
+                    @Override
+                    public Map<String, String> reuseLocalStack(SharedLocalStackContainer localstack) {
+                        return Map.of(
+                                endpointOverride,
+                                localstack.getEndpointOverride(enabledService).toString(),
+                                String.format(AWS_REGION, enabledService.getName()), localstack.getRegion(),
+                                String.format(AWS_CREDENTIALS_TYPE, enabledService.getName()),
+                                AwsCredentialsProviderType.STATIC.name(),
+                                String.format(AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID, enabledService.getName()),
+                                localstack.getAccessKey(),
+                                String.format(AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY, enabledService.getName()),
+                                localstack.getSecretKey());
+                    }
                 });
     }
 

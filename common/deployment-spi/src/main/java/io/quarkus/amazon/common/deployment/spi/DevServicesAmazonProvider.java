@@ -6,4 +6,6 @@ import org.testcontainers.containers.localstack.LocalStackContainer;
 
 public interface DevServicesAmazonProvider {
     Map<String, String> prepareLocalStack(LocalStackContainer localstack);
+
+    Map<String, String> reuseLocalStack(SharedLocalStackContainer localstack);
 }
