@@ -39,47 +39,78 @@ public abstract class AbstractDevServicesLocalStackProcessor {
             return null;
         }
 
-        LocalStackDevServicesSharedConfig sharedConfig = new LocalStackDevServicesSharedConfig(
-                devServicesBuildTimeConfig.shared,
-                devServicesBuildTimeConfig.serviceName);
+        LocalStackDevServicesBaseConfig sharedConfig = getConfiguration(devServicesBuildTimeConfig);
 
-        return new DevServicesLocalStackProviderBuildItem(enabledService, devServicesBuildTimeConfig.containerProperties,
+        return new DevServicesLocalStackProviderBuildItem(enabledService,
                 sharedConfig,
                 new DevServicesAmazonProvider() {
                     @Override
                     public Map<String, String> prepareLocalStack(LocalStackContainer localstack) {
 
-                        AbstractDevServicesLocalStackProcessor.this.prepareLocalStack(devServicesBuildTimeConfig,
+                        AbstractDevServicesLocalStackProcessor.this.prepareLocalStack(
+                                devServicesBuildTimeConfig,
                                 localstack);
 
                         return Map.of(
                                 endpointOverride,
-                                localstack.getEndpointOverride(enabledService).toString(),
-                                String.format(AWS_REGION, enabledService.getName()), localstack.getRegion(),
-                                String.format(AWS_CREDENTIALS_TYPE, enabledService.getName()),
+                                localstack.getEndpointOverride(enabledService)
+                                        .toString(),
+                                String.format(AWS_REGION, enabledService.getName()),
+                                localstack.getRegion(),
+                                String.format(AWS_CREDENTIALS_TYPE,
+                                        enabledService.getName()),
                                 AwsCredentialsProviderType.STATIC.name(),
-                                String.format(AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID, enabledService.getName()),
+                                String.format(AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID,
+                                        enabledService.getName()),
                                 localstack.getAccessKey(),
-                                String.format(AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY, enabledService.getName()),
+                                String.format(AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY,
+                                        enabledService.getName()),
                                 localstack.getSecretKey());
                     }
 
                     @Override
-                    public Map<String, String> reuseLocalStack(SharedLocalStackContainer localstack) {
+                    public Map<String, String> reuseLocalStack(
+                            BorrowedLocalStackContainer localstack) {
                         return Map.of(
                                 endpointOverride,
-                                localstack.getEndpointOverride(enabledService).toString(),
-                                String.format(AWS_REGION, enabledService.getName()), localstack.getRegion(),
-                                String.format(AWS_CREDENTIALS_TYPE, enabledService.getName()),
+                                localstack.getEndpointOverride(enabledService)
+                                        .toString(),
+                                String.format(AWS_REGION, enabledService.getName()),
+                                localstack.getRegion(),
+                                String.format(AWS_CREDENTIALS_TYPE,
+                                        enabledService.getName()),
                                 AwsCredentialsProviderType.STATIC.name(),
-                                String.format(AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID, enabledService.getName()),
+                                String.format(AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID,
+                                        enabledService.getName()),
                                 localstack.getAccessKey(),
-                                String.format(AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY, enabledService.getName()),
+                                String.format(AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY,
+                                        enabledService.getName()),
                                 localstack.getSecretKey());
                     }
                 });
     }
 
-    protected void prepareLocalStack(DevServicesBuildTimeConfig devServicesBuildTimeConfig, LocalStackContainer localstack) {
+    /**
+     * Returns an equatable configuration
+     *
+     * @param devServicesBuildTimeConfig build time configuration
+     * @return
+     */
+    protected LocalStackDevServicesBaseConfig getConfiguration(
+            DevServicesBuildTimeConfig devServicesBuildTimeConfig) {
+        return new LocalStackDevServicesBaseConfig(
+                devServicesBuildTimeConfig.shared,
+                devServicesBuildTimeConfig.serviceName,
+                devServicesBuildTimeConfig.containerProperties);
+    }
+
+    /**
+     * Prepare the owned localStack container
+     *
+     * @param devServicesBuildTimeConfig build time configuration to apply to container
+     * @param localstack the new localStack container to prepare
+     */
+    protected void prepareLocalStack(DevServicesBuildTimeConfig devServicesBuildTimeConfig,
+            LocalStackContainer localstack) {
     }
 }

@@ -1,25 +1,30 @@
 package io.quarkus.amazon.common.deployment.spi;
 
-import java.util.Map;
-
 import org.testcontainers.containers.localstack.LocalStackContainer.EnabledService;
 
 import io.quarkus.builder.item.MultiBuildItem;
 
+/**
+ * BuildItem to request a localstack dev service container.
+ *
+ */
 public final class DevServicesLocalStackProviderBuildItem extends MultiBuildItem {
     private final EnabledService service;
-    private final Map<String, String> env;
-
     private final DevServicesAmazonProvider devProvider;
-    private final LocalStackDevServicesSharedConfig sharedConfig;
+    private final LocalStackDevServicesBaseConfig config;
 
-    public DevServicesLocalStackProviderBuildItem(EnabledService service,
-            Map<String, String> env,
-            LocalStackDevServicesSharedConfig sharedConfig,
+    /**
+     * ctor
+     *
+     * @param enabledService amamzon service type the container must expose
+     * @param config configuration for this service
+     * @param devProvider provider to configure the container and get client configuration properties
+     */
+    public DevServicesLocalStackProviderBuildItem(EnabledService enabledService,
+            LocalStackDevServicesBaseConfig config,
             DevServicesAmazonProvider devProvider) {
-        this.service = service;
-        this.env = env;
-        this.sharedConfig = sharedConfig;
+        this.service = enabledService;
+        this.config = config;
         this.devProvider = devProvider;
     }
 
@@ -27,15 +32,11 @@ public final class DevServicesLocalStackProviderBuildItem extends MultiBuildItem
         return service;
     }
 
-    public Map<String, String> getEnv() {
-        return env;
-    }
-
     public DevServicesAmazonProvider getDevProvider() {
         return devProvider;
     }
 
-    public LocalStackDevServicesSharedConfig getSharedConfig() {
-        return sharedConfig;
+    public LocalStackDevServicesBaseConfig getConfig() {
+        return config;
     }
 }

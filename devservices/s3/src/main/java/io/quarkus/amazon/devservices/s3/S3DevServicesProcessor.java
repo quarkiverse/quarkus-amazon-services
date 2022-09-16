@@ -8,6 +8,7 @@ import org.testcontainers.containers.localstack.LocalStackContainer.Service;
 
 import io.quarkus.amazon.common.deployment.spi.AbstractDevServicesLocalStackProcessor;
 import io.quarkus.amazon.common.deployment.spi.DevServicesLocalStackProviderBuildItem;
+import io.quarkus.amazon.common.deployment.spi.LocalStackDevServicesBaseConfig;
 import io.quarkus.amazon.common.runtime.DevServicesBuildTimeConfig;
 import io.quarkus.amazon.s3.runtime.S3BuildTimeConfig;
 import io.quarkus.amazon.s3.runtime.S3DevServicesBuildTimeConfig;
@@ -47,35 +48,22 @@ public class S3DevServicesProcessor extends AbstractDevServicesLocalStackProcess
         return new S3DevServiceCfg(devServicesConfig);
     }
 
-    private static final class S3DevServiceCfg {
-        private final boolean devServicesEnabled;
-        private final boolean shared;
-        private final String serviceName;
+    private static final class S3DevServiceCfg extends LocalStackDevServicesBaseConfig {
         private final Set<String> buckets;
 
         public S3DevServiceCfg(S3DevServicesBuildTimeConfig config) {
-            this.devServicesEnabled = config.enabled.orElse(true);
-            this.shared = config.shared;
-            this.serviceName = config.serviceName;
+            super(config.shared, config.serviceName, config.containerProperties);
             this.buckets = config.buckets;
         }
 
         @Override
         public boolean equals(Object o) {
-            if (this == o)
-                return true;
-            if (o == null || getClass() != o.getClass())
-                return false;
-            S3DevServiceCfg that = (S3DevServiceCfg) o;
-            return devServicesEnabled == that.devServicesEnabled && shared == that.shared
-                    && Objects.equals(serviceName,
-                            that.serviceName)
-                    && Objects.equals(buckets, that.buckets);
+            return super.equals(o) && Objects.equals(buckets, ((S3DevServiceCfg) o).buckets);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(devServicesEnabled, shared, serviceName,
+            return Objects.hash(super.hashCode(),
                     buckets);
         }
     }
