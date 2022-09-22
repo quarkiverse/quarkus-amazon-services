@@ -9,7 +9,7 @@ You can find more information about DynamoDB at https://aws.amazon.com/dynamodb/
 
 NOTE: The DynamoDB extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
 It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
-Keep in mind it's actively developed and does not support yet all the features available in SDK 1.x such as https://github.com/aws/aws-sdk-java-v2/issues/36[Document APIs] or https://github.com/aws/aws-sdk-java-v2/issues/35[Object Mappers]
+Keep in mind it's actively developed and does not support yet all the features available in SDK 1.x such as https://github.com/aws/aws-sdk-java-v2/issues/36[Document APIs]
 
 The Quarkus extension supports two programming models:
 
@@ -34,32 +34,22 @@ The easiest way to start working with DynamoDB is to run a local instance as a c
 
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run --publish 8000:8000 amazon/dynamodb-local:1.11.477 -jar DynamoDBLocal.jar -inMemory -sharedDb
+docker run --publish 4566:8000 amazon/dynamodb-local:1.19.0 -jar DynamoDBLocal.jar -inMemory -sharedDb
 ----
 
-This starts a DynamoDB instance that is accessible on port `8000`.
-You can check it's running by accessing the web shell on `http://localhost:8000/shell`.
+This starts a DynamoDB instance that is accessible on port `4566`.
+You can check if it's working with `aws dynamodb list-tables --endpoint-url http://localhost:4566`.
+
+[source,json]
+----
+{
+    "TableNames": []
+}
+----
+
+You should see the output above in your terminal. That's it, DynamoDB runs locally.
 
 Have a look at the https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html[Setting Up DynamoDB Local guide] for other options to run DynamoDB.
-
-Open `http://localhost:8000/shell` in your browser.
-
-Copy and paste the following code to the shell and run it:
-[source,js,subs="verbatim,attributes"]
-----
-var params = {
-    TableName: 'QuarkusFruits',
-    KeySchema: [{ AttributeName: 'fruitName', KeyType: 'HASH' }],
-    AttributeDefinitions: [{  AttributeName: 'fruitName', AttributeType: 'S', }],
-    ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1, }
-};
-
-dynamodb.createTable(params, function(err, data) {
-    if (err) ppJson(err);
-    else ppJson(data);
-
-});
-----
 
 === Set up Dynamodb on AWS
 
@@ -67,6 +57,8 @@ Before you can use the AWS SDKs with DynamoDB, you must get an AWS access key ID
 For more information, see https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SettingUp.DynamoWebService.html[Setting Up DynamoDB (Web Service)].
 
 We recommend to use the AWS CLI to provision the table:
+
+=== Create the QuarkusFruits Table
 
 [source,bash,subs="verbatim,attributes"]
 ----
@@ -345,7 +337,7 @@ If you're going to use a local DynamoDB instance, configure it as follows:
 
 [source,properties]
 ----
-quarkus.dynamodb.endpoint-override=http://localhost:8000
+quarkus.dynamodb.endpoint-override=http://localhost:4566
 
 quarkus.dynamodb.aws.region=eu-central-1
 quarkus.dynamodb.aws.credentials.type=static
@@ -477,4 +469,5 @@ And add Netty HTTP client dependency to the `pom.xml`:
 == Configuration Reference
 
 include::./includes/quarkus-amazon-dynamodb.adoc[]
+
 

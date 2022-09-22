@@ -33,9 +33,9 @@ The easiest way to start working with SSM is to run a local instance as a contai
 
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run --rm --name local-ssm --publish 8014:4583 -e SERVICES=ssm -e START_WEB=0 -d localstack/localstack:0.11.1
+docker run --rm --name local-ssm --publish 4566:4583 -e SERVICES=ssm -e START_WEB=0 -d localstack/localstack:0.11.1
 ----
-This starts a SSM instance that is accessible on port `8014`.
+This starts a SSM instance that is accessible on port `4566`.
 
 Create an AWS profile for your local instance using AWS CLI:
 [source,shell,subs="verbatim,attributes"]
@@ -250,7 +250,7 @@ If you're going to use a local SSM instance, configure it as follows:
 
 [source,properties]
 ----
-quarkus.ssm.endpoint-override=http://localhost:8014 <1>
+quarkus.ssm.endpoint-override=http://localhost:4566 <1>
 
 quarkus.ssm.aws.region=us-east-1 <2>
 quarkus.ssm.aws.credentials.type=static <3>

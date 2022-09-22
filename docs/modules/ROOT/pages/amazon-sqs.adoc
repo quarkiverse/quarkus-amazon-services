@@ -36,9 +36,9 @@ The easiest way to start working with SQS is to run a local instance as a contai
 
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run --rm --name local-sqs -p 8010:4576 -e SERVICES=sqs -e START_WEB=0 -d localstack/localstack:0.11.1
+docker run --rm --name local-sqs -p 4566:4576 -e SERVICES=sqs -e START_WEB=0 -d localstack/localstack:0.11.1
 ----
-This starts a SQS instance that is accessible on port `8010`.
+This starts a SQS instance that is accessible on port `4566`.
 
 Create an AWS profile for your local instance using AWS CLI:
 [source,shell,subs="verbatim,attributes"]
@@ -56,7 +56,7 @@ Create a SQS queue using AWS CLI and store in `QUEUE_URL` environment variable.
 
 [source,bash,subs="verbatim,attributes"]
 ----
-QUEUE_URL=`aws sqs create-queue --queue-name=ColliderQueue --profile localstack --endpoint-url=http://localhost:8010`
+QUEUE_URL=`aws sqs create-queue --queue-name=ColliderQueue --profile localstack --endpoint-url=http://localhost:4566`
 ----
 
 Or, if you want to use your SQS queue on your AWS account create a queue using your default profile
@@ -298,7 +298,7 @@ If you're going to use a local SQS instance, configure it as follows:
 
 [source,properties]
 ----
-quarkus.sqs.endpoint-override=http://localhost:8010
+quarkus.sqs.endpoint-override=http://localhost:4566
 
 quarkus.sqs.aws.region=us-east-1
 quarkus.sqs.aws.credentials.type=static

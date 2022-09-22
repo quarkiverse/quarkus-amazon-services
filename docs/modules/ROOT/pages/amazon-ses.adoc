@@ -32,9 +32,9 @@ However, local instance of SES is only mocks the SES APIs without the actual ema
 
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run --rm --name local-ses -p 8012:4579 -e SERVICES=ses -e START_WEB=0 -d localstack/localstack:0.11.1
+docker run --rm --name local-ses -p 4566:4579 -e SERVICES=ses -e START_WEB=0 -d localstack/localstack:0.11.1
 ----
-This starts a SES instance that is accessible on port `8012`.
+This starts a SES instance that is accessible on port `4566`.
 
 Create an AWS profile for your local instance using AWS CLI:
 [source,shell,subs="verbatim,attributes"]
@@ -73,8 +73,8 @@ However, no emails to be send as it only mocks the service APIs.
 
 [source,bash,subs="verbatim,attributes"]
 ----
-aws ses verify-email-identity --email-address <sender@email.address> --profile localstack --endpoint-url=http://localhost:8012
-aws ses verify-email-identity --email-address <recipient@email.address> --profile localstack --endpoint-url=http://localhost:8012
+aws ses verify-email-identity --email-address <sender@email.address> --profile localstack --endpoint-url=http://localhost:4566
+aws ses verify-email-identity --email-address <recipient@email.address> --profile localstack --endpoint-url=http://localhost:4566
 ----
 
 == Solution
@@ -180,7 +180,7 @@ If you're going to use a local SES instance, configure it as follows:
 
 [source,properties]
 ----
-quarkus.ses.endpoint-override=http://localhost:8012
+quarkus.ses.endpoint-override=http://localhost:4566
 
 quarkus.ses.aws.region=us-east-1
 quarkus.ses.aws.credentials.type=static
