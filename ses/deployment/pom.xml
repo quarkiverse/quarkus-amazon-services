@@ -32,6 +32,10 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-ses</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-devservices-ses</artifactId>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>

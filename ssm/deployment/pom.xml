@@ -32,6 +32,10 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-ssm</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-devservices-ssm</artifactId>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>

@@ -32,6 +32,10 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-secretsmanager</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-devservices-secretsmanager</artifactId>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>

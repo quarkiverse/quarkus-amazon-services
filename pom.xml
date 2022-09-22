@@ -16,6 +16,7 @@
         <module>build-parent</module>
         <module>cognito-user-pools</module>
         <module>common</module>
+        <module>devservices</module>
         <module>dynamodb</module>
         <module>iam</module>
         <module>s3</module>
@@ -36,8 +37,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.version>2.12.2.Final</quarkus.version>
-
         <awssdk.version>2.17.273</awssdk.version>
+        <!-- required by testcontainer localstack to run but not used
+            https://github.com/testcontainers/testcontainers-java/issues/4279
+        -->
+        <awssdk.v1.version>1.12.169</awssdk.v1.version>
     </properties>
     <build>
         <pluginManagement>
