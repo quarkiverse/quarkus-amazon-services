@@ -1,0 +1,15 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon DynamoDB Enhanced"
+metadata:
+  keywords:
+    - "dynamodb enhanced"
+    - "enhanced"
+    - "dynamodb"
+    - "dynamo"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-dynamodb.html
+  status: "stable"
