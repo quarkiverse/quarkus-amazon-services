@@ -10,22 +10,26 @@ import io.quarkus.runtime.annotations.ConfigItem;
 public class DevServicesBuildTimeConfig {
 
     /**
-     * If local stack based dev services should be used. (default to true)
+     * If a local AWS stack should be used. (default to true)
      *
-     * If this is true and endpoint-override is not configured then a LocalStack container
+     * If this is true and endpoint-override is not configured then a local AWS stack
      * will be started and will be used instead of the given configuration.
+     * For all services but Cognito, the local AWS stack will be provided by LocalStack.
+     * Otherwise, it will be provided by MotoServer
      */
     @ConfigItem
     public Optional<Boolean> enabled = Optional.empty();
 
     /**
-     * Indicates if the localstack managed by Quarkus Dev Services is shared.
+     * Indicates if the LocalStack container managed by Dev Services is shared.
      * When shared, Quarkus looks for running containers using label-based service discovery.
      * If a matching container is found, it is used, and so a second one is not started.
      * Otherwise, Dev Services starts a new container.
      * <p>
      * The discovery uses the {@code quarkus-dev-service-localstack} label.
      * The value is configured using the {@code service-name} property.
+     * <p>
+     * Sharing is not supported for the Cognito extension.
      * <p>
      */
     @ConfigItem(defaultValue = "false")

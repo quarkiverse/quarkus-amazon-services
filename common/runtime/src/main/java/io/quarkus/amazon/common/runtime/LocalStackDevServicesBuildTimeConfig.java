@@ -9,7 +9,7 @@ import io.quarkus.runtime.annotations.ConfigRoot;
 @ConfigRoot(name = "aws.devservices.localstack", phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
 public class LocalStackDevServicesBuildTimeConfig {
     /**
-     * The localstack container image to use.
+     * The LocalStack container image to use.
      */
     @ConfigItem(defaultValue = "localstack/localstack")
     public String imageName;
