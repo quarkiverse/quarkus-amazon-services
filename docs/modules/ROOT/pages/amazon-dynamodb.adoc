@@ -11,7 +11,9 @@ NOTE: The DynamoDB extension is based on https://docs.aws.amazon.com/sdk-for-jav
 It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
 Keep in mind it's actively developed and does not support yet all the features available in SDK 1.x such as https://github.com/aws/aws-sdk-java-v2/issues/36[Document APIs]
 
-The Quarkus extension supports two programming models:
+The Quarkus extension supports the traditional DynamoDB client as well as the https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/dynamodb-enhanced-client.html[enhanced client].
+
+It supports two programming models:
 
 * Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
 * https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client.
@@ -28,7 +30,7 @@ To complete this guide, you need:
 * An AWS Account to access the DynamoDB service
 * Optionally, Docker for your system to run DynamoDB locally for testing purposes
 
-=== Setup DynamoDB locally
+=== Set up DynamoDB locally
 
 The easiest way to start working with DynamoDB is to run a local instance as a container.
 
@@ -302,7 +304,7 @@ The implementation is pretty straightforward and you just need to define your en
 
 == Configuring DynamoDB clients
 
-Both DynamoDB clients (sync and async) are configurable via the `application.properties` file that can be provided in the `src/main/resources` directory.
+DynamoDB clients (sync and async) are configurable via the `application.properties` file that can be provided in the `src/main/resources` directory.
 Additionally, you need to add to the classpath a proper implementation of the sync client. By default the extension uses the `java.net.URLConnection` HTTP client, so
 you need to add a URL connection client dependency to the `pom.xml` file:
 
@@ -466,8 +468,108 @@ And add Netty HTTP client dependency to the `pom.xml`:
 </dependency>
 ----
 
+== DynamoDB enhanced client
+
+The DynamoDB enhanced client is part of the AWS SDK for Java version 2 and makes the mapping between DynamoDB Tables and Java beans very easy.
+The Enhanced Client requires a TableSchema, which can be generated with a set of annotations or declared in code.
+It has both a sync and an async variants.
+
+To use the enhanced client, add the `quarkus-amazon-dynamodb-enhanced` extension to your `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>io.quarkiverse.amazonservices</groupId>
+    <artifactId>quarkus-amazon-dynamodb-enhanced</artifactId>
+</dependency>
+----
+
+The `Fruit` bean would look like this:
+
+[source,java]
+----
+package org.acme.dynamodb;
+
+import io.quarkus.runtime.annotations.RegisterForReflection;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+
+@DynamoDbBean
+public class Fruit {
+
+    private String name;
+    private String description;
+
+    @DynamoDbPartitionKey
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+}
+----
+
+The `FruitSyncService` would need to use the `DynamoDbEnhancedClient` as well as create a `TableSchema`:
+
+[source,java]
+----
+package org.acme.dynamodb;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+
+@ApplicationScoped
+public class FruitSyncService extends AbstractService {
+
+    private DynamoDbTable<Fruit> fruitTable;
+
+    @Inject
+    DynamoDbEnhancedClient dynamoEnhancedClient;
+
+    FruitSyncService() {
+        fruitTable = dynamoEnhancedClient.table(getTableName(),
+            TableSchema.fromClass(Fruit.class));
+    }
+
+    public List<Fruit> findAll() {
+        return exampleBlockingTable.scan().items().stream().collect(Collectors.toList());
+    }
+
+    public List<Fruit> add(Fruit fruit) {
+        fruitTable.putItem(fruit);
+        return findAll();
+    }
+
+    public Fruit get(String name) {
+        Key partitionKey = Key.builder().partitionValue(name).build();
+        return fruitTable.getItem(partitionKey);
+    }
+}
+----
+
+The `FruitResource` does not change.
+
+You can find more information about the DynamoDB enhanced client in the AWS documentation:
+
+* https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/examples-dynamodb-enhanced.html
+* https://aws.amazon.com/de/blogs/developer/introducing-enhanced-dynamodb-client-in-the-aws-sdk-for-java-v2/
+
 == Configuration Reference
 
 include::./includes/quarkus-amazon-dynamodb.adoc[]
-
-
