@@ -1,6 +1,6 @@
 # Quarkus Amazon Services
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/maven-central/v/io.quarkiverse.amazonservices/quarkus-amazon-services-bom?logo=apache-maven&style=flat-square)](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom)
@@ -50,6 +50,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center"><a href="https://github.com/kdubb"><img src="https://avatars.githubusercontent.com/u/787655?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kevin Wooten</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=kdubb" title="Code">💻</a></td>
       <td align="center"><a href="https://resume.fedorenko-d.ru/"><img src="https://avatars.githubusercontent.com/u/587257?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Fedorenko Dmitrij</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=c0va23" title="Code">💻</a></td>
       <td align="center"><a href="https://www.inulogic.fr"><img src="https://avatars.githubusercontent.com/u/88554524?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sébastien CROCQUESEL</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=scrocquesel" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/hamburml"><img src="https://avatars.githubusercontent.com/u/7239350?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Michael Hamburger</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=hamburml" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
