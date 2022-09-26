@@ -25,10 +25,14 @@ To complete this guide, you need:
 * An AWS Account to access the SES service
 * Docker for your system to run SES locally for testing purposes
 
-== Set up SES locally
+=== Provision SES locally via Dev Services
 
-The easiest way to start working with SES is to run a local instance as a container.
+The easiest way to start working with SES is to run a local instance using Dev Services.
 However, local instance of SES is only mocks the SES APIs without the actual email sending capabilities. You can still use it for this guide to verify an API communication or integration test purposes.
+
+=== Provision SES locally manually
+
+You can also set up a local version of SES manually, first start a LocalStack container:
 
 [source,bash,subs="verbatim,attributes"]
 ----
@@ -188,7 +192,7 @@ quarkus.ses.aws.credentials.static-provider.access-key-id=test-key
 quarkus.ses.aws.credentials.static-provider.secret-access-key=test-secret
 ----
 
-- `quarkus.ses.aws.region` - It's required by the client, but since you're using a local SES instance use `us-east-1` as it's a default region of localstack's SES.
+- `quarkus.ses.aws.region` - It's required by the client, but since you're using a local SES instance use `us-east-1` as it's a default region of LocalStack's SES.
 - `quarkus.ses.aws.credentials.type` - Set `static` credentials provider with any values for `access-key-id` and `secret-access-key`
 - `quarkus.ses.endpoint-override` - Override the SES client to use a local instance instead of an AWS service
 

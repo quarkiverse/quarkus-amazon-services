@@ -27,9 +27,13 @@ To complete this guide, you need:
 * An AWS Account to access the KMS service
 * Docker for your system to run KMS locally for testing purposes
 
-=== Set up KMS locally
+=== Provision KMS locally via Dev Services
 
-The easiest way to start working with KMS is to run a local instance as a container.
+The easiest way to start working with KMS is to run a local instance using Dev Services.
+
+=== Provision KMS locally manually
+
+You can also set up a local version of KMS manually, first start a LocalStack container:
 
 [source,bash,subs="verbatim,attributes"]
 ----
@@ -196,7 +200,7 @@ quarkus.kms.aws.credentials.static-provider.access-key-id=test-key
 quarkus.kms.aws.credentials.static-provider.secret-access-key=test-secret
 ----
 
-- `quarkus.kms.aws.region` - It's required by the client, but since you're using a local KMS instance use `us-east-1` as it's a default region of localstack's KMS.
+- `quarkus.kms.aws.region` - It's required by the client, but since you're using a local KMS instance use `us-east-1` as it's a default region of LocalStack's KMS.
 - `quarkus.kms.aws.credentials.type` - Set `static` credentials provider with any values for `access-key-id` and `secret-access-key`
 - `quarkus.kms.endpoint-override` - Override the KMS client to use a local instance instead of an AWS service
 

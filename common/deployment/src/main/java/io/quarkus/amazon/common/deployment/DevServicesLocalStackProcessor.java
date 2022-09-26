@@ -324,7 +324,6 @@ public class DevServicesLocalStackProcessor {
     }
 
     private static final class LocalStackDevServicesConfig {
-        private final boolean devServicesEnabled;
         private final String imageName;
         private final Map<String, String> containerProperties;
 
@@ -333,7 +332,6 @@ public class DevServicesLocalStackProcessor {
         }
 
         private LocalStackDevServicesConfig(LocalStackDevServicesBuildTimeConfig config) {
-            this.devServicesEnabled = config.enabled;
             this.imageName = config.imageName;
             this.containerProperties = config.containerProperties;
         }
@@ -345,14 +343,13 @@ public class DevServicesLocalStackProcessor {
             if (o == null || getClass() != o.getClass())
                 return false;
             LocalStackDevServicesConfig that = (LocalStackDevServicesConfig) o;
-            return devServicesEnabled == that.devServicesEnabled
-                    && Objects.equals(imageName, that.imageName)
+            return Objects.equals(imageName, that.imageName)
                     && Objects.equals(containerProperties, that.containerProperties);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(devServicesEnabled, imageName, containerProperties);
+            return Objects.hash(imageName, containerProperties);
         }
     }
 

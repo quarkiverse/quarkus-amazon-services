@@ -27,9 +27,13 @@ To complete this guide, you need:
 * An AWS Account to access the SSM service
 * Docker for your system to run SSM locally for testing purposes
 
-=== Set up SSM locally
+=== Provision SSM locally via Dev Services
 
-The easiest way to start working with SSM is to run a local instance as a container.
+The easiest way to start working with SSM is to run a local instance using Dev Services.
+
+=== Provision SSM locally manually
+
+You can also set up a local version of SSM manually, first start a LocalStack container:
 
 [source,bash,subs="verbatim,attributes"]
 ----
@@ -258,7 +262,7 @@ quarkus.ssm.aws.credentials.static-provider.access-key-id=test-key
 quarkus.ssm.aws.credentials.static-provider.secret-access-key=test-secret
 ----
 
-<1> Override the SSM client to use localstack instead of the actual AWS service
+<1> Override the SSM client to use LocalStack instead of the actual AWS service
 <2> Localstack defaults to `us-east-1`
 <3> The `static` credentials provider lets you set the `access-key-id` and `secret-access-key` directly
 
