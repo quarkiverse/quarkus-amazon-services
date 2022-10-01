@@ -9,3 +9,4 @@
 * xref:amazon-sns.adoc[SNS]
 * xref:amazon-sqs.adoc[SQS]
 * xref:amazon-ssm.adoc[SSM]
+* xref:dev-services.adoc[Dev Services for Amazon Services]
