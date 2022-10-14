@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
+import software.amazon.awssdk.http.TlsTrustManagersProvider;
 import software.amazon.awssdk.http.async.SdkAsyncHttpClient;
 import software.amazon.awssdk.http.nio.netty.Http2Configuration;
 import software.amazon.awssdk.http.nio.netty.NettyNioAsyncHttpClient;
@@ -55,7 +56,10 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
         }
 
         builder.tlsKeyManagersProvider(getTlsKeyManagersProvider(asyncConfig.tlsKeyManagersProvider));
-        builder.tlsTrustManagersProvider(getTlsTrustManagersProvider(asyncConfig.tlsTrustManagersProvider));
+        TlsTrustManagersProvider tlsTrustManagerProvider = getTlsTrustManagersProvider(asyncConfig.tlsTrustManagersProvider);
+        if (tlsTrustManagerProvider != null) {
+            builder.tlsTrustManagersProvider(tlsTrustManagerProvider);
+        }
 
         if (asyncConfig.eventLoop.override) {
             SdkEventLoopGroup.Builder eventLoopBuilder = SdkEventLoopGroup.builder();
