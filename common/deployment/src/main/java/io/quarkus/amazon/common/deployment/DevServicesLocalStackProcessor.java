@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 import org.jboss.logging.Logger;
 import org.testcontainers.containers.localstack.LocalStackContainer;
 import org.testcontainers.containers.localstack.LocalStackContainer.EnabledService;
+import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 
 import io.quarkus.amazon.common.deployment.spi.BorrowedLocalStackContainer;
@@ -296,6 +297,14 @@ public class DevServicesLocalStackProcessor {
                                 .withServices(requestedServicesGroup.stream().map(ds -> ds.getService())
                                         .toArray(EnabledService[]::new))
                                 .withLabel(DEV_SERVICE_LABEL, devServiceName);
+
+                        localStackDevServicesBuildTimeConfig.initScriptsFolder.ifPresent(initScriptsFolder -> {
+                            container.withFileSystemBind(initScriptsFolder, "/docker-entrypoint-initaws.d");
+                            localStackDevServicesBuildTimeConfig.initCompletionMsg.ifPresent(initCompletionMsg -> {
+                                container.waitingFor(Wait.forLogMessage(".*" + initCompletionMsg + ".*\\n", 1));
+                            });
+                        });
+
                         ConfigureUtil.configureSharedNetwork(container, devServiceName);
 
                         timeout.ifPresent(container::withStartupTimeout);

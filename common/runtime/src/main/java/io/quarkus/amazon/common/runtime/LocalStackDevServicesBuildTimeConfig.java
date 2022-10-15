@@ -1,6 +1,7 @@
 package io.quarkus.amazon.common.runtime;
 
 import java.util.Map;
+import java.util.Optional;
 
 import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
@@ -19,4 +20,16 @@ public class LocalStackDevServicesBuildTimeConfig {
      */
     @ConfigItem
     public Map<String, String> containerProperties;
+
+    /**
+     * Path to init scripts folder executed during localstack startup.
+     */
+    @ConfigItem
+    public Optional<String> initScriptsFolder;
+
+    /**
+     * Specific container log message to be waiting for localstack init scripts completion.
+     */
+    @ConfigItem
+    public Optional<String> initCompletionMsg;
 }
