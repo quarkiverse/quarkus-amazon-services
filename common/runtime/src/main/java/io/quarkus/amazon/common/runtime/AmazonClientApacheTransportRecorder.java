@@ -3,6 +3,7 @@ package io.quarkus.amazon.common.runtime;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.http.SdkHttpClient;
+import software.amazon.awssdk.http.TlsTrustManagersProvider;
 import software.amazon.awssdk.http.apache.ApacheHttpClient;
 import software.amazon.awssdk.http.apache.ApacheHttpClient.Builder;
 import software.amazon.awssdk.http.apache.ProxyConfiguration;
@@ -43,7 +44,10 @@ public class AmazonClientApacheTransportRecorder extends AbstractAmazonClientTra
             builder.proxyConfiguration(proxyBuilder.build());
         }
         builder.tlsKeyManagersProvider(getTlsKeyManagersProvider(syncConfig.tlsKeyManagersProvider));
-        builder.tlsTrustManagersProvider(getTlsTrustManagersProvider(syncConfig.tlsTrustManagersProvider));
+        TlsTrustManagersProvider tlsTrustManagerProvider = getTlsTrustManagersProvider(syncConfig.tlsTrustManagersProvider);
+        if (tlsTrustManagerProvider != null) {
+            builder.tlsTrustManagersProvider(tlsTrustManagerProvider);
+        }
         return new RuntimeValue<>(builder);
     }
 

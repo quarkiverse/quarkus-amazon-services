@@ -12,7 +12,8 @@ public enum TlsTrustManagersProviderType {
     SYSTEM_PROPERTY {
         @Override
         public TlsTrustManagersProvider create(TlsTrustManagersProviderConfig config) {
-            return new SystemPropertyTlsTrustManagersProvider();
+            // we use the default trust managers, no need to add another one
+            return null;
         }
     },
     FILE_STORE {
