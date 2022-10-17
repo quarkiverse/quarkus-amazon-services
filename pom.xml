@@ -42,7 +42,7 @@
         <!-- required by testcontainer localstack to run but not used
             https://github.com/testcontainers/testcontainers-java/issues/4279
         -->
-        <awssdk.v1.version>1.12.169</awssdk.v1.version>
+        <awssdk.v1.version>1.12.321</awssdk.v1.version>
     </properties>
     <build>
         <pluginManagement>
