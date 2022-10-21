@@ -5,6 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 
+import io.quarkus.arc.DefaultBean;
 import software.amazon.awssdk.services.iam.IamAsyncClient;
 import software.amazon.awssdk.services.iam.IamAsyncClientBuilder;
 import software.amazon.awssdk.services.iam.IamClient;
@@ -21,6 +22,7 @@ public class IamClientProducer {
         this.asyncClient = asyncClientBuilderInstance.isResolvable() ? asyncClientBuilderInstance.get().build() : null;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public IamClient client() {
@@ -30,6 +32,7 @@ public class IamClientProducer {
         return syncClient;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public IamAsyncClient asyncClient() {

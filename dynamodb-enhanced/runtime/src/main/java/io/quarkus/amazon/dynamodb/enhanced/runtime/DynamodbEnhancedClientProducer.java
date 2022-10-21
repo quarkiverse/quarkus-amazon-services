@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 
+import io.quarkus.arc.DefaultBean;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
@@ -28,6 +29,7 @@ public class DynamodbEnhancedClientProducer {
         }
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public DynamoDbEnhancedClient client() {
@@ -37,6 +39,7 @@ public class DynamodbEnhancedClientProducer {
         return syncEnhancedClient;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public DynamoDbEnhancedAsyncClient asyncClient() {

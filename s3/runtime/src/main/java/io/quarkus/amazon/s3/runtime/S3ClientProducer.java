@@ -5,6 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 
+import io.quarkus.arc.DefaultBean;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3AsyncClientBuilder;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -25,6 +26,7 @@ public class S3ClientProducer {
         this.presigner = presignerBuilder.isResolvable() ? presignerBuilder.get().build() : null;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public S3Client client() {
@@ -34,6 +36,7 @@ public class S3ClientProducer {
         return syncClient;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public S3AsyncClient asyncClient() {
@@ -43,6 +46,7 @@ public class S3ClientProducer {
         return asyncClient;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public S3Presigner presigner() {
