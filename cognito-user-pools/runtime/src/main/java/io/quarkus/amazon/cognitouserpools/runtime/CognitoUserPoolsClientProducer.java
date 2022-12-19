@@ -5,6 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 
+import io.quarkus.arc.DefaultBean;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderAsyncClient;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderAsyncClientBuilder;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient;
@@ -21,6 +22,7 @@ public class CognitoUserPoolsClientProducer {
         this.asyncClient = asyncClientBuilderInstance.isResolvable() ? asyncClientBuilderInstance.get().build() : null;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public CognitoIdentityProviderClient client() {
@@ -31,6 +33,7 @@ public class CognitoUserPoolsClientProducer {
         return syncClient;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public CognitoIdentityProviderAsyncClient asyncClient() {

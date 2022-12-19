@@ -5,6 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 
+import io.quarkus.arc.DefaultBean;
 import software.amazon.awssdk.services.ssm.SsmAsyncClient;
 import software.amazon.awssdk.services.ssm.SsmAsyncClientBuilder;
 import software.amazon.awssdk.services.ssm.SsmClient;
@@ -21,6 +22,7 @@ public class SsmClientProducer {
         this.asyncClient = asyncClientBuilderInstance.isResolvable() ? asyncClientBuilderInstance.get().build() : null;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public SsmClient client() {
@@ -30,6 +32,7 @@ public class SsmClientProducer {
         return syncClient;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public SsmAsyncClient asyncClient() {

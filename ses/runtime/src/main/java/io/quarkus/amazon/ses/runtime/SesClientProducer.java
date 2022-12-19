@@ -5,6 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 
+import io.quarkus.arc.DefaultBean;
 import software.amazon.awssdk.services.ses.SesAsyncClient;
 import software.amazon.awssdk.services.ses.SesAsyncClientBuilder;
 import software.amazon.awssdk.services.ses.SesClient;
@@ -21,6 +22,7 @@ public class SesClientProducer {
         this.asyncClient = asyncClientBuilderInstance.isResolvable() ? asyncClientBuilderInstance.get().build() : null;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public SesClient client() {
@@ -30,6 +32,7 @@ public class SesClientProducer {
         return syncClient;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public SesAsyncClient asyncClient() {
