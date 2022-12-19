@@ -239,7 +239,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SNS_AWS_CREDENTIALS_TYPE+++`
 endif::add-copy-button-to-env-var[]
 -- a|
-`default`, `static`, `system-property`, `env-variable`, `profile`, `container`, `instance-profile`, `process`, `anonymous` 
+`default`, `static`, `system-property`, `env-variable`, `profile`, `container`, `instance-profile`, `process`, `custom`, `anonymous` 
 |`default`
 
 
@@ -424,6 +424,27 @@ Environment variable: env_var_with_copy_button:+++QUARKUS_SNS_AWS_CREDENTIALS_PR
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SNS_AWS_CREDENTIALS_PROCESS_PROVIDER_COMMAND+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|
+
+
+h|[[quarkus-amazon-sns_quarkus.sns.aws.credentials.custom-provider-custom-credentials-provider-configuration]]link:#quarkus-amazon-sns_quarkus.sns.aws.credentials.custom-provider-custom-credentials-provider-configuration[Custom credentials provider configuration]
+
+h|Type
+h|Default
+
+a| [[quarkus-amazon-sns_quarkus.sns.aws.credentials.custom-provider.name]]`link:#quarkus-amazon-sns_quarkus.sns.aws.credentials.custom-provider.name[quarkus.sns.aws.credentials.custom-provider.name]`
+
+[.description]
+--
+The name of custom AwsCredentialsProvider bean.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SNS_AWS_CREDENTIALS_CUSTOM_PROVIDER_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SNS_AWS_CREDENTIALS_CUSTOM_PROVIDER_NAME+++`
 endif::add-copy-button-to-env-var[]
 --|string 
 |

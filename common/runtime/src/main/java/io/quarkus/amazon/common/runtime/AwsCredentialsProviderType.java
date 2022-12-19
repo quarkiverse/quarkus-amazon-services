@@ -1,6 +1,7 @@
 package io.quarkus.amazon.common.runtime;
 
 import io.quarkus.amazon.common.runtime.AwsCredentialsProviderConfig.ProfileCredentialsProviderConfig;
+import io.quarkus.arc.Arc;
 import software.amazon.awssdk.auth.credentials.AnonymousCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
@@ -96,6 +97,22 @@ public enum AwsCredentialsProviderType {
             builder.command(config.processProvider.command.get());
 
             return builder.build();
+        }
+    },
+    CUSTOM {
+        @Override
+        public AwsCredentialsProvider create(AwsCredentialsProviderConfig config, String configKeyRoot) {
+            String beanName = config.customProvider.name.orElseThrow(() -> new RuntimeConfigurationError(
+                    String.format(
+                            "%s.aws.credentials.custom-provider.name cannot be empty if CUSTOM credentials provider used.",
+                            configKeyRoot)));
+            AwsCredentialsProvider credentialsProvider = (AwsCredentialsProvider) Arc.container().instance(beanName).get();
+            if (credentialsProvider == null) {
+                throw new RuntimeConfigurationError(
+                        String.format("cannot find bean '%s' specified in %s.aws.credentials.custom-provider.name", beanName,
+                                configKeyRoot));
+            }
+            return credentialsProvider;
         }
     },
     ANONYMOUS {

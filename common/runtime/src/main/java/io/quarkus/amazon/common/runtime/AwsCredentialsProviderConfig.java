@@ -72,6 +72,13 @@ public class AwsCredentialsProviderConfig {
     @ConfigDocSection
     public ProcessCredentialsProviderConfig processProvider;
 
+    /**
+     * Custom credentials provider configuration
+     */
+    @ConfigItem
+    @ConfigDocSection
+    public CustomCredentialsProviderConfig customProvider;
+
     @ConfigGroup
     public static class DefaultCredentialsProviderConfig {
 
@@ -157,5 +164,14 @@ public class AwsCredentialsProviderConfig {
          */
         @ConfigItem
         public Optional<String> command;
+    }
+
+    @ConfigGroup
+    public static class CustomCredentialsProviderConfig {
+        /**
+         * The name of custom AwsCredentialsProvider bean.
+         */
+        @ConfigItem
+        public Optional<String> name;
     }
 }
