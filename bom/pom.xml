@@ -23,6 +23,11 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
+                <groupId>software.amazon.awssdk.crt</groupId>
+                <artifactId>aws-crt</artifactId>
+                <version>${awscrt.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
                 <artifactId>quarkus-amazon-common</artifactId>
                 <version>${project.version}</version>
