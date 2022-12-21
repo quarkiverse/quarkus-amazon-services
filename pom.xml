@@ -38,7 +38,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.version>2.15.0.Final</quarkus.version>
-        <awssdk.version>2.18.41</awssdk.version>
+        <awssdk.version>2.19.1</awssdk.version>
         <awscrt.version>0.20.4</awscrt.version>
         <!-- required by testcontainer localstack to run but not used
             https://github.com/testcontainers/testcontainers-java/issues/4279
