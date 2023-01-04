@@ -28,14 +28,13 @@ public class BeanTableSchemaSubstitutionImplementation {
 
     public static <T, R> Function<T, R> getterForProperty(
             PropertyDescriptor propertyDescriptor, Class<T> beanClass) {
+        // change back to MethodHandle after https://github.com/oracle/graal/issues/5672 is resolved
         Method readMethod = propertyDescriptor.getReadMethod();
-        try {
-            MethodHandle mh = MethodHandles.publicLookup().unreflect(readMethod);
-            return new GetterWrapper<>(mh);
-        } catch (IllegalAccessException ex) {
+        if (readMethod == null) {
             throw new IllegalStateException(
-                    "GraalVM Substitution: Unable to convert Getter-Method to MethodHandle", ex);
+                    "GraalVM Substitution: Unable to convert Getter-Method to Method");
         }
+        return new GetterWrapper<>(readMethod);
     }
 
     public static <T, U> BiConsumer<T, U> setterForProperty(
@@ -73,16 +72,16 @@ public class BeanTableSchemaSubstitutionImplementation {
     }
 
     private static class GetterWrapper<T, R> implements Function<T, R> {
-        private final MethodHandle mh;
+        private final Method method;
 
-        public GetterWrapper(MethodHandle mh) {
-            this.mh = mh;
+        public GetterWrapper(Method method) {
+            this.method = method;
         }
 
         @Override
         public R apply(T t) {
             try {
-                return (R) mh.invoke(t);
+                return (R) method.invoke(t);
             } catch (Exception ex) {
                 throw new IllegalStateException("GraalVM Substitution: Exception invoking getter", ex);
             } catch (Error error) {
