@@ -15,7 +15,6 @@ import org.jboss.logging.Logger;
 import software.amazon.awssdk.enhanced.dynamodb.*;
 
 @Path("/dynamodbenhanced")
-
 public class DynamoDbEnhancedResource {
     private final static String ASYNC_TABLE = "enhancedasync";
     private final static String BLOCKING_TABLE = "enhancedblocking";
@@ -51,7 +50,7 @@ public class DynamoDbEnhancedResource {
         return exampleAsyncTable.createTable()
                 .thenCompose(t -> exampleAsyncTable.putItem(exampleTableEntry))
                 .thenCompose(t -> exampleAsyncTable.getItem(partitionKey))
-                .thenApply(p -> p.getPayload())
+                .thenApply(p -> p.getPayload() + "@" + p.getVersion())
                 .exceptionally(th -> {
                     LOG.error("Error during async Dynamodb operations", th.getCause());
                     return "ERROR";
@@ -84,7 +83,7 @@ public class DynamoDbEnhancedResource {
         DynamoDBExampleTableEntry existingTableEntry = exampleBlockingTable.getItem(partitionKey);
 
         if (existingTableEntry != null) {
-            return existingTableEntry.getPayload();
+            return existingTableEntry.getPayload() + "@" + existingTableEntry.getVersion();
         } else {
             return "ERROR";
         }
