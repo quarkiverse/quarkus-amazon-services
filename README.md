@@ -1,6 +1,6 @@
 # Quarkus Amazon Services
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-14-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/maven-central/v/io.quarkiverse.amazonservices/quarkus-amazon-services-bom?logo=apache-maven&style=flat-square)](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom)
@@ -53,6 +53,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center"><a href="https://github.com/hamburml"><img src="https://avatars.githubusercontent.com/u/7239350?v=4?s=100" width="100px;" alt="Michael Hamburger"/><br /><sub><b>Michael Hamburger</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=hamburml" title="Code">💻</a></td>
       <td align="center"><a href="https://www.nithanim.me/"><img src="https://avatars.githubusercontent.com/u/2402064?v=4?s=100" width="100px;" alt="Nithanim"/><br /><sub><b>Nithanim</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=Nithanim" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/Temdegon"><img src="https://avatars.githubusercontent.com/u/708289?v=4?s=100" width="100px;" alt="Pavel"/><br /><sub><b>Pavel</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=Temdegon" title="Code">💻</a></td>
+      <td align="center"><a href="https://github.com/dagrammy"><img src="https://avatars.githubusercontent.com/u/14089875?v=4?s=100" width="100px;" alt="dagrammy"/><br /><sub><b>dagrammy</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=dagrammy" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
