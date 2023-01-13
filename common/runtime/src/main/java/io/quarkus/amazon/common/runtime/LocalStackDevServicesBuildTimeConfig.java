@@ -32,4 +32,11 @@ public class LocalStackDevServicesBuildTimeConfig {
      */
     @ConfigItem
     public Optional<String> initCompletionMsg;
+
+    /**
+     * Additional services to be started. Use this property if the service
+     * you want is not covered by the extension
+     */
+    @ConfigItem
+    public Map<String, DevServicesBuildTimeConfig> additionalServices;
 }
