@@ -46,7 +46,30 @@ abstract public class AbstractAmazonServiceProcessor {
 
     abstract protected String builtinInterceptorsPath();
 
-    protected void setupExtension(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
+    protected void discoverClient(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
+            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
+        Optional<DotName> syncClassName = Optional.empty();
+        Optional<DotName> asyncClassName = Optional.empty();
+
+        //Discover all clients injections in order to determine if async or sync client is required
+        for (InjectionPointInfo injectionPoint : beanRegistrationPhase.getContext().get(BuildExtension.Key.INJECTION_POINTS)) {
+
+            Type injectedType = getInjectedType(injectionPoint);
+
+            if (syncClientName().equals(injectedType.name())) {
+                syncClassName = Optional.of(syncClientName());
+            }
+            if (asyncClientName().equals(injectedType.name())) {
+                asyncClassName = Optional.of(asyncClientName());
+            }
+        }
+        if (syncClassName.isPresent() || asyncClassName.isPresent()) {
+            requireClientProducer.produce(new RequireAmazonClientBuildItem(syncClassName, asyncClassName));
+        }
+    }
+
+    protected void setupExtension(
+            List<RequireAmazonClientBuildItem> clientRequirements,
             BuildProducer<ExtensionSslNativeSupportBuildItem> extensionSslNativeSupport,
             BuildProducer<FeatureBuildItem> feature,
             BuildProducer<AmazonClientInterceptorsPathBuildItem> interceptors,
@@ -62,13 +85,12 @@ abstract public class AbstractAmazonServiceProcessor {
         Optional<DotName> asyncClassName = Optional.empty();
 
         //Discover all clients injections in order to determine if async or sync client is required
-        for (InjectionPointInfo injectionPoint : beanRegistrationPhase.getContext().get(BuildExtension.Key.INJECTION_POINTS)) {
-            Type injectedType = getInjectedType(injectionPoint);
+        for (RequireAmazonClientBuildItem clientRequirement : clientRequirements) {
 
-            if (syncClientName().equals(injectedType.name())) {
+            if (clientRequirement.getSyncClassName().filter(syncClientName()::equals).isPresent()) {
                 syncClassName = Optional.of(syncClientName());
             }
-            if (asyncClientName().equals(injectedType.name())) {
+            if (clientRequirement.getAsyncClassName().filter(asyncClientName()::equals).isPresent()) {
                 asyncClassName = Optional.of(asyncClientName());
             }
         }
@@ -165,7 +187,9 @@ abstract public class AbstractAmazonServiceProcessor {
             Function<RuntimeValue<SdkAsyncHttpClient.Builder>, RuntimeValue<AwsClientBuilder>> asyncClientBuilderFunction,
             Class<?> presignerBuilderClass,
             RuntimeValue<SdkPresigner.Builder> presignerBuilder,
-            BuildProducer<SyntheticBeanBuildItem> syntheticBeans) {
+            BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
+            BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
+            BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync) {
         String configName = configName();
 
         Optional<RuntimeValue<SdkHttpClient.Builder>> syncSdkHttpClientBuilder = amazonClientSyncTransports.stream()
@@ -196,6 +220,7 @@ abstract public class AbstractAmazonServiceProcessor {
                     .scope(ApplicationScoped.class)
                     .runtimeValue(syncClientBuilder)
                     .done());
+            clientSync.produce(new AmazonClientSyncResultBuildItem(configName));
         }
         if (asyncClientBuilder != null) {
             asyncClientBuilder = recorder.configure(asyncClientBuilder, awsConfigRuntime, sdkConfigRuntime,
@@ -205,6 +230,7 @@ abstract public class AbstractAmazonServiceProcessor {
                     .scope(ApplicationScoped.class)
                     .runtimeValue(asyncClientBuilder)
                     .done());
+            clientAsync.produce(new AmazonClientAsyncResultBuildItem(configName));
         }
         if (presignerBuilder != null) {
             presignerBuilder = recorder.configurePresigner(presignerBuilder, awsConfigRuntime, sdkConfigRuntime,

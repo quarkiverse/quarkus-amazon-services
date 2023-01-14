@@ -1,7 +1,6 @@
 package io.quarkus.amazon.dynamodb.enhanced.runtime;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 
 import io.quarkus.arc.DefaultBean;
@@ -17,16 +16,12 @@ public class DynamodbEnhancedClientProducer {
 
     private DynamoDbEnhancedAsyncClient asyncEnhancedClient;
 
-    DynamodbEnhancedClientProducer(Instance<DynamoDbClient> syncClientInstance,
-            Instance<DynamoDbAsyncClient> asyncClientInstance) {
-        if (syncClientInstance.isResolvable()) {
-            this.syncEnhancedClient = DynamoDbEnhancedClient.builder()
-                    .dynamoDbClient(syncClientInstance.get()).build();
-        }
-        if (asyncClientInstance.isResolvable()) {
-            this.asyncEnhancedClient = DynamoDbEnhancedAsyncClient.builder()
-                    .dynamoDbClient(asyncClientInstance.get()).build();
-        }
+    public void setDynamoDbClient(DynamoDbClient client) {
+        syncEnhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(client).build();
+    }
+
+    public void setDynamoDbAsyncClient(DynamoDbAsyncClient client) {
+        asyncEnhancedClient = DynamoDbEnhancedAsyncClient.builder().dynamoDbClient(client).build();
     }
 
     @DefaultBean
