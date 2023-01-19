@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>quarkus-amazon-common-deployment-spi</artifactId>
-    <name>Quarkus - Amazon Services - Common - Deployment</name>
+    <name>Quarkus - Amazon Services - Common - Deployment Spi</name>
 
     <dependencies>
         <dependency>
