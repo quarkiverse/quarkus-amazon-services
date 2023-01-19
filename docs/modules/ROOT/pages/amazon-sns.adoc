@@ -62,12 +62,16 @@ Create a SNS topic using AWS CLI and store in `TOPIC_ARN` environment variable
 TOPIC_ARN=`aws sns create-topic --name=QuarksCollider --profile localstack --endpoint-url=http://localhost:4566`
 ----
 
-If you are using localstack you will need pay attention in some details:
+[WARNING]
+====
+If you are using LocalStack, some additional configuration is needed:
 
-- You will need set the propertie quarks.shield.base.url on application.properties file inside of resouces folder. Set with your IP address instead localhost 
-- You will need set the propertie quarkus.http.host=0.0.0.0, this will made quarkus listen all network interfaces
+- Set the `quarkus.shield.base.url` configuration property in your `application.properties` to your IP address instead of `localhost`.
+- Set the `quarkus.http.host` configuration property in your `application.properties` to `0.0.0.0`.
+Be aware that Quarkus will then listen to all interfaces, which might be a security hazard depending on your network configuration.
 
-Otherwise your service not will receive the notifications properly.
+Otherwise your service will not receive the notifications.
+====
 
 If you want to run the demo using SNS on your AWS account, you can create a topic using AWS default profile
 [source,bash,subs="verbatim,attributes"]
