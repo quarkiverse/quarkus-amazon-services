@@ -45,7 +45,7 @@ Refer to the LocalStack documentation for more configuration : https://docs.loca
 
 == Additional services
 
-If you need to start additional services for which a client extension is not imported in the project, you can set `additional-services` property:
+To start additional services for which a Quarkus extension does not exist or is not imported in the project, use the `additional-services` property:
 
 [source,properties]
 ----
