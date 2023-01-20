@@ -88,6 +88,12 @@ public class SyncHttpClientConfig {
         public boolean useIdleConnectionReaper;
 
         /**
+         * Configure whether to enable or disable TCP KeepAlive.
+         */
+        @ConfigItem(defaultValue = "false")
+        public Boolean tcpKeepAlive;
+
+        /**
          * HTTP proxy configuration
          */
         @ConfigItem
