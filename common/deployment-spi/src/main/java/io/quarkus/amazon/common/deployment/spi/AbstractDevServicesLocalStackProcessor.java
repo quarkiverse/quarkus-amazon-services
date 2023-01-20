@@ -1,5 +1,6 @@
 package io.quarkus.amazon.common.deployment.spi;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.jboss.logging.Logger;
@@ -51,21 +52,26 @@ public abstract class AbstractDevServicesLocalStackProcessor {
                                 devServicesBuildTimeConfig,
                                 localstack);
 
-                        return Map.of(
+                        var config = new HashMap<String, String>();
+                        config.put(
                                 endpointOverride,
                                 localstack.getEndpointOverride(enabledService)
-                                        .toString(),
-                                String.format(AWS_REGION, enabledService.getName()),
-                                localstack.getRegion(),
-                                String.format(AWS_CREDENTIALS_TYPE,
-                                        enabledService.getName()),
-                                AwsCredentialsProviderType.STATIC.name(),
-                                String.format(AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID,
-                                        enabledService.getName()),
-                                localstack.getAccessKey(),
-                                String.format(AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY,
-                                        enabledService.getName()),
+                                        .toString());
+                        config.put(String.format(AWS_REGION, enabledService.getName()),
+                                localstack.getRegion());
+                        config.put(String.format(AWS_CREDENTIALS_TYPE,
+                                enabledService.getName()),
+                                AwsCredentialsProviderType.STATIC.name());
+                        config.put(String.format(AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID,
+                                enabledService.getName()),
+                                localstack.getAccessKey());
+                        config.put(String.format(AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY,
+                                enabledService.getName()),
                                 localstack.getSecretKey());
+
+                        overrideDefaultConfig(config);
+
+                        return config;
                     }
 
                     @Override
@@ -88,6 +94,9 @@ public abstract class AbstractDevServicesLocalStackProcessor {
                                 localstack.getSecretKey());
                     }
                 });
+    }
+
+    protected void overrideDefaultConfig(Map<String, String> defaultConfig) {
     }
 
     /**

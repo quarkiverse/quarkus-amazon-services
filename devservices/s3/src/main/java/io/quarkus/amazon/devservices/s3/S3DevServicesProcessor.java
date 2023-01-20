@@ -1,5 +1,6 @@
 package io.quarkus.amazon.devservices.s3;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,9 +18,10 @@ import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
 
 public class S3DevServicesProcessor extends AbstractDevServicesLocalStackProcessor {
+
+    private static final String AWS_PATH_STYLE_ACCESS = "quarkus.s3.path-style-access";
 
     @BuildStep
     DevServicesLocalStackProviderBuildItem setupS3(S3BuildTimeConfig clientBuildTimeConfig) {
@@ -31,15 +33,23 @@ public class S3DevServicesProcessor extends AbstractDevServicesLocalStackProcess
         createBuckets(localstack, getConfiguration((S3DevServicesBuildTimeConfig) clientBuildTimeConfig));
     }
 
+    @Override
+    protected void overrideDefaultConfig(Map<String, String> defaultConfig) {
+        // Forces this client to use path-style addressing for buckets. Localstack returns an ip as host
+        // and it confuse DefaultS3EndpointProvider ruleset
+        defaultConfig.put(AWS_PATH_STYLE_ACCESS, "true");
+    }
+
     public void createBuckets(LocalStackContainer localstack, S3DevServiceCfg configuration) {
         try (S3Client client = S3Client.builder()
                 .endpointOverride(localstack.getEndpointOverride(LocalStackContainer.Service.S3))
                 .region(Region.of(localstack.getRegion()))
+                .forcePathStyle(true)
                 .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials
                         .create(localstack.getAccessKey(), localstack.getSecretKey())))
                 .build()) {
-            for (var i : configuration.buckets) {
-                client.createBucket(CreateBucketRequest.builder().bucket(i).build());
+            for (var bucketName : configuration.buckets) {
+                client.createBucket(b -> b.bucket(bucketName));
             }
         }
     }
