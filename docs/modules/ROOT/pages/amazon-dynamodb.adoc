@@ -577,3 +577,5 @@ You can find more information about the DynamoDB enhanced client in the AWS docu
 == Configuration Reference
 
 include::./includes/quarkus-amazon-dynamodb.adoc[]
+
+include::./includes/quarkus-amazon-dynamodb-enhanced.adoc[]
