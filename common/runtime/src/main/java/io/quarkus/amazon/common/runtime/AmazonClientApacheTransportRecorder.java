@@ -29,6 +29,7 @@ public class AmazonClientApacheTransportRecorder extends AbstractAmazonClientTra
         builder.maxConnections(syncConfig.apache.maxConnections);
         builder.socketTimeout(syncConfig.socketTimeout);
         builder.useIdleConnectionReaper(syncConfig.apache.useIdleConnectionReaper);
+        builder.tcpKeepAlive(syncConfig.apache.tcpKeepAlive);
 
         if (syncConfig.apache.proxy.enabled && syncConfig.apache.proxy.endpoint.isPresent()) {
             ProxyConfiguration.Builder proxyBuilder = ProxyConfiguration.builder()

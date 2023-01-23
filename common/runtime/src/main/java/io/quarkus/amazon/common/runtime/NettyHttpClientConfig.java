@@ -83,6 +83,12 @@ public class NettyHttpClientConfig {
     public boolean useIdleConnectionReaper;
 
     /**
+     * Configure whether to enable or disable TCP KeepAlive.
+     */
+    @ConfigItem(defaultValue = "false")
+    public Boolean tcpKeepAlive;
+
+    /**
      * The HTTP protocol to use.
      */
     @ConfigItem(defaultValue = "http1-1")

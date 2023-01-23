@@ -32,6 +32,7 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
         builder.protocol(asyncConfig.protocol);
         builder.readTimeout(asyncConfig.readTimeout);
         builder.writeTimeout(asyncConfig.writeTimeout);
+        builder.tcpKeepAlive(asyncConfig.tcpKeepAlive);
         asyncConfig.sslProvider.ifPresent(builder::sslProvider);
         builder.useIdleConnectionReaper(asyncConfig.useIdleConnectionReaper);
 
