@@ -1,6 +1,6 @@
 package io.quarkus.amazon.ses.deployment;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;

@@ -1,9 +1,9 @@
 package io.quarkus.amazon.iam.runtime;
 
-import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Instance;
-import javax.enterprise.inject.Produces;
+import jakarta.annotation.PreDestroy;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
+import jakarta.enterprise.inject.Produces;
 
 import io.quarkus.arc.DefaultBean;
 import software.amazon.awssdk.services.iam.IamAsyncClient;
