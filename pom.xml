@@ -37,7 +37,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <quarkus.version>2.16.0.Final</quarkus.version>
+        <quarkus.version>2.16.1.Final</quarkus.version>
         <awssdk.version>2.19.31</awssdk.version>
         <awscrt.version>0.21.1</awscrt.version>
         <!-- required by testcontainer localstack to run but not used
