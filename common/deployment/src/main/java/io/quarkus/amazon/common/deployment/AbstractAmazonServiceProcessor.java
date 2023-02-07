@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.ParameterizedType;
