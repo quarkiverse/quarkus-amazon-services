@@ -12,7 +12,7 @@ public class LocalStackDevServicesBuildTimeConfig {
     /**
      * The LocalStack container image to use.
      */
-    @ConfigItem(defaultValue = "localstack/localstack")
+    @ConfigItem(defaultValue = "localstack/localstack:1.0.3")
     public String imageName;
 
     /**
