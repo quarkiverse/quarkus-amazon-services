@@ -252,7 +252,8 @@ public class DevServicesLocalStackProcessor {
                 // LocalStack default values are not statically exposed
                 // create an instance just to get those value
                 LocalStackContainer defaultValueContainerNotStarted = new LocalStackContainer(
-                        DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName));
+                        DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName)
+                                .asCompatibleSubstituteFor("localstack/localstack"));
 
                 requestedServicesGroup.forEach(ds -> {
                     config.putAll(ds.getDevProvider().reuseLocalStack(new BorrowedLocalStackContainer() {
@@ -284,7 +285,8 @@ public class DevServicesLocalStackProcessor {
             }).orElseGet(
                     () -> {
                         LocalStackContainer container = new LocalStackContainer(
-                                DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName))
+                                DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName)
+                                        .asCompatibleSubstituteFor("localstack/localstack"))
                                 .withEnv(
                                         Stream.concat(
                                                 requestedServicesGroup.stream()
