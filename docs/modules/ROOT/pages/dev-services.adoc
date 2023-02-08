@@ -24,11 +24,11 @@ Sharing is disabled by default in dev mode, and is always disabled in test mode.
 
 == Configuring the image
 
-Dev Services for Amazon Services uses the latest `localstack/localstack` image. You can configure the image and version using the `quarkus.aws.devservices.localstack.image-name` property:
+Dev Services for Amazon Services uses `localstack/localstack` image. You can configure the image and version using the `quarkus.aws.devservices.localstack.image-name` property:
 
 [source,properties]
 ----
-quarkus.aws.devservices.localstack.image-name=localstack/localstack:0.13.1
+quarkus.aws.devservices.localstack.image-name=localstack/localstack:1.0.3
 ----
 
 == Specific configuration
