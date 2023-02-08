@@ -40,7 +40,7 @@ You can also set up a local version of SQS manually, first start a LocalStack co
 
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run --rm --name local-sqs -p 4566:4576 -e SERVICES=sqs -e START_WEB=0 -d localstack/localstack:0.11.1
+docker run --rm --name local-sqs -p 4566:4576 -e SERVICES=sqs -e START_WEB=0 -d localstack/localstack:1.0.3
 ----
 This starts a SQS instance that is accessible on port `4566`.
 
