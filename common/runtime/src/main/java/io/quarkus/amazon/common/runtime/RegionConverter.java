@@ -23,12 +23,12 @@ public class RegionConverter implements Converter<Region> {
             return null;
         }
 
+        String trimmedValue = value.trim();
+
         Optional<Region> regionFound = Region.regions().stream()
-                .filter(region -> value.equals(region.id()))
+                .filter(region -> trimmedValue.equals(region.id()))
                 .findAny();
 
-        return regionFound.orElseThrow(
-                () -> new IllegalArgumentException(
-                        String.format("value %s is not a valid AWS Region %s", value, Region.regions().toString())));
+        return regionFound.orElse(Region.of(trimmedValue));
     }
 }
