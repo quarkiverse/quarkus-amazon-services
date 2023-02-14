@@ -24,9 +24,20 @@ They also provide a common infrastructure to make it easy to add new ones.
 
 Each extension provides configuration properties to configure the clients and wires everything via CDI injection.
 
+## Compatibility
+
+Quarkus GitHub App provides two different version streams, one compatible with Quarkus 2.x and the other compatible with Quarkus 3.x.
+
+| Quarkus | Quarkus GitHub App | Documentation                                                                                          |
+|---------|--------------------|--------------------------------------------------------------------------------------------------------|
+| 2.x     | 1.6.x              | [Documentation](https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/1.x/index.html) |
+| 3.x     | 2.x                | [Documentation](https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/index.html) |
+
+Use the latest version of the corresponding stream, [the list of versions is available on Maven Central](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom).
+
 ## Documentation
 
-The documentation for this extension can be found [here](https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/index.html).
+The documentation for this extension can be found [here](https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/index.html) - or [here](https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/index.html) for a version compatible with Quarkus 3.
 
 ## Contributors ✨
 
