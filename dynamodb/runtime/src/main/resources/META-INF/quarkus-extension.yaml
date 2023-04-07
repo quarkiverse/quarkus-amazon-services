@@ -7,7 +7,6 @@ metadata:
     - "dynamo"
     - "aws"
     - "amazon"
-  guide: "https://quarkus.io/guides/amazon-dynamodb"
   categories:
     - "data"
   guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-dynamodb.html

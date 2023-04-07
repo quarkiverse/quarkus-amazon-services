@@ -6,7 +6,6 @@ metadata:
     - "ssm"
     - "aws"
     - "amazon"
-  guide: "https://quarkus.io/guides/amazon-ssm"
   categories:
     - "data"
   guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-ssm.html

@@ -10,7 +10,7 @@
 This set of extensions allows you to interact with some of the AWS Services namely:
 
  * Cognito User Pools
- * DynamoDB
+ * DynamoDB / DynamoDB Enhanced
  * IAM
  * KMS
  * S3
