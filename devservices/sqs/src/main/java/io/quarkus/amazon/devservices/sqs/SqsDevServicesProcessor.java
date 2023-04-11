@@ -18,6 +18,7 @@ import io.quarkus.amazon.sqs.runtime.SqsDevServicesBuildTimeConfig;
 import io.quarkus.deployment.annotations.BuildStep;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsClient;
 
@@ -39,6 +40,7 @@ public class SqsDevServicesProcessor extends AbstractDevServicesLocalStackProces
                 .region(Region.of(localstack.getRegion()))
                 .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials
                         .create(localstack.getAccessKey(), localstack.getSecretKey())))
+                .httpClientBuilder(UrlConnectionHttpClient.builder())
                 .build()) {
             for (var queueName : configuration.queues) {
                 client.createQueue(b -> b.queueName(queueName));
