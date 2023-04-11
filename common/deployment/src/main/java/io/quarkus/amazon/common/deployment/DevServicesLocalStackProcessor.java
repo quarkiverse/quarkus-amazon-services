@@ -301,7 +301,7 @@ public class DevServicesLocalStackProcessor {
                                 .withLabel(DEV_SERVICE_LABEL, devServiceName);
 
                         localStackDevServicesBuildTimeConfig.initScriptsFolder.ifPresent(initScriptsFolder -> {
-                            container.withFileSystemBind(initScriptsFolder, "/docker-entrypoint-initaws.d");
+                            container.withFileSystemBind(initScriptsFolder, "/etc/localstack/init/ready.d");
                             localStackDevServicesBuildTimeConfig.initCompletionMsg.ifPresent(initCompletionMsg -> {
                                 container.waitingFor(Wait.forLogMessage(".*" + initCompletionMsg + ".*\\n", 1));
                             });
