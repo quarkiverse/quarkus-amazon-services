@@ -36,7 +36,7 @@ You can also set up a local version of SES manually, first start a LocalStack co
 
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run --rm --name local-ses -p 4566:4579 -e SERVICES=ses -e START_WEB=0 -d localstack/localstack:1.0.3
+docker run --rm --name local-ses -p 4566:4579 -e SERVICES=ses -e START_WEB=0 -d localstack/localstack:1.4.0
 ----
 This starts a SES instance that is accessible on port `4566`.
 
