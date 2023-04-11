@@ -23,8 +23,8 @@ public class SsmResource {
 
     private static final Logger LOG = Logger.getLogger(SsmResource.class);
     public final static String TEXT = "Quarkus is awsome";
-    private static final String SYNC_PARAM = "quarkus/sync-" + UUID.randomUUID().toString();
-    private static final String ASYNC_PARAM = "quarkus/async-" + UUID.randomUUID().toString();
+    private static final String SYNC_PARAM = "/quarkus/sync-" + UUID.randomUUID().toString();
+    private static final String ASYNC_PARAM = "/quarkus/async-" + UUID.randomUUID().toString();
 
     @Inject
     SsmClient ssmClient;
