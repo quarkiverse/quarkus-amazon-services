@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 echo "#### Create QuarkusFruits table ####"
 aws dynamodb create-table --endpoint-url=http://localhost:4566 \
                           --table-name QuarkusFruits \
