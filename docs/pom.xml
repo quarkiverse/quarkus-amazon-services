@@ -25,6 +25,11 @@
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-dynamodb-enhanced-deployment</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-iam-deployment</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -105,6 +110,7 @@
                                     <directory>${project.basedir}/../target/asciidoc/generated/config/</directory>
                                     <includes>
                                         <include>quarkus-amazon-dynamodb.adoc</include>
+                                        <include>quarkus-amazon-dynamodb-enhanced.adoc</include>
                                         <include>quarkus-amazon-iam.adoc</include>
                                         <include>quarkus-amazon-kms.adoc</include>
                                         <include>quarkus-amazon-s3.adoc</include>

@@ -34,6 +34,8 @@ To complete this guide, you need:
 
 The easiest way to start working with SQS is to run a local instance using Dev Services.
 
+You can optionally configure the queues that are created on startup with the `quarkus.sqs.devservices.queues` config property.
+
 === Provision SQS locally manually
 
 You can also set up a local version of SQS manually, first start a LocalStack container:
