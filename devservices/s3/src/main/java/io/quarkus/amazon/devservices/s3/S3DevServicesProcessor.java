@@ -16,6 +16,7 @@ import io.quarkus.amazon.s3.runtime.S3DevServicesBuildTimeConfig;
 import io.quarkus.deployment.annotations.BuildStep;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 
@@ -35,7 +36,8 @@ public class S3DevServicesProcessor extends AbstractDevServicesLocalStackProcess
 
     @Override
     protected void overrideDefaultConfig(Map<String, String> defaultConfig) {
-        // Forces this client to use path-style addressing for buckets. Localstack returns an ip as host
+        // Forces this client to use path-style addressing for buckets. Localstack
+        // returns an ip as host
         // and it confuse DefaultS3EndpointProvider ruleset
         defaultConfig.put(AWS_PATH_STYLE_ACCESS, "true");
     }
@@ -47,6 +49,7 @@ public class S3DevServicesProcessor extends AbstractDevServicesLocalStackProcess
                 .forcePathStyle(true)
                 .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials
                         .create(localstack.getAccessKey(), localstack.getSecretKey())))
+                .httpClientBuilder(UrlConnectionHttpClient.builder())
                 .build()) {
             for (var bucketName : configuration.buckets) {
                 client.createBucket(b -> b.bucket(bucketName));
