@@ -1131,7 +1131,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_DYNAMODB_ASYNC_CLIENT_HTTP2_MAX_STREAMS+++`
 endif::add-copy-button-to-env-var[]
 --|long 
-|`4294967295`
+|
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.http2.initial-window-size]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.http2.initial-window-size[quarkus.dynamodb.async-client.http2.initial-window-size]`
@@ -1166,7 +1166,7 @@ Environment variable: `+++QUARKUS_DYNAMODB_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
   link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
-|`5`
+|
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.proxy.enabled]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.proxy.enabled[quarkus.dynamodb.async-client.proxy.enabled]`
