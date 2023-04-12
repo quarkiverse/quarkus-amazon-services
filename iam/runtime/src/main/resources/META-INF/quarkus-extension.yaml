@@ -6,7 +6,6 @@ metadata:
     - "iam"
     - "aws"
     - "amazon"
-  guide: "https://quarkus.io/guides/amazon-iam"
   categories:
     - "data"
   guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-iam.html

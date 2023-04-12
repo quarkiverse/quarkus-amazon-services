@@ -6,7 +6,6 @@ metadata:
     - "kms"
     - "aws"
     - "amazon"
-  guide: "https://quarkus.io/guides/amazon-kms"
   categories:
     - "data"
   guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-kms.html

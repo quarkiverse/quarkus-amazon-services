@@ -6,7 +6,6 @@ metadata:
     - "ses"
     - "aws"
     - "amazon"
-  guide: "https://quarkus.io/guides/amazon-ses"
   categories:
     - "data"
   guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-ses.html
