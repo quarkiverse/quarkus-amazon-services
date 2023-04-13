@@ -39,7 +39,7 @@ You can also set up a local version of SNS manually, first start a LocalStack co
 
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run -it --publish 4566:4575 -e SERVICES=sns -e START_WEB=0 localstack/localstack:1.0.3
+docker run -it --publish 4566:4575 -e SERVICES=sns -e START_WEB=0 localstack/localstack:1.4.0
 ----
 This starts a SNS instance that is accessible on port `4566`.
 

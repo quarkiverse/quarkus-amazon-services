@@ -12,7 +12,7 @@ public class LocalStackDevServicesBuildTimeConfig {
     /**
      * The LocalStack container image to use.
      */
-    @ConfigItem(defaultValue = "localstack/localstack:1.0.3")
+    @ConfigItem(defaultValue = "localstack/localstack:1.4.0")
     public String imageName;
 
     /**
@@ -28,7 +28,8 @@ public class LocalStackDevServicesBuildTimeConfig {
     public Optional<String> initScriptsFolder;
 
     /**
-     * Specific container log message to be waiting for localstack init scripts completion.
+     * Specific container log message to be waiting for localstack init scripts
+     * completion.
      */
     @ConfigItem
     public Optional<String> initCompletionMsg;
