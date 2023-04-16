@@ -73,17 +73,6 @@ public class DevServicesLocalStackProcessor {
             BuildProducer<DevServicesResultBuildItem> devServicesResultBuildItemBuildProducer,
             LoggingSetupBuildItem loggingSetupBuildItem) {
 
-        if (!dockerStatusBuildItem.isDockerAvailable()) {
-            String message = "Docker isn't working, dev services for Amazon Services is not available.";
-            if (launchMode.getLaunchMode() == LaunchMode.TEST) {
-                throw new IllegalStateException(message);
-            } else {
-                // in dev-mode we just want to warn users and allow them to recover
-                log.warn(message);
-                return;
-            }
-        }
-
         Map<String, List<DevServicesLocalStackProviderBuildItem>> requestedServicesBySharedServiceName;
         if (launchMode.isTest()) {
             // reuse same container for service with same service name
@@ -129,6 +118,17 @@ public class DevServicesLocalStackProcessor {
                                 return ret;
                             })));
 
+        }
+
+        if (!requestedServicesBySharedServiceName.isEmpty() && !dockerStatusBuildItem.isDockerAvailable()) {
+            String message = "Docker isn't working, dev services for Amazon Services is not available.";
+            if (launchMode.getLaunchMode() == LaunchMode.TEST) {
+                throw new IllegalStateException(message);
+            } else {
+                // in dev-mode we just want to warn users and allow them to recover
+                log.warn(message);
+                return;
+            }
         }
 
         LocalStackDevServicesConfig newlocalStackDevServicesConfig = LocalStackDevServicesConfig
