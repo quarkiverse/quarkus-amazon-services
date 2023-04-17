@@ -61,7 +61,7 @@ Some extensions support additional configuration to be applied at startup. Refer
 
 == Cognito
 
-The Cognito extension is not using LocalStack but motoserver.
+The Cognito extension is not using LocalStack but Moto.
 
 Dev Services for Amazon Services uses the latest `motoserver/moto` image. You can configure the image and version using the `quarkus.aws.devservices.moto.image-name` property:
 
@@ -76,3 +76,13 @@ Dev Services for Amazon Services can support specific properties sent to the con
 ----
 quarkus.aws.devservices.moto.container-properties.MOTO_COGNITO_IDP_USER_POOL_ID_STRATEGY=HASH
 ----
+
+== Global DevServices Configuration Reference
+
+=== LocalStack Configuration
+
+include::./includes/quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config.adoc[]
+
+=== Moto Configuration
+
+include::./includes/quarkus-aws-devservices-moto-moto-dev-services-build-time-config.adoc[]

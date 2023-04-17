@@ -109,6 +109,8 @@
                                 <resource>
                                     <directory>${project.basedir}/../target/asciidoc/generated/config/</directory>
                                     <includes>
+                                        <include>quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config.adoc</include>
+                                        <include>quarkus-aws-devservices-moto-moto-dev-services-build-time-config.adoc</include>
                                         <include>quarkus-amazon-dynamodb.adoc</include>
                                         <include>quarkus-amazon-dynamodb-enhanced.adoc</include>
                                         <include>quarkus-amazon-iam.adoc</include>
@@ -119,7 +121,7 @@
                                         <include>quarkus-amazon-sns.adoc</include>
                                         <include>quarkus-amazon-sqs.adoc</include>
                                         <include>quarkus-amazon-ssm.adoc</include>
-                                        <include>quarkus-amazon-cognitouserpools.adoc</include>
+                                        <include>quarkus-amazon-cognitouserpools.adoc</include>                                        
                                     </includes>
                                     <filtering>false</filtering>
                                 </resource>
