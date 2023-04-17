@@ -48,7 +48,7 @@ a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cognitouserpools_quarkus
 
 [.description]
 --
-If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. For all services but Cognito, the local AWS stack will be provided by LocalStack. Otherwise, it will be provided by MotoServer
+If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. For all services but Cognito, the local AWS stack will be provided by LocalStack. Otherwise, it will be provided by Moto
 
 ifdef::add-copy-button-to-env-var[]
 Environment variable: env_var_with_copy_button:+++QUARKUS_COGNITO_USER_POOLS_DEVSERVICES_ENABLED+++[]
