@@ -79,6 +79,7 @@ public class BeanTableSchemaSubstitutionImplementation {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public R apply(T t) {
             try {
                 return (R) method.invoke(t);
