@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.quarkiverse.amazonservices</groupId>
         <artifactId>quarkus-amazon-services-build-parent</artifactId>
-        <version>1.0.3-SNAPSHOT</version>
+        <version>999-SNAPSHOT</version>
         <relativePath>../build-parent/pom.xml</relativePath>
     </parent>
 

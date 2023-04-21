@@ -1,10 +1,10 @@
 package io.quarkus.amazon.sts.runtime;
 
-import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Instance;
-import javax.enterprise.inject.Produces;
-
+import io.quarkus.arc.DefaultBean;
+import jakarta.annotation.PreDestroy;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
+import jakarta.enterprise.inject.Produces;
 import software.amazon.awssdk.services.sts.StsAsyncClient;
 import software.amazon.awssdk.services.sts.StsAsyncClientBuilder;
 import software.amazon.awssdk.services.sts.StsClient;
@@ -23,6 +23,7 @@ public class StsClientProducer {
                 .build() : null;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public StsClient client() {
@@ -33,6 +34,7 @@ public class StsClientProducer {
         return syncClient;
     }
 
+    @DefaultBean
     @Produces
     @ApplicationScoped
     public StsAsyncClient asyncClient() {

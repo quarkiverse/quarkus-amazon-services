@@ -2,7 +2,7 @@ package io.quarkus.it.amazon;
 
 import static org.hamcrest.Matchers.is;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
@@ -15,7 +15,7 @@ public class AmazonStsTest {
         RestAssured.when()
                 .get("/test/sts/async")
                 .then()
-                .body(is("Quarkus is awsome"));
+                .body(is("arn:aws:sts::000000000000:assumed-role/test-role/session-test"));
     }
 
     @Test
@@ -23,6 +23,6 @@ public class AmazonStsTest {
         RestAssured.when()
                 .get("/test/sts/sync")
                 .then()
-                .body(is("Quarkus is awsome"));
+                .body(is("arn:aws:sts::000000000000:assumed-role/test-role/session-test"));
     }
 }

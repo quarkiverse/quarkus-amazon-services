@@ -1,5 +1,6 @@
 package io.quarkus.amazon.sts.runtime;
 
+import io.quarkus.amazon.common.runtime.DevServicesBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
 import io.quarkus.runtime.annotations.ConfigItem;
@@ -20,4 +21,10 @@ public class StsBuildTimeConfig {
      */
     @ConfigItem
     public SyncHttpClientBuildTimeConfig syncClient;
+
+    /**
+     * Config for dev services
+     */
+    @ConfigItem
+    public DevServicesBuildTimeConfig devservices;
 }

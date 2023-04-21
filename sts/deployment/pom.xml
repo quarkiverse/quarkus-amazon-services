@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.quarkiverse.amazonservices</groupId>
         <artifactId>quarkus-amazon-sts-parent</artifactId>
-        <version>1.0.3-SNAPSHOT</version>
+        <version>999-SNAPSHOT</version>
     </parent>
 
     <artifactId>quarkus-amazon-sts-deployment</artifactId>
@@ -31,6 +31,10 @@
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-sts</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-devservices-sts</artifactId>
         </dependency>
 
         <!-- Test dependencies -->

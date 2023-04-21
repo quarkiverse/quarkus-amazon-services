@@ -5,11 +5,14 @@ import java.util.List;
 import org.jboss.jandex.DotName;
 
 import io.quarkus.amazon.common.deployment.AbstractAmazonServiceProcessor;
+import io.quarkus.amazon.common.deployment.AmazonClientAsyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncTransportBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientInterceptorsPathBuildItem;
+import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncTransportBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonHttpClients;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientRecorder;
@@ -69,13 +72,19 @@ public class StsProcessor extends AbstractAmazonServiceProcessor {
     }
 
     @BuildStep
-    void setup(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
+    void discover(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
+            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
+        discoverClient(beanRegistrationPhase, requireClientProducer);
+    }
+
+    @BuildStep
+    void setup(List<RequireAmazonClientBuildItem> clientRequirements,
             BuildProducer<ExtensionSslNativeSupportBuildItem> extensionSslNativeSupport,
             BuildProducer<FeatureBuildItem> feature,
             BuildProducer<AmazonClientInterceptorsPathBuildItem> interceptors,
             BuildProducer<AmazonClientBuildItem> clientProducer) {
 
-        setupExtension(beanRegistrationPhase,
+        setupExtension(clientRequirements,
                 extensionSslNativeSupport,
                 feature,
                 interceptors,
@@ -128,7 +137,9 @@ public class StsProcessor extends AbstractAmazonServiceProcessor {
     void createClientBuilders(StsRecorder recorder, AmazonClientRecorder commonRecorder,
             StsConfig runtimeConfig, List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
-            BuildProducer<SyntheticBeanBuildItem> syntheticBeans) {
+            BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
+            BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
+            BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync) {
 
         createClientBuilders(commonRecorder,
                 recorder.getAwsConfig(runtimeConfig),
@@ -140,6 +151,10 @@ public class StsProcessor extends AbstractAmazonServiceProcessor {
                 (syncTransport) -> recorder.createSyncBuilder(runtimeConfig, syncTransport),
                 StsAsyncClientBuilder.class,
                 (asyncTransport) -> recorder.createAsyncBuilder(runtimeConfig, asyncTransport),
-                syntheticBeans);
+                null,
+                null,
+                syntheticBeans,
+                clientSync,
+                clientAsync);
     }
 }
