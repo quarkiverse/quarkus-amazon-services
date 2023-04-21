@@ -26,6 +26,7 @@
         <module>ses</module>
         <module>kms</module>
         <module>ssm</module>
+        <module>sts</module>
         <module>secretsmanager</module>
         <module>docs</module>
         <module>integration-tests</module>
