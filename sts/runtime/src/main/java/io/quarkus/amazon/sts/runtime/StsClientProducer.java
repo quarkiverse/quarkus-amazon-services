@@ -1,10 +1,11 @@
 package io.quarkus.amazon.sts.runtime;
 
-import io.quarkus.arc.DefaultBean;
 import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.Produces;
+
+import io.quarkus.arc.DefaultBean;
 import software.amazon.awssdk.services.sts.StsAsyncClient;
 import software.amazon.awssdk.services.sts.StsAsyncClientBuilder;
 import software.amazon.awssdk.services.sts.StsClient;

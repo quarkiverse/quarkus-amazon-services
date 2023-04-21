@@ -4,12 +4,13 @@ import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 
 import java.util.concurrent.CompletionStage;
 
-import org.jboss.logging.Logger;
-
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+
+import org.jboss.logging.Logger;
+
 import software.amazon.awssdk.services.sts.StsAsyncClient;
 import software.amazon.awssdk.services.sts.StsClient;
 import software.amazon.awssdk.services.sts.model.AssumeRoleResponse;
