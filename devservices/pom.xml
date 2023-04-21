@@ -27,5 +27,6 @@
         <module>sns</module>
         <module>sqs</module>
         <module>ssm</module>
+        <module>sts</module>
     </modules>
 </project>

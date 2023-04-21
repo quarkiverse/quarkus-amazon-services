@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon STS"
+metadata:
+  keywords:
+    - "sts"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-sts.html
+  status: "stable"
+  config:
+  - "quarkus.sts."

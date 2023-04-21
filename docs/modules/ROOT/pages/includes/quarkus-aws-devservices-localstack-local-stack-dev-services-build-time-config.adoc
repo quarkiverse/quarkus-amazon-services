@@ -23,7 +23,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_IMAGE_NAME+++`
 endif::add-copy-button-to-env-var[]
 --|string 
-|`localstack/localstack:1.4.0`
+|`localstack/localstack:1.0.3`
 
 
 a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-scripts-folder]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-scripts-folder[quarkus.aws.devservices.localstack.init-scripts-folder]`
