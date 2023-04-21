@@ -6,10 +6,9 @@ metadata:
     - "sts"
     - "aws"
     - "amazon"
-#  guide: "https://quarkus.io/guides/amazon-sts"
   categories:
     - "data"
-#  guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-sts.html
-  status: "experimental"
+  guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-sts.html
+  status: "stable"
   config:
   - "quarkus.sts."
