@@ -70,6 +70,11 @@
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-sts-deployment</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-cognito-user-pools-deployment</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -99,7 +104,7 @@
                 <executions>
                     <execution>
                         <id>copy-resources</id>
-                        <phase>prepare-package</phase>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
@@ -109,6 +114,8 @@
                                 <resource>
                                     <directory>${project.basedir}/../target/asciidoc/generated/config/</directory>
                                     <includes>
+                                        <include>quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config.adoc</include>
+                                        <include>quarkus-aws-devservices-moto-moto-dev-services-build-time-config.adoc</include>
                                         <include>quarkus-amazon-dynamodb.adoc</include>
                                         <include>quarkus-amazon-dynamodb-enhanced.adoc</include>
                                         <include>quarkus-amazon-iam.adoc</include>
@@ -119,6 +126,7 @@
                                         <include>quarkus-amazon-sns.adoc</include>
                                         <include>quarkus-amazon-sqs.adoc</include>
                                         <include>quarkus-amazon-ssm.adoc</include>
+                                        <include>quarkus-amazon-sts.adoc</include>
                                         <include>quarkus-amazon-cognitouserpools.adoc</include>
                                     </includes>
                                     <filtering>false</filtering>

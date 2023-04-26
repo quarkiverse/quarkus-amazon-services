@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.quarkiverse</groupId>
         <artifactId>quarkiverse-parent</artifactId>
-        <version>12</version>
+        <version>13</version>
     </parent>
     <groupId>io.quarkiverse.amazonservices</groupId>
     <artifactId>quarkus-amazon-services-parent</artifactId>
@@ -26,6 +26,7 @@
         <module>ses</module>
         <module>kms</module>
         <module>ssm</module>
+        <module>sts</module>
         <module>secretsmanager</module>
         <module>docs</module>
         <module>integration-tests</module>
@@ -37,13 +38,13 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <quarkus.version>2.16.2.Final</quarkus.version>
-        <awssdk.version>2.19.32</awssdk.version>
-        <awscrt.version>0.21.7</awscrt.version>
+        <quarkus.version>2.16.6.Final</quarkus.version>
+        <awssdk.version>2.20.53</awssdk.version>
+        <awscrt.version>0.21.12</awscrt.version>
         <!-- required by testcontainer localstack to run but not used
             https://github.com/testcontainers/testcontainers-java/issues/4279
         -->
-        <awssdk.v1.version>1.12.406</awssdk.v1.version>
+        <awssdk.v1.version>1.12.456</awssdk.v1.version>
     </properties>
     <build>
         <pluginManagement>
@@ -55,7 +56,7 @@
                 </plugin>
                 <plugin>
                     <groupId>io.quarkus</groupId>
-                    <artifactId>quarkus-bootstrap-maven-plugin</artifactId>
+                    <artifactId>quarkus-extension-maven-plugin</artifactId>
                     <version>${quarkus.version}</version>
                     <executions>
                         <execution>

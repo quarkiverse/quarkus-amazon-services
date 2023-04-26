@@ -15,7 +15,7 @@ public class DevServicesBuildTimeConfig {
      * If this is true and endpoint-override is not configured then a local AWS stack
      * will be started and will be used instead of the given configuration.
      * For all services but Cognito, the local AWS stack will be provided by LocalStack.
-     * Otherwise, it will be provided by MotoServer
+     * Otherwise, it will be provided by Moto
      */
     @ConfigItem
     public Optional<Boolean> enabled = Optional.empty();
