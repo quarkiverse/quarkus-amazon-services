@@ -11,6 +11,7 @@ import org.jboss.jandex.DotName;
 
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig.SyncClientType;
+import io.quarkus.bootstrap.classloading.QuarkusClassLoader;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.AdditionalApplicationArchiveMarkerBuildItem;
@@ -104,9 +105,10 @@ public class AmazonServicesClientsProcessor {
         // Register what's needed depending on the clients in the classpath and the configuration.
         // We use the configuration to guide us but if we don't have any clients configured,
         // we still register what's needed depending on what is in the classpath.
-        boolean isSyncApacheInClasspath = isInClasspath(AmazonHttpClients.APACHE_HTTP_SERVICE);
-        boolean isSyncUrlConnectionInClasspath = isInClasspath(AmazonHttpClients.URL_CONNECTION_HTTP_SERVICE);
-        boolean isAsyncInClasspath = isInClasspath(AmazonHttpClients.NETTY_HTTP_SERVICE);
+        boolean isSyncApacheInClasspath = QuarkusClassLoader.isClassPresentAtRuntime(AmazonHttpClients.APACHE_HTTP_SERVICE);
+        boolean isSyncUrlConnectionInClasspath = QuarkusClassLoader
+                .isClassPresentAtRuntime(AmazonHttpClients.URL_CONNECTION_HTTP_SERVICE);
+        boolean isAsyncInClasspath = QuarkusClassLoader.isClassPresentAtRuntime(AmazonHttpClients.NETTY_HTTP_SERVICE);
 
         // Check that the clients required by the configuration are available
         if (syncTransportNeeded) {
@@ -158,15 +160,6 @@ public class AmazonServicesClientsProcessor {
         serviceProvider.produce(
                 new ServiceProviderBuildItem(SdkAsyncHttpService.class.getName(),
                         AmazonHttpClients.NETTY_HTTP_SERVICE));
-    }
-
-    private static boolean isInClasspath(String className) {
-        try {
-            Class.forName(className, true, Thread.currentThread().getContextClassLoader());
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
     }
 
     private DeploymentException missingDependencyException(String dependencyName) {
