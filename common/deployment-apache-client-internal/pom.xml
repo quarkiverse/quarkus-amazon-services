@@ -8,8 +8,9 @@
         <version>999-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quarkus-amazon-common-deployment</artifactId>
-    <name>Quarkus - Amazon Services - Common - Deployment</name>
+    <artifactId>quarkus-amazon-apache-client-internal-deployment</artifactId>
+    <name>Quarkus - Amazon Services - Apache Client - Internal - Deployment</name>
+    <description>This module only exists to house quarkus-apache-httpclient as a conditional dependency</description>
 
     <dependencies>
         <dependency>
@@ -17,36 +18,12 @@
             <artifactId>quarkus-core-deployment</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-arc-deployment</artifactId>
-        </dependency>
-        <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-netty-client-internal-deployment</artifactId> 
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-apache-client-internal-deployment</artifactId> 
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-common-deployment-spi</artifactId>
+            <artifactId>quarkus-amazon-apache-client-internal</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-devservices-deployment</artifactId>
-        </dependency>
-        <!-- required by testcontainer localstack -->
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-core</artifactId>
-            <version>${awssdk.v1.version}</version>
+            <artifactId>quarkus-apache-httpclient-deployment</artifactId>
         </dependency>
     </dependencies>
 

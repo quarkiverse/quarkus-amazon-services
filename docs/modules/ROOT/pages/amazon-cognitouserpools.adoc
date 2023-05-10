@@ -183,10 +183,6 @@ And add the following dependency to the application `pom.xml`:
     <groupId>software.amazon.awssdk</groupId>
     <artifactId>apache-client</artifactId>
 </dependency>
-<dependency>
-    <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-apache-httpclient</artifactId>
-</dependency>
 ----
 
 
@@ -272,10 +268,6 @@ And we need to add the Netty HTTP client dependency to the `pom.xml`:
 <dependency>
     <groupId>software.amazon.awssdk</groupId>
     <artifactId>netty-nio-client</artifactId>
-</dependency>
-<dependency>
-    <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-netty</artifactId>
 </dependency>
 ----
 
