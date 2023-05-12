@@ -244,10 +244,6 @@ And add the following dependency to the application `pom.xml`:
     <groupId>software.amazon.awssdk</groupId>
     <artifactId>apache-client</artifactId>
 </dependency>
-<dependency>
-    <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-apache-httpclient</artifactId>
-</dependency>
 ----
 
 If you're going to use a local SSM instance, configure it as follows:
@@ -350,10 +346,6 @@ To enable the asynchronous client, we also need to add the Netty HTTP client dep
 <dependency>
     <groupId>software.amazon.awssdk</groupId>
     <artifactId>netty-nio-client</artifactId>
-</dependency>
-<dependency>
-    <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-netty</artifactId>
 </dependency>
 ----
 
