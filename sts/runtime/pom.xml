@@ -58,8 +58,13 @@
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>apache-client</artifactId>
             <optional>true</optional>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>commons-logging-jboss-logging</artifactId>
