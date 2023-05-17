@@ -1,9 +1,6 @@
 package io.quarkus.amazon.devservices.cognitouserpools;
 
-import java.net.InetAddress;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.UnknownHostException;
+import java.net.*;
 
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
@@ -29,7 +26,15 @@ public class MotoContainer extends GenericContainer<MotoContainer> {
             final String address = getHost();
             String ipAddress = address;
             // resolve IP address and use that as the endpoint so that path-style access is automatically used by client
-            ipAddress = InetAddress.getByName(address).getHostAddress();
+            final InetAddress fetchedIpAddress = InetAddress.getByName(address);
+
+            if (fetchedIpAddress instanceof Inet6Address) {
+                // RFC 2732 specifies that IPv6 addresses should be surrounded by brackets when used as a URI reference
+                ipAddress = String.format("[%s]", fetchedIpAddress.getHostAddress());
+            } else {
+                ipAddress = fetchedIpAddress.getHostAddress();
+            }
+
             return new URI("http://" + ipAddress + ":" + getMappedPort(PORT));
         } catch (UnknownHostException | URISyntaxException e) {
             throw new IllegalStateException("Cannot obtain endpoint URL", e);
