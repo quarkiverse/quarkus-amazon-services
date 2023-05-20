@@ -25,7 +25,7 @@ jobs:
           close-pr-message: >
             This PR was closed because it has been stalled for 10 days with no activity.
           stale-issue-label: 'stale'
-          exempt-issue-labels: 'needs-discussion,help wanted,never stale,feature'
+          exempt-issue-labels: 'help wanted,never stale,enhancement'
           stale-pr-label: 'stale'
           exempt-pr-labels: 'never stale'
           operations-per-run: 500
