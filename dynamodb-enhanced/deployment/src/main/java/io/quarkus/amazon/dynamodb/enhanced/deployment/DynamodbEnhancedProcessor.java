@@ -1,5 +1,6 @@
 package io.quarkus.amazon.dynamodb.enhanced.deployment;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 import org.jboss.jandex.AnnotationInstance;
 import org.jboss.jandex.ClassInfo;
 import org.jboss.jandex.DotName;
+import org.jboss.jandex.IndexView;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -48,21 +50,25 @@ import software.amazon.awssdk.enhanced.dynamodb.internal.extensions.VersionRecor
 import software.amazon.awssdk.enhanced.dynamodb.internal.mapper.BeanTableSchemaAttributeTags;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.BeanTableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbImmutable;
 import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 public class DynamodbEnhancedProcessor {
     private static final String FEATURE = "amazon-dynamodb-enhanced";
 
-    private static final DotName DYNAMODB_ENHANCED_CLIENT = DotName.createSimple(DynamoDbEnhancedClient.class.getName());
+    private static final DotName DYNAMODB_ENHANCED_CLIENT = DotName.createSimple(DynamoDbEnhancedClient.class);
     private static final DotName DYNAMODB_ENHANCED_ASYNC_CLIENT = DotName
-            .createSimple(DynamoDbEnhancedAsyncClient.class.getName());
-    private static final DotName DYNAMODB_CLIENT = DotName.createSimple(DynamoDbClient.class.getName());
+            .createSimple(DynamoDbEnhancedAsyncClient.class);
+    private static final DotName DYNAMODB_CLIENT = DotName.createSimple(DynamoDbClient.class);
     private static final DotName DYNAMODB_ASYNC_CLIENT = DotName
-            .createSimple(DynamoDbAsyncClient.class.getName());
+            .createSimple(DynamoDbAsyncClient.class);
 
     private static final DotName DYNAMODB_ENHANCED_CLIENT_EXTENSION_NAME = DotName
-            .createSimple(DynamoDbEnhancedClientExtension.class.getName());
+            .createSimple(DynamoDbEnhancedClientExtension.class);
+
+    private static final DotName DYNAMODB_ENHANCED_BEAN = DotName.createSimple(DynamoDbBean.class);
+    private static final DotName DYNAMODB_ENHANCED_IMMUTABLE = DotName.createSimple(DynamoDbImmutable.class);
 
     @BuildStep
     FeatureBuildItem feature() {
@@ -83,13 +89,13 @@ public class DynamodbEnhancedProcessor {
         Optional<DotName> syncClassName = Optional.empty();
         Optional<DotName> asyncClassName = Optional.empty();
 
-        //Discover all known dynamodb-enhanced-client-extension implementors
+        // Discover all known dynamodb-enhanced-client-extension implementors
         List<String> knownDynamodbEnhancedClientExtensionImpls = combinedIndexBuildItem.getIndex()
                 .getAllKnownImplementors(DYNAMODB_ENHANCED_CLIENT_EXTENSION_NAME)
                 .stream()
                 .map(c -> c.name().toString()).collect(Collectors.toList());
 
-        //Validate configurations
+        // Validate configurations
         Optional<List<String>> extensions = buildTimeConfig.clientExtensions;
         if (extensions != null && extensions.isPresent()) {
             for (var extension : extensions.get()) {
@@ -100,8 +106,10 @@ public class DynamodbEnhancedProcessor {
             }
         }
 
-        //Discover all clients injections in order to determine if async or sync client is required
-        for (InjectionPointInfo injectionPoint : beanRegistrationPhase.getContext().get(BuildExtension.Key.INJECTION_POINTS)) {
+        // Discover all clients injections in order to determine if async or sync client
+        // is required
+        for (InjectionPointInfo injectionPoint : beanRegistrationPhase.getContext()
+                .get(BuildExtension.Key.INJECTION_POINTS)) {
 
             org.jboss.jandex.Type injectedType = injectionPoint.getRequiredType();
 
@@ -138,29 +146,68 @@ public class DynamodbEnhancedProcessor {
                 .findFirst();
 
         if (syncClientRuntime != null) {
-            containerListenerProducer.produce(new BeanContainerListenerBuildItem(recorder.setDynamoDbClient(extensions)));
+            containerListenerProducer
+                    .produce(new BeanContainerListenerBuildItem(recorder.setDynamoDbClient(extensions)));
         }
 
         if (asyncClientRuntime != null) {
-            containerListenerProducer.produce(new BeanContainerListenerBuildItem(recorder.setDynamoDbAsyncClient(extensions)));
+            containerListenerProducer
+                    .produce(new BeanContainerListenerBuildItem(recorder.setDynamoDbAsyncClient(extensions)));
         }
+    }
+
+    @BuildStep
+    public void discoverDynamoDbBeans(CombinedIndexBuildItem combinedIndexBuildItem,
+            BuildProducer<DynamodbEnhancedBeanBuildItem> dynamodbEnhancedBeanBuildItems) {
+        IndexView index = combinedIndexBuildItem.getIndex();
+
+        // Discover all DynamoDbBean annotated classes and register them
+        for (AnnotationInstance annotationInstance : index.getAnnotations(DYNAMODB_ENHANCED_BEAN)) {
+            ClassInfo beanClassInfo = annotationInstance.target().asClass();
+            dynamodbEnhancedBeanBuildItems.produce(new DynamodbEnhancedBeanBuildItem(beanClassInfo.name()));
+        }
+
+        // Discover all DynamoDbImmutable annotated classes and register them
+        for (AnnotationInstance annotationInstance : index.getAnnotations(DYNAMODB_ENHANCED_IMMUTABLE)) {
+            var beanClassInfo = annotationInstance.target().asClass();
+            dynamodbEnhancedBeanBuildItems.produce(new DynamodbEnhancedBeanBuildItem(beanClassInfo.name()));
+        }
+    }
+
+    @BuildStep
+    @Record(ExecutionTime.STATIC_INIT)
+    public void recordTableSchema(
+            DynamoDbEnhancedBuildTimeConfig config,
+            DynamodbEnhancedClientRecorder recorder,
+            List<DynamodbEnhancedBeanBuildItem> dynamodbEnhancedBeanBuildItems,
+            BuildProducer<ReflectiveClassBuildItem> reflectiveClass) {
+
+        if (!config.createTableSchemas)
+            return;
+
+        List<Class<?>> tableSchemaClasses = new ArrayList<>();
+        for (DynamodbEnhancedBeanBuildItem dynamodbEnhancedBeanBuildItem : dynamodbEnhancedBeanBuildItems) {
+            try {
+                tableSchemaClasses.add(Class.forName(dynamodbEnhancedBeanBuildItem.getClassName().toString(), false,
+                        Thread.currentThread().getContextClassLoader()));
+            } catch (ClassNotFoundException e) {
+            }
+        }
+
+        recorder.createTableSchema(tableSchemaClasses);
     }
 
     @BuildStep(onlyIf = NativeBuild.class)
     public void registerClassesForReflectiveAccess(
-            CombinedIndexBuildItem combinedIndexBuildItem,
+            List<DynamodbEnhancedBeanBuildItem> dynamodbEnhancedBeanBuildItems,
             BuildProducer<ReflectiveClassBuildItem> reflectiveClass) {
 
-        //Discover all DynamoDbBean annotated classes and register them
-        for (AnnotationInstance i : combinedIndexBuildItem
-                .getIndex()
-                .getAnnotations(DotName.createSimple(DynamoDbBean.class.getName()))) {
-            ClassInfo classInfo = i.target().asClass();
-            reflectiveClass.produce(
-                    ReflectiveClassBuildItem.builder(classInfo.name().toString()).methods().build());
+        for (DynamodbEnhancedBeanBuildItem dynamodbEnhancedBeanBuildItem : dynamodbEnhancedBeanBuildItems) {
+            registerInstance(reflectiveClass, dynamodbEnhancedBeanBuildItem.getClassName());
         }
 
-        // Register classes which are used by BeanTableSchema but are not found by the classloader
+        // Register classes which are used by BeanTableSchema but are not found by the
+        // classloader
         reflectiveClass
                 .produce(ReflectiveClassBuildItem
                         .builder(DefaultAttributeConverterProvider.class, BeanTableSchemaAttributeTags.class,
@@ -168,9 +215,16 @@ public class DynamodbEnhancedProcessor {
                         .methods().build());
     }
 
+    private void registerInstance(BuildProducer<ReflectiveClassBuildItem> reflectiveClass,
+            DotName className) {
+        reflectiveClass.produce(
+                ReflectiveClassBuildItem.builder(className.toString()).methods().build());
+    }
+
     @BuildStep
     private void applyClassTransformation(BuildProducer<BytecodeTransformerBuildItem> transformers) {
-        // We rewrite the bytecode to avoid native-image issues (runtime generated lambdas not supported)
+        // We rewrite the bytecode to avoid native-image issues (runtime generated
+        // lambdas not supported)
         // and class loader issues (that are only problematic in test and dev mode).
         transformers.produce(
                 new BytecodeTransformerBuildItem(
@@ -180,8 +234,9 @@ public class DynamodbEnhancedProcessor {
     private static class MethodCallRedirectionVisitor
             implements BiFunction<String, ClassVisitor, ClassVisitor> {
 
-        public static final String TARGET_METHOD_OWNER = BeanTableSchemaSubstitutionImplementation.class.getName().replace('.',
-                '/');
+        public static final String TARGET_METHOD_OWNER = BeanTableSchemaSubstitutionImplementation.class.getName()
+                .replace('.',
+                        '/');
 
         @Override
         public ClassVisitor apply(String className, ClassVisitor outputClassVisitor) {
@@ -191,7 +246,8 @@ public class DynamodbEnhancedProcessor {
                 public MethodVisitor visitMethod(
                         int access, String name, String descriptor, String signature, String[] exceptions) {
                     // https://stackoverflow.com/questions/45180625/how-to-remove-method-body-at-runtime-with-asm-5-2
-                    MethodVisitor originalMethodVisitor = super.visitMethod(access, name, descriptor, signature, exceptions);
+                    MethodVisitor originalMethodVisitor = super.visitMethod(access, name, descriptor, signature,
+                            exceptions);
                     if (name.equals("newObjectSupplierForClass")) {
                         return new ReplaceMethodBody(
                                 originalMethodVisitor,
@@ -201,7 +257,8 @@ public class DynamodbEnhancedProcessor {
                                     visitor.visitVarInsn(Opcodes.ALOAD, 0);
                                     Type type = Type.getType(descriptor);
                                     visitor.visitMethodInsn(
-                                            Opcodes.INVOKESTATIC, TARGET_METHOD_OWNER, name, type.getDescriptor(), false);
+                                            Opcodes.INVOKESTATIC, TARGET_METHOD_OWNER, name, type.getDescriptor(),
+                                            false);
                                     visitor.visitInsn(Opcodes.ARETURN);
                                 });
                     } else if (name.equals("getterForProperty")) {
@@ -214,7 +271,8 @@ public class DynamodbEnhancedProcessor {
                                     visitor.visitVarInsn(Opcodes.ALOAD, 1);
                                     Type type = Type.getType(descriptor);
                                     visitor.visitMethodInsn(
-                                            Opcodes.INVOKESTATIC, TARGET_METHOD_OWNER, name, type.getDescriptor(), false);
+                                            Opcodes.INVOKESTATIC, TARGET_METHOD_OWNER, name, type.getDescriptor(),
+                                            false);
                                     visitor.visitInsn(Opcodes.ARETURN);
                                 });
                     } else if (name.equals("setterForProperty")) {
@@ -227,7 +285,8 @@ public class DynamodbEnhancedProcessor {
                                     visitor.visitVarInsn(Opcodes.ALOAD, 1);
                                     Type type = Type.getType(descriptor);
                                     visitor.visitMethodInsn(
-                                            Opcodes.INVOKESTATIC, TARGET_METHOD_OWNER, name, type.getDescriptor(), false);
+                                            Opcodes.INVOKESTATIC, TARGET_METHOD_OWNER, name, type.getDescriptor(),
+                                            false);
                                     visitor.visitInsn(Opcodes.ARETURN);
                                 });
                     } else {

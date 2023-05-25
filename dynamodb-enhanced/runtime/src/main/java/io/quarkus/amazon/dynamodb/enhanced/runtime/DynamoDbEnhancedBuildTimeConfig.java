@@ -22,4 +22,13 @@ public class DynamoDbEnhancedBuildTimeConfig {
     @ConfigItem
     @ConfigDocSection
     public Optional<List<String>> clientExtensions;
+
+    /**
+     * Whether a {@link TableSchema} should be created at
+     * start up classes that has been annotated with DynamoDb enhanced client annotations
+     * <p>
+     * {@link TableSchema} are cached and can be retrieved later with {@code TableSchema.fromClass()}
+     */
+    @ConfigItem(defaultValue = "true")
+    public boolean createTableSchemas;
 }
