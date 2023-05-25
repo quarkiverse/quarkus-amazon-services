@@ -1245,7 +1245,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_HTTP2_MAX_STREAMS+++`
 endif::add-copy-button-to-env-var[]
 --|long 
-|
+|`4294967295`
 
 
 a| [[quarkus-amazon-s3_quarkus.s3.async-client.http2.initial-window-size]]`link:#quarkus-amazon-s3_quarkus.s3.async-client.http2.initial-window-size[quarkus.s3.async-client.http2.initial-window-size]`
@@ -1280,7 +1280,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_PERIOD
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
   link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
-|
+|`5`
 
 
 a| [[quarkus-amazon-s3_quarkus.s3.async-client.proxy.enabled]]`link:#quarkus-amazon-s3_quarkus.s3.async-client.proxy.enabled[quarkus.s3.async-client.proxy.enabled]`
