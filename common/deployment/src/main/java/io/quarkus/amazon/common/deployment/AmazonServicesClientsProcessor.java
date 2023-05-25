@@ -89,13 +89,12 @@ public class AmazonServicesClientsProcessor {
             }
         }
 
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(false, false,
-                knownInterceptorImpls.toArray(new String[knownInterceptorImpls.size()])));
+        reflectiveClasses.produce(ReflectiveClassBuildItem
+                .builder(knownInterceptorImpls.toArray(new String[knownInterceptorImpls.size()])).build());
 
         reflectiveClasses
-                .produce(new ReflectiveClassBuildItem(true, false, "com.sun.xml.internal.stream.XMLInputFactoryImpl"));
-        reflectiveClasses
-                .produce(new ReflectiveClassBuildItem(true, false, "com.sun.xml.internal.stream.XMLOutputFactoryImpl"));
+                .produce(ReflectiveClassBuildItem.builder("com.sun.xml.internal.stream.XMLInputFactoryImpl",
+                        "com.sun.xml.internal.stream.XMLOutputFactoryImpl").methods().build());
 
         boolean syncTransportNeeded = amazonClients.stream().anyMatch(item -> item.getSyncClassName().isPresent());
         boolean asyncTransportNeeded = amazonClients.stream().anyMatch(item -> item.getAsyncClassName().isPresent());
