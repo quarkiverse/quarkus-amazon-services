@@ -490,7 +490,6 @@ The `Fruit` bean would look like this:
 ----
 package org.acme.dynamodb;
 
-import io.quarkus.runtime.annotations.RegisterForReflection;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 

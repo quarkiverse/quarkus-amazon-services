@@ -15,6 +15,7 @@ import io.quarkus.arc.runtime.BeanContainerListener;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClientExtension;
+import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.internal.client.ExtensionResolver;
 import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
@@ -53,6 +54,12 @@ public class DynamodbEnhancedClientRecorder {
         };
 
         return beanContainerListener;
+    }
+
+    public void createTableSchema(List<Class<?>> tableSchemClasses) {
+        for (Class<?> tableSchemaClass : tableSchemClasses) {
+            TableSchema.fromClass(tableSchemaClass);
+        }
     }
 
     public RuntimeValue<DynamoDbEnhancedClientExtension> createExtensionList() {
