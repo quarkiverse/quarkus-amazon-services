@@ -80,6 +80,15 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
     }
 
     @BuildStep
+    void setup(
+            BuildProducer<ExtensionSslNativeSupportBuildItem> extensionSslNativeSupport,
+            BuildProducer<FeatureBuildItem> feature,
+            BuildProducer<AmazonClientInterceptorsPathBuildItem> interceptors) {
+
+        setupExtension(extensionSslNativeSupport, feature, interceptors);
+    }
+
+    @BuildStep
     void discover(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
             BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
 
@@ -87,14 +96,10 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
     }
 
     @BuildStep
-    void setup(List<RequireAmazonClientBuildItem> clientRequirements,
-            BuildProducer<ExtensionSslNativeSupportBuildItem> extensionSslNativeSupport,
-            BuildProducer<FeatureBuildItem> feature,
-            BuildProducer<AmazonClientInterceptorsPathBuildItem> interceptors,
+    void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
             BuildProducer<AmazonClientBuildItem> clientProducer) {
 
-        setupExtension(clientRequirements, extensionSslNativeSupport, feature, interceptors, clientProducer,
-                buildTimeConfig.sdk, buildTimeConfig.syncClient);
+        setupClient(clientRequirements, clientProducer, buildTimeConfig.sdk, buildTimeConfig.syncClient);
     }
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonApacheHttpServicePresent.class)
