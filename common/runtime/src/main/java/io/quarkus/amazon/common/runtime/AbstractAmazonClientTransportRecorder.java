@@ -85,7 +85,7 @@ public abstract class AbstractAmazonClientTransportRecorder {
                             "quarkus.%s.%s-client.tls-%s-managers-provider.file-store must be specified if 'FILE_STORE' provider type is used",
                             extension, clientType, storeType));
         } else {
-            if (!fileStore.password.isPresent()) {
+            if (!fileStore.path.isPresent()) {
                 throw new RuntimeConfigurationError(
                         String.format(
                                 "quarkus.%s.%s-client.tls-%s-managers-provider.file-store.path should not be empty if 'FILE_STORE' provider is used.",
