@@ -51,8 +51,10 @@ abstract public class AbstractAmazonServiceProcessor {
         Optional<DotName> syncClassName = Optional.empty();
         Optional<DotName> asyncClassName = Optional.empty();
 
-        //Discover all clients injections in order to determine if async or sync client is required
-        for (InjectionPointInfo injectionPoint : beanRegistrationPhase.getContext().get(BuildExtension.Key.INJECTION_POINTS)) {
+        // Discover all clients injections in order to determine if async or sync client
+        // is required
+        for (InjectionPointInfo injectionPoint : beanRegistrationPhase.getContext()
+                .get(BuildExtension.Key.INJECTION_POINTS)) {
 
             Type injectedType = getInjectedType(injectionPoint);
 
@@ -68,23 +70,14 @@ abstract public class AbstractAmazonServiceProcessor {
         }
     }
 
-    protected void setupExtension(
-            List<RequireAmazonClientBuildItem> clientRequirements,
-            BuildProducer<ExtensionSslNativeSupportBuildItem> extensionSslNativeSupport,
-            BuildProducer<FeatureBuildItem> feature,
-            BuildProducer<AmazonClientInterceptorsPathBuildItem> interceptors,
+    protected void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
             BuildProducer<AmazonClientBuildItem> clientProducer,
             SdkBuildTimeConfig buildTimeSdkConfig,
             SyncHttpClientBuildTimeConfig buildTimeSyncConfig) {
 
-        feature.produce(new FeatureBuildItem(amazonServiceClientName()));
-        extensionSslNativeSupport.produce(new ExtensionSslNativeSupportBuildItem(amazonServiceClientName()));
-        interceptors.produce(new AmazonClientInterceptorsPathBuildItem(builtinInterceptorsPath()));
-
         Optional<DotName> syncClassName = Optional.empty();
         Optional<DotName> asyncClassName = Optional.empty();
 
-        //Discover all clients injections in order to determine if async or sync client is required
         for (RequireAmazonClientBuildItem clientRequirement : clientRequirements) {
 
             if (clientRequirement.getSyncClassName().filter(syncClientName()::equals).isPresent()) {
@@ -98,6 +91,16 @@ abstract public class AbstractAmazonServiceProcessor {
             clientProducer.produce(new AmazonClientBuildItem(syncClassName, asyncClassName, configName(),
                     buildTimeSdkConfig, buildTimeSyncConfig));
         }
+    }
+
+    protected void setupExtension(
+            BuildProducer<ExtensionSslNativeSupportBuildItem> extensionSslNativeSupport,
+            BuildProducer<FeatureBuildItem> feature,
+            BuildProducer<AmazonClientInterceptorsPathBuildItem> interceptors) {
+
+        feature.produce(new FeatureBuildItem(amazonServiceClientName()));
+        extensionSslNativeSupport.produce(new ExtensionSslNativeSupportBuildItem(amazonServiceClientName()));
+        interceptors.produce(new AmazonClientInterceptorsPathBuildItem(builtinInterceptorsPath()));
     }
 
     protected void createApacheSyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
@@ -196,12 +199,14 @@ abstract public class AbstractAmazonServiceProcessor {
                 .filter(c -> configName.equals(c.getAwsClientName()))
                 .map(c -> c.getClientBuilder())
                 .findFirst();
-        Optional<RuntimeValue<SdkAsyncHttpClient.Builder>> asyncSdkAsyncHttpClientBuilder = amazonClientAsyncTransports.stream()
+        Optional<RuntimeValue<SdkAsyncHttpClient.Builder>> asyncSdkAsyncHttpClientBuilder = amazonClientAsyncTransports
+                .stream()
                 .filter(c -> configName.equals(c.getAwsClientName()))
                 .map(c -> c.getClientBuilder())
                 .findFirst();
 
-        if (!syncSdkHttpClientBuilder.isPresent() && !asyncSdkAsyncHttpClientBuilder.isPresent() && presignerBuilder == null) {
+        if (!syncSdkHttpClientBuilder.isPresent() && !asyncSdkAsyncHttpClientBuilder.isPresent()
+                && presignerBuilder == null) {
             return;
         }
 
