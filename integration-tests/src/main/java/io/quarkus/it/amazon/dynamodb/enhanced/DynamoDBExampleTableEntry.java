@@ -11,13 +11,11 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbUpdateBehavior;
 
 @DynamoDbBean
-public class DynamoDBExampleTableEntry {
+public class DynamoDBExampleTableEntry extends BaseDynamoDbBean {
 
     private String keyId;
 
     private String rangeId;
-
-    private String payload;
 
     private Long version;
 
@@ -40,14 +38,6 @@ public class DynamoDBExampleTableEntry {
 
     public void setRangeId(String rangeId) {
         this.rangeId = rangeId;
-    }
-
-    public String getPayload() {
-        return payload;
-    }
-
-    public void setPayload(String payload) {
-        this.payload = payload;
     }
 
     @DynamoDbVersionAttribute

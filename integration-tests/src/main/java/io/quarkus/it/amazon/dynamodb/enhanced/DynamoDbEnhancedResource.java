@@ -5,6 +5,7 @@ import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -23,11 +24,22 @@ public class DynamoDbEnhancedResource {
 
     private final static String PAYLOAD_VALUE = "OK";
 
+    // when quarkus.dynamodbenhanced.create-table-schemas is true (default), this is not necessary
+    private static final TableSchema<DynamoDBExampleTableEntry> TABLE_SCHEMA = TableSchema
+            .fromClass(DynamoDBExampleTableEntry.class);
+
     @Inject
     DynamoDbEnhancedClient dynamoEnhancedClient;
 
     @Inject
     DynamoDbEnhancedAsyncClient dynamoEnhancedAsyncClient;
+
+    private DynamoDbTable<DynamoDBExampleTableEntry> exampleBlockingTable;
+
+    @PostConstruct
+    void init() {
+        this.exampleBlockingTable = dynamoEnhancedClient.table(BLOCKING_TABLE, TABLE_SCHEMA);
+    }
 
     @GET
     @Path("async")
@@ -38,7 +50,7 @@ public class DynamoDbEnhancedResource {
         String rangeId = UUID.randomUUID().toString();
 
         DynamoDbAsyncTable<DynamoDBExampleTableEntry> exampleAsyncTable = dynamoEnhancedAsyncClient.table(ASYNC_TABLE,
-                TableSchema.fromClass(DynamoDBExampleTableEntry.class));
+                TABLE_SCHEMA);
 
         DynamoDBExampleTableEntry exampleTableEntry = new DynamoDBExampleTableEntry();
         exampleTableEntry.setKeyId(partitionKeyAsString);
@@ -65,9 +77,6 @@ public class DynamoDbEnhancedResource {
 
         String partitionKeyAsString = UUID.randomUUID().toString();
         String rangeId = UUID.randomUUID().toString();
-
-        DynamoDbTable<DynamoDBExampleTableEntry> exampleBlockingTable = dynamoEnhancedClient.table(BLOCKING_TABLE,
-                TableSchema.fromClass(DynamoDBExampleTableEntry.class));
 
         exampleBlockingTable.createTable();
 
