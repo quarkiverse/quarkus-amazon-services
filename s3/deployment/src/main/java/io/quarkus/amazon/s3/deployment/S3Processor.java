@@ -159,6 +159,7 @@ public class S3Processor extends AbstractAmazonServiceProcessor {
                 recorder.createPresignerBuilder(),
                 syntheticBeans,
                 clientSync,
-                clientAsync);
+                clientAsync,
+                executorBuildItem);
     }
 }

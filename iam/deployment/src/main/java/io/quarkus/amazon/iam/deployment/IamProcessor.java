@@ -157,6 +157,7 @@ public class IamProcessor extends AbstractAmazonServiceProcessor {
                 null,
                 syntheticBeans,
                 clientSync,
-                clientAsync);
+                clientAsync,
+                executorBuildItem);
     }
 }

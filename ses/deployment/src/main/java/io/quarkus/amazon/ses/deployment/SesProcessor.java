@@ -159,6 +159,7 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
                 null,
                 syntheticBeans,
                 clientSync,
-                clientAsync);
+                clientAsync,
+                executorBuildItem);
     }
 }

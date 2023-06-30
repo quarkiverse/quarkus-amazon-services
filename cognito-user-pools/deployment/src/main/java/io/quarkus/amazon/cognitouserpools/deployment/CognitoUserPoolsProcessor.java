@@ -160,6 +160,7 @@ public class CognitoUserPoolsProcessor extends AbstractAmazonServiceProcessor {
                 null,
                 syntheticBeans,
                 clientSync,
-                clientAsync);
+                clientAsync,
+                executorBuildItem);
     }
 }

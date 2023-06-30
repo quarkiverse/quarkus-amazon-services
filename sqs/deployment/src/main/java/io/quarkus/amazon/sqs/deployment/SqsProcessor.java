@@ -157,6 +157,7 @@ public class SqsProcessor extends AbstractAmazonServiceProcessor {
                 null,
                 syntheticBeans,
                 clientSync,
-                clientAsync);
+                clientAsync,
+                executorBuildItem);
     }
 }

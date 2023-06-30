@@ -157,6 +157,7 @@ public class KmsProcessor extends AbstractAmazonServiceProcessor {
                 null,
                 syntheticBeans,
                 clientSync,
-                clientAsync);
+                clientAsync,
+                executorBuildItem);
     }
 }
