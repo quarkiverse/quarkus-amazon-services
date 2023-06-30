@@ -26,6 +26,7 @@ import io.quarkus.arc.processor.BuildExtension;
 import io.quarkus.arc.processor.DotNames;
 import io.quarkus.arc.processor.InjectionPointInfo;
 import io.quarkus.deployment.annotations.BuildProducer;
+import io.quarkus.deployment.builditem.ExecutorBuildItem;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.runtime.RuntimeValue;
@@ -192,7 +193,8 @@ abstract public class AbstractAmazonServiceProcessor {
             RuntimeValue<SdkPresigner.Builder> presignerBuilder,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
             BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
-            BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync) {
+            BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
+            ExecutorBuildItem executorBuildItem) {
         String configName = configName();
 
         Optional<RuntimeValue<SdkHttpClient.Builder>> syncSdkHttpClientBuilder = amazonClientSyncTransports.stream()
@@ -219,7 +221,7 @@ abstract public class AbstractAmazonServiceProcessor {
 
         if (syncClientBuilder != null) {
             syncClientBuilder = recorder.configure(syncClientBuilder, awsConfigRuntime, sdkConfigRuntime,
-                    sdkBuildConfig, configName());
+                    sdkBuildConfig, executorBuildItem.getExecutorProxy(), configName());
             syntheticBeans.produce(SyntheticBeanBuildItem.configure(syncClientBuilderClass)
                     .setRuntimeInit()
                     .scope(ApplicationScoped.class)
@@ -229,7 +231,7 @@ abstract public class AbstractAmazonServiceProcessor {
         }
         if (asyncClientBuilder != null) {
             asyncClientBuilder = recorder.configure(asyncClientBuilder, awsConfigRuntime, sdkConfigRuntime,
-                    sdkBuildConfig, configName());
+                    sdkBuildConfig, executorBuildItem.getExecutorProxy(), configName());
             syntheticBeans.produce(SyntheticBeanBuildItem.configure(asyncClientBuilderClass)
                     .setRuntimeInit()
                     .scope(ApplicationScoped.class)

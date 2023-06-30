@@ -3,6 +3,7 @@ package io.quarkus.amazon.common.runtime;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.concurrent.ScheduledExecutorService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,11 +23,11 @@ public class AmazonClientRecorder {
 
     public RuntimeValue<AwsClientBuilder> configure(RuntimeValue<? extends AwsClientBuilder> clientBuilder,
             RuntimeValue<AwsConfig> awsConfig, RuntimeValue<SdkConfig> sdkConfig, SdkBuildTimeConfig sdkBuildTimeConfig,
-            String awsServiceName) {
+            ScheduledExecutorService scheduledExecutorService, String awsServiceName) {
         AwsClientBuilder builder = clientBuilder.getValue();
 
         initAwsClient(builder, awsServiceName, awsConfig.getValue());
-        initSdkClient(builder, awsServiceName, sdkConfig.getValue(), sdkBuildTimeConfig);
+        initSdkClient(builder, awsServiceName, sdkConfig.getValue(), sdkBuildTimeConfig, scheduledExecutorService);
 
         return new RuntimeValue<>(builder);
     }
@@ -37,7 +38,8 @@ public class AmazonClientRecorder {
         builder.credentialsProvider(config.credentials.type.create(config.credentials, "quarkus." + extension));
     }
 
-    public void initSdkClient(SdkClientBuilder builder, String extension, SdkConfig config, SdkBuildTimeConfig buildConfig) {
+    public void initSdkClient(SdkClientBuilder builder, String extension, SdkConfig config, SdkBuildTimeConfig buildConfig,
+            ScheduledExecutorService scheduledExecutorService) {
         if (config.endpointOverride.isPresent()) {
             URI endpointOverride = config.endpointOverride.get();
             if (StringUtils.isBlank(endpointOverride.getScheme())) {
@@ -51,6 +53,9 @@ public class AmazonClientRecorder {
         config.endpointOverride.filter(URI::isAbsolute).ifPresent(builder::endpointOverride);
 
         final ClientOverrideConfiguration.Builder overrides = ClientOverrideConfiguration.builder();
+        // use quarkus executor service
+        overrides.scheduledExecutorService(scheduledExecutorService);
+
         config.apiCallTimeout.ifPresent(overrides::apiCallTimeout);
         config.apiCallAttemptTimeout.ifPresent(overrides::apiCallAttemptTimeout);
 

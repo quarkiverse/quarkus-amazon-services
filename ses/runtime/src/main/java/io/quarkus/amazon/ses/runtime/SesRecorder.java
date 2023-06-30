@@ -1,5 +1,7 @@
 package io.quarkus.amazon.ses.runtime;
 
+import java.util.concurrent.Executor;
+
 import io.quarkus.amazon.common.runtime.AwsConfig;
 import io.quarkus.amazon.common.runtime.NettyHttpClientConfig;
 import io.quarkus.amazon.common.runtime.SdkConfig;
@@ -47,7 +49,8 @@ public class SesRecorder {
         return new RuntimeValue<>(builder);
     }
 
-    public RuntimeValue<AwsClientBuilder> createAsyncBuilder(RuntimeValue<SdkAsyncHttpClient.Builder> transport) {
+    public RuntimeValue<AwsClientBuilder> createAsyncBuilder(RuntimeValue<SdkAsyncHttpClient.Builder> transport,
+            Executor executor) {
 
         SesAsyncClientBuilder builder = SesAsyncClient.builder();
         if (transport != null) {

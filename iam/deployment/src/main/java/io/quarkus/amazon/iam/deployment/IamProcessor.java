@@ -27,6 +27,7 @@ import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
+import io.quarkus.deployment.builditem.ExecutorBuildItem;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import software.amazon.awssdk.services.iam.IamAsyncClient;
@@ -139,7 +140,8 @@ public class IamProcessor extends AbstractAmazonServiceProcessor {
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
             BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
-            BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync) {
+            BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
+            ExecutorBuildItem executorBuildItem) {
 
         createClientBuilders(commonRecorder,
                 recorder.getAwsConfig(),
@@ -150,11 +152,12 @@ public class IamProcessor extends AbstractAmazonServiceProcessor {
                 IamClientBuilder.class,
                 (syncTransport) -> recorder.createSyncBuilder(syncTransport),
                 IamAsyncClientBuilder.class,
-                (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport),
+                (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport, executorBuildItem.getExecutorProxy()),
                 null,
                 null,
                 syntheticBeans,
                 clientSync,
-                clientAsync);
+                clientAsync,
+                executorBuildItem);
     }
 }
