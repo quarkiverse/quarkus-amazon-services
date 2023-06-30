@@ -14,7 +14,8 @@ a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb-enhanced_quarku
 
 [.description]
 --
-List of extensions to load with the enhanced client. 
+List of extensions to load with the enhanced client.
+
 The list should consists of class names which implements `software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClientExtension` interface.
 
 ifdef::add-copy-button-to-env-var[]
@@ -31,7 +32,8 @@ a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb-enhanced_quarku
 
 [.description]
 --
-Whether a `TableSchema` should be created at start up classes that has been annotated with DynamoDb enhanced client annotations 
+Whether a `TableSchema` should be created at start up classes that has been annotated with DynamoDb enhanced client annotations
+
 `TableSchema` are cached and can be retrieved later with `TableSchema.fromClass()`
 
 ifdef::add-copy-button-to-env-var[]

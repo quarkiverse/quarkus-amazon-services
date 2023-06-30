@@ -94,8 +94,10 @@ a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-loca
 
 [.description]
 --
-Indicates if the LocalStack container managed by Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services starts a new container. 
-The discovery uses the `quarkus-dev-service-localstack` label. The value is configured using the `service-name` property. 
+Indicates if the LocalStack container managed by Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services starts a new container.
+
+The discovery uses the `quarkus-dev-service-localstack` label. The value is configured using the `service-name` property.
+
 Sharing is not supported for the Cognito extension.
 
 ifdef::add-copy-button-to-env-var[]
@@ -112,7 +114,8 @@ a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-loca
 
 [.description]
 --
-The value of the `quarkus-dev-service-localstack` label attached to the started container. In dev mode, when `shared` is set to `true`, before starting a container, Dev Services looks for a container with the `quarkus-dev-service-localstack` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise it starts a new container with the `quarkus-dev-service-localstack` label set to the specified value. In test mode, Dev Services will group services with the same `service-name` value in one container instance. 
+The value of the `quarkus-dev-service-localstack` label attached to the started container. In dev mode, when `shared` is set to `true`, before starting a container, Dev Services looks for a container with the `quarkus-dev-service-localstack` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise it starts a new container with the `quarkus-dev-service-localstack` label set to the specified value. In test mode, Dev Services will group services with the same `service-name` value in one container instance.
+
 This property is used when you need multiple shared LocalStack instances.
 
 ifdef::add-copy-button-to-env-var[]

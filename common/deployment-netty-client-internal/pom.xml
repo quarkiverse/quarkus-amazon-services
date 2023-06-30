@@ -22,6 +22,10 @@
             <artifactId>quarkus-amazon-netty-client-internal</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-common-deployment-spi</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-netty-deployment</artifactId>
         </dependency>
