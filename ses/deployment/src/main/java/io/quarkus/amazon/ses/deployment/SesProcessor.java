@@ -14,8 +14,8 @@ import io.quarkus.amazon.common.deployment.AmazonClientSyncTransportBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonHttpClients;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
+import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
-import io.quarkus.amazon.common.runtime.AmazonClientRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
 import io.quarkus.amazon.ses.runtime.SesBuildTimeConfig;
 import io.quarkus.amazon.ses.runtime.SesClientProducer;
@@ -136,7 +136,7 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
     void createClientBuilders(SesRecorder recorder,
-            AmazonClientRecorder commonRecorder,
+            AmazonClientCommonRecorder commonRecorder,
             SesConfig runtimeConfig,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
@@ -145,17 +145,13 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
             BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
             ExecutorBuildItem executorBuildItem) {
 
-        createClientBuilders(commonRecorder,
-                recorder.getAwsConfig(),
-                recorder.getSdkConfig(),
+        createClientBuilders(recorder,
+                commonRecorder,
                 buildTimeConfig.sdk,
                 syncTransports,
                 asyncTransports,
                 SesClientBuilder.class,
-                (syncTransport) -> recorder.createSyncBuilder(syncTransport),
                 SesAsyncClientBuilder.class,
-                (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport, executorBuildItem.getExecutorProxy()),
-                null,
                 null,
                 syntheticBeans,
                 clientSync,
