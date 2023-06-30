@@ -1,5 +1,7 @@
 package io.quarkus.amazon.sns.runtime;
 
+import java.util.concurrent.Executor;
+
 import io.quarkus.amazon.common.runtime.AwsConfig;
 import io.quarkus.amazon.common.runtime.NettyHttpClientConfig;
 import io.quarkus.amazon.common.runtime.SdkConfig;
@@ -48,7 +50,8 @@ public class SnsRecorder {
         return new RuntimeValue<>(builder);
     }
 
-    public RuntimeValue<AwsClientBuilder> createAsyncBuilder(RuntimeValue<SdkAsyncHttpClient.Builder> transport) {
+    public RuntimeValue<AwsClientBuilder> createAsyncBuilder(RuntimeValue<SdkAsyncHttpClient.Builder> transport,
+            Executor executor) {
 
         SnsAsyncClientBuilder builder = SnsAsyncClient.builder();
 
@@ -58,6 +61,9 @@ public class SnsRecorder {
         if (!config.asyncClient.advanced.useFutureCompletionThreadPool) {
             builder.asyncConfiguration(asyncConfigBuilder -> asyncConfigBuilder
                     .advancedOption(SdkAdvancedAsyncClientOption.FUTURE_COMPLETION_EXECUTOR, Runnable::run));
+        } else {
+            builder.asyncConfiguration(asyncConfigBuilder -> asyncConfigBuilder
+                    .advancedOption(SdkAdvancedAsyncClientOption.FUTURE_COMPLETION_EXECUTOR, executor));
         }
         return new RuntimeValue<>(builder);
     }

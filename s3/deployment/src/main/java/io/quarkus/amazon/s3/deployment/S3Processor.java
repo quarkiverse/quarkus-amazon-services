@@ -28,6 +28,7 @@ import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
+import io.quarkus.deployment.builditem.ExecutorBuildItem;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
@@ -141,7 +142,8 @@ public class S3Processor extends AbstractAmazonServiceProcessor {
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
             BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
-            BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync) {
+            BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
+            ExecutorBuildItem executorBuildItem) {
 
         createClientBuilders(commonRecorder,
                 recorder.getAwsConfig(),
@@ -152,7 +154,7 @@ public class S3Processor extends AbstractAmazonServiceProcessor {
                 S3ClientBuilder.class,
                 (syncTransport) -> recorder.createSyncBuilder(syncTransport),
                 S3AsyncClientBuilder.class,
-                (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport),
+                (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport, executorBuildItem.getExecutorProxy()),
                 S3Presigner.Builder.class,
                 recorder.createPresignerBuilder(),
                 syntheticBeans,
