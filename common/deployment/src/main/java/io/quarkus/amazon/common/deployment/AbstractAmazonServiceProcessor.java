@@ -11,6 +11,7 @@ import org.jboss.jandex.ParameterizedType;
 import org.jboss.jandex.Type;
 
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
+import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
@@ -178,8 +179,44 @@ abstract public class AbstractAmazonServiceProcessor {
         });
     }
 
-    protected void createClientBuilders(
-            AmazonClientRecorder recorder,
+    protected void createClientBuilders(AmazonClientRecorder recorder,
+            AmazonClientCommonRecorder commonRecorder,
+            SdkBuildTimeConfig sdkBuildConfig,
+            List<AmazonClientSyncTransportBuildItem> syncTransports,
+            List<AmazonClientAsyncTransportBuildItem> asyncTransports,
+            Class<?> syncClientBuilderClass,
+            Class<?> asyncClientBuilderClass,
+            Class<?> presignerBuilderClass,
+            BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
+            BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
+            BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
+            ExecutorBuildItem executorBuildItem) {
+
+        RuntimeValue<SdkPresigner.Builder> presignerBuilder = null;
+        if (presignerBuilderClass != null) {
+            presignerBuilder = recorder.createPresignerBuilder();
+        }
+
+        createClientBuilders(commonRecorder,
+                recorder.getAwsConfig(),
+                recorder.getSdkConfig(),
+                sdkBuildConfig,
+                syncTransports,
+                asyncTransports,
+                syncClientBuilderClass,
+                (syncTransport) -> recorder.createSyncBuilder(syncTransport),
+                asyncClientBuilderClass,
+                (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport, executorBuildItem.getExecutorProxy()),
+                presignerBuilderClass,
+                presignerBuilder,
+                syntheticBeans,
+                clientSync,
+                clientAsync,
+                executorBuildItem);
+    }
+
+    private void createClientBuilders(
+            AmazonClientCommonRecorder recorder,
             RuntimeValue<AwsConfig> awsConfigRuntime,
             RuntimeValue<SdkConfig> sdkConfigRuntime,
             SdkBuildTimeConfig sdkBuildConfig,

@@ -14,8 +14,8 @@ import io.quarkus.amazon.common.deployment.AmazonClientSyncTransportBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonHttpClients;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
+import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
-import io.quarkus.amazon.common.runtime.AmazonClientRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
 import io.quarkus.amazon.dynamodb.runtime.DynamodbBuildTimeConfig;
 import io.quarkus.amazon.dynamodb.runtime.DynamodbClientProducer;
@@ -144,7 +144,7 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
     void createClientBuilders(DynamodbRecorder recorder,
-            AmazonClientRecorder commonRecorder,
+            AmazonClientCommonRecorder commonRecorder,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
@@ -152,17 +152,13 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
             BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
             ExecutorBuildItem executorBuildItem) {
 
-        createClientBuilders(commonRecorder,
-                recorder.getAwsConfig(),
-                recorder.getSdkConfig(),
+        createClientBuilders(recorder,
+                commonRecorder,
                 buildTimeConfig.sdk,
                 syncTransports,
                 asyncTransports,
                 DynamoDbClientBuilder.class,
-                (syncTransport) -> recorder.createSyncBuilder(syncTransport),
                 DynamoDbAsyncClientBuilder.class,
-                (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport, executorBuildItem.getExecutorProxy()),
-                null,
                 null,
                 syntheticBeans,
                 clientSync,

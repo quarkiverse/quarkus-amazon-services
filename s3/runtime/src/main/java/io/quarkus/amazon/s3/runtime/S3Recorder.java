@@ -1,18 +1,15 @@
 package io.quarkus.amazon.s3.runtime;
 
-import java.util.concurrent.Executor;
-
+import io.quarkus.amazon.common.runtime.AmazonClientRecorder;
 import io.quarkus.amazon.common.runtime.AwsConfig;
 import io.quarkus.amazon.common.runtime.NettyHttpClientConfig;
 import io.quarkus.amazon.common.runtime.SdkConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
-import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder;
+import software.amazon.awssdk.awscore.client.builder.AwsAsyncClientBuilder;
+import software.amazon.awssdk.awscore.client.builder.AwsSyncClientBuilder;
 import software.amazon.awssdk.awscore.presigner.SdkPresigner;
-import software.amazon.awssdk.core.client.config.SdkAdvancedAsyncClientOption;
-import software.amazon.awssdk.http.SdkHttpClient.Builder;
-import software.amazon.awssdk.http.async.SdkAsyncHttpClient;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3AsyncClientBuilder;
 import software.amazon.awssdk.services.s3.S3BaseClientBuilder;
@@ -22,7 +19,7 @@ import software.amazon.awssdk.services.s3.S3Configuration;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 @Recorder
-public class S3Recorder {
+public class S3Recorder extends AmazonClientRecorder {
 
     final S3Config config;
 
@@ -30,51 +27,43 @@ public class S3Recorder {
         this.config = config;
     }
 
-    public RuntimeValue<SyncHttpClientConfig> getSyncConfig() {
-        return new RuntimeValue<>(config.syncClient);
-    }
-
-    public RuntimeValue<NettyHttpClientConfig> getAsyncConfig() {
-        return new RuntimeValue<>(config.asyncClient);
-    }
-
+    @Override
     public RuntimeValue<AwsConfig> getAwsConfig() {
         return new RuntimeValue<>(config.aws);
     }
 
+    @Override
     public RuntimeValue<SdkConfig> getSdkConfig() {
         return new RuntimeValue<>(config.sdk);
     }
 
-    public RuntimeValue<AwsClientBuilder> createSyncBuilder(RuntimeValue<Builder> transport) {
+    @Override
+    public NettyHttpClientConfig getAsyncClientConfig() {
+        return config.asyncClient;
+    }
+
+    @Override
+    public SyncHttpClientConfig getSyncClientConfig() {
+        return config.syncClient;
+    }
+
+    @Override
+    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
         S3ClientBuilder builder = S3Client.builder();
         configureS3Client(builder);
 
-        if (transport != null) {
-            builder.httpClientBuilder(transport.getValue());
-        }
-        return new RuntimeValue<>(builder);
+        return builder;
     }
 
-    public RuntimeValue<AwsClientBuilder> createAsyncBuilder(RuntimeValue<SdkAsyncHttpClient.Builder> transport,
-            Executor executor) {
-
+    @Override
+    public AwsAsyncClientBuilder<?, ?> getAsyncClientBuilder() {
         S3AsyncClientBuilder builder = S3AsyncClient.builder();
         configureS3Client(builder);
 
-        if (transport != null) {
-            builder.httpClientBuilder(transport.getValue());
-        }
-        if (!config.asyncClient.advanced.useFutureCompletionThreadPool) {
-            builder.asyncConfiguration(asyncConfigBuilder -> asyncConfigBuilder
-                    .advancedOption(SdkAdvancedAsyncClientOption.FUTURE_COMPLETION_EXECUTOR, Runnable::run));
-        } else {
-            builder.asyncConfiguration(asyncConfigBuilder -> asyncConfigBuilder
-                    .advancedOption(SdkAdvancedAsyncClientOption.FUTURE_COMPLETION_EXECUTOR, executor));
-        }
-        return new RuntimeValue<>(builder);
+        return builder;
     }
 
+    @Override
     public RuntimeValue<SdkPresigner.Builder> createPresignerBuilder() {
         S3Presigner.Builder builder = S3Presigner.builder()
                 .serviceConfiguration(s3ConfigurationBuilder().build())
