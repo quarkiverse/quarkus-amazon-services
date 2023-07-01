@@ -15,12 +15,13 @@
 
     <modules>
         <module>runtime-apache-client-internal</module>
-        <module>deployment-apache-client-internal</module>
         <module>runtime-netty-client-internal</module>
-        <module>deployment-netty-client-internal</module>
         <module>runtime</module>
+        <module>deployment-devservices-spi</module>
         <module>deployment-spi</module>
+        <module>deployment-apache-client-internal</module>
+        <module>deployment-netty-client-internal</module>
         <module>deployment</module>
     </modules>
-    
+
 </project>

@@ -2,7 +2,9 @@ package io.quarkus.amazon.common.runtime;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.function.Supplier;
 
+import io.netty.channel.EventLoopGroup;
 import io.quarkus.amazon.common.runtime.NettyHttpClientConfig.SslProviderType;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
@@ -19,7 +21,7 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
     @SuppressWarnings("rawtypes")
     @Override
     public RuntimeValue<SdkAsyncHttpClient.Builder> configureAsync(String clientName,
-            RuntimeValue<NettyHttpClientConfig> asyncConfigRuntime) {
+            RuntimeValue<NettyHttpClientConfig> asyncConfigRuntime, Supplier<EventLoopGroup> eventLoopSupplier) {
         NettyNioAsyncHttpClient.Builder builder = NettyNioAsyncHttpClient.builder();
         NettyHttpClientConfig asyncConfig = asyncConfigRuntime.getValue();
         validateNettyClientConfig(clientName, asyncConfig);
@@ -71,6 +73,9 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
                         new ThreadFactoryBuilder().threadNamePrefix(asyncConfig.eventLoop.threadNamePrefix.get()).build());
             }
             builder.eventLoopGroupBuilder(eventLoopBuilder);
+        } else {
+            var eventLoopGroup = SdkEventLoopGroup.create(eventLoopSupplier.get());
+            builder.eventLoopGroup(eventLoopGroup);
         }
 
         return new RuntimeValue<>(builder);

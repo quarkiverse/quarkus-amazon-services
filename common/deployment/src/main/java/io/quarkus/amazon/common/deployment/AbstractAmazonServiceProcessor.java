@@ -3,6 +3,7 @@ package io.quarkus.amazon.common.deployment;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -10,6 +11,7 @@ import org.jboss.jandex.DotName;
 import org.jboss.jandex.ParameterizedType;
 import org.jboss.jandex.Type;
 
+import io.netty.channel.EventLoopGroup;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
@@ -160,7 +162,8 @@ abstract public class AbstractAmazonServiceProcessor {
     protected void createNettyAsyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
             AmazonClientNettyTransportRecorder recorder,
             RuntimeValue<NettyHttpClientConfig> asyncConfig,
-            BuildProducer<AmazonClientAsyncTransportBuildItem> clientAsyncTransports) {
+            BuildProducer<AmazonClientAsyncTransportBuildItem> clientAsyncTransports,
+            Supplier<EventLoopGroup> eventLoopSupplier) {
 
         Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
@@ -175,7 +178,7 @@ abstract public class AbstractAmazonServiceProcessor {
                     new AmazonClientAsyncTransportBuildItem(
                             client.getAwsClientName(),
                             client.getAsyncClassName().get(),
-                            recorder.configureAsync(configName(), asyncConfig)));
+                            recorder.configureAsync(configName(), asyncConfig, eventLoopSupplier)));
         });
     }
 

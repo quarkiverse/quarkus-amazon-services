@@ -13,6 +13,7 @@ import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncTransportBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonHttpClients;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.spi.EventLoopGroupBuildItem;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
@@ -124,12 +125,13 @@ public class SsmProcessor extends AbstractAmazonServiceProcessor {
     @Record(ExecutionTime.RUNTIME_INIT)
     void setupNettyAsyncTransport(List<AmazonClientBuildItem> amazonClients, SsmRecorder recorder,
             AmazonClientNettyTransportRecorder transportRecorder,
-            BuildProducer<AmazonClientAsyncTransportBuildItem> asyncTransports) {
+            BuildProducer<AmazonClientAsyncTransportBuildItem> asyncTransports,
+            EventLoopGroupBuildItem eventLoopSupplier) {
 
         createNettyAsyncTransportBuilder(amazonClients,
                 transportRecorder,
                 recorder.getAsyncConfig(),
-                asyncTransports);
+                asyncTransports, eventLoopSupplier.getMainEventLoopGroup());
     }
 
     @BuildStep
