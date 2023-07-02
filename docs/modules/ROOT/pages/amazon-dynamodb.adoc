@@ -194,13 +194,10 @@ public abstract class AbstractService {
 
     public final static String FRUIT_NAME_COL = "fruitName";
     public final static String FRUIT_DESC_COL = "fruitDescription";
-
-    public String getTableName() {
-        return "QuarkusFruits";
-    }
+    public final static String FRUIT_TABLE_NAME = "QuarkusFruits";
 
     protected ScanRequest scanRequest() {
-        return ScanRequest.builder().tableName(getTableName())
+        return ScanRequest.builder().tableName(FRUIT_TABLE_NAME)
                 .attributesToGet(FRUIT_NAME_COL, FRUIT_DESC_COL).build();
     }
 
@@ -210,7 +207,7 @@ public abstract class AbstractService {
         item.put(FRUIT_DESC_COL, AttributeValue.builder().s(fruit.getDescription()).build());
 
         return PutItemRequest.builder()
-                .tableName(getTableName())
+                .tableName(FRUIT_TABLE_NAME)
                 .item(item)
                 .build();
     }
@@ -220,7 +217,7 @@ public abstract class AbstractService {
         key.put(FRUIT_NAME_COL, AttributeValue.builder().s(name).build());
 
         return GetItemRequest.builder()
-                .tableName(getTableName())
+                .tableName(FRUIT_TABLE_NAME)
                 .key(key)
                 .attributesToGet(FRUIT_NAME_COL, FRUIT_DESC_COL)
                 .build();
@@ -254,9 +251,8 @@ public class FruitSyncService extends AbstractService {
                 .collect(Collectors.toList());
     }
 
-    public List<Fruit> add(Fruit fruit) {
+    public void add(Fruit fruit) {
         dynamoDB.putItem(putRequest(fruit));
-        return findAll();
     }
 
     public Fruit get(String name) {
@@ -274,12 +270,16 @@ package org.acme.dynamodb;
 import java.util.List;
 
 import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("/fruits")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class FruitResource {
 
     @Inject
@@ -384,7 +384,6 @@ Create a `org.acme.dynamodb.FruitAsyncService` that will be similar to our `Frui
 package org.acme.dynamodb;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -404,9 +403,8 @@ public class FruitAsyncService extends AbstractService {
                 .onItem().transform(res -> res.items().stream().map(Fruit::from).collect(Collectors.toList()));
     }
 
-    public Uni<List<Fruit>> add(Fruit fruit) {
-        return Uni.createFrom().completionStage(() -> dynamoDB.putItem(putRequest(fruit)))
-                .onItem().ignore().andSwitchTo(this::findAll);
+    public Uni<Void> add(Fruit fruit) {
+        return Uni.createFrom().completionStage(() -> dynamoDB.putItem(putRequest(fruit))).replaceWithVoid();
     }
 
     public Uni<Fruit> get(String name) {
@@ -424,16 +422,16 @@ Then, create an asynchronous REST resource that consumes this async service:
 ----
 package org.acme.dynamodb;
 
-import io.smallrye.mutiny.Uni;
-
-import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+
+import io.smallrye.mutiny.Uni;
+
 @Path("/async-fruits")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class FruitAsyncResource {
 
     @Inject
@@ -483,10 +481,11 @@ And add the following dependency to the application `pom.xml`:
 </dependency>
 ----
 
-== DynamoDB enhanced client
+=== DynamoDB enhanced client
 
 The DynamoDB enhanced client is part of the AWS SDK for Java version 2 and makes the mapping between DynamoDB Tables and Java beans very easy.
-The Enhanced Client requires a TableSchema, which can be generated with a set of annotations or declared in code.
+The Enhanced Client requires a TableSchema which can be generated from a bean class annotated with `DynamoDbBean` or `DynamoDbImmutable` or generated from code.
+By default, TableSchemas generated from bean classes are registered and cached at startup. You don't need to explicitely instantiate them at class-load time.
 It has both a sync and an async variants.
 
 To use the enhanced client, add the `quarkus-amazon-dynamodb-enhanced` extension to your `pom.xml`:
@@ -505,16 +504,27 @@ The `Fruit` bean would look like this:
 ----
 package org.acme.dynamodb;
 
+import java.util.Map;
+import java.util.Objects;
+
+import io.quarkus.runtime.annotations.RegisterForReflection;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
+@RegisterForReflection
 @DynamoDbBean
 public class Fruit {
 
     private String name;
     private String description;
 
+    public Fruit() {
+    }
+
     @DynamoDbPartitionKey
+    @DynamoDbAttribute(AbstractService.FRUIT_NAME_COL)
     public String getName() {
         return name;
     }
@@ -523,6 +533,7 @@ public class Fruit {
         this.name = name;
     }
 
+    @DynamoDbAttribute(AbstractService.FRUIT_DESC_COL)
     public String getDescription() {
         return description;
     }
@@ -530,8 +541,26 @@ public class Fruit {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Fruit)) {
+            return false;
+        }
+
+        Fruit other = (Fruit) obj;
+
+        return Objects.equals(other.name, this.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.name);
+    }
 }
 ----
+
+Note that you don't need to add `@RegisterForReflection` anymore.
 
 The `FruitSyncService` would need to use the `DynamoDbEnhancedClient` as well as create a `TableSchema`:
 
@@ -544,8 +573,9 @@ import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 
 @ApplicationScoped
@@ -554,8 +584,8 @@ public class FruitSyncService extends AbstractService {
     private DynamoDbTable<Fruit> fruitTable;
 
     @Inject
-    FruitSyncService(DynamoDbEnhancedClient dynamoEnhancedClient) {
-        fruitTable = dynamoEnhancedClient.table(getTableName(),
+    FruitEnhancedSyncService(DynamoDbEnhancedClient dynamoEnhancedClient) {
+        fruitTable = dynamoEnhancedClient.table(FRUIT_TABLE_NAME,
             TableSchema.fromClass(Fruit.class));
     }
 
@@ -575,7 +605,133 @@ public class FruitSyncService extends AbstractService {
 }
 ----
 
-The `FruitResource` does not change.
+The same goes for the asynchronous version with `DynamoDbEnhanceAsyncdClient`:
+
+[source,java]
+----
+package org.acme.dynamodb;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import mutiny.zero.flow.adapters.AdaptersToFlow;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbAsyncTable;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
+import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+
+@ApplicationScoped
+public class FruitAsyncService extends AbstractService {
+
+    private DynamoDbAsyncTable<Fruit> fruitTable;
+
+    @Inject
+    FruitEnhancedAsyncService(DynamoDbEnhancedAsyncClient dynamoEnhancedAsyncClient) {
+        fruitTable = dynamoEnhancedAsyncClient.table(FRUIT_TABLE_NAME,
+            TableSchema.fromClass(Fruit.class));
+    }
+
+    public Uni<List<Fruit>> findAll() {
+        return Multi.createFrom().publisher(AdaptersToFlow.publisher(fruitTable.scan().items())).collect().asList();
+    }
+
+    public Uni<Void> add(Fruit fruit){
+        return Uni.createFrom().completionStage(() -> fruitTable.putItem(fruit));
+}
+
+    public Uni<Fruit> get(String name) {
+        Key partitionKey = Key.builder().partitionValue(name).build();
+        return Uni.createFrom().completionStage(() -> fruitTable.getItem(partitionKey));
+    }
+}
+----
+
+Resource classes remain unchanged.
+
+Alternatively, if you only need to use the DynamoDbTable instance, you can inject it directly with a `@NamedDynamoDbTable` annotation.
+
+The synchronous version would be :
+
+[source,java]
+----
+package org.acme.dynamodb;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import io.quarkus.amazon.dynamodb.enhanced.runtime.NamedDynamoDbTable;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
+
+@ApplicationScoped
+public class FruitSyncService extends AbstractService {
+
+    @Inject
+    @NamedDynamoDbTable(FRUIT_TABLE_NAME)
+    DynamoDbTable<Fruit> fruitTable;
+
+    public List<Fruit> findAll() {
+        return fruitTable.scan().items().stream().collect(Collectors.toList());
+    }
+
+    public List<Fruit> add(Fruit fruit) {
+        fruitTable.putItem(fruit);
+        return findAll();
+    }
+
+    public Fruit get(String name) {
+        Key partitionKey = Key.builder().partitionValue(name).build();
+        return fruitTable.getItem(partitionKey);
+    }
+}
+----
+
+And the asynchronous version :
+
+[source,java]
+----
+package org.acme.dynamodb;
+
+import java.util.List;
+
+import io.quarkus.amazon.dynamodb.enhanced.runtime.NamedDynamoDbTable;
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import mutiny.zero.flow.adapters.AdaptersToFlow;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbAsyncTable;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
+import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+
+@ApplicationScoped
+public class FruitEnhancedAsyncService extends AbstractService {
+
+    @Inject
+    @NamedDynamoDbTable(FRUIT_TABLE_NAME)
+    private DynamoDbAsyncTable<Fruit> fruitTable;
+
+    public Uni<List<Fruit>> findAll() {
+        return Multi.createFrom().publisher(AdaptersToFlow.publisher(fruitTable.scan().items())).collect().asList();
+    }
+
+    public Uni<Void> add(Fruit fruit){
+        return Uni.createFrom().completionStage(() -> fruitTable.putItem(fruit));
+}
+
+    public Uni<Fruit> get(String name) {
+        Key partitionKey = Key.builder().partitionValue(name).build();
+        return Uni.createFrom().completionStage(() -> fruitTable.getItem(partitionKey));
+    }
+}
+----
 
 You can find more information about the DynamoDB enhanced client in the AWS documentation:
 

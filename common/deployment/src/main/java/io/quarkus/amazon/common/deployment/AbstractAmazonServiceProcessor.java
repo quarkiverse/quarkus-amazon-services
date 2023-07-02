@@ -27,7 +27,6 @@ import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
-import io.quarkus.arc.processor.BuildExtension;
 import io.quarkus.arc.processor.DotNames;
 import io.quarkus.arc.processor.InjectionPointInfo;
 import io.quarkus.deployment.annotations.BuildProducer;
@@ -59,8 +58,7 @@ abstract public class AbstractAmazonServiceProcessor {
 
         // Discover all clients injections in order to determine if async or sync client
         // is required
-        for (InjectionPointInfo injectionPoint : beanRegistrationPhase.getContext()
-                .get(BuildExtension.Key.INJECTION_POINTS)) {
+        for (InjectionPointInfo injectionPoint : beanRegistrationPhase.getInjectionPoints()) {
 
             Type injectedType = getInjectedType(injectionPoint);
 

@@ -7,6 +7,9 @@ import io.quarkus.runtime.annotations.ConfigDocSection;
 import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbImmutable;
 
 @ConfigRoot(name = "dynamodbenhanced", phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
 public class DynamoDbEnhancedBuildTimeConfig {
@@ -24,8 +27,8 @@ public class DynamoDbEnhancedBuildTimeConfig {
     public Optional<List<String>> clientExtensions;
 
     /**
-     * Whether a {@link TableSchema} should be created at
-     * start up classes that has been annotated with DynamoDb enhanced client annotations
+     * Whether a {@link TableSchema} should be created at start up for DynamoDb mappable entities
+     * annotated with {@link DynamoDbBean} or {@link DynamoDbImmutable}
      * <p>
      * {@link TableSchema} are cached and can be retrieved later with {@code TableSchema.fromClass()}
      */

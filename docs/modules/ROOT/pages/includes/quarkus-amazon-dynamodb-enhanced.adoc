@@ -32,7 +32,7 @@ a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb-enhanced_quarku
 
 [.description]
 --
-Whether a `TableSchema` should be created at start up classes that has been annotated with DynamoDb enhanced client annotations
+Whether a `TableSchema` should be created at start up for DynamoDb mappable entities annotated with `DynamoDbBean` or `DynamoDbImmutable`
 
 `TableSchema` are cached and can be retrieved later with `TableSchema.fromClass()`
 
