@@ -13,12 +13,14 @@ import org.jboss.jandex.Type;
 
 import io.netty.channel.EventLoopGroup;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
+import io.quarkus.amazon.common.runtime.AmazonClientAwsCrtTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
+import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig;
+import io.quarkus.amazon.common.runtime.AsyncHttpClientConfig;
 import io.quarkus.amazon.common.runtime.AwsConfig;
-import io.quarkus.amazon.common.runtime.NettyHttpClientConfig;
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SdkConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
@@ -77,7 +79,8 @@ abstract public class AbstractAmazonServiceProcessor {
     protected void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
             BuildProducer<AmazonClientBuildItem> clientProducer,
             SdkBuildTimeConfig buildTimeSdkConfig,
-            SyncHttpClientBuildTimeConfig buildTimeSyncConfig) {
+            SyncHttpClientBuildTimeConfig buildTimeSyncConfig,
+            AsyncHttpClientBuildTimeConfig buildTimeAsyncConfig) {
 
         Optional<DotName> syncClassName = Optional.empty();
         Optional<DotName> asyncClassName = Optional.empty();
@@ -93,7 +96,7 @@ abstract public class AbstractAmazonServiceProcessor {
         }
         if (syncClassName.isPresent() || asyncClassName.isPresent()) {
             clientProducer.produce(new AmazonClientBuildItem(syncClassName, asyncClassName, configName(),
-                    buildTimeSdkConfig, buildTimeSyncConfig));
+                    buildTimeSdkConfig, buildTimeSyncConfig, buildTimeAsyncConfig));
         }
     }
 
@@ -161,7 +164,8 @@ abstract public class AbstractAmazonServiceProcessor {
 
     protected void createNettyAsyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
             AmazonClientNettyTransportRecorder recorder,
-            RuntimeValue<NettyHttpClientConfig> asyncConfig,
+            AsyncHttpClientBuildTimeConfig buildAsyncConfig,
+            RuntimeValue<AsyncHttpClientConfig> asyncConfig,
             BuildProducer<AmazonClientAsyncTransportBuildItem> clientAsyncTransports,
             Supplier<EventLoopGroup> eventLoopSupplier) {
 
@@ -173,12 +177,42 @@ abstract public class AbstractAmazonServiceProcessor {
             if (!client.getAsyncClassName().isPresent()) {
                 return;
             }
+            if (buildAsyncConfig.type != AsyncHttpClientBuildTimeConfig.AsyncClientType.NETTY) {
+                return;
+            }
 
             clientAsyncTransports.produce(
                     new AmazonClientAsyncTransportBuildItem(
                             client.getAwsClientName(),
                             client.getAsyncClassName().get(),
-                            recorder.configureAsync(configName(), asyncConfig, eventLoopSupplier)));
+                            recorder.configureNettyAsync(recorder.configureAsync(configName(), asyncConfig), eventLoopSupplier,
+                                    asyncConfig)));
+        });
+    }
+
+    protected void createAwsCrtAsyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
+            AmazonClientAwsCrtTransportRecorder recorder,
+            AsyncHttpClientBuildTimeConfig buildAsyncConfig,
+            RuntimeValue<AsyncHttpClientConfig> asyncConfig,
+            BuildProducer<AmazonClientAsyncTransportBuildItem> clientAsyncTransports) {
+
+        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+                .filter(c -> c.getAwsClientName().equals(configName()))
+                .findAny();
+
+        matchingClientBuildItem.ifPresent(client -> {
+            if (!client.getAsyncClassName().isPresent()) {
+                return;
+            }
+            if (buildAsyncConfig.type != AsyncHttpClientBuildTimeConfig.AsyncClientType.AWS_CRT) {
+                return;
+            }
+
+            clientAsyncTransports.produce(
+                    new AmazonClientAsyncTransportBuildItem(
+                            client.getAwsClientName(),
+                            client.getAsyncClassName().get(),
+                            recorder.configureAsync(configName(), asyncConfig)));
         });
     }
 

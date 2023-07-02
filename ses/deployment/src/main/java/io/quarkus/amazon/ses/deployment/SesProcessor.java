@@ -15,6 +15,7 @@ import io.quarkus.amazon.common.deployment.AmazonHttpClients;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
 import io.quarkus.amazon.common.deployment.spi.EventLoopGroupBuildItem;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
+import io.quarkus.amazon.common.runtime.AmazonClientAwsCrtTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
@@ -93,7 +94,8 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
     void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
             BuildProducer<AmazonClientBuildItem> clientProducer) {
 
-        setupClient(clientRequirements, clientProducer, buildTimeConfig.sdk, buildTimeConfig.syncClient);
+        setupClient(clientRequirements, clientProducer, buildTimeConfig.sdk, buildTimeConfig.syncClient,
+                buildTimeConfig.asyncClient);
     }
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonApacheHttpServicePresent.class)
@@ -131,8 +133,22 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
 
         createNettyAsyncTransportBuilder(amazonClients,
                 transportRecorder,
+                buildTimeConfig.asyncClient,
                 recorder.getAsyncConfig(),
                 asyncTransports, eventLoopSupplier.getMainEventLoopGroup());
+    }
+
+    @BuildStep(onlyIf = AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent.class)
+    @Record(ExecutionTime.RUNTIME_INIT)
+    void setupAwsCrtAsyncTransport(List<AmazonClientBuildItem> amazonClients, SesRecorder recorder,
+            AmazonClientAwsCrtTransportRecorder transportRecorder,
+            BuildProducer<AmazonClientAsyncTransportBuildItem> asyncTransports) {
+
+        createAwsCrtAsyncTransportBuilder(amazonClients,
+                transportRecorder,
+                buildTimeConfig.asyncClient,
+                recorder.getAsyncConfig(),
+                asyncTransports);
     }
 
     @BuildStep

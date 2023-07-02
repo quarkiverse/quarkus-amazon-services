@@ -1,5 +1,6 @@
 package io.quarkus.amazon.sqs.runtime;
 
+import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
 import io.quarkus.runtime.annotations.ConfigItem;
@@ -24,6 +25,11 @@ public class SqsBuildTimeConfig {
     @ConfigItem
     public SyncHttpClientBuildTimeConfig syncClient;
 
+    /**
+     * Async HTTP transport configuration for Amazon SQS client
+     */
+    @ConfigItem
+    public AsyncHttpClientBuildTimeConfig asyncClient;
     /**
      * Config for dev services
      */

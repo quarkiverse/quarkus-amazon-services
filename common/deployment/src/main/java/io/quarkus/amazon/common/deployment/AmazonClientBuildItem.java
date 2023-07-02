@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.jboss.jandex.DotName;
 
+import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
 import io.quarkus.builder.item.MultiBuildItem;
@@ -17,15 +18,18 @@ public final class AmazonClientBuildItem extends MultiBuildItem {
     private final String awsClientName;
     private final SdkBuildTimeConfig buildTimeSdkConfig;
     private final SyncHttpClientBuildTimeConfig buildTimeSyncConfig;
+    private final AsyncHttpClientBuildTimeConfig buildTimeAsyncConfig;
 
     public AmazonClientBuildItem(Optional<DotName> syncClassName, Optional<DotName> asyncClassName,
             String awsClientName, SdkBuildTimeConfig buildTimeSdkConfig,
-            SyncHttpClientBuildTimeConfig buildTimeSyncConfig) {
+            SyncHttpClientBuildTimeConfig buildTimeSyncConfig,
+            AsyncHttpClientBuildTimeConfig buildTimeAsyncConfig) {
         this.syncClassName = syncClassName;
         this.asyncClassName = asyncClassName;
         this.awsClientName = awsClientName;
         this.buildTimeSdkConfig = buildTimeSdkConfig;
         this.buildTimeSyncConfig = buildTimeSyncConfig;
+        this.buildTimeAsyncConfig = buildTimeAsyncConfig;
     }
 
     public Optional<DotName> getSyncClassName() {
@@ -46,5 +50,9 @@ public final class AmazonClientBuildItem extends MultiBuildItem {
 
     public SyncHttpClientBuildTimeConfig getBuildTimeSyncConfig() {
         return buildTimeSyncConfig;
+    }
+
+    public AsyncHttpClientBuildTimeConfig getBuildTimeAsyncConfig() {
+        return buildTimeAsyncConfig;
     }
 }

@@ -1,5 +1,6 @@
 package io.quarkus.amazon.s3.runtime;
 
+import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
 import io.quarkus.runtime.annotations.ConfigItem;
@@ -23,6 +24,12 @@ public class S3BuildTimeConfig {
      */
     @ConfigItem
     public SyncHttpClientBuildTimeConfig syncClient;
+
+    /**
+     * Async HTTP transport configuration for Amazon S3 client
+     */
+    @ConfigItem
+    public AsyncHttpClientBuildTimeConfig asyncClient;
 
     /**
      * Config for dev services

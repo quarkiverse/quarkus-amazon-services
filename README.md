@@ -19,10 +19,16 @@ This set of extensions allows you to interact with some of the AWS Services name
  * SNS
  * SQS
  * SSM
+ * STS
 
 They also provide a common infrastructure to make it easy to add new ones.
 
-Each extension provides configuration properties to configure the clients and wires everything via CDI injection.
+Each extension provides configuration properties to configure the clients and wires everything via CDI injection. It allows to use all 4 HTTP client implementations available in the AWS SDK for Java 2.x :
+
+* URL Connection HTTP client (default for synchronous call)
+* Apache HTTP Client
+* Netty HTTP client (default for asynchronous call)
+* AWS CRT-based HTTP client (native mode is experimental)
 
 ## Compatibility
 

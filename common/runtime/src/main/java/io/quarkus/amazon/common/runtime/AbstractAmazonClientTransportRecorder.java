@@ -1,9 +1,7 @@
 package io.quarkus.amazon.common.runtime;
 
 import java.net.URI;
-import java.util.function.Supplier;
 
-import io.netty.channel.EventLoopGroup;
 import io.quarkus.runtime.RuntimeValue;
 import software.amazon.awssdk.http.SdkHttpClient;
 import software.amazon.awssdk.http.TlsKeyManagersProvider;
@@ -21,7 +19,7 @@ public abstract class AbstractAmazonClientTransportRecorder {
 
     @SuppressWarnings("rawtypes")
     public RuntimeValue<SdkAsyncHttpClient.Builder> configureAsync(String clientName,
-            RuntimeValue<NettyHttpClientConfig> asyncConfigRuntime, Supplier<EventLoopGroup> eventLoopSupplier) {
+            RuntimeValue<AsyncHttpClientConfig> asyncConfigRuntime) {
         throw new IllegalStateException("Configuring an async client is not supported by " + this.getClass().getName());
     }
 
