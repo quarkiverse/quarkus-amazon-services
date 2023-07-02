@@ -7,8 +7,11 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 import org.jboss.jandex.AnnotationInstance;
 import org.jboss.jandex.ClassInfo;
+import org.jboss.jandex.ClassType;
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.IndexView;
 import org.objectweb.asm.AnnotationVisitor;
@@ -22,11 +25,9 @@ import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.BeanTableSchemaSubstitutionImplementation;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.DynamoDbEnhancedBuildTimeConfig;
-import io.quarkus.amazon.dynamodb.enhanced.runtime.DynamodbEnhancedClientProducer;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.DynamodbEnhancedClientRecorder;
-import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
-import io.quarkus.arc.deployment.BeanContainerListenerBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
+import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.arc.processor.BuildExtension;
 import io.quarkus.arc.processor.InjectionPointInfo;
 import io.quarkus.deployment.annotations.BuildProducer;
@@ -73,11 +74,6 @@ public class DynamodbEnhancedProcessor {
     @BuildStep
     FeatureBuildItem feature() {
         return new FeatureBuildItem(FEATURE);
-    }
-
-    @BuildStep
-    AdditionalBeanBuildItem producer() {
-        return AdditionalBeanBuildItem.unremovableOf(DynamodbEnhancedClientProducer.class);
     }
 
     @BuildStep
@@ -130,13 +126,11 @@ public class DynamodbEnhancedProcessor {
     @Record(ExecutionTime.STATIC_INIT)
     void createClientBuilders(
             DynamodbEnhancedClientRecorder recorder,
-            BuildProducer<BeanContainerListenerBuildItem> containerListenerProducer,
+            BuildProducer<SyntheticBeanBuildItem> syntheticBean,
             List<AmazonClientSyncResultBuildItem> syncBuilder,
             List<AmazonClientAsyncResultBuildItem> asyncBuilder) {
 
         String configName = "dynamodb";
-
-        RuntimeValue<DynamoDbEnhancedClientExtension> extensions = recorder.createExtensionList();
 
         Optional<AmazonClientSyncResultBuildItem> syncClientRuntime = syncBuilder.stream()
                 .filter(c -> configName.equals(c.getAwsClientName()))
@@ -145,14 +139,27 @@ public class DynamodbEnhancedProcessor {
                 .filter(c -> configName.equals(c.getAwsClientName()))
                 .findFirst();
 
-        if (syncClientRuntime != null) {
-            containerListenerProducer
-                    .produce(new BeanContainerListenerBuildItem(recorder.setDynamoDbClient(extensions)));
-        }
+        if (syncClientRuntime != null || asyncClientRuntime != null) {
+            RuntimeValue<DynamoDbEnhancedClientExtension> extensions = recorder.createExtensionList();
 
-        if (asyncClientRuntime != null) {
-            containerListenerProducer
-                    .produce(new BeanContainerListenerBuildItem(recorder.setDynamoDbAsyncClient(extensions)));
+            if (syncClientRuntime != null) {
+                syntheticBean.produce(SyntheticBeanBuildItem
+                        .configure(DynamoDbEnhancedClient.class)
+                        .scope(ApplicationScoped.class)
+                        .setRuntimeInit()
+                        .createWith(recorder.createDynamoDbEnhancedClient(extensions))
+                        .addInjectionPoint(ClassType.create(DynamoDbClient.class)).done());
+
+            }
+
+            if (asyncClientRuntime != null) {
+                syntheticBean.produce(SyntheticBeanBuildItem
+                        .configure(DynamoDbEnhancedAsyncClient.class)
+                        .scope(ApplicationScoped.class)
+                        .setRuntimeInit()
+                        .createWith(recorder.createDynamoDbEnhancedAsyncClient(extensions))
+                        .addInjectionPoint(ClassType.create(DynamoDbAsyncClient.class)).done());
+            }
         }
     }
 

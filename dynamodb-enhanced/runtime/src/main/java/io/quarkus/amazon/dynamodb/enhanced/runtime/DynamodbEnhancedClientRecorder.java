@@ -6,14 +6,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import io.quarkus.arc.runtime.BeanContainer;
-import io.quarkus.arc.runtime.BeanContainerListener;
+import io.quarkus.arc.SyntheticCreationalContext;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClientExtension;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.internal.client.ExtensionResolver;
@@ -28,32 +30,6 @@ public class DynamodbEnhancedClientRecorder {
 
     public DynamodbEnhancedClientRecorder(DynamoDbEnhancedBuildTimeConfig buildTimeConfig) {
         this.buildTimeConfig = buildTimeConfig;
-    }
-
-    public BeanContainerListener setDynamoDbClient(RuntimeValue<DynamoDbEnhancedClientExtension> extensions) {
-        BeanContainerListener beanContainerListener = new BeanContainerListener() {
-
-            @Override
-            public void created(BeanContainer container) {
-                DynamodbEnhancedClientProducer producer = container.beanInstance(DynamodbEnhancedClientProducer.class);
-                producer.setDynamoDbClient(container.beanInstance(DynamoDbClient.class), extensions.getValue());
-            }
-        };
-
-        return beanContainerListener;
-    }
-
-    public BeanContainerListener setDynamoDbAsyncClient(RuntimeValue<DynamoDbEnhancedClientExtension> extensions) {
-        BeanContainerListener beanContainerListener = new BeanContainerListener() {
-
-            @Override
-            public void created(BeanContainer container) {
-                DynamodbEnhancedClientProducer producer = container.beanInstance(DynamodbEnhancedClientProducer.class);
-                producer.setDynamoDbAsyncClient(container.beanInstance(DynamoDbAsyncClient.class), extensions.getValue());
-            }
-        };
-
-        return beanContainerListener;
     }
 
     public void createTableSchema(List<Class<?>> tableSchemClasses) {
@@ -99,5 +75,28 @@ public class DynamodbEnhancedClientRecorder {
                 return null;
             }
         }
+    }
+
+    public Function<SyntheticCreationalContext<DynamoDbEnhancedClient>, DynamoDbEnhancedClient> createDynamoDbEnhancedClient(
+            RuntimeValue<DynamoDbEnhancedClientExtension> extensions) {
+        return new Function<SyntheticCreationalContext<DynamoDbEnhancedClient>, DynamoDbEnhancedClient>() {
+            @Override
+            public DynamoDbEnhancedClient apply(SyntheticCreationalContext<DynamoDbEnhancedClient> context) {
+                return DynamoDbEnhancedClient.builder().dynamoDbClient(context.getInjectedReference(DynamoDbClient.class))
+                        .extensions(extensions.getValue()).build();
+            }
+        };
+    }
+
+    public Function<SyntheticCreationalContext<DynamoDbEnhancedAsyncClient>, DynamoDbEnhancedAsyncClient> createDynamoDbEnhancedAsyncClient(
+            RuntimeValue<DynamoDbEnhancedClientExtension> extensions) {
+        return new Function<SyntheticCreationalContext<DynamoDbEnhancedAsyncClient>, DynamoDbEnhancedAsyncClient>() {
+            @Override
+            public DynamoDbEnhancedAsyncClient apply(SyntheticCreationalContext<DynamoDbEnhancedAsyncClient> context) {
+                return DynamoDbEnhancedAsyncClient.builder()
+                        .dynamoDbClient(context.getInjectedReference(DynamoDbAsyncClient.class))
+                        .extensions(extensions.getValue()).build();
+            }
+        };
     }
 }
