@@ -1,6 +1,6 @@
 = Dev services for Amazon Services
 
-Quarkus Amazon Services automatically starts a LocalStack container in dev mode and when running tests. So, you don’t have to start one manually. The extension client is configured automatically.
+Quarkus Amazon Services automatically starts a LocalStack container in dev mode and when running tests. So, you don't have to start one manually. The extension client is configured automatically.
 
 == Enabling / Disabling Dev Services for Amazon Services
 

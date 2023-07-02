@@ -17,7 +17,7 @@ public abstract class AmazonClientRecorder {
 
     public abstract RuntimeValue<SdkConfig> getSdkConfig();
 
-    public abstract NettyHttpClientConfig getAsyncClientConfig();
+    public abstract AsyncHttpClientConfig getAsyncClientConfig();
 
     public abstract SyncHttpClientConfig getSyncClientConfig();
 
@@ -29,7 +29,7 @@ public abstract class AmazonClientRecorder {
         return new RuntimeValue<>(getSyncClientConfig());
     }
 
-    public RuntimeValue<NettyHttpClientConfig> getAsyncConfig() {
+    public RuntimeValue<AsyncHttpClientConfig> getAsyncConfig() {
         return new RuntimeValue<>(getAsyncClientConfig());
     }
 
@@ -45,7 +45,7 @@ public abstract class AmazonClientRecorder {
     public RuntimeValue<AwsClientBuilder> createAsyncBuilder(RuntimeValue<SdkAsyncHttpClient.Builder> transport,
             Executor executor) {
         AwsAsyncClientBuilder<?, ?> builder = getAsyncClientBuilder();
-        NettyHttpClientConfig config = getAsyncClientConfig();
+        AsyncHttpClientConfig config = getAsyncClientConfig();
 
         if (transport != null) {
             builder.httpClientBuilder(transport.getValue());

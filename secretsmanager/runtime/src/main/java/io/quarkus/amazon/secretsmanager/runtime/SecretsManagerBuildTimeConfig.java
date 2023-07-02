@@ -1,5 +1,6 @@
 package io.quarkus.amazon.secretsmanager.runtime;
 
+import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.DevServicesBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
@@ -24,6 +25,12 @@ public class SecretsManagerBuildTimeConfig {
      */
     @ConfigItem
     public SyncHttpClientBuildTimeConfig syncClient;
+
+    /**
+     * Async HTTP transport configuration for Amazon Secrets Manager client
+     */
+    @ConfigItem
+    public AsyncHttpClientBuildTimeConfig asyncClient;
 
     /**
      * Config for dev services

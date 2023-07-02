@@ -45,6 +45,23 @@ endif::add-copy-button-to-env-var[]
 |`url`
 
 
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.type]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.type[quarkus.dynamodb.async-client.type]`
+
+[.description]
+--
+Type of the async HTTP client implementation
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_DYNAMODB_ASYNC_CLIENT_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_DYNAMODB_ASYNC_CLIENT_TYPE+++`
+endif::add-copy-button-to-env-var[]
+-- a|
+`netty`, `aws-crt` 
+|`netty`
+
+
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.enabled]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.enabled[quarkus.dynamodb.devservices.enabled]`
 
 [.description]
@@ -923,7 +940,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client-netty-http-transport-configurations]]link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client-netty-http-transport-configurations[Netty HTTP transport configurations]
+h|[[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client-async-http-transport-configurations]]link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client-async-http-transport-configurations[Async HTTP transport configurations]
 
 h|Type
 h|Default

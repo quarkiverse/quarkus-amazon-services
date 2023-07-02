@@ -1,8 +1,8 @@
 package io.quarkus.amazon.secretsmanager.runtime;
 
 import io.quarkus.amazon.common.runtime.AmazonClientRecorder;
+import io.quarkus.amazon.common.runtime.AsyncHttpClientConfig;
 import io.quarkus.amazon.common.runtime.AwsConfig;
-import io.quarkus.amazon.common.runtime.NettyHttpClientConfig;
 import io.quarkus.amazon.common.runtime.SdkConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.runtime.RuntimeValue;
@@ -32,7 +32,7 @@ public class SecretsManagerRecorder extends AmazonClientRecorder {
     }
 
     @Override
-    public NettyHttpClientConfig getAsyncClientConfig() {
+    public AsyncHttpClientConfig getAsyncClientConfig() {
         return config.asyncClient;
     }
 

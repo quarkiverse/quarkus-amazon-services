@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.function.Supplier;
 
 import io.netty.channel.EventLoopGroup;
-import io.quarkus.amazon.common.runtime.NettyHttpClientConfig.SslProviderType;
+import io.quarkus.amazon.common.runtime.AsyncHttpClientConfig.SslProviderType;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.http.TlsTrustManagersProvider;
@@ -21,9 +21,9 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
     @SuppressWarnings("rawtypes")
     @Override
     public RuntimeValue<SdkAsyncHttpClient.Builder> configureAsync(String clientName,
-            RuntimeValue<NettyHttpClientConfig> asyncConfigRuntime, Supplier<EventLoopGroup> eventLoopSupplier) {
+            RuntimeValue<AsyncHttpClientConfig> asyncConfigRuntime) {
         NettyNioAsyncHttpClient.Builder builder = NettyNioAsyncHttpClient.builder();
-        NettyHttpClientConfig asyncConfig = asyncConfigRuntime.getValue();
+        AsyncHttpClientConfig asyncConfig = asyncConfigRuntime.getValue();
         validateNettyClientConfig(clientName, asyncConfig);
 
         builder.connectionAcquisitionTimeout(asyncConfig.connectionAcquisitionTimeout);
@@ -65,6 +65,14 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
             builder.tlsTrustManagersProvider(tlsTrustManagerProvider);
         }
 
+        return new RuntimeValue<>(builder);
+    }
+
+    public RuntimeValue<SdkAsyncHttpClient.Builder> configureNettyAsync(RuntimeValue<SdkAsyncHttpClient.Builder> builderRuntime,
+            Supplier<EventLoopGroup> eventLoopSupplier, RuntimeValue<AsyncHttpClientConfig> asyncConfigRuntime) {
+        AsyncHttpClientConfig asyncConfig = asyncConfigRuntime.getValue();
+        NettyNioAsyncHttpClient.Builder builder = (NettyNioAsyncHttpClient.Builder) builderRuntime.getValue();
+
         if (asyncConfig.eventLoop.override) {
             SdkEventLoopGroup.Builder eventLoopBuilder = SdkEventLoopGroup.builder();
             asyncConfig.eventLoop.numberOfThreads.ifPresent(eventLoopBuilder::numberOfThreads);
@@ -81,7 +89,7 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
         return new RuntimeValue<>(builder);
     }
 
-    private void validateNettyClientConfig(String extension, NettyHttpClientConfig config) {
+    private void validateNettyClientConfig(String extension, AsyncHttpClientConfig config) {
         if (config.maxConcurrency <= 0) {
             throw new RuntimeConfigurationError(
                     String.format("quarkus.%s.async-client.max-concurrency may not be negative or zero.", extension));

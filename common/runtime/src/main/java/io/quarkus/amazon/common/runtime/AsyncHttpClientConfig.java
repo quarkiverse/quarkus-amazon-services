@@ -12,7 +12,7 @@ import io.quarkus.runtime.annotations.ConfigItem;
 import software.amazon.awssdk.http.Protocol;
 
 @ConfigGroup
-public class NettyHttpClientConfig {
+public class AsyncHttpClientConfig {
 
     /**
      * The maximum number of allowed concurrent requests.

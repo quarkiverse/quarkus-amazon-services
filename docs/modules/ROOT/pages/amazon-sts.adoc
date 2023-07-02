@@ -130,6 +130,35 @@ It can then be run with `java -Dparameters.path=/quarkus/is/awesome/ -jar target
 With GraalVM installed, you can also create a native executable binary: `./mvnw clean package -Dnative`.
 Depending on your system, that will take some time.
 
+=== Going asynchronous
+
+Thanks to the AWS SDK v2.x used by the Quarkus extension, you can use the asynchronous programming model out of the box.
+
+We need to add the Netty HTTP client dependency to the `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>netty-nio-client</artifactId>
+</dependency>
+----
+
+If you want to use the AWS CRT-based HTTP client instead, configure it as follows:
+[source,properties]
+----
+quarkus.sts.async-client.type=aws-crt
+----
+
+And add the following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>aws-crt-client</artifactId>
+</dependency>
+----
+
 == Configuration Reference
 
 include::./includes/quarkus-amazon-sts.adoc[]
