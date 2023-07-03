@@ -26,9 +26,9 @@ import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.BeanTableSchemaSubstitutionImplementation;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.DynamoDbEnhancedBuildTimeConfig;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.DynamodbEnhancedClientRecorder;
+import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
-import io.quarkus.arc.processor.BuildExtension;
 import io.quarkus.arc.processor.InjectionPointInfo;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -50,30 +50,23 @@ import software.amazon.awssdk.enhanced.dynamodb.internal.extensions.AutoGenerate
 import software.amazon.awssdk.enhanced.dynamodb.internal.extensions.VersionRecordAttributeTags;
 import software.amazon.awssdk.enhanced.dynamodb.internal.mapper.BeanTableSchemaAttributeTags;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.BeanTableSchema;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbImmutable;
 import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 public class DynamodbEnhancedProcessor {
     private static final String FEATURE = "amazon-dynamodb-enhanced";
 
-    private static final DotName DYNAMODB_ENHANCED_CLIENT = DotName.createSimple(DynamoDbEnhancedClient.class);
-    private static final DotName DYNAMODB_ENHANCED_ASYNC_CLIENT = DotName
-            .createSimple(DynamoDbEnhancedAsyncClient.class);
-    private static final DotName DYNAMODB_CLIENT = DotName.createSimple(DynamoDbClient.class);
-    private static final DotName DYNAMODB_ASYNC_CLIENT = DotName
-            .createSimple(DynamoDbAsyncClient.class);
-
-    private static final DotName DYNAMODB_ENHANCED_CLIENT_EXTENSION_NAME = DotName
-            .createSimple(DynamoDbEnhancedClientExtension.class);
-
-    private static final DotName DYNAMODB_ENHANCED_BEAN = DotName.createSimple(DynamoDbBean.class);
-    private static final DotName DYNAMODB_ENHANCED_IMMUTABLE = DotName.createSimple(DynamoDbImmutable.class);
-
     @BuildStep
     FeatureBuildItem feature() {
         return new FeatureBuildItem(FEATURE);
+    }
+
+    @BuildStep
+    AdditionalBeanBuildItem additionalBeans() {
+        return AdditionalBeanBuildItem.builder()
+                .addBeanClasses(DynamoDbEnhancedClient.class, DynamoDbEnhancedAsyncClient.class)
+                .setUnremovable()
+                .setDefaultScope(io.quarkus.arc.processor.DotNames.APPLICATION_SCOPED).build();
     }
 
     @BuildStep
@@ -87,7 +80,7 @@ public class DynamodbEnhancedProcessor {
 
         // Discover all known dynamodb-enhanced-client-extension implementors
         List<String> knownDynamodbEnhancedClientExtensionImpls = combinedIndexBuildItem.getIndex()
-                .getAllKnownImplementors(DYNAMODB_ENHANCED_CLIENT_EXTENSION_NAME)
+                .getAllKnownImplementors(DotNames.DYNAMODB_ENHANCED_CLIENT_EXTENSION_NAME)
                 .stream()
                 .map(c -> c.name().toString()).collect(Collectors.toList());
 
@@ -104,16 +97,15 @@ public class DynamodbEnhancedProcessor {
 
         // Discover all clients injections in order to determine if async or sync client
         // is required
-        for (InjectionPointInfo injectionPoint : beanRegistrationPhase.getContext()
-                .get(BuildExtension.Key.INJECTION_POINTS)) {
+        for (InjectionPointInfo injectionPoint : beanRegistrationPhase.getInjectionPoints()) {
 
             org.jboss.jandex.Type injectedType = injectionPoint.getRequiredType();
 
-            if (DYNAMODB_ENHANCED_CLIENT.equals(injectedType.name())) {
-                syncClassName = Optional.of(DYNAMODB_CLIENT);
+            if (DotNames.DYNAMODB_ENHANCED_CLIENT.equals(injectedType.name())) {
+                syncClassName = Optional.of(DotNames.DYNAMODB_CLIENT);
             }
-            if (DYNAMODB_ENHANCED_ASYNC_CLIENT.equals(injectedType.name())) {
-                asyncClassName = Optional.of(DYNAMODB_ASYNC_CLIENT);
+            if (DotNames.DYNAMODB_ENHANCED_ASYNC_CLIENT.equals(injectedType.name())) {
+                asyncClassName = Optional.of(DotNames.DYNAMODB_ASYNC_CLIENT);
             }
         }
 
@@ -169,13 +161,13 @@ public class DynamodbEnhancedProcessor {
         IndexView index = combinedIndexBuildItem.getIndex();
 
         // Discover all DynamoDbBean annotated classes and register them
-        for (AnnotationInstance annotationInstance : index.getAnnotations(DYNAMODB_ENHANCED_BEAN)) {
+        for (AnnotationInstance annotationInstance : index.getAnnotations(DotNames.DYNAMODB_ENHANCED_BEAN)) {
             ClassInfo beanClassInfo = annotationInstance.target().asClass();
             dynamodbEnhancedBeanBuildItems.produce(new DynamodbEnhancedBeanBuildItem(beanClassInfo.name()));
         }
 
         // Discover all DynamoDbImmutable annotated classes and register them
-        for (AnnotationInstance annotationInstance : index.getAnnotations(DYNAMODB_ENHANCED_IMMUTABLE)) {
+        for (AnnotationInstance annotationInstance : index.getAnnotations(DotNames.DYNAMODB_ENHANCED_IMMUTABLE)) {
             var beanClassInfo = annotationInstance.target().asClass();
             dynamodbEnhancedBeanBuildItems.produce(new DynamodbEnhancedBeanBuildItem(beanClassInfo.name()));
         }

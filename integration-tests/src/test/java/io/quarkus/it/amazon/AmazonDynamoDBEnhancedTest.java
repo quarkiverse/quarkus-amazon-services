@@ -1,22 +1,25 @@
 package io.quarkus.it.amazon;
 
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
-import org.junit.jupiter.api.Test;
+import org.junitpioneer.jupiter.CartesianProductTest;
+import org.junitpioneer.jupiter.CartesianValueSource;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.RestAssured;
 
 @QuarkusTest
 public class AmazonDynamoDBEnhancedTest {
 
-    @Test
-    public void testDynamoDbEnhancedClientWithCustomExtensionAsync() {
-        RestAssured.when().get("/test/dynamodbenhanced/async").then().body(is("INTERCEPTED EXTENSION OK@1"));
-    }
+    @CartesianProductTest
+    @CartesianValueSource(strings = { "dynamodbenhanced", "dynamodbenhanceddbtable" })
+    @CartesianValueSource(strings = { "async", "blocking" })
+    public void testDynamoDbEnhancedClientWithCustomExtension(String testedRresource, String path) {
 
-    @Test
-    public void testDynamoDbEnhancedClientWithCustomExtensionBlocking() {
-        RestAssured.when().get("/test/dynamodbenhanced/blocking").then().body(is("INTERCEPTED EXTENSION OK@1"));
+        given()
+                .pathParam("resource", testedRresource)
+                .pathParam("path", path)
+                .when().get("/test/{resource}/{path}")
+                .then().body(is("INTERCEPTED EXTENSION OK@1"));
     }
 }
