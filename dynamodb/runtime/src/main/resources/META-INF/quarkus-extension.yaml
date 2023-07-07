@@ -9,7 +9,7 @@ metadata:
     - "amazon"
   categories:
     - "data"
-  guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-dynamodb.html
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-dynamodb.html
   status: "stable"
   config:
   - "quarkus.dynamodb."

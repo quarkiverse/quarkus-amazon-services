@@ -8,7 +8,7 @@ metadata:
     - "amazon"
   categories:
     - "data"
-  guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-sns.html
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-sns.html
   status: "stable"
   config:
   - "quarkus.sns."
