@@ -1,5 +1,5 @@
 name: quarkus-amazon-services
-title: Quarkus Amazon Services
+title: Amazon Services
 version: dev
 nav:
   - modules/ROOT/nav.adoc
