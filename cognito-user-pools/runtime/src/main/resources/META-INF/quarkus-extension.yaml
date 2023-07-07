@@ -9,7 +9,7 @@ metadata:
     - "cognito-idp"
     - "aws"
     - "amazon"
-  guide: "https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-cognitouserpools.html"
+  guide: "https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-cognitouserpools.html"
   categories:
     - "data"
   status: "stable"
