@@ -3,6 +3,7 @@ package io.quarkus.amazon.common.runtime;
 import java.util.Collections;
 import java.util.HashSet;
 
+import io.quarkus.amazon.common.runtime.NettyHttpClientConfig.SslProviderType;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.http.TlsTrustManagersProvider;
@@ -33,7 +34,7 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
         builder.readTimeout(asyncConfig.readTimeout);
         builder.writeTimeout(asyncConfig.writeTimeout);
         builder.tcpKeepAlive(asyncConfig.tcpKeepAlive);
-        asyncConfig.sslProvider.ifPresent(builder::sslProvider);
+        asyncConfig.sslProvider.map(SslProviderType::create).ifPresent(builder::sslProvider);
         builder.useIdleConnectionReaper(asyncConfig.useIdleConnectionReaper);
 
         if (asyncConfig.http2.initialWindowSize.isPresent() || asyncConfig.http2.maxStreams.isPresent()) {
