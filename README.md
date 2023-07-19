@@ -1,6 +1,6 @@
 # Quarkus Amazon Services
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-19-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-20-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/maven-central/v/io.quarkiverse.amazonservices/quarkus-amazon-services-bom?logo=apache-maven&style=flat-square)](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom)
@@ -78,6 +78,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="http://surunairdejava.com"><img src="https://avatars.githubusercontent.com/u/1970634?v=4?s=100" width="100px;" alt="Cedric Thiebault"/><br /><sub><b>Cedric Thiebault</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=cthiebault" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/krisgerhard"><img src="https://avatars.githubusercontent.com/u/11822359?v=4?s=100" width="100px;" alt="Kris-Gerhard"/><br /><sub><b>Kris-Gerhard</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=krisgerhard" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Nonoelgringo"><img src="https://avatars.githubusercontent.com/u/9656394?v=4?s=100" width="100px;" alt="Arnaud Bailly"/><br /><sub><b>Arnaud Bailly</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=Nonoelgringo" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://thejavaguy.org/"><img src="https://avatars.githubusercontent.com/u/11942401?v=4?s=100" width="100px;" alt="Ivan Milosavljević"/><br /><sub><b>Ivan Milosavljević</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=TheJavaGuy" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
