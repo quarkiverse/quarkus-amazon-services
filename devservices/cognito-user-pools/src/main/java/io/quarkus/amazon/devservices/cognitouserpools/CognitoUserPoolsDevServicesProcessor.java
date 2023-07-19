@@ -72,7 +72,7 @@ public class CognitoUserPoolsDevServicesProcessor {
 
         try {
             MotoContainer container = new MotoContainer(
-                    DockerImageName.parse(motoDevServicesBuildTimeConfig.imageName));
+                    DockerImageName.parse(motoDevServicesBuildTimeConfig.imageName()));
             container.start();
 
             compressor.close();

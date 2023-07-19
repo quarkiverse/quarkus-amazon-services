@@ -85,7 +85,7 @@ public class DynamodbEnhancedProcessor {
                 .map(c -> c.name().toString()).collect(Collectors.toList());
 
         // Validate configurations
-        Optional<List<String>> extensions = buildTimeConfig.clientExtensions;
+        Optional<List<String>> extensions = buildTimeConfig.clientExtensions();
         if (extensions != null && extensions.isPresent()) {
             for (var extension : extensions.get()) {
                 if (!knownDynamodbEnhancedClientExtensionImpls.contains(extension)) {
@@ -181,7 +181,7 @@ public class DynamodbEnhancedProcessor {
             List<DynamodbEnhancedBeanBuildItem> dynamodbEnhancedBeanBuildItems,
             BuildProducer<ReflectiveClassBuildItem> reflectiveClass) {
 
-        if (!config.createTableSchemas)
+        if (!config.createTableSchemas())
             return;
 
         List<Class<?>> tableSchemaClasses = new ArrayList<>();

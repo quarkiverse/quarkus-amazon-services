@@ -22,26 +22,26 @@ public class AmazonClientCommonRecorder {
     private static final Log LOG = LogFactory.getLog(AmazonClientCommonRecorder.class);
 
     public RuntimeValue<AwsClientBuilder> configure(RuntimeValue<? extends AwsClientBuilder> clientBuilder,
-            RuntimeValue<AwsConfig> awsConfig, RuntimeValue<SdkConfig> sdkConfig, SdkBuildTimeConfig sdkBuildTimeConfig,
+            RuntimeValue<AwsConfig> awsConfig, RuntimeValue<SdkConfig> sdkConfig, HasSdkBuildTimeConfig sdkBuildTimeConfig,
             ScheduledExecutorService scheduledExecutorService, String awsServiceName) {
         AwsClientBuilder builder = clientBuilder.getValue();
 
         initAwsClient(builder, awsServiceName, awsConfig.getValue());
-        initSdkClient(builder, awsServiceName, sdkConfig.getValue(), sdkBuildTimeConfig, scheduledExecutorService);
+        initSdkClient(builder, awsServiceName, sdkConfig.getValue(), sdkBuildTimeConfig.sdk(), scheduledExecutorService);
 
         return new RuntimeValue<>(builder);
     }
 
     public void initAwsClient(AwsClientBuilder builder, String extension, AwsConfig config) {
-        config.region.ifPresent(builder::region);
+        config.region().ifPresent(builder::region);
 
-        builder.credentialsProvider(config.credentials.type.create(config.credentials, "quarkus." + extension));
+        builder.credentialsProvider(config.credentials().type().create(config.credentials(), "quarkus." + extension));
     }
 
     public void initSdkClient(SdkClientBuilder builder, String extension, SdkConfig config, SdkBuildTimeConfig buildConfig,
             ScheduledExecutorService scheduledExecutorService) {
-        if (config.endpointOverride.isPresent()) {
-            URI endpointOverride = config.endpointOverride.get();
+        if (config.endpointOverride().isPresent()) {
+            URI endpointOverride = config.endpointOverride().get();
             if (StringUtils.isBlank(endpointOverride.getScheme())) {
                 throw new RuntimeConfigurationError(
                         String.format("quarkus.%s.endpoint-override (%s) - scheme must be specified",
@@ -50,16 +50,16 @@ public class AmazonClientCommonRecorder {
             }
         }
 
-        config.endpointOverride.filter(URI::isAbsolute).ifPresent(builder::endpointOverride);
+        config.endpointOverride().filter(URI::isAbsolute).ifPresent(builder::endpointOverride);
 
         final ClientOverrideConfiguration.Builder overrides = ClientOverrideConfiguration.builder();
         // use quarkus executor service
         overrides.scheduledExecutorService(scheduledExecutorService);
 
-        config.apiCallTimeout.ifPresent(overrides::apiCallTimeout);
-        config.apiCallAttemptTimeout.ifPresent(overrides::apiCallAttemptTimeout);
+        config.apiCallTimeout().ifPresent(overrides::apiCallTimeout);
+        config.apiCallAttemptTimeout().ifPresent(overrides::apiCallAttemptTimeout);
 
-        buildConfig.interceptors.orElse(Collections.emptyList()).stream()
+        buildConfig.interceptors().orElse(Collections.emptyList()).stream()
                 .map(String::trim)
                 .map(this::createInterceptor)
                 .filter(Objects::nonNull)
@@ -80,14 +80,14 @@ public class AmazonClientCommonRecorder {
     }
 
     public void initAwsPresigner(SdkPresigner.Builder builder, String extension, AwsConfig config) {
-        config.region.ifPresent(builder::region);
+        config.region().ifPresent(builder::region);
 
-        builder.credentialsProvider(config.credentials.type.create(config.credentials, "quarkus." + extension));
+        builder.credentialsProvider(config.credentials().type().create(config.credentials(), "quarkus." + extension));
     }
 
     public void initSdkPresigner(SdkPresigner.Builder builder, String extension, SdkConfig config) {
-        if (config.endpointOverride.isPresent()) {
-            URI endpointOverride = config.endpointOverride.get();
+        if (config.endpointOverride().isPresent()) {
+            URI endpointOverride = config.endpointOverride().get();
             if (StringUtils.isBlank(endpointOverride.getScheme())) {
                 throw new RuntimeConfigurationError(
                         String.format("quarkus.%s.endpoint-override (%s) - scheme must be specified",
@@ -96,7 +96,7 @@ public class AmazonClientCommonRecorder {
             }
         }
 
-        config.endpointOverride.filter(URI::isAbsolute).ifPresent(builder::endpointOverride);
+        config.endpointOverride().filter(URI::isAbsolute).ifPresent(builder::endpointOverride);
     }
 
     private ExecutionInterceptor createInterceptor(String interceptorClassName) {

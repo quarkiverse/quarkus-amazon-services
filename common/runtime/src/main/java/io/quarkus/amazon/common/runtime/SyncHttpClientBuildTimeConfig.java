@@ -1,16 +1,16 @@
 package io.quarkus.amazon.common.runtime;
 
 import io.quarkus.runtime.annotations.ConfigGroup;
-import io.quarkus.runtime.annotations.ConfigItem;
+import io.smallrye.config.WithDefault;
 
 @ConfigGroup
-public class SyncHttpClientBuildTimeConfig {
+public interface SyncHttpClientBuildTimeConfig {
 
     /**
      * Type of the sync HTTP client implementation
      */
-    @ConfigItem(defaultValue = "url")
-    public SyncClientType type;
+    @WithDefault(value = "url")
+    SyncClientType type();
 
     public enum SyncClientType {
         URL,

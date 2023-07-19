@@ -25,7 +25,7 @@ public abstract class AbstractDevServicesLocalStackProcessor {
             DevServicesBuildTimeConfig devServicesBuildTimeConfig) {
 
         // explicitely disabled
-        if (!devServicesBuildTimeConfig.enabled.orElse(true)) {
+        if (!devServicesBuildTimeConfig.enabled().orElse(true)) {
             log.debugf(
                     "Not starting Dev Services for Amazon Services - %s, as it has been disabled in the config.",
                     enabledService.getName());
@@ -108,9 +108,9 @@ public abstract class AbstractDevServicesLocalStackProcessor {
     protected LocalStackDevServicesBaseConfig getConfiguration(
             DevServicesBuildTimeConfig devServicesBuildTimeConfig) {
         return new LocalStackDevServicesBaseConfig(
-                devServicesBuildTimeConfig.shared,
-                devServicesBuildTimeConfig.serviceName,
-                devServicesBuildTimeConfig.containerProperties);
+                devServicesBuildTimeConfig.shared(),
+                devServicesBuildTimeConfig.serviceName(),
+                devServicesBuildTimeConfig.containerProperties());
     }
 
     /**

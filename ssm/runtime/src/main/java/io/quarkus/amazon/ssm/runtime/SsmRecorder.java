@@ -23,22 +23,22 @@ public class SsmRecorder extends AmazonClientRecorder {
 
     @Override
     public RuntimeValue<AwsConfig> getAwsConfig() {
-        return new RuntimeValue<>(config.aws);
+        return new RuntimeValue<>(config.aws());
     }
 
     @Override
     public RuntimeValue<SdkConfig> getSdkConfig() {
-        return new RuntimeValue<>(config.sdk);
+        return new RuntimeValue<>(config.sdk());
     }
 
     @Override
     public AsyncHttpClientConfig getAsyncClientConfig() {
-        return config.asyncClient;
+        return config.asyncClient();
     }
 
     @Override
     public SyncHttpClientConfig getSyncClientConfig() {
-        return config.syncClient;
+        return config.syncClient();
     }
 
     @Override

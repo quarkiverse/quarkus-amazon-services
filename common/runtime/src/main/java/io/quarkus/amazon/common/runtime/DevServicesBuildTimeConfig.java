@@ -4,10 +4,10 @@ import java.util.Map;
 import java.util.Optional;
 
 import io.quarkus.runtime.annotations.ConfigGroup;
-import io.quarkus.runtime.annotations.ConfigItem;
+import io.smallrye.config.WithDefault;
 
 @ConfigGroup
-public class DevServicesBuildTimeConfig {
+public interface DevServicesBuildTimeConfig {
 
     /**
      * If a local AWS stack should be used. (default to true)
@@ -17,8 +17,7 @@ public class DevServicesBuildTimeConfig {
      * For all services but Cognito, the local AWS stack will be provided by LocalStack.
      * Otherwise, it will be provided by Moto
      */
-    @ConfigItem
-    public Optional<Boolean> enabled = Optional.empty();
+    Optional<Boolean> enabled();
 
     /**
      * Indicates if the LocalStack container managed by Dev Services is shared.
@@ -32,8 +31,8 @@ public class DevServicesBuildTimeConfig {
      * Sharing is not supported for the Cognito extension.
      * <p>
      */
-    @ConfigItem(defaultValue = "false")
-    public boolean shared;
+    @WithDefault(value = "false")
+    boolean shared();
 
     /**
      * The value of the {@code quarkus-dev-service-localstack} label attached to the started container.
@@ -46,12 +45,11 @@ public class DevServicesBuildTimeConfig {
      * <p>
      * This property is used when you need multiple shared LocalStack instances.
      */
-    @ConfigItem(defaultValue = "localstack")
-    public String serviceName;
+    @WithDefault(value = "localstack")
+    String serviceName();
 
     /**
      * Generic properties that are pass for additional container configuration.
      */
-    @ConfigItem
-    public Map<String, String> containerProperties;
+    Map<String, String> containerProperties();
 }

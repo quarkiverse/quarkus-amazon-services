@@ -5,37 +5,36 @@ import io.quarkus.amazon.common.runtime.AwsConfig;
 import io.quarkus.amazon.common.runtime.SdkConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.runtime.annotations.ConfigDocSection;
-import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithParentName;
 
 @ConfigRoot(phase = ConfigPhase.RUN_TIME)
-public class SnsConfig {
+@ConfigMapping(prefix = "quarkus.sns")
+public interface SnsConfig {
     /**
      * AWS SDK client configurations
      */
-    @ConfigItem(name = ConfigItem.PARENT)
+    @WithParentName
     @ConfigDocSection
-    public SdkConfig sdk;
+    SdkConfig sdk();
 
     /**
      * AWS services configurations
      */
-    @ConfigItem
     @ConfigDocSection
-    public AwsConfig aws;
+    AwsConfig aws();
 
     /**
      * Sync HTTP transport configurations
      */
-    @ConfigItem
     @ConfigDocSection
-    public SyncHttpClientConfig syncClient;
+    SyncHttpClientConfig syncClient();
 
     /**
      * Async HTTP transport configurations
      */
-    @ConfigItem
     @ConfigDocSection
-    public AsyncHttpClientConfig asyncClient;
+    AsyncHttpClientConfig asyncClient();
 }

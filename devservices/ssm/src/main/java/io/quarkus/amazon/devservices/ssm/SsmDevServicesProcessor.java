@@ -11,6 +11,6 @@ public class SsmDevServicesProcessor extends AbstractDevServicesLocalStackProces
 
     @BuildStep
     DevServicesLocalStackProviderBuildItem setupSsm(SsmBuildTimeConfig clientBuildTimeConfig) {
-        return this.setup(Service.SSM, clientBuildTimeConfig.devservices);
+        return this.setup(Service.SSM, clientBuildTimeConfig.devservices());
     }
 }

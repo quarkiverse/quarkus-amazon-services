@@ -77,14 +77,14 @@ public class AmazonServicesClientsProcessor {
         for (AmazonClientBuildItem client : amazonClients) {
             SdkBuildTimeConfig clientSdkConfig = client.getBuildTimeSdkConfig();
             if (clientSdkConfig != null) {
-                clientSdkConfig.interceptors.orElse(Collections.emptyList()).forEach(interceptorClassName -> {
+                clientSdkConfig.interceptors().orElse(Collections.emptyList()).forEach(interceptorClassName -> {
                     interceptorClassName = interceptorClassName.trim();
                     if (!knownInterceptorImpls.contains(interceptorClassName)) {
                         throw new ConfigurationException(
                                 String.format(
                                         "quarkus.%s.interceptors (%s) - must list only existing implementations of software.amazon.awssdk.core.interceptor.ExecutionInterceptor",
                                         client.getAwsClientName(),
-                                        clientSdkConfig.interceptors.toString()));
+                                        clientSdkConfig.interceptors().toString()));
                     }
                 });
             }
@@ -100,9 +100,9 @@ public class AmazonServicesClientsProcessor {
         boolean syncTransportNeeded = amazonClients.stream().anyMatch(item -> item.getSyncClassName().isPresent());
         boolean asyncTransportNeeded = amazonClients.stream().anyMatch(item -> item.getAsyncClassName().isPresent());
         final Predicate<AmazonClientBuildItem> isSyncApache = client -> client
-                .getBuildTimeSyncConfig().type == SyncClientType.APACHE;
+                .getBuildTimeSyncConfig().type() == SyncClientType.APACHE;
         final Predicate<AmazonClientBuildItem> isAsyncNetty = client -> client
-                .getBuildTimeAsyncConfig().type == AsyncClientType.NETTY;
+                .getBuildTimeAsyncConfig().type() == AsyncClientType.NETTY;
 
         // Register what's needed depending on the clients in the classpath and the configuration.
         // We use the configuration to guide us but if we don't have any clients configured,

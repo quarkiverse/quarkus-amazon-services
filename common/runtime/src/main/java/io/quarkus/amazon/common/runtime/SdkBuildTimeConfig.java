@@ -4,13 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import io.quarkus.runtime.annotations.ConfigGroup;
-import io.quarkus.runtime.annotations.ConfigItem;
 
 /**
  * AWS SDK specific configurations
  */
 @ConfigGroup
-public class SdkBuildTimeConfig {
+public interface SdkBuildTimeConfig {
 
     /**
      * List of execution interceptors that will have access to read and modify the request and response objects as they are
@@ -21,6 +20,5 @@ public class SdkBuildTimeConfig {
      *
      * @see software.amazon.awssdk.core.interceptor.ExecutionInterceptor
      */
-    @ConfigItem
-    public Optional<List<String>> interceptors; // cannot be classes as can be runtime initialized (e.g. XRay interceptor)
+    Optional<List<String>> interceptors(); // cannot be classes as can be runtime initialized (e.g. XRay interceptor)
 }

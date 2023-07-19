@@ -5,11 +5,14 @@ import java.util.Optional;
 
 import io.quarkus.runtime.annotations.ConfigDocSection;
 import io.quarkus.runtime.annotations.ConfigGroup;
-import io.quarkus.runtime.annotations.ConfigItem;
+import io.quarkus.runtime.configuration.DurationConverter;
 import io.quarkus.runtime.configuration.MemorySize;
+import io.quarkus.runtime.configuration.MemorySizeConverter;
+import io.smallrye.config.WithConverter;
+import io.smallrye.config.WithDefault;
 
 @ConfigGroup
-public class AwsCredentialsProviderConfig {
+public interface AwsCredentialsProviderConfig {
 
     // @formatter:off
     /**
@@ -41,54 +44,49 @@ public class AwsCredentialsProviderConfig {
      * @asciidoclet
      */
     // @formatter:on
-    @ConfigItem(defaultValue = "default")
-    public AwsCredentialsProviderType type;
+    @WithDefault("default")
+    AwsCredentialsProviderType type();
 
     /**
      * Default credentials provider configuration
      */
-    @ConfigItem
     @ConfigDocSection
-    public DefaultCredentialsProviderConfig defaultProvider;
+    DefaultCredentialsProviderConfig defaultProvider();
 
     /**
      * Static credentials provider configuration
      */
-    @ConfigItem
     @ConfigDocSection
-    public StaticCredentialsProviderConfig staticProvider;
+    StaticCredentialsProviderConfig staticProvider();
 
     /**
      * AWS Profile credentials provider configuration
      */
-    @ConfigItem
     @ConfigDocSection
-    public ProfileCredentialsProviderConfig profileProvider;
+    ProfileCredentialsProviderConfig profileProvider();
 
     /**
      * Process credentials provider configuration
      */
-    @ConfigItem
     @ConfigDocSection
-    public ProcessCredentialsProviderConfig processProvider;
+    ProcessCredentialsProviderConfig processProvider();
 
     /**
      * Custom credentials provider configuration
      */
-    @ConfigItem
     @ConfigDocSection
-    public CustomCredentialsProviderConfig customProvider;
+    CustomCredentialsProviderConfig customProvider();
 
     @ConfigGroup
-    public static class DefaultCredentialsProviderConfig {
+    public interface DefaultCredentialsProviderConfig {
 
         /**
          * Whether this provider should fetch credentials asynchronously in the background.
          * <p>
          * If this is `true`, threads are less likely to block, but additional resources are used to maintain the provider.
          */
-        @ConfigItem
-        public boolean asyncCredentialUpdateEnabled;
+        @WithDefault("false")
+        boolean asyncCredentialUpdateEnabled();
 
         /**
          * Whether the provider should reuse the last successful credentials provider in the chain.
@@ -96,53 +94,49 @@ public class AwsCredentialsProviderConfig {
          * Reusing the last successful credentials provider will typically return credentials faster than searching through the
          * chain.
          */
-        @ConfigItem(defaultValue = "true")
-        public boolean reuseLastProviderEnabled;
+        @WithDefault("true")
+        boolean reuseLastProviderEnabled();
     }
 
     @ConfigGroup
-    public static class StaticCredentialsProviderConfig {
+    public interface StaticCredentialsProviderConfig {
         /**
          * AWS Access key id
          */
-        @ConfigItem
-        public Optional<String> accessKeyId;
+        Optional<String> accessKeyId();
 
         /**
          * AWS Secret access key
          */
-        @ConfigItem
-        public Optional<String> secretAccessKey;
+        Optional<String> secretAccessKey();
 
         /**
          * AWS Session token
          */
-        @ConfigItem
-        public Optional<String> sessionToken;
+        Optional<String> sessionToken();
     }
 
     @ConfigGroup
-    public static class ProfileCredentialsProviderConfig {
+    public interface ProfileCredentialsProviderConfig {
         /**
          * The name of the profile that should be used by this credentials provider.
          * <p>
          * If not specified, the value in `AWS_PROFILE` environment variable or `aws.profile` system property is used and
          * defaults to `default` name.
          */
-        @ConfigItem
-        public Optional<String> profileName;
+        Optional<String> profileName();
     }
 
     @ConfigGroup
-    public static class ProcessCredentialsProviderConfig {
+    public interface ProcessCredentialsProviderConfig {
         /**
          * Whether the provider should fetch credentials asynchronously in the background.
          * <p>
          * If this is true, threads are less likely to block when credentials are loaded, but additional resources are used to
          * maintain the provider.
          */
-        @ConfigItem
-        public boolean asyncCredentialUpdateEnabled;
+        @WithDefault("false")
+        boolean asyncCredentialUpdateEnabled();
 
         /**
          * The amount of time between when the credentials expire and when the credentials should start to be
@@ -150,28 +144,28 @@ public class AwsCredentialsProviderConfig {
          * <p>
          * This allows the credentials to be refreshed *before* they are reported to expire.
          */
-        @ConfigItem(defaultValue = "15S")
-        public Duration credentialRefreshThreshold;
+        @WithDefault("15S")
+        @WithConverter(DurationConverter.class)
+        Duration credentialRefreshThreshold();
 
         /**
          * The maximum size of the output that can be returned by the external process before an exception is raised.
          */
-        @ConfigItem(defaultValue = "1024")
-        public MemorySize processOutputLimit;
+        @WithDefault("1024")
+        @WithConverter(MemorySizeConverter.class)
+        MemorySize processOutputLimit();
 
         /**
          * The command that should be executed to retrieve credentials.
          */
-        @ConfigItem
-        public Optional<String> command;
+        Optional<String> command();
     }
 
     @ConfigGroup
-    public static class CustomCredentialsProviderConfig {
+    public interface CustomCredentialsProviderConfig {
         /**
          * The name of custom AwsCredentialsProvider bean.
          */
-        @ConfigItem
-        public Optional<String> name;
+        Optional<String> name();
     }
 }

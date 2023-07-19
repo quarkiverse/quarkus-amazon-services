@@ -29,22 +29,22 @@ public class S3Recorder extends AmazonClientRecorder {
 
     @Override
     public RuntimeValue<AwsConfig> getAwsConfig() {
-        return new RuntimeValue<>(config.aws);
+        return new RuntimeValue<>(config.aws());
     }
 
     @Override
     public RuntimeValue<SdkConfig> getSdkConfig() {
-        return new RuntimeValue<>(config.sdk);
+        return new RuntimeValue<>(config.sdk());
     }
 
     @Override
     public AsyncHttpClientConfig getAsyncClientConfig() {
-        return config.asyncClient;
+        return config.asyncClient();
     }
 
     @Override
     public SyncHttpClientConfig getSyncClientConfig() {
-        return config.syncClient;
+        return config.syncClient();
     }
 
     @Override
@@ -67,24 +67,24 @@ public class S3Recorder extends AmazonClientRecorder {
     public RuntimeValue<SdkPresigner.Builder> createPresignerBuilder() {
         S3Presigner.Builder builder = S3Presigner.builder()
                 .serviceConfiguration(s3ConfigurationBuilder().build())
-                .dualstackEnabled(config.dualstack);
+                .dualstackEnabled(config.dualstack());
         return new RuntimeValue<>(builder);
     }
 
     private void configureS3Client(S3BaseClientBuilder builder) {
         builder
                 .serviceConfiguration(s3ConfigurationBuilder().build())
-                .dualstackEnabled(config.dualstack);
+                .dualstackEnabled(config.dualstack());
     }
 
     private S3Configuration.Builder s3ConfigurationBuilder() {
         S3Configuration.Builder s3ConfigBuilder = S3Configuration.builder()
-                .accelerateModeEnabled(config.accelerateMode)
-                .checksumValidationEnabled(config.checksumValidation)
-                .chunkedEncodingEnabled(config.chunkedEncoding)
-                .pathStyleAccessEnabled(config.pathStyleAccess)
-                .useArnRegionEnabled(config.useArnRegionEnabled);
-        config.profileName.ifPresent(s3ConfigBuilder::profileName);
+                .accelerateModeEnabled(config.accelerateMode())
+                .checksumValidationEnabled(config.checksumValidation())
+                .chunkedEncodingEnabled(config.chunkedEncoding())
+                .pathStyleAccessEnabled(config.pathStyleAccess())
+                .useArnRegionEnabled(config.useArnRegionEnabled());
+        config.profileName().ifPresent(s3ConfigBuilder::profileName);
         return s3ConfigBuilder;
     }
 }

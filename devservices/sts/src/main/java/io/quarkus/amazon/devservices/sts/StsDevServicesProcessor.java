@@ -11,6 +11,6 @@ public class StsDevServicesProcessor extends AbstractDevServicesLocalStackProces
 
     @BuildStep
     DevServicesLocalStackProviderBuildItem setupSts(StsBuildTimeConfig clientBuildTimeConfig) {
-        return this.setup(Service.STS, clientBuildTimeConfig.devservices);
+        return this.setup(Service.STS, clientBuildTimeConfig.devservices());
     }
 }

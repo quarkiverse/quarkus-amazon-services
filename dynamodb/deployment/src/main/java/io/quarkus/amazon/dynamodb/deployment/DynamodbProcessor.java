@@ -102,8 +102,8 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
     void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
             BuildProducer<AmazonClientBuildItem> clientProducer) {
 
-        setupClient(clientRequirements, clientProducer, buildTimeConfig.sdk, buildTimeConfig.syncClient,
-                buildTimeConfig.asyncClient);
+        setupClient(clientRequirements, clientProducer, buildTimeConfig.sdk(), buildTimeConfig.syncClient(),
+                buildTimeConfig.asyncClient());
     }
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonApacheHttpServicePresent.class)
@@ -114,7 +114,7 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
 
         createApacheSyncTransportBuilder(amazonClients,
                 transportRecorder,
-                buildTimeConfig.syncClient,
+                buildTimeConfig.syncClient(),
                 recorder.getSyncConfig(),
                 syncTransports);
     }
@@ -127,7 +127,7 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
 
         createUrlConnectionSyncTransportBuilder(amazonClients,
                 transportRecorder,
-                buildTimeConfig.syncClient,
+                buildTimeConfig.syncClient(),
                 recorder.getSyncConfig(),
                 syncTransports);
     }
@@ -141,7 +141,7 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
 
         createNettyAsyncTransportBuilder(amazonClients,
                 transportRecorder,
-                buildTimeConfig.asyncClient,
+                buildTimeConfig.asyncClient(),
                 recorder.getAsyncConfig(),
                 asyncTransports, eventLoopSupplier.getMainEventLoopGroup());
     }
@@ -154,7 +154,7 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
 
         createAwsCrtAsyncTransportBuilder(amazonClients,
                 transportRecorder,
-                buildTimeConfig.asyncClient,
+                buildTimeConfig.asyncClient(),
                 recorder.getAsyncConfig(),
                 asyncTransports);
     }
@@ -172,7 +172,7 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
 
         createClientBuilders(recorder,
                 commonRecorder,
-                buildTimeConfig.sdk,
+                buildTimeConfig,
                 syncTransports,
                 asyncTransports,
                 DynamoDbClientBuilder.class,

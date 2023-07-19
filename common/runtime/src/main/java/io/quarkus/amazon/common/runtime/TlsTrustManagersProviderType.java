@@ -19,7 +19,7 @@ public enum TlsTrustManagersProviderType {
     FILE_STORE {
         @Override
         public TlsTrustManagersProvider create(TlsTrustManagersProviderConfig config) {
-            return new FileStoreTlsTrustManagersProvider(config.fileStore);
+            return new FileStoreTlsTrustManagersProvider(config.fileStore());
         }
     };
 

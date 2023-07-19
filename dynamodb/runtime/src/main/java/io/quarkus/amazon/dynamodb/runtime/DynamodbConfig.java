@@ -5,44 +5,43 @@ import io.quarkus.amazon.common.runtime.AwsConfig;
 import io.quarkus.amazon.common.runtime.SdkConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.runtime.annotations.ConfigDocSection;
-import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithDefault;
+import io.smallrye.config.WithParentName;
 
-@ConfigRoot(name = "dynamodb", phase = ConfigPhase.RUN_TIME)
-public class DynamodbConfig {
-
+@ConfigMapping(prefix = "quarkus.dynamodb")
+@ConfigRoot(phase = ConfigPhase.RUN_TIME)
+public interface DynamodbConfig {
     /**
      * Enable DynamoDB service endpoint discovery.
      */
-    @ConfigItem
-    public boolean enableEndpointDiscovery;
+    @WithDefault("false")
+    boolean enableEndpointDiscovery();
 
     /**
      * AWS SDK client configurations
      */
-    @ConfigItem(name = ConfigItem.PARENT)
+    @WithParentName
     @ConfigDocSection
-    public SdkConfig sdk;
+    SdkConfig sdk();
 
     /**
      * AWS services configurations
      */
-    @ConfigItem
     @ConfigDocSection
-    public AwsConfig aws;
+    AwsConfig aws();
 
     /**
      * Sync HTTP transport configurations
      */
-    @ConfigItem
     @ConfigDocSection
-    public SyncHttpClientConfig syncClient;
+    SyncHttpClientConfig syncClient();
 
     /**
      * Async HTTP transport configurations
      */
-    @ConfigItem
     @ConfigDocSection
-    public AsyncHttpClientConfig asyncClient;
+    AsyncHttpClientConfig asyncClient();
 }

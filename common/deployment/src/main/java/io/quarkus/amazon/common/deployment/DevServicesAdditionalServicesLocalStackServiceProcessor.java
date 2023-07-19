@@ -17,7 +17,7 @@ public class DevServicesAdditionalServicesLocalStackServiceProcessor extends Abs
     @BuildStep
     List<DevServicesLocalStackProviderBuildItem> setupServices(
             LocalStackDevServicesBuildTimeConfig localStackDevServicesBuildTimeConfig) {
-        return localStackDevServicesBuildTimeConfig.additionalServices.entrySet().stream()
+        return localStackDevServicesBuildTimeConfig.additionalServices().entrySet().stream()
                 .map(entry -> setupService(entry.getKey(), entry.getValue()))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());

@@ -21,6 +21,7 @@ import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecord
 import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.AsyncHttpClientConfig;
 import io.quarkus.amazon.common.runtime.AwsConfig;
+import io.quarkus.amazon.common.runtime.HasSdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SdkConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
@@ -122,7 +123,7 @@ abstract public class AbstractAmazonServiceProcessor {
             if (!client.getSyncClassName().isPresent()) {
                 return;
             }
-            if (buildSyncConfig.type != SyncHttpClientBuildTimeConfig.SyncClientType.APACHE) {
+            if (buildSyncConfig.type() != SyncHttpClientBuildTimeConfig.SyncClientType.APACHE) {
                 return;
             }
 
@@ -148,7 +149,7 @@ abstract public class AbstractAmazonServiceProcessor {
             if (!client.getSyncClassName().isPresent()) {
                 return;
             }
-            if (buildSyncConfig.type != SyncHttpClientBuildTimeConfig.SyncClientType.URL) {
+            if (buildSyncConfig.type() != SyncHttpClientBuildTimeConfig.SyncClientType.URL) {
                 return;
             }
 
@@ -175,7 +176,7 @@ abstract public class AbstractAmazonServiceProcessor {
             if (!client.getAsyncClassName().isPresent()) {
                 return;
             }
-            if (buildAsyncConfig.type != AsyncHttpClientBuildTimeConfig.AsyncClientType.NETTY) {
+            if (buildAsyncConfig.type() != AsyncHttpClientBuildTimeConfig.AsyncClientType.NETTY) {
                 return;
             }
 
@@ -202,7 +203,7 @@ abstract public class AbstractAmazonServiceProcessor {
             if (!client.getAsyncClassName().isPresent()) {
                 return;
             }
-            if (buildAsyncConfig.type != AsyncHttpClientBuildTimeConfig.AsyncClientType.AWS_CRT) {
+            if (buildAsyncConfig.type() != AsyncHttpClientBuildTimeConfig.AsyncClientType.AWS_CRT) {
                 return;
             }
 
@@ -216,7 +217,7 @@ abstract public class AbstractAmazonServiceProcessor {
 
     protected void createClientBuilders(AmazonClientRecorder recorder,
             AmazonClientCommonRecorder commonRecorder,
-            SdkBuildTimeConfig sdkBuildConfig,
+            HasSdkBuildTimeConfig sdkBuildConfig,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
             Class<?> syncClientBuilderClass,
@@ -254,7 +255,7 @@ abstract public class AbstractAmazonServiceProcessor {
             AmazonClientCommonRecorder recorder,
             RuntimeValue<AwsConfig> awsConfigRuntime,
             RuntimeValue<SdkConfig> sdkConfigRuntime,
-            SdkBuildTimeConfig sdkBuildConfig,
+            HasSdkBuildTimeConfig sdkBuildConfig,
             List<AmazonClientSyncTransportBuildItem> amazonClientSyncTransports,
             List<AmazonClientAsyncTransportBuildItem> amazonClientAsyncTransports,
             Class<?> syncClientBuilderClass,

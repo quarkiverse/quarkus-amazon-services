@@ -1,10 +1,10 @@
 package io.quarkus.amazon.common.runtime;
 
 import io.quarkus.runtime.annotations.ConfigGroup;
-import io.quarkus.runtime.annotations.ConfigItem;
+import io.smallrye.config.WithDefault;
 
 @ConfigGroup
-public class TlsKeyManagersProviderConfig {
+public interface TlsKeyManagersProviderConfig {
 
     // @formatter:off
     /**
@@ -21,15 +21,14 @@ public class TlsKeyManagersProviderConfig {
      * @asciidoclet
      */
     // @formatter:on
-    @ConfigItem(defaultValue = "system-property")
-    public TlsKeyManagersProviderType type;
+    @WithDefault("system-property")
+    public TlsKeyManagersProviderType type();
 
     /**
      * Configuration of the file store provider.
      * <p>
      * Used only if {@code FILE_STORE} type is chosen.
      */
-    @ConfigItem
-    public FileStoreTlsManagersProviderConfig fileStore;
+    public FileStoreTlsManagersProviderConfig fileStore();
 
 }

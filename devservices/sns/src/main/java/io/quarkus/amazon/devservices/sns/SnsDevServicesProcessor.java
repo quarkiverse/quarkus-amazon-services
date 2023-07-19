@@ -11,6 +11,6 @@ public class SnsDevServicesProcessor extends AbstractDevServicesLocalStackProces
 
     @BuildStep
     DevServicesLocalStackProviderBuildItem setupSns(SnsBuildTimeConfig clientBuildTimeConfig) {
-        return this.setup(Service.SNS, clientBuildTimeConfig.devservices);
+        return this.setup(Service.SNS, clientBuildTimeConfig.devservices());
     }
 }

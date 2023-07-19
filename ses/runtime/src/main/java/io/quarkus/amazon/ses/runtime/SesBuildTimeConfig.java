@@ -2,39 +2,31 @@ package io.quarkus.amazon.ses.runtime;
 
 import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.DevServicesBuildTimeConfig;
-import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
+import io.quarkus.amazon.common.runtime.HasSdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
-import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
 
 /**
  * Amazon SES build time configuration
  */
-@ConfigRoot(name = "ses", phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
-public class SesBuildTimeConfig {
-
-    /**
-     * SDK client configurations for AWS SES client
-     */
-    @ConfigItem(name = ConfigItem.PARENT)
-    public SdkBuildTimeConfig sdk;
+@ConfigMapping(prefix = "quarkus.ses")
+@ConfigRoot(phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
+public interface SesBuildTimeConfig extends HasSdkBuildTimeConfig {
 
     /**
      * Sync HTTP transport configuration for Amazon SES client
      */
-    @ConfigItem
-    public SyncHttpClientBuildTimeConfig syncClient;
+    SyncHttpClientBuildTimeConfig syncClient();
 
     /**
      * Async HTTP transport configuration for Amazon SES client
      */
-    @ConfigItem
-    public AsyncHttpClientBuildTimeConfig asyncClient;
+    AsyncHttpClientBuildTimeConfig asyncClient();
 
     /**
      * Config for dev services
      */
-    @ConfigItem
-    public DevServicesBuildTimeConfig devservices;
+    DevServicesBuildTimeConfig devservices();
 }

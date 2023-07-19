@@ -4,15 +4,17 @@ import java.util.List;
 import java.util.Optional;
 
 import io.quarkus.runtime.annotations.ConfigDocSection;
-import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithDefault;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbImmutable;
 
-@ConfigRoot(name = "dynamodbenhanced", phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
-public class DynamoDbEnhancedBuildTimeConfig {
+@ConfigMapping(prefix = "quarkus.dynamodbenhanced")
+@ConfigRoot(phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
+public interface DynamoDbEnhancedBuildTimeConfig {
 
     /**
      * List of extensions to load with the enhanced client.
@@ -22,9 +24,8 @@ public class DynamoDbEnhancedBuildTimeConfig {
      *
      * @see software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClientExtension
      */
-    @ConfigItem
     @ConfigDocSection
-    public Optional<List<String>> clientExtensions;
+    Optional<List<String>> clientExtensions();
 
     /**
      * Whether a {@link TableSchema} should be created at start up for DynamoDb mappable entities
@@ -32,6 +33,6 @@ public class DynamoDbEnhancedBuildTimeConfig {
      * <p>
      * {@link TableSchema} are cached and can be retrieved later with {@code TableSchema.fromClass()}
      */
-    @ConfigItem(defaultValue = "true")
-    public boolean createTableSchemas;
+    @WithDefault(value = "true")
+    boolean createTableSchemas();
 }
