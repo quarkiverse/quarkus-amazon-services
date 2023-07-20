@@ -47,7 +47,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.version>3.2.1.Final</quarkus.version>
-    <awssdk.version>2.20.103</awssdk.version>
+    <awssdk.version>2.20.107</awssdk.version>
     <awscrt.version>0.22.2</awscrt.version>
   </properties>
   <build>
