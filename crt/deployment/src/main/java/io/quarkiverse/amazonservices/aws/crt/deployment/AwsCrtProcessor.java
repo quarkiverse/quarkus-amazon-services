@@ -32,17 +32,18 @@ public class AwsCrtProcessor {
             BuildProducer<NativeImageResourceBuildItem> resource,
             NativeImageRunnerBuildItem nativeImageRunnerFactory) {
 
-        // add linux x64 native lid when targeting containers
+        // add linux x64 native lib when targeting containers
         if (nativeImageRunnerFactory.isContainerBuild()) {
             String libraryName = "libaws-crt-jni.so";
             String dir = "linux/x86_64";
-            String libResourcePath = dir + "/" + libraryName;
-            resource.produce(new NativeImageResourceBuildItem(libResourcePath));
+            String glibResourcePath = dir + "/glibc/" + libraryName;
+            resource.produce(new NativeImageResourceBuildItem(glibResourcePath));
         }
         // otherwise the native lib of the platform this build runs on
         else {
             String libraryName = System.mapLibraryName(CRT_LIB_NAME);
-            String dir = CRT.getOSIdentifier() + "/" + CRT.getArchIdentifier();
+            String os = CRT.getOSIdentifier();
+            String dir = os + "/" + CRT.getArchIdentifier() + "/" + CRT.getCRuntime(os);
             String libResourcePath = dir + "/" + libraryName;
             resource.produce(new NativeImageResourceBuildItem(libResourcePath));
         }
