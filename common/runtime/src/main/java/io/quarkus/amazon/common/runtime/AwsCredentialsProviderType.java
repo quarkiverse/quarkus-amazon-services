@@ -21,24 +21,24 @@ public enum AwsCredentialsProviderType {
         @Override
         public AwsCredentialsProvider create(AwsCredentialsProviderConfig config, String configKeyRoot) {
             return DefaultCredentialsProvider.builder()
-                    .asyncCredentialUpdateEnabled(config.defaultProvider.asyncCredentialUpdateEnabled)
-                    .reuseLastProviderEnabled(config.defaultProvider.reuseLastProviderEnabled).build();
+                    .asyncCredentialUpdateEnabled(config.defaultProvider().asyncCredentialUpdateEnabled())
+                    .reuseLastProviderEnabled(config.defaultProvider().reuseLastProviderEnabled()).build();
         }
     },
     STATIC {
         @Override
         public AwsCredentialsProvider create(AwsCredentialsProviderConfig config, String configKeyRoot) {
-            if (!config.staticProvider.accessKeyId.isPresent()
-                    || !config.staticProvider.secretAccessKey.isPresent()) {
+            if (!config.staticProvider().accessKeyId().isPresent()
+                    || !config.staticProvider().secretAccessKey().isPresent()) {
                 throw new RuntimeConfigurationError(
                         String.format("%1$s.aws.credentials.static-provider.access-key-id and "
                                 + "%1$s.aws.credentials.static-provider.secret-access-key cannot be empty if STATIC credentials provider used.",
                                 configKeyRoot));
             }
-            var accessKeyId = config.staticProvider.accessKeyId.get();
-            var secretAccessKey = config.staticProvider.secretAccessKey.get();
+            var accessKeyId = config.staticProvider().accessKeyId().get();
+            var secretAccessKey = config.staticProvider().secretAccessKey().get();
             return StaticCredentialsProvider.create(
-                    config.staticProvider.sessionToken
+                    config.staticProvider().sessionToken()
                             .map(sessionToken -> (AwsCredentials) AwsSessionCredentials
                                     .create(accessKeyId, secretAccessKey, sessionToken))
                             .orElseGet(() -> AwsBasicCredentials
@@ -61,9 +61,9 @@ public enum AwsCredentialsProviderType {
     PROFILE {
         @Override
         public AwsCredentialsProvider create(AwsCredentialsProviderConfig config, String configKeyRoot) {
-            ProfileCredentialsProviderConfig cfg = config.profileProvider;
+            ProfileCredentialsProviderConfig cfg = config.profileProvider();
             ProfileCredentialsProvider.Builder builder = ProfileCredentialsProvider.builder();
-            cfg.profileName.ifPresent(builder::profileName);
+            cfg.profileName().ifPresent(builder::profileName);
 
             return builder.build();
         }
@@ -83,18 +83,18 @@ public enum AwsCredentialsProviderType {
     PROCESS {
         @Override
         public AwsCredentialsProvider create(AwsCredentialsProviderConfig config, String configKeyRoot) {
-            if (!config.processProvider.command.isPresent()) {
+            if (!config.processProvider().command().isPresent()) {
                 throw new RuntimeConfigurationError(
                         String.format(
                                 "%s.aws.credentials.process-provider.command cannot be empty if PROCESS credentials provider used.",
                                 configKeyRoot));
             }
             ProcessCredentialsProvider.Builder builder = ProcessCredentialsProvider.builder()
-                    .asyncCredentialUpdateEnabled(config.processProvider.asyncCredentialUpdateEnabled);
+                    .asyncCredentialUpdateEnabled(config.processProvider().asyncCredentialUpdateEnabled());
 
-            builder.credentialRefreshThreshold(config.processProvider.credentialRefreshThreshold);
-            builder.processOutputLimit(config.processProvider.processOutputLimit.asLongValue());
-            builder.command(config.processProvider.command.get());
+            builder.credentialRefreshThreshold(config.processProvider().credentialRefreshThreshold());
+            builder.processOutputLimit(config.processProvider().processOutputLimit().asLongValue());
+            builder.command(config.processProvider().command().get());
 
             return builder.build();
         }
@@ -102,7 +102,7 @@ public enum AwsCredentialsProviderType {
     CUSTOM {
         @Override
         public AwsCredentialsProvider create(AwsCredentialsProviderConfig config, String configKeyRoot) {
-            String beanName = config.customProvider.name.orElseThrow(() -> new RuntimeConfigurationError(
+            String beanName = config.customProvider().name().orElseThrow(() -> new RuntimeConfigurationError(
                     String.format(
                             "%s.aws.credentials.custom-provider.name cannot be empty if CUSTOM credentials provider used.",
                             configKeyRoot)));

@@ -14,13 +14,13 @@ public class AmazonClientUrlConnectionTransportRecorder extends AbstractAmazonCl
     public RuntimeValue<SdkHttpClient.Builder> configureSync(String clientName,
             RuntimeValue<SyncHttpClientConfig> syncConfigRuntime) {
         SyncHttpClientConfig syncConfig = syncConfigRuntime.getValue();
-        validateTlsKeyManagersProvider(clientName, syncConfig.tlsKeyManagersProvider, "sync");
-        validateTlsTrustManagersProvider(clientName, syncConfig.tlsTrustManagersProvider, "sync");
+        validateTlsKeyManagersProvider(clientName, syncConfig.tlsKeyManagersProvider(), "sync");
+        validateTlsTrustManagersProvider(clientName, syncConfig.tlsTrustManagersProvider(), "sync");
         UrlConnectionHttpClient.Builder builder = UrlConnectionHttpClient.builder();
-        builder.connectionTimeout(syncConfig.connectionTimeout);
-        builder.socketTimeout(syncConfig.socketTimeout);
-        builder.tlsKeyManagersProvider(getTlsKeyManagersProvider(syncConfig.tlsKeyManagersProvider));
-        TlsTrustManagersProvider tlsTrustManagerProvider = getTlsTrustManagersProvider(syncConfig.tlsTrustManagersProvider);
+        builder.connectionTimeout(syncConfig.connectionTimeout());
+        builder.socketTimeout(syncConfig.socketTimeout());
+        builder.tlsKeyManagersProvider(getTlsKeyManagersProvider(syncConfig.tlsKeyManagersProvider()));
+        TlsTrustManagersProvider tlsTrustManagerProvider = getTlsTrustManagersProvider(syncConfig.tlsTrustManagersProvider());
         if (tlsTrustManagerProvider != null) {
             builder.tlsTrustManagersProvider(tlsTrustManagerProvider);
         }

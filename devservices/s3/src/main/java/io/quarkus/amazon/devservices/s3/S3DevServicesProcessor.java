@@ -26,7 +26,7 @@ public class S3DevServicesProcessor extends AbstractDevServicesLocalStackProcess
 
     @BuildStep
     DevServicesLocalStackProviderBuildItem setupS3(S3BuildTimeConfig clientBuildTimeConfig) {
-        return this.setup(Service.S3, clientBuildTimeConfig.devservices);
+        return this.setup(Service.S3, clientBuildTimeConfig.devservices());
     }
 
     @Override
@@ -65,8 +65,8 @@ public class S3DevServicesProcessor extends AbstractDevServicesLocalStackProcess
         private final Set<String> buckets;
 
         public S3DevServiceCfg(S3DevServicesBuildTimeConfig config) {
-            super(config.shared, config.serviceName, config.containerProperties);
-            this.buckets = config.buckets;
+            super(config.shared(), config.serviceName(), config.containerProperties());
+            this.buckets = config.buckets();
         }
 
         @Override

@@ -4,14 +4,14 @@ import java.util.Set;
 
 import io.quarkus.amazon.common.runtime.DevServicesBuildTimeConfig;
 import io.quarkus.runtime.annotations.ConfigGroup;
-import io.quarkus.runtime.annotations.ConfigItem;
+import io.smallrye.config.WithDefault;
 
 @ConfigGroup
-public class S3DevServicesBuildTimeConfig extends DevServicesBuildTimeConfig {
+public interface S3DevServicesBuildTimeConfig extends DevServicesBuildTimeConfig {
 
     /**
      * The buckets to create on startup.
      */
-    @ConfigItem(defaultValue = "default")
-    public Set<String> buckets;
+    @WithDefault(value = "default")
+    public Set<String> buckets();
 }

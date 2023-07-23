@@ -94,8 +94,8 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
     void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
             BuildProducer<AmazonClientBuildItem> clientProducer) {
 
-        setupClient(clientRequirements, clientProducer, buildTimeConfig.sdk, buildTimeConfig.syncClient,
-                buildTimeConfig.asyncClient);
+        setupClient(clientRequirements, clientProducer, buildTimeConfig.sdk(), buildTimeConfig.syncClient(),
+                buildTimeConfig.asyncClient());
     }
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonApacheHttpServicePresent.class)
@@ -106,7 +106,7 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
 
         createApacheSyncTransportBuilder(amazonClients,
                 transportRecorder,
-                buildTimeConfig.syncClient,
+                buildTimeConfig.syncClient(),
                 recorder.getSyncConfig(),
                 syncTransports);
     }
@@ -119,7 +119,7 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
 
         createUrlConnectionSyncTransportBuilder(amazonClients,
                 transportRecorder,
-                buildTimeConfig.syncClient,
+                buildTimeConfig.syncClient(),
                 recorder.getSyncConfig(),
                 syncTransports);
     }
@@ -133,7 +133,7 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
 
         createNettyAsyncTransportBuilder(amazonClients,
                 transportRecorder,
-                buildTimeConfig.asyncClient,
+                buildTimeConfig.asyncClient(),
                 recorder.getAsyncConfig(),
                 asyncTransports, eventLoopSupplier.getMainEventLoopGroup());
     }
@@ -146,7 +146,7 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
 
         createAwsCrtAsyncTransportBuilder(amazonClients,
                 transportRecorder,
-                buildTimeConfig.asyncClient,
+                buildTimeConfig.asyncClient(),
                 recorder.getAsyncConfig(),
                 asyncTransports);
     }
@@ -165,7 +165,7 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
 
         createClientBuilders(recorder,
                 commonRecorder,
-                buildTimeConfig.sdk,
+                buildTimeConfig,
                 syncTransports,
                 asyncTransports,
                 SesClientBuilder.class,

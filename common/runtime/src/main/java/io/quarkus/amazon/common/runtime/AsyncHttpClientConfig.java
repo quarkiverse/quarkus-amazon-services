@@ -7,12 +7,15 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 import io.netty.handler.ssl.SslProvider;
+import io.quarkus.runtime.annotations.ConfigDocDefault;
 import io.quarkus.runtime.annotations.ConfigGroup;
-import io.quarkus.runtime.annotations.ConfigItem;
+import io.quarkus.runtime.configuration.DurationConverter;
+import io.smallrye.config.WithConverter;
+import io.smallrye.config.WithDefault;
 import software.amazon.awssdk.http.Protocol;
 
 @ConfigGroup
-public class AsyncHttpClientConfig {
+public interface AsyncHttpClientConfig {
 
     /**
      * The maximum number of allowed concurrent requests.
@@ -21,16 +24,16 @@ public class AsyncHttpClientConfig {
      * connections that will be used depends on the
      * max streams allowed per connection.
      */
-    @ConfigItem(defaultValue = "50")
-    public int maxConcurrency;
+    @WithDefault("50")
+    int maxConcurrency();
 
     /**
      * The maximum number of pending acquires allowed.
      * <p>
      * Once this exceeds, acquire tries will be failed.
      */
-    @ConfigItem(defaultValue = "10000")
-    public int maxPendingConnectionAcquires;
+    @WithDefault("10000")
+    int maxPendingConnectionAcquires();
 
     /**
      * The amount of time to wait for a read on a socket before an exception is
@@ -38,8 +41,9 @@ public class AsyncHttpClientConfig {
      * <p>
      * Specify `0` to disable.
      */
-    @ConfigItem(defaultValue = "30S")
-    public Duration readTimeout;
+    @WithDefault("30S")
+    @WithConverter(DurationConverter.class)
+    Duration readTimeout();
 
     /**
      * The amount of time to wait for a write on a socket before an exception is
@@ -47,29 +51,32 @@ public class AsyncHttpClientConfig {
      * <p>
      * Specify `0` to disable.
      */
-    @ConfigItem(defaultValue = "30S")
-    public Duration writeTimeout;
+    @WithDefault("30S")
+    @WithConverter(DurationConverter.class)
+    Duration writeTimeout();
 
     /**
      * The amount of time to wait when initially establishing a connection before
      * giving up and timing out.
      */
-    @ConfigItem(defaultValue = "10S")
-    public Duration connectionTimeout;
+    @WithDefault("10S")
+    @WithConverter(DurationConverter.class)
+    Duration connectionTimeout();
 
     /**
      * The amount of time to wait when acquiring a connection from the pool before
      * giving up and timing out.
      */
-    @ConfigItem(defaultValue = "2S")
-    public Duration connectionAcquisitionTimeout;
+    @WithDefault("2S")
+    @WithConverter(DurationConverter.class)
+    Duration connectionAcquisitionTimeout();
 
     /**
      * The maximum amount of time that a connection should be allowed to remain
      * open, regardless of usage frequency.
      */
-    @ConfigItem
-    public Optional<Duration> connectionTimeToLive;
+    @WithConverter(DurationConverter.class)
+    Optional<Duration> connectionTimeToLive();
 
     /**
      * The maximum amount of time that a connection should be allowed to remain open
@@ -78,8 +85,9 @@ public class AsyncHttpClientConfig {
      * Currently has no effect if
      * `quarkus.<amazon-service>.async-client.use-idle-connection-reaper` is false.
      */
-    @ConfigItem(defaultValue = "5S")
-    public Duration connectionMaxIdleTime;
+    @WithDefault("5S")
+    @WithConverter(DurationConverter.class)
+    Duration connectionMaxIdleTime();
 
     /**
      * Whether the idle connections in the connection pool should be closed.
@@ -88,75 +96,68 @@ public class AsyncHttpClientConfig {
      * `quarkus.<amazon-service>.async-client.connection-max-idle-time`
      * will be closed. This will not close connections currently in use.
      */
-    @ConfigItem(defaultValue = "true")
-    public boolean useIdleConnectionReaper;
+    @WithDefault("true")
+    boolean useIdleConnectionReaper();
 
     /**
      * Configure whether to enable or disable TCP KeepAlive.
      */
-    @ConfigItem(defaultValue = "false")
-    public Boolean tcpKeepAlive;
+    @WithDefault("false")
+    Boolean tcpKeepAlive();
 
     /**
      * The HTTP protocol to use.
      */
-    @ConfigItem(defaultValue = "http1-1")
-    public Protocol protocol;
+    @WithDefault("http1-1")
+    Protocol protocol();
 
     /**
      * The SSL Provider to be used in the Netty client.
      * <p>
      * Default is `OPENSSL` if available, `JDK` otherwise.
      */
-    @ConfigItem
-    public Optional<SslProviderType> sslProvider;
+    Optional<SslProviderType> sslProvider();
 
     /**
      * HTTP/2 specific configuration
      */
-    @ConfigItem
-    public Http2Config http2;
+    Http2Config http2();
 
     /**
      * HTTP proxy configuration
      */
-    @ConfigItem
-    public NettyProxyConfiguration proxy;
+    NettyProxyConfiguration proxy();
 
     /**
      * TLS Key Managers provider configuration
      */
-    @ConfigItem
-    public TlsKeyManagersProviderConfig tlsKeyManagersProvider;
+    TlsKeyManagersProviderConfig tlsKeyManagersProvider();
 
     /**
      * TLS Trust Managers provider configuration
      */
-    @ConfigItem
-    public TlsTrustManagersProviderConfig tlsTrustManagersProvider;
+    TlsTrustManagersProviderConfig tlsTrustManagersProvider();
 
     /**
      * Netty event loop configuration override
      */
-    @ConfigItem
-    public SdkEventLoopGroupConfig eventLoop;
+    SdkEventLoopGroupConfig eventLoop();
 
     /**
      * Async client advanced options
      */
-    @ConfigItem
-    public Advanced advanced;
+    Advanced advanced();
 
     @ConfigGroup
-    public static class Http2Config {
+    public interface Http2Config {
         /**
          * The maximum number of concurrent streams for an HTTP/2 connection.
          * <p>
          * This setting is only respected when the HTTP/2 protocol is used.
          * <p>
          */
-        @ConfigItem(defaultValueDocumentation = "4294967295")
-        public Optional<Long> maxStreams;
+        @ConfigDocDefault("4294967295")
+        Optional<Long> maxStreams();
 
         /**
          * The initial window size for an HTTP/2 stream.
@@ -164,8 +165,8 @@ public class AsyncHttpClientConfig {
          * This setting is only respected when the HTTP/2 protocol is used.
          * <p>
          */
-        @ConfigItem(defaultValueDocumentation = "1048576")
-        public OptionalInt initialWindowSize;
+        @ConfigDocDefault("1048576")
+        OptionalInt initialWindowSize();
 
         /**
          * Sets the period that the Netty client will send {@code PING} frames to the
@@ -175,18 +176,19 @@ public class AsyncHttpClientConfig {
          * This setting is only respected when the HTTP/2 protocol is used.
          * <p>
          */
-        @ConfigItem(defaultValueDocumentation = "5")
-        public Optional<Duration> healthCheckPingPeriod;
+        @ConfigDocDefault("5")
+        @WithConverter(DurationConverter.class)
+        Optional<Duration> healthCheckPingPeriod();
     }
 
     @ConfigGroup
-    public static class SdkEventLoopGroupConfig {
+    public interface SdkEventLoopGroupConfig {
 
         /**
          * Enable the custom configuration of the Netty event loop group.
          */
-        @ConfigItem
-        public boolean override;
+        @WithDefault("false")
+        boolean override();
 
         /**
          * Number of threads to use for the event loop group.
@@ -195,8 +197,7 @@ public class AsyncHttpClientConfig {
          * number of available processors unless the
          * `io.netty.eventLoopThreads` system property is set.
          */
-        @ConfigItem
-        public OptionalInt numberOfThreads;
+        OptionalInt numberOfThreads();
 
         /**
          * The thread name prefix for threads created by this thread factory used by
@@ -207,18 +208,17 @@ public class AsyncHttpClientConfig {
          * <p>
          * If not specified it defaults to `aws-java-sdk-NettyEventLoop`
          */
-        @ConfigItem
-        public Optional<String> threadNamePrefix;
+        Optional<String> threadNamePrefix();
     }
 
     @ConfigGroup
-    public static class NettyProxyConfiguration {
+    public interface NettyProxyConfiguration {
 
         /**
          * Enable HTTP proxy.
          */
-        @ConfigItem
-        public boolean enabled;
+        @WithDefault("false")
+        boolean enabled();
 
         /**
          * The endpoint of the proxy server that the SDK should connect through.
@@ -227,19 +227,17 @@ public class AsyncHttpClientConfig {
          * components will result in an exception being
          * raised.
          */
-        @ConfigItem
-        public Optional<URI> endpoint;
+        Optional<URI> endpoint();
 
         /**
          * The hosts that the client is allowed to access without going through the
          * proxy.
          */
-        @ConfigItem
-        public Optional<List<String>> nonProxyHosts;
+        Optional<List<String>> nonProxyHosts();
     }
 
     @ConfigGroup
-    public static class Advanced {
+    public interface Advanced {
 
         /**
          * Whether the default thread pool should be used to complete the futures
@@ -247,8 +245,8 @@ public class AsyncHttpClientConfig {
          * <p>
          * When disabled, futures will be completed on the Netty event loop thread.
          */
-        @ConfigItem(defaultValue = "true")
-        public boolean useFutureCompletionThreadPool;
+        @WithDefault("true")
+        boolean useFutureCompletionThreadPool();
     }
 
     // TODO: additionalChannelOptions

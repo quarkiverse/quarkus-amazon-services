@@ -26,7 +26,7 @@ public class SqsDevServicesProcessor extends AbstractDevServicesLocalStackProces
 
     @BuildStep
     DevServicesLocalStackProviderBuildItem setupSqs(SqsBuildTimeConfig clientBuildTimeConfig) {
-        return this.setup(Service.SQS, clientBuildTimeConfig.devservices);
+        return this.setup(Service.SQS, clientBuildTimeConfig.devservices());
     }
 
     @Override
@@ -56,8 +56,8 @@ public class SqsDevServicesProcessor extends AbstractDevServicesLocalStackProces
         private final Set<String> queues;
 
         public SqsDevServiceCfg(SqsDevServicesBuildTimeConfig config) {
-            super(config.shared, config.serviceName, config.containerProperties);
-            this.queues = new HashSet<>(config.queues.orElse(emptyList()));
+            super(config.shared(), config.serviceName(), config.containerProperties());
+            this.queues = new HashSet<>(config.queues().orElse(emptyList()));
         }
 
         @Override

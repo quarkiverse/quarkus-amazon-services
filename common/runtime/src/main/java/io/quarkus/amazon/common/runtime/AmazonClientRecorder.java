@@ -50,7 +50,7 @@ public abstract class AmazonClientRecorder {
         if (transport != null) {
             builder.httpClientBuilder(transport.getValue());
         }
-        if (!config.advanced.useFutureCompletionThreadPool) {
+        if (!config.advanced().useFutureCompletionThreadPool()) {
             builder.asyncConfiguration(asyncConfigBuilder -> asyncConfigBuilder
                     .advancedOption(SdkAdvancedAsyncClientOption.FUTURE_COMPLETION_EXECUTOR, Runnable::run));
         } else {

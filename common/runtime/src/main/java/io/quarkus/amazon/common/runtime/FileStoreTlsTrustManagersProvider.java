@@ -27,9 +27,9 @@ public class FileStoreTlsTrustManagersProvider implements TlsTrustManagersProvid
     private final char[] password;
 
     public FileStoreTlsTrustManagersProvider(FileStoreTlsManagersProviderConfig fileStore) {
-        path = fileStore.path.get();
-        type = fileStore.type.get();
-        password = fileStore.password.map(String::toCharArray).orElse(null);
+        path = fileStore.path().get();
+        type = fileStore.type().get();
+        password = fileStore.password().map(String::toCharArray).orElse(null);
     }
 
     @Override

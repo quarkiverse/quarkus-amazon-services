@@ -93,8 +93,8 @@ public class StsProcessor extends AbstractAmazonServiceProcessor {
     void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
             BuildProducer<AmazonClientBuildItem> clientProducer) {
 
-        setupClient(clientRequirements, clientProducer, buildTimeConfig.sdk, buildTimeConfig.syncClient,
-                buildTimeConfig.asyncClient);
+        setupClient(clientRequirements, clientProducer, buildTimeConfig.sdk(), buildTimeConfig.syncClient(),
+                buildTimeConfig.asyncClient());
     }
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonApacheHttpServicePresent.class)
@@ -105,7 +105,7 @@ public class StsProcessor extends AbstractAmazonServiceProcessor {
 
         createApacheSyncTransportBuilder(amazonClients,
                 transportRecorder,
-                buildTimeConfig.syncClient,
+                buildTimeConfig.syncClient(),
                 recorder.getSyncConfig(),
                 syncTransports);
     }
@@ -118,7 +118,7 @@ public class StsProcessor extends AbstractAmazonServiceProcessor {
 
         createUrlConnectionSyncTransportBuilder(amazonClients,
                 transportRecorder,
-                buildTimeConfig.syncClient,
+                buildTimeConfig.syncClient(),
                 recorder.getSyncConfig(),
                 syncTransports);
     }
@@ -132,7 +132,7 @@ public class StsProcessor extends AbstractAmazonServiceProcessor {
 
         createNettyAsyncTransportBuilder(amazonClients,
                 transportRecorder,
-                buildTimeConfig.asyncClient,
+                buildTimeConfig.asyncClient(),
                 recorder.getAsyncConfig(),
                 asyncTransports, eventLoopSupplier.getMainEventLoopGroup());
     }
@@ -145,7 +145,7 @@ public class StsProcessor extends AbstractAmazonServiceProcessor {
 
         createAwsCrtAsyncTransportBuilder(amazonClients,
                 transportRecorder,
-                buildTimeConfig.asyncClient,
+                buildTimeConfig.asyncClient(),
                 recorder.getAsyncConfig(),
                 asyncTransports);
     }
@@ -163,7 +163,7 @@ public class StsProcessor extends AbstractAmazonServiceProcessor {
 
         createClientBuilders(recorder,
                 commonRecorder,
-                buildTimeConfig.sdk,
+                buildTimeConfig,
                 syncTransports,
                 asyncTransports,
                 StsClientBuilder.class,

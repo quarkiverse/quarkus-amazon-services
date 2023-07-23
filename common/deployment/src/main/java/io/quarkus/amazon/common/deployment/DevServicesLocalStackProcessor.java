@@ -252,7 +252,7 @@ public class DevServicesLocalStackProcessor {
                 // LocalStack default values are not statically exposed
                 // create an instance just to get those value
                 LocalStackContainer defaultValueContainerNotStarted = new LocalStackContainer(
-                        DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName)
+                        DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName())
                                 .asCompatibleSubstituteFor("localstack/localstack"));
 
                 requestedServicesGroup.forEach(ds -> {
@@ -285,14 +285,14 @@ public class DevServicesLocalStackProcessor {
             }).orElseGet(
                     () -> {
                         LocalStackContainer container = new LocalStackContainer(
-                                DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName)
+                                DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName())
                                         .asCompatibleSubstituteFor("localstack/localstack"))
                                 .withEnv(
                                         Stream.concat(
                                                 requestedServicesGroup.stream()
                                                         .map(ds -> ds.getConfig().getContainerProperties())
                                                         .flatMap(ds -> ds.entrySet().stream()),
-                                                localStackDevServicesBuildTimeConfig.containerProperties.entrySet()
+                                                localStackDevServicesBuildTimeConfig.containerProperties().entrySet()
                                                         .stream())
                                                 .collect(Collectors.toMap(entry -> entry.getKey(),
                                                         entry -> entry.getValue())))
@@ -300,9 +300,9 @@ public class DevServicesLocalStackProcessor {
                                         .toArray(EnabledService[]::new))
                                 .withLabel(DEV_SERVICE_LABEL, devServiceName);
 
-                        localStackDevServicesBuildTimeConfig.initScriptsFolder.ifPresent(initScriptsFolder -> {
+                        localStackDevServicesBuildTimeConfig.initScriptsFolder().ifPresent(initScriptsFolder -> {
                             container.withFileSystemBind(initScriptsFolder, "/etc/localstack/init/ready.d");
-                            localStackDevServicesBuildTimeConfig.initCompletionMsg.ifPresent(initCompletionMsg -> {
+                            localStackDevServicesBuildTimeConfig.initCompletionMsg().ifPresent(initCompletionMsg -> {
                                 container.waitingFor(Wait.forLogMessage(".*" + initCompletionMsg + ".*\\n", 1));
                             });
                         });
@@ -343,8 +343,8 @@ public class DevServicesLocalStackProcessor {
         }
 
         private LocalStackDevServicesConfig(LocalStackDevServicesBuildTimeConfig config) {
-            this.imageName = config.imageName;
-            this.containerProperties = config.containerProperties;
+            this.imageName = config.imageName();
+            this.containerProperties = config.containerProperties();
         }
 
         @Override

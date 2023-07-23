@@ -11,6 +11,6 @@ public class KmsDevServicesProcessor extends AbstractDevServicesLocalStackProces
 
     @BuildStep
     DevServicesLocalStackProviderBuildItem setupKms(KmsBuildTimeConfig clientBuildTimeConfig) {
-        return this.setup(Service.KMS, clientBuildTimeConfig.devservices);
+        return this.setup(Service.KMS, clientBuildTimeConfig.devservices());
     }
 }

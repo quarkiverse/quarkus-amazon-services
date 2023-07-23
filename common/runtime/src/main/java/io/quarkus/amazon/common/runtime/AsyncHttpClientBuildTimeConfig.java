@@ -1,16 +1,16 @@
 package io.quarkus.amazon.common.runtime;
 
 import io.quarkus.runtime.annotations.ConfigGroup;
-import io.quarkus.runtime.annotations.ConfigItem;
+import io.smallrye.config.WithDefault;
 
 @ConfigGroup
-public class AsyncHttpClientBuildTimeConfig {
+public interface AsyncHttpClientBuildTimeConfig {
 
     /**
      * Type of the async HTTP client implementation
      */
-    @ConfigItem(defaultValue = "netty")
-    public AsyncClientType type;
+    @WithDefault(value = "netty")
+    AsyncClientType type();
 
     public enum AsyncClientType {
         NETTY,

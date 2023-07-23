@@ -7,75 +7,78 @@ import java.util.Optional;
 
 import io.quarkus.runtime.annotations.ConfigDocSection;
 import io.quarkus.runtime.annotations.ConfigGroup;
-import io.quarkus.runtime.annotations.ConfigItem;
+import io.quarkus.runtime.configuration.DurationConverter;
+import io.smallrye.config.WithConverter;
+import io.smallrye.config.WithDefault;
 
 @ConfigGroup
-public class SyncHttpClientConfig {
+public interface SyncHttpClientConfig {
     /**
      * The maximum amount of time to establish a connection before timing out.
      */
-    @ConfigItem(defaultValue = "2S")
-    public Duration connectionTimeout;
+    @WithDefault("2S")
+    @WithConverter(DurationConverter.class)
+    Duration connectionTimeout();
 
     /**
      * The amount of time to wait for data to be transferred over an established, open connection before the connection is timed
      * out.
      */
-    @ConfigItem(defaultValue = "30S")
-    public Duration socketTimeout;
+    @WithDefault("30S")
+    @WithConverter(DurationConverter.class)
+    Duration socketTimeout();
 
     /**
      * TLS Key Managers provider configuration
      */
-    @ConfigItem
-    public TlsKeyManagersProviderConfig tlsKeyManagersProvider;
+    TlsKeyManagersProviderConfig tlsKeyManagersProvider();
 
     /**
      * TLS Trust Managers provider configuration
      */
-    @ConfigItem
-    public TlsTrustManagersProviderConfig tlsTrustManagersProvider;
+    TlsTrustManagersProviderConfig tlsTrustManagersProvider();
 
     /**
      * Apache HTTP client specific configurations
      */
-    @ConfigItem
     @ConfigDocSection
-    public ApacheHttpClientConfig apache;
+    ApacheHttpClientConfig apache();
 
     @ConfigGroup
-    public static class ApacheHttpClientConfig {
+    public interface ApacheHttpClientConfig {
         /**
          * The amount of time to wait when acquiring a connection from the pool before giving up and timing out.
          */
-        @ConfigItem(defaultValue = "10S")
-        public Duration connectionAcquisitionTimeout;
+        @WithDefault("10S")
+        @WithConverter(DurationConverter.class)
+        Duration connectionAcquisitionTimeout();
 
         /**
          * The maximum amount of time that a connection should be allowed to remain open while idle.
          */
-        @ConfigItem(defaultValue = "60S")
-        public Duration connectionMaxIdleTime;
+        @WithDefault("60S")
+        @WithConverter(DurationConverter.class)
+        Duration connectionMaxIdleTime();
 
         /**
          * The maximum amount of time that a connection should be allowed to remain open, regardless of usage frequency.
          */
-        @ConfigItem
-        public Optional<Duration> connectionTimeToLive;
+        @WithConverter(DurationConverter.class)
+        Optional<Duration> connectionTimeToLive();
 
         /**
          * The maximum number of connections allowed in the connection pool.
          * <p>
          * Each built HTTP client has its own private connection pool.
          */
-        @ConfigItem(defaultValue = "50")
-        public int maxConnections;
+        @WithDefault("50")
+        int maxConnections();
 
         /**
          * Whether the client should send an HTTP expect-continue handshake before each request.
          */
-        @ConfigItem(defaultValue = "true")
-        public boolean expectContinueEnabled;
+        @WithDefault("true")
+        boolean expectContinueEnabled();
 
         /**
          * Whether the idle connections in the connection pool should be closed asynchronously.
@@ -84,29 +87,28 @@ public class SyncHttpClientConfig {
          * will be closed.
          * This will not close connections currently in use.
          */
-        @ConfigItem(defaultValue = "true")
-        public boolean useIdleConnectionReaper;
+        @WithDefault("true")
+        boolean useIdleConnectionReaper();
 
         /**
          * Configure whether to enable or disable TCP KeepAlive.
          */
-        @ConfigItem(defaultValue = "false")
-        public Boolean tcpKeepAlive;
+        @WithDefault("false")
+        Boolean tcpKeepAlive();
 
         /**
          * HTTP proxy configuration
          */
-        @ConfigItem
-        public HttpClientProxyConfiguration proxy;
+        HttpClientProxyConfiguration proxy();
 
         @ConfigGroup
-        public static class HttpClientProxyConfiguration {
+        public interface HttpClientProxyConfiguration {
 
             /**
              * Enable HTTP proxy
              */
-            @ConfigItem
-            public boolean enabled;
+            @WithDefault("false")
+            boolean enabled();
 
             /**
              * The endpoint of the proxy server that the SDK should connect through.
@@ -114,44 +116,37 @@ public class SyncHttpClientConfig {
              * Currently, the endpoint is limited to a host and port. Any other URI components will result in an exception being
              * raised.
              */
-            @ConfigItem
-            public Optional<URI> endpoint;
+            Optional<URI> endpoint();
 
             /**
              * The username to use when connecting through a proxy.
              */
-            @ConfigItem
-            public Optional<String> username;
+            Optional<String> username();
 
             /**
              * The password to use when connecting through a proxy.
              */
-            @ConfigItem
-            public Optional<String> password;
+            Optional<String> password();
 
             /**
              * For NTLM proxies - the Windows domain name to use when authenticating with the proxy.
              */
-            @ConfigItem
-            public Optional<String> ntlmDomain;
+            Optional<String> ntlmDomain();
 
             /**
              * For NTLM proxies - the Windows workstation name to use when authenticating with the proxy.
              */
-            @ConfigItem
-            public Optional<String> ntlmWorkstation;
+            Optional<String> ntlmWorkstation();
 
             /**
              * Whether to attempt to authenticate preemptively against the proxy server using basic authentication.
              */
-            @ConfigItem
-            public Optional<Boolean> preemptiveBasicAuthenticationEnabled;
+            Optional<Boolean> preemptiveBasicAuthenticationEnabled();
 
             /**
              * The hosts that the client is allowed to access without going through the proxy.
              */
-            @ConfigItem
-            public Optional<List<String>> nonProxyHosts;
+            Optional<List<String>> nonProxyHosts();
         }
     }
 }

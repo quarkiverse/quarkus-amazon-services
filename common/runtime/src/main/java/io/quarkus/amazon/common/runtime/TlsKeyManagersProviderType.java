@@ -20,9 +20,9 @@ public enum TlsKeyManagersProviderType {
     FILE_STORE {
         @Override
         public TlsKeyManagersProvider create(TlsKeyManagersProviderConfig config) {
-            final FileStoreTlsManagersProviderConfig fileStore = config.fileStore;
-            return FileStoreTlsKeyManagersProvider.create(fileStore.path.get(), fileStore.type.get(),
-                    fileStore.password.orElse(null));
+            final FileStoreTlsManagersProviderConfig fileStore = config.fileStore();
+            return FileStoreTlsKeyManagersProvider.create(fileStore.path().get(), fileStore.type().get(),
+                    fileStore.password().orElse(null));
         }
     };
 

@@ -3,11 +3,10 @@ package io.quarkus.amazon.common.runtime;
 import java.util.Optional;
 
 import io.quarkus.runtime.annotations.ConfigGroup;
-import io.quarkus.runtime.annotations.ConfigItem;
 import software.amazon.awssdk.regions.Region;
 
 @ConfigGroup
-public class AwsConfig {
+public interface AwsConfig {
 
     // @formatter:off
     /**
@@ -27,13 +26,11 @@ public class AwsConfig {
      * @asciidoclet
      */
     // @formatter:on
-    @ConfigItem
-    public Optional<Region> region;
+    Optional<Region> region();
 
     /**
      * Defines credentials provider used
      */
-    @ConfigItem
-    public AwsCredentialsProviderConfig credentials;
+    AwsCredentialsProviderConfig credentials();
 
 }

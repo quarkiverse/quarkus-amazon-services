@@ -2,38 +2,31 @@ package io.quarkus.amazon.dynamodb.runtime;
 
 import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.DevServicesBuildTimeConfig;
-import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
+import io.quarkus.amazon.common.runtime.HasSdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
-import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
 
 /**
  * Amazon DynamoDb build time configuration
  */
-@ConfigRoot(name = "dynamodb", phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
-public class DynamodbBuildTimeConfig {
-
-    /**
-     * SDK client configurations for AWS Dynamodb client
-     */
-    @ConfigItem(name = ConfigItem.PARENT)
-    public SdkBuildTimeConfig sdk;
+@ConfigMapping(prefix = "quarkus.dynamodb")
+@ConfigRoot(phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
+public interface DynamodbBuildTimeConfig extends HasSdkBuildTimeConfig {
 
     /**
      * Sync HTTP transport configuration for Amazon Dynamodb client
      */
-    @ConfigItem
-    public SyncHttpClientBuildTimeConfig syncClient;
+    SyncHttpClientBuildTimeConfig syncClient();
 
     /**
      * Async HTTP transport configuration for Amazon Dynamodb client
      */
-    @ConfigItem
-    public AsyncHttpClientBuildTimeConfig asyncClient;
+    AsyncHttpClientBuildTimeConfig asyncClient();
+
     /**
      * Config for dev services
      */
-    @ConfigItem
-    public DevServicesBuildTimeConfig devservices;
+    DevServicesBuildTimeConfig devservices();
 }

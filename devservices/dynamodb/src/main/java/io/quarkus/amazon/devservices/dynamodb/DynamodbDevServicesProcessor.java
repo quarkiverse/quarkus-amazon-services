@@ -11,6 +11,6 @@ public class DynamodbDevServicesProcessor extends AbstractDevServicesLocalStackP
 
     @BuildStep
     DevServicesLocalStackProviderBuildItem setupDynamodb(DynamodbBuildTimeConfig clientBuildTimeConfig) {
-        return this.setup(Service.DYNAMODB, clientBuildTimeConfig.devservices);
+        return this.setup(Service.DYNAMODB, clientBuildTimeConfig.devservices());
     }
 }

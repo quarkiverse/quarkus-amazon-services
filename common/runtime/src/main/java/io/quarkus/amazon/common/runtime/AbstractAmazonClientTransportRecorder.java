@@ -24,11 +24,11 @@ public abstract class AbstractAmazonClientTransportRecorder {
     }
 
     protected TlsKeyManagersProvider getTlsKeyManagersProvider(TlsKeyManagersProviderConfig config) {
-        return config.type.create(config);
+        return config.type().create(config);
     }
 
     protected TlsTrustManagersProvider getTlsTrustManagersProvider(TlsTrustManagersProviderConfig config) {
-        return config.type.create(config);
+        return config.type().create(config);
     }
 
     protected void validateProxyEndpoint(String extension, URI endpoint, String clientType) {
@@ -65,15 +65,15 @@ public abstract class AbstractAmazonClientTransportRecorder {
     }
 
     protected void validateTlsKeyManagersProvider(String extension, TlsKeyManagersProviderConfig config, String clientType) {
-        if (config != null && config.type == TlsKeyManagersProviderType.FILE_STORE) {
-            validateFileStore(extension, clientType, "key", config.fileStore);
+        if (config != null && config.type() == TlsKeyManagersProviderType.FILE_STORE) {
+            validateFileStore(extension, clientType, "key", config.fileStore());
         }
     }
 
     protected void validateTlsTrustManagersProvider(String extension, TlsTrustManagersProviderConfig config,
             String clientType) {
-        if (config != null && config.type == TlsTrustManagersProviderType.FILE_STORE) {
-            validateFileStore(extension, clientType, "trust", config.fileStore);
+        if (config != null && config.type() == TlsTrustManagersProviderType.FILE_STORE) {
+            validateFileStore(extension, clientType, "trust", config.fileStore());
         }
     }
 
@@ -85,19 +85,19 @@ public abstract class AbstractAmazonClientTransportRecorder {
                             "quarkus.%s.%s-client.tls-%s-managers-provider.file-store must be specified if 'FILE_STORE' provider type is used",
                             extension, clientType, storeType));
         } else {
-            if (!fileStore.path.isPresent()) {
+            if (!fileStore.path().isPresent()) {
                 throw new RuntimeConfigurationError(
                         String.format(
                                 "quarkus.%s.%s-client.tls-%s-managers-provider.file-store.path should not be empty if 'FILE_STORE' provider is used.",
                                 extension, clientType, storeType));
             }
-            if (!fileStore.type.isPresent()) {
+            if (!fileStore.type().isPresent()) {
                 throw new RuntimeConfigurationError(
                         String.format(
                                 "quarkus.%s.%s-client.tls-%s-managers-provider.file-store.type should not be empty if 'FILE_STORE' provider is used.",
                                 extension, clientType, storeType));
             }
-            if (!fileStore.password.isPresent()) {
+            if (!fileStore.password().isPresent()) {
                 throw new RuntimeConfigurationError(
                         String.format(
                                 "quarkus.%s.%s-client.tls-%s-managers-provider.file-store.password should not be empty if 'FILE_STORE' provider is used.",

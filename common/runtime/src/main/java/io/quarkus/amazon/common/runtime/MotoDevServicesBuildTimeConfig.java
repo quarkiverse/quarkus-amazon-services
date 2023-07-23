@@ -2,21 +2,22 @@ package io.quarkus.amazon.common.runtime;
 
 import java.util.Map;
 
-import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithDefault;
 
-@ConfigRoot(name = "aws.devservices.moto", phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
-public class MotoDevServicesBuildTimeConfig {
+@ConfigMapping(prefix = "quarkus.aws.devservices.moto")
+@ConfigRoot(phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
+public interface MotoDevServicesBuildTimeConfig {
     /**
      * The Moto container image to use.
      */
-    @ConfigItem(defaultValue = "motoserver/moto")
-    public String imageName;
+    @WithDefault(value = "motoserver/moto")
+    String imageName();
 
     /**
      * Generic properties that are pass for additional container configuration.
      */
-    @ConfigItem
-    public Map<String, String> containerProperties;
+    Map<String, String> containerProperties();
 }

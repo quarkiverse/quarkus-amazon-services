@@ -11,6 +11,6 @@ public class SesDevServicesProcessor extends AbstractDevServicesLocalStackProces
 
     @BuildStep
     DevServicesLocalStackProviderBuildItem setupSes(SesBuildTimeConfig clientBuildTimeConfig) {
-        return this.setup(Service.SES, clientBuildTimeConfig.devservices);
+        return this.setup(Service.SES, clientBuildTimeConfig.devservices());
     }
 }

@@ -11,6 +11,6 @@ public class SecretsManagerDevServicesProcessor extends AbstractDevServicesLocal
 
     @BuildStep
     DevServicesLocalStackProviderBuildItem setupSecretsManager(SecretsManagerBuildTimeConfig clientBuildTimeConfig) {
-        return this.setup(Service.SECRETSMANAGER, clientBuildTimeConfig.devservices);
+        return this.setup(Service.SECRETSMANAGER, clientBuildTimeConfig.devservices());
     }
 }

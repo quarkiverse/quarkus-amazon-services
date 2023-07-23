@@ -41,7 +41,7 @@ public class DynamodbEnhancedClientRecorder {
     public RuntimeValue<DynamoDbEnhancedClientExtension> createExtensionList() {
 
         List<DynamoDbEnhancedClientExtension> extensions = new ArrayList<>();
-        for (String item : buildTimeConfig.clientExtensions.orElse(Collections.emptyList())) {
+        for (String item : buildTimeConfig.clientExtensions().orElse(Collections.emptyList())) {
             DynamoDbEnhancedClientExtension extension = createExtension(item.trim());
             if (Objects.nonNull(extension)) {
                 extensions.add(extension);

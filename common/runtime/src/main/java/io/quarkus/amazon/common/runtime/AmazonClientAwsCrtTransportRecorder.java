@@ -17,17 +17,17 @@ public class AmazonClientAwsCrtTransportRecorder extends AbstractAmazonClientTra
         AsyncHttpClientConfig asyncConfig = asyncConfigRuntime.getValue();
         validateAwsCrtClientConfig(clientName, asyncConfig);
 
-        builder.connectionMaxIdleTime(asyncConfig.connectionMaxIdleTime);
-        builder.connectionTimeout(asyncConfig.connectionTimeout);
-        builder.maxConcurrency(asyncConfig.maxConcurrency);
+        builder.connectionMaxIdleTime(asyncConfig.connectionMaxIdleTime());
+        builder.connectionTimeout(asyncConfig.connectionTimeout());
+        builder.maxConcurrency(asyncConfig.maxConcurrency());
 
-        if (asyncConfig.proxy.enabled && asyncConfig.proxy.endpoint.isPresent()) {
+        if (asyncConfig.proxy().enabled() && asyncConfig.proxy().endpoint().isPresent()) {
             software.amazon.awssdk.http.crt.ProxyConfiguration.Builder proxyBuilder = software.amazon.awssdk.http.crt.ProxyConfiguration
-                    .builder().scheme(asyncConfig.proxy.endpoint.get().getScheme())
-                    .host(asyncConfig.proxy.endpoint.get().getHost());
+                    .builder().scheme(asyncConfig.proxy().endpoint().get().getScheme())
+                    .host(asyncConfig.proxy().endpoint().get().getHost());
 
-            if (asyncConfig.proxy.endpoint.get().getPort() != -1) {
-                proxyBuilder.port(asyncConfig.proxy.endpoint.get().getPort());
+            if (asyncConfig.proxy().endpoint().get().getPort() != -1) {
+                proxyBuilder.port(asyncConfig.proxy().endpoint().get().getPort());
             }
             builder.proxyConfiguration(proxyBuilder.build());
         }
@@ -36,13 +36,13 @@ public class AmazonClientAwsCrtTransportRecorder extends AbstractAmazonClientTra
     }
 
     private void validateAwsCrtClientConfig(String extension, AsyncHttpClientConfig config) {
-        if (config.maxConcurrency <= 0) {
+        if (config.maxConcurrency() <= 0) {
             throw new RuntimeConfigurationError(
                     String.format("quarkus.%s.async-client.max-concurrency may not be negative or zero.", extension));
         }
 
-        if (config.proxy.enabled) {
-            config.proxy.endpoint.ifPresent(uri -> validateProxyEndpoint(extension, uri, "async"));
+        if (config.proxy().enabled()) {
+            config.proxy().endpoint().ifPresent(uri -> validateProxyEndpoint(extension, uri, "async"));
         }
     }
 }

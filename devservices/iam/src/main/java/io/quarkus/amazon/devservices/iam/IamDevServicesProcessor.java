@@ -11,6 +11,6 @@ public class IamDevServicesProcessor extends AbstractDevServicesLocalStackProces
 
     @BuildStep
     DevServicesLocalStackProviderBuildItem setupIam(IamBuildTimeConfig clientBuildTimeConfig) {
-        return this.setup(Service.IAM, clientBuildTimeConfig.devservices);
+        return this.setup(Service.IAM, clientBuildTimeConfig.devservices());
     }
 }
