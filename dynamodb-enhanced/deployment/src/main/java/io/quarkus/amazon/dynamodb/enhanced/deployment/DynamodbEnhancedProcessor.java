@@ -137,6 +137,7 @@ public class DynamodbEnhancedProcessor {
             if (syncClientRuntime != null) {
                 syntheticBean.produce(SyntheticBeanBuildItem
                         .configure(DynamoDbEnhancedClient.class)
+                        .defaultBean()
                         .scope(ApplicationScoped.class)
                         .setRuntimeInit()
                         .createWith(recorder.createDynamoDbEnhancedClient(extensions))
@@ -147,6 +148,7 @@ public class DynamodbEnhancedProcessor {
             if (asyncClientRuntime != null) {
                 syntheticBean.produce(SyntheticBeanBuildItem
                         .configure(DynamoDbEnhancedAsyncClient.class)
+                        .defaultBean()
                         .scope(ApplicationScoped.class)
                         .setRuntimeInit()
                         .createWith(recorder.createDynamoDbEnhancedAsyncClient(extensions))
