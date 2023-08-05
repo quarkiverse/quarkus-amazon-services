@@ -1,4 +1,4 @@
-:quarkus-version: 2.16.8.Final
+:quarkus-version: 2.16.9.Final
 :quarkus-amazon-services-version: 1.9.0
 :maven-version: 3.8.1+
 
