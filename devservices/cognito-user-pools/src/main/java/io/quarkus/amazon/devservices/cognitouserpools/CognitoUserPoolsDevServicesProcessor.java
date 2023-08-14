@@ -42,7 +42,7 @@ public class CognitoUserPoolsDevServicesProcessor {
         }
 
         // explicitly disabled
-        if (!clientBuildTimeConfig.devservices().enabled().orElse(true)) {
+        if (!clientBuildTimeConfig.devservices.enabled.orElse(true)) {
             log.debugf(
                     "Not starting Dev Services for Amazon Services - cognito user pools, as it has been disabled in the config.");
             return null;
