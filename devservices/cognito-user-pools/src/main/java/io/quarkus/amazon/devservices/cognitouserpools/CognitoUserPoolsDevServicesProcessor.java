@@ -41,6 +41,13 @@ public class CognitoUserPoolsDevServicesProcessor {
             return devServices.toBuildItem();
         }
 
+        // explicitly disabled
+        if (!clientBuildTimeConfig.devservices.enabled.orElse(true)) {
+            log.debugf(
+                    "Not starting Dev Services for Amazon Services - cognito user pools, as it has been disabled in the config.");
+            return null;
+        }
+
         if (ConfigUtils.isPropertyPresent("quarkus.cognito-user-pools.endpoint-override")) {
             log.debugf(
                     "Not starting Dev Services for Amazon Services - cognito user pools, the quarkus.cognito-user-pools.endpoint-override is configured.");
