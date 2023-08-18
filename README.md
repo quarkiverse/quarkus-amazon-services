@@ -32,12 +32,14 @@ Each extension provides configuration properties to configure the clients and wi
 
 ## Compatibility
 
-Quarkus GitHub App provides two different version streams, one compatible with Quarkus 2.x and the other compatible with Quarkus 3.x.
+Quarkus GitHub App provides multiple different version streams, one compatible with Quarkus 2.x while the others compatible with Quarkus 3.x and aligned with Quarkus LTS.
 
-| Quarkus | Quarkus GitHub App | Documentation                                                                                          |
-|---------|--------------------|--------------------------------------------------------------------------------------------------------|
-| 2.x     | 1.6.x              | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/1.x/index.html) |
-| 3.x     | 2.x                | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html) |
+| Quarkus     | Quarkus GitHub App | Documentation                                                                                          |
+|-------------|--------------------|--------------------------------------------------------------------------------------------------------|
+| 2.x         | 1.6.x              | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/1.x/index.html)                    |
+| 3.2.x (LTS) | 2.4.x              | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.4.x/index.html)                    |
+| 3.3.x       | 2.5.x              | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)                    |
+
 
 Use the latest version of the corresponding stream, [the list of versions is available on Maven Central](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom).
 
