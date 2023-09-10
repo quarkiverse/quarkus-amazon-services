@@ -12,6 +12,7 @@ h|Default
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus.dynamodb.interceptors]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.interceptors[quarkus.dynamodb.interceptors]`
 
+
 [.description]
 --
 List of execution interceptors that will have access to read and modify the request and response objects as they are processed by the AWS SDK.
@@ -30,6 +31,7 @@ endif::add-copy-button-to-env-var[]
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.type]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.type[quarkus.dynamodb.sync-client.type]`
 
+
 [.description]
 --
 Type of the sync HTTP client implementation
@@ -46,6 +48,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.type]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.type[quarkus.dynamodb.async-client.type]`
+
 
 [.description]
 --
@@ -64,6 +67,7 @@ endif::add-copy-button-to-env-var[]
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.enabled]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.enabled[quarkus.dynamodb.devservices.enabled]`
 
+
 [.description]
 --
 If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. For all services but Cognito, the local AWS stack will be provided by LocalStack. Otherwise, it will be provided by Moto
@@ -79,6 +83,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.shared]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.shared[quarkus.dynamodb.devservices.shared]`
+
 
 [.description]
 --
@@ -100,6 +105,7 @@ endif::add-copy-button-to-env-var[]
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.service-name]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.service-name[quarkus.dynamodb.devservices.service-name]`
 
+
 [.description]
 --
 The value of the `quarkus-dev-service-localstack` label attached to the started container. In dev mode, when `shared` is set to `true`, before starting a container, Dev Services looks for a container with the `quarkus-dev-service-localstack` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise it starts a new container with the `quarkus-dev-service-localstack` label set to the specified value. In test mode, Dev Services will group services with the same `service-name` value in one container instance.
@@ -118,6 +124,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.enable-endpoint-discovery]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.enable-endpoint-discovery[quarkus.dynamodb.enable-endpoint-discovery]`
 
+
 [.description]
 --
 Enable DynamoDB service endpoint discovery.
@@ -133,6 +140,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.container-properties-container-properties]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.devservices.container-properties-container-properties[quarkus.dynamodb.devservices.container-properties]`
+
 
 [.description]
 --
@@ -155,6 +163,7 @@ h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.endpoint-override]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.endpoint-override[quarkus.dynamodb.endpoint-override]`
 
+
 [.description]
 --
 The endpoint URI with which the SDK should communicate.
@@ -173,6 +182,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.api-call-timeout]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.api-call-timeout[quarkus.dynamodb.api-call-timeout]`
+
 
 [.description]
 --
@@ -195,6 +205,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.api-call-attempt-timeout]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.api-call-attempt-timeout[quarkus.dynamodb.api-call-attempt-timeout]`
 
+
 [.description]
 --
 The amount of time to wait for the HTTP request to complete before giving up and timing out.
@@ -212,12 +223,32 @@ endif::add-copy-button-to-env-var[]
 |
 
 
+a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.advanced.use-quarkus-scheduled-executor-service]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.advanced.use-quarkus-scheduled-executor-service[quarkus.dynamodb.advanced.use-quarkus-scheduled-executor-service]`
+
+
+[.description]
+--
+Whether the Quarkus thread pool should be used for scheduling tasks such as async retry attempts and timeout task.
+
+When disabled, the default sdk behavior is to create a dedicated thread pool for each client, resulting in competition for CPU resources among these thread pools.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_DYNAMODB_ADVANCED_USE_QUARKUS_SCHEDULED_EXECUTOR_SERVICE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_DYNAMODB_ADVANCED_USE_QUARKUS_SCHEDULED_EXECUTOR_SERVICE+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|`true`
+
+
 h|[[quarkus-amazon-dynamodb_quarkus.dynamodb.aws-aws-services-configurations]]link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws-aws-services-configurations[AWS services configurations]
 
 h|Type
 h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.region]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.region[quarkus.dynamodb.aws.region]`
+
 
 [.description]
 --
@@ -245,6 +276,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.type]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.type[quarkus.dynamodb.aws.credentials.type]`
+
 
 [.description]
 --
@@ -291,6 +323,7 @@ h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.default-provider.async-credential-update-enabled]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.default-provider.async-credential-update-enabled[quarkus.dynamodb.aws.credentials.default-provider.async-credential-update-enabled]`
 
+
 [.description]
 --
 Whether this provider should fetch credentials asynchronously in the background.
@@ -308,6 +341,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.default-provider.reuse-last-provider-enabled]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.default-provider.reuse-last-provider-enabled[quarkus.dynamodb.aws.credentials.default-provider.reuse-last-provider-enabled]`
+
 
 [.description]
 --
@@ -332,6 +366,7 @@ h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.static-provider.access-key-id]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.static-provider.access-key-id[quarkus.dynamodb.aws.credentials.static-provider.access-key-id]`
 
+
 [.description]
 --
 AWS Access key id
@@ -348,6 +383,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.static-provider.secret-access-key]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.static-provider.secret-access-key[quarkus.dynamodb.aws.credentials.static-provider.secret-access-key]`
 
+
 [.description]
 --
 AWS Secret access key
@@ -363,6 +399,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.static-provider.session-token]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.static-provider.session-token[quarkus.dynamodb.aws.credentials.static-provider.session-token]`
+
 
 [.description]
 --
@@ -384,6 +421,7 @@ h|Type
 h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.profile-provider.profile-name]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.profile-provider.profile-name[quarkus.dynamodb.aws.credentials.profile-provider.profile-name]`
+
 
 [.description]
 --
@@ -408,6 +446,7 @@ h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.process-provider.async-credential-update-enabled]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.process-provider.async-credential-update-enabled[quarkus.dynamodb.aws.credentials.process-provider.async-credential-update-enabled]`
 
+
 [.description]
 --
 Whether the provider should fetch credentials asynchronously in the background.
@@ -425,6 +464,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.process-provider.credential-refresh-threshold]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.process-provider.credential-refresh-threshold[quarkus.dynamodb.aws.credentials.process-provider.credential-refresh-threshold]`
+
 
 [.description]
 --
@@ -445,6 +485,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.process-provider.process-output-limit]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.process-provider.process-output-limit[quarkus.dynamodb.aws.credentials.process-provider.process-output-limit]`
 
+
 [.description]
 --
 The maximum size of the output that can be returned by the external process before an exception is raised.
@@ -460,6 +501,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.process-provider.command]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.process-provider.command[quarkus.dynamodb.aws.credentials.process-provider.command]`
+
 
 [.description]
 --
@@ -482,6 +524,7 @@ h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.custom-provider.name]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.aws.credentials.custom-provider.name[quarkus.dynamodb.aws.credentials.custom-provider.name]`
 
+
 [.description]
 --
 The name of custom AwsCredentialsProvider bean.
@@ -503,6 +546,7 @@ h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.connection-timeout]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.connection-timeout[quarkus.dynamodb.sync-client.connection-timeout]`
 
+
 [.description]
 --
 The maximum amount of time to establish a connection before timing out.
@@ -520,6 +564,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.socket-timeout]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.socket-timeout[quarkus.dynamodb.sync-client.socket-timeout]`
 
+
 [.description]
 --
 The amount of time to wait for data to be transferred over an established, open connection before the connection is timed out.
@@ -536,6 +581,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-key-managers-provider.type]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-key-managers-provider.type[quarkus.dynamodb.sync-client.tls-key-managers-provider.type]`
+
 
 [.description]
 --
@@ -562,6 +608,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.path]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.path[quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.path]`
 
+
 [.description]
 --
 Path to the key store.
@@ -577,6 +624,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.type]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.type[quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.type]`
+
 
 [.description]
 --
@@ -596,6 +644,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.password]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.password[quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.password]`
 
+
 [.description]
 --
 Key store password
@@ -611,6 +660,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-trust-managers-provider.type]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-trust-managers-provider.type[quarkus.dynamodb.sync-client.tls-trust-managers-provider.type]`
+
 
 [.description]
 --
@@ -637,6 +687,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.path]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.path[quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.path]`
 
+
 [.description]
 --
 Path to the key store.
@@ -652,6 +703,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.type]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.type[quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.type]`
+
 
 [.description]
 --
@@ -670,6 +722,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.password]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.password[quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.password]`
+
 
 [.description]
 --
@@ -692,6 +745,7 @@ h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.connection-acquisition-timeout]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.connection-acquisition-timeout[quarkus.dynamodb.sync-client.apache.connection-acquisition-timeout]`
 
+
 [.description]
 --
 The amount of time to wait when acquiring a connection from the pool before giving up and timing out.
@@ -708,6 +762,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.connection-max-idle-time]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.connection-max-idle-time[quarkus.dynamodb.sync-client.apache.connection-max-idle-time]`
+
 
 [.description]
 --
@@ -726,6 +781,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.connection-time-to-live]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.connection-time-to-live[quarkus.dynamodb.sync-client.apache.connection-time-to-live]`
 
+
 [.description]
 --
 The maximum amount of time that a connection should be allowed to remain open, regardless of usage frequency.
@@ -742,6 +798,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.max-connections]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.max-connections[quarkus.dynamodb.sync-client.apache.max-connections]`
+
 
 [.description]
 --
@@ -761,6 +818,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.expect-continue-enabled]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.expect-continue-enabled[quarkus.dynamodb.sync-client.apache.expect-continue-enabled]`
 
+
 [.description]
 --
 Whether the client should send an HTTP expect-continue handshake before each request.
@@ -776,6 +834,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.use-idle-connection-reaper]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.use-idle-connection-reaper[quarkus.dynamodb.sync-client.apache.use-idle-connection-reaper]`
+
 
 [.description]
 --
@@ -795,6 +854,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.tcp-keep-alive]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.tcp-keep-alive[quarkus.dynamodb.sync-client.apache.tcp-keep-alive]`
 
+
 [.description]
 --
 Configure whether to enable or disable TCP KeepAlive.
@@ -811,6 +871,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.enabled]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.enabled[quarkus.dynamodb.sync-client.apache.proxy.enabled]`
 
+
 [.description]
 --
 Enable HTTP proxy
@@ -826,6 +887,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.endpoint]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.endpoint[quarkus.dynamodb.sync-client.apache.proxy.endpoint]`
+
 
 [.description]
 --
@@ -846,6 +908,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.username]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.username[quarkus.dynamodb.sync-client.apache.proxy.username]`
 
+
 [.description]
 --
 The username to use when connecting through a proxy.
@@ -861,6 +924,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.password]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.password[quarkus.dynamodb.sync-client.apache.proxy.password]`
+
 
 [.description]
 --
@@ -878,6 +942,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.ntlm-domain]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.ntlm-domain[quarkus.dynamodb.sync-client.apache.proxy.ntlm-domain]`
 
+
 [.description]
 --
 For NTLM proxies - the Windows domain name to use when authenticating with the proxy.
@@ -893,6 +958,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.ntlm-workstation]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.ntlm-workstation[quarkus.dynamodb.sync-client.apache.proxy.ntlm-workstation]`
+
 
 [.description]
 --
@@ -910,6 +976,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.preemptive-basic-authentication-enabled]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.preemptive-basic-authentication-enabled[quarkus.dynamodb.sync-client.apache.proxy.preemptive-basic-authentication-enabled]`
 
+
 [.description]
 --
 Whether to attempt to authenticate preemptively against the proxy server using basic authentication.
@@ -925,6 +992,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.non-proxy-hosts]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.sync-client.apache.proxy.non-proxy-hosts[quarkus.dynamodb.sync-client.apache.proxy.non-proxy-hosts]`
+
 
 [.description]
 --
@@ -947,6 +1015,7 @@ h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.max-concurrency]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.max-concurrency[quarkus.dynamodb.async-client.max-concurrency]`
 
+
 [.description]
 --
 The maximum number of allowed concurrent requests.
@@ -965,6 +1034,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.max-pending-connection-acquires]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.max-pending-connection-acquires[quarkus.dynamodb.async-client.max-pending-connection-acquires]`
 
+
 [.description]
 --
 The maximum number of pending acquires allowed.
@@ -982,6 +1052,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.read-timeout]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.read-timeout[quarkus.dynamodb.async-client.read-timeout]`
+
 
 [.description]
 --
@@ -1002,6 +1073,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.write-timeout]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.write-timeout[quarkus.dynamodb.async-client.write-timeout]`
 
+
 [.description]
 --
 The amount of time to wait for a write on a socket before an exception is thrown.
@@ -1021,6 +1093,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.connection-timeout]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.connection-timeout[quarkus.dynamodb.async-client.connection-timeout]`
 
+
 [.description]
 --
 The amount of time to wait when initially establishing a connection before giving up and timing out.
@@ -1037,6 +1110,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.connection-acquisition-timeout]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.connection-acquisition-timeout[quarkus.dynamodb.async-client.connection-acquisition-timeout]`
+
 
 [.description]
 --
@@ -1055,6 +1129,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.connection-time-to-live]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.connection-time-to-live[quarkus.dynamodb.async-client.connection-time-to-live]`
 
+
 [.description]
 --
 The maximum amount of time that a connection should be allowed to remain open, regardless of usage frequency.
@@ -1071,6 +1146,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.connection-max-idle-time]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.connection-max-idle-time[quarkus.dynamodb.async-client.connection-max-idle-time]`
+
 
 [.description]
 --
@@ -1091,6 +1167,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.use-idle-connection-reaper]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.use-idle-connection-reaper[quarkus.dynamodb.async-client.use-idle-connection-reaper]`
 
+
 [.description]
 --
 Whether the idle connections in the connection pool should be closed.
@@ -1109,6 +1186,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tcp-keep-alive]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tcp-keep-alive[quarkus.dynamodb.async-client.tcp-keep-alive]`
 
+
 [.description]
 --
 Configure whether to enable or disable TCP KeepAlive.
@@ -1124,6 +1202,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.protocol]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.protocol[quarkus.dynamodb.async-client.protocol]`
+
 
 [.description]
 --
@@ -1141,6 +1220,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.ssl-provider]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.ssl-provider[quarkus.dynamodb.async-client.ssl-provider]`
+
 
 [.description]
 --
@@ -1161,6 +1241,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.http2.max-streams]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.http2.max-streams[quarkus.dynamodb.async-client.http2.max-streams]`
 
+
 [.description]
 --
 The maximum number of concurrent streams for an HTTP/2 connection.
@@ -1179,6 +1260,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.http2.initial-window-size]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.http2.initial-window-size[quarkus.dynamodb.async-client.http2.initial-window-size]`
 
+
 [.description]
 --
 The initial window size for an HTTP/2 stream.
@@ -1196,6 +1278,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.http2.health-check-ping-period]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.http2.health-check-ping-period[quarkus.dynamodb.async-client.http2.health-check-ping-period]`
+
 
 [.description]
 --
@@ -1216,6 +1299,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.proxy.enabled]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.proxy.enabled[quarkus.dynamodb.async-client.proxy.enabled]`
 
+
 [.description]
 --
 Enable HTTP proxy.
@@ -1231,6 +1315,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.proxy.endpoint]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.proxy.endpoint[quarkus.dynamodb.async-client.proxy.endpoint]`
+
 
 [.description]
 --
@@ -1251,6 +1336,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.proxy.non-proxy-hosts]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.proxy.non-proxy-hosts[quarkus.dynamodb.async-client.proxy.non-proxy-hosts]`
 
+
 [.description]
 --
 The hosts that the client is allowed to access without going through the proxy.
@@ -1266,6 +1352,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-key-managers-provider.type]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-key-managers-provider.type[quarkus.dynamodb.async-client.tls-key-managers-provider.type]`
+
 
 [.description]
 --
@@ -1292,6 +1379,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.path]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.path[quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.path]`
 
+
 [.description]
 --
 Path to the key store.
@@ -1307,6 +1395,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.type]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.type[quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.type]`
+
 
 [.description]
 --
@@ -1326,6 +1415,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.password]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.password[quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.password]`
 
+
 [.description]
 --
 Key store password
@@ -1341,6 +1431,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-trust-managers-provider.type]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-trust-managers-provider.type[quarkus.dynamodb.async-client.tls-trust-managers-provider.type]`
+
 
 [.description]
 --
@@ -1367,6 +1458,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.path]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.path[quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.path]`
 
+
 [.description]
 --
 Path to the key store.
@@ -1382,6 +1474,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.type]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.type[quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.type]`
+
 
 [.description]
 --
@@ -1401,6 +1494,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.password]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.password[quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.password]`
 
+
 [.description]
 --
 Key store password
@@ -1417,6 +1511,7 @@ endif::add-copy-button-to-env-var[]
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.event-loop.override]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.event-loop.override[quarkus.dynamodb.async-client.event-loop.override]`
 
+
 [.description]
 --
 Enable the custom configuration of the Netty event loop group.
@@ -1432,6 +1527,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.event-loop.number-of-threads]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.event-loop.number-of-threads[quarkus.dynamodb.async-client.event-loop.number-of-threads]`
+
 
 [.description]
 --
@@ -1450,6 +1546,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.event-loop.thread-name-prefix]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.event-loop.thread-name-prefix[quarkus.dynamodb.async-client.event-loop.thread-name-prefix]`
+
 
 [.description]
 --
@@ -1470,6 +1567,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a| [[quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.advanced.use-future-completion-thread-pool]]`link:#quarkus-amazon-dynamodb_quarkus.dynamodb.async-client.advanced.use-future-completion-thread-pool[quarkus.dynamodb.async-client.advanced.use-future-completion-thread-pool]`
+
 
 [.description]
 --

@@ -53,8 +53,11 @@ public class AmazonClientCommonRecorder {
         config.endpointOverride().filter(URI::isAbsolute).ifPresent(builder::endpointOverride);
 
         final ClientOverrideConfiguration.Builder overrides = ClientOverrideConfiguration.builder();
-        // use quarkus executor service
-        overrides.scheduledExecutorService(scheduledExecutorService);
+
+        if (config.advanced().useQuarkusScheduledExecutorService()) {
+            // use quarkus executor service
+            overrides.scheduledExecutorService(scheduledExecutorService);
+        }
 
         config.apiCallTimeout().ifPresent(overrides::apiCallTimeout);
         config.apiCallAttemptTimeout().ifPresent(overrides::apiCallAttemptTimeout);

@@ -12,6 +12,7 @@ h|Default
 
 a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.image-name]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.image-name[quarkus.aws.devservices.localstack.image-name]`
 
+
 [.description]
 --
 The LocalStack container image to use.
@@ -27,6 +28,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-scripts-folder]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-scripts-folder[quarkus.aws.devservices.localstack.init-scripts-folder]`
+
 
 [.description]
 --
@@ -44,6 +46,7 @@ endif::add-copy-button-to-env-var[]
 
 a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-completion-msg]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-completion-msg[quarkus.aws.devservices.localstack.init-completion-msg]`
 
+
 [.description]
 --
 Specific container log message to be waiting for localstack init scripts completion.
@@ -59,6 +62,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.container-properties-container-properties]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.container-properties-container-properties[quarkus.aws.devservices.localstack.container-properties]`
+
 
 [.description]
 --
@@ -76,6 +80,7 @@ endif::add-copy-button-to-env-var[]
 
 a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.enabled]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.enabled[quarkus.aws.devservices.localstack.additional-services."additional-services".enabled]`
 
+
 [.description]
 --
 If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. For all services but Cognito, the local AWS stack will be provided by LocalStack. Otherwise, it will be provided by Moto
@@ -91,6 +96,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.shared]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.shared[quarkus.aws.devservices.localstack.additional-services."additional-services".shared]`
+
 
 [.description]
 --
@@ -112,6 +118,7 @@ endif::add-copy-button-to-env-var[]
 
 a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.service-name]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.service-name[quarkus.aws.devservices.localstack.additional-services."additional-services".service-name]`
 
+
 [.description]
 --
 The value of the `quarkus-dev-service-localstack` label attached to the started container. In dev mode, when `shared` is set to `true`, before starting a container, Dev Services looks for a container with the `quarkus-dev-service-localstack` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise it starts a new container with the `quarkus-dev-service-localstack` label set to the specified value. In test mode, Dev Services will group services with the same `service-name` value in one container instance.
@@ -129,6 +136,7 @@ endif::add-copy-button-to-env-var[]
 
 
 a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.container-properties-container-properties]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.container-properties-container-properties[quarkus.aws.devservices.localstack.additional-services."additional-services".container-properties]`
+
 
 [.description]
 --

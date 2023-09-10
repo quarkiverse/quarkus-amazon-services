@@ -7,6 +7,7 @@ import java.util.Optional;
 import io.quarkus.runtime.annotations.ConfigGroup;
 import io.quarkus.runtime.configuration.DurationConverter;
 import io.smallrye.config.WithConverter;
+import io.smallrye.config.WithDefault;
 
 /**
  * AWS SDK specific configurations
@@ -42,4 +43,22 @@ public interface SdkConfig {
      */
     @WithConverter(DurationConverter.class)
     Optional<Duration> apiCallAttemptTimeout();
+
+    /**
+     * sdk client advanced options
+     */
+    Advanced advanced();
+
+    @ConfigGroup
+    public interface Advanced {
+
+        /**
+         * Whether the Quarkus thread pool should be used for scheduling tasks such as async retry attempts and timeout task.
+         * <p>
+         * When disabled, the default sdk behavior is to create a dedicated thread pool for each client, resulting in
+         * competition for CPU resources among these thread pools.
+         */
+        @WithDefault("true")
+        boolean useQuarkusScheduledExecutorService();
+    }
 }

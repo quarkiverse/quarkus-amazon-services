@@ -2,6 +2,7 @@ package io.quarkus.amazon.common.deployment;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -292,9 +293,11 @@ abstract public class AbstractAmazonServiceProcessor {
                 ? asyncClientBuilderFunction.apply(asyncSdkAsyncHttpClientBuilder.get())
                 : null;
 
+        ScheduledExecutorService sharedExecutorService = executorBuildItem.getExecutorProxy();
+
         if (syncClientBuilder != null) {
             syncClientBuilder = recorder.configure(syncClientBuilder, awsConfigRuntime, sdkConfigRuntime,
-                    sdkBuildConfig, executorBuildItem.getExecutorProxy(), configName());
+                    sdkBuildConfig, sharedExecutorService, configName());
             syntheticBeans.produce(SyntheticBeanBuildItem.configure(syncClientBuilderClass)
                     .setRuntimeInit()
                     .scope(ApplicationScoped.class)
@@ -304,7 +307,7 @@ abstract public class AbstractAmazonServiceProcessor {
         }
         if (asyncClientBuilder != null) {
             asyncClientBuilder = recorder.configure(asyncClientBuilder, awsConfigRuntime, sdkConfigRuntime,
-                    sdkBuildConfig, executorBuildItem.getExecutorProxy(), configName());
+                    sdkBuildConfig, sharedExecutorService, configName());
             syntheticBeans.produce(SyntheticBeanBuildItem.configure(asyncClientBuilderClass)
                     .setRuntimeInit()
                     .scope(ApplicationScoped.class)
