@@ -9,7 +9,7 @@ Dev Services for Amazon Services is automatically enabled for each extensions ad
 * `quarkus.devservices.enabled` is set to `false`
 * `devservices.enabled` is set to `false` per extension (eg. `quarkus.s3.devservices.enabled=false`) 
 * the `endpoint-override` is configured  (eg. `quarkus.s3.endpoint-override=http://localhost:4566`)
-* Your environment does not support Docker
+* Your environment does not support Docker. In test mode, it will cause the test to fail. Either disable Dev Services or configure the `endpoint-override`.
 
 == Shared services
 
