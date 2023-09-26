@@ -15,6 +15,7 @@ import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig.SyncClient
 import io.quarkus.bootstrap.classloading.QuarkusClassLoader;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.Produce;
 import io.quarkus.deployment.builditem.AdditionalApplicationArchiveMarkerBuildItem;
 import io.quarkus.deployment.builditem.CombinedIndexBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageProxyDefinitionBuildItem;
@@ -56,6 +57,8 @@ public class AmazonServicesClientsProcessor {
     }
 
     @BuildStep
+    @Produce(value = AmazonClientSyncTransportBuildItem.class)
+    @Produce(value = AmazonClientAsyncTransportBuildItem.class)
     void setup(CombinedIndexBuildItem combinedIndexBuildItem,
             List<AmazonClientBuildItem> amazonClients,
             List<AmazonClientInterceptorsPathBuildItem> interceptors,
