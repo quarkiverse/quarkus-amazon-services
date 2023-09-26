@@ -1,0 +1,15 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon Secrets Manager Config"
+metadata:
+  keywords:
+    - "secretsmanager"
+    - "aws"
+    - "amazon"
+    - "config"
+  categories:
+    - "data"
+  guide: https://quarkiverse.github.io/quarkiverse-docs/quarkus-amazon-services/dev/amazon-secretsmanager.html
+  status: "preview"
+  config:
+  - "quarkus.secretsmanager-config."
