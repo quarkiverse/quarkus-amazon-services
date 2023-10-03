@@ -364,6 +364,12 @@ public class AwsCrtProcessor {
                 "software.amazon.awssdk.crt.mqtt.MqttClientConnection", "onWebsocketHandshake",
                 "software.amazon.awssdk.crt.http.HttpRequest", "long"));
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
+                "software.amazon.awssdk.crt.mqtt.MqttClientConnection", "onConnectionSuccess",
+                "boolean"));
+        jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
+                "software.amazon.awssdk.crt.mqtt.MqttClientConnection", "onConnectionFailure",
+                "int"));
+        jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
                 "software.amazon.awssdk.crt.mqtt.MqttClientConnection$MessageHandler", "deliver",
                 "java.lang.String", "byte[]", "boolean", "int", "boolean"));
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
