@@ -28,7 +28,7 @@ Dev Services for Amazon Services uses `localstack/localstack` image. You can con
 
 [source,properties]
 ----
-quarkus.aws.devservices.localstack.image-name=localstack/localstack:1.4.0
+quarkus.aws.devservices.localstack.image-name=localstack/localstack:2.3.0
 ----
 
 == Specific configuration

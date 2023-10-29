@@ -21,7 +21,7 @@ class SqsDevServicesWithoutQueueTest {
     @RegisterExtension
     static final QuarkusUnitTest config = new QuarkusUnitTest()
             .withApplicationRoot((jar) -> jar
-                    .addAsResource(new StringAsset("quarkus.aws.devservices.localstack.image-name=localstack/localstack:1.0.3"),
+                    .addAsResource(new StringAsset("quarkus.aws.devservices.localstack.image-name=localstack/localstack:2.3.0"),
                             "application.properties"));
 
     @Test
