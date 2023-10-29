@@ -790,7 +790,7 @@ public class AwsCrtProcessor {
                 "software.amazon.awssdk.crt.s3.S3MetaRequestProgress", "contentLength"));
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
                 "software.amazon.awssdk.crt.s3.S3MetaRequestResponseHandlerNativeAdapter", "onFinished",
-                "int", "int", "byte[]", "int", "boolean"));
+                "int", "int", "byte[]", "int", "boolean", "java.lang.Throwable"));
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
                 "software.amazon.awssdk.crt.s3.S3MetaRequestResponseHandlerNativeAdapter", "onProgress",
                 "software.amazon.awssdk.crt.s3.S3MetaRequestProgress"));
