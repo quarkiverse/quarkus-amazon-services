@@ -32,20 +32,16 @@ Each extension provides configuration properties to configure the clients and wi
 
 ## Compatibility
 
-Quarkus Amazon Services provides multiple different version streams, one compatible with Quarkus 2.x while the others compatible with Quarkus 3.x and aligned with Quarkus LTS.
+Quarkus Amazon Services provides multiple version streams. One stream is compatible with Quarkus 2.x, while the others are designed to work with Quarkus 3.x and are aligned with Quarkus LTS.
 
 | Quarkus     | Quarkus Amazon Services | Documentation                                                                                          |
 |-------------|-------------------------|--------------------------------------------------------------------------------------------------------|
 | 2.x         | 1.6.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/1.x/index.html)                    |
 | 3.2.x (LTS) | 2.4.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.4.x/index.html)                  |
-| 3.3.x       | 2.5.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)                    |
+| 3.x         | 2.5.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)                    |
 
 
 Use the latest version of the corresponding stream, [the list of versions is available on Maven Central](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom).
-
-## Documentation
-
-The documentation for this extension can be found [here](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html) - or [here](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html) for a version compatible with Quarkus 3.
 
 ## Contributors ✨
 
