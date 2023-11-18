@@ -31,6 +31,7 @@
     <module>secretsmanager</module>
     <module>docs</module>
     <module>integration-tests</module>
+    <module>lambdaclient</module>
   </modules>
   <scm>
     <connection>:git:git@github.com:quarkiverse/quarkus-amazon-services.git</connection>
