@@ -17,4 +17,9 @@ public interface LambdaBuildTimeConfig extends HasSdkBuildTimeConfig {
 
     /** Async HTTP transport configuration for Amazon LAMBDA client */
     AsyncHttpClientBuildTimeConfig asyncClient();
+
+    /**
+     * Config for dev services
+     */
+    LambdaDevServicesBuildTimeConfig devservices();
 }

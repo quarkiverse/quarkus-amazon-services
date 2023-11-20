@@ -4,9 +4,21 @@ import java.util.List;
 
 import org.jboss.jandex.DotName;
 
-import io.quarkus.amazon.common.deployment.*;
+import io.quarkus.amazon.common.deployment.AbstractAmazonServiceProcessor;
+import io.quarkus.amazon.common.deployment.AmazonClientAsyncResultBuildItem;
+import io.quarkus.amazon.common.deployment.AmazonClientAsyncTransportBuildItem;
+import io.quarkus.amazon.common.deployment.AmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.AmazonClientInterceptorsPathBuildItem;
+import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
+import io.quarkus.amazon.common.deployment.AmazonClientSyncTransportBuildItem;
+import io.quarkus.amazon.common.deployment.AmazonHttpClients;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
 import io.quarkus.amazon.common.deployment.spi.EventLoopGroupBuildItem;
-import io.quarkus.amazon.common.runtime.*;
+import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
+import io.quarkus.amazon.common.runtime.AmazonClientAwsCrtTransportRecorder;
+import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
+import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
+import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
 import io.quarkus.amazon.lambda.client.runtime.LambdaBuildTimeConfig;
 import io.quarkus.amazon.lambda.client.runtime.LambdaClientProducer;
 import io.quarkus.amazon.lambda.client.runtime.LambdaConfig;
@@ -26,9 +38,6 @@ import software.amazon.awssdk.services.lambda.LambdaAsyncClientBuilder;
 import software.amazon.awssdk.services.lambda.LambdaClient;
 import software.amazon.awssdk.services.lambda.LambdaClientBuilder;
 
-/*
- * Created by triphon 10.09.23 г.
- */
 public class LambdaProcessor extends AbstractAmazonServiceProcessor {
     private static final String AMAZON_Lambda = "amazon-lambda";
 

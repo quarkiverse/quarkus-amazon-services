@@ -28,5 +28,6 @@
         <module>sqs</module>
         <module>ssm</module>
         <module>sts</module>
+        <module>lambda</module>
     </modules>
 </project>
