@@ -29,9 +29,9 @@
     <module>ssm</module>
     <module>sts</module>
     <module>secretsmanager</module>
+    <module>lambdaclient</module>
     <module>docs</module>
     <module>integration-tests</module>
-    <module>lambdaclient</module>
   </modules>
   <scm>
     <connection>:git:git@github.com:quarkiverse/quarkus-amazon-services.git</connection>

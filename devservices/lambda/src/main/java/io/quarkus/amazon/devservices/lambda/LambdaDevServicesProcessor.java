@@ -1,5 +1,7 @@
 package io.quarkus.amazon.devservices.lambda;
 
+import java.util.Optional;
+
 import org.testcontainers.containers.localstack.LocalStackContainer;
 import org.testcontainers.containers.localstack.LocalStackContainer.Service;
 
@@ -21,7 +23,8 @@ import software.amazon.awssdk.services.lambda.model.Runtime;
 public class LambdaDevServicesProcessor extends AbstractDevServicesLocalStackProcessor {
 
     @BuildStep
-    DevServicesLocalStackProviderBuildItem setupS3(LambdaBuildTimeConfig clientBuildTimeConfig) {
+    @SuppressWarnings("unused")
+    DevServicesLocalStackProviderBuildItem setupLambda(LambdaBuildTimeConfig clientBuildTimeConfig) {
         return this.setup(Service.LAMBDA, clientBuildTimeConfig.devservices());
     }
 
@@ -30,6 +33,7 @@ public class LambdaDevServicesProcessor extends AbstractDevServicesLocalStackPro
         createFunctions(localstack, getConfiguration((LambdaDevServicesBuildTimeConfig) clientBuildTimeConfig));
     }
 
+    @SuppressWarnings("unused")
     public void createFunctions(LocalStackContainer localstack, LambdaDevServiceCfg configuration) {
         try (LambdaClient client = LambdaClient.builder()
                 .endpointOverride(localstack.getEndpointOverride(Service.LAMBDA))
@@ -44,7 +48,8 @@ public class LambdaDevServicesProcessor extends AbstractDevServicesLocalStackPro
                     .role("arn:aws:iam::000000000000:role/lambda-role")
                     .code(c -> c.zipFile(SdkBytes
                             .fromInputStream(
-                                    getClass().getResourceAsStream("/functions/hello-lambda.zip-archive")))));
+                                    Optional.ofNullable(getClass().getResourceAsStream("/functions/hello-lambda.zip-archive"))
+                                            .orElseThrow()))));
         }
     }
 
