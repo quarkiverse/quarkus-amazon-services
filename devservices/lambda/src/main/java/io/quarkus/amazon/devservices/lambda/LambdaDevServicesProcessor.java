@@ -1,6 +1,8 @@
 package io.quarkus.amazon.devservices.lambda;
 
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import org.testcontainers.containers.localstack.LocalStackContainer;
 import org.testcontainers.containers.localstack.LocalStackContainer.Service;
@@ -22,6 +24,8 @@ import software.amazon.awssdk.services.lambda.model.Runtime;
 
 public class LambdaDevServicesProcessor extends AbstractDevServicesLocalStackProcessor {
 
+    public static final String HELLO_LAMBDA = "hello-lambda";
+
     @BuildStep
     @SuppressWarnings("unused")
     DevServicesLocalStackProviderBuildItem setupLambda(LambdaBuildTimeConfig clientBuildTimeConfig) {
@@ -42,7 +46,7 @@ public class LambdaDevServicesProcessor extends AbstractDevServicesLocalStackPro
                         .create(localstack.getAccessKey(), localstack.getSecretKey())))
                 .httpClientBuilder(UrlConnectionHttpClient.builder())
                 .build()) {
-            client.createFunction(b -> b.functionName("hello-lambda")
+            client.createFunction(b -> b.functionName(HELLO_LAMBDA)
                     .runtime(Runtime.NODEJS18_X)
                     .handler("index.handler")
                     .role("arn:aws:iam::000000000000:role/lambda-role")
@@ -59,8 +63,21 @@ public class LambdaDevServicesProcessor extends AbstractDevServicesLocalStackPro
 
     private static final class LambdaDevServiceCfg extends LocalStackDevServicesBaseConfig {
 
+        private final Set<String> functions = Set.of(HELLO_LAMBDA);
+
         public LambdaDevServiceCfg(LambdaDevServicesBuildTimeConfig config) {
             super(config.shared(), config.serviceName(), config.containerProperties());
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return super.equals(o) && Objects.equals(functions, ((LambdaDevServiceCfg) o).functions);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(super.hashCode(),
+                    functions);
         }
 
     }
