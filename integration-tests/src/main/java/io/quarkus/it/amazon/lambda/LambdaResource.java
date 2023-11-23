@@ -1,12 +1,12 @@
 package io.quarkus.it.amazon.lambda;
 
-import static io.quarkus.it.amazon.lambda.LambdaUtils.LAMBDA;
 import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 
@@ -25,29 +25,41 @@ public class LambdaResource {
     public static final String OK = "OK";
     public static final String ERROR = "ERROR";
 
+    private final AtomicBoolean lambdaCreated = new AtomicBoolean(false);
+
     @Inject
     LambdaUtils lambdaUtils;
 
-    @GET
+    @POST
     @Path("blocking")
     @Produces(TEXT_PLAIN)
-    public String testBlocking() {
-        LOG.info("Testing Blocking Lambda client with lambda: " + LAMBDA);
+    public String testBlocking(byte[] function) {
+        LOG.info("Testing Blocking Lambda client with lambda: " + lambdaUtils.getLambdaName());
+        createLambda(function);
         return processFuncitonConfig(lambdaUtils.findDevLambdaBlocking());
     }
 
-    @GET
+    @POST
     @Path("async")
     @Produces(TEXT_PLAIN)
-    public CompletionStage<String> testAsync() {
-        LOG.info("Testing Blocking Lambda client with lambda: " + LAMBDA);
+    public CompletionStage<String> testAsync(byte[] function) {
+        LOG.info("Testing Async Lambda client with lambda: " + lambdaUtils.getLambdaName());
 
+        createLambda(function);
         return lambdaUtils.findDevLambdaAsync()
-                .thenApply(LambdaResource::processFuncitonConfig);
+                .thenApply(this::processFuncitonConfig);
     }
 
-    private static String processFuncitonConfig(FunctionConfiguration lambda) {
-        if (StringUtils.equals(LAMBDA, lambda.functionName())) {
+    private void createLambda(byte[] function) {
+        if (lambdaCreated.get()) {
+            return;
+        }
+        lambdaUtils.createLambda(function);
+        lambdaCreated.set(true);
+    }
+
+    private String processFuncitonConfig(FunctionConfiguration lambda) {
+        if (StringUtils.equals(lambdaUtils.getLambdaName(), lambda.functionName())) {
             return OK;
         }
         return ERROR;
