@@ -1,5 +1,6 @@
 package io.quarkus.it.amazon.lambda;
 
+import java.text.MessageFormat;
 import java.util.concurrent.CompletableFuture;
 
 import jakarta.annotation.PostConstruct;
@@ -32,7 +33,7 @@ public class LambdaUtils {
 
     @PostConstruct
     void init() {
-        lambdaName = LAMBDA_PREFIX + "-" + System.currentTimeMillis() % 1000000000;
+        lambdaName = MessageFormat.format("{0}-{1,number,#}", LAMBDA_PREFIX, System.currentTimeMillis() % 1000000000);
     }
 
     void createLambda(byte[] function) {
