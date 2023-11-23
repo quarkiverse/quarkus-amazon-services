@@ -30,7 +30,7 @@
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-lambda-client</artifactId>
+            <artifactId>quarkus-amazon-lambda</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>

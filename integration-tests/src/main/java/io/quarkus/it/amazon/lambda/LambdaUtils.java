@@ -1,13 +1,14 @@
 package io.quarkus.it.amazon.lambda;
 
+import java.util.concurrent.CompletableFuture;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import software.amazon.awssdk.core.SdkBytes;
+import software.amazon.awssdk.services.lambda.LambdaAsyncClient;
 import software.amazon.awssdk.services.lambda.LambdaClient;
 import software.amazon.awssdk.services.lambda.model.FunctionConfiguration;
-import software.amazon.awssdk.services.lambda.model.InvokeRequest;
-import software.amazon.awssdk.services.lambda.model.InvokeResponse;
+import software.amazon.awssdk.services.lambda.model.ListFunctionsResponse;
 import software.amazon.awssdk.utils.StringUtils;
 
 /*
@@ -16,31 +17,24 @@ import software.amazon.awssdk.utils.StringUtils;
 @ApplicationScoped
 public class LambdaUtils {
     public static final String LAMBDA = "hello-lambda";
-    public static final String PAYLOAD = "{\"body\":\"{\\\"name\\\":\\\"World\\\"}\"}";
     @Inject
     LambdaClient lambdaClient;
+    @Inject
+    LambdaAsyncClient lambdaAsyncClient;
 
-    FunctionConfiguration findDevLambda() {
-        return lambdaClient.listFunctions().functions().stream()
+    FunctionConfiguration findDevLambdaBlocking() {
+        final ListFunctionsResponse listFunctionsResponse = lambdaClient.listFunctions();
+        return extractDevLambda(listFunctionsResponse);
+    }
+
+    CompletableFuture<FunctionConfiguration> findDevLambdaAsync() {
+        return lambdaAsyncClient.listFunctions()
+                .thenApply(listFunctionsResponse -> extractDevLambda(listFunctionsResponse));
+    }
+
+    private static FunctionConfiguration extractDevLambda(ListFunctionsResponse listFunctionsResponse) {
+        return listFunctionsResponse.functions().stream()
                 .filter(functionConfiguration -> StringUtils.equals(LAMBDA, functionConfiguration.functionName()))
                 .findFirst().orElseThrow();
-    }
-
-    InvokeResponse invokeLambda(FunctionConfiguration functionInfo)
-            throws InterruptedException {
-        try {
-            return lambdaClient.invoke(builder -> getPayloadBuilder(functionInfo, builder));
-        } catch (Exception e) {
-            if (e.getMessage().contains(" The function is currently in the following state: Pending")) {
-                Thread.sleep(1000);
-                return invokeLambda(functionInfo);
-            }
-            throw new RuntimeException(e);
-        }
-    }
-
-    static InvokeRequest.Builder getPayloadBuilder(FunctionConfiguration functionInfo, InvokeRequest.Builder builder) {
-        return builder.functionName(functionInfo.functionArn())
-                .payload(SdkBytes.fromUtf8String(PAYLOAD));
     }
 }

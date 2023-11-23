@@ -159,7 +159,7 @@
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
-                <artifactId>quarkus-amazon-lambda-client</artifactId>
+                <artifactId>quarkus-amazon-lambda</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -169,7 +169,7 @@
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
-                <artifactId>quarkus-amazon-lambda-client-deployment</artifactId>
+                <artifactId>quarkus-amazon-lambda-deployment</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
