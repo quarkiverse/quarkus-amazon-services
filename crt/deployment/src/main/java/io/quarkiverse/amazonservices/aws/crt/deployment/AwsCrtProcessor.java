@@ -456,6 +456,8 @@ public class AwsCrtProcessor {
                 "software.amazon.awssdk.crt.mqtt5.Mqtt5ClientOptions", "retryJitterMode"));
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
                 "software.amazon.awssdk.crt.mqtt5.Mqtt5ClientOptions", "sessionBehavior"));
+        jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
+                "software.amazon.awssdk.crt.mqtt5.Mqtt5ClientOptions", "topicAliasingOptions"));
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
                 "software.amazon.awssdk.crt.mqtt5.Mqtt5ClientOptions$ClientOfflineQueueBehavior",
                 "getValue"));
@@ -514,6 +516,10 @@ public class AwsCrtProcessor {
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
                 "software.amazon.awssdk.crt.mqtt5.NegotiatedSettings",
                 "subscriptionIdentifiersAvailable"));
+        jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
+                "software.amazon.awssdk.crt.mqtt5.NegotiatedSettings", "topicAliasMaximumToClient"));
+        jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
+                "software.amazon.awssdk.crt.mqtt5.NegotiatedSettings", "topicAliasMaximumToServer"));
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
                 "software.amazon.awssdk.crt.mqtt5.NegotiatedSettings",
                 "wildcardSubscriptionsAvailable"));
@@ -582,6 +588,8 @@ public class AwsCrtProcessor {
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
                 "software.amazon.awssdk.crt.mqtt5.packets.ConnAckPacket",
                 "subscriptionIdentifiersAvailable"));
+        jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
+                "software.amazon.awssdk.crt.mqtt5.packets.ConnAckPacket", "topicAliasMaximum"));
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
                 "software.amazon.awssdk.crt.mqtt5.packets.ConnAckPacket", "userProperties"));
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
@@ -687,6 +695,8 @@ public class AwsCrtProcessor {
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
                 "software.amazon.awssdk.crt.mqtt5.packets.PublishPacket", "retain"));
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
+                "software.amazon.awssdk.crt.mqtt5.packets.PublishPacket", "topicAlias"));
+        jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
                 "software.amazon.awssdk.crt.mqtt5.packets.PublishPacket", "subscriptionIdentifiers"));
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
                 "software.amazon.awssdk.crt.mqtt5.packets.PublishPacket", "topic"));
@@ -764,6 +774,20 @@ public class AwsCrtProcessor {
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
                 "software.amazon.awssdk.crt.mqtt5.packets.UserProperty", "<init>", "java.lang.String",
                 "java.lang.String"));
+        jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
+                "software.amazon.awssdk.crt.mqtt5.TopicAliasingOptions", "outboundBehavior"));
+        jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
+                "software.amazon.awssdk.crt.mqtt5.TopicAliasingOptions", "outboundCacheMaxSize"));
+        jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
+                "software.amazon.awssdk.crt.mqtt5.TopicAliasingOptions", "inboundBehavior"));
+        jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
+                "software.amazon.awssdk.crt.mqtt5.TopicAliasingOptions", "inboundCacheMaxSize"));
+        jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
+                "software.amazon.awssdk.crt.mqtt5.TopicAliasingOptions$OutboundTopicAliasBehaviorType",
+                "getValue"));
+        jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
+                "software.amazon.awssdk.crt.mqtt5.TopicAliasingOptions$InboundTopicAliasBehaviorType",
+                "getValue"));
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
                 "software.amazon.awssdk.crt.mqtt5.packets.UserProperty", "key"));
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
