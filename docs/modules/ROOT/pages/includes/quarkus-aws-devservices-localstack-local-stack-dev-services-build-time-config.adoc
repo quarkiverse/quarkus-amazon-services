@@ -44,6 +44,23 @@ endif::add-copy-button-to-env-var[]
 |
 
 
+a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-scripts-classpath]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-scripts-classpath[quarkus.aws.devservices.localstack.init-scripts-classpath]`
+
+
+[.description]
+--
+Classpath to init scripts folder executed during localstack startup. initScriptsFolder has higher precedence.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_INIT_SCRIPTS_CLASSPATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_INIT_SCRIPTS_CLASSPATH+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|
+
+
 a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-completion-msg]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-completion-msg[quarkus.aws.devservices.localstack.init-completion-msg]`
 
 
