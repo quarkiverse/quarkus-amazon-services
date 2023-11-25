@@ -78,6 +78,11 @@
             <artifactId>quarkus-amazon-cognito-user-pools-deployment</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-lambda-deployment</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -128,6 +133,7 @@
                                         <include>quarkus-amazon-ssm.adoc</include>
                                         <include>quarkus-amazon-sts.adoc</include>
                                         <include>quarkus-amazon-cognitouserpools.adoc</include>
+                                        <include>quarkus-amazon-lambda.adoc</include>
                                     </includes>
                                     <filtering>false</filtering>
                                 </resource>

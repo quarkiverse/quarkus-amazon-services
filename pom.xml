@@ -29,6 +29,7 @@
     <module>ssm</module>
     <module>sts</module>
     <module>secretsmanager</module>
+    <module>lambda</module>
     <module>docs</module>
     <module>integration-tests</module>
   </modules>

@@ -159,6 +159,21 @@
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-lambda</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-devservices-lambda</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-lambda-deployment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
                 <artifactId>quarkus-amazon-devservices-secretsmanager</artifactId>
                 <version>${project.version}</version>
             </dependency>
