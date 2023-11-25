@@ -28,6 +28,11 @@ public interface LocalStackDevServicesBuildTimeConfig {
     Optional<String> initScriptsFolder();
 
     /**
+     * Classpath to init scripts folder executed during localstack startup. initScriptsFolder has higher precedence.
+     */
+    Optional<String> initScriptsClasspath();
+
+    /**
      * Specific container log message to be waiting for localstack init scripts
      * completion.
      */

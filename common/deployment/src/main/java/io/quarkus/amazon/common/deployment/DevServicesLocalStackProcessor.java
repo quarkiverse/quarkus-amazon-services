@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.jboss.logging.Logger;
+import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.localstack.LocalStackContainer;
 import org.testcontainers.containers.localstack.LocalStackContainer.EnabledService;
 import org.testcontainers.containers.wait.strategy.Wait;
@@ -300,11 +301,15 @@ public class DevServicesLocalStackProcessor {
                                         .toArray(EnabledService[]::new))
                                 .withLabel(DEV_SERVICE_LABEL, devServiceName);
 
-                        localStackDevServicesBuildTimeConfig.initScriptsFolder().ifPresent(initScriptsFolder -> {
-                            container.withFileSystemBind(initScriptsFolder, "/etc/localstack/init/ready.d");
-                            localStackDevServicesBuildTimeConfig.initCompletionMsg().ifPresent(initCompletionMsg -> {
-                                container.waitingFor(Wait.forLogMessage(".*" + initCompletionMsg + ".*\\n", 1));
-                            });
+                        localStackDevServicesBuildTimeConfig.initScriptsFolder().ifPresentOrElse(initScriptsFolder -> {
+                            container.withFileSystemBind(initScriptsFolder, "/etc/localstack/init/ready.d", BindMode.READ_ONLY);
+                        }, () -> localStackDevServicesBuildTimeConfig.initScriptsClasspath().ifPresent(resourcePath -> {
+                            container.withClasspathResourceMapping(resourcePath, "/etc/localstack/init/ready.d",
+                                    BindMode.READ_ONLY);
+                        }));
+
+                        localStackDevServicesBuildTimeConfig.initCompletionMsg().ifPresent(initCompletionMsg -> {
+                            container.waitingFor(Wait.forLogMessage(".*" + initCompletionMsg + ".*\\n", 1));
                         });
 
                         ConfigureUtil.configureSharedNetwork(container, devServiceName);
