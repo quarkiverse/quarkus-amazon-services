@@ -19,6 +19,7 @@ import org.testcontainers.containers.localstack.LocalStackContainer;
 import org.testcontainers.containers.localstack.LocalStackContainer.EnabledService;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
+import org.testcontainers.utility.MountableFile;
 
 import io.quarkus.amazon.common.deployment.spi.BorrowedLocalStackContainer;
 import io.quarkus.amazon.common.deployment.spi.DevServicesLocalStackProviderBuildItem;
@@ -304,8 +305,9 @@ public class DevServicesLocalStackProcessor {
                         localStackDevServicesBuildTimeConfig.initScriptsFolder().ifPresentOrElse(initScriptsFolder -> {
                             container.withFileSystemBind(initScriptsFolder, "/etc/localstack/init/ready.d", BindMode.READ_ONLY);
                         }, () -> localStackDevServicesBuildTimeConfig.initScriptsClasspath().ifPresent(resourcePath -> {
-                            container.withClasspathResourceMapping(resourcePath, "/etc/localstack/init/ready.d",
-                                    BindMode.READ_ONLY);
+                            // scripts must be executable but withClasspathResourceMapping will extract file with read only for regular file
+                            final MountableFile mountableFile = MountableFile.forClasspathResource(resourcePath, 555);
+                            container.withCopyFileToContainer(mountableFile, "/etc/localstack/init/ready.d");
                         }));
 
                         localStackDevServicesBuildTimeConfig.initCompletionMsg().ifPresent(initCompletionMsg -> {
