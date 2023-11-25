@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>quarkus-amazon-lambda-parent</artifactId>
-    <name>Quarkus - Amazon Services - Lambda client</name>
+    <name>Quarkus - Amazon Services - Lambda</name>
     <packaging>pom</packaging>
 
     <modules>

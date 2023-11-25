@@ -1,4 +1,4 @@
-package io.quarkus.amazon.lambda.client.runtime;
+package io.quarkus.amazon.lambda.runtime;
 
 import io.quarkus.amazon.common.runtime.*;
 import io.quarkus.runtime.RuntimeValue;

@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon Lambda"
+metadata:
+  keywords:
+    - "lambda"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-lambda.html
+  status: "stable"
+  config:
+  - "quarkus.lambda."

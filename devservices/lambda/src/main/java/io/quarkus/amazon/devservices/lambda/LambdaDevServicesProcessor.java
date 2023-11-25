@@ -5,8 +5,8 @@ import org.testcontainers.containers.localstack.LocalStackContainer.Service;
 import io.quarkus.amazon.common.deployment.spi.AbstractDevServicesLocalStackProcessor;
 import io.quarkus.amazon.common.deployment.spi.DevServicesLocalStackProviderBuildItem;
 import io.quarkus.amazon.common.deployment.spi.LocalStackDevServicesBaseConfig;
-import io.quarkus.amazon.lambda.client.runtime.LambdaBuildTimeConfig;
-import io.quarkus.amazon.lambda.client.runtime.LambdaDevServicesBuildTimeConfig;
+import io.quarkus.amazon.lambda.runtime.LambdaBuildTimeConfig;
+import io.quarkus.amazon.lambda.runtime.LambdaDevServicesBuildTimeConfig;
 import io.quarkus.deployment.annotations.BuildStep;
 
 public class LambdaDevServicesProcessor extends AbstractDevServicesLocalStackProcessor {

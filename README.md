@@ -20,7 +20,7 @@ This set of extensions allows you to interact with some of the AWS Services name
  * SQS
  * SSM
  * STS
- * Lambda Client
+ * Lambda
 
 They also provide a common infrastructure to make it easy to add new ones.
 

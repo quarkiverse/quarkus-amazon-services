@@ -1,0 +1,167 @@
+= Amazon Lambda Client
+
+include::./includes/attributes.adoc[]
+
+Service client for accessing Amazon Lambda.
+
+Using the Amazon Lambda API, you can manage your AWS Lambdas.
+
+You can find more information about Lambda at https://docs.aws.amazon.com/lambda/[the AWS Lambda website].
+
+NOTE: The Lambda extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
+
+The Quarkus extension supports two programming models:
+
+* Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
+* https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
+
+In this guide, we see how you can get your REST services to use Lambda locally and on AWS.
+
+== Prerequisites
+
+To complete this guide, you need:
+
+* JDK 11+ installed with `JAVA_HOME` configured appropriately
+* an IDE
+* Apache Maven {maven-version}
+* An AWS Account to access the Lambda service
+* Docker for your system to run Lambda locally for testing purposes
+
+=== Provision Lambda locally via Dev Services
+
+The easiest way to start working with Lambda is to run a local instance using Dev Services.
+
+=== Provision Lambda locally manually
+
+You can also set up a local version of Lambda manually, first start a LocalStack container:
+
+[source,bash,subs="verbatim,attributes"]
+----
+docker run --rm --name local-lambda --publish 4566:4583 -e SERVICES=lambda -e START_WEB=0 -d localstack/localstack:3.0.1
+----
+This starts a Lambda instance that is accessible on port `4566`.
+
+Create an AWS profile for your local instance using AWS CLI:
+[source,shell,subs="verbatim,attributes"]
+----
+$ aws configure --profile localstack
+AWS Access Key ID [None]: test-key
+AWS Secret Access Key [None]: test-secret
+Default region name [None]: us-east-1
+Default output format [None]:
+----
+
+== Creating the Maven project
+
+First, we need a new project. Create a new project with the following command:
+
+[source,bash,subs=attributes+]
+----
+mvn io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:create \
+    -DprojectGroupId=org.acme \
+    -DprojectArtifactId=amazon-lambda-quickstart \
+    -DclassName="org.acme.lambda.QuarkusLambdaSyncResource" \
+    -Dpath="/sync" \
+    -Dextensions="resteasy-reactive-jackson,amazon-lambda"
+cd amazon-lambda-quickstart
+----
+
+This command generates a Maven structure importing the RESTEasy Reactive/JAX-RS and Amazon Lambda Client extensions.
+After this, the `amazon-lambda` extension has been added to your `pom.xml` as well as the Mutiny support for RESTEasy.
+
+== Configuring Lambda clients
+
+Both Lambda clients (sync and async) are configurable via the `application.properties` file that can be provided in the `src/main/resources` directory.
+Additionally, you need to add to the classpath a proper implementation of the sync client. By default the extension uses the URL connection HTTP client, so
+you need to add a URL connection client dependency to the `pom.xml` file:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>url-connection-client</artifactId>
+</dependency>
+----
+
+If you want to use Apache HTTP client instead, configure it as follows:
+
+[source,properties]
+----
+quarkus.lambda.sync-client.type=apache
+----
+
+And add the following dependency to the application `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>apache-client</artifactId>
+</dependency>
+----
+
+If you're going to use a local Lambda instance, configure it as follows:
+
+[source,properties]
+----
+quarkus.lambda.endpoint-override=http://localhost:4566 <1>
+
+quarkus.lambda.aws.region=us-east-1 <2>
+quarkus.lambda.aws.credentials.type=static <3>
+quarkus.lambda.aws.credentials.static-provider.access-key-id=test-key
+quarkus.lambda.aws.credentials.static-provider.secret-access-key=test-secret
+----
+
+<1> Override the Lambda client to use LocalStack instead of the actual AWS service
+<2> Localstack defaults to `us-east-1`
+<3> The `static` credentials provider lets you set the `access-key-id` and `secret-access-key` directly
+
+If you want to work with an AWS account, you can simply remove or comment out all Amazon Lambda related properties. By default, the Lambda client extension will use the `default` credentials provider chain that looks for credentials in this order:
+
+include::./amazon-credentials.adoc[]
+
+And the region from your AWS CLI profile will be used.
+
+== Next steps
+
+=== Packaging
+
+Packaging your application is as simple as `./mvnw clean package`.
+It can then be run with `java -Dparameters.path=/quarkus/is/awesome/ -jar target/quarkus-app/quarkus-run.jar`.
+
+With GraalVM installed, you can also create a native executable binary: `./mvnw clean package -Dnative`.
+Depending on your system, that will take some time.
+
+=== Going asynchronous
+
+Thanks to the AWS SDK v2.x used by the Quarkus extension, you can use the asynchronous programming model out of the box.
+
+We need to add the Netty HTTP client dependency to the `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>netty-nio-client</artifactId>
+</dependency>
+----
+
+If you want to use the AWS CRT-based HTTP client instead, configure it as follows:
+[source,properties]
+----
+quarkus.lambda.async-client.type=aws-crt
+----
+
+And add the following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>aws-crt-client</artifactId>
+</dependency>
+----
+
+== Configuration Reference
+
+include::./includes/quarkus-amazon-lambda.adoc[]

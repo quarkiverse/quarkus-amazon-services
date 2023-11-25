@@ -1,4 +1,4 @@
-package io.quarkus.amazon.lambda.client.deployment;
+package io.quarkus.amazon.lambda.deployment;
 
 import java.util.List;
 
@@ -19,10 +19,10 @@ import io.quarkus.amazon.common.runtime.AmazonClientAwsCrtTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
-import io.quarkus.amazon.lambda.client.runtime.LambdaBuildTimeConfig;
-import io.quarkus.amazon.lambda.client.runtime.LambdaConfig;
-import io.quarkus.amazon.lambda.client.runtime.LambdaProducer;
-import io.quarkus.amazon.lambda.client.runtime.LambdaRecorder;
+import io.quarkus.amazon.lambda.runtime.LambdaBuildTimeConfig;
+import io.quarkus.amazon.lambda.runtime.LambdaConfig;
+import io.quarkus.amazon.lambda.runtime.LambdaProducer;
+import io.quarkus.amazon.lambda.runtime.LambdaRecorder;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;

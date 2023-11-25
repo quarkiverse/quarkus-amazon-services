@@ -1,4 +1,4 @@
-package io.quarkus.amazon.lambda.client.runtime;
+package io.quarkus.amazon.lambda.runtime;
 
 import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
