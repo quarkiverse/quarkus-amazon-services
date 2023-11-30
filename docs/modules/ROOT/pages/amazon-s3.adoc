@@ -21,7 +21,7 @@ In this guide, we see how you can get your REST services to use S3 locally and o
 
 To complete this guide, you need:
 
-* JDK 11+ installed with `JAVA_HOME` configured appropriately
+* JDK 17+ installed with `JAVA_HOME` configured appropriately
 * an IDE
 * Apache Maven {maven-version}
 * https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html[AWS Command line interface]
