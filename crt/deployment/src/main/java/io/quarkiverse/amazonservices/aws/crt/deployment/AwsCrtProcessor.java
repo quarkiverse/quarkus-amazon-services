@@ -122,6 +122,8 @@ public class AwsCrtProcessor {
                 "software.amazon.awssdk.crt.auth.credentials.Credentials", "secretAccessKey"));
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
                 "software.amazon.awssdk.crt.auth.credentials.Credentials", "sessionToken"));
+        jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
+                "software.amazon.awssdk.crt.auth.credentials.Credentials", "expirationTimePointSecs"));
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
                 "software.amazon.awssdk.crt.auth.credentials.CredentialsProvider",
                 "onGetCredentialsComplete", "java.util.concurrent.CompletableFuture",
@@ -832,5 +834,21 @@ public class AwsCrtProcessor {
                 "software.amazon.awssdk.crt.s3.S3TcpKeepAliveOptions", "keepAliveMaxFailedProbes"));
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
                 "software.amazon.awssdk.crt.s3.S3TcpKeepAliveOptions", "keepAliveTimeoutSec"));
+        jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
+                "software.amazon.awssdk.crt.s3.S3ExpressCredentialsProviderFactory",
+                "createS3ExpressCredentialsProvider", "software.amazon.awssdk.crt.s3.S3Client"));
+        jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
+                "software.amazon.awssdk.crt.s3.S3ExpressCredentialsProperties", "<init>"));
+        jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
+                "software.amazon.awssdk.crt.s3.S3ExpressCredentialsProperties", "hostValue"));
+        jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
+                "software.amazon.awssdk.crt.s3.S3ExpressCredentialsProperties", "region"));
+        jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
+                "software.amazon.awssdk.crt.s3.S3ExpressCredentialsProvider",
+                "getS3ExpressCredentials", "software.amazon.awssdk.crt.s3.S3ExpressCredentialsProperties",
+                "software.amazon.awssdk.crt.auth.credentials.Credentials", "long"));
+        jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
+                "software.amazon.awssdk.crt.s3.S3ExpressCredentialsProvider",
+                "destroyProvider"));
     }
 }
