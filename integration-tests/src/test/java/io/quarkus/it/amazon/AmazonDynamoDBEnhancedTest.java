@@ -13,7 +13,8 @@ public class AmazonDynamoDBEnhancedTest {
 
     @CartesianTest
     public void testDynamoDbEnhancedClientWithCustomExtension(
-            @Values(strings = { "dynamodbenhanced", "dynamodbenhanceddbtable" }) String testedRresource,
+            @Values(strings = { "dynamodbenhanced", "dynamodbenhanceddbtable",
+                    "dynamodbenhancedimmutable" }) String testedRresource,
             @Values(strings = { "async", "blocking" }) String path) {
 
         given()
