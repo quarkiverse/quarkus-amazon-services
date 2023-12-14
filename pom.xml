@@ -49,7 +49,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.version>3.6.3</quarkus.version>
     <awssdk.version>2.21.39</awssdk.version>
-    <awscrt.version>0.28.12</awscrt.version>
+    <awscrt.version>0.29.1</awscrt.version>
   </properties>
   <build>
     <pluginManagement>
