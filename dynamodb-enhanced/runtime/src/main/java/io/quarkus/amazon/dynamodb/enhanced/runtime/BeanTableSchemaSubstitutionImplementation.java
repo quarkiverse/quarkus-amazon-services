@@ -1,12 +1,16 @@
 package io.quarkus.amazon.dynamodb.enhanced.runtime;
 
-import java.beans.PropertyDescriptor;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
+import java.lang.invoke.WrongMethodTypeException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
+
+import software.amazon.awssdk.enhanced.dynamodb.internal.mapper.BeanAttributeGetter;
+import software.amazon.awssdk.enhanced.dynamodb.internal.mapper.BeanAttributeSetter;
+import software.amazon.awssdk.enhanced.dynamodb.internal.mapper.ObjectConstructor;
+import software.amazon.awssdk.enhanced.dynamodb.internal.mapper.ObjectGetterMethod;
+import software.amazon.awssdk.enhanced.dynamodb.internal.mapper.StaticGetterMethod;
 
 /**
  * These are not GraalVM substitutions.
@@ -16,43 +20,60 @@ import java.util.function.Supplier;
  * Runtime generated lambdas are not supported by native-image and we have class loader problems anyway.
  */
 public class BeanTableSchemaSubstitutionImplementation {
-    public static <T> Supplier<T> newObjectSupplierForClass(Class<T> clazz) {
-        try {
-            MethodHandle mh = MethodHandles.publicLookup().unreflectConstructor(clazz.getConstructor());
-            return new ConstructorWrapper<>(mh);
-        } catch (IllegalAccessException | NoSuchMethodException ex) {
-            throw new IllegalStateException(
-                    "GraalVM Substitution: Unable to convert Constructor to MethodHandle", ex);
-        }
-    }
 
-    public static <T, R> Function<T, R> getterForProperty(
-            PropertyDescriptor propertyDescriptor, Class<T> beanClass) {
-        // change back to MethodHandle after https://github.com/oracle/graal/issues/5672 is resolved
-        Method readMethod = propertyDescriptor.getReadMethod();
-        if (readMethod == null) {
-            throw new IllegalStateException(
-                    "GraalVM Substitution: Unable to convert Getter-Method to Method");
-        }
-        return new GetterWrapper<>(readMethod);
-    }
-
-    public static <T, U> BiConsumer<T, U> setterForProperty(
-            PropertyDescriptor propertyDescriptor, Class<T> beanClass) {
-        Method writeMethod = propertyDescriptor.getWriteMethod();
+    public static <BeanT, GetterT> ObjectGetterMethod<BeanT, GetterT> ObjectGetterMethod_create(Class<BeanT> beanClass,
+            Method buildMethod) {
         try {
-            MethodHandle mh = MethodHandles.publicLookup().unreflect(writeMethod);
-            return new SetterWrapper<>(mh);
+            MethodHandle mh = MethodHandles.publicLookup().unreflect(buildMethod);
+            return new FunctionWrapper<BeanT, GetterT>(mh);
         } catch (IllegalAccessException ex) {
             throw new IllegalStateException(
-                    "GraalVM Substitution: Unable to convert Setter-Method to MethodHandle", ex);
+                    "GraalVM Substitution: Unable to convert setter to MethodHandle", ex);
         }
     }
 
-    private static class ConstructorWrapper<T> implements Supplier<T> {
+    public static <BeanT, GetterT> BeanAttributeGetter<BeanT, GetterT> BeanAttributeGetter_create(Class<BeanT> beanClass,
+            Method getter) {
+        // change back to MethodHandle after https://github.com/oracle/graal/issues/5672 is resolved
+        return new GetterWrapper<BeanT, GetterT>(getter);
+    }
+
+    public static <BeanT, SetterT> BeanAttributeSetter<BeanT, SetterT> BeanAttributeSetter_create(Class<BeanT> beanClass,
+            Method setter) {
+        try {
+            MethodHandle mh = MethodHandles.publicLookup().unreflect(setter);
+            return new BiConsumerWrapper<BeanT, SetterT>(mh);
+        } catch (IllegalAccessException ex) {
+            throw new IllegalStateException(
+                    "GraalVM Substitution: Unable to convert setter to MethodHandle", ex);
+        }
+    }
+
+    public static <BeanT> ObjectConstructor<BeanT> ObjectConstructor_create(Class<BeanT> beanClass,
+            Constructor<BeanT> noArgsConstructor) {
+        try {
+            MethodHandle mh = MethodHandles.publicLookup().unreflectConstructor(noArgsConstructor);
+            return new SupplierWrapper<>(mh);
+        } catch (IllegalAccessException ex) {
+            throw new IllegalStateException(
+                    "GraalVM Substitution: Unable to convert noArgsConstructor to MethodHandle", ex);
+        }
+    }
+
+    public static <GetterT> StaticGetterMethod<GetterT> StaticGetterMethod_create(Method buildMethod) {
+        try {
+            MethodHandle mh = MethodHandles.publicLookup().unreflect(buildMethod);
+            return new SupplierWrapper<>(mh);
+        } catch (IllegalAccessException ex) {
+            throw new IllegalStateException(
+                    "GraalVM Substitution: Unable to convert noArgsConstructor to MethodHandle", ex);
+        }
+    }
+
+    private static class SupplierWrapper<T> implements ObjectConstructor<T>, StaticGetterMethod<T> {
         private final MethodHandle mh;
 
-        public ConstructorWrapper(MethodHandle mh) {
+        public SupplierWrapper(MethodHandle mh) {
             this.mh = mh;
         }
 
@@ -61,7 +82,7 @@ public class BeanTableSchemaSubstitutionImplementation {
             try {
                 return (T) mh.invoke();
             } catch (Exception ex) {
-                throw new IllegalStateException("GraalVM Substitution: Exception invoking getter", ex);
+                throw new IllegalStateException("GraalVM Substitution: Exception invoking method", ex);
             } catch (Error error) {
                 throw error;
             } catch (Throwable throwable) {
@@ -71,7 +92,27 @@ public class BeanTableSchemaSubstitutionImplementation {
         }
     }
 
-    private static class GetterWrapper<T, R> implements Function<T, R> {
+    private static class FunctionWrapper<T, R> implements ObjectGetterMethod<T, R> {
+        private final MethodHandle mh;
+
+        public FunctionWrapper(MethodHandle mh) {
+            this.mh = mh;
+        }
+
+        @Override
+        public R apply(T t) {
+            try {
+                return (R) mh.invoke(t);
+            } catch (WrongMethodTypeException | ClassCastException ex) {
+                throw new IllegalStateException("GraalVM Substitution: Exception invoking method", ex);
+            } catch (Throwable throwable) {
+                throw new Error(
+                        "GraalVM Substitution: No other direct descendant of Throwable should exist", throwable);
+            }
+        }
+    }
+
+    private static class GetterWrapper<T, R> implements BeanAttributeGetter<T, R> {
         private final Method method;
 
         public GetterWrapper(Method method) {
@@ -94,10 +135,10 @@ public class BeanTableSchemaSubstitutionImplementation {
         }
     }
 
-    private static class SetterWrapper<T, U> implements BiConsumer<T, U> {
+    private static class BiConsumerWrapper<T, U> implements BeanAttributeSetter<T, U> {
         private final MethodHandle mh;
 
-        public SetterWrapper(MethodHandle mh) {
+        public BiConsumerWrapper(MethodHandle mh) {
             this.mh = mh;
         }
 

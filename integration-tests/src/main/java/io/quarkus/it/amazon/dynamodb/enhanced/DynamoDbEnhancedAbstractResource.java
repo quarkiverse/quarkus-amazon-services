@@ -63,4 +63,50 @@ public class DynamoDbEnhancedAbstractResource {
             return "ERROR";
         }
     }
+
+    protected CompletionStage<String> testAsyncDynamoImmutable(
+            DynamoDbAsyncTable<DynamoDBExampleTableEntryImmutable> exampleAsyncTable)
+            throws InterruptedException {
+        LOG.info("Testing Async Dynamodb client with table: " + exampleAsyncTable.tableName());
+        String partitionKeyAsString = UUID.randomUUID().toString();
+        String rangeId = UUID.randomUUID().toString();
+
+        DynamoDBExampleTableEntryImmutable exampleTableEntry = DynamoDBExampleTableEntryImmutable.builder()
+                .keyId(partitionKeyAsString).rangeId(rangeId).payload(PAYLOAD_VALUE).build();
+
+        Key partitionKey = Key.builder().partitionValue(partitionKeyAsString).build();
+
+        return exampleAsyncTable.createTable()
+                .thenCompose(t -> exampleAsyncTable.putItem(exampleTableEntry))
+                .thenCompose(t -> exampleAsyncTable.getItem(partitionKey))
+                .thenApply(p -> p.getPayload() + "@" + p.getVersion())
+                .exceptionally(th -> {
+                    LOG.error("Error during async Dynamodb operations", th.getCause());
+                    return "ERROR";
+                });
+    }
+
+    protected String testBlockingDynamoImmuitable(DynamoDbTable<DynamoDBExampleTableEntryImmutable> exampleBlockingTable) {
+        LOG.info("Testing Blocking Dynamodb client with table: " + exampleBlockingTable.tableName());
+
+        String partitionKeyAsString = UUID.randomUUID().toString();
+        String rangeId = UUID.randomUUID().toString();
+
+        exampleBlockingTable.createTable();
+
+        DynamoDBExampleTableEntryImmutable exampleTableEntry = DynamoDBExampleTableEntryImmutable.builder()
+                .keyId(partitionKeyAsString).rangeId(rangeId).payload(PAYLOAD_VALUE).build();
+
+        exampleBlockingTable.putItem(exampleTableEntry);
+
+        Key partitionKey = Key.builder().partitionValue(partitionKeyAsString).build();
+
+        DynamoDBExampleTableEntryImmutable existingTableEntry = exampleBlockingTable.getItem(partitionKey);
+
+        if (existingTableEntry != null) {
+            return existingTableEntry.getPayload() + "@" + existingTableEntry.getVersion();
+        } else {
+            return "ERROR";
+        }
+    }
 }
