@@ -3,7 +3,9 @@ package io.quarkus.amazon.common.runtime;
 import java.util.List;
 import java.util.Optional;
 
+import io.quarkus.runtime.annotations.ConfigDocDefault;
 import io.quarkus.runtime.annotations.ConfigGroup;
+import io.smallrye.config.WithName;
 
 /**
  * AWS SDK specific configurations
@@ -21,4 +23,11 @@ public interface SdkBuildTimeConfig {
      * @see software.amazon.awssdk.core.interceptor.ExecutionInterceptor
      */
     Optional<List<String>> interceptors(); // cannot be classes as can be runtime initialized (e.g. XRay interceptor)
+
+    /**
+     * OpenTelemetry AWS SDK instrumentation will be enabled if the OpenTelemetry extension is present and this value is true.
+     */
+    @WithName("telemetry.enabled")
+    @ConfigDocDefault("false")
+    Optional<Boolean> telemetry();
 }

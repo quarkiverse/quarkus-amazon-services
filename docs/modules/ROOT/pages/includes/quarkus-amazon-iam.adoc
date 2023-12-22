@@ -29,6 +29,23 @@ endif::add-copy-button-to-env-var[]
 |
 
 
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-iam_quarkus.iam.telemetry.enabled]]`link:#quarkus-amazon-iam_quarkus.iam.telemetry.enabled[quarkus.iam.telemetry.enabled]`
+
+
+[.description]
+--
+OpenTelemetry AWS SDK instrumentation will be enabled if the OpenTelemetry extension is present and this value is true.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_IAM_TELEMETRY_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_IAM_TELEMETRY_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|`false`
+
+
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-iam_quarkus.iam.sync-client.type]]`link:#quarkus-amazon-iam_quarkus.iam.sync-client.type[quarkus.iam.sync-client.type]`
 
 

@@ -8,15 +8,18 @@ import java.util.function.Supplier;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
+import org.jboss.jandex.ClassType;
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.ParameterizedType;
 import org.jboss.jandex.Type;
 
 import io.netty.channel.EventLoopGroup;
+import io.opentelemetry.api.OpenTelemetry;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientAwsCrtTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
+import io.quarkus.amazon.common.runtime.AmazonClientOpenTelemetryRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
 import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig;
@@ -31,6 +34,8 @@ import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.arc.processor.DotNames;
 import io.quarkus.arc.processor.InjectionPointInfo;
+import io.quarkus.deployment.Capabilities;
+import io.quarkus.deployment.Capability;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.builditem.ExecutorBuildItem;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
@@ -216,8 +221,11 @@ abstract public class AbstractAmazonServiceProcessor {
         });
     }
 
-    protected void createClientBuilders(AmazonClientRecorder recorder,
+    protected void createClientBuilders(
+            Capabilities capabilities,
+            AmazonClientRecorder recorder,
             AmazonClientCommonRecorder commonRecorder,
+            AmazonClientOpenTelemetryRecorder otelRecorder,
             HasSdkBuildTimeConfig sdkBuildConfig,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
@@ -234,7 +242,9 @@ abstract public class AbstractAmazonServiceProcessor {
             presignerBuilder = recorder.createPresignerBuilder();
         }
 
-        createClientBuilders(commonRecorder,
+        createClientBuilders(capabilities,
+                commonRecorder,
+                otelRecorder,
                 recorder.getAwsConfig(),
                 recorder.getSdkConfig(),
                 sdkBuildConfig,
@@ -253,7 +263,9 @@ abstract public class AbstractAmazonServiceProcessor {
     }
 
     private void createClientBuilders(
+            Capabilities capabilities,
             AmazonClientCommonRecorder recorder,
+            AmazonClientOpenTelemetryRecorder otelRecorder,
             RuntimeValue<AwsConfig> awsConfigRuntime,
             RuntimeValue<SdkConfig> sdkConfigRuntime,
             HasSdkBuildTimeConfig sdkBuildConfig,
@@ -294,25 +306,47 @@ abstract public class AbstractAmazonServiceProcessor {
                 : null;
 
         ScheduledExecutorService sharedExecutorService = executorBuildItem.getExecutorProxy();
+        var addOpenTelemetry = sdkBuildConfig.sdk().telemetry().orElse(false)
+                && capabilities.isPresent(Capability.OPENTELEMETRY_TRACER);
 
         if (syncClientBuilder != null) {
             syncClientBuilder = recorder.configure(syncClientBuilder, awsConfigRuntime, sdkConfigRuntime,
                     sdkBuildConfig, sharedExecutorService, configName());
-            syntheticBeans.produce(SyntheticBeanBuildItem.configure(syncClientBuilderClass)
-                    .setRuntimeInit()
-                    .scope(ApplicationScoped.class)
-                    .runtimeValue(syncClientBuilder)
-                    .done());
+            if (addOpenTelemetry) {
+                syntheticBeans.produce(SyntheticBeanBuildItem
+                        .configure(syncClientBuilderClass)
+                        .defaultBean()
+                        .scope(ApplicationScoped.class)
+                        .setRuntimeInit()
+                        .createWith(otelRecorder.configure(syncClientBuilder))
+                        .addInjectionPoint(ClassType.create(OpenTelemetry.class)).done());
+            } else {
+                syntheticBeans.produce(SyntheticBeanBuildItem.configure(syncClientBuilderClass)
+                        .setRuntimeInit()
+                        .scope(ApplicationScoped.class)
+                        .runtimeValue(syncClientBuilder)
+                        .done());
+            }
             clientSync.produce(new AmazonClientSyncResultBuildItem(configName));
         }
         if (asyncClientBuilder != null) {
             asyncClientBuilder = recorder.configure(asyncClientBuilder, awsConfigRuntime, sdkConfigRuntime,
                     sdkBuildConfig, sharedExecutorService, configName());
-            syntheticBeans.produce(SyntheticBeanBuildItem.configure(asyncClientBuilderClass)
-                    .setRuntimeInit()
-                    .scope(ApplicationScoped.class)
-                    .runtimeValue(asyncClientBuilder)
-                    .done());
+            if (addOpenTelemetry) {
+                syntheticBeans.produce(SyntheticBeanBuildItem
+                        .configure(asyncClientBuilderClass)
+                        .defaultBean()
+                        .scope(ApplicationScoped.class)
+                        .setRuntimeInit()
+                        .createWith(otelRecorder.configure(asyncClientBuilder))
+                        .addInjectionPoint(ClassType.create(OpenTelemetry.class)).done());
+            } else {
+                syntheticBeans.produce(SyntheticBeanBuildItem.configure(asyncClientBuilderClass)
+                        .setRuntimeInit()
+                        .scope(ApplicationScoped.class)
+                        .runtimeValue(asyncClientBuilder)
+                        .done());
+            }
             clientAsync.produce(new AmazonClientAsyncResultBuildItem(configName));
         }
         if (presignerBuilder != null) {

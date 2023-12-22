@@ -18,6 +18,7 @@ import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientAwsCrtTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
+import io.quarkus.amazon.common.runtime.AmazonClientOpenTelemetryRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
 import io.quarkus.amazon.ses.runtime.SesBuildTimeConfig;
 import io.quarkus.amazon.ses.runtime.SesClientProducer;
@@ -26,6 +27,7 @@ import io.quarkus.amazon.ses.runtime.SesRecorder;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
+import io.quarkus.deployment.Capabilities;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
@@ -154,7 +156,9 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
     void createClientBuilders(SesRecorder recorder,
+            Capabilities capabilities,
             AmazonClientCommonRecorder commonRecorder,
+            AmazonClientOpenTelemetryRecorder otelRecorder,
             SesConfig runtimeConfig,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
@@ -163,8 +167,10 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
             BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
             ExecutorBuildItem executorBuildItem) {
 
-        createClientBuilders(recorder,
+        createClientBuilders(capabilities,
+                recorder,
                 commonRecorder,
+                otelRecorder,
                 buildTimeConfig,
                 syncTransports,
                 asyncTransports,

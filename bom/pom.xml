@@ -28,6 +28,11 @@
                 <version>${awscrt.version}</version>
             </dependency>
             <dependency>
+                <groupId>io.opentelemetry.instrumentation</groupId>
+                <artifactId>opentelemetry-aws-sdk-2.2</artifactId>
+                <version>${awsotel.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
                 <artifactId>quarkus-amazon-crt</artifactId>
                 <version>${project.version}</version>
@@ -55,6 +60,16 @@
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
                 <artifactId>quarkus-amazon-common-deployment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-opentelemetry-internal</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-opentelemetry-internal-deployment</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

@@ -18,6 +18,7 @@ import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientAwsCrtTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
+import io.quarkus.amazon.common.runtime.AmazonClientOpenTelemetryRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
 import io.quarkus.amazon.dynamodb.runtime.DynamodbBuildTimeConfig;
 import io.quarkus.amazon.dynamodb.runtime.DynamodbClientProducer;
@@ -25,6 +26,7 @@ import io.quarkus.amazon.dynamodb.runtime.DynamodbRecorder;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
+import io.quarkus.deployment.Capabilities;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
@@ -162,7 +164,9 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
     void createClientBuilders(DynamodbRecorder recorder,
+            Capabilities capabilities,
             AmazonClientCommonRecorder commonRecorder,
+            AmazonClientOpenTelemetryRecorder otelRecorder,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
@@ -170,8 +174,10 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
             BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
             ExecutorBuildItem executorBuildItem) {
 
-        createClientBuilders(recorder,
+        createClientBuilders(capabilities,
+                recorder,
                 commonRecorder,
+                otelRecorder,
                 buildTimeConfig,
                 syncTransports,
                 asyncTransports,
