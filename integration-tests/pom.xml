@@ -22,6 +22,10 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
             <artifactId>quarkus-core</artifactId>
         </dependency>
         <dependency>
@@ -76,11 +80,20 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-cognito-user-pools</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-opentelemetry</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.jboss.slf4j</groupId>
             <artifactId>slf4j-jboss-logmanager</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- Needed for InMemorySpanExporter to verify captured traces -->
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk-testing</artifactId>
         </dependency>
 
         <!-- test dependencies -->
@@ -105,6 +118,7 @@
             <version>2.2.0</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
