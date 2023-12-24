@@ -1,6 +1,6 @@
 # Quarkus Amazon Services
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-21-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-22-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/maven-central/v/io.quarkiverse.amazonservices/quarkus-amazon-services-bom?logo=apache-maven&style=flat-square)](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom)
@@ -79,6 +79,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Nonoelgringo"><img src="https://avatars.githubusercontent.com/u/9656394?v=4?s=100" width="100px;" alt="Arnaud Bailly"/><br /><sub><b>Arnaud Bailly</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=Nonoelgringo" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://thejavaguy.org/"><img src="https://avatars.githubusercontent.com/u/11942401?v=4?s=100" width="100px;" alt="Ivan Milosavljević"/><br /><sub><b>Ivan Milosavljević</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=TheJavaGuy" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/tpenakov"><img src="https://avatars.githubusercontent.com/u/8676603?v=4?s=100" width="100px;" alt="Triphon Penakov"/><br /><sub><b>Triphon Penakov</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=tpenakov" title="Code">💻</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.ryandens.com"><img src="https://avatars.githubusercontent.com/u/8192732?v=4?s=100" width="100px;" alt="Ryan Dens"/><br /><sub><b>Ryan Dens</b></sub></a><br /><a href="#ideas-ryandens" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
 </table>
