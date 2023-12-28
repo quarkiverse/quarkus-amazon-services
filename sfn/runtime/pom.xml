@@ -10,7 +10,7 @@
 
     <artifactId>quarkus-amazon-sfn</artifactId>
     <name>Quarkus - Amazon Services - SFN - Runtime</name>
-    <description>Connect to Amazon Step Functions</description>
+    <description>Connect to Amazon SFN (Step Functions)</description>
 
     <dependencies>
         <dependency>
