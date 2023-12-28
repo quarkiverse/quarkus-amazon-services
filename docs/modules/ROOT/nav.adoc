@@ -5,6 +5,7 @@
 * xref:amazon-kms.adoc[KMS]
 * xref:amazon-s3.adoc[S3]
 * xref:amazon-secretsmanager.adoc[Secret Manager]
+* xref:amazon-sfn.adoc[SFN]
 * xref:amazon-ses.adoc[SES]
 * xref:amazon-sns.adoc[SNS]
 * xref:amazon-sqs.adoc[SQS]
