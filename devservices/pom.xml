@@ -29,5 +29,6 @@
         <module>ssm</module>
         <module>sts</module>
         <module>lambda</module>
+        <module>sfn</module>
     </modules>
 </project>

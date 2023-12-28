@@ -32,6 +32,7 @@
     <module>lambda</module>
     <module>docs</module>
     <module>integration-tests</module>
+    <module>sfn</module>
   </modules>
   <scm>
     <connection>:git:git@github.com:quarkiverse/quarkus-amazon-services.git</connection>
