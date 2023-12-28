@@ -10,7 +10,7 @@ h|[[quarkus-amazon-sfn_configuration]]link:#quarkus-amazon-sfn_configuration[Con
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.sfn.interceptors]]`link:#quarkus-amazon-sfn_quarkus.sfn.interceptors[quarkus.sfn.interceptors]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.stepfunctions.interceptors]]`link:#quarkus-amazon-sfn_quarkus.stepfunctions.interceptors[quarkus.stepfunctions.interceptors]`
 
 
 [.description]
@@ -20,16 +20,16 @@ List of execution interceptors that will have access to read and modify the requ
 The list should consists of class names which implements `software.amazon.awssdk.core.interceptor.ExecutionInterceptor` interface.
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SFN_INTERCEPTORS+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_STEPFUNCTIONS_INTERCEPTORS+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SFN_INTERCEPTORS+++`
+Environment variable: `+++QUARKUS_STEPFUNCTIONS_INTERCEPTORS+++`
 endif::add-copy-button-to-env-var[]
 --|list of string 
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.sfn.telemetry.enabled]]`link:#quarkus-amazon-sfn_quarkus.sfn.telemetry.enabled[quarkus.sfn.telemetry.enabled]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.stepfunctions.telemetry.enabled]]`link:#quarkus-amazon-sfn_quarkus.stepfunctions.telemetry.enabled[quarkus.stepfunctions.telemetry.enabled]`
 
 
 [.description]
@@ -37,16 +37,16 @@ a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.sfn.telemetr
 OpenTelemetry AWS SDK instrumentation will be enabled if the OpenTelemetry extension is present and this value is true.
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SFN_TELEMETRY_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_STEPFUNCTIONS_TELEMETRY_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SFN_TELEMETRY_ENABLED+++`
+Environment variable: `+++QUARKUS_STEPFUNCTIONS_TELEMETRY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --|boolean 
 |`false`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.sfn.sync-client.type]]`link:#quarkus-amazon-sfn_quarkus.sfn.sync-client.type[quarkus.sfn.sync-client.type]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.stepfunctions.sync-client.type]]`link:#quarkus-amazon-sfn_quarkus.stepfunctions.sync-client.type[quarkus.stepfunctions.sync-client.type]`
 
 
 [.description]
@@ -54,17 +54,17 @@ a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.sfn.sync-cli
 Type of the sync HTTP client implementation
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SFN_SYNC_CLIENT_TYPE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_STEPFUNCTIONS_SYNC_CLIENT_TYPE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SFN_SYNC_CLIENT_TYPE+++`
+Environment variable: `+++QUARKUS_STEPFUNCTIONS_SYNC_CLIENT_TYPE+++`
 endif::add-copy-button-to-env-var[]
 -- a|
 `url`, `apache` 
 |`url`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.sfn.async-client.type]]`link:#quarkus-amazon-sfn_quarkus.sfn.async-client.type[quarkus.sfn.async-client.type]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.stepfunctions.async-client.type]]`link:#quarkus-amazon-sfn_quarkus.stepfunctions.async-client.type[quarkus.stepfunctions.async-client.type]`
 
 
 [.description]
@@ -72,17 +72,17 @@ a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.sfn.async-cl
 Type of the async HTTP client implementation
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SFN_ASYNC_CLIENT_TYPE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_STEPFUNCTIONS_ASYNC_CLIENT_TYPE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SFN_ASYNC_CLIENT_TYPE+++`
+Environment variable: `+++QUARKUS_STEPFUNCTIONS_ASYNC_CLIENT_TYPE+++`
 endif::add-copy-button-to-env-var[]
 -- a|
 `netty`, `aws-crt` 
 |`netty`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.sfn.devservices.enabled]]`link:#quarkus-amazon-sfn_quarkus.sfn.devservices.enabled[quarkus.sfn.devservices.enabled]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.stepfunctions.devservices.enabled]]`link:#quarkus-amazon-sfn_quarkus.stepfunctions.devservices.enabled[quarkus.stepfunctions.devservices.enabled]`
 
 
 [.description]
@@ -90,16 +90,16 @@ a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.sfn.devservi
 If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. For all services but Cognito, the local AWS stack will be provided by LocalStack. Otherwise, it will be provided by Moto
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SFN_DEVSERVICES_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_STEPFUNCTIONS_DEVSERVICES_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SFN_DEVSERVICES_ENABLED+++`
+Environment variable: `+++QUARKUS_STEPFUNCTIONS_DEVSERVICES_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --|boolean 
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.sfn.devservices.shared]]`link:#quarkus-amazon-sfn_quarkus.sfn.devservices.shared[quarkus.sfn.devservices.shared]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.stepfunctions.devservices.shared]]`link:#quarkus-amazon-sfn_quarkus.stepfunctions.devservices.shared[quarkus.stepfunctions.devservices.shared]`
 
 
 [.description]
@@ -111,16 +111,16 @@ The discovery uses the `quarkus-dev-service-localstack` label. The value is conf
 Sharing is not supported for the Cognito extension.
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SFN_DEVSERVICES_SHARED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_STEPFUNCTIONS_DEVSERVICES_SHARED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SFN_DEVSERVICES_SHARED+++`
+Environment variable: `+++QUARKUS_STEPFUNCTIONS_DEVSERVICES_SHARED+++`
 endif::add-copy-button-to-env-var[]
 --|boolean 
 |`false`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.sfn.devservices.service-name]]`link:#quarkus-amazon-sfn_quarkus.sfn.devservices.service-name[quarkus.sfn.devservices.service-name]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.stepfunctions.devservices.service-name]]`link:#quarkus-amazon-sfn_quarkus.stepfunctions.devservices.service-name[quarkus.stepfunctions.devservices.service-name]`
 
 
 [.description]
@@ -130,16 +130,16 @@ The value of the `quarkus-dev-service-localstack` label attached to the started 
 This property is used when you need multiple shared LocalStack instances.
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SFN_DEVSERVICES_SERVICE_NAME+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_STEPFUNCTIONS_DEVSERVICES_SERVICE_NAME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SFN_DEVSERVICES_SERVICE_NAME+++`
+Environment variable: `+++QUARKUS_STEPFUNCTIONS_DEVSERVICES_SERVICE_NAME+++`
 endif::add-copy-button-to-env-var[]
 --|string 
 |`localstack`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.sfn.devservices.container-properties-container-properties]]`link:#quarkus-amazon-sfn_quarkus.sfn.devservices.container-properties-container-properties[quarkus.sfn.devservices.container-properties]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.stepfunctions.devservices.container-properties-container-properties]]`link:#quarkus-amazon-sfn_quarkus.stepfunctions.devservices.container-properties-container-properties[quarkus.stepfunctions.devservices.container-properties]`
 
 
 [.description]
@@ -147,10 +147,10 @@ a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus.sfn.devservi
 Generic properties that are pass for additional container configuration.
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SFN_DEVSERVICES_CONTAINER_PROPERTIES+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_STEPFUNCTIONS_DEVSERVICES_CONTAINER_PROPERTIES+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SFN_DEVSERVICES_CONTAINER_PROPERTIES+++`
+Environment variable: `+++QUARKUS_STEPFUNCTIONS_DEVSERVICES_CONTAINER_PROPERTIES+++`
 endif::add-copy-button-to-env-var[]
 --|`Map<String,String>` 
 |
