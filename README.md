@@ -15,13 +15,13 @@ This set of extensions allows you to interact with some of the AWS Services name
  * KMS
  * S3
  * Secrets Manager
- * SES
+ * SES 
+ * SFN
  * SNS
  * SQS
  * SSM
  * STS
  * Lambda
- * SFN
 
 They also provide a common infrastructure to make it easy to add new ones.
 
