@@ -22,6 +22,7 @@
     <module>dynamodb-enhanced</module>
     <module>iam</module>
     <module>s3</module>
+    <module>sfn</module>
     <module>sns</module>
     <module>sqs</module>
     <module>ses</module>
@@ -32,7 +33,6 @@
     <module>lambda</module>
     <module>docs</module>
     <module>integration-tests</module>
-    <module>sfn</module>
   </modules>
   <scm>
     <connection>:git:git@github.com:quarkiverse/quarkus-amazon-services.git</connection>
