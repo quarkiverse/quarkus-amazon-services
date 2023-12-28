@@ -134,7 +134,7 @@ If you're going to use a local SFN instance, configure it as follows:
 
 [source,properties]
 ----
-quarkus.stepfunctions.endpoint-override=http://localhost:8083
+quarkus.stepfunctions.endpoint-override=http://localhost:4566
 
 quarkus.stepfunctions.aws.region=us-east-1
 quarkus.stepfunctions.aws.credentials.type=static
