@@ -24,6 +24,8 @@ public abstract class AbstractDevServicesLocalStackProcessor {
     protected DevServicesLocalStackProviderBuildItem setup(EnabledService enabledService,
             DevServicesBuildTimeConfig devServicesBuildTimeConfig) {
 
+        String propertyConfigurationName = getPropertyConfigurationName(enabledService);
+
         // explicitely disabled
         if (!devServicesBuildTimeConfig.enabled().orElse(true)) {
             log.debugf(
@@ -32,7 +34,7 @@ public abstract class AbstractDevServicesLocalStackProcessor {
             return null;
         }
 
-        String endpointOverride = String.format(ENDPOINT_OVERRIDE, enabledService.getName());
+        String endpointOverride = String.format(ENDPOINT_OVERRIDE, propertyConfigurationName);
         if (ConfigUtils.isPropertyPresent(endpointOverride)) {
             log.debugf("Not starting Dev Services for Amazon Services - %s, the %s is configured.",
                     enabledService.getName(),
@@ -57,16 +59,16 @@ public abstract class AbstractDevServicesLocalStackProcessor {
                                 endpointOverride,
                                 localstack.getEndpointOverride(enabledService)
                                         .toString());
-                        config.put(String.format(AWS_REGION, enabledService.getName()),
+                        config.put(String.format(AWS_REGION, propertyConfigurationName),
                                 localstack.getRegion());
                         config.put(String.format(AWS_CREDENTIALS_TYPE,
-                                enabledService.getName()),
+                                propertyConfigurationName),
                                 AwsCredentialsProviderType.STATIC.name());
                         config.put(String.format(AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID,
-                                enabledService.getName()),
+                                propertyConfigurationName),
                                 localstack.getAccessKey());
                         config.put(String.format(AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY,
-                                enabledService.getName()),
+                                propertyConfigurationName),
                                 localstack.getSecretKey());
 
                         overrideDefaultConfig(config);
@@ -81,16 +83,16 @@ public abstract class AbstractDevServicesLocalStackProcessor {
                                 endpointOverride,
                                 localstack.getEndpointOverride(enabledService)
                                         .toString(),
-                                String.format(AWS_REGION, enabledService.getName()),
+                                String.format(AWS_REGION, propertyConfigurationName),
                                 localstack.getRegion(),
                                 String.format(AWS_CREDENTIALS_TYPE,
-                                        enabledService.getName()),
+                                        propertyConfigurationName),
                                 AwsCredentialsProviderType.STATIC.name(),
                                 String.format(AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID,
-                                        enabledService.getName()),
+                                        propertyConfigurationName),
                                 localstack.getAccessKey(),
                                 String.format(AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY,
-                                        enabledService.getName()),
+                                        propertyConfigurationName),
                                 localstack.getSecretKey());
                     }
                 });
@@ -121,5 +123,22 @@ public abstract class AbstractDevServicesLocalStackProcessor {
      */
     protected void prepareLocalStack(DevServicesBuildTimeConfig devServicesBuildTimeConfig,
             LocalStackContainer localstack) {
+    }
+
+    /**
+     * Returns the property configuration name for the given {@link LocalStackContainer.EnabledService}.
+     * <p>
+     * The property configuration name is the name of the service, which is the same as the AWSSDK artifact id.
+     * The only exception is the Step Functions service, which is named "sfn" in the AWSSDK and "stepfunctions" in the
+     * LocalStack configuration.
+     * <p>
+     *
+     * @param enabledService the LocalStack enabled service
+     * @return the property configuration name
+     */
+    private String getPropertyConfigurationName(LocalStackContainer.EnabledService enabledService) {
+        if (enabledService == LocalStackContainer.Service.STEPFUNCTIONS)
+            return "sfn";
+        return enabledService.getName();
     }
 }
