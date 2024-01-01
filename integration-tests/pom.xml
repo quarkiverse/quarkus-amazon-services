@@ -78,6 +78,10 @@
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-sfn</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-cognito-user-pools</artifactId>
         </dependency>
         <dependency>

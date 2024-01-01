@@ -15,7 +15,8 @@ This set of extensions allows you to interact with some of the AWS Services name
  * KMS
  * S3
  * Secrets Manager
- * SES
+ * SES 
+ * SFN
  * SNS
  * SQS
  * SSM

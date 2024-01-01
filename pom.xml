@@ -22,6 +22,7 @@
     <module>dynamodb-enhanced</module>
     <module>iam</module>
     <module>s3</module>
+    <module>sfn</module>
     <module>sns</module>
     <module>sqs</module>
     <module>ses</module>

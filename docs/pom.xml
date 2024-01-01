@@ -50,6 +50,11 @@
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-sfn-deployment</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-ses-deployment</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -128,6 +133,7 @@
                                         <include>quarkus-amazon-s3.adoc</include>
                                         <include>quarkus-amazon-secretsmanager.adoc</include>
                                         <include>quarkus-amazon-ses.adoc</include>
+                                        <include>quarkus-amazon-sfn.adoc</include>
                                         <include>quarkus-amazon-sns.adoc</include>
                                         <include>quarkus-amazon-sqs.adoc</include>
                                         <include>quarkus-amazon-ssm.adoc</include>

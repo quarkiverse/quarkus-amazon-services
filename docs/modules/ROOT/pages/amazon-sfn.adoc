@@ -1,0 +1,202 @@
+= Amazon SFN Client
+
+include::./includes/attributes.adoc[]
+
+Amazon AWS Step Functions (SFN) is a cloud service that enables you to coordinate and automate the execution of multiple AWS services in a serverless workflow.
+It allows you to design, visualize, and execute workflows using a state machine architecture.
+With SFN, you can seamlessly integrate various AWS services, including Lambda functions, Amazon S3, Amazon DynamoDB, and others, into a cohesive and scalable workflow.
+
+You can find more information about SFN at https://aws.amazon.com/step-functions/[the Amazon SFN website].
+
+NOTE: The SFN extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
+
+The Quarkus extension supports two programming models:
+
+* Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
+* https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
+
+In this guide, we see how you can get your REST services to use SFN locally and on AWS.
+
+== Prerequisites
+
+To complete this guide, you need:
+
+* JDK 17+ installed with `JAVA_HOME` configured appropriately
+* an IDE
+* Apache Maven {maven-version}
+* An AWS Account to access the SFN service
+* Optionally, Docker for your system to run SFN locally for testing purposes
+
+=== Provision SFN locally via Dev Services
+
+The easiest way to start working with SFN is to run a local instance using Dev Services.
+
+=== Provision SFN locally manually
+
+You can also set up a local version of SFN manually, first start a LocalStack container:
+
+[source,bash,subs="verbatim,attributes"]
+----
+docker run -it --publish 4566:4566 -e SERVICES=stepfunctions -e START_WEB=0 localstack/localstack:3.0.1
+----
+This starts a SFN instance that is accessible on port `4566`.
+
+Create an AWS profile for your local instance using AWS CLI:
+[source,shell,subs="verbatim,attributes"]
+----
+$ aws configure --profile localstack
+AWS Access Key ID [None]: test-key
+AWS Secret Access Key [None]: test-secret
+Default region name [None]: us-east-1
+Default output format [None]: text
+----
+
+=== Create a SFN state machine
+
+Create a SFN state machine using AWS CLI and store the state machine ARN in a `STATE_MACHINE_ARN` variable:
+
+[source,bash,subs="verbatim,attributes"]
+----
+STATE_MACHINE_ARN=$(aws stepfunctions create-state-machine --definition "{\
+  \"Comment\": \"A Hello World example of the Amazon States Language using a Pass state\",\
+  \"StartAt\": \"HelloWorld\",\
+  \"States\": {\
+    \"HelloWorld\": {\
+      \"Type\": \"Pass\",\
+      \"End\": true\
+    }\
+  }}" --name "HelloWorld" --role-arn "arn:aws:iam::012345678901:role/DummyRole"  --endpoint-url http://localhost:4566 --profile localstack --query stateMachineArn --output text)
+----
+
+Start an execution using the ARN of the state machine you created and store the execution ARN in a `EXECUTION_ARN` variable:
+
+[source,bash,subs="verbatim,attributes"]
+----
+EXECUTION_ARN=$(aws stepfunctions start-execution --state-machine-arn "$STATE_MACHINE_ARN" --endpoint-url http://localhost:4566 --profile localstack --query executionArn --output text)
+----
+
+Finally, get the information about the state machine execution:
+
+[source,bash,subs="verbatim,attributes"]
+----
+aws stepfunctions describe-execution --execution-arn "$EXECUTION_ARN" --endpoint-url http://localhost:4566 --profile localstack
+----
+
+== Creating the Maven project
+
+First, we need a new project. Create a new project with the following command:
+
+[source,bash,subs=attributes+]
+----
+mvn io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:create \
+    -DprojectGroupId=org.acme \
+    -DprojectArtifactId=amazon-sfn-quickstart \
+    -DclassName="org.acme.sfn.QuarkusSfnSyncResource" \
+    -Dpath="/sync" \
+    -Dextensions="resteasy-reactive-jackson,amazon-sfn"
+cd amazon-sfn-quickstart
+----
+
+This command generates a Maven structure importing the RESTEasy Reactive/JAX-RS and Amazon SFN Client extensions.
+After this, the `amazon-sfn` extension has been added to your `pom.xml` as well as the Mutiny support for RESTEasy.
+
+== Configuring SFN clients
+
+Both SFN clients (sync and async) are configurable via the `application.properties` file that can be provided in the `src/main/resources` directory.
+Additionally, you need to add to the classpath a proper implementation of the sync client. By default, the extension uses URL connection HTTP client, so
+you need to add a URL connection client dependency to the `pom.xml` file:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>url-connection-client</artifactId>
+</dependency>
+----
+
+If you want to use Apache HTTP client instead, configure it as follows:
+[source,properties]
+----
+quarkus.sfn.sync-client.type=apache
+----
+
+And add the following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>apache-client</artifactId>
+</dependency>
+----
+
+If you're going to use a local SFN instance, configure it as follows:
+
+[source,properties]
+----
+quarkus.sfn.endpoint-override=http://localhost:4566
+
+quarkus.sfn.aws.region=us-east-1
+quarkus.sfn.aws.credentials.type=static
+quarkus.sfn.aws.credentials.static-provider.access-key-id=test-key
+quarkus.sfn.aws.credentials.static-provider.secret-access-key=test-secret
+----
+
+- `quarkus.sfn.aws.region` - It's required by the client, but since you're using a local SFN instance you can pick any valid AWS region.
+- `quarkus.sfn.aws.credentials.type` - Set `static` credentials provider with any values for `access-key-id` and `secret-access-key`
+- `quarkus.sfn.endpoint-override` - Override the SFN client to use a local instance instead of an AWS service
+
+If you want to work with an AWS account, you'd need to set it with:
+[source,properties]
+----
+quarkus.sfn.aws.region=<YOUR_REGION>
+quarkus.sfn.aws.credentials.type=default
+----
+
+- `quarkus.sfn.aws.region` you should set it to the region where you provisioned the SFN state machine,
+- `quarkus.sfn.aws.credentials.type` - use the `default` credentials provider chain that looks for credentials in this order:
+
+include::./amazon-credentials.adoc[]
+
+== Next steps
+
+=== Packaging
+
+Packaging your application is as simple as `./mvnw clean package`.
+It can then be run with `java -Dparameters.path=/quarkus/is/awesome/ -jar target/quarkus-app/quarkus-run.jar`.
+
+With GraalVM installed, you can also create a native executable binary: `./mvnw clean package -Dnative`.
+Depending on your system, that will take some time.
+
+=== Going asynchronous
+
+Thanks to the AWS SDK v2.x used by the Quarkus extension, you can use the asynchronous programming model out of the box.
+
+We need to add Netty HTTP client dependency to the `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>netty-nio-client</artifactId>
+</dependency>
+----
+
+If you want to use the AWS CRT-based HTTP client instead, configure it as follows:
+[source,properties]
+----
+quarkus.sfn.async-client.type=aws-crt
+----
+
+And add the following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>aws-crt-client</artifactId>
+</dependency>
+----
+
+== Configuration Reference
+
+include::./includes/quarkus-amazon-sfn.adoc[]
