@@ -10,8 +10,8 @@ import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithParentName;
 
+@ConfigMapping(prefix = "quarkus.sfn")
 @ConfigRoot(phase = ConfigPhase.RUN_TIME)
-@ConfigMapping(prefix = "quarkus.stepfunctions")
 public interface SfnConfig {
     /**
      * AWS SDK client configurations

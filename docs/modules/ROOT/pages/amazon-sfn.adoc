@@ -118,7 +118,7 @@ you need to add a URL connection client dependency to the `pom.xml` file:
 If you want to use Apache HTTP client instead, configure it as follows:
 [source,properties]
 ----
-quarkus.stepfunctions.sync-client.type=apache
+quarkus.sfn.sync-client.type=apache
 ----
 
 And add the following dependency to the application `pom.xml`:
@@ -134,27 +134,27 @@ If you're going to use a local SFN instance, configure it as follows:
 
 [source,properties]
 ----
-quarkus.stepfunctions.endpoint-override=http://localhost:4566
+quarkus.sfn.endpoint-override=http://localhost:4566
 
-quarkus.stepfunctions.aws.region=us-east-1
-quarkus.stepfunctions.aws.credentials.type=static
-quarkus.stepfunctions.aws.credentials.static-provider.access-key-id=test-key
-quarkus.stepfunctions.aws.credentials.static-provider.secret-access-key=test-secret
+quarkus.sfn.aws.region=us-east-1
+quarkus.sfn.aws.credentials.type=static
+quarkus.sfn.aws.credentials.static-provider.access-key-id=test-key
+quarkus.sfn.aws.credentials.static-provider.secret-access-key=test-secret
 ----
 
-- `quarkus.stepfunctions.aws.region` - It's required by the client, but since you're using a local SFN instance you can pick any valid AWS region.
-- `quarkus.stepfunctions.aws.credentials.type` - Set `static` credentials provider with any values for `access-key-id` and `secret-access-key`
-- `quarkus.stepfunctions.endpoint-override` - Override the SFN client to use a local instance instead of an AWS service
+- `quarkus.sfn.aws.region` - It's required by the client, but since you're using a local SFN instance you can pick any valid AWS region.
+- `quarkus.sfn.aws.credentials.type` - Set `static` credentials provider with any values for `access-key-id` and `secret-access-key`
+- `quarkus.sfn.endpoint-override` - Override the SFN client to use a local instance instead of an AWS service
 
 If you want to work with an AWS account, you'd need to set it with:
 [source,properties]
 ----
-quarkus.stepfunctions.aws.region=<YOUR_REGION>
-quarkus.stepfunctions.aws.credentials.type=default
+quarkus.sfn.aws.region=<YOUR_REGION>
+quarkus.sfn.aws.credentials.type=default
 ----
 
-- `quarkus.stepfunctions.aws.region` you should set it to the region where you provisioned the SFN table,
-- `quarkus.stepfunctions.aws.credentials.type` - use the `default` credentials provider chain that looks for credentials in this order:
+- `quarkus.sfn.aws.region` you should set it to the region where you provisioned the SFN state machine,
+- `quarkus.sfn.aws.credentials.type` - use the `default` credentials provider chain that looks for credentials in this order:
 
 include::./amazon-credentials.adoc[]
 
@@ -185,7 +185,7 @@ We need to add Netty HTTP client dependency to the `pom.xml`:
 If you want to use the AWS CRT-based HTTP client instead, configure it as follows:
 [source,properties]
 ----
-quarkus.stepfunctions.async-client.type=aws-crt
+quarkus.sfn.async-client.type=aws-crt
 ----
 
 And add the following dependency to the application `pom.xml`:

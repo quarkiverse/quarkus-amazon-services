@@ -11,7 +11,7 @@ import io.smallrye.config.ConfigMapping;
 /**
  * Amazon SFN build time configuration
  */
-@ConfigMapping(prefix = "quarkus.stepfunctions")
+@ConfigMapping(prefix = "quarkus.sfn")
 @ConfigRoot(phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
 public interface SfnBuildTimeConfig extends HasSdkBuildTimeConfig {
 

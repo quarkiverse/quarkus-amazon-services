@@ -11,4 +11,4 @@ metadata:
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-sfn.html
   status: "stable"
   config:
-  - "quarkus.stepfunctions."
+  - "quarkus.sfn."
