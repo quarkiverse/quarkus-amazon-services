@@ -129,6 +129,21 @@
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-devservices-eventbridge</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-eventbridge</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-eventbridge-deployment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
                 <artifactId>quarkus-amazon-devservices-iam</artifactId>
                 <version>${project.version}</version>
             </dependency>

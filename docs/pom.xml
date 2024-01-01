@@ -129,6 +129,7 @@
                                         <include>quarkus-amazon-cognitouserpools.adoc</include>
                                         <include>quarkus-amazon-dynamodb.adoc</include>
                                         <include>quarkus-amazon-dynamodb-enhanced.adoc</include>
+                                        <include>quarkus-amazon-eventbridge.adoc</include>
                                         <include>quarkus-amazon-iam.adoc</include>
                                         <include>quarkus-amazon-kms.adoc</include>
                                         <include>quarkus-amazon-kinesis.adoc</include>
