@@ -12,7 +12,9 @@ This set of extensions allows you to interact with some of the AWS Services name
  * Cognito User Pools
  * DynamoDB / DynamoDB Enhanced
  * IAM
+ * Kinesis
  * KMS
+ * Lambda
  * S3
  * Secrets Manager
  * SES 
@@ -21,7 +23,6 @@ This set of extensions allows you to interact with some of the AWS Services name
  * SQS
  * SSM
  * STS
- * Lambda
 
 They also provide a common infrastructure to make it easy to add new ones.
 
