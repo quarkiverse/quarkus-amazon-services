@@ -19,8 +19,10 @@
     <modules>
         <module>cognito-user-pools</module>
         <module>dynamodb</module>
-        <module>kms</module>
         <module>iam</module>
+        <module>kinesis</module>
+        <module>kms</module>
+        <module>lambda</module>
         <module>s3</module>
         <module>secretsmanager</module>
         <module>ses</module>
@@ -29,6 +31,5 @@
         <module>sqs</module>
         <module>ssm</module>
         <module>sts</module>
-        <module>lambda</module>
     </modules>
 </project>

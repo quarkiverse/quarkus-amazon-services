@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon Kinesis"
+metadata:
+  keywords:
+    - "kinesis"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-kinesis.html
+  status: "stable"
+  config:
+  - "quarkus.kinesis."
