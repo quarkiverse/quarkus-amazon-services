@@ -139,6 +139,8 @@ public abstract class AbstractDevServicesLocalStackProcessor {
     private String getPropertyConfigurationName(LocalStackContainer.EnabledService enabledService) {
         if (enabledService == LocalStackContainer.Service.STEPFUNCTIONS)
             return "sfn";
+        if (enabledService.getName().equals("events"))
+            return "eventbridge";
         return enabledService.getName();
     }
 }
