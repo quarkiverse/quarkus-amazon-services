@@ -264,6 +264,10 @@ public class AwsCrtProcessor {
                 "onChunkCompleted", "int"));
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
                 "software.amazon.awssdk.crt.http.HttpStreamResponseHandlerNativeAdapter",
+                "onMetrics", "software.amazon.awssdk.crt.http.HttpStreamBase",
+                "software.amazon.awssdk.crt.http.HttpStreamMetrics"));
+        jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
+                "software.amazon.awssdk.crt.http.HttpStreamResponseHandlerNativeAdapter",
                 "onResponseBody", "software.amazon.awssdk.crt.http.HttpStreamBase",
                 "java.nio.ByteBuffer"));
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
@@ -276,6 +280,9 @@ public class AwsCrtProcessor {
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
                 "software.amazon.awssdk.crt.http.HttpStreamResponseHandlerNativeAdapter",
                 "onResponseHeadersDone", "software.amazon.awssdk.crt.http.HttpStreamBase", "int"));
+        jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
+                "software.amazon.awssdk.crt.http.HttpStreamMetrics", "<init>", "long", "long", "long", "long", "long", "long",
+                "int"));
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
                 "software.amazon.awssdk.crt.io.ClientBootstrap", "onShutdownComplete"));
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
