@@ -44,6 +44,12 @@ public interface SyncHttpClientConfig {
     @ConfigDocSection
     ApacheHttpClientConfig apache();
 
+    /**
+     * AWS CRT-based HTTP client specific configurations
+     */
+    @ConfigDocSection
+    CrtHttpClientConfig crt();
+
     @ConfigGroup
     public interface ApacheHttpClientConfig {
         /**

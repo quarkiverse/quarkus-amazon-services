@@ -314,7 +314,7 @@ add a URL connection client dependency to the `pom.xml` file:
 </dependency>
 ----
 
-If you want to use Apache HTTP client instead, configure it as follows:
+If you want to use the Apache HTTP client instead, configure it as follows:
 [source,properties]
 ----
 quarkus.s3.sync-client.type=apache
@@ -328,6 +328,23 @@ And add following dependency to the application `pom.xml`:
     <artifactId>apache-client</artifactId>
 </dependency>
 ----
+
+If you want to use the AWS CRT-based HTTP client instead, configure it as follows:
+[source,properties]
+----
+quarkus.s3.sync-client.type=aws-crt
+----
+
+And add the following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>aws-crt-client</artifactId>
+</dependency>
+----
+
+
 
 For asynchronous client refer to <<Going asynchronous>> for more information.
 

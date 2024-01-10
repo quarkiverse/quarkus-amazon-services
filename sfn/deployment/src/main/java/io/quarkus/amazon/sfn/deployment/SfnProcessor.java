@@ -113,6 +113,19 @@ public class SfnProcessor extends AbstractAmazonServiceProcessor {
                 syncTransports);
     }
 
+    @BuildStep(onlyIf = AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent.class)
+    @Record(ExecutionTime.RUNTIME_INIT)
+    void setupAwsCrtSyncTransport(List<AmazonClientBuildItem> amazonClients, SfnRecorder recorder,
+            AmazonClientAwsCrtTransportRecorder transportRecorder,
+            BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
+
+        createAwsCrtSyncTransportBuilder(amazonClients,
+                transportRecorder,
+                buildTimeConfig.syncClient(),
+                recorder.getSyncConfig(),
+                syncTransports);
+    }
+
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonUrlConnectionHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
     void setupUrlConnectionSyncTransport(List<AmazonClientBuildItem> amazonClients, SfnRecorder recorder,

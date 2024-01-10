@@ -101,6 +101,8 @@ public class AmazonServicesClientsProcessor {
         boolean asyncTransportNeeded = amazonClients.stream().anyMatch(item -> item.getAsyncClassName().isPresent());
         final Predicate<AmazonClientBuildItem> isSyncApache = client -> client
                 .getBuildTimeSyncConfig().type() == SyncClientType.APACHE;
+        final Predicate<AmazonClientBuildItem> isSyncCrt = client -> client
+                .getBuildTimeSyncConfig().type() == SyncClientType.AWS_CRT;
         final Predicate<AmazonClientBuildItem> isAsyncNetty = client -> client
                 .getBuildTimeAsyncConfig().type() == AsyncClientType.NETTY;
 
@@ -111,7 +113,7 @@ public class AmazonServicesClientsProcessor {
         boolean isSyncUrlConnectionInClasspath = QuarkusClassLoader
                 .isClassPresentAtRuntime(AmazonHttpClients.URL_CONNECTION_HTTP_SERVICE);
         boolean isAsyncNettyInClasspath = QuarkusClassLoader.isClassPresentAtRuntime(AmazonHttpClients.NETTY_HTTP_SERVICE);
-        boolean isAsyncAwsCrtInClasspath = QuarkusClassLoader.isClassPresentAtRuntime(AmazonHttpClients.AWS_CRT_HTTP_SERVICE);
+        boolean isAwsCrtInClasspath = QuarkusClassLoader.isClassPresentAtRuntime(AmazonHttpClients.AWS_CRT_HTTP_SERVICE);
 
         // Check that the clients required by the configuration are available
         if (syncTransportNeeded) {
@@ -120,6 +122,12 @@ public class AmazonServicesClientsProcessor {
                     registerSyncApacheClient(proxyDefinition, serviceProvider);
                 } else {
                     throw missingDependencyException("apache-client");
+                }
+            } else if (amazonClients.stream().filter(isSyncCrt).findAny().isPresent()) {
+                if (isAwsCrtInClasspath) {
+                    registerSyncAwsCrtClient(serviceProvider);
+                } else {
+                    throw missingDependencyException("aws-crt-client");
                 }
             } else {
                 if (isSyncUrlConnectionInClasspath) {
@@ -146,7 +154,7 @@ public class AmazonServicesClientsProcessor {
                     throw missingDependencyException("netty-nio-client");
                 }
             } else {
-                if (isAsyncAwsCrtInClasspath) {
+                if (isAwsCrtInClasspath) {
                     registerAsyncAwsCrtClient(serviceProvider);
                 } else {
                     throw missingDependencyException("aws-crt-client");
@@ -157,7 +165,7 @@ public class AmazonServicesClientsProcessor {
             // but this time only based on the classpath.
             if (isAsyncNettyInClasspath) {
                 registerAsyncNettyClient(serviceProvider);
-            } else if (isAsyncAwsCrtInClasspath) {
+            } else if (isAwsCrtInClasspath) {
                 registerAsyncAwsCrtClient(serviceProvider);
             }
         }
@@ -172,6 +180,12 @@ public class AmazonServicesClientsProcessor {
 
         serviceProvider.produce(
                 new ServiceProviderBuildItem(SdkHttpService.class.getName(), AmazonHttpClients.APACHE_HTTP_SERVICE));
+    }
+
+    private static void registerSyncAwsCrtClient(BuildProducer<ServiceProviderBuildItem> serviceProvider) {
+        serviceProvider.produce(
+                new ServiceProviderBuildItem(SdkHttpService.class.getName(),
+                        AmazonHttpClients.AWS_CRT_HTTP_SERVICE));
     }
 
     private static void registerSyncUrlConnectionClient(BuildProducer<ServiceProviderBuildItem> serviceProvider) {
