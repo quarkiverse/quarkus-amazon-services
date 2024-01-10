@@ -110,6 +110,9 @@ public class AwsCrtProcessor {
                 "software.amazon.awssdk.crt.CrtResource", "releaseReferences"));
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
                 "software.amazon.awssdk.crt.CrtRuntimeException", "<init>", "int"));
+        // for exception thrown from https://github.com/awslabs/aws-crt-java/blob/3eea28d5f617f408655054efd33278ce84d0563b/src/native/crt.c#L258-L259
+        jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
+                "software.amazon.awssdk.crt.CrtRuntimeException", "<init>", "java.lang.String"));
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
                 "software.amazon.awssdk.crt.CrtRuntimeException", "errorCode"));
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
