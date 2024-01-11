@@ -141,6 +141,32 @@ abstract public class AbstractAmazonServiceProcessor {
         });
     }
 
+    protected void createAwsCrtSyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
+            AmazonClientAwsCrtTransportRecorder recorder,
+            SyncHttpClientBuildTimeConfig buildSyncConfig,
+            RuntimeValue<SyncHttpClientConfig> syncConfig,
+            BuildProducer<AmazonClientSyncTransportBuildItem> clientSyncTransports) {
+
+        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+                .filter(c -> c.getAwsClientName().equals(configName()))
+                .findAny();
+
+        matchingClientBuildItem.ifPresent(client -> {
+            if (!client.getSyncClassName().isPresent()) {
+                return;
+            }
+            if (buildSyncConfig.type() != SyncHttpClientBuildTimeConfig.SyncClientType.AWS_CRT) {
+                return;
+            }
+
+            clientSyncTransports.produce(
+                    new AmazonClientSyncTransportBuildItem(
+                            client.getAwsClientName(),
+                            client.getSyncClassName().get(),
+                            recorder.configureSync(configName(), syncConfig)));
+        });
+    }
+
     protected void createUrlConnectionSyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
             AmazonClientUrlConnectionTransportRecorder recorder,
             SyncHttpClientBuildTimeConfig buildSyncConfig,

@@ -33,9 +33,13 @@ public class KinesisResource {
     public String testSync() {
         LOG.info("Testing Sync Kinesis client");
 
-        kinesisClient.createStream(builder -> builder.streamName(STREAM_NAME + "sync").shardCount(1));
-        return kinesisClient.describeStream(builder -> builder.streamName(STREAM_NAME + "sync")).streamDescription()
-                .streamARN();
+        try {
+            kinesisClient.createStream(builder -> builder.streamName(STREAM_NAME + "sync").shardCount(1));
+            return kinesisClient.describeStream(builder -> builder.streamName(STREAM_NAME + "sync")).streamDescription()
+                    .streamARN();
+        } catch (UnsupportedOperationException ex) {
+            return ex.getMessage();
+        }
     }
 
     @GET

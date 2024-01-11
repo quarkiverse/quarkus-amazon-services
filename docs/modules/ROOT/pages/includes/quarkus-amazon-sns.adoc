@@ -60,7 +60,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SNS_SYNC_CLIENT_TYPE+++`
 endif::add-copy-button-to-env-var[]
 -- a|
-`url`, `apache` 
+`url`, `apache`, `aws-crt` 
 |`url`
 
 
@@ -1005,6 +1005,117 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SNS_SYNC_CLIENT_APACHE_PROXY_NON_PROXY_HOSTS+++`
 endif::add-copy-button-to-env-var[]
 --|list of string 
+|
+
+
+h|[[quarkus-amazon-sns_quarkus.sns.sync-client.crt-aws-crt-based-http-client-specific-configurations]]link:#quarkus-amazon-sns_quarkus.sns.sync-client.crt-aws-crt-based-http-client-specific-configurations[AWS CRT-based HTTP client specific configurations]
+
+h|Type
+h|Default
+
+a| [[quarkus-amazon-sns_quarkus.sns.sync-client.crt.connection-max-idle-time]]`link:#quarkus-amazon-sns_quarkus.sns.sync-client.crt.connection-max-idle-time[quarkus.sns.sync-client.crt.connection-max-idle-time]`
+
+
+[.description]
+--
+The maximum amount of time that a connection should be allowed to remain open while idle.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SNS_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SNS_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
+endif::add-copy-button-to-env-var[]
+--|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+|`60S`
+
+
+a| [[quarkus-amazon-sns_quarkus.sns.sync-client.crt.max-concurrency]]`link:#quarkus-amazon-sns_quarkus.sns.sync-client.crt.max-concurrency[quarkus.sns.sync-client.crt.max-concurrency]`
+
+
+[.description]
+--
+The maximum number of allowed concurrent requests.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SNS_SYNC_CLIENT_CRT_MAX_CONCURRENCY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SNS_SYNC_CLIENT_CRT_MAX_CONCURRENCY+++`
+endif::add-copy-button-to-env-var[]
+--|int 
+|`50`
+
+
+a| [[quarkus-amazon-sns_quarkus.sns.sync-client.crt.proxy.enabled]]`link:#quarkus-amazon-sns_quarkus.sns.sync-client.crt.proxy.enabled[quarkus.sns.sync-client.crt.proxy.enabled]`
+
+
+[.description]
+--
+Enable HTTP proxy
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SNS_SYNC_CLIENT_CRT_PROXY_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SNS_SYNC_CLIENT_CRT_PROXY_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|`false`
+
+
+a| [[quarkus-amazon-sns_quarkus.sns.sync-client.crt.proxy.endpoint]]`link:#quarkus-amazon-sns_quarkus.sns.sync-client.crt.proxy.endpoint[quarkus.sns.sync-client.crt.proxy.endpoint]`
+
+
+[.description]
+--
+The endpoint of the proxy server that the SDK should connect through.
+
+Currently, the endpoint is limited to a host and port. Any other URI components will result in an exception being raised.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SNS_SYNC_CLIENT_CRT_PROXY_ENDPOINT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SNS_SYNC_CLIENT_CRT_PROXY_ENDPOINT+++`
+endif::add-copy-button-to-env-var[]
+--|link:https://docs.oracle.com/javase/8/docs/api/java/net/URI.html[URI]
+ 
+|
+
+
+a| [[quarkus-amazon-sns_quarkus.sns.sync-client.crt.proxy.username]]`link:#quarkus-amazon-sns_quarkus.sns.sync-client.crt.proxy.username[quarkus.sns.sync-client.crt.proxy.username]`
+
+
+[.description]
+--
+The username to use when connecting through a proxy.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SNS_SYNC_CLIENT_CRT_PROXY_USERNAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SNS_SYNC_CLIENT_CRT_PROXY_USERNAME+++`
+endif::add-copy-button-to-env-var[]
+--|string 
+|
+
+
+a| [[quarkus-amazon-sns_quarkus.sns.sync-client.crt.proxy.password]]`link:#quarkus-amazon-sns_quarkus.sns.sync-client.crt.proxy.password[quarkus.sns.sync-client.crt.proxy.password]`
+
+
+[.description]
+--
+The password to use when connecting through a proxy.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SNS_SYNC_CLIENT_CRT_PROXY_PASSWORD+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SNS_SYNC_CLIENT_CRT_PROXY_PASSWORD+++`
+endif::add-copy-button-to-env-var[]
+--|string 
 |
 
 
