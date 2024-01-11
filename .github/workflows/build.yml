@@ -28,7 +28,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        alternative-client-implementation: ['true', 'false']
+        include:
+          - sync-client-type: "url"
+            async-client-type: "netty"
+          - sync-client-type: "apache"
+            async-client-type: "netty"
+          - sync-client-type: "aws-crt"
+            async-client-type: "aws-crt"
 
     steps:
       - uses: actions/checkout@v3
@@ -39,4 +45,4 @@ jobs:
           java-version: 17
           cache: maven
       - name: Build with Maven
-        run: ./mvnw -B formatter:validate verify --file pom.xml -Dnative -Dalternative-client-implementation=${{ matrix.alternative-client-implementation }}
+        run: ./mvnw -B formatter:validate verify --file pom.xml -Dnative -Dsync-client-type=${{ matrix.sync-client-type }} -Dasync-client-type=${{ matrix.async-client-type }}

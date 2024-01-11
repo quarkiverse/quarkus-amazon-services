@@ -32,7 +32,7 @@ Each extension provides configuration properties to configure the clients and wi
 * URL Connection HTTP client (default for synchronous call)
 * Apache HTTP Client
 * Netty HTTP client (default for asynchronous call)
-* AWS CRT-based HTTP client (native mode is experimental)
+* AWS CRT-based HTTP client (for both synchronous and asynchronous client)
 
 ## Compatibility
 

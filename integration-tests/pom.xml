@@ -169,41 +169,14 @@
 
     <profiles>
         <profile>
-            <id>default-client-implementation</id>
+            <id>sync-client-type-apache</id>
             <activation>
                 <property>
-                  <name>alternative-client-implementation</name>
-                  <value>!true</value>
+                  <name>sync-client-type</name>
+                  <value>apache</value>
                 </property>
             </activation>
             <dependencies>
-                <dependency>
-                    <groupId>software.amazon.awssdk</groupId>
-                    <artifactId>netty-nio-client</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>software.amazon.awssdk</groupId>
-                    <artifactId>url-connection-client</artifactId>
-                </dependency>
-            </dependencies>
-            <properties>
-                <sync-client.type>url</sync-client.type>
-                <async-client.type>netty</async-client.type>
-            </properties>
-        </profile>
-        <profile>
-            <id>alternative-client-implementation</id>
-            <activation>
-                <property>
-                  <name>alternative-client-implementation</name>
-                  <value>true</value>
-                </property>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>software.amazon.awssdk</groupId>
-                    <artifactId>aws-crt-client</artifactId>
-                </dependency>
                 <dependency>
                     <groupId>software.amazon.awssdk</groupId>
                     <artifactId>apache-client</artifactId>
@@ -211,7 +184,112 @@
             </dependencies>
             <properties>
                 <sync-client.type>apache</sync-client.type>
+            </properties>
+        </profile>
+        <profile>
+            <id>sync-client-type-url</id>
+            <activation>
+                <property>
+                  <name>sync-client-type</name>
+                  <value>url</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>software.amazon.awssdk</groupId>
+                    <artifactId>url-connection-client</artifactId>
+                </dependency>
+            </dependencies>
+            <properties>
+                <sync-client.type>url</sync-client.type>
+            </properties>
+        </profile>
+        <profile>
+            <id>sync-client-type-aws-crt</id>
+            <activation>
+                <property>
+                  <name>sync-client-type</name>
+                  <value>aws-crt</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>software.amazon.awssdk</groupId>
+                    <artifactId>aws-crt-client</artifactId>
+                </dependency>
+            </dependencies>
+            <properties>
+                <sync-client.type>aws-crt</sync-client.type>
+            </properties>
+        </profile>
+        <profile>
+            <id>async-client-type-netty</id>
+            <activation>
+                <property>
+                  <name>async-client-type</name>
+                  <value>netty</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>software.amazon.awssdk</groupId>
+                    <artifactId>netty-nio-client</artifactId>
+                </dependency>
+            </dependencies>
+            <properties>
+                <async-client.type>netty</async-client.type>
+            </properties>
+        </profile>
+        <profile>
+            <id>async-client-type-aws-crt</id>
+            <activation>
+                <property>
+                  <name>async-client-type</name>
+                  <value>aws-crt</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>software.amazon.awssdk</groupId>
+                    <artifactId>aws-crt-client</artifactId>
+                </dependency>
+            </dependencies>
+            <properties>
                 <async-client.type>aws-crt</async-client.type>
+            </properties>
+        </profile>
+        <profile>
+            <id>sync-client-type-default-for-test</id>
+            <activation>
+                <property>
+                  <name>!sync-client-type</name>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>software.amazon.awssdk</groupId>
+                    <artifactId>url-connection-client</artifactId>
+                </dependency>
+            </dependencies>
+            <properties>
+                <sync-client.type>url</sync-client.type>
+            </properties>
+        </profile>
+        <profile>
+            <id>async-client-type-default-for-test</id>
+            <activation>
+                <property>
+                  <name>!async-client-type</name>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>software.amazon.awssdk</groupId>
+                    <artifactId>netty-nio-client</artifactId>
+                </dependency>
+            </dependencies>
+            <properties>
+                <async-client.type>netty</async-client.type>
             </properties>
         </profile>
         <profile>
