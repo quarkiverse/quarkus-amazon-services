@@ -537,6 +537,23 @@ And add the following dependency to the application `pom.xml`:
 </dependency>
 ----
 
+If you want to use the https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/crt-based-s3-client.html[AWS CRT-based S3 client], add the `io.quarkus.amazon.s3.runtime.S3Crt` qualifier as follows:
+[source,java]
+----
+@Inject
+@S3Crt
+S3AsyncClient s3;
+----
+
+And add the following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>aws-crt-client</artifactId>
+</dependency>
+----
+
 == Configuration Reference
 
 include::./includes/quarkus-amazon-s3.adoc[]

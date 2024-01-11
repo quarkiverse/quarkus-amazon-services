@@ -342,12 +342,13 @@ abstract public class AbstractAmazonServiceProcessor {
                 syntheticBeans.produce(SyntheticBeanBuildItem
                         .configure(syncClientBuilderClass)
                         .defaultBean()
-                        .scope(ApplicationScoped.class)
                         .setRuntimeInit()
+                        .scope(ApplicationScoped.class)
                         .createWith(otelRecorder.configure(syncClientBuilder))
                         .addInjectionPoint(ClassType.create(OpenTelemetry.class)).done());
             } else {
                 syntheticBeans.produce(SyntheticBeanBuildItem.configure(syncClientBuilderClass)
+                        .defaultBean()
                         .setRuntimeInit()
                         .scope(ApplicationScoped.class)
                         .runtimeValue(syncClientBuilder)
@@ -362,12 +363,13 @@ abstract public class AbstractAmazonServiceProcessor {
                 syntheticBeans.produce(SyntheticBeanBuildItem
                         .configure(asyncClientBuilderClass)
                         .defaultBean()
-                        .scope(ApplicationScoped.class)
                         .setRuntimeInit()
+                        .scope(ApplicationScoped.class)
                         .createWith(otelRecorder.configure(asyncClientBuilder))
                         .addInjectionPoint(ClassType.create(OpenTelemetry.class)).done());
             } else {
                 syntheticBeans.produce(SyntheticBeanBuildItem.configure(asyncClientBuilderClass)
+                        .defaultBean()
                         .setRuntimeInit()
                         .scope(ApplicationScoped.class)
                         .runtimeValue(asyncClientBuilder)
@@ -379,6 +381,7 @@ abstract public class AbstractAmazonServiceProcessor {
             presignerBuilder = recorder.configurePresigner(presignerBuilder, awsConfigRuntime, sdkConfigRuntime,
                     configName());
             syntheticBeans.produce(SyntheticBeanBuildItem.configure(presignerBuilderClass)
+                    .defaultBean()
                     .setRuntimeInit()
                     .scope(ApplicationScoped.class)
                     .runtimeValue(presignerBuilder)

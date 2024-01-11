@@ -95,4 +95,10 @@ public interface S3Config {
      */
     @ConfigDocSection
     AsyncHttpClientConfig asyncClient();
+
+    /**
+     * AWS CRT-based S3 client configurations
+     */
+    @ConfigDocSection
+    S3CrtConfig crtClient();
 }
