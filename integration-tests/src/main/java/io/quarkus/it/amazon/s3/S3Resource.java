@@ -5,8 +5,10 @@ import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 import java.io.ByteArrayOutputStream;
 import java.time.Duration;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
+import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -14,6 +16,7 @@ import jakarta.ws.rs.Produces;
 
 import org.jboss.logging.Logger;
 
+import io.quarkus.amazon.s3.runtime.S3Crt;
 import software.amazon.awssdk.core.async.AsyncRequestBody;
 import software.amazon.awssdk.core.async.AsyncResponseTransformer;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -28,6 +31,7 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 public class S3Resource {
     private static final String SYNC_BUCKET = "sync-" + UUID.randomUUID().toString();
     private static final String ASYNC_BUCKET = "async-" + UUID.randomUUID().toString();
+    private static final String CRT_ASYNC_BUCKET = "crt-async-" + UUID.randomUUID().toString();
     private static final String SAMPLE_S3_OBJECT = "sample S3 object";
 
     private static final Logger LOG = Logger.getLogger(S3Resource.class);
@@ -37,6 +41,10 @@ public class S3Resource {
 
     @Inject
     S3AsyncClient s3AsyncClient;
+
+    @Inject
+    @S3Crt
+    Instance<S3AsyncClient> s3AsyncClientWithS3CrtQualifierInstance;
 
     @Inject
     S3Presigner s3Presigner;
@@ -58,6 +66,33 @@ public class S3Resource {
                     LOG.error("Error during async S3 operations", th.getCause());
                     return "ERROR";
                 });
+    }
+
+    @GET
+    @Path("crt-async")
+    @Produces(TEXT_PLAIN)
+    public CompletionStage<String> testCrtAsyncS3() {
+        LOG.info("Testing Crt Async S3 client with bucket: " + CRT_ASYNC_BUCKET);
+        String keyValue = UUID.randomUUID().toString();
+
+        S3AsyncClient s3AsyncClientWithS3CrtQualifier = s3AsyncClientWithS3CrtQualifierInstance.get();
+
+        try {
+            return S3Utils.createBucketAsync(s3AsyncClientWithS3CrtQualifier, CRT_ASYNC_BUCKET)
+                    .thenCompose(bucket -> s3AsyncClientWithS3CrtQualifier.putObject(
+                            S3Utils.createPutRequest(CRT_ASYNC_BUCKET, keyValue),
+                            AsyncRequestBody.fromString(SAMPLE_S3_OBJECT)))
+                    .thenCompose(resp -> s3AsyncClientWithS3CrtQualifier.getObject(
+                            S3Utils.createGetRequest(CRT_ASYNC_BUCKET, keyValue),
+                            AsyncResponseTransformer.toBytes()))
+                    .thenApply(resp -> resp.asUtf8String())
+                    .exceptionally(th -> {
+                        LOG.error("Error during async S3 operations", th.getCause());
+                        return "ERROR";
+                    });
+        } catch (IllegalStateException ex) {
+            return CompletableFuture.completedStage(ex.getMessage());
+        }
     }
 
     @GET

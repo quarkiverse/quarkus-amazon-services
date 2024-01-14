@@ -1835,6 +1835,79 @@ endif::add-copy-button-to-env-var[]
 --|boolean 
 |`true`
 
+
+h|[[quarkus-amazon-s3_quarkus.s3.crt-client-aws-crt-based-s3-client-configurations]]link:#quarkus-amazon-s3_quarkus.s3.crt-client-aws-crt-based-s3-client-configurations[AWS CRT-based S3 client configurations]
+
+h|Type
+h|Default
+
+a| [[quarkus-amazon-s3_quarkus.s3.crt-client.initial-read-buffer-size-in-bytes]]`link:#quarkus-amazon-s3_quarkus.s3.crt-client.initial-read-buffer-size-in-bytes[quarkus.s3.crt-client.initial-read-buffer-size-in-bytes]`
+
+
+[.description]
+--
+Configure the starting buffer size the client will use to buffer the parts downloaded from S3.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CRT_CLIENT_INITIAL_READ_BUFFER_SIZE_IN_BYTES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CRT_CLIENT_INITIAL_READ_BUFFER_SIZE_IN_BYTES+++`
+endif::add-copy-button-to-env-var[]
+--|long 
+|`Equal to the resolved part size * 10`
+
+
+a| [[quarkus-amazon-s3_quarkus.s3.crt-client.max-concurrency]]`link:#quarkus-amazon-s3_quarkus.s3.crt-client.max-concurrency[quarkus.s3.crt-client.max-concurrency]`
+
+
+[.description]
+--
+Specifies the maximum number of S3 connections that should be established during a transfer.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CRT_CLIENT_MAX_CONCURRENCY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CRT_CLIENT_MAX_CONCURRENCY+++`
+endif::add-copy-button-to-env-var[]
+--|int 
+|
+
+
+a| [[quarkus-amazon-s3_quarkus.s3.crt-client.minimum-part-size-in-bytes]]`link:#quarkus-amazon-s3_quarkus.s3.crt-client.minimum-part-size-in-bytes[quarkus.s3.crt-client.minimum-part-size-in-bytes]`
+
+
+[.description]
+--
+Sets the minimum part size for transfer parts.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CRT_CLIENT_MINIMUM_PART_SIZE_IN_BYTES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CRT_CLIENT_MINIMUM_PART_SIZE_IN_BYTES+++`
+endif::add-copy-button-to-env-var[]
+--|long 
+|`8MB`
+
+
+a| [[quarkus-amazon-s3_quarkus.s3.crt-client.target-throughput-in-gbps]]`link:#quarkus-amazon-s3_quarkus.s3.crt-client.target-throughput-in-gbps[quarkus.s3.crt-client.target-throughput-in-gbps]`
+
+
+[.description]
+--
+The target throughput for transfer requests.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CRT_CLIENT_TARGET_THROUGHPUT_IN_GBPS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CRT_CLIENT_TARGET_THROUGHPUT_IN_GBPS+++`
+endif::add-copy-button-to-env-var[]
+--|double 
+|`10`
+
 |===
 ifndef::no-duration-note[]
 [NOTE]
