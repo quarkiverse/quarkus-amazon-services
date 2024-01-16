@@ -18,11 +18,15 @@ public class AwsCrtProcessor {
 
     @BuildStep(onlyIf = NativeOrNativeSourcesBuild.class)
     void runtimeInitializedClasses(BuildProducer<RuntimeInitializedClassBuildItem> runtimeInitializedClass) {
+        // CRT and all types that statically init CRT
         Stream.of(
                 "software.amazon.awssdk.crt.CRT",
                 "software.amazon.awssdk.crt.CrtRuntimeException",
                 "software.amazon.awssdk.crt.CrtResource",
-                "software.amazon.awssdk.crt.Log")
+                "software.amazon.awssdk.crt.Log",
+                "software.amazon.awssdk.crt.io.Uri",
+                "software.amazon.awssdk.crt.checksums.CRC32",
+                "software.amazon.awssdk.crt.checksums.CRC32C")
                 .map(RuntimeInitializedClassBuildItem::new)
                 .forEach(runtimeInitializedClass::produce);
     }
