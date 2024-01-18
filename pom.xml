@@ -51,7 +51,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.version>3.6.5</quarkus.version>
-    <awssdk.version>2.23.0</awssdk.version>
+    <awssdk.version>2.23.5</awssdk.version>
     <awscrt.version>0.29.6</awscrt.version>
     <awsotel.version>1.32.0-alpha</awsotel.version>
   </properties>
