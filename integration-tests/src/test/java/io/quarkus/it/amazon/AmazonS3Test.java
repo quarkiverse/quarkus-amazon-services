@@ -19,11 +19,22 @@ public class AmazonS3Test {
     @Test
     public void testS3CrtAsync() {
         RestAssured.when().get("/test/s3/crt-async").then().body(anyOf(is("sample S3 object"),
-                is("The Crt S3AsyncClient is required but has not been detected/configured.")));
+                is("No bean found for required type [interface software.amazon.awssdk.services.s3.S3AsyncClient] and qualifiers [[@io.quarkus.amazon.s3.runtime.S3Crt()]]")));
     }
 
     @Test
     public void testS3Blocking() {
         RestAssured.when().get("/test/s3/blocking").then().body(is("INTERCEPTED+sample S3 object"));
+    }
+
+    @Test
+    public void testCopyS3Async() {
+        RestAssured.when().get("/test/s3-transfer-manager/async").then().body(is("sample S3 object"));
+    }
+
+    @Test
+    public void testCopyS3CrtAsync() {
+        RestAssured.when().get("/test/s3-transfer-manager/crt-async").then().body(anyOf(is("sample S3 object"),
+                is("No bean found for required type [interface software.amazon.awssdk.services.s3.S3AsyncClient] and qualifiers [[@io.quarkus.amazon.s3.runtime.S3Crt()]]")));
     }
 }

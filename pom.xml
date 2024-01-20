@@ -26,6 +26,7 @@
     <module>kms</module>
     <module>lambda</module>
     <module>s3</module>
+    <module>s3-transfer-manager</module>
     <module>secretsmanager</module>
     <module>ses</module>
     <module>sfn</module>

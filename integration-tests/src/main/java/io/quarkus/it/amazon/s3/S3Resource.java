@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import jakarta.enterprise.inject.Instance;
+import jakarta.enterprise.inject.UnsatisfiedResolutionException;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -16,6 +17,8 @@ import jakarta.ws.rs.Produces;
 
 import org.jboss.logging.Logger;
 
+import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig.AsyncClientType;
+import io.quarkus.amazon.s3.runtime.S3BuildTimeConfig;
 import io.quarkus.amazon.s3.runtime.S3Crt;
 import software.amazon.awssdk.core.async.AsyncRequestBody;
 import software.amazon.awssdk.core.async.AsyncResponseTransformer;
@@ -35,6 +38,9 @@ public class S3Resource {
     private static final String SAMPLE_S3_OBJECT = "sample S3 object";
 
     private static final Logger LOG = Logger.getLogger(S3Resource.class);
+
+    @Inject
+    S3BuildTimeConfig s3Config;
 
     @Inject
     S3Client s3Client;
@@ -75,9 +81,8 @@ public class S3Resource {
         LOG.info("Testing Crt Async S3 client with bucket: " + CRT_ASYNC_BUCKET);
         String keyValue = UUID.randomUUID().toString();
 
-        S3AsyncClient s3AsyncClientWithS3CrtQualifier = s3AsyncClientWithS3CrtQualifierInstance.get();
-
         try {
+            S3AsyncClient s3AsyncClientWithS3CrtQualifier = s3AsyncClientWithS3CrtQualifierInstance.get();
             return S3Utils.createBucketAsync(s3AsyncClientWithS3CrtQualifier, CRT_ASYNC_BUCKET)
                     .thenCompose(bucket -> s3AsyncClientWithS3CrtQualifier.putObject(
                             S3Utils.createPutRequest(CRT_ASYNC_BUCKET, keyValue),
@@ -90,8 +95,11 @@ public class S3Resource {
                         LOG.error("Error during async S3 operations", th.getCause());
                         return "ERROR";
                     });
-        } catch (IllegalStateException ex) {
-            return CompletableFuture.completedStage(ex.getMessage());
+        } catch (UnsatisfiedResolutionException ex) {
+            if (s3Config.asyncClient().type().equals(AsyncClientType.AWS_CRT))
+                return CompletableFuture.completedStage("ERROR");
+            else
+                return CompletableFuture.completedStage(ex.getMessage());
         }
     }
 

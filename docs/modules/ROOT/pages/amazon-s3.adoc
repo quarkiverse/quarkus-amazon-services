@@ -554,6 +554,39 @@ And add the following dependency to the application `pom.xml`:
 </dependency>
 ----
 
+=== S3 Transfer Manager
+
+Amazon S3 Transfer Manager is high-level file transfer utility based on the S3 client. The extension provides functionality that allows to use `S3TransferManager` when running in Quarkus.
+You can find more information about S3 Transfer Manager at https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/transfer-manager.html[the Amazon S3 website].
+
+S3 Transfer Manager and the Quarkus extension supports only https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client, or AWS CRT-based S3 client.
+
+S3 Transfer Manager share the same configuration as S3 asynchronous client. See above to configure an `S3AsyncClient`.
+
+If you want to use S3 Transfer Manager, configure an `S3AsyncClient`with the desired HTTP client library and simply inject an instance of `S3TransferManager`:
+[source,java]
+----
+// Netty or AWS CRT-based HTTP client
+@Inject
+S3TransferManager transferManager;
+
+// or AWS CRT-based S3 client
+@Inject
+@S3Crt
+S3TransferManager transferManager;
+----
+
+And add the following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>io.quarkiverse.amazonservices</groupId>
+    <artifactId>quarkus-amazon-s3-transfer-manager</artifactId>
+</dependency>
+----
+
+You can then make call
+
 == Configuration Reference
 
 include::./includes/quarkus-amazon-s3.adoc[]

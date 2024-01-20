@@ -101,7 +101,11 @@
             <artifactId>slf4j-jboss-logmanager</artifactId>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-s3-transfer-manager</artifactId>
+        </dependency>
+         
         <!-- Needed for InMemorySpanExporter to verify captured traces -->
         <dependency>
             <groupId>io.opentelemetry</groupId>
