@@ -34,7 +34,64 @@ Each extension provides configuration properties to configure the clients and wi
 * Netty HTTP client (default for asynchronous call)
 * AWS CRT-based HTTP client (for both synchronous and asynchronous client)
 
-## Compatibility
+## Compatibility with Quarkus Core
+
+Quarkus Amazon Services is a component of the [Quarkus Platform](https://quarkus.io/guides/platform). If you do not require specific features from the latest release, it is recommended to use BOMs from the Quarkus Platform.
+
+```xml
+  <properties>
+    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+    <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+    <quarkus.platform.version>3.6.0</quarkus.platform.version>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>${quarkus.platform.artifact-id}</artifactId>
+        <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>quarkus-amazon-services-bom</artifactId>
+        <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+```
+
+Alternatively, you can switch to using a specific version of the Quarkus Amazon Services BOM.
+
+```xml
+  <properties>
+    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+    <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+    <quarkus.platform.version>3.6.0</quarkus.platform.version>
+    <quarkus-amazon-services.version>2.10.1</quarkus-amazon-services.version>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>${quarkus.platform.group-id}</groupId>
+        <artifactId>${quarkus.platform.artifact-id}</artifactId>
+        <version>${quarkus.platform.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.quarkiverse.amazonservices</groupId>
+        <artifactId>quarkus-amazon-services-bom</artifactId>
+        <version>${quarkus-amazon-services.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+```
 
 Quarkus Amazon Services provides multiple version streams. One stream is compatible with Quarkus 2.x, while the others are designed to work with Quarkus 3.x and are aligned with Quarkus LTS.
 
@@ -42,8 +99,7 @@ Quarkus Amazon Services provides multiple version streams. One stream is compati
 |-------------|-------------------------|--------------------------------------------------------------------------------------------------------|
 | 2.x         | 1.6.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/1.x/index.html)                    |
 | 3.2.x (LTS) | 2.4.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.4.x/index.html)                  |
-| 3.x         | 2.5.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)                    |
-
+| >=3.x       | >=2.5.x                 | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)                    |
 
 Use the latest version of the corresponding stream, [the list of versions is available on Maven Central](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom).
 
