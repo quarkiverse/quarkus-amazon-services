@@ -12,6 +12,16 @@ import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 public class S3ModifyResponse implements ExecutionInterceptor {
     final static String CUSTOM_METADATA = "CUSTOM-METADATA";
 
+    private String value;
+
+    public S3ModifyResponse() {
+        this("DEFAULT_CONSTRUCTOR");
+    }
+
+    public S3ModifyResponse(String value) {
+        this.value = value;
+    }
+
     @Override
     public SdkResponse modifyResponse(ModifyResponse context, ExecutionAttributes executionAttributes) {
         if (context.response() instanceof GetObjectResponse) {
@@ -24,7 +34,7 @@ public class S3ModifyResponse implements ExecutionInterceptor {
     private Map<String, String> updateMetadata(Map<String, String> metadata) {
         Map<String, String> modifiedMetadata = new HashMap<>(metadata);
 
-        modifiedMetadata.put(CUSTOM_METADATA, "INTERCEPTED");
+        modifiedMetadata.put(CUSTOM_METADATA, value);
 
         return modifiedMetadata;
     }
