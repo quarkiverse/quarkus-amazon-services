@@ -30,7 +30,6 @@
             <dependency>
                 <groupId>io.opentelemetry.instrumentation</groupId>
                 <artifactId>opentelemetry-aws-sdk-2.2</artifactId>
-                <version>${awsotel.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
