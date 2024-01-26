@@ -20,6 +20,9 @@ public interface SdkBuildTimeConfig {
      * The list should consists of class names which implements
      * {@code software.amazon.awssdk.core.interceptor.ExecutionInterceptor} interface.
      *
+     * Classes will be attempted to be loaded via CDI first, and if no CDI beans are available, then the constructor with no
+     * parameters will be invoked to instantiate each class.
+     *
      * @see software.amazon.awssdk.core.interceptor.ExecutionInterceptor
      */
     Optional<List<String>> interceptors(); // cannot be classes as can be runtime initialized (e.g. XRay interceptor)

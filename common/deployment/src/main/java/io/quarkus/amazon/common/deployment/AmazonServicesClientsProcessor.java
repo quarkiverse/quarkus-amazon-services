@@ -8,10 +8,12 @@ import java.util.stream.Collectors;
 import jakarta.enterprise.inject.spi.DeploymentException;
 
 import org.jboss.jandex.DotName;
+import org.jboss.jandex.Type;
 
 import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig.AsyncClientType;
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig.SyncClientType;
+import io.quarkus.arc.deployment.UnremovableBeanBuildItem;
 import io.quarkus.bootstrap.classloading.QuarkusClassLoader;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -46,23 +48,12 @@ public class AmazonServicesClientsProcessor {
     }
 
     @BuildStep
-    void runtimeInitialize(BuildProducer<RuntimeInitializedClassBuildItem> producer) {
-        // FullJitterBackoffStrategy uses j.u.Ramdom, so needs to be runtime-initialized
-        producer.produce(
-                new RuntimeInitializedClassBuildItem("software.amazon.awssdk.core.retry.backoff.FullJitterBackoffStrategy"));
-        // CachedSupplier uses j.u.Ramdom, so needs to be runtime-initialized
-        producer.produce(
-                new RuntimeInitializedClassBuildItem("software.amazon.awssdk.utils.cache.CachedSupplier"));
-    }
-
-    @BuildStep
-    void setup(CombinedIndexBuildItem combinedIndexBuildItem,
-            List<AmazonClientBuildItem> amazonClients,
-            List<AmazonClientInterceptorsPathBuildItem> interceptors,
-            BuildProducer<ReflectiveClassBuildItem> reflectiveClasses,
+    void setupInterceptors(List<AmazonClientInterceptorsPathBuildItem> interceptors,
             BuildProducer<NativeImageResourceBuildItem> resource,
-            BuildProducer<NativeImageProxyDefinitionBuildItem> proxyDefinition,
-            BuildProducer<ServiceProviderBuildItem> serviceProvider) {
+            CombinedIndexBuildItem combinedIndexBuildItem,
+            List<AmazonClientBuildItem> amazonClients,
+            BuildProducer<ReflectiveClassBuildItem> reflectiveClasses,
+            BuildProducer<UnremovableBeanBuildItem> unremovables) {
 
         interceptors.stream().map(AmazonClientInterceptorsPathBuildItem::getInterceptorsPath)
                 .forEach(path -> resource.produce(new NativeImageResourceBuildItem(path)));
@@ -92,6 +83,32 @@ public class AmazonServicesClientsProcessor {
 
         reflectiveClasses.produce(ReflectiveClassBuildItem
                 .builder(knownInterceptorImpls.toArray(new String[knownInterceptorImpls.size()])).build());
+
+        List<DotName> interceptorDotNames = knownInterceptorImpls.stream().map(DotName::createSimple)
+                .collect(Collectors.toList());
+        unremovables.produce(new UnremovableBeanBuildItem(beanInfo -> {
+            return beanInfo.getTypes().stream()
+                    .map(Type::name)
+                    .anyMatch(interceptorDotNames::contains);
+        }));
+    }
+
+    @BuildStep
+    void runtimeInitialize(BuildProducer<RuntimeInitializedClassBuildItem> producer) {
+        // FullJitterBackoffStrategy uses j.u.Ramdom, so needs to be runtime-initialized
+        producer.produce(
+                new RuntimeInitializedClassBuildItem("software.amazon.awssdk.core.retry.backoff.FullJitterBackoffStrategy"));
+        // CachedSupplier uses j.u.Ramdom, so needs to be runtime-initialized
+        producer.produce(
+                new RuntimeInitializedClassBuildItem("software.amazon.awssdk.utils.cache.CachedSupplier"));
+    }
+
+    @BuildStep
+    void setup(
+            List<AmazonClientBuildItem> amazonClients,
+            BuildProducer<ReflectiveClassBuildItem> reflectiveClasses,
+            BuildProducer<NativeImageProxyDefinitionBuildItem> proxyDefinition,
+            BuildProducer<ServiceProviderBuildItem> serviceProvider) {
 
         reflectiveClasses
                 .produce(ReflectiveClassBuildItem.builder("com.sun.xml.internal.stream.XMLInputFactoryImpl",

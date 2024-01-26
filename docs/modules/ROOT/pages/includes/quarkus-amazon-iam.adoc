@@ -17,7 +17,7 @@ a|icon:lock[title=Fixed at build time] [[quarkus-amazon-iam_quarkus.iam.intercep
 --
 List of execution interceptors that will have access to read and modify the request and response objects as they are processed by the AWS SDK.
 
-The list should consists of class names which implements `software.amazon.awssdk.core.interceptor.ExecutionInterceptor` interface.
+The list should consists of class names which implements `software.amazon.awssdk.core.interceptor.ExecutionInterceptor` interface. Classes will be attempted to be loaded via CDI first, and if no CDI beans are available, then the constructor with no parameters will be invoked to instantiate each class.
 
 ifdef::add-copy-button-to-env-var[]
 Environment variable: env_var_with_copy_button:+++QUARKUS_IAM_INTERCEPTORS+++[]

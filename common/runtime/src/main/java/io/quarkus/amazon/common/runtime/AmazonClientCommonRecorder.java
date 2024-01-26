@@ -1,9 +1,13 @@
 package io.quarkus.amazon.common.runtime;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.concurrent.ScheduledExecutorService;
+
+import jakarta.enterprise.inject.UnsatisfiedResolutionException;
+import jakarta.enterprise.inject.spi.CDI;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -104,9 +108,16 @@ public class AmazonClientCommonRecorder {
 
     private ExecutionInterceptor createInterceptor(String interceptorClassName) {
         try {
-            return (ExecutionInterceptor) Class
-                    .forName(interceptorClassName, false, Thread.currentThread().getContextClassLoader()).newInstance();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            Class<ExecutionInterceptor> classObj = (Class<ExecutionInterceptor>) Thread.currentThread().getContextClassLoader()
+                    .loadClass(interceptorClassName);
+            try {
+                return CDI.current().select(classObj).get();
+            } catch (UnsatisfiedResolutionException e) {
+                // silent fail
+            }
+            return classObj.getConstructor().newInstance();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException
+                | InvocationTargetException | NoSuchMethodException | SecurityException e) {
             LOG.error("Unable to create interceptor " + interceptorClassName, e);
             return null;
         }
