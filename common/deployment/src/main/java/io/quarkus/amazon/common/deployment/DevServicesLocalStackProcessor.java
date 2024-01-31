@@ -309,6 +309,7 @@ public class DevServicesLocalStackProcessor {
                             final MountableFile mountableFile = MountableFile.forClasspathResource(resourcePath, 555);
                             container.withCopyFileToContainer(mountableFile, "/etc/localstack/init/ready.d");
                         }));
+                        localStackDevServicesBuildTimeConfig.containerCommand().ifPresent(container::withCommand);
 
                         localStackDevServicesBuildTimeConfig.initCompletionMsg().ifPresent(initCompletionMsg -> {
                             container.waitingFor(Wait.forLogMessage(".*" + initCompletionMsg + ".*\\n", 1));

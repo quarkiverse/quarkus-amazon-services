@@ -43,4 +43,9 @@ public interface LocalStackDevServicesBuildTimeConfig {
      * you want is not covered by the extension
      */
     Map<String, DevServicesBuildTimeConfig> additionalServices();
+
+    /**
+     * Allows to run a command during the startup of the docker container
+     */
+    Optional<String> containerCommand();
 }
