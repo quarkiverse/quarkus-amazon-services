@@ -85,9 +85,6 @@ public class S3TransferManagerResource {
         try {
             S3AsyncClient s3CrtAsyncClient = s3CrtAsyncClientInstance.get();
             S3TransferManager s3CrtTransferManagerAsyncClient = s3CrtTransferManagerAsyncClientInstance.get();
-            // workaround ClassNotFoundException when the bean is created from within the aws executor used to complete futures
-            s3CrtTransferManagerAsyncClient.toString();
-
             return S3Utils.createBucketAsync(s3CrtAsyncClient, CRT_ASYNC_BUCKET_SOURCE)
                     .thenCompose(bucket -> S3Utils.createBucketAsync(s3AsyncClient, CRT_ASYNC_BUCKET_DESTINATION))
                     .thenCompose(

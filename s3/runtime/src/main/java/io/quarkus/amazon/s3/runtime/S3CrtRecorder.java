@@ -1,10 +1,12 @@
 package io.quarkus.amazon.s3.runtime;
 
 import java.net.URI;
+import java.util.concurrent.Executor;
 import java.util.function.Function;
 
 import io.quarkus.amazon.common.runtime.RuntimeConfigurationError;
 import io.quarkus.arc.SyntheticCreationalContext;
+import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
@@ -56,6 +58,15 @@ public class S3CrtRecorder {
         config.sdk().endpointOverride().filter(URI::isAbsolute).ifPresent(builder::endpointOverride);
     }
 
+    public RuntimeValue<S3CrtAsyncClientBuilder> setExecutor(RuntimeValue<S3CrtAsyncClientBuilder> builder,
+            LaunchMode launchMode, Executor executor) {
+        if (launchMode == LaunchMode.NORMAL) {
+            return new RuntimeValue<>(builder.getValue().futureCompletionExecutor(executor));
+        } else {
+            return new RuntimeValue<>(builder.getValue().futureCompletionExecutor(new S3CrtExecutorWrapper(executor)));
+        }
+    }
+
     public Function<SyntheticCreationalContext<S3AsyncClient>, S3AsyncClient> getS3CrtAsyncClient() {
         return new Function<SyntheticCreationalContext<S3AsyncClient>, S3AsyncClient>() {
             @Override
@@ -63,5 +74,30 @@ public class S3CrtRecorder {
                 return context.getInjectedReference(S3CrtAsyncClientBuilder.class).build();
             }
         };
+    }
+
+    /**
+     * Capture the current ClassLoader and restore it to support dev and test mode
+     */
+    public static final class S3CrtExecutorWrapper implements Executor {
+
+        private Executor executor;
+        private ClassLoader contextClassLoader;
+
+        private S3CrtExecutorWrapper(Executor executor) {
+            this.executor = executor;
+            this.contextClassLoader = Thread.currentThread().getContextClassLoader();
+        }
+
+        @Override
+        public void execute(Runnable command) {
+            final ClassLoader old = Thread.currentThread().getContextClassLoader();
+            try {
+                Thread.currentThread().setContextClassLoader(contextClassLoader);
+                executor.execute(command);
+            } finally {
+                Thread.currentThread().setContextClassLoader(old);
+            }
+        }
     }
 }
