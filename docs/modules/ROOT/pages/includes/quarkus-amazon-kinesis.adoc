@@ -10,7 +10,7 @@ h|[[quarkus-amazon-kinesis_configuration]]link:#quarkus-amazon-kinesis_configura
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus.kinesis.interceptors]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.interceptors[quarkus.kinesis.interceptors]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus-kinesis-interceptors]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-interceptors[quarkus.kinesis.interceptors]`
 
 
 [.description]
@@ -29,7 +29,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus.kinesis.telemetry.enabled]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.telemetry.enabled[quarkus.kinesis.telemetry.enabled]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus-kinesis-telemetry-enabled]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-telemetry-enabled[quarkus.kinesis.telemetry.enabled]`
 
 
 [.description]
@@ -46,7 +46,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.type]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.type[quarkus.kinesis.sync-client.type]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-type]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-type[quarkus.kinesis.sync-client.type]`
 
 
 [.description]
@@ -64,7 +64,7 @@ endif::add-copy-button-to-env-var[]
 |`url`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.type]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.type[quarkus.kinesis.async-client.type]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-type]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-type[quarkus.kinesis.async-client.type]`
 
 
 [.description]
@@ -82,7 +82,7 @@ endif::add-copy-button-to-env-var[]
 |`netty`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus.kinesis.devservices.enabled]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.devservices.enabled[quarkus.kinesis.devservices.enabled]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus-kinesis-devservices-enabled]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-devservices-enabled[quarkus.kinesis.devservices.enabled]`
 
 
 [.description]
@@ -99,7 +99,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus.kinesis.devservices.shared]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.devservices.shared[quarkus.kinesis.devservices.shared]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus-kinesis-devservices-shared]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-devservices-shared[quarkus.kinesis.devservices.shared]`
 
 
 [.description]
@@ -120,7 +120,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus.kinesis.devservices.service-name]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.devservices.service-name[quarkus.kinesis.devservices.service-name]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus-kinesis-devservices-service-name]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-devservices-service-name[quarkus.kinesis.devservices.service-name]`
 
 
 [.description]
@@ -139,7 +139,7 @@ endif::add-copy-button-to-env-var[]
 |`localstack`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus.kinesis.devservices.container-properties-container-properties]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.devservices.container-properties-container-properties[quarkus.kinesis.devservices.container-properties]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kinesis_quarkus-kinesis-devservices-container-properties-container-properties]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-devservices-container-properties-container-properties[quarkus.kinesis.devservices.container-properties]`
 
 
 [.description]
@@ -156,12 +156,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-kinesis_quarkus.kinesis.sdk-aws-sdk-client-configurations]]link:#quarkus-amazon-kinesis_quarkus.kinesis.sdk-aws-sdk-client-configurations[AWS SDK client configurations]
+h|[[quarkus-amazon-kinesis_quarkus-kinesis-sdk-aws-sdk-client-configurations]]link:#quarkus-amazon-kinesis_quarkus-kinesis-sdk-aws-sdk-client-configurations[AWS SDK client configurations]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.endpoint-override]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.endpoint-override[quarkus.kinesis.endpoint-override]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-endpoint-override]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-endpoint-override[quarkus.kinesis.endpoint-override]`
 
 
 [.description]
@@ -181,7 +181,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.api-call-timeout]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.api-call-timeout[quarkus.kinesis.api-call-timeout]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-api-call-timeout]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-api-call-timeout[quarkus.kinesis.api-call-timeout]`
 
 
 [.description]
@@ -203,7 +203,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.api-call-attempt-timeout]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.api-call-attempt-timeout[quarkus.kinesis.api-call-attempt-timeout]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-api-call-attempt-timeout]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-api-call-attempt-timeout[quarkus.kinesis.api-call-attempt-timeout]`
 
 
 [.description]
@@ -223,7 +223,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.advanced.use-quarkus-scheduled-executor-service]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.advanced.use-quarkus-scheduled-executor-service[quarkus.kinesis.advanced.use-quarkus-scheduled-executor-service]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-advanced-use-quarkus-scheduled-executor-service]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-advanced-use-quarkus-scheduled-executor-service[quarkus.kinesis.advanced.use-quarkus-scheduled-executor-service]`
 
 
 [.description]
@@ -242,12 +242,12 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 
-h|[[quarkus-amazon-kinesis_quarkus.kinesis.aws-aws-services-configurations]]link:#quarkus-amazon-kinesis_quarkus.kinesis.aws-aws-services-configurations[AWS services configurations]
+h|[[quarkus-amazon-kinesis_quarkus-kinesis-aws-aws-services-configurations]]link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-aws-services-configurations[AWS services configurations]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.aws.region]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.region[quarkus.kinesis.aws.region]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-aws-region]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-region[quarkus.kinesis.aws.region]`
 
 
 [.description]
@@ -275,7 +275,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.type]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.type[quarkus.kinesis.aws.credentials.type]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-type]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-type[quarkus.kinesis.aws.credentials.type]`
 
 
 [.description]
@@ -316,12 +316,12 @@ endif::add-copy-button-to-env-var[]
 |`default`
 
 
-h|[[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.default-provider-default-credentials-provider-configuration]]link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.default-provider-default-credentials-provider-configuration[Default credentials provider configuration]
+h|[[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-default-provider-default-credentials-provider-configuration]]link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-default-provider-default-credentials-provider-configuration[Default credentials provider configuration]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.default-provider.async-credential-update-enabled]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.default-provider.async-credential-update-enabled[quarkus.kinesis.aws.credentials.default-provider.async-credential-update-enabled]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-default-provider-async-credential-update-enabled]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-default-provider-async-credential-update-enabled[quarkus.kinesis.aws.credentials.default-provider.async-credential-update-enabled]`
 
 
 [.description]
@@ -340,7 +340,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.default-provider.reuse-last-provider-enabled]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.default-provider.reuse-last-provider-enabled[quarkus.kinesis.aws.credentials.default-provider.reuse-last-provider-enabled]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-default-provider-reuse-last-provider-enabled]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-default-provider-reuse-last-provider-enabled[quarkus.kinesis.aws.credentials.default-provider.reuse-last-provider-enabled]`
 
 
 [.description]
@@ -359,12 +359,12 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 
-h|[[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.static-provider-static-credentials-provider-configuration]]link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.static-provider-static-credentials-provider-configuration[Static credentials provider configuration]
+h|[[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-static-provider-static-credentials-provider-configuration]]link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-static-provider-static-credentials-provider-configuration[Static credentials provider configuration]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.static-provider.access-key-id]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.static-provider.access-key-id[quarkus.kinesis.aws.credentials.static-provider.access-key-id]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-static-provider-access-key-id]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-static-provider-access-key-id[quarkus.kinesis.aws.credentials.static-provider.access-key-id]`
 
 
 [.description]
@@ -381,7 +381,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.static-provider.secret-access-key]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.static-provider.secret-access-key[quarkus.kinesis.aws.credentials.static-provider.secret-access-key]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-static-provider-secret-access-key]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-static-provider-secret-access-key[quarkus.kinesis.aws.credentials.static-provider.secret-access-key]`
 
 
 [.description]
@@ -398,7 +398,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.static-provider.session-token]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.static-provider.session-token[quarkus.kinesis.aws.credentials.static-provider.session-token]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-static-provider-session-token]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-static-provider-session-token[quarkus.kinesis.aws.credentials.static-provider.session-token]`
 
 
 [.description]
@@ -415,12 +415,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.profile-provider-aws-profile-credentials-provider-configuration]]link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.profile-provider-aws-profile-credentials-provider-configuration[AWS Profile credentials provider configuration]
+h|[[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-profile-provider-aws-profile-credentials-provider-configuration]]link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-profile-provider-aws-profile-credentials-provider-configuration[AWS Profile credentials provider configuration]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.profile-provider.profile-name]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.profile-provider.profile-name[quarkus.kinesis.aws.credentials.profile-provider.profile-name]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-profile-provider-profile-name]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-profile-provider-profile-name[quarkus.kinesis.aws.credentials.profile-provider.profile-name]`
 
 
 [.description]
@@ -439,12 +439,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.process-provider-process-credentials-provider-configuration]]link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.process-provider-process-credentials-provider-configuration[Process credentials provider configuration]
+h|[[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-process-provider-process-credentials-provider-configuration]]link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-process-provider-process-credentials-provider-configuration[Process credentials provider configuration]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.process-provider.async-credential-update-enabled]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.process-provider.async-credential-update-enabled[quarkus.kinesis.aws.credentials.process-provider.async-credential-update-enabled]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-process-provider-async-credential-update-enabled]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-process-provider-async-credential-update-enabled[quarkus.kinesis.aws.credentials.process-provider.async-credential-update-enabled]`
 
 
 [.description]
@@ -463,7 +463,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.process-provider.credential-refresh-threshold]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.process-provider.credential-refresh-threshold[quarkus.kinesis.aws.credentials.process-provider.credential-refresh-threshold]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-process-provider-credential-refresh-threshold]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-process-provider-credential-refresh-threshold[quarkus.kinesis.aws.credentials.process-provider.credential-refresh-threshold]`
 
 
 [.description]
@@ -483,7 +483,7 @@ endif::add-copy-button-to-env-var[]
 |`15S`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.process-provider.process-output-limit]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.process-provider.process-output-limit[quarkus.kinesis.aws.credentials.process-provider.process-output-limit]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-process-provider-process-output-limit]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-process-provider-process-output-limit[quarkus.kinesis.aws.credentials.process-provider.process-output-limit]`
 
 
 [.description]
@@ -500,7 +500,7 @@ endif::add-copy-button-to-env-var[]
 |`1024`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.process-provider.command]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.process-provider.command[quarkus.kinesis.aws.credentials.process-provider.command]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-process-provider-command]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-process-provider-command[quarkus.kinesis.aws.credentials.process-provider.command]`
 
 
 [.description]
@@ -517,12 +517,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.custom-provider-custom-credentials-provider-configuration]]link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.custom-provider-custom-credentials-provider-configuration[Custom credentials provider configuration]
+h|[[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-custom-provider-custom-credentials-provider-configuration]]link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-custom-provider-custom-credentials-provider-configuration[Custom credentials provider configuration]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.custom-provider.name]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.aws.credentials.custom-provider.name[quarkus.kinesis.aws.credentials.custom-provider.name]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-custom-provider-name]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-aws-credentials-custom-provider-name[quarkus.kinesis.aws.credentials.custom-provider.name]`
 
 
 [.description]
@@ -539,12 +539,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-kinesis_quarkus.kinesis.sync-client-sync-http-transport-configurations]]link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client-sync-http-transport-configurations[Sync HTTP transport configurations]
+h|[[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-sync-http-transport-configurations]]link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-sync-http-transport-configurations[Sync HTTP transport configurations]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.connection-timeout]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.connection-timeout[quarkus.kinesis.sync-client.connection-timeout]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-connection-timeout]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-connection-timeout[quarkus.kinesis.sync-client.connection-timeout]`
 
 
 [.description]
@@ -562,7 +562,7 @@ endif::add-copy-button-to-env-var[]
 |`2S`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.socket-timeout]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.socket-timeout[quarkus.kinesis.sync-client.socket-timeout]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-socket-timeout]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-socket-timeout[quarkus.kinesis.sync-client.socket-timeout]`
 
 
 [.description]
@@ -580,7 +580,7 @@ endif::add-copy-button-to-env-var[]
 |`30S`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-key-managers-provider.type]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-key-managers-provider.type[quarkus.kinesis.sync-client.tls-key-managers-provider.type]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-key-managers-provider-type]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-key-managers-provider-type[quarkus.kinesis.sync-client.tls-key-managers-provider.type]`
 
 
 [.description]
@@ -606,7 +606,7 @@ endif::add-copy-button-to-env-var[]
 |`system-property`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-key-managers-provider.file-store.path]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-key-managers-provider.file-store.path[quarkus.kinesis.sync-client.tls-key-managers-provider.file-store.path]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-key-managers-provider-file-store-path]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-key-managers-provider-file-store-path[quarkus.kinesis.sync-client.tls-key-managers-provider.file-store.path]`
 
 
 [.description]
@@ -623,7 +623,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-key-managers-provider.file-store.type]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-key-managers-provider.file-store.type[quarkus.kinesis.sync-client.tls-key-managers-provider.file-store.type]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-key-managers-provider-file-store-type]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-key-managers-provider-file-store-type[quarkus.kinesis.sync-client.tls-key-managers-provider.file-store.type]`
 
 
 [.description]
@@ -642,7 +642,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-key-managers-provider.file-store.password]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-key-managers-provider.file-store.password[quarkus.kinesis.sync-client.tls-key-managers-provider.file-store.password]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-key-managers-provider-file-store-password]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-key-managers-provider-file-store-password[quarkus.kinesis.sync-client.tls-key-managers-provider.file-store.password]`
 
 
 [.description]
@@ -659,7 +659,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-trust-managers-provider.type]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-trust-managers-provider.type[quarkus.kinesis.sync-client.tls-trust-managers-provider.type]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-trust-managers-provider-type]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-trust-managers-provider-type[quarkus.kinesis.sync-client.tls-trust-managers-provider.type]`
 
 
 [.description]
@@ -685,7 +685,7 @@ endif::add-copy-button-to-env-var[]
 |`system-property`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-trust-managers-provider.file-store.path]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-trust-managers-provider.file-store.path[quarkus.kinesis.sync-client.tls-trust-managers-provider.file-store.path]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-trust-managers-provider-file-store-path]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-trust-managers-provider-file-store-path[quarkus.kinesis.sync-client.tls-trust-managers-provider.file-store.path]`
 
 
 [.description]
@@ -702,7 +702,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-trust-managers-provider.file-store.type]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-trust-managers-provider.file-store.type[quarkus.kinesis.sync-client.tls-trust-managers-provider.file-store.type]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-trust-managers-provider-file-store-type]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-trust-managers-provider-file-store-type[quarkus.kinesis.sync-client.tls-trust-managers-provider.file-store.type]`
 
 
 [.description]
@@ -721,7 +721,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-trust-managers-provider.file-store.password]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.tls-trust-managers-provider.file-store.password[quarkus.kinesis.sync-client.tls-trust-managers-provider.file-store.password]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-trust-managers-provider-file-store-password]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-tls-trust-managers-provider-file-store-password[quarkus.kinesis.sync-client.tls-trust-managers-provider.file-store.password]`
 
 
 [.description]
@@ -738,12 +738,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache-apache-http-client-specific-configurations]]link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache-apache-http-client-specific-configurations[Apache HTTP client specific configurations]
+h|[[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-apache-http-client-specific-configurations]]link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-apache-http-client-specific-configurations[Apache HTTP client specific configurations]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.connection-acquisition-timeout]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.connection-acquisition-timeout[quarkus.kinesis.sync-client.apache.connection-acquisition-timeout]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-connection-acquisition-timeout]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-connection-acquisition-timeout[quarkus.kinesis.sync-client.apache.connection-acquisition-timeout]`
 
 
 [.description]
@@ -761,7 +761,7 @@ endif::add-copy-button-to-env-var[]
 |`10S`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.connection-max-idle-time]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.connection-max-idle-time[quarkus.kinesis.sync-client.apache.connection-max-idle-time]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-connection-max-idle-time]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-connection-max-idle-time[quarkus.kinesis.sync-client.apache.connection-max-idle-time]`
 
 
 [.description]
@@ -779,7 +779,7 @@ endif::add-copy-button-to-env-var[]
 |`60S`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.connection-time-to-live]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.connection-time-to-live[quarkus.kinesis.sync-client.apache.connection-time-to-live]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-connection-time-to-live]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-connection-time-to-live[quarkus.kinesis.sync-client.apache.connection-time-to-live]`
 
 
 [.description]
@@ -797,7 +797,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.max-connections]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.max-connections[quarkus.kinesis.sync-client.apache.max-connections]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-max-connections]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-max-connections[quarkus.kinesis.sync-client.apache.max-connections]`
 
 
 [.description]
@@ -816,7 +816,7 @@ endif::add-copy-button-to-env-var[]
 |`50`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.expect-continue-enabled]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.expect-continue-enabled[quarkus.kinesis.sync-client.apache.expect-continue-enabled]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-expect-continue-enabled]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-expect-continue-enabled[quarkus.kinesis.sync-client.apache.expect-continue-enabled]`
 
 
 [.description]
@@ -833,7 +833,7 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.use-idle-connection-reaper]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.use-idle-connection-reaper[quarkus.kinesis.sync-client.apache.use-idle-connection-reaper]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-use-idle-connection-reaper]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-use-idle-connection-reaper[quarkus.kinesis.sync-client.apache.use-idle-connection-reaper]`
 
 
 [.description]
@@ -852,7 +852,7 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.tcp-keep-alive]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.tcp-keep-alive[quarkus.kinesis.sync-client.apache.tcp-keep-alive]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-tcp-keep-alive]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-tcp-keep-alive[quarkus.kinesis.sync-client.apache.tcp-keep-alive]`
 
 
 [.description]
@@ -869,7 +869,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.enabled]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.enabled[quarkus.kinesis.sync-client.apache.proxy.enabled]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-enabled]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-enabled[quarkus.kinesis.sync-client.apache.proxy.enabled]`
 
 
 [.description]
@@ -886,7 +886,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.endpoint]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.endpoint[quarkus.kinesis.sync-client.apache.proxy.endpoint]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-endpoint]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-endpoint[quarkus.kinesis.sync-client.apache.proxy.endpoint]`
 
 
 [.description]
@@ -906,7 +906,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.username]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.username[quarkus.kinesis.sync-client.apache.proxy.username]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-username]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-username[quarkus.kinesis.sync-client.apache.proxy.username]`
 
 
 [.description]
@@ -923,7 +923,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.password]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.password[quarkus.kinesis.sync-client.apache.proxy.password]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-password]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-password[quarkus.kinesis.sync-client.apache.proxy.password]`
 
 
 [.description]
@@ -940,7 +940,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.ntlm-domain]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.ntlm-domain[quarkus.kinesis.sync-client.apache.proxy.ntlm-domain]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-ntlm-domain]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-ntlm-domain[quarkus.kinesis.sync-client.apache.proxy.ntlm-domain]`
 
 
 [.description]
@@ -957,7 +957,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.ntlm-workstation]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.ntlm-workstation[quarkus.kinesis.sync-client.apache.proxy.ntlm-workstation]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-ntlm-workstation]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-ntlm-workstation[quarkus.kinesis.sync-client.apache.proxy.ntlm-workstation]`
 
 
 [.description]
@@ -974,7 +974,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.preemptive-basic-authentication-enabled]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.preemptive-basic-authentication-enabled[quarkus.kinesis.sync-client.apache.proxy.preemptive-basic-authentication-enabled]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-preemptive-basic-authentication-enabled]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-preemptive-basic-authentication-enabled[quarkus.kinesis.sync-client.apache.proxy.preemptive-basic-authentication-enabled]`
 
 
 [.description]
@@ -991,7 +991,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.non-proxy-hosts]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.apache.proxy.non-proxy-hosts[quarkus.kinesis.sync-client.apache.proxy.non-proxy-hosts]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-non-proxy-hosts]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-apache-proxy-non-proxy-hosts[quarkus.kinesis.sync-client.apache.proxy.non-proxy-hosts]`
 
 
 [.description]
@@ -1008,12 +1008,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt-aws-crt-based-http-client-specific-configurations]]link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt-aws-crt-based-http-client-specific-configurations[AWS CRT-based HTTP client specific configurations]
+h|[[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-aws-crt-based-http-client-specific-configurations]]link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-aws-crt-based-http-client-specific-configurations[AWS CRT-based HTTP client specific configurations]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt.connection-max-idle-time]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt.connection-max-idle-time[quarkus.kinesis.sync-client.crt.connection-max-idle-time]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-connection-max-idle-time]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-connection-max-idle-time[quarkus.kinesis.sync-client.crt.connection-max-idle-time]`
 
 
 [.description]
@@ -1031,7 +1031,7 @@ endif::add-copy-button-to-env-var[]
 |`60S`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt.max-concurrency]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt.max-concurrency[quarkus.kinesis.sync-client.crt.max-concurrency]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-max-concurrency]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-max-concurrency[quarkus.kinesis.sync-client.crt.max-concurrency]`
 
 
 [.description]
@@ -1048,7 +1048,7 @@ endif::add-copy-button-to-env-var[]
 |`50`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt.proxy.enabled]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt.proxy.enabled[quarkus.kinesis.sync-client.crt.proxy.enabled]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-proxy-enabled]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-proxy-enabled[quarkus.kinesis.sync-client.crt.proxy.enabled]`
 
 
 [.description]
@@ -1065,7 +1065,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt.proxy.endpoint]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt.proxy.endpoint[quarkus.kinesis.sync-client.crt.proxy.endpoint]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-proxy-endpoint]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-proxy-endpoint[quarkus.kinesis.sync-client.crt.proxy.endpoint]`
 
 
 [.description]
@@ -1085,7 +1085,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt.proxy.username]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt.proxy.username[quarkus.kinesis.sync-client.crt.proxy.username]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-proxy-username]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-proxy-username[quarkus.kinesis.sync-client.crt.proxy.username]`
 
 
 [.description]
@@ -1102,7 +1102,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt.proxy.password]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.sync-client.crt.proxy.password[quarkus.kinesis.sync-client.crt.proxy.password]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-proxy-password]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-sync-client-crt-proxy-password[quarkus.kinesis.sync-client.crt.proxy.password]`
 
 
 [.description]
@@ -1119,12 +1119,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-kinesis_quarkus.kinesis.async-client-async-http-transport-configurations]]link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client-async-http-transport-configurations[Async HTTP transport configurations]
+h|[[quarkus-amazon-kinesis_quarkus-kinesis-async-client-async-http-transport-configurations]]link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-async-http-transport-configurations[Async HTTP transport configurations]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.max-concurrency]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.max-concurrency[quarkus.kinesis.async-client.max-concurrency]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-max-concurrency]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-max-concurrency[quarkus.kinesis.async-client.max-concurrency]`
 
 
 [.description]
@@ -1143,7 +1143,7 @@ endif::add-copy-button-to-env-var[]
 |`50`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.max-pending-connection-acquires]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.max-pending-connection-acquires[quarkus.kinesis.async-client.max-pending-connection-acquires]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-max-pending-connection-acquires]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-max-pending-connection-acquires[quarkus.kinesis.async-client.max-pending-connection-acquires]`
 
 
 [.description]
@@ -1162,7 +1162,7 @@ endif::add-copy-button-to-env-var[]
 |`10000`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.read-timeout]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.read-timeout[quarkus.kinesis.async-client.read-timeout]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-read-timeout]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-read-timeout[quarkus.kinesis.async-client.read-timeout]`
 
 
 [.description]
@@ -1182,7 +1182,7 @@ endif::add-copy-button-to-env-var[]
 |`30S`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.write-timeout]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.write-timeout[quarkus.kinesis.async-client.write-timeout]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-write-timeout]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-write-timeout[quarkus.kinesis.async-client.write-timeout]`
 
 
 [.description]
@@ -1202,7 +1202,7 @@ endif::add-copy-button-to-env-var[]
 |`30S`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.connection-timeout]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.connection-timeout[quarkus.kinesis.async-client.connection-timeout]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-connection-timeout]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-connection-timeout[quarkus.kinesis.async-client.connection-timeout]`
 
 
 [.description]
@@ -1220,7 +1220,7 @@ endif::add-copy-button-to-env-var[]
 |`10S`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.connection-acquisition-timeout]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.connection-acquisition-timeout[quarkus.kinesis.async-client.connection-acquisition-timeout]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-connection-acquisition-timeout]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-connection-acquisition-timeout[quarkus.kinesis.async-client.connection-acquisition-timeout]`
 
 
 [.description]
@@ -1238,7 +1238,7 @@ endif::add-copy-button-to-env-var[]
 |`2S`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.connection-time-to-live]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.connection-time-to-live[quarkus.kinesis.async-client.connection-time-to-live]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-connection-time-to-live]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-connection-time-to-live[quarkus.kinesis.async-client.connection-time-to-live]`
 
 
 [.description]
@@ -1256,7 +1256,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.connection-max-idle-time]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.connection-max-idle-time[quarkus.kinesis.async-client.connection-max-idle-time]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-connection-max-idle-time]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-connection-max-idle-time[quarkus.kinesis.async-client.connection-max-idle-time]`
 
 
 [.description]
@@ -1276,7 +1276,7 @@ endif::add-copy-button-to-env-var[]
 |`5S`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.use-idle-connection-reaper]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.use-idle-connection-reaper[quarkus.kinesis.async-client.use-idle-connection-reaper]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-use-idle-connection-reaper]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-use-idle-connection-reaper[quarkus.kinesis.async-client.use-idle-connection-reaper]`
 
 
 [.description]
@@ -1295,7 +1295,7 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.tcp-keep-alive]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.tcp-keep-alive[quarkus.kinesis.async-client.tcp-keep-alive]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-tcp-keep-alive]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-tcp-keep-alive[quarkus.kinesis.async-client.tcp-keep-alive]`
 
 
 [.description]
@@ -1312,7 +1312,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.protocol]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.protocol[quarkus.kinesis.async-client.protocol]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-protocol]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-protocol[quarkus.kinesis.async-client.protocol]`
 
 
 [.description]
@@ -1330,7 +1330,7 @@ endif::add-copy-button-to-env-var[]
 |`http1-1`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.ssl-provider]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.ssl-provider[quarkus.kinesis.async-client.ssl-provider]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-ssl-provider]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-ssl-provider[quarkus.kinesis.async-client.ssl-provider]`
 
 
 [.description]
@@ -1350,7 +1350,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.http2.max-streams]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.http2.max-streams[quarkus.kinesis.async-client.http2.max-streams]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-http2-max-streams]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-http2-max-streams[quarkus.kinesis.async-client.http2.max-streams]`
 
 
 [.description]
@@ -1369,7 +1369,7 @@ endif::add-copy-button-to-env-var[]
 |`4294967295`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.http2.initial-window-size]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.http2.initial-window-size[quarkus.kinesis.async-client.http2.initial-window-size]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-http2-initial-window-size]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-http2-initial-window-size[quarkus.kinesis.async-client.http2.initial-window-size]`
 
 
 [.description]
@@ -1388,7 +1388,7 @@ endif::add-copy-button-to-env-var[]
 |`1048576`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.http2.health-check-ping-period]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.http2.health-check-ping-period[quarkus.kinesis.async-client.http2.health-check-ping-period]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-http2-health-check-ping-period]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-http2-health-check-ping-period[quarkus.kinesis.async-client.http2.health-check-ping-period]`
 
 
 [.description]
@@ -1408,7 +1408,7 @@ endif::add-copy-button-to-env-var[]
 |`5`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.proxy.enabled]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.proxy.enabled[quarkus.kinesis.async-client.proxy.enabled]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-proxy-enabled]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-proxy-enabled[quarkus.kinesis.async-client.proxy.enabled]`
 
 
 [.description]
@@ -1425,7 +1425,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.proxy.endpoint]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.proxy.endpoint[quarkus.kinesis.async-client.proxy.endpoint]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-proxy-endpoint]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-proxy-endpoint[quarkus.kinesis.async-client.proxy.endpoint]`
 
 
 [.description]
@@ -1445,7 +1445,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.proxy.non-proxy-hosts]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.proxy.non-proxy-hosts[quarkus.kinesis.async-client.proxy.non-proxy-hosts]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-proxy-non-proxy-hosts]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-proxy-non-proxy-hosts[quarkus.kinesis.async-client.proxy.non-proxy-hosts]`
 
 
 [.description]
@@ -1462,7 +1462,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-key-managers-provider.type]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-key-managers-provider.type[quarkus.kinesis.async-client.tls-key-managers-provider.type]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-key-managers-provider-type]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-key-managers-provider-type[quarkus.kinesis.async-client.tls-key-managers-provider.type]`
 
 
 [.description]
@@ -1488,7 +1488,7 @@ endif::add-copy-button-to-env-var[]
 |`system-property`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-key-managers-provider.file-store.path]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-key-managers-provider.file-store.path[quarkus.kinesis.async-client.tls-key-managers-provider.file-store.path]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-key-managers-provider-file-store-path]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-key-managers-provider-file-store-path[quarkus.kinesis.async-client.tls-key-managers-provider.file-store.path]`
 
 
 [.description]
@@ -1505,7 +1505,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-key-managers-provider.file-store.type]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-key-managers-provider.file-store.type[quarkus.kinesis.async-client.tls-key-managers-provider.file-store.type]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-key-managers-provider-file-store-type]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-key-managers-provider-file-store-type[quarkus.kinesis.async-client.tls-key-managers-provider.file-store.type]`
 
 
 [.description]
@@ -1524,7 +1524,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-key-managers-provider.file-store.password]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-key-managers-provider.file-store.password[quarkus.kinesis.async-client.tls-key-managers-provider.file-store.password]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-key-managers-provider-file-store-password]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-key-managers-provider-file-store-password[quarkus.kinesis.async-client.tls-key-managers-provider.file-store.password]`
 
 
 [.description]
@@ -1541,7 +1541,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-trust-managers-provider.type]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-trust-managers-provider.type[quarkus.kinesis.async-client.tls-trust-managers-provider.type]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-trust-managers-provider-type]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-trust-managers-provider-type[quarkus.kinesis.async-client.tls-trust-managers-provider.type]`
 
 
 [.description]
@@ -1567,7 +1567,7 @@ endif::add-copy-button-to-env-var[]
 |`system-property`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-trust-managers-provider.file-store.path]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-trust-managers-provider.file-store.path[quarkus.kinesis.async-client.tls-trust-managers-provider.file-store.path]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-trust-managers-provider-file-store-path]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-trust-managers-provider-file-store-path[quarkus.kinesis.async-client.tls-trust-managers-provider.file-store.path]`
 
 
 [.description]
@@ -1584,7 +1584,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-trust-managers-provider.file-store.type]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-trust-managers-provider.file-store.type[quarkus.kinesis.async-client.tls-trust-managers-provider.file-store.type]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-trust-managers-provider-file-store-type]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-trust-managers-provider-file-store-type[quarkus.kinesis.async-client.tls-trust-managers-provider.file-store.type]`
 
 
 [.description]
@@ -1603,7 +1603,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-trust-managers-provider.file-store.password]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.tls-trust-managers-provider.file-store.password[quarkus.kinesis.async-client.tls-trust-managers-provider.file-store.password]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-trust-managers-provider-file-store-password]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-tls-trust-managers-provider-file-store-password[quarkus.kinesis.async-client.tls-trust-managers-provider.file-store.password]`
 
 
 [.description]
@@ -1620,7 +1620,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.event-loop.override]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.event-loop.override[quarkus.kinesis.async-client.event-loop.override]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-event-loop-override]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-event-loop-override[quarkus.kinesis.async-client.event-loop.override]`
 
 
 [.description]
@@ -1637,7 +1637,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.event-loop.number-of-threads]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.event-loop.number-of-threads[quarkus.kinesis.async-client.event-loop.number-of-threads]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-event-loop-number-of-threads]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-event-loop-number-of-threads[quarkus.kinesis.async-client.event-loop.number-of-threads]`
 
 
 [.description]
@@ -1656,7 +1656,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.event-loop.thread-name-prefix]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.event-loop.thread-name-prefix[quarkus.kinesis.async-client.event-loop.thread-name-prefix]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-event-loop-thread-name-prefix]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-event-loop-thread-name-prefix[quarkus.kinesis.async-client.event-loop.thread-name-prefix]`
 
 
 [.description]
@@ -1677,7 +1677,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-kinesis_quarkus.kinesis.async-client.advanced.use-future-completion-thread-pool]]`link:#quarkus-amazon-kinesis_quarkus.kinesis.async-client.advanced.use-future-completion-thread-pool[quarkus.kinesis.async-client.advanced.use-future-completion-thread-pool]`
+a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-advanced-use-future-completion-thread-pool]]`link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-advanced-use-future-completion-thread-pool[quarkus.kinesis.async-client.advanced.use-future-completion-thread-pool]`
 
 
 [.description]
@@ -1702,7 +1702,7 @@ ifndef::no-duration-note[]
 .About the Duration format
 ====
 To write duration values, use the standard `java.time.Duration` format.
-See the link:https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/Duration.html#parse(java.lang.CharSequence)[Duration#parse() javadoc] for more information.
+See the link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html#parse(java.lang.CharSequence)[Duration#parse() Java API documentation] for more information.
 
 You can also use a simplified format, starting with a number:
 

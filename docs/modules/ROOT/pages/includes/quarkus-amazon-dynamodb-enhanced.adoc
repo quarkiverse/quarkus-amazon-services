@@ -10,7 +10,7 @@ h|[[quarkus-amazon-dynamodb-enhanced_configuration]]link:#quarkus-amazon-dynamod
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb-enhanced_quarkus.dynamodbenhanced.client-extensions]]`link:#quarkus-amazon-dynamodb-enhanced_quarkus.dynamodbenhanced.client-extensions[quarkus.dynamodbenhanced.client-extensions]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb-enhanced_quarkus-dynamodbenhanced-client-extensions]]`link:#quarkus-amazon-dynamodb-enhanced_quarkus-dynamodbenhanced-client-extensions[quarkus.dynamodbenhanced.client-extensions]`
 
 
 [.description]
@@ -29,7 +29,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb-enhanced_quarkus.dynamodbenhanced.create-table-schemas]]`link:#quarkus-amazon-dynamodb-enhanced_quarkus.dynamodbenhanced.create-table-schemas[quarkus.dynamodbenhanced.create-table-schemas]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb-enhanced_quarkus-dynamodbenhanced-create-table-schemas]]`link:#quarkus-amazon-dynamodb-enhanced_quarkus-dynamodbenhanced-create-table-schemas[quarkus.dynamodbenhanced.create-table-schemas]`
 
 
 [.description]

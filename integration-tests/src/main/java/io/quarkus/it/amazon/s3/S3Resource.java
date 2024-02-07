@@ -62,7 +62,14 @@ public class S3Resource {
         LOG.info("Testing Async S3 client with bucket: " + ASYNC_BUCKET);
         String keyValue = UUID.randomUUID().toString();
 
+        ClassLoader currentContextClassLoader = Thread.currentThread().getContextClassLoader();
+
         return S3Utils.createBucketAsync(s3AsyncClient, ASYNC_BUCKET)
+                .thenAccept(ignore -> {
+                    if (currentContextClassLoader != Thread.currentThread().getContextClassLoader()) {
+                        throw new RuntimeException("TCCL is not propagated");
+                    }
+                })
                 .thenCompose(bucket -> s3AsyncClient.putObject(S3Utils.createPutRequest(ASYNC_BUCKET, keyValue),
                         AsyncRequestBody.fromString(SAMPLE_S3_OBJECT)))
                 .thenCompose(resp -> s3AsyncClient.getObject(S3Utils.createGetRequest(ASYNC_BUCKET, keyValue),
