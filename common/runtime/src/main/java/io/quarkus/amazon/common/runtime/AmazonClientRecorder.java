@@ -2,6 +2,7 @@ package io.quarkus.amazon.common.runtime;
 
 import java.util.concurrent.Executor;
 
+import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.RuntimeValue;
 import software.amazon.awssdk.awscore.client.builder.AwsAsyncClientBuilder;
 import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder;
@@ -43,6 +44,7 @@ public abstract class AmazonClientRecorder {
     }
 
     public RuntimeValue<AwsClientBuilder> createAsyncBuilder(RuntimeValue<SdkAsyncHttpClient.Builder> transport,
+            LaunchMode launchMode,
             Executor executor) {
         AwsAsyncClientBuilder<?, ?> builder = getAsyncClientBuilder();
         AsyncHttpClientConfig config = getAsyncClientConfig();
@@ -50,17 +52,53 @@ public abstract class AmazonClientRecorder {
         if (transport != null) {
             builder.httpClientBuilder(transport.getValue());
         }
+
+        Executor configExecutor;
+
         if (!config.advanced().useFutureCompletionThreadPool()) {
-            builder.asyncConfiguration(asyncConfigBuilder -> asyncConfigBuilder
-                    .advancedOption(SdkAdvancedAsyncClientOption.FUTURE_COMPLETION_EXECUTOR, Runnable::run));
+            configExecutor = Runnable::run;
         } else {
-            builder.asyncConfiguration(asyncConfigBuilder -> asyncConfigBuilder
-                    .advancedOption(SdkAdvancedAsyncClientOption.FUTURE_COMPLETION_EXECUTOR, executor));
+            configExecutor = executor;
         }
+
+        if (launchMode != LaunchMode.NORMAL) {
+            configExecutor = new ClassLoaderExecutorWrapper(executor);
+        }
+
+        final Executor futureCompletionExecutor = configExecutor;
+
+        builder.asyncConfiguration(asyncConfigBuilder -> asyncConfigBuilder
+                .advancedOption(SdkAdvancedAsyncClientOption.FUTURE_COMPLETION_EXECUTOR, futureCompletionExecutor));
+
         return new RuntimeValue<>((AwsClientBuilder) builder);
     }
 
     public RuntimeValue<SdkPresigner.Builder> createPresignerBuilder() {
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Capture the current ClassLoader and restore it to support dev and test mode
+     */
+    private static final class ClassLoaderExecutorWrapper implements Executor {
+
+        private Executor executor;
+        private ClassLoader contextClassLoader;
+
+        private ClassLoaderExecutorWrapper(Executor executor) {
+            this.executor = executor;
+            this.contextClassLoader = Thread.currentThread().getContextClassLoader();
+        }
+
+        @Override
+        public void execute(Runnable command) {
+            final ClassLoader old = Thread.currentThread().getContextClassLoader();
+            try {
+                Thread.currentThread().setContextClassLoader(contextClassLoader);
+                executor.execute(command);
+            } finally {
+                Thread.currentThread().setContextClassLoader(old);
+            }
+        }
     }
 }

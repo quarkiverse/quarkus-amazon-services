@@ -34,6 +34,7 @@ import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.ExecutorBuildItem;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
+import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 import software.amazon.awssdk.services.sqs.SqsAsyncClientBuilder;
 import software.amazon.awssdk.services.sqs.SqsClient;
@@ -176,6 +177,7 @@ public class SqsProcessor extends AbstractAmazonServiceProcessor {
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
             BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
             BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
+            LaunchModeBuildItem launchModeBuildItem,
             ExecutorBuildItem executorBuildItem) {
 
         createClientBuilders(capabilities,
@@ -191,6 +193,7 @@ public class SqsProcessor extends AbstractAmazonServiceProcessor {
                 syntheticBeans,
                 clientSync,
                 clientAsync,
+                launchModeBuildItem,
                 executorBuildItem);
     }
 }

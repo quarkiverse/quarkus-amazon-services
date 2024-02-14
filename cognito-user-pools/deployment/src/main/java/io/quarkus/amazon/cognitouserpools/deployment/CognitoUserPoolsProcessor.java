@@ -34,6 +34,7 @@ import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.ExecutorBuildItem;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
+import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderAsyncClient;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderAsyncClientBuilder;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient;
@@ -179,6 +180,7 @@ public class CognitoUserPoolsProcessor extends AbstractAmazonServiceProcessor {
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
             BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
             BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
+            LaunchModeBuildItem launchModeBuildItem,
             ExecutorBuildItem executorBuildItem) {
 
         createClientBuilders(capabilities,
@@ -194,6 +196,7 @@ public class CognitoUserPoolsProcessor extends AbstractAmazonServiceProcessor {
                 syntheticBeans,
                 clientSync,
                 clientAsync,
+                launchModeBuildItem,
                 executorBuildItem);
     }
 }

@@ -40,6 +40,7 @@ import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.builditem.ExecutorBuildItem;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
+import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.runtime.RuntimeValue;
 import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder;
 import software.amazon.awssdk.awscore.presigner.SdkPresigner;
@@ -261,6 +262,7 @@ abstract public class AbstractAmazonServiceProcessor {
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
             BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
             BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
+            LaunchModeBuildItem launchModeBuildItem,
             ExecutorBuildItem executorBuildItem) {
 
         RuntimeValue<SdkPresigner.Builder> presignerBuilder = null;
@@ -279,12 +281,14 @@ abstract public class AbstractAmazonServiceProcessor {
                 syncClientBuilderClass,
                 (syncTransport) -> recorder.createSyncBuilder(syncTransport),
                 asyncClientBuilderClass,
-                (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport, executorBuildItem.getExecutorProxy()),
+                (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport, launchModeBuildItem.getLaunchMode(),
+                        executorBuildItem.getExecutorProxy()),
                 presignerBuilderClass,
                 presignerBuilder,
                 syntheticBeans,
                 clientSync,
                 clientAsync,
+                launchModeBuildItem,
                 executorBuildItem);
     }
 
@@ -306,6 +310,7 @@ abstract public class AbstractAmazonServiceProcessor {
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
             BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
             BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
+            LaunchModeBuildItem launchModeBuildItem,
             ExecutorBuildItem executorBuildItem) {
         String configName = configName();
 

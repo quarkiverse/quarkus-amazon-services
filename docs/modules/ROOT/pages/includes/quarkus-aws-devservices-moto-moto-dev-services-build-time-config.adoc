@@ -10,7 +10,7 @@ h|[[quarkus-aws-devservices-moto-moto-dev-services-build-time-config_configurati
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-moto-moto-dev-services-build-time-config_quarkus.aws.devservices.moto.image-name]]`link:#quarkus-aws-devservices-moto-moto-dev-services-build-time-config_quarkus.aws.devservices.moto.image-name[quarkus.aws.devservices.moto.image-name]`
+a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-moto-moto-dev-services-build-time-config_quarkus-aws-devservices-moto-image-name]]`link:#quarkus-aws-devservices-moto-moto-dev-services-build-time-config_quarkus-aws-devservices-moto-image-name[quarkus.aws.devservices.moto.image-name]`
 
 
 [.description]
@@ -27,7 +27,7 @@ endif::add-copy-button-to-env-var[]
 |`motoserver/moto`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-moto-moto-dev-services-build-time-config_quarkus.aws.devservices.moto.container-properties-container-properties]]`link:#quarkus-aws-devservices-moto-moto-dev-services-build-time-config_quarkus.aws.devservices.moto.container-properties-container-properties[quarkus.aws.devservices.moto.container-properties]`
+a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-moto-moto-dev-services-build-time-config_quarkus-aws-devservices-moto-container-properties-container-properties]]`link:#quarkus-aws-devservices-moto-moto-dev-services-build-time-config_quarkus-aws-devservices-moto-container-properties-container-properties[quarkus.aws.devservices.moto.container-properties]`
 
 
 [.description]

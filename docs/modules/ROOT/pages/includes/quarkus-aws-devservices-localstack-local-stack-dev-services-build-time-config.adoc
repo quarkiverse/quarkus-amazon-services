@@ -10,7 +10,7 @@ h|[[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-confi
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.image-name]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.image-name[quarkus.aws.devservices.localstack.image-name]`
+a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-image-name]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-image-name[quarkus.aws.devservices.localstack.image-name]`
 
 
 [.description]
@@ -27,7 +27,7 @@ endif::add-copy-button-to-env-var[]
 |`localstack/localstack:3.0.1`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-scripts-folder]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-scripts-folder[quarkus.aws.devservices.localstack.init-scripts-folder]`
+a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-init-scripts-folder]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-init-scripts-folder[quarkus.aws.devservices.localstack.init-scripts-folder]`
 
 
 [.description]
@@ -44,7 +44,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-scripts-classpath]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-scripts-classpath[quarkus.aws.devservices.localstack.init-scripts-classpath]`
+a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-init-scripts-classpath]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-init-scripts-classpath[quarkus.aws.devservices.localstack.init-scripts-classpath]`
 
 
 [.description]
@@ -61,7 +61,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-completion-msg]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.init-completion-msg[quarkus.aws.devservices.localstack.init-completion-msg]`
+a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-init-completion-msg]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-init-completion-msg[quarkus.aws.devservices.localstack.init-completion-msg]`
 
 
 [.description]
@@ -78,7 +78,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.container-properties-container-properties]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.container-properties-container-properties[quarkus.aws.devservices.localstack.container-properties]`
+a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-container-properties-container-properties]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-container-properties-container-properties[quarkus.aws.devservices.localstack.container-properties]`
 
 
 [.description]
@@ -95,7 +95,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.enabled]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.enabled[quarkus.aws.devservices.localstack.additional-services."additional-services".enabled]`
+a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-additional-services-additional-services-enabled]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-additional-services-additional-services-enabled[quarkus.aws.devservices.localstack.additional-services."additional-services".enabled]`
 
 
 [.description]
@@ -112,7 +112,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.shared]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.shared[quarkus.aws.devservices.localstack.additional-services."additional-services".shared]`
+a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-additional-services-additional-services-shared]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-additional-services-additional-services-shared[quarkus.aws.devservices.localstack.additional-services."additional-services".shared]`
 
 
 [.description]
@@ -133,7 +133,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.service-name]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.service-name[quarkus.aws.devservices.localstack.additional-services."additional-services".service-name]`
+a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-additional-services-additional-services-service-name]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-additional-services-additional-services-service-name[quarkus.aws.devservices.localstack.additional-services."additional-services".service-name]`
 
 
 [.description]
@@ -152,7 +152,7 @@ endif::add-copy-button-to-env-var[]
 |`localstack`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.container-properties-container-properties]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus.aws.devservices.localstack.additional-services.-additional-services-.container-properties-container-properties[quarkus.aws.devservices.localstack.additional-services."additional-services".container-properties]`
+a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-additional-services-additional-services-container-properties-container-properties]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-additional-services-additional-services-container-properties-container-properties[quarkus.aws.devservices.localstack.additional-services."additional-services".container-properties]`
 
 
 [.description]

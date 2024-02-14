@@ -79,7 +79,7 @@ public class S3CrtRecorder {
     /**
      * Capture the current ClassLoader and restore it to support dev and test mode
      */
-    public static final class S3CrtExecutorWrapper implements Executor {
+    private static final class S3CrtExecutorWrapper implements Executor {
 
         private Executor executor;
         private ClassLoader contextClassLoader;
