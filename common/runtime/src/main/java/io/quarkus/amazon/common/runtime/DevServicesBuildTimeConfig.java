@@ -35,6 +35,14 @@ public interface DevServicesBuildTimeConfig {
     boolean shared();
 
     /**
+     * Indicates if shared LocalStack services managed by Dev Services should be isolated.
+     * When true, the service will be started in its own container and the value of
+     * the {@code quarkus-dev-service-localstack} label will be suffixed by the service name (s3, sqs, ...)
+     */
+    @WithDefault(value = "true")
+    boolean isolated();
+
+    /**
      * The value of the {@code quarkus-dev-service-localstack} label attached to the started container.
      * In dev mode, when {@code shared} is set to {@code true}, before starting a container, Dev Services looks for a container
      * with the

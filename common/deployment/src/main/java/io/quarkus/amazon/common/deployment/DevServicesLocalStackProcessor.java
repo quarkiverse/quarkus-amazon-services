@@ -98,7 +98,9 @@ public class DevServicesLocalStackProcessor {
                     .stream()
                     .filter(rs -> rs.getConfig().isShared())
                     .collect(Collectors.toMap(
-                            r -> String.format("%s-%s", r.getConfig().getServiceName(), r.getService().getName()),
+                            r -> r.getConfig().isIsolated()
+                                    ? String.format("%s-%s", r.getConfig().getServiceName(), r.getService().getName())
+                                    : r.getConfig().getServiceName(),
                             Collections::singletonList,
                             (requestedService1, requestedService2) -> {
                                 List<DevServicesLocalStackProviderBuildItem> ret = new ArrayList<>();

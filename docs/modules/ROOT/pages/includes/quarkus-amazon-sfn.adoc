@@ -120,6 +120,23 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus-sfn-devservices-isolated]]`link:#quarkus-amazon-sfn_quarkus-sfn-devservices-isolated[quarkus.sfn.devservices.isolated]`
+
+
+[.description]
+--
+Indicates if shared LocalStack services managed by Dev Services should be isolated. When true, the service will be started in its own container and the value of the `quarkus-dev-service-localstack` label will be suffixed by the service name (s3, sqs, ...)
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SFN_DEVSERVICES_ISOLATED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SFN_DEVSERVICES_ISOLATED+++`
+endif::add-copy-button-to-env-var[]
+--|boolean 
+|`true`
+
+
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sfn_quarkus-sfn-devservices-service-name]]`link:#quarkus-amazon-sfn_quarkus-sfn-devservices-service-name[quarkus.sfn.devservices.service-name]`
 
 
@@ -199,7 +216,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_API_CALL_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |
 
 
@@ -219,7 +236,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_API_CALL_ATTEMPT_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |
 
 
@@ -479,7 +496,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_AWS_CREDENTIALS_PROCESS_PROVIDER_CREDENTIAL_REFRESH_THRESHOLD+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |`15S`
 
 
@@ -496,7 +513,7 @@ endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_OUTPUT_LIMIT+++`
 endif::add-copy-button-to-env-var[]
---|MemorySize  link:#memory-size-note-anchor[icon:question-circle[], title=More information about the MemorySize format]
+--|MemorySize  link:#memory-size-note-anchor[icon:question-circle[title=More information about the MemorySize format]]
 |`1024`
 
 
@@ -558,7 +575,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_SYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |`2S`
 
 
@@ -576,7 +593,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_SYNC_CLIENT_SOCKET_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |`30S`
 
 
@@ -757,7 +774,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_SYNC_CLIENT_APACHE_CONNECTION_ACQUISITION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |`10S`
 
 
@@ -775,7 +792,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_SYNC_CLIENT_APACHE_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |`60S`
 
 
@@ -793,7 +810,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_SYNC_CLIENT_APACHE_CONNECTION_TIME_TO_LIVE+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |
 
 
@@ -1027,7 +1044,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |`60S`
 
 
@@ -1178,7 +1195,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_ASYNC_CLIENT_READ_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |`30S`
 
 
@@ -1198,7 +1215,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_ASYNC_CLIENT_WRITE_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |`30S`
 
 
@@ -1216,7 +1233,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_ASYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |`10S`
 
 
@@ -1234,7 +1251,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_ASYNC_CLIENT_CONNECTION_ACQUISITION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |`2S`
 
 
@@ -1252,7 +1269,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_ASYNC_CLIENT_CONNECTION_TIME_TO_LIVE+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |
 
 
@@ -1272,7 +1289,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_ASYNC_CLIENT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |`5S`
 
 
@@ -1404,7 +1421,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_PERIOD+++`
 endif::add-copy-button-to-env-var[]
 --|link:https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html[Duration]
-  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[], title=More information about the Duration format]
+  link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
 |`5`
 
 

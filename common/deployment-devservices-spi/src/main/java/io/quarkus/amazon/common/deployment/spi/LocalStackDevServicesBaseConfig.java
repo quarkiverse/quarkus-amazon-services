@@ -5,18 +5,24 @@ import java.util.Objects;
 
 public class LocalStackDevServicesBaseConfig {
     private final boolean shared;
+    private final boolean isolated;
     private final String serviceName;
     private final Map<String, String> containerProperties;
 
-    public LocalStackDevServicesBaseConfig(boolean shared, String serviceName,
+    public LocalStackDevServicesBaseConfig(boolean shared, boolean isolated, String serviceName,
             Map<String, String> containerProperties) {
         this.shared = shared;
+        this.isolated = isolated;
         this.serviceName = serviceName;
         this.containerProperties = containerProperties;
     }
 
     public boolean isShared() {
         return shared;
+    }
+
+    public boolean isIsolated() {
+        return isolated;
     }
 
     public String getServiceName() {
@@ -29,7 +35,7 @@ public class LocalStackDevServicesBaseConfig {
 
     @Override
     public int hashCode() {
-        return Objects.hash(shared, serviceName, containerProperties);
+        return Objects.hash(shared, isolated, serviceName, containerProperties);
     }
 
     @Override
@@ -40,6 +46,7 @@ public class LocalStackDevServicesBaseConfig {
             return false;
         LocalStackDevServicesBaseConfig that = (LocalStackDevServicesBaseConfig) o;
         return shared == that.shared
+                && isolated == that.isolated
                 && Objects.equals(serviceName, that.serviceName)
                 && Objects.equals(containerProperties, that.containerProperties);
     }

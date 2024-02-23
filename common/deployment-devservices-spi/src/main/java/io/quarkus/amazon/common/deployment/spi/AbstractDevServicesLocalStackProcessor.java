@@ -111,6 +111,7 @@ public abstract class AbstractDevServicesLocalStackProcessor {
             DevServicesBuildTimeConfig devServicesBuildTimeConfig) {
         return new LocalStackDevServicesBaseConfig(
                 devServicesBuildTimeConfig.shared(),
+                devServicesBuildTimeConfig.isolated(),
                 devServicesBuildTimeConfig.serviceName(),
                 devServicesBuildTimeConfig.containerProperties());
     }

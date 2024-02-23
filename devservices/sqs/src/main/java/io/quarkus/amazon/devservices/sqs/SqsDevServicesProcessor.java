@@ -56,7 +56,7 @@ public class SqsDevServicesProcessor extends AbstractDevServicesLocalStackProces
         private final Set<String> queues;
 
         public SqsDevServiceCfg(SqsDevServicesBuildTimeConfig config) {
-            super(config.shared(), config.serviceName(), config.containerProperties());
+            super(config.shared(), config.isolated(), config.serviceName(), config.containerProperties());
             this.queues = new HashSet<>(config.queues().orElse(emptyList()));
         }
 
