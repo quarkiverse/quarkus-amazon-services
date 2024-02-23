@@ -15,10 +15,12 @@ Dev Services for Amazon Services is automatically enabled for each extensions ad
 
 By default, Dev Services for Amazon Services will start one LocalStack container with only the needed services.
 
-If you need to share a particular service between applications, Dev Services for Amazon Services implements a service discovery mechanism for your multiple Quarkus applications running in dev mode to share a single container. To ease sharing, each service will be started in its own container.
+If you need to share a particular service between applications, Dev Services for Amazon Services implements a service discovery mechanism for your multiple Quarkus applications running in dev mode to share a single container.
 
 Dev Services for Amazon Services starts the container with the `quarkus-dev-service-localstack` label and service name as the value, which is used to identify the container.
-If you need multiple (shared) container, you can configure the `devservices.service-name` attribute for a given extension (eg. `quarkus.s3.devservices.services-name`) and indicate the container name. It looks for a container with the same value, or starts a new one if none can be found. The default service name is `localstack`.
+If you need multiple (shared) container, you can configure the `devservices.service-name` attribute for a given extension (eg. `quarkus.s3.devservices.service-name`) and indicate the container name. It looks for a container with the same value, or starts a new one if none can be found. The default service name is `localstack`.
+
+By default, to ease sharing containers across multiple applications, each service will be started in its own container (the value of the `quarkus-dev-service-localstack` label is suffixed by the extension name). However, sometimes, some services need to communicate with each other inside the same container (e.g., subscribing an Amazon SQS queue to an Amazon SNS topic). In this case, you can disable this behavior by setting the `devservices.isolated` attribute for a given extension to `false`.
 
 Sharing is disabled by default in dev mode, and is always disabled in test mode. You can enable the sharing with `devservices.shared=true` for a given extension (e.g. `quarkus.s3.devservices.shared=true`). All other non-shared services will be grouped in another container.
 

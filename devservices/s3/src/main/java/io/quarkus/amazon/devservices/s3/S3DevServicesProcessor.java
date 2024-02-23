@@ -65,7 +65,7 @@ public class S3DevServicesProcessor extends AbstractDevServicesLocalStackProcess
         private final Set<String> buckets;
 
         public S3DevServiceCfg(S3DevServicesBuildTimeConfig config) {
-            super(config.shared(), config.serviceName(), config.containerProperties());
+            super(config.shared(), config.isolated(), config.serviceName(), config.containerProperties());
             this.buckets = config.buckets();
         }
 
