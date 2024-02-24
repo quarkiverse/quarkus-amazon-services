@@ -42,7 +42,7 @@ Quarkus Amazon Services is a component of the [Quarkus Platform](https://quarkus
   <properties>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>3.6.0</quarkus.platform.version>
+    <quarkus.platform.version>3.8.0</quarkus.platform.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -70,8 +70,8 @@ Alternatively, you can switch to using a specific version of the Quarkus Amazon 
   <properties>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>3.6.0</quarkus.platform.version>
-    <quarkus-amazon-services.version>2.10.1</quarkus-amazon-services.version>
+    <quarkus.platform.version>3.8.0</quarkus.platform.version>
+    <quarkus-amazon-services.version>2.12.0</quarkus-amazon-services.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -99,7 +99,8 @@ Quarkus Amazon Services provides multiple version streams. One stream is compati
 |-------------|-------------------------|--------------------------------------------------------------------------------------------------------|
 | 2.x         | 1.6.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/1.x/index.html)                    |
 | 3.2.x (LTS) | 2.4.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.4.x/index.html)                  |
-| >=3.x       | >=2.5.x                 | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)                    |
+| 3.8.x (LTS) | 2.12.x                  | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.12.x/index.html)                 |
+| >=3.x       | >=2.5                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)                    |
 
 Use the latest version of the corresponding stream, [the list of versions is available on Maven Central](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom).
 
