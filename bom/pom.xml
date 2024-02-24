@@ -28,10 +28,6 @@
                 <version>${awscrt.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.opentelemetry.instrumentation</groupId>
-                <artifactId>opentelemetry-aws-sdk-2.2</artifactId>
-            </dependency>
-            <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
                 <artifactId>quarkus-amazon-crt</artifactId>
                 <version>${project.version}</version>
