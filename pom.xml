@@ -16,6 +16,7 @@
     <module>build-parent</module>
     <module>crt</module>
     <module>common</module>
+    <module>cloudwatch</module>
     <module>devservices</module>
     <module>cognito-user-pools</module>
     <module>dynamodb</module>
