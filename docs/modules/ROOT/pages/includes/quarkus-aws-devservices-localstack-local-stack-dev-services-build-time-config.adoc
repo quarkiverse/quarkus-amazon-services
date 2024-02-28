@@ -78,6 +78,23 @@ endif::add-copy-button-to-env-var[]
 |
 
 
+a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-port]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-port[quarkus.aws.devservices.localstack.port]`
+
+
+[.description]
+--
+Optional fixed port localstack will listen to.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_PORT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_PORT+++`
+endif::add-copy-button-to-env-var[]
+--|int 
+|
+
+
 a|icon:lock[title=Fixed at build time] [[quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-container-properties-container-properties]]`link:#quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config_quarkus-aws-devservices-localstack-container-properties-container-properties[quarkus.aws.devservices.localstack.container-properties]`
 
 

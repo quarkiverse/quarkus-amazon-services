@@ -43,4 +43,9 @@ public interface LocalStackDevServicesBuildTimeConfig {
      * you want is not covered by the extension
      */
     Map<String, DevServicesBuildTimeConfig> additionalServices();
+
+    /**
+     * Optional fixed port localstack will listen to.
+     */
+    Optional<Integer> port();
 }

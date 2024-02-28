@@ -304,6 +304,10 @@ public class DevServicesLocalStackProcessor {
                                         .toArray(EnabledService[]::new))
                                 .withLabel(DEV_SERVICE_LABEL, devServiceName);
 
+                        localStackDevServicesBuildTimeConfig.port().ifPresent(port ->
+                            container.setPortBindings(Collections.singletonList("%s:%s".formatted(port, PORT)))
+                        );
+
                         localStackDevServicesBuildTimeConfig.initScriptsFolder().ifPresentOrElse(initScriptsFolder -> {
                             container.withFileSystemBind(initScriptsFolder, "/etc/localstack/init/ready.d", BindMode.READ_ONLY);
                         }, () -> localStackDevServicesBuildTimeConfig.initScriptsClasspath().ifPresent(resourcePath -> {
