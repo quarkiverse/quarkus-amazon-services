@@ -51,7 +51,7 @@ Default output format [None]:
 ----
 
 == Solution
-The application built here allows listing the available Alarms for the provided credentials.
+The application built here allows listing the available metrics and push data for a specific metric for the provided credentials.
 
 We recommend that you follow the instructions in the next sections and create the application step by step.
 However, you can go right to the completed example.
@@ -80,7 +80,7 @@ After this, the `amazon-cloudwatch` extension has been added to your `pom.xml` a
 
 == Creating JSON REST service
 
-In this example, we will create an application that allows us to store and retrieve parameters to and from CloudWatch store using a RESTful API.
+In this example, we will create an application that allows us listing the available metrics and push data for a specific metric with CloudWatch SDK using a RESTful API.
 The example application will demonstrate the two programming models supported by the extension.
 
 Let's start with an abstract `org.acme.cloudwatch.QuarkusCloudWatchResource` class to provide the common functionality we will need for both the synchronous and asynchronous exposures.
