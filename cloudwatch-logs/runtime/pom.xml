@@ -10,7 +10,7 @@
 
     <artifactId>quarkus-amazon-cloudwatch-logs</artifactId>
     <name>Quarkus - Amazon Services - CloudWatch Logs - Runtime</name>
-    <description>Connect to Amazon Secrets Manager</description>
+    <description>Connect to Amazon CloudWatch Logs</description>
 
     <dependencies>
         <dependency>

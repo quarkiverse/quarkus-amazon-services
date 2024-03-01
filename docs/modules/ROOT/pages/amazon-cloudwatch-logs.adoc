@@ -97,28 +97,28 @@ public abstract class QuarkusCloudWatchLogsResource {
     protected CreateLogStreamRequest generateCreateLogStreamRequest(String groupName, String streamName) {
         return CreateLogStreamRequest.builder()
                     .logGroupName(groupName)
-                    .logStreamName(streamName).build() <1>;
+                    .logStreamName(streamName).build(); <1>
     }
 
     protected DescribeLogGroupsRequest generateDescribeLogGroupRequest(String groupName) {
         return DescribeLogGroupsRequest.builder()
-                    .logGroupNamePattern(groupName).build() <2>;
+                    .logGroupNamePattern(groupName).build(); <2>
     }
 
     protected CreateLogGroupRequest generateCreateLogGroupRequest(String groupName) {
-        return CreateLogGroupRequest.builder().logGroupName(groupName).build() <3>;
+        return CreateLogGroupRequest.builder().logGroupName(groupName).build(); <3>
     }
 
     protected PutLogEventsRequest generatePutLogEventRequest(String groupName, String streamName, String logMessage) {
         return PutLogEventsRequest.builder().logGroupName(groupName).logStreamName(streamName)
                 .logEvents(InputLogEvent.builder().message(logMessage)
-                        .timestamp(Instant.now().toEpochMilli()).build()).build() <4>;
+                        .timestamp(Instant.now().toEpochMilli()).build()).build(); <4>
     }
 
     protected GetLogEventsRequest generateGetLogEvents(String groupName, String streamName) {
         return GetLogEventsRequest.builder()
                 .logGroupName(groupName).logStreamName(streamName)
-                .build() <5>;
+                .build();  <5>
     }
 
 
@@ -128,9 +128,9 @@ public abstract class QuarkusCloudWatchLogsResource {
 
 <1> Generate a request to create a log stream for a specific group
 <2> Generate a request to list created log groups
-<2> Generate a request to create a log group
-<2> Generate a request put log events at a specific log stream and group
-<2> Generate a request to list all log events for a specific log stream and group
+<3> Generate a request to create a log group
+<4> Generate a request put log events at a specific log stream and group
+<5> Generate a request to list all log events for a specific log stream and group
 
 Now, we can extend the class and create the synchronous implementation in the `org.acme.cloudwatchlogs.QuarkusCloudWatchLogsSyncResource` class.
 

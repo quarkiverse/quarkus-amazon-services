@@ -126,6 +126,7 @@
                                     <includes>
                                         <include>quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config.adoc</include>
                                         <include>quarkus-aws-devservices-moto-moto-dev-services-build-time-config.adoc</include>
+                                        <include>quarkus-amazon-cloudwatch-logs.adoc</include>
                                         <include>quarkus-amazon-cognitouserpools.adoc</include>
                                         <include>quarkus-amazon-dynamodb.adoc</include>
                                         <include>quarkus-amazon-dynamodb-enhanced.adoc</include>
