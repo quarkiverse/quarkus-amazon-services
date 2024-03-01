@@ -10,7 +10,7 @@
 
     <artifactId>quarkus-amazon-cloudwatch</artifactId>
     <name>Quarkus - Amazon Services - CloudWatch - Runtime</name>
-    <description>Connect to Amazon Secrets Manager</description>
+    <description>Connect to Amazon CloudWatch</description>
 
     <dependencies>
         <dependency>
