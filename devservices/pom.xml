@@ -18,6 +18,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>cognito-user-pools</module>
+        <module>cloudwatch</module>
         <module>dynamodb</module>
         <module>eventbridge</module>
         <module>iam</module>

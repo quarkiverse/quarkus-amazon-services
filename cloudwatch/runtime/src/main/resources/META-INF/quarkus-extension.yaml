@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon CloudWatch"
+metadata:
+  keywords:
+    - "cloudwatch"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-cloudwatch.html
+  status: "preview"
+  config:
+  - "quarkus.cloudwatch."

@@ -17,6 +17,7 @@
     <module>crt</module>
     <module>common</module>
     <module>devservices</module>
+    <module>cloudwatch</module>
     <module>cognito-user-pools</module>
     <module>dynamodb</module>
     <module>dynamodb-enhanced</module>
