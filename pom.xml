@@ -16,7 +16,7 @@
     <module>build-parent</module>
     <module>crt</module>
     <module>common</module>
-    <module>cloudwatch-logs</module>
+    <module>cloudwatchlogs</module>
     <module>devservices</module>
     <module>cloudwatch</module>
     <module>cognito-user-pools</module>

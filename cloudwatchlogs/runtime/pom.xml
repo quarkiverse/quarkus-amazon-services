@@ -4,11 +4,11 @@
 
     <parent>
         <groupId>io.quarkiverse.amazonservices</groupId>
-        <artifactId>quarkus-amazon-cloudwatch-logs-parent</artifactId>
+        <artifactId>quarkus-amazon-cloudwatchlogs-parent</artifactId>
         <version>999-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quarkus-amazon-cloudwatch-logs</artifactId>
+    <artifactId>quarkus-amazon-cloudwatchlogs</artifactId>
     <name>Quarkus - Amazon Services - CloudWatch Logs - Runtime</name>
     <description>Connect to Amazon CloudWatch Logs</description>
 

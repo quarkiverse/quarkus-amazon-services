@@ -240,17 +240,17 @@
 
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
-                <artifactId>quarkus-amazon-devservices-cloudwatch-logs</artifactId>
+                <artifactId>quarkus-amazon-devservices-cloudwatchlogs</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
-                <artifactId>quarkus-amazon-cloudwatch-logs</artifactId>
+                <artifactId>quarkus-amazon-cloudwatchlogs</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
-                <artifactId>quarkus-amazon-cloudwatch-logs-deployment</artifactId>
+                <artifactId>quarkus-amazon-cloudwatchlogs-deployment</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

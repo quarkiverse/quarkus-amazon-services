@@ -1,16 +1,16 @@
 
-:summaryTableId: quarkus-amazon-cloudwatch-logs
+:summaryTableId: quarkus-amazon-cloudwatchlogs
 [.configuration-legend]
 icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
 [.configuration-reference.searchable, cols="80,.^10,.^10"]
 |===
 
-h|[[quarkus-amazon-cloudwatch-logs_configuration]]link:#quarkus-amazon-cloudwatch-logs_configuration[Configuration property]
+h|[[quarkus-amazon-cloudwatchlogs_configuration]]link:#quarkus-amazon-cloudwatchlogs_configuration[Configuration property]
 
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-interceptors]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-interceptors[quarkus.cloudwatchlogs.interceptors]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-interceptors]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-interceptors[quarkus.cloudwatchlogs.interceptors]`
 
 
 [.description]
@@ -29,7 +29,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-telemetry-enabled]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-telemetry-enabled[quarkus.cloudwatchlogs.telemetry.enabled]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-telemetry-enabled]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-telemetry-enabled[quarkus.cloudwatchlogs.telemetry.enabled]`
 
 
 [.description]
@@ -46,7 +46,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-type]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-type[quarkus.cloudwatchlogs.sync-client.type]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-type]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-type[quarkus.cloudwatchlogs.sync-client.type]`
 
 
 [.description]
@@ -64,7 +64,7 @@ endif::add-copy-button-to-env-var[]
 |`url`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-type]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-type[quarkus.cloudwatchlogs.async-client.type]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-type]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-type[quarkus.cloudwatchlogs.async-client.type]`
 
 
 [.description]
@@ -82,7 +82,7 @@ endif::add-copy-button-to-env-var[]
 |`netty`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-devservices-enabled]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-devservices-enabled[quarkus.cloudwatchlogs.devservices.enabled]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-devservices-enabled]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-devservices-enabled[quarkus.cloudwatchlogs.devservices.enabled]`
 
 
 [.description]
@@ -99,7 +99,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-devservices-shared]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-devservices-shared[quarkus.cloudwatchlogs.devservices.shared]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-devservices-shared]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-devservices-shared[quarkus.cloudwatchlogs.devservices.shared]`
 
 
 [.description]
@@ -120,7 +120,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-devservices-service-name]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-devservices-service-name[quarkus.cloudwatchlogs.devservices.service-name]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-devservices-service-name]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-devservices-service-name[quarkus.cloudwatchlogs.devservices.service-name]`
 
 
 [.description]
@@ -139,7 +139,7 @@ endif::add-copy-button-to-env-var[]
 |`localstack`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-devservices-container-properties-container-properties]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-devservices-container-properties-container-properties[quarkus.cloudwatchlogs.devservices.container-properties]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-devservices-container-properties-container-properties]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-devservices-container-properties-container-properties[quarkus.cloudwatchlogs.devservices.container-properties]`
 
 
 [.description]
@@ -156,12 +156,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sdk-aws-sdk-client-configurations]]link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sdk-aws-sdk-client-configurations[AWS SDK client configurations]
+h|[[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sdk-aws-sdk-client-configurations]]link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sdk-aws-sdk-client-configurations[AWS SDK client configurations]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-endpoint-override]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-endpoint-override[quarkus.cloudwatchlogs.endpoint-override]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-endpoint-override]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-endpoint-override[quarkus.cloudwatchlogs.endpoint-override]`
 
 
 [.description]
@@ -181,7 +181,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-api-call-timeout]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-api-call-timeout[quarkus.cloudwatchlogs.api-call-timeout]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-api-call-timeout]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-api-call-timeout[quarkus.cloudwatchlogs.api-call-timeout]`
 
 
 [.description]
@@ -203,7 +203,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-api-call-attempt-timeout]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-api-call-attempt-timeout[quarkus.cloudwatchlogs.api-call-attempt-timeout]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-api-call-attempt-timeout]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-api-call-attempt-timeout[quarkus.cloudwatchlogs.api-call-attempt-timeout]`
 
 
 [.description]
@@ -223,7 +223,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-advanced-use-quarkus-scheduled-executor-service]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-advanced-use-quarkus-scheduled-executor-service[quarkus.cloudwatchlogs.advanced.use-quarkus-scheduled-executor-service]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-advanced-use-quarkus-scheduled-executor-service]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-advanced-use-quarkus-scheduled-executor-service[quarkus.cloudwatchlogs.advanced.use-quarkus-scheduled-executor-service]`
 
 
 [.description]
@@ -242,12 +242,12 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 
-h|[[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-aws-services-configurations]]link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-aws-services-configurations[AWS services configurations]
+h|[[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-aws-services-configurations]]link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-aws-services-configurations[AWS services configurations]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-region]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-region[quarkus.cloudwatchlogs.aws.region]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-region]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-region[quarkus.cloudwatchlogs.aws.region]`
 
 
 [.description]
@@ -275,7 +275,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-type]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-type[quarkus.cloudwatchlogs.aws.credentials.type]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-type]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-type[quarkus.cloudwatchlogs.aws.credentials.type]`
 
 
 [.description]
@@ -316,12 +316,12 @@ endif::add-copy-button-to-env-var[]
 |`default`
 
 
-h|[[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-default-provider-default-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-default-provider-default-credentials-provider-configuration[Default credentials provider configuration]
+h|[[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-default-provider-default-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-default-provider-default-credentials-provider-configuration[Default credentials provider configuration]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-default-provider-async-credential-update-enabled]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-default-provider-async-credential-update-enabled[quarkus.cloudwatchlogs.aws.credentials.default-provider.async-credential-update-enabled]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-default-provider-async-credential-update-enabled]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-default-provider-async-credential-update-enabled[quarkus.cloudwatchlogs.aws.credentials.default-provider.async-credential-update-enabled]`
 
 
 [.description]
@@ -340,7 +340,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-default-provider-reuse-last-provider-enabled]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-default-provider-reuse-last-provider-enabled[quarkus.cloudwatchlogs.aws.credentials.default-provider.reuse-last-provider-enabled]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-default-provider-reuse-last-provider-enabled]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-default-provider-reuse-last-provider-enabled[quarkus.cloudwatchlogs.aws.credentials.default-provider.reuse-last-provider-enabled]`
 
 
 [.description]
@@ -359,12 +359,12 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 
-h|[[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-static-provider-static-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-static-provider-static-credentials-provider-configuration[Static credentials provider configuration]
+h|[[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-static-provider-static-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-static-provider-static-credentials-provider-configuration[Static credentials provider configuration]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-static-provider-access-key-id]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-static-provider-access-key-id[quarkus.cloudwatchlogs.aws.credentials.static-provider.access-key-id]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-static-provider-access-key-id]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-static-provider-access-key-id[quarkus.cloudwatchlogs.aws.credentials.static-provider.access-key-id]`
 
 
 [.description]
@@ -381,7 +381,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-static-provider-secret-access-key]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-static-provider-secret-access-key[quarkus.cloudwatchlogs.aws.credentials.static-provider.secret-access-key]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-static-provider-secret-access-key]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-static-provider-secret-access-key[quarkus.cloudwatchlogs.aws.credentials.static-provider.secret-access-key]`
 
 
 [.description]
@@ -398,7 +398,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-static-provider-session-token]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-static-provider-session-token[quarkus.cloudwatchlogs.aws.credentials.static-provider.session-token]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-static-provider-session-token]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-static-provider-session-token[quarkus.cloudwatchlogs.aws.credentials.static-provider.session-token]`
 
 
 [.description]
@@ -415,12 +415,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-profile-provider-aws-profile-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-profile-provider-aws-profile-credentials-provider-configuration[AWS Profile credentials provider configuration]
+h|[[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-profile-provider-aws-profile-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-profile-provider-aws-profile-credentials-provider-configuration[AWS Profile credentials provider configuration]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-profile-provider-profile-name]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-profile-provider-profile-name[quarkus.cloudwatchlogs.aws.credentials.profile-provider.profile-name]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-profile-provider-profile-name]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-profile-provider-profile-name[quarkus.cloudwatchlogs.aws.credentials.profile-provider.profile-name]`
 
 
 [.description]
@@ -439,12 +439,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-process-provider-process-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-process-provider-process-credentials-provider-configuration[Process credentials provider configuration]
+h|[[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-process-provider-process-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-process-provider-process-credentials-provider-configuration[Process credentials provider configuration]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-process-provider-async-credential-update-enabled]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-process-provider-async-credential-update-enabled[quarkus.cloudwatchlogs.aws.credentials.process-provider.async-credential-update-enabled]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-process-provider-async-credential-update-enabled]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-process-provider-async-credential-update-enabled[quarkus.cloudwatchlogs.aws.credentials.process-provider.async-credential-update-enabled]`
 
 
 [.description]
@@ -463,7 +463,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-process-provider-credential-refresh-threshold]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-process-provider-credential-refresh-threshold[quarkus.cloudwatchlogs.aws.credentials.process-provider.credential-refresh-threshold]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-process-provider-credential-refresh-threshold]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-process-provider-credential-refresh-threshold[quarkus.cloudwatchlogs.aws.credentials.process-provider.credential-refresh-threshold]`
 
 
 [.description]
@@ -483,7 +483,7 @@ endif::add-copy-button-to-env-var[]
 |`15S`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-process-provider-process-output-limit]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-process-provider-process-output-limit[quarkus.cloudwatchlogs.aws.credentials.process-provider.process-output-limit]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-process-provider-process-output-limit]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-process-provider-process-output-limit[quarkus.cloudwatchlogs.aws.credentials.process-provider.process-output-limit]`
 
 
 [.description]
@@ -500,7 +500,7 @@ endif::add-copy-button-to-env-var[]
 |`1024`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-process-provider-command]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-process-provider-command[quarkus.cloudwatchlogs.aws.credentials.process-provider.command]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-process-provider-command]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-process-provider-command[quarkus.cloudwatchlogs.aws.credentials.process-provider.command]`
 
 
 [.description]
@@ -517,12 +517,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-custom-provider-custom-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-custom-provider-custom-credentials-provider-configuration[Custom credentials provider configuration]
+h|[[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-custom-provider-custom-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-custom-provider-custom-credentials-provider-configuration[Custom credentials provider configuration]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-custom-provider-name]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-aws-credentials-custom-provider-name[quarkus.cloudwatchlogs.aws.credentials.custom-provider.name]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-custom-provider-name]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-aws-credentials-custom-provider-name[quarkus.cloudwatchlogs.aws.credentials.custom-provider.name]`
 
 
 [.description]
@@ -539,12 +539,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-sync-http-transport-configurations]]link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-sync-http-transport-configurations[Sync HTTP transport configurations]
+h|[[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-sync-http-transport-configurations]]link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-sync-http-transport-configurations[Sync HTTP transport configurations]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-connection-timeout]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-connection-timeout[quarkus.cloudwatchlogs.sync-client.connection-timeout]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-connection-timeout]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-connection-timeout[quarkus.cloudwatchlogs.sync-client.connection-timeout]`
 
 
 [.description]
@@ -562,7 +562,7 @@ endif::add-copy-button-to-env-var[]
 |`2S`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-socket-timeout]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-socket-timeout[quarkus.cloudwatchlogs.sync-client.socket-timeout]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-socket-timeout]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-socket-timeout[quarkus.cloudwatchlogs.sync-client.socket-timeout]`
 
 
 [.description]
@@ -580,7 +580,7 @@ endif::add-copy-button-to-env-var[]
 |`30S`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-key-managers-provider-type]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-key-managers-provider-type[quarkus.cloudwatchlogs.sync-client.tls-key-managers-provider.type]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-key-managers-provider-type]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-key-managers-provider-type[quarkus.cloudwatchlogs.sync-client.tls-key-managers-provider.type]`
 
 
 [.description]
@@ -606,7 +606,7 @@ endif::add-copy-button-to-env-var[]
 |`system-property`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-key-managers-provider-file-store-path]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-key-managers-provider-file-store-path[quarkus.cloudwatchlogs.sync-client.tls-key-managers-provider.file-store.path]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-key-managers-provider-file-store-path]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-key-managers-provider-file-store-path[quarkus.cloudwatchlogs.sync-client.tls-key-managers-provider.file-store.path]`
 
 
 [.description]
@@ -623,7 +623,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-key-managers-provider-file-store-type]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-key-managers-provider-file-store-type[quarkus.cloudwatchlogs.sync-client.tls-key-managers-provider.file-store.type]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-key-managers-provider-file-store-type]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-key-managers-provider-file-store-type[quarkus.cloudwatchlogs.sync-client.tls-key-managers-provider.file-store.type]`
 
 
 [.description]
@@ -642,7 +642,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-key-managers-provider-file-store-password]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-key-managers-provider-file-store-password[quarkus.cloudwatchlogs.sync-client.tls-key-managers-provider.file-store.password]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-key-managers-provider-file-store-password]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-key-managers-provider-file-store-password[quarkus.cloudwatchlogs.sync-client.tls-key-managers-provider.file-store.password]`
 
 
 [.description]
@@ -659,7 +659,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-trust-managers-provider-type]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-trust-managers-provider-type[quarkus.cloudwatchlogs.sync-client.tls-trust-managers-provider.type]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-trust-managers-provider-type]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-trust-managers-provider-type[quarkus.cloudwatchlogs.sync-client.tls-trust-managers-provider.type]`
 
 
 [.description]
@@ -685,7 +685,7 @@ endif::add-copy-button-to-env-var[]
 |`system-property`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-trust-managers-provider-file-store-path]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-trust-managers-provider-file-store-path[quarkus.cloudwatchlogs.sync-client.tls-trust-managers-provider.file-store.path]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-trust-managers-provider-file-store-path]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-trust-managers-provider-file-store-path[quarkus.cloudwatchlogs.sync-client.tls-trust-managers-provider.file-store.path]`
 
 
 [.description]
@@ -702,7 +702,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-trust-managers-provider-file-store-type]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-trust-managers-provider-file-store-type[quarkus.cloudwatchlogs.sync-client.tls-trust-managers-provider.file-store.type]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-trust-managers-provider-file-store-type]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-trust-managers-provider-file-store-type[quarkus.cloudwatchlogs.sync-client.tls-trust-managers-provider.file-store.type]`
 
 
 [.description]
@@ -721,7 +721,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-trust-managers-provider-file-store-password]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-tls-trust-managers-provider-file-store-password[quarkus.cloudwatchlogs.sync-client.tls-trust-managers-provider.file-store.password]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-trust-managers-provider-file-store-password]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-tls-trust-managers-provider-file-store-password[quarkus.cloudwatchlogs.sync-client.tls-trust-managers-provider.file-store.password]`
 
 
 [.description]
@@ -738,12 +738,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-apache-http-client-specific-configurations]]link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-apache-http-client-specific-configurations[Apache HTTP client specific configurations]
+h|[[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-apache-http-client-specific-configurations]]link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-apache-http-client-specific-configurations[Apache HTTP client specific configurations]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-connection-acquisition-timeout]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-connection-acquisition-timeout[quarkus.cloudwatchlogs.sync-client.apache.connection-acquisition-timeout]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-connection-acquisition-timeout]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-connection-acquisition-timeout[quarkus.cloudwatchlogs.sync-client.apache.connection-acquisition-timeout]`
 
 
 [.description]
@@ -761,7 +761,7 @@ endif::add-copy-button-to-env-var[]
 |`10S`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-connection-max-idle-time]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-connection-max-idle-time[quarkus.cloudwatchlogs.sync-client.apache.connection-max-idle-time]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-connection-max-idle-time]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-connection-max-idle-time[quarkus.cloudwatchlogs.sync-client.apache.connection-max-idle-time]`
 
 
 [.description]
@@ -779,7 +779,7 @@ endif::add-copy-button-to-env-var[]
 |`60S`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-connection-time-to-live]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-connection-time-to-live[quarkus.cloudwatchlogs.sync-client.apache.connection-time-to-live]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-connection-time-to-live]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-connection-time-to-live[quarkus.cloudwatchlogs.sync-client.apache.connection-time-to-live]`
 
 
 [.description]
@@ -797,7 +797,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-max-connections]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-max-connections[quarkus.cloudwatchlogs.sync-client.apache.max-connections]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-max-connections]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-max-connections[quarkus.cloudwatchlogs.sync-client.apache.max-connections]`
 
 
 [.description]
@@ -816,7 +816,7 @@ endif::add-copy-button-to-env-var[]
 |`50`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-expect-continue-enabled]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-expect-continue-enabled[quarkus.cloudwatchlogs.sync-client.apache.expect-continue-enabled]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-expect-continue-enabled]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-expect-continue-enabled[quarkus.cloudwatchlogs.sync-client.apache.expect-continue-enabled]`
 
 
 [.description]
@@ -833,7 +833,7 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-use-idle-connection-reaper]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-use-idle-connection-reaper[quarkus.cloudwatchlogs.sync-client.apache.use-idle-connection-reaper]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-use-idle-connection-reaper]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-use-idle-connection-reaper[quarkus.cloudwatchlogs.sync-client.apache.use-idle-connection-reaper]`
 
 
 [.description]
@@ -852,7 +852,7 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-tcp-keep-alive]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-tcp-keep-alive[quarkus.cloudwatchlogs.sync-client.apache.tcp-keep-alive]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-tcp-keep-alive]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-tcp-keep-alive[quarkus.cloudwatchlogs.sync-client.apache.tcp-keep-alive]`
 
 
 [.description]
@@ -869,7 +869,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-enabled]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-enabled[quarkus.cloudwatchlogs.sync-client.apache.proxy.enabled]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-enabled]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-enabled[quarkus.cloudwatchlogs.sync-client.apache.proxy.enabled]`
 
 
 [.description]
@@ -886,7 +886,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-endpoint]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-endpoint[quarkus.cloudwatchlogs.sync-client.apache.proxy.endpoint]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-endpoint]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-endpoint[quarkus.cloudwatchlogs.sync-client.apache.proxy.endpoint]`
 
 
 [.description]
@@ -906,7 +906,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-username]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-username[quarkus.cloudwatchlogs.sync-client.apache.proxy.username]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-username]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-username[quarkus.cloudwatchlogs.sync-client.apache.proxy.username]`
 
 
 [.description]
@@ -923,7 +923,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-password]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-password[quarkus.cloudwatchlogs.sync-client.apache.proxy.password]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-password]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-password[quarkus.cloudwatchlogs.sync-client.apache.proxy.password]`
 
 
 [.description]
@@ -940,7 +940,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-ntlm-domain]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-ntlm-domain[quarkus.cloudwatchlogs.sync-client.apache.proxy.ntlm-domain]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-ntlm-domain]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-ntlm-domain[quarkus.cloudwatchlogs.sync-client.apache.proxy.ntlm-domain]`
 
 
 [.description]
@@ -957,7 +957,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-ntlm-workstation]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-ntlm-workstation[quarkus.cloudwatchlogs.sync-client.apache.proxy.ntlm-workstation]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-ntlm-workstation]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-ntlm-workstation[quarkus.cloudwatchlogs.sync-client.apache.proxy.ntlm-workstation]`
 
 
 [.description]
@@ -974,7 +974,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-preemptive-basic-authentication-enabled]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-preemptive-basic-authentication-enabled[quarkus.cloudwatchlogs.sync-client.apache.proxy.preemptive-basic-authentication-enabled]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-preemptive-basic-authentication-enabled]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-preemptive-basic-authentication-enabled[quarkus.cloudwatchlogs.sync-client.apache.proxy.preemptive-basic-authentication-enabled]`
 
 
 [.description]
@@ -991,7 +991,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-non-proxy-hosts]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-apache-proxy-non-proxy-hosts[quarkus.cloudwatchlogs.sync-client.apache.proxy.non-proxy-hosts]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-non-proxy-hosts]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-apache-proxy-non-proxy-hosts[quarkus.cloudwatchlogs.sync-client.apache.proxy.non-proxy-hosts]`
 
 
 [.description]
@@ -1008,12 +1008,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-aws-crt-based-http-client-specific-configurations]]link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-aws-crt-based-http-client-specific-configurations[AWS CRT-based HTTP client specific configurations]
+h|[[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-aws-crt-based-http-client-specific-configurations]]link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-aws-crt-based-http-client-specific-configurations[AWS CRT-based HTTP client specific configurations]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-connection-max-idle-time]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-connection-max-idle-time[quarkus.cloudwatchlogs.sync-client.crt.connection-max-idle-time]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-connection-max-idle-time]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-connection-max-idle-time[quarkus.cloudwatchlogs.sync-client.crt.connection-max-idle-time]`
 
 
 [.description]
@@ -1031,7 +1031,7 @@ endif::add-copy-button-to-env-var[]
 |`60S`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-max-concurrency]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-max-concurrency[quarkus.cloudwatchlogs.sync-client.crt.max-concurrency]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-max-concurrency]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-max-concurrency[quarkus.cloudwatchlogs.sync-client.crt.max-concurrency]`
 
 
 [.description]
@@ -1048,7 +1048,7 @@ endif::add-copy-button-to-env-var[]
 |`50`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-proxy-enabled]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-proxy-enabled[quarkus.cloudwatchlogs.sync-client.crt.proxy.enabled]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-proxy-enabled]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-proxy-enabled[quarkus.cloudwatchlogs.sync-client.crt.proxy.enabled]`
 
 
 [.description]
@@ -1065,7 +1065,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-proxy-endpoint]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-proxy-endpoint[quarkus.cloudwatchlogs.sync-client.crt.proxy.endpoint]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-proxy-endpoint]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-proxy-endpoint[quarkus.cloudwatchlogs.sync-client.crt.proxy.endpoint]`
 
 
 [.description]
@@ -1085,7 +1085,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-proxy-username]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-proxy-username[quarkus.cloudwatchlogs.sync-client.crt.proxy.username]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-proxy-username]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-proxy-username[quarkus.cloudwatchlogs.sync-client.crt.proxy.username]`
 
 
 [.description]
@@ -1102,7 +1102,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-proxy-password]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-sync-client-crt-proxy-password[quarkus.cloudwatchlogs.sync-client.crt.proxy.password]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-proxy-password]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-sync-client-crt-proxy-password[quarkus.cloudwatchlogs.sync-client.crt.proxy.password]`
 
 
 [.description]
@@ -1119,12 +1119,12 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-async-http-transport-configurations]]link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-async-http-transport-configurations[Async HTTP transport configurations]
+h|[[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-async-http-transport-configurations]]link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-async-http-transport-configurations[Async HTTP transport configurations]
 
 h|Type
 h|Default
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-max-concurrency]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-max-concurrency[quarkus.cloudwatchlogs.async-client.max-concurrency]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-max-concurrency]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-max-concurrency[quarkus.cloudwatchlogs.async-client.max-concurrency]`
 
 
 [.description]
@@ -1143,7 +1143,7 @@ endif::add-copy-button-to-env-var[]
 |`50`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-max-pending-connection-acquires]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-max-pending-connection-acquires[quarkus.cloudwatchlogs.async-client.max-pending-connection-acquires]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-max-pending-connection-acquires]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-max-pending-connection-acquires[quarkus.cloudwatchlogs.async-client.max-pending-connection-acquires]`
 
 
 [.description]
@@ -1162,7 +1162,7 @@ endif::add-copy-button-to-env-var[]
 |`10000`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-read-timeout]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-read-timeout[quarkus.cloudwatchlogs.async-client.read-timeout]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-read-timeout]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-read-timeout[quarkus.cloudwatchlogs.async-client.read-timeout]`
 
 
 [.description]
@@ -1182,7 +1182,7 @@ endif::add-copy-button-to-env-var[]
 |`30S`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-write-timeout]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-write-timeout[quarkus.cloudwatchlogs.async-client.write-timeout]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-write-timeout]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-write-timeout[quarkus.cloudwatchlogs.async-client.write-timeout]`
 
 
 [.description]
@@ -1202,7 +1202,7 @@ endif::add-copy-button-to-env-var[]
 |`30S`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-connection-timeout]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-connection-timeout[quarkus.cloudwatchlogs.async-client.connection-timeout]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-connection-timeout]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-connection-timeout[quarkus.cloudwatchlogs.async-client.connection-timeout]`
 
 
 [.description]
@@ -1220,7 +1220,7 @@ endif::add-copy-button-to-env-var[]
 |`10S`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-connection-acquisition-timeout]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-connection-acquisition-timeout[quarkus.cloudwatchlogs.async-client.connection-acquisition-timeout]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-connection-acquisition-timeout]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-connection-acquisition-timeout[quarkus.cloudwatchlogs.async-client.connection-acquisition-timeout]`
 
 
 [.description]
@@ -1238,7 +1238,7 @@ endif::add-copy-button-to-env-var[]
 |`2S`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-connection-time-to-live]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-connection-time-to-live[quarkus.cloudwatchlogs.async-client.connection-time-to-live]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-connection-time-to-live]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-connection-time-to-live[quarkus.cloudwatchlogs.async-client.connection-time-to-live]`
 
 
 [.description]
@@ -1256,7 +1256,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-connection-max-idle-time]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-connection-max-idle-time[quarkus.cloudwatchlogs.async-client.connection-max-idle-time]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-connection-max-idle-time]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-connection-max-idle-time[quarkus.cloudwatchlogs.async-client.connection-max-idle-time]`
 
 
 [.description]
@@ -1276,7 +1276,7 @@ endif::add-copy-button-to-env-var[]
 |`5S`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-use-idle-connection-reaper]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-use-idle-connection-reaper[quarkus.cloudwatchlogs.async-client.use-idle-connection-reaper]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-use-idle-connection-reaper]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-use-idle-connection-reaper[quarkus.cloudwatchlogs.async-client.use-idle-connection-reaper]`
 
 
 [.description]
@@ -1295,7 +1295,7 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tcp-keep-alive]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tcp-keep-alive[quarkus.cloudwatchlogs.async-client.tcp-keep-alive]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tcp-keep-alive]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tcp-keep-alive[quarkus.cloudwatchlogs.async-client.tcp-keep-alive]`
 
 
 [.description]
@@ -1312,7 +1312,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-protocol]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-protocol[quarkus.cloudwatchlogs.async-client.protocol]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-protocol]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-protocol[quarkus.cloudwatchlogs.async-client.protocol]`
 
 
 [.description]
@@ -1330,7 +1330,7 @@ endif::add-copy-button-to-env-var[]
 |`http1-1`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-ssl-provider]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-ssl-provider[quarkus.cloudwatchlogs.async-client.ssl-provider]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-ssl-provider]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-ssl-provider[quarkus.cloudwatchlogs.async-client.ssl-provider]`
 
 
 [.description]
@@ -1350,7 +1350,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-http2-max-streams]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-http2-max-streams[quarkus.cloudwatchlogs.async-client.http2.max-streams]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-http2-max-streams]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-http2-max-streams[quarkus.cloudwatchlogs.async-client.http2.max-streams]`
 
 
 [.description]
@@ -1369,7 +1369,7 @@ endif::add-copy-button-to-env-var[]
 |`4294967295`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-http2-initial-window-size]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-http2-initial-window-size[quarkus.cloudwatchlogs.async-client.http2.initial-window-size]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-http2-initial-window-size]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-http2-initial-window-size[quarkus.cloudwatchlogs.async-client.http2.initial-window-size]`
 
 
 [.description]
@@ -1388,7 +1388,7 @@ endif::add-copy-button-to-env-var[]
 |`1048576`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-http2-health-check-ping-period]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-http2-health-check-ping-period[quarkus.cloudwatchlogs.async-client.http2.health-check-ping-period]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-http2-health-check-ping-period]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-http2-health-check-ping-period[quarkus.cloudwatchlogs.async-client.http2.health-check-ping-period]`
 
 
 [.description]
@@ -1408,7 +1408,7 @@ endif::add-copy-button-to-env-var[]
 |`5`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-proxy-enabled]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-proxy-enabled[quarkus.cloudwatchlogs.async-client.proxy.enabled]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-proxy-enabled]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-proxy-enabled[quarkus.cloudwatchlogs.async-client.proxy.enabled]`
 
 
 [.description]
@@ -1425,7 +1425,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-proxy-endpoint]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-proxy-endpoint[quarkus.cloudwatchlogs.async-client.proxy.endpoint]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-proxy-endpoint]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-proxy-endpoint[quarkus.cloudwatchlogs.async-client.proxy.endpoint]`
 
 
 [.description]
@@ -1445,7 +1445,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-proxy-non-proxy-hosts]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-proxy-non-proxy-hosts[quarkus.cloudwatchlogs.async-client.proxy.non-proxy-hosts]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-proxy-non-proxy-hosts]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-proxy-non-proxy-hosts[quarkus.cloudwatchlogs.async-client.proxy.non-proxy-hosts]`
 
 
 [.description]
@@ -1462,7 +1462,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-key-managers-provider-type]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-key-managers-provider-type[quarkus.cloudwatchlogs.async-client.tls-key-managers-provider.type]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-key-managers-provider-type]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-key-managers-provider-type[quarkus.cloudwatchlogs.async-client.tls-key-managers-provider.type]`
 
 
 [.description]
@@ -1488,7 +1488,7 @@ endif::add-copy-button-to-env-var[]
 |`system-property`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-key-managers-provider-file-store-path]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-key-managers-provider-file-store-path[quarkus.cloudwatchlogs.async-client.tls-key-managers-provider.file-store.path]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-key-managers-provider-file-store-path]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-key-managers-provider-file-store-path[quarkus.cloudwatchlogs.async-client.tls-key-managers-provider.file-store.path]`
 
 
 [.description]
@@ -1505,7 +1505,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-key-managers-provider-file-store-type]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-key-managers-provider-file-store-type[quarkus.cloudwatchlogs.async-client.tls-key-managers-provider.file-store.type]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-key-managers-provider-file-store-type]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-key-managers-provider-file-store-type[quarkus.cloudwatchlogs.async-client.tls-key-managers-provider.file-store.type]`
 
 
 [.description]
@@ -1524,7 +1524,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-key-managers-provider-file-store-password]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-key-managers-provider-file-store-password[quarkus.cloudwatchlogs.async-client.tls-key-managers-provider.file-store.password]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-key-managers-provider-file-store-password]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-key-managers-provider-file-store-password[quarkus.cloudwatchlogs.async-client.tls-key-managers-provider.file-store.password]`
 
 
 [.description]
@@ -1541,7 +1541,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-trust-managers-provider-type]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-trust-managers-provider-type[quarkus.cloudwatchlogs.async-client.tls-trust-managers-provider.type]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-trust-managers-provider-type]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-trust-managers-provider-type[quarkus.cloudwatchlogs.async-client.tls-trust-managers-provider.type]`
 
 
 [.description]
@@ -1567,7 +1567,7 @@ endif::add-copy-button-to-env-var[]
 |`system-property`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-trust-managers-provider-file-store-path]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-trust-managers-provider-file-store-path[quarkus.cloudwatchlogs.async-client.tls-trust-managers-provider.file-store.path]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-trust-managers-provider-file-store-path]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-trust-managers-provider-file-store-path[quarkus.cloudwatchlogs.async-client.tls-trust-managers-provider.file-store.path]`
 
 
 [.description]
@@ -1584,7 +1584,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-trust-managers-provider-file-store-type]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-trust-managers-provider-file-store-type[quarkus.cloudwatchlogs.async-client.tls-trust-managers-provider.file-store.type]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-trust-managers-provider-file-store-type]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-trust-managers-provider-file-store-type[quarkus.cloudwatchlogs.async-client.tls-trust-managers-provider.file-store.type]`
 
 
 [.description]
@@ -1603,7 +1603,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-trust-managers-provider-file-store-password]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-tls-trust-managers-provider-file-store-password[quarkus.cloudwatchlogs.async-client.tls-trust-managers-provider.file-store.password]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-trust-managers-provider-file-store-password]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-tls-trust-managers-provider-file-store-password[quarkus.cloudwatchlogs.async-client.tls-trust-managers-provider.file-store.password]`
 
 
 [.description]
@@ -1620,7 +1620,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-event-loop-override]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-event-loop-override[quarkus.cloudwatchlogs.async-client.event-loop.override]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-event-loop-override]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-event-loop-override[quarkus.cloudwatchlogs.async-client.event-loop.override]`
 
 
 [.description]
@@ -1637,7 +1637,7 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-event-loop-number-of-threads]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-event-loop-number-of-threads[quarkus.cloudwatchlogs.async-client.event-loop.number-of-threads]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-event-loop-number-of-threads]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-event-loop-number-of-threads[quarkus.cloudwatchlogs.async-client.event-loop.number-of-threads]`
 
 
 [.description]
@@ -1656,7 +1656,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-event-loop-thread-name-prefix]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-event-loop-thread-name-prefix[quarkus.cloudwatchlogs.async-client.event-loop.thread-name-prefix]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-event-loop-thread-name-prefix]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-event-loop-thread-name-prefix[quarkus.cloudwatchlogs.async-client.event-loop.thread-name-prefix]`
 
 
 [.description]
@@ -1677,7 +1677,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a| [[quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-advanced-use-future-completion-thread-pool]]`link:#quarkus-amazon-cloudwatch-logs_quarkus-cloudwatch-logs-async-client-advanced-use-future-completion-thread-pool[quarkus.cloudwatchlogs.async-client.advanced.use-future-completion-thread-pool]`
+a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-advanced-use-future-completion-thread-pool]]`link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-advanced-use-future-completion-thread-pool[quarkus.cloudwatchlogs.async-client.advanced.use-future-completion-thread-pool]`
 
 
 [.description]

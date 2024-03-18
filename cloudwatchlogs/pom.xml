@@ -9,7 +9,7 @@
         <relativePath>../build-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>quarkus-amazon-cloudwatch-logs-parent</artifactId>
+    <artifactId>quarkus-amazon-cloudwatchlogs-parent</artifactId>
     <name>Quarkus - Amazon Services - CloudWatch Logs</name>
     <packaging>pom</packaging>
 

@@ -16,7 +16,7 @@ import software.amazon.awssdk.services.cloudwatchlogs.CloudWatchLogsAsyncClient;
 import software.amazon.awssdk.services.cloudwatchlogs.CloudWatchLogsClient;
 import software.amazon.awssdk.services.cloudwatchlogs.model.*;
 
-@Path("/cloudwatch-logs")
+@Path("/cloudwatchlogs")
 public class CloudWatchLogsResource {
 
     @Inject
@@ -107,8 +107,7 @@ public class CloudWatchLogsResource {
             }
 
             return maybeLogGroup.get();
-        }
-        ).onFailure(IllegalStateException.class)
+        }).onFailure(IllegalStateException.class)
                 .retry().indefinitely()
                 .await().atMost(Duration.ofSeconds(10));
         if (logGroup == null) {
@@ -340,10 +339,9 @@ public class CloudWatchLogsResource {
                         return Uni.createFrom().failure(IllegalStateException::new);
                     }
                 }).onFailure(IllegalStateException.class)
-                .retry().indefinitely().map(events ->
-                        events.stream()
-                                .map(OutputLogEvent::message)
-                                .collect(Collectors.toList()));
+                .retry().indefinitely().map(events -> events.stream()
+                        .map(OutputLogEvent::message)
+                        .collect(Collectors.toList()));
 
     }
 

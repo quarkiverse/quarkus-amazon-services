@@ -1,6 +1,6 @@
 * xref:index.adoc[Quarkus Amazon Services]
 * xref:amazon-cloudwatch.adoc[CloudWatch]
-* xref:amazon-cloudwatch-logs.adoc[CloudWatch Logs]
+* xref:amazon-cloudwatchlogs.adoc[CloudWatch Logs]
 * xref:amazon-cognitouserpools.adoc[Cognito User Pools]
 * xref:amazon-dynamodb.adoc[DynamoDB]
 * xref:amazon-eventbridge.adoc[EventBridge]

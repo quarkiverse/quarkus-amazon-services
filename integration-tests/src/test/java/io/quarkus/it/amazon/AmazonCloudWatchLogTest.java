@@ -5,15 +5,15 @@ import static org.hamcrest.Matchers.is;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.Timeout;
 
 @QuarkusTest
 public class AmazonCloudWatchLogTest {
 
-    String prefix = "/test/cloudwatch-logs";
+    String prefix = "/test/cloudwatchlogs";
 
     @Test
     @Timeout(30)

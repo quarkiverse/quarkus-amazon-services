@@ -8,7 +8,7 @@
         <version>999-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quarkus-amazon-devservices-cloudwatch-logs</artifactId>
+    <artifactId>quarkus-amazon-devservices-cloudwatchlogs</artifactId>
     <name>Quarkus - Amazon DevServices - CloudWatch Logs</name>
     <dependencies>
         <dependency>
@@ -17,7 +17,7 @@
         </dependency>
          <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-cloudwatch-logs</artifactId>
+            <artifactId>quarkus-amazon-cloudwatchlogs</artifactId>
         </dependency>
     </dependencies>
     <build>
