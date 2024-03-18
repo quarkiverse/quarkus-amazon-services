@@ -214,6 +214,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "andrezimmermann",
+      "name": "André Zimmermann",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2397101?v=4",
+      "profile": "https://github.com/andrezimmermann",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
