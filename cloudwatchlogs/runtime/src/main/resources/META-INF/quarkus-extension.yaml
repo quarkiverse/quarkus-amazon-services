@@ -11,4 +11,4 @@ metadata:
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-cloudwatchlogs.html
   status: "preview"
   config:
-  - "quarkus.cloudwatch."
+  - "quarkus.cloudwatchlogs."
