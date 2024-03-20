@@ -130,8 +130,8 @@ public abstract class AbstractDevServicesLocalStackProcessor {
      * Returns the property configuration name for the given {@link LocalStackContainer.EnabledService}.
      * <p>
      * The property configuration name is the name of the service, which is the same as the AWSSDK artifact id.
-     * The only exception is the Step Functions service, which is named "sfn" in the AWSSDK and "stepfunctions" in the
-     * LocalStack configuration.
+     * The only exception is the Step Functions service, which is named "sfn" in the AWSSDK, "stepfunctions"
+     * and "logs" in the LocalStack configuration.
      * <p>
      *
      * @param enabledService the LocalStack enabled service
@@ -142,6 +142,8 @@ public abstract class AbstractDevServicesLocalStackProcessor {
             return "sfn";
         if (enabledService.getName().equals("events"))
             return "eventbridge";
+        if (enabledService == LocalStackContainer.Service.CLOUDWATCHLOGS)
+            return "cloudwatchlogs";
         return enabledService.getName();
     }
 }

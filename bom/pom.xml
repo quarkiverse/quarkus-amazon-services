@@ -237,6 +237,23 @@
                 <artifactId>quarkus-amazon-secretsmanager-deployment</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-devservices-cloudwatchlogs</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-cloudwatchlogs</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-cloudwatchlogs-deployment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
                 <artifactId>quarkus-amazon-devservices-cloudwatch</artifactId>
