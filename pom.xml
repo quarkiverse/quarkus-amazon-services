@@ -55,7 +55,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.version>3.9.0</quarkus.version>
     <awssdk.version>2.25.13</awssdk.version>
-    <awscrt.version>0.29.12</awscrt.version>
+    <awscrt.version>0.29.13</awscrt.version>
   </properties>
   <build>
     <pluginManagement>
