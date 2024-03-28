@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.jboss.logging.Logger;
+import org.testcontainers.Testcontainers;
 import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.localstack.LocalStackContainer;
 import org.testcontainers.containers.localstack.LocalStackContainer.EnabledService;
@@ -303,6 +304,10 @@ public class DevServicesLocalStackProcessor {
                                 .withServices(requestedServicesGroup.stream().map(ds -> ds.getService())
                                         .toArray(EnabledService[]::new))
                                 .withLabel(DEV_SERVICE_LABEL, devServiceName);
+
+                        if (localStackDevServicesBuildTimeConfig.accessToHost()) {
+                            Testcontainers.exposeHostPorts(localStackDevServicesBuildTimeConfig.hostPort());
+                        }
 
                         localStackDevServicesBuildTimeConfig.port().ifPresent(
                                 port -> container.setPortBindings(Collections.singletonList("%s:%s".formatted(port, PORT))));

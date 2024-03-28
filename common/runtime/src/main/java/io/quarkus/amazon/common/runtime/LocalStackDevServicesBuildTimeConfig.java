@@ -48,4 +48,17 @@ public interface LocalStackDevServicesBuildTimeConfig {
      * Optional fixed port localstack will listen to.
      */
     Optional<Integer> port();
+
+    /**
+     * Indicates if the container would make a connection to the host network.
+     */
+    @WithDefault("false")
+    boolean accessToHost();
+
+    /**
+     * port which the application listen to.
+     */
+    @WithDefault("${quarkus.http.port:8080}")
+    int hostPort();
+
 }
