@@ -61,6 +61,24 @@ The key is the name of the service to enable and must be a valid LocalStack serv
 
 Some extensions support additional configuration to be applied at startup. Refer to the extension documentation.
 
+== Connect to host network
+
+Dev Services for Amazon Services can support communication from the localstack container to the host network.
+
+If the container needs to communicate with the application running in dev mode, the property `quarkus.http.host` must be set to make the application listen on `0.0.0.0`.
+Otherwise, network traffic must be forwarded somehow to `127.0.0.1` which is the default listening address.
+
+By default, the host exposes port `8080` or the one set via `quarkus.http.port` property to the LocalStack container.
+In case the exposed port is incorrectly evaluated, it can be manually forced by specifying the desired value via `quarkus.aws.devservices.localstack.host-port`.
+
+[source, properties]
+----
+quarkus.http.host=0.0.0.0
+quarkus.aws.devservices.localstack.access-to-host=true
+----
+
+Connection to host network DOES NOT support `quarkus.http.port=0`
+
 == Cognito
 
 The Cognito extension is not using LocalStack but Moto.
