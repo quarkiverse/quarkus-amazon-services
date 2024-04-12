@@ -9,7 +9,6 @@ You can find more information about DynamoDB at https://aws.amazon.com/dynamodb/
 
 NOTE: The DynamoDB extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
 It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
-Keep in mind it's actively developed and does not support yet all the features available in SDK 1.x such as https://github.com/aws/aws-sdk-java-v2/issues/36[Document APIs]
 
 The Quarkus extension supports the traditional DynamoDB client as well as the https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/dynamodb-enhanced-client.html[enhanced client].
 
