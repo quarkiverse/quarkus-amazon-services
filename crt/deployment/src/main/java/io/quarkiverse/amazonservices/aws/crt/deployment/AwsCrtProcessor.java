@@ -253,6 +253,9 @@ public class AwsCrtProcessor {
                 "software.amazon.awssdk.crt.http.HttpProxyOptions$HttpProxyConnectionType",
                 "getValue"));
         jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
+                "software.amazon.awssdk.crt.http.HttpProxyOptions$HttpProxyAuthorizationType",
+                "getValue"));
+        jniRuntimeAccessMethod.produce(new JniRuntimeAccessMethodBuildItem(
                 "software.amazon.awssdk.crt.http.HttpRequest", "<init>", "java.nio.ByteBuffer",
                 "software.amazon.awssdk.crt.http.HttpRequestBodyStream"));
         jniRuntimeAccessField.produce(new JniRuntimeAccessFieldBuildItem(
