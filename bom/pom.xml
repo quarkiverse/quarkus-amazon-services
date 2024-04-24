@@ -152,6 +152,23 @@
                 <artifactId>quarkus-amazon-iam-deployment</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!--
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-devservices-inspector</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            -->
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-inspector</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-inspector-deployment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
                 <artifactId>quarkus-amazon-devservices-kms</artifactId>

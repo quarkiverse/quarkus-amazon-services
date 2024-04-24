@@ -23,6 +23,7 @@
         <module>dynamodb</module>
         <module>eventbridge</module>
         <module>iam</module>
+<!--        <module>inspector</module>-->
         <module>kinesis</module>
         <module>kms</module>
         <module>lambda</module>
