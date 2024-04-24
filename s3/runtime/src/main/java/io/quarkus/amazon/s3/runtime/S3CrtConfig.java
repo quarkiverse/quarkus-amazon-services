@@ -31,4 +31,12 @@ public interface S3CrtConfig {
      */
     @ConfigDocDefault("10")
     Optional<Double> targetThroughputInGbps();
+
+    /***
+     * The amount of native memory that CRT is allowed to use when making requests to S3.
+     *
+     * Only specify the memory limit explicitly when necessary. Refer to the AWS SDK documentation for further details.
+     */
+    @ConfigDocDefault("Based on a number of parameters such as target throughput")
+    Optional<Long> maxNativeMemoryLimitInBytes();
 }
