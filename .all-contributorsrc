@@ -232,6 +232,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "javaduke",
+      "name": "javaduke",
+      "avatar_url": "https://avatars.githubusercontent.com/u/561559?v=4",
+      "profile": "https://github.com/javaduke",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
