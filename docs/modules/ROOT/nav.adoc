@@ -5,6 +5,7 @@
 * xref:amazon-dynamodb.adoc[DynamoDB]
 * xref:amazon-eventbridge.adoc[EventBridge]
 * xref:amazon-iam.adoc[IAM]
+* xref:amazon-inspector.adoc[Inspector]
 * xref:amazon-kinesis.adoc[Kinesis]
 * xref:amazon-kms.adoc[KMS]
 * xref:amazon-lambda.adoc[Lambda]
