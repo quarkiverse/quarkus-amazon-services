@@ -6,6 +6,7 @@
 * xref:amazon-eventbridge.adoc[EventBridge]
 * xref:amazon-iam.adoc[IAM]
 * xref:amazon-inspector.adoc[Inspector]
+* xref:amazon-inspector2.adoc[Inspector2]
 * xref:amazon-kinesis.adoc[Kinesis]
 * xref:amazon-kms.adoc[KMS]
 * xref:amazon-lambda.adoc[Lambda]

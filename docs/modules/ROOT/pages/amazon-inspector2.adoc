@@ -1,0 +1,17 @@
+= Amazon Inspector Client
+
+include::./includes/attributes.adoc[]
+
+Amazon Inspector automatically discovers workloads, such as Amazon EC2 instances, containers, and Lambda functions, and scans them for software vulnerabilities and unintended network exposure.
+
+You can find more information about Inspector at https://aws.amazon.com/inspector/[the Amazon Inspector website].
+
+NOTE: The Inspector2 extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
+
+The Quarkus extension supports two programming models:
+
+* Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
+* https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
+
+include::./includes/quarkus-amazon-inspector2.adoc[]

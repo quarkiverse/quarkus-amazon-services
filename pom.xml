@@ -25,6 +25,7 @@
     <module>eventbridge</module>
     <module>iam</module>
     <module>inspector</module>
+    <module>inspector2</module>
     <module>kinesis</module>
     <module>kms</module>
     <module>lambda</module>

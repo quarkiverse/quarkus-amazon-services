@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon Inspector2"
+metadata:
+  keywords:
+    - "inspector2"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-inspector2.html
+  status: "stable"
+  config:
+  - "quarkus.inspector2."
