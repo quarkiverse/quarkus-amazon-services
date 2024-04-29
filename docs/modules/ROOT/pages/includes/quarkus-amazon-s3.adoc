@@ -1925,6 +1925,23 @@ endif::add-copy-button-to-env-var[]
 --|double 
 |`10`
 
+
+a| [[quarkus-amazon-s3_quarkus-s3-crt-client-max-native-memory-limit-in-bytes]]`link:#quarkus-amazon-s3_quarkus-s3-crt-client-max-native-memory-limit-in-bytes[quarkus.s3.crt-client.max-native-memory-limit-in-bytes]`
+
+
+[.description]
+--
+The amount of native memory that CRT is allowed to use when making requests to S3. Only specify the memory limit explicitly when necessary. Refer to the AWS SDK documentation for further details.
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CRT_CLIENT_MAX_NATIVE_MEMORY_LIMIT_IN_BYTES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CRT_CLIENT_MAX_NATIVE_MEMORY_LIMIT_IN_BYTES+++`
+endif::add-copy-button-to-env-var[]
+--|long 
+|`Based on a number of parameters such as target throughput`
+
 |===
 ifndef::no-duration-note[]
 [NOTE]
