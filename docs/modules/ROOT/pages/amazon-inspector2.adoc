@@ -1,4 +1,4 @@
-= Amazon Inspector Client
+= Amazon Inspector2 Client
 
 include::./includes/attributes.adoc[]
 
