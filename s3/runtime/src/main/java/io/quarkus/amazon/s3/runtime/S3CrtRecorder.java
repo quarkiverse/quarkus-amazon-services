@@ -40,6 +40,7 @@ public class S3CrtRecorder {
         config.crtClient().maxConcurrency().ifPresent(builder::maxConcurrency);
         config.crtClient().minimumPartSizeInBytes().ifPresent(builder::minimumPartSizeInBytes);
         config.crtClient().targetThroughputInGbps().ifPresent(builder::targetThroughputInGbps);
+        config.crtClient().maxNativeMemoryLimitInBytes().ifPresent(builder::maxNativeMemoryLimitInBytes);
 
         config.aws().region().ifPresent(builder::region);
         builder.credentialsProvider(
