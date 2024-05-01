@@ -13,6 +13,7 @@ This set of extensions allows you to interact with some of the AWS Services name
  * DynamoDB / DynamoDB Enhanced
  * EventBridge
  * IAM
+ * Inspector / Inspector2
  * Kinesis
  * KMS
  * Lambda
