@@ -7,6 +7,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.spi.DeploymentException;
 
 import org.jboss.jandex.ClassType;
 import org.jboss.jandex.DotName;
@@ -337,8 +338,12 @@ abstract public class AbstractAmazonServiceProcessor {
                 : null;
 
         ScheduledExecutorService sharedExecutorService = executorBuildItem.getExecutorProxy();
-        var addOpenTelemetry = sdkBuildConfig.sdk().telemetry().orElse(false)
-                && capabilities.isPresent(Capability.OPENTELEMETRY_TRACER);
+
+        var addOpenTelemetry = sdkBuildConfig.sdk().telemetry().orElse(false);
+        if (addOpenTelemetry && !capabilities.isPresent(Capability.OPENTELEMETRY_TRACER)) {
+            throw new DeploymentException("'quarkus." + configName
+                    + ".telemetry.enabled=true but 'io.quarkus:quarkus-opentelemetry' dependency is missing on the classpath");
+        }
 
         if (syncClientBuilder != null) {
             syncClientBuilder = recorder.configure(syncClientBuilder, awsConfigRuntime, sdkConfigRuntime,
