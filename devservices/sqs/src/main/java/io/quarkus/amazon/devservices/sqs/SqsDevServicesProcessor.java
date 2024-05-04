@@ -36,7 +36,7 @@ public class SqsDevServicesProcessor extends AbstractDevServicesLocalStackProces
 
     public void createQueues(LocalStackContainer localstack, SqsDevServiceCfg configuration) {
         try (SqsClient client = SqsClient.builder()
-                .endpointOverride(localstack.getEndpointOverride(LocalStackContainer.Service.S3))
+                .endpointOverride(localstack.getEndpointOverride(LocalStackContainer.Service.SQS))
                 .region(Region.of(localstack.getRegion()))
                 .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials
                         .create(localstack.getAccessKey(), localstack.getSecretKey())))
