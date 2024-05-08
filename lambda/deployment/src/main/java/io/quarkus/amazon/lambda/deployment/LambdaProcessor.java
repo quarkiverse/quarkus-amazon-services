@@ -13,6 +13,7 @@ import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncTransportBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonHttpClients;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonTelemetryBuildItem;
 import io.quarkus.amazon.common.deployment.spi.EventLoopGroupBuildItem;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientAwsCrtTransportRecorder;
@@ -27,7 +28,6 @@ import io.quarkus.amazon.lambda.runtime.LambdaRecorder;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
-import io.quarkus.deployment.Capabilities;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
@@ -91,6 +91,12 @@ public class LambdaProcessor extends AbstractAmazonServiceProcessor {
             final BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
 
         discoverClient(beanRegistrationPhase, requireClientProducer);
+    }
+
+    @BuildStep
+    void discoverTelemetry(BuildProducer<RequireAmazonTelemetryBuildItem> telemetryProducer) {
+
+        discoverTelemetry(telemetryProducer, buildTimeConfig.sdk());
     }
 
     @BuildStep
@@ -185,10 +191,10 @@ public class LambdaProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
-    void createClientBuilders(final LambdaRecorder recorder,
-            Capabilities capabilities,
+    void createClientBuilders(LambdaRecorder recorder,
             AmazonClientCommonRecorder commonRecorder,
             AmazonClientOpenTelemetryRecorder otelRecorder,
+            List<RequireAmazonTelemetryBuildItem> amazonRequireTelemtryClients,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
@@ -197,11 +203,12 @@ public class LambdaProcessor extends AbstractAmazonServiceProcessor {
             LaunchModeBuildItem launchModeBuildItem,
             ExecutorBuildItem executorBuildItem) {
 
-        createClientBuilders(capabilities,
+        createClientBuilders(
                 recorder,
                 commonRecorder,
                 otelRecorder,
                 buildTimeConfig,
+                amazonRequireTelemtryClients,
                 syncTransports,
                 asyncTransports,
                 LambdaClientBuilder.class,

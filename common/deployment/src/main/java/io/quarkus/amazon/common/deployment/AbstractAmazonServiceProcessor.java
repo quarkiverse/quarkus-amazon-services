@@ -7,7 +7,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.spi.DeploymentException;
 
 import org.jboss.jandex.ClassType;
 import org.jboss.jandex.DotName;
@@ -15,7 +14,7 @@ import org.jboss.jandex.ParameterizedType;
 import org.jboss.jandex.Type;
 
 import io.netty.channel.EventLoopGroup;
-import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.instrumentation.awssdk.v2_2.AwsSdkTelemetry;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientAwsCrtTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
@@ -35,8 +34,6 @@ import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.arc.processor.DotNames;
 import io.quarkus.arc.processor.InjectionPointInfo;
-import io.quarkus.deployment.Capabilities;
-import io.quarkus.deployment.Capability;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.builditem.ExecutorBuildItem;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
@@ -80,6 +77,13 @@ abstract public class AbstractAmazonServiceProcessor {
         }
         if (syncClassName.isPresent() || asyncClassName.isPresent()) {
             requireClientProducer.produce(new RequireAmazonClientBuildItem(syncClassName, asyncClassName));
+        }
+    }
+
+    protected void discoverTelemetry(BuildProducer<RequireAmazonTelemetryBuildItem> telemetryProducer,
+            SdkBuildTimeConfig buildTimeSdkConfig) {
+        if (buildTimeSdkConfig.telemetry().orElse(false)) {
+            telemetryProducer.produce(new RequireAmazonTelemetryBuildItem(configName()));
         }
     }
 
@@ -250,11 +254,11 @@ abstract public class AbstractAmazonServiceProcessor {
     }
 
     protected void createClientBuilders(
-            Capabilities capabilities,
             AmazonClientRecorder recorder,
             AmazonClientCommonRecorder commonRecorder,
             AmazonClientOpenTelemetryRecorder otelRecorder,
             HasSdkBuildTimeConfig sdkBuildConfig,
+            List<RequireAmazonTelemetryBuildItem> amazonRequireTelemtryClients,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
             Class<?> syncClientBuilderClass,
@@ -271,12 +275,13 @@ abstract public class AbstractAmazonServiceProcessor {
             presignerBuilder = recorder.createPresignerBuilder();
         }
 
-        createClientBuilders(capabilities,
+        createClientBuilders(
                 commonRecorder,
                 otelRecorder,
                 recorder.getAwsConfig(),
                 recorder.getSdkConfig(),
                 sdkBuildConfig,
+                amazonRequireTelemtryClients,
                 syncTransports,
                 asyncTransports,
                 syncClientBuilderClass,
@@ -294,12 +299,12 @@ abstract public class AbstractAmazonServiceProcessor {
     }
 
     private void createClientBuilders(
-            Capabilities capabilities,
             AmazonClientCommonRecorder recorder,
             AmazonClientOpenTelemetryRecorder otelRecorder,
             RuntimeValue<AwsConfig> awsConfigRuntime,
             RuntimeValue<SdkConfig> sdkConfigRuntime,
             HasSdkBuildTimeConfig sdkBuildConfig,
+            List<RequireAmazonTelemetryBuildItem> amazonRequireTelemtryClients,
             List<AmazonClientSyncTransportBuildItem> amazonClientSyncTransports,
             List<AmazonClientAsyncTransportBuildItem> amazonClientAsyncTransports,
             Class<?> syncClientBuilderClass,
@@ -325,6 +330,10 @@ abstract public class AbstractAmazonServiceProcessor {
                 .map(c -> c.getClientBuilder())
                 .findFirst();
 
+        boolean addOpenTelemetry = amazonRequireTelemtryClients
+                .stream()
+                .anyMatch(c -> configName.equals(c.getConfigName()));
+
         if (!syncSdkHttpClientBuilder.isPresent() && !asyncSdkAsyncHttpClientBuilder.isPresent()
                 && presignerBuilder == null) {
             return;
@@ -339,12 +348,6 @@ abstract public class AbstractAmazonServiceProcessor {
 
         ScheduledExecutorService sharedExecutorService = executorBuildItem.getExecutorProxy();
 
-        var addOpenTelemetry = sdkBuildConfig.sdk().telemetry().orElse(false);
-        if (addOpenTelemetry && !capabilities.isPresent(Capability.OPENTELEMETRY_TRACER)) {
-            throw new DeploymentException("'quarkus." + configName
-                    + ".telemetry.enabled=true but 'io.quarkus:quarkus-opentelemetry' dependency is missing on the classpath");
-        }
-
         if (syncClientBuilder != null) {
             syncClientBuilder = recorder.configure(syncClientBuilder, awsConfigRuntime, sdkConfigRuntime,
                     sdkBuildConfig, sharedExecutorService, configName());
@@ -354,8 +357,8 @@ abstract public class AbstractAmazonServiceProcessor {
                         .defaultBean()
                         .setRuntimeInit()
                         .scope(ApplicationScoped.class)
-                        .createWith(otelRecorder.configure(syncClientBuilder))
-                        .addInjectionPoint(ClassType.create(OpenTelemetry.class)).done());
+                        .createWith(otelRecorder.configureSync(syncClientBuilder))
+                        .addInjectionPoint(ClassType.create(AwsSdkTelemetry.class)).done());
             } else {
                 syntheticBeans.produce(SyntheticBeanBuildItem.configure(syncClientBuilderClass)
                         .defaultBean()
@@ -375,8 +378,8 @@ abstract public class AbstractAmazonServiceProcessor {
                         .defaultBean()
                         .setRuntimeInit()
                         .scope(ApplicationScoped.class)
-                        .createWith(otelRecorder.configure(asyncClientBuilder))
-                        .addInjectionPoint(ClassType.create(OpenTelemetry.class)).done());
+                        .createWith(otelRecorder.configureAsync(asyncClientBuilder))
+                        .addInjectionPoint(ClassType.create(AwsSdkTelemetry.class)).done());
             } else {
                 syntheticBeans.produce(SyntheticBeanBuildItem.configure(asyncClientBuilderClass)
                         .defaultBean()

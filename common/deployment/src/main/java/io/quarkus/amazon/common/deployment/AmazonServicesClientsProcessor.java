@@ -11,10 +11,14 @@ import org.jboss.jandex.DotName;
 import org.jboss.jandex.Type;
 
 import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig.AsyncClientType;
+import io.quarkus.amazon.common.runtime.AwsSdkTelemetryProducer;
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig.SyncClientType;
+import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.UnremovableBeanBuildItem;
 import io.quarkus.bootstrap.classloading.QuarkusClassLoader;
+import io.quarkus.deployment.Capabilities;
+import io.quarkus.deployment.Capability;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.AdditionalApplicationArchiveMarkerBuildItem;
@@ -101,6 +105,22 @@ public class AmazonServicesClientsProcessor {
         // CachedSupplier uses j.u.Ramdom, so needs to be runtime-initialized
         producer.produce(
                 new RuntimeInitializedClassBuildItem("software.amazon.awssdk.utils.cache.CachedSupplier"));
+    }
+
+    @BuildStep
+    void setupTelemetry(List<RequireAmazonTelemetryBuildItem> items,
+            Capabilities capabilities,
+            BuildProducer<AdditionalBeanBuildItem> additionalBuildItem) {
+        if (items.isEmpty())
+            return;
+
+        if (!capabilities.isPresent(Capability.OPENTELEMETRY_TRACER)) {
+            throw new DeploymentException(
+                    "Telemetry enabled for " + String.join(", ", items.stream().map(item -> item.getConfigName()).toList())
+                            + " but 'io.quarkus:quarkus-opentelemetry' dependency is missing on the classpath");
+        }
+
+        additionalBuildItem.produce(AdditionalBeanBuildItem.unremovableOf(AwsSdkTelemetryProducer.class));
     }
 
     @BuildStep
