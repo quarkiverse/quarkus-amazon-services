@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.function.Function;
 
 import jakarta.enterprise.inject.UnsatisfiedResolutionException;
 import jakarta.enterprise.inject.spi.CDI;
@@ -12,14 +13,17 @@ import jakarta.enterprise.inject.spi.CDI;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import io.quarkus.arc.SyntheticCreationalContext;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
+import software.amazon.awssdk.awscore.AwsClient;
 import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder;
 import software.amazon.awssdk.awscore.presigner.SdkPresigner;
 import software.amazon.awssdk.core.client.builder.SdkClientBuilder;
 import software.amazon.awssdk.core.client.config.ClientOverrideConfiguration;
 import software.amazon.awssdk.core.interceptor.ExecutionInterceptor;
 import software.amazon.awssdk.utils.StringUtils;
+import software.amazon.awssdk.utils.builder.SdkBuilder;
 
 @Recorder
 public class AmazonClientCommonRecorder {
@@ -121,5 +125,17 @@ public class AmazonClientCommonRecorder {
             LOG.error("Unable to create interceptor " + interceptorClassName, e);
             return null;
         }
+    }
+
+    public Function<SyntheticCreationalContext<AwsClient>, AwsClient> build(Class<?> clazz) {
+        return new Function<SyntheticCreationalContext<AwsClient>, AwsClient>() {
+
+            @Override
+            public AwsClient apply(SyntheticCreationalContext<AwsClient> context) {
+                SdkBuilder builder = (SdkBuilder) context.getInjectedReference(clazz);
+
+                return (AwsClient) builder.build();
+            }
+        };
     }
 }

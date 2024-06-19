@@ -22,9 +22,7 @@ import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientOpenTelemetryRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
 import io.quarkus.amazon.inspector2.runtime.Inspector2BuildTimeConfig;
-import io.quarkus.amazon.inspector2.runtime.Inspector2ClientProducer;
 import io.quarkus.amazon.inspector2.runtime.Inspector2Recorder;
-import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
@@ -69,11 +67,6 @@ public class Inspector2Processor extends AbstractAmazonServiceProcessor {
     @Override
     protected String builtinInterceptorsPath() {
         return "software/amazon/awssdk/services/inspector/execution.interceptors";
-    }
-
-    @BuildStep
-    AdditionalBeanBuildItem producer() {
-        return AdditionalBeanBuildItem.unremovableOf(Inspector2ClientProducer.class);
     }
 
     @BuildStep

@@ -5,7 +5,6 @@ import java.util.List;
 import org.jboss.jandex.DotName;
 
 import io.quarkus.amazon.cognitouserpools.runtime.CognitoUserPoolsBuildTimeConfig;
-import io.quarkus.amazon.cognitouserpools.runtime.CognitoUserPoolsClientProducer;
 import io.quarkus.amazon.cognitouserpools.runtime.CognitoUserPoolsRecorder;
 import io.quarkus.amazon.common.deployment.AbstractAmazonServiceProcessor;
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncResultBuildItem;
@@ -24,7 +23,6 @@ import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientOpenTelemetryRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
-import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
@@ -69,11 +67,6 @@ public class CognitoUserPoolsProcessor extends AbstractAmazonServiceProcessor {
     @Override
     protected String builtinInterceptorsPath() {
         return "software/amazon/awssdk/services/cognitoidentityprovider/execution.interceptors";
-    }
-
-    @BuildStep
-    AdditionalBeanBuildItem producer() {
-        return AdditionalBeanBuildItem.unremovableOf(CognitoUserPoolsClientProducer.class);
     }
 
     @BuildStep
