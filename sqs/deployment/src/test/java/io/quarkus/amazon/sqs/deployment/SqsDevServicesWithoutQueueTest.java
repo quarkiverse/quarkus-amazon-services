@@ -10,6 +10,7 @@ import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import io.quarkus.amazon.common.AmazonClient;
 import io.quarkus.test.QuarkusUnitTest;
 import software.amazon.awssdk.services.sqs.SqsClient;
 
@@ -17,6 +18,10 @@ class SqsDevServicesWithoutQueueTest {
 
     @Inject
     Instance<SqsClient> client;
+
+    @Inject
+    @AmazonClient("test")
+    Instance<SqsClient> clientNamed;
 
     @RegisterExtension
     static final QuarkusUnitTest config = new QuarkusUnitTest()
@@ -28,5 +33,7 @@ class SqsDevServicesWithoutQueueTest {
     void test() {
         assertNotNull(client.get());
         assertTrue(client.get().listQueues().queueUrls().isEmpty());
+        assertNotNull(clientNamed.get());
+        assertTrue(clientNamed.get().listQueues().queueUrls().isEmpty());
     }
 }

@@ -66,9 +66,10 @@ public class CloudWatchLogsProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep
     void discover(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
-            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
+            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer,
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
 
-        discoverClient(beanRegistrationPhase, requireClientProducer);
+        discoverClient(beanRegistrationPhase, requireClientProducer, requireClientInjectionProducer);
     }
 
     @BuildStep
@@ -156,6 +157,7 @@ public class CloudWatchLogsProcessor extends AbstractAmazonServiceProcessor {
     void createClientBuilders(CloudWatchLogsRecorder recorder,
             AmazonClientCommonRecorder commonRecorder,
             AmazonClientOpenTelemetryRecorder otelRecorder,
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjections,
             List<RequireAmazonTelemetryBuildItem> amazonRequireTelemtryClients,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
@@ -170,6 +172,7 @@ public class CloudWatchLogsProcessor extends AbstractAmazonServiceProcessor {
                 commonRecorder,
                 otelRecorder,
                 buildTimeConfig,
+                amazonClientInjections,
                 amazonRequireTelemtryClients,
                 syncTransports,
                 asyncTransports,

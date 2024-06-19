@@ -30,12 +30,14 @@ public class AmazonClientCommonRecorder {
     private static final Log LOG = LogFactory.getLog(AmazonClientCommonRecorder.class);
 
     public RuntimeValue<AwsClientBuilder> configure(RuntimeValue<? extends AwsClientBuilder> clientBuilder,
-            RuntimeValue<AwsConfig> awsConfig, RuntimeValue<SdkConfig> sdkConfig, HasSdkBuildTimeConfig sdkBuildTimeConfig,
-            ScheduledExecutorService scheduledExecutorService, String awsServiceName) {
+            RuntimeValue<HasAmazonClientRuntimeConfig> amazonClientConfigRuntime, HasSdkBuildTimeConfig sdkBuildTimeConfig,
+            ScheduledExecutorService scheduledExecutorService, String awsServiceName, String clientName) {
         AwsClientBuilder builder = clientBuilder.getValue();
 
-        initAwsClient(builder, awsServiceName, awsConfig.getValue());
-        initSdkClient(builder, awsServiceName, sdkConfig.getValue(), sdkBuildTimeConfig.sdk(), scheduledExecutorService);
+        AmazonClientConfig config = amazonClientConfigRuntime.getValue().clients().get(clientName);
+
+        initAwsClient(builder, awsServiceName, config.aws());
+        initSdkClient(builder, awsServiceName, config.sdk(), sdkBuildTimeConfig.sdk(), scheduledExecutorService);
 
         return new RuntimeValue<>(builder);
     }
@@ -80,12 +82,14 @@ public class AmazonClientCommonRecorder {
 
     public RuntimeValue<SdkPresigner.Builder> configurePresigner(
             RuntimeValue<? extends SdkPresigner.Builder> clientBuilder,
-            RuntimeValue<AwsConfig> awsConfig, RuntimeValue<SdkConfig> sdkConfig,
-            String awsServiceName) {
+            RuntimeValue<HasAmazonClientRuntimeConfig> amazonClientConfigRuntime,
+            String awsServiceName, String clientName) {
         SdkPresigner.Builder builder = clientBuilder.getValue();
 
-        initAwsPresigner(builder, awsServiceName, awsConfig.getValue());
-        initSdkPresigner(builder, awsServiceName, sdkConfig.getValue());
+        AmazonClientConfig config = amazonClientConfigRuntime.getValue().clients().get(clientName);
+
+        initAwsPresigner(builder, awsServiceName, config.aws());
+        initSdkPresigner(builder, awsServiceName, config.sdk());
 
         return new RuntimeValue<>(builder);
     }
@@ -127,14 +131,36 @@ public class AmazonClientCommonRecorder {
         }
     }
 
-    public Function<SyntheticCreationalContext<AwsClient>, AwsClient> build(Class<?> clazz) {
+    public Function<SyntheticCreationalContext<AwsClient>, AwsClient> build(Class<?> clazz, String clientName) {
         return new Function<SyntheticCreationalContext<AwsClient>, AwsClient>() {
 
             @Override
             public AwsClient apply(SyntheticCreationalContext<AwsClient> context) {
-                SdkBuilder builder = (SdkBuilder) context.getInjectedReference(clazz);
+                SdkBuilder builder;
+                if (ClientUtil.isDefaultClient(clientName))
+                    builder = (SdkBuilder) context.getInjectedReference(clazz);
+                else
+                    builder = (SdkBuilder) context.getInjectedReference(clazz,
+                            new io.quarkus.amazon.common.AmazonClientBuilder.AwsClientBuilderLiteral(clientName));
 
                 return (AwsClient) builder.build();
+            }
+        };
+    }
+
+    public Function<SyntheticCreationalContext<SdkPresigner>, SdkPresigner> buildPresigner(Class<?> clazz, String clientName) {
+        return new Function<SyntheticCreationalContext<SdkPresigner>, SdkPresigner>() {
+
+            @Override
+            public SdkPresigner apply(SyntheticCreationalContext<SdkPresigner> context) {
+                SdkPresigner.Builder builder;
+                if (ClientUtil.isDefaultClient(clientName))
+                    builder = (SdkPresigner.Builder) context.getInjectedReference(clazz);
+                else
+                    builder = (SdkPresigner.Builder) context.getInjectedReference(clazz,
+                            new io.quarkus.amazon.common.AmazonClientBuilder.AwsClientBuilderLiteral(clientName));
+
+                return (SdkPresigner) builder.build();
             }
         };
     }

@@ -1,5 +1,6 @@
 package io.quarkus.amazon.s3.deployment;
 
+import java.util.List;
 import java.util.Optional;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -10,6 +11,8 @@ import org.jboss.jandex.DotName;
 
 import io.quarkus.amazon.common.deployment.AmazonClientInterceptorsPathBuildItem;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
+import io.quarkus.amazon.common.runtime.ClientUtil;
 import io.quarkus.amazon.common.runtime.SdkAutoCloseableDestroyer;
 import io.quarkus.amazon.s3.deployment.S3CrtProcessor.IsAmazonCrtS3ClientPresent;
 import io.quarkus.amazon.s3.runtime.S3Crt;
@@ -47,8 +50,11 @@ public class S3TransferManagerProcessor {
     }
 
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
-    void requireS3CrtClient(BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
+    void requireS3CrtClient(BuildProducer<RequireAmazonClientBuildItem> requireClientProducer,
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
         requireClientProducer.produce(new RequireAmazonClientBuildItem(Optional.empty(), Optional.of(S3CRT_CLIENT)));
+        requireClientInjectionProducer
+                .produce(new RequireAmazonClientInjectionBuildItem(S3CRT_CLIENT, List.of(ClientUtil.DEFAULT_CLIENT_NAME)));
     }
 
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)

@@ -10,6 +10,8 @@ import jakarta.enterprise.inject.spi.DeploymentException;
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.Type;
 
+import io.quarkus.amazon.common.AmazonClient;
+import io.quarkus.amazon.common.AmazonClientBuilder;
 import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig.AsyncClientType;
 import io.quarkus.amazon.common.runtime.AwsSdkTelemetryProducer;
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
@@ -38,6 +40,11 @@ public class AmazonServicesClientsProcessor {
     public static final String AWS_SDK_XRAY_ARCHIVE_MARKER = "com/amazonaws/xray";
 
     private static final DotName EXECUTION_INTERCEPTOR_NAME = DotName.createSimple(ExecutionInterceptor.class.getName());
+
+    @BuildStep
+    AdditionalBeanBuildItem additionalBeans() {
+        return new AdditionalBeanBuildItem(AmazonClient.class, AmazonClientBuilder.class);
+    }
 
     @BuildStep
     void globalInterceptors(BuildProducer<AmazonClientInterceptorsPathBuildItem> producer) {

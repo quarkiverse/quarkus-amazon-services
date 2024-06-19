@@ -13,6 +13,7 @@ import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncTransportBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonHttpClients;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
 import io.quarkus.amazon.common.deployment.RequireAmazonTelemetryBuildItem;
 import io.quarkus.amazon.common.deployment.spi.EventLoopGroupBuildItem;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
@@ -81,9 +82,10 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep
     void discover(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
-            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
+            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer,
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
 
-        discoverClient(beanRegistrationPhase, requireClientProducer);
+        discoverClient(beanRegistrationPhase, requireClientProducer, requireClientInjectionProducer);
     }
 
     @BuildStep
@@ -171,6 +173,7 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
     void createClientBuilders(SesRecorder recorder,
             AmazonClientCommonRecorder commonRecorder,
             AmazonClientOpenTelemetryRecorder otelRecorder,
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjections,
             List<RequireAmazonTelemetryBuildItem> amazonRequireTelemtryClients,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
@@ -185,6 +188,7 @@ public class SesProcessor extends AbstractAmazonServiceProcessor {
                 commonRecorder,
                 otelRecorder,
                 buildTimeConfig,
+                amazonClientInjections,
                 amazonRequireTelemtryClients,
                 syncTransports,
                 asyncTransports,

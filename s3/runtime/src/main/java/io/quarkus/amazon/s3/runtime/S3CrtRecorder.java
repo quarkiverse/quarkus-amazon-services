@@ -4,7 +4,10 @@ import java.net.URI;
 import java.util.concurrent.Executor;
 import java.util.function.Function;
 
+import io.quarkus.amazon.common.runtime.AwsConfig;
+import io.quarkus.amazon.common.runtime.ClientUtil;
 import io.quarkus.amazon.common.runtime.RuntimeConfigurationError;
+import io.quarkus.amazon.common.runtime.SdkConfig;
 import io.quarkus.arc.SyntheticCreationalContext;
 import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.RuntimeValue;
@@ -42,12 +45,16 @@ public class S3CrtRecorder {
         config.crtClient().targetThroughputInGbps().ifPresent(builder::targetThroughputInGbps);
         config.crtClient().maxNativeMemoryLimitInBytes().ifPresent(builder::maxNativeMemoryLimitInBytes);
 
-        config.aws().region().ifPresent(builder::region);
-        builder.credentialsProvider(
-                config.aws().credentials().type().create(config.aws().credentials(), "quarkus." + awsServiceName));
+        AwsConfig awsConfig = config.clients().get(ClientUtil.DEFAULT_CLIENT_NAME).aws();
+        SdkConfig sdkConfig = config.clients().get(ClientUtil.DEFAULT_CLIENT_NAME).sdk();
 
-        if (config.sdk().endpointOverride().isPresent()) {
-            URI endpointOverride = config.sdk().endpointOverride().get();
+        awsConfig.region().ifPresent(builder::region);
+        builder.credentialsProvider(
+                awsConfig.credentials().type().create(config.clients().get(ClientUtil.DEFAULT_CLIENT_NAME).aws().credentials(),
+                        "quarkus." + awsServiceName));
+
+        if (sdkConfig.endpointOverride().isPresent()) {
+            URI endpointOverride = sdkConfig.endpointOverride().get();
             if (StringUtils.isBlank(endpointOverride.getScheme())) {
                 throw new RuntimeConfigurationError(
                         String.format("quarkus.%s.endpoint-override (%s) - scheme must be specified",
@@ -56,7 +63,7 @@ public class S3CrtRecorder {
             }
         }
 
-        config.sdk().endpointOverride().filter(URI::isAbsolute).ifPresent(builder::endpointOverride);
+        sdkConfig.endpointOverride().filter(URI::isAbsolute).ifPresent(builder::endpointOverride);
     }
 
     public RuntimeValue<S3CrtAsyncClientBuilder> setExecutor(RuntimeValue<S3CrtAsyncClientBuilder> builder,

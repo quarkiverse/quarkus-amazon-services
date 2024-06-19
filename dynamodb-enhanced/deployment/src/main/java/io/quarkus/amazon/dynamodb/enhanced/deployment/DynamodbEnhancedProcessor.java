@@ -23,6 +23,8 @@ import org.objectweb.asm.Type;
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
+import io.quarkus.amazon.common.runtime.ClientUtil;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.BeanTableSchemaSubstitutionImplementation;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.DynamoDbEnhancedBuildTimeConfig;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.DynamodbEnhancedClientRecorder;
@@ -68,7 +70,8 @@ public class DynamodbEnhancedProcessor {
     void setup(CombinedIndexBuildItem combinedIndexBuildItem,
             DynamoDbEnhancedBuildTimeConfig buildTimeConfig,
             BeanRegistrationPhaseBuildItem beanRegistrationPhase,
-            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
+            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer,
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
 
         Optional<DotName> syncClassName = Optional.empty();
         Optional<DotName> asyncClassName = Optional.empty();
@@ -106,6 +109,15 @@ public class DynamodbEnhancedProcessor {
 
         if (syncClassName.isPresent() || asyncClassName.isPresent()) {
             requireClientProducer.produce(new RequireAmazonClientBuildItem(syncClassName, asyncClassName));
+        }
+
+        if (syncClassName.isPresent()) {
+            requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(DotNames.DYNAMODB_CLIENT,
+                    List.of(ClientUtil.DEFAULT_CLIENT_NAME)));
+        }
+        if (asyncClassName.isPresent()) {
+            requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(DotNames.DYNAMODB_ASYNC_CLIENT,
+                    List.of(ClientUtil.DEFAULT_CLIENT_NAME)));
         }
     }
 

@@ -21,6 +21,8 @@ import org.jboss.jandex.IndexView;
 import org.jboss.jandex.ParameterizedType;
 
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
+import io.quarkus.amazon.common.runtime.ClientUtil;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.NamedDynamoDbTable;
 import io.quarkus.arc.SyntheticCreationalContext;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
@@ -59,13 +61,14 @@ public class DynamodbEnhancedDbTableProcessor {
 
     @BuildStep
     AdditionalBeanBuildItem additionalBeans() {
-        return AdditionalBeanBuildItem.unremovableOf(NamedDynamoDbTable.class);
+        return new AdditionalBeanBuildItem(NamedDynamoDbTable.class);
     }
 
     @BuildStep
     void discoverDynamoDbTable(CombinedIndexBuildItem combinedIndexBuildItem,
             BuildProducer<DynamodbEnhancedTableBuildItem> tables,
-            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
+            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer,
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
 
         Optional<DotName> syncClassName = Optional.empty();
         Optional<DotName> asyncClassName = Optional.empty();
@@ -109,6 +112,15 @@ public class DynamodbEnhancedDbTableProcessor {
 
         if (syncClassName.isPresent() || asyncClassName.isPresent()) {
             requireClientProducer.produce(new RequireAmazonClientBuildItem(syncClassName, asyncClassName));
+        }
+
+        if (syncClassName.isPresent()) {
+            requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(DotNames.DYNAMODB_CLIENT,
+                    List.of(ClientUtil.DEFAULT_CLIENT_NAME)));
+        }
+        if (asyncClassName.isPresent()) {
+            requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(DotNames.DYNAMODB_ASYNC_CLIENT,
+                    List.of(ClientUtil.DEFAULT_CLIENT_NAME)));
         }
     }
 

@@ -1,31 +1,16 @@
 package io.quarkus.amazon.iam.runtime;
 
 import io.quarkus.amazon.common.runtime.AsyncHttpClientConfig;
-import io.quarkus.amazon.common.runtime.AwsConfig;
-import io.quarkus.amazon.common.runtime.SdkConfig;
+import io.quarkus.amazon.common.runtime.HasAmazonClientRuntimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.runtime.annotations.ConfigDocSection;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
-import io.smallrye.config.WithParentName;
 
 @ConfigMapping(prefix = "quarkus.iam")
 @ConfigRoot(phase = ConfigPhase.RUN_TIME)
-public interface IamConfig {
-    /**
-     * AWS SDK client configurations
-     */
-    @WithParentName
-    @ConfigDocSection
-    SdkConfig sdk();
-
-    /**
-     * AWS services configurations
-     */
-    @ConfigDocSection
-    AwsConfig aws();
-
+public interface IamConfig extends HasAmazonClientRuntimeConfig {
     /**
      * Sync HTTP transport configurations
      */
