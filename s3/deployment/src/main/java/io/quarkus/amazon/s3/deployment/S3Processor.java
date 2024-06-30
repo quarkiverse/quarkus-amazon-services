@@ -7,13 +7,13 @@ import org.jboss.jandex.DotName;
 import io.quarkus.amazon.common.deployment.AbstractAmazonServiceProcessor;
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncTransportBuildItem;
-import io.quarkus.amazon.common.deployment.AmazonClientBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientInterceptorsPathBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncTransportBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonHttpClients;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientTransportBuilderBuildItem;
 import io.quarkus.amazon.common.deployment.RequireAmazonTelemetryBuildItem;
 import io.quarkus.amazon.common.deployment.spi.EventLoopGroupBuildItem;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
@@ -87,11 +87,18 @@ public class S3Processor extends AbstractAmazonServiceProcessor {
     }
 
     @BuildStep
-    void discover(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
-            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer,
+    void discoverClientInjectionPoints(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
             BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
 
-        discoverClient(beanRegistrationPhase, requireClientProducer, requireClientInjectionProducer);
+        discoverClientInjectionPointsInternal(beanRegistrationPhase, requireClientInjectionProducer);
+    }
+
+    @BuildStep
+    void discover(
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjectionPoints,
+            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
+
+        discoverClient(amazonClientInjectionPoints, requireClientProducer);
     }
 
     @BuildStep
@@ -102,7 +109,7 @@ public class S3Processor extends AbstractAmazonServiceProcessor {
 
     @BuildStep
     void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
-            BuildProducer<AmazonClientBuildItem> clientProducer) {
+            BuildProducer<RequireAmazonClientTransportBuilderBuildItem> clientProducer) {
 
         setupClient(clientRequirements, clientProducer, buildTimeConfig.sdk(), buildTimeConfig.syncClient(),
                 buildTimeConfig.asyncClient());
@@ -110,7 +117,7 @@ public class S3Processor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonApacheHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupApacheSyncTransport(List<AmazonClientBuildItem> amazonClients, S3Recorder recorder,
+    void setupApacheSyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, S3Recorder recorder,
             AmazonClientApacheTransportRecorder transportRecorder,
             BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
 
@@ -123,7 +130,7 @@ public class S3Processor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupAwsCrtSyncTransport(List<AmazonClientBuildItem> amazonClients, S3Recorder recorder,
+    void setupAwsCrtSyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, S3Recorder recorder,
             AmazonClientAwsCrtTransportRecorder transportRecorder,
             BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
 
@@ -136,7 +143,7 @@ public class S3Processor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonUrlConnectionHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupUrlConnectionSyncTransport(List<AmazonClientBuildItem> amazonClients, S3Recorder recorder,
+    void setupUrlConnectionSyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, S3Recorder recorder,
             AmazonClientUrlConnectionTransportRecorder transportRecorder,
             BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
 
@@ -149,7 +156,7 @@ public class S3Processor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonNettyHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupNettyAsyncTransport(List<AmazonClientBuildItem> amazonClients, S3Recorder recorder,
+    void setupNettyAsyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, S3Recorder recorder,
             AmazonClientNettyTransportRecorder transportRecorder,
             S3Config runtimeConfig, BuildProducer<AmazonClientAsyncTransportBuildItem> asyncTransports,
             EventLoopGroupBuildItem eventLoopSupplier) {
@@ -163,7 +170,7 @@ public class S3Processor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupAwsCrtAsyncTransport(List<AmazonClientBuildItem> amazonClients, S3Recorder recorder,
+    void setupAwsCrtAsyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, S3Recorder recorder,
             AmazonClientAwsCrtTransportRecorder transportRecorder,
             BuildProducer<AmazonClientAsyncTransportBuildItem> asyncTransports) {
 

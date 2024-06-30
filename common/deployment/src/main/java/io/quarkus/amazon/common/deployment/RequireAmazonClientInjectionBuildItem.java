@@ -1,7 +1,5 @@
 package io.quarkus.amazon.common.deployment;
 
-import java.util.Collection;
-
 import org.jboss.jandex.DotName;
 
 import io.quarkus.builder.item.MultiBuildItem;
@@ -12,18 +10,18 @@ import io.quarkus.builder.item.MultiBuildItem;
  */
 public final class RequireAmazonClientInjectionBuildItem extends MultiBuildItem {
     private final DotName className;
-    private final Collection<String> names;
+    private final String name;
 
-    public RequireAmazonClientInjectionBuildItem(DotName className, Collection<String> names) {
+    public RequireAmazonClientInjectionBuildItem(DotName className, String name) {
         this.className = className;
-        this.names = names;
+        this.name = name;
     }
 
     public DotName getClassName() {
         return className;
     }
 
-    public Collection<String> getNames() {
-        return names;
+    public String getName() {
+        return name;
     }
 }

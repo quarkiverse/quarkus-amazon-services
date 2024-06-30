@@ -10,9 +10,9 @@ import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
 import io.quarkus.builder.item.MultiBuildItem;
 
 /**
- * Describes what clients are required for a given extension
+ * Describes what client transport builders are required for a given extension
  */
-public final class AmazonClientBuildItem extends MultiBuildItem {
+public final class RequireAmazonClientTransportBuilderBuildItem extends MultiBuildItem {
     private final Optional<DotName> syncClassName;
     private final Optional<DotName> asyncClassName;
     private final String awsClientName;
@@ -20,7 +20,7 @@ public final class AmazonClientBuildItem extends MultiBuildItem {
     private final SyncHttpClientBuildTimeConfig buildTimeSyncConfig;
     private final AsyncHttpClientBuildTimeConfig buildTimeAsyncConfig;
 
-    public AmazonClientBuildItem(Optional<DotName> syncClassName, Optional<DotName> asyncClassName,
+    public RequireAmazonClientTransportBuilderBuildItem(Optional<DotName> syncClassName, Optional<DotName> asyncClassName,
             String awsClientName, SdkBuildTimeConfig buildTimeSdkConfig,
             SyncHttpClientBuildTimeConfig buildTimeSyncConfig,
             AsyncHttpClientBuildTimeConfig buildTimeAsyncConfig) {

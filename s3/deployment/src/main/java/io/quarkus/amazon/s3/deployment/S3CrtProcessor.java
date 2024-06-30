@@ -11,8 +11,8 @@ import org.jboss.jandex.DotName;
 import org.jboss.jandex.ParameterizedType;
 import org.jboss.jandex.Type;
 
-import io.quarkus.amazon.common.deployment.AmazonClientBuildItem;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientTransportBuilderBuildItem;
 import io.quarkus.amazon.common.runtime.SdkAutoCloseableDestroyer;
 import io.quarkus.amazon.s3.runtime.S3BuildTimeConfig;
 import io.quarkus.amazon.s3.runtime.S3Crt;
@@ -81,7 +81,7 @@ public class S3CrtProcessor {
 
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
     void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
-            BuildProducer<AmazonClientBuildItem> clientProducer) {
+            BuildProducer<RequireAmazonClientTransportBuilderBuildItem> clientProducer) {
         Optional<DotName> asyncClassName = Optional.empty();
 
         for (RequireAmazonClientBuildItem clientRequirement : clientRequirements) {
@@ -92,20 +92,21 @@ public class S3CrtProcessor {
         }
 
         if (asyncClassName.isPresent()) {
-            clientProducer.produce(new AmazonClientBuildItem(Optional.empty(), asyncClassName, configName(),
-                    buildTimeConfig.sdk(), buildTimeConfig.syncClient(), buildTimeConfig.asyncClient()));
+            clientProducer
+                    .produce(new RequireAmazonClientTransportBuilderBuildItem(Optional.empty(), asyncClassName, configName(),
+                            buildTimeConfig.sdk(), buildTimeConfig.syncClient(), buildTimeConfig.asyncClient()));
         }
     }
 
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void createS3CrtAsyncClient(List<AmazonClientBuildItem> amazonClients,
+    void createS3CrtAsyncClient(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             S3CrtRecorder recorder,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
             ExecutorBuildItem executorBuildItem,
             LaunchModeBuildItem launchMode) {
 
-        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+        Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
                 .findAny();
 

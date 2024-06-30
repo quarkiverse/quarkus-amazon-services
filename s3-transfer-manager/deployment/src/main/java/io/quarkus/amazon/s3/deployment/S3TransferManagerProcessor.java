@@ -1,8 +1,5 @@
 package io.quarkus.amazon.s3.deployment;
 
-import java.util.List;
-import java.util.Optional;
-
 import jakarta.enterprise.context.ApplicationScoped;
 
 import org.jboss.jandex.AnnotationInstance;
@@ -10,7 +7,6 @@ import org.jboss.jandex.ClassType;
 import org.jboss.jandex.DotName;
 
 import io.quarkus.amazon.common.deployment.AmazonClientInterceptorsPathBuildItem;
-import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
 import io.quarkus.amazon.common.runtime.ClientUtil;
 import io.quarkus.amazon.common.runtime.SdkAutoCloseableDestroyer;
@@ -50,11 +46,9 @@ public class S3TransferManagerProcessor {
     }
 
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
-    void requireS3CrtClient(BuildProducer<RequireAmazonClientBuildItem> requireClientProducer,
-            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
-        requireClientProducer.produce(new RequireAmazonClientBuildItem(Optional.empty(), Optional.of(S3CRT_CLIENT)));
+    void requireS3CrtClient(BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
         requireClientInjectionProducer
-                .produce(new RequireAmazonClientInjectionBuildItem(S3CRT_CLIENT, List.of(ClientUtil.DEFAULT_CLIENT_NAME)));
+                .produce(new RequireAmazonClientInjectionBuildItem(S3CRT_CLIENT, ClientUtil.DEFAULT_CLIENT_NAME));
     }
 
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
@@ -66,7 +60,6 @@ public class S3TransferManagerProcessor {
                 .unremovable()
                 .setRuntimeInit()
                 .scope(ApplicationScoped.class)
-                .addQualifier(S3Crt.class)
                 .createWith(recorder.getS3CrtTransferManager())
                 .destroyer(SdkAutoCloseableDestroyer.class)
                 .addInjectionPoint(ClassType.create(S3AsyncClient.class),

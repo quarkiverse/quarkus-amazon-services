@@ -1,7 +1,6 @@
 package io.quarkus.amazon.common.deployment;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ScheduledExecutorService;
@@ -19,7 +18,6 @@ import org.jboss.jandex.Type;
 
 import io.netty.channel.EventLoopGroup;
 import io.opentelemetry.instrumentation.awssdk.v2_2.AwsSdkTelemetry;
-import io.quarkus.amazon.common.AmazonClient;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientAwsCrtTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientCommonRecorder;
@@ -42,6 +40,7 @@ import io.quarkus.arc.deployment.SyntheticBeanBuildItem.ExtendedBeanConfigurator
 import io.quarkus.arc.processor.DotNames;
 import io.quarkus.arc.processor.InjectionPointInfo;
 import io.quarkus.deployment.annotations.BuildProducer;
+import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.ExecutorBuildItem;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
@@ -72,57 +71,59 @@ abstract public class AbstractAmazonServiceProcessor {
 
     abstract protected String builtinInterceptorsPath();
 
-    private void registerNamedClientInjection(HashSet<String> set, InjectionPointInfo injectionPoint) {
+    private String getNamedClientInjection(InjectionPointInfo injectionPoint) {
         var named = injectionPoint.getRequiredQualifier(AWS_CLIENT_NAME);
         if (named != null) {
-            set.add(named.value("value").asString());
+            return named.value("value").asString();
         } else {
-            set.add(ClientUtil.DEFAULT_CLIENT_NAME);
+            return ClientUtil.DEFAULT_CLIENT_NAME;
         }
     }
 
-    protected void discoverClient(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
-            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer,
+    protected void discoverClientInjectionPointsInternal(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
             BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
-        Optional<DotName> syncClassName = Optional.empty();
-        Optional<DotName> asyncClassName = Optional.empty();
-        HashSet<String> syncNamedSet = new HashSet<>();
-        HashSet<String> asyncNamedSet = new HashSet<>();
-        HashSet<String> presignerNamedSet = new HashSet<>();
 
-        // Discover all clients injections in order to determine if async or sync client
-        // is required
+        // Discover all clients injections
         for (InjectionPointInfo injectionPoint : beanRegistrationPhase.getInjectionPoints()) {
 
             Type injectedType = getInjectedType(injectionPoint);
 
             if (syncClientName().equals(injectedType.name())) {
-                syncClassName = Optional.of(syncClientName());
-                registerNamedClientInjection(syncNamedSet, injectionPoint);
+                requireClientInjectionProducer
+                        .produce(new RequireAmazonClientInjectionBuildItem(syncClientName(),
+                                getNamedClientInjection(injectionPoint)));
             }
             if (asyncClientName().equals(injectedType.name())) {
-                asyncClassName = Optional.of(asyncClientName());
-                registerNamedClientInjection(asyncNamedSet, injectionPoint);
+                requireClientInjectionProducer
+                        .produce(new RequireAmazonClientInjectionBuildItem(asyncClientName(),
+                                getNamedClientInjection(injectionPoint)));
             }
             if (presignerClientName() != null && presignerClientName().equals(injectedType.name())) {
-                registerNamedClientInjection(presignerNamedSet, injectionPoint);
+                requireClientInjectionProducer
+                        .produce(new RequireAmazonClientInjectionBuildItem(presignerClientName(),
+                                getNamedClientInjection(injectionPoint)));
             }
         }
-        if (syncClassName.isPresent() || asyncClassName.isPresent()) {
-            requireClientProducer.produce(new RequireAmazonClientBuildItem(syncClassName, asyncClassName));
+    }
+
+    @BuildStep
+    protected void discoverClient(
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjectionPoints,
+            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
+        Optional<DotName> syncClassName = Optional.empty();
+        Optional<DotName> asyncClassName = Optional.empty();
+
+        for (RequireAmazonClientInjectionBuildItem requireInjectionPoint : amazonClientInjectionPoints) {
+            if (syncClientName().equals(requireInjectionPoint.getClassName())) {
+                syncClassName = Optional.of(syncClientName());
+            }
+            if (asyncClientName().equals(requireInjectionPoint.getClassName())) {
+                asyncClassName = Optional.of(asyncClientName());
+            }
         }
 
-        if (!syncNamedSet.isEmpty()) {
-            requireClientInjectionProducer
-                    .produce(new RequireAmazonClientInjectionBuildItem(syncClientName(), syncNamedSet));
-        }
-        if (!asyncNamedSet.isEmpty()) {
-            requireClientInjectionProducer
-                    .produce(new RequireAmazonClientInjectionBuildItem(asyncClientName(), asyncNamedSet));
-        }
-        if (!presignerNamedSet.isEmpty()) {
-            requireClientInjectionProducer
-                    .produce(new RequireAmazonClientInjectionBuildItem(presignerClientName(), presignerNamedSet));
+        if (syncClassName.isPresent() || asyncClassName.isPresent()) {
+            requireClientProducer.produce(new RequireAmazonClientBuildItem(syncClassName, asyncClassName));
         }
     }
 
@@ -134,7 +135,7 @@ abstract public class AbstractAmazonServiceProcessor {
     }
 
     protected void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
-            BuildProducer<AmazonClientBuildItem> clientProducer,
+            BuildProducer<RequireAmazonClientTransportBuilderBuildItem> clientProducer,
             SdkBuildTimeConfig buildTimeSdkConfig,
             SyncHttpClientBuildTimeConfig buildTimeSyncConfig,
             AsyncHttpClientBuildTimeConfig buildTimeAsyncConfig) {
@@ -152,7 +153,7 @@ abstract public class AbstractAmazonServiceProcessor {
             }
         }
         if (syncClassName.isPresent() || asyncClassName.isPresent()) {
-            clientProducer.produce(new AmazonClientBuildItem(syncClassName, asyncClassName, configName(),
+            clientProducer.produce(new RequireAmazonClientTransportBuilderBuildItem(syncClassName, asyncClassName, configName(),
                     buildTimeSdkConfig, buildTimeSyncConfig, buildTimeAsyncConfig));
         }
     }
@@ -167,13 +168,13 @@ abstract public class AbstractAmazonServiceProcessor {
         interceptors.produce(new AmazonClientInterceptorsPathBuildItem(builtinInterceptorsPath()));
     }
 
-    protected void createApacheSyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
+    protected void createApacheSyncTransportBuilder(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientApacheTransportRecorder recorder,
             SyncHttpClientBuildTimeConfig buildSyncConfig,
             RuntimeValue<SyncHttpClientConfig> syncConfig,
             BuildProducer<AmazonClientSyncTransportBuildItem> clientSyncTransports) {
 
-        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+        Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
                 .findAny();
 
@@ -193,13 +194,13 @@ abstract public class AbstractAmazonServiceProcessor {
         });
     }
 
-    protected void createAwsCrtSyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
+    protected void createAwsCrtSyncTransportBuilder(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientAwsCrtTransportRecorder recorder,
             SyncHttpClientBuildTimeConfig buildSyncConfig,
             RuntimeValue<SyncHttpClientConfig> syncConfig,
             BuildProducer<AmazonClientSyncTransportBuildItem> clientSyncTransports) {
 
-        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+        Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
                 .findAny();
 
@@ -219,13 +220,13 @@ abstract public class AbstractAmazonServiceProcessor {
         });
     }
 
-    protected void createUrlConnectionSyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
+    protected void createUrlConnectionSyncTransportBuilder(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientUrlConnectionTransportRecorder recorder,
             SyncHttpClientBuildTimeConfig buildSyncConfig,
             RuntimeValue<SyncHttpClientConfig> syncConfig,
             BuildProducer<AmazonClientSyncTransportBuildItem> clientSyncTransports) {
 
-        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+        Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
                 .findAny();
 
@@ -245,14 +246,14 @@ abstract public class AbstractAmazonServiceProcessor {
         });
     }
 
-    protected void createNettyAsyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
+    protected void createNettyAsyncTransportBuilder(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientNettyTransportRecorder recorder,
             AsyncHttpClientBuildTimeConfig buildAsyncConfig,
             RuntimeValue<AsyncHttpClientConfig> asyncConfig,
             BuildProducer<AmazonClientAsyncTransportBuildItem> clientAsyncTransports,
             Supplier<EventLoopGroup> eventLoopSupplier) {
 
-        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+        Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
                 .findAny();
 
@@ -273,13 +274,13 @@ abstract public class AbstractAmazonServiceProcessor {
         });
     }
 
-    protected void createAwsCrtAsyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
+    protected void createAwsCrtAsyncTransportBuilder(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientAwsCrtTransportRecorder recorder,
             AsyncHttpClientBuildTimeConfig buildAsyncConfig,
             RuntimeValue<AsyncHttpClientConfig> asyncConfig,
             BuildProducer<AmazonClientAsyncTransportBuildItem> clientAsyncTransports) {
 
-        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+        Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
                 .findAny();
 
@@ -396,22 +397,19 @@ abstract public class AbstractAmazonServiceProcessor {
         // requiring named clients can originate from multiple sources and we may have duplicates
         Collection<String> syncClientNames = amazonClientInjections.stream()
                 .filter(c -> syncClientName().equals(c.getClassName()))
-                .map(c -> c.getNames())
-                .flatMap(Collection::stream)
+                .map(c -> c.getName())
                 .distinct()
                 .collect(Collectors.toSet());
 
         Collection<String> asyncClientNames = amazonClientInjections.stream()
                 .filter(c -> asyncClientName().equals(c.getClassName()))
-                .map(c -> c.getNames())
-                .flatMap(Collection::stream)
+                .map(c -> c.getName())
                 .distinct()
                 .collect(Collectors.toSet());
 
         Collection<String> presignerClientNames = amazonClientInjections.stream()
                 .filter(c -> presignerClientName() != null && presignerClientName().equals(c.getClassName()))
-                .map(c -> c.getNames())
-                .flatMap(Collection::stream)
+                .map(c -> c.getName())
                 .distinct()
                 .collect(Collectors.toSet());
 

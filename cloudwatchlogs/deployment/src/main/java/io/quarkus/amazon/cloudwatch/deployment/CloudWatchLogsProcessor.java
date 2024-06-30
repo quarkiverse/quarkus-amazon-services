@@ -65,11 +65,18 @@ public class CloudWatchLogsProcessor extends AbstractAmazonServiceProcessor {
     }
 
     @BuildStep
-    void discover(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
-            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer,
+    void discoverClientInjectionPoints(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
             BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
 
-        discoverClient(beanRegistrationPhase, requireClientProducer, requireClientInjectionProducer);
+        discoverClientInjectionPointsInternal(beanRegistrationPhase, requireClientInjectionProducer);
+    }
+
+    @BuildStep
+    void discover(
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjectionPoints,
+            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
+
+        discoverClient(amazonClientInjectionPoints, requireClientProducer);
     }
 
     @BuildStep
@@ -80,7 +87,7 @@ public class CloudWatchLogsProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep
     void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
-            BuildProducer<AmazonClientBuildItem> clientProducer) {
+            BuildProducer<RequireAmazonClientTransportBuilderBuildItem> clientProducer) {
 
         setupClient(clientRequirements, clientProducer, buildTimeConfig.sdk(), buildTimeConfig.syncClient(),
                 buildTimeConfig.asyncClient());
@@ -88,7 +95,8 @@ public class CloudWatchLogsProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonApacheHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupApacheSyncTransport(List<AmazonClientBuildItem> amazonClients, CloudWatchLogsRecorder recorder,
+    void setupApacheSyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
+            CloudWatchLogsRecorder recorder,
             AmazonClientApacheTransportRecorder transportRecorder,
             BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
 
@@ -101,7 +109,8 @@ public class CloudWatchLogsProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupAwsCrtSyncTransport(List<AmazonClientBuildItem> amazonClients, CloudWatchLogsRecorder recorder,
+    void setupAwsCrtSyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
+            CloudWatchLogsRecorder recorder,
             AmazonClientAwsCrtTransportRecorder transportRecorder,
             BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
 
@@ -114,7 +123,8 @@ public class CloudWatchLogsProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonUrlConnectionHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupUrlConnectionSyncTransport(List<AmazonClientBuildItem> amazonClients, CloudWatchLogsRecorder recorder,
+    void setupUrlConnectionSyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
+            CloudWatchLogsRecorder recorder,
             AmazonClientUrlConnectionTransportRecorder transportRecorder,
             BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
 
@@ -127,7 +137,8 @@ public class CloudWatchLogsProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonNettyHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupNettyAsyncTransport(List<AmazonClientBuildItem> amazonClients, CloudWatchLogsRecorder recorder,
+    void setupNettyAsyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
+            CloudWatchLogsRecorder recorder,
             AmazonClientNettyTransportRecorder transportRecorder,
             BuildProducer<AmazonClientAsyncTransportBuildItem> asyncTransports,
             EventLoopGroupBuildItem eventLoopSupplier) {
@@ -141,7 +152,8 @@ public class CloudWatchLogsProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupAwsCrtAsyncTransport(List<AmazonClientBuildItem> amazonClients, CloudWatchLogsRecorder recorder,
+    void setupAwsCrtAsyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
+            CloudWatchLogsRecorder recorder,
             AmazonClientAwsCrtTransportRecorder transportRecorder,
             BuildProducer<AmazonClientAsyncTransportBuildItem> asyncTransports) {
 

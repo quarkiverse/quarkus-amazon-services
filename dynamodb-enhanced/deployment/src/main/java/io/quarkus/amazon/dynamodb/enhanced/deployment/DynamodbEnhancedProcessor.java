@@ -22,7 +22,6 @@ import org.objectweb.asm.Type;
 
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
-import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
 import io.quarkus.amazon.common.runtime.ClientUtil;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.BeanTableSchemaSubstitutionImplementation;
@@ -70,11 +69,7 @@ public class DynamodbEnhancedProcessor {
     void setup(CombinedIndexBuildItem combinedIndexBuildItem,
             DynamoDbEnhancedBuildTimeConfig buildTimeConfig,
             BeanRegistrationPhaseBuildItem beanRegistrationPhase,
-            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer,
             BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
-
-        Optional<DotName> syncClassName = Optional.empty();
-        Optional<DotName> asyncClassName = Optional.empty();
 
         // Discover all known dynamodb-enhanced-client-extension implementors
         List<String> knownDynamodbEnhancedClientExtensionImpls = combinedIndexBuildItem.getIndex()
@@ -100,24 +95,13 @@ public class DynamodbEnhancedProcessor {
             org.jboss.jandex.Type injectedType = injectionPoint.getRequiredType();
 
             if (DotNames.DYNAMODB_ENHANCED_CLIENT.equals(injectedType.name())) {
-                syncClassName = Optional.of(DotNames.DYNAMODB_CLIENT);
+                requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(DotNames.DYNAMODB_CLIENT,
+                        ClientUtil.DEFAULT_CLIENT_NAME));
             }
             if (DotNames.DYNAMODB_ENHANCED_ASYNC_CLIENT.equals(injectedType.name())) {
-                asyncClassName = Optional.of(DotNames.DYNAMODB_ASYNC_CLIENT);
+                requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(DotNames.DYNAMODB_ASYNC_CLIENT,
+                        ClientUtil.DEFAULT_CLIENT_NAME));
             }
-        }
-
-        if (syncClassName.isPresent() || asyncClassName.isPresent()) {
-            requireClientProducer.produce(new RequireAmazonClientBuildItem(syncClassName, asyncClassName));
-        }
-
-        if (syncClassName.isPresent()) {
-            requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(DotNames.DYNAMODB_CLIENT,
-                    List.of(ClientUtil.DEFAULT_CLIENT_NAME)));
-        }
-        if (asyncClassName.isPresent()) {
-            requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(DotNames.DYNAMODB_ASYNC_CLIENT,
-                    List.of(ClientUtil.DEFAULT_CLIENT_NAME)));
         }
     }
 
