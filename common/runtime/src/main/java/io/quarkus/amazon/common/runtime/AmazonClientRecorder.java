@@ -14,9 +14,7 @@ import software.amazon.awssdk.http.async.SdkAsyncHttpClient;
 
 public abstract class AmazonClientRecorder {
 
-    public abstract RuntimeValue<AwsConfig> getAwsConfig();
-
-    public abstract RuntimeValue<SdkConfig> getSdkConfig();
+    public abstract RuntimeValue<HasAmazonClientRuntimeConfig> getAmazonClientsConfig();
 
     public abstract AsyncHttpClientConfig getAsyncClientConfig();
 

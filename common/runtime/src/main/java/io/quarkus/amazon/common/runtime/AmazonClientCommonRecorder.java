@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.function.Function;
 
 import jakarta.enterprise.inject.UnsatisfiedResolutionException;
 import jakarta.enterprise.inject.spi.CDI;
@@ -12,26 +13,31 @@ import jakarta.enterprise.inject.spi.CDI;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import io.quarkus.arc.SyntheticCreationalContext;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
+import software.amazon.awssdk.awscore.AwsClient;
 import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder;
 import software.amazon.awssdk.awscore.presigner.SdkPresigner;
 import software.amazon.awssdk.core.client.builder.SdkClientBuilder;
 import software.amazon.awssdk.core.client.config.ClientOverrideConfiguration;
 import software.amazon.awssdk.core.interceptor.ExecutionInterceptor;
 import software.amazon.awssdk.utils.StringUtils;
+import software.amazon.awssdk.utils.builder.SdkBuilder;
 
 @Recorder
 public class AmazonClientCommonRecorder {
     private static final Log LOG = LogFactory.getLog(AmazonClientCommonRecorder.class);
 
     public RuntimeValue<AwsClientBuilder> configure(RuntimeValue<? extends AwsClientBuilder> clientBuilder,
-            RuntimeValue<AwsConfig> awsConfig, RuntimeValue<SdkConfig> sdkConfig, HasSdkBuildTimeConfig sdkBuildTimeConfig,
-            ScheduledExecutorService scheduledExecutorService, String awsServiceName) {
+            RuntimeValue<HasAmazonClientRuntimeConfig> amazonClientConfigRuntime, HasSdkBuildTimeConfig sdkBuildTimeConfig,
+            ScheduledExecutorService scheduledExecutorService, String awsServiceName, String clientName) {
         AwsClientBuilder builder = clientBuilder.getValue();
 
-        initAwsClient(builder, awsServiceName, awsConfig.getValue());
-        initSdkClient(builder, awsServiceName, sdkConfig.getValue(), sdkBuildTimeConfig.sdk(), scheduledExecutorService);
+        AmazonClientConfig config = amazonClientConfigRuntime.getValue().clients().get(clientName);
+
+        initAwsClient(builder, awsServiceName, config.aws());
+        initSdkClient(builder, awsServiceName, config.sdk(), sdkBuildTimeConfig.sdk(), scheduledExecutorService);
 
         return new RuntimeValue<>(builder);
     }
@@ -76,12 +82,14 @@ public class AmazonClientCommonRecorder {
 
     public RuntimeValue<SdkPresigner.Builder> configurePresigner(
             RuntimeValue<? extends SdkPresigner.Builder> clientBuilder,
-            RuntimeValue<AwsConfig> awsConfig, RuntimeValue<SdkConfig> sdkConfig,
-            String awsServiceName) {
+            RuntimeValue<HasAmazonClientRuntimeConfig> amazonClientConfigRuntime,
+            String awsServiceName, String clientName) {
         SdkPresigner.Builder builder = clientBuilder.getValue();
 
-        initAwsPresigner(builder, awsServiceName, awsConfig.getValue());
-        initSdkPresigner(builder, awsServiceName, sdkConfig.getValue());
+        AmazonClientConfig config = amazonClientConfigRuntime.getValue().clients().get(clientName);
+
+        initAwsPresigner(builder, awsServiceName, config.aws());
+        initSdkPresigner(builder, awsServiceName, config.sdk());
 
         return new RuntimeValue<>(builder);
     }
@@ -121,5 +129,39 @@ public class AmazonClientCommonRecorder {
             LOG.error("Unable to create interceptor " + interceptorClassName, e);
             return null;
         }
+    }
+
+    public Function<SyntheticCreationalContext<AwsClient>, AwsClient> build(Class<?> clazz, String clientName) {
+        return new Function<SyntheticCreationalContext<AwsClient>, AwsClient>() {
+
+            @Override
+            public AwsClient apply(SyntheticCreationalContext<AwsClient> context) {
+                SdkBuilder builder;
+                if (ClientUtil.isDefaultClient(clientName))
+                    builder = (SdkBuilder) context.getInjectedReference(clazz);
+                else
+                    builder = (SdkBuilder) context.getInjectedReference(clazz,
+                            new io.quarkus.amazon.common.AmazonClientBuilder.AwsClientBuilderLiteral(clientName));
+
+                return (AwsClient) builder.build();
+            }
+        };
+    }
+
+    public Function<SyntheticCreationalContext<SdkPresigner>, SdkPresigner> buildPresigner(Class<?> clazz, String clientName) {
+        return new Function<SyntheticCreationalContext<SdkPresigner>, SdkPresigner>() {
+
+            @Override
+            public SdkPresigner apply(SyntheticCreationalContext<SdkPresigner> context) {
+                SdkPresigner.Builder builder;
+                if (ClientUtil.isDefaultClient(clientName))
+                    builder = (SdkPresigner.Builder) context.getInjectedReference(clazz);
+                else
+                    builder = (SdkPresigner.Builder) context.getInjectedReference(clazz,
+                            new io.quarkus.amazon.common.AmazonClientBuilder.AwsClientBuilderLiteral(clientName));
+
+                return (SdkPresigner) builder.build();
+            }
+        };
     }
 }

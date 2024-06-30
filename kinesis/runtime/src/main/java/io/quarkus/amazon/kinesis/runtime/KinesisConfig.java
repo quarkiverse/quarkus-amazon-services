@@ -1,31 +1,16 @@
 package io.quarkus.amazon.kinesis.runtime;
 
 import io.quarkus.amazon.common.runtime.AsyncHttpClientConfig;
-import io.quarkus.amazon.common.runtime.AwsConfig;
-import io.quarkus.amazon.common.runtime.SdkConfig;
+import io.quarkus.amazon.common.runtime.HasAmazonClientRuntimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.runtime.annotations.ConfigDocSection;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
-import io.smallrye.config.WithParentName;
 
 @ConfigRoot(phase = ConfigPhase.RUN_TIME)
 @ConfigMapping(prefix = "quarkus.kinesis")
-public interface KinesisConfig {
-    /**
-     * AWS SDK client configurations
-     */
-    @WithParentName
-    @ConfigDocSection
-    SdkConfig sdk();
-
-    /**
-     * AWS services configurations
-     */
-    @ConfigDocSection
-    AwsConfig aws();
-
+public interface KinesisConfig extends HasAmazonClientRuntimeConfig {
     /**
      * Sync HTTP transport configurations
      */

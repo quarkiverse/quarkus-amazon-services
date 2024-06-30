@@ -18,13 +18,8 @@ public class CloudWatchLogsRecorder extends AmazonClientRecorder {
     }
 
     @Override
-    public RuntimeValue<AwsConfig> getAwsConfig() {
-        return new RuntimeValue<>(config.aws());
-    }
-
-    @Override
-    public RuntimeValue<SdkConfig> getSdkConfig() {
-        return new RuntimeValue<>(config.sdk());
+    public RuntimeValue<HasAmazonClientRuntimeConfig> getAmazonClientsConfig() {
+        return new RuntimeValue<>(config);
     }
 
     @Override

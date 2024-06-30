@@ -3,19 +3,17 @@ package io.quarkus.amazon.s3.runtime;
 import java.util.Optional;
 
 import io.quarkus.amazon.common.runtime.AsyncHttpClientConfig;
-import io.quarkus.amazon.common.runtime.AwsConfig;
-import io.quarkus.amazon.common.runtime.SdkConfig;
+import io.quarkus.amazon.common.runtime.HasAmazonClientRuntimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.runtime.annotations.ConfigDocSection;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithDefault;
-import io.smallrye.config.WithParentName;
 
 @ConfigMapping(prefix = "quarkus.s3")
 @ConfigRoot(phase = ConfigPhase.RUN_TIME)
-public interface S3Config {
+public interface S3Config extends HasAmazonClientRuntimeConfig {
 
     /**
      * Enable using the accelerate endpoint when accessing S3.
@@ -70,19 +68,6 @@ public interface S3Config {
      * defaults to `default` name.
      */
     Optional<String> profileName();
-
-    /**
-     * AWS SDK client configurations
-     */
-    @WithParentName
-    @ConfigDocSection
-    SdkConfig sdk();
-
-    /**
-     * AWS services configurations
-     */
-    @ConfigDocSection
-    AwsConfig aws();
 
     /**
      * Sync HTTP transport configurations

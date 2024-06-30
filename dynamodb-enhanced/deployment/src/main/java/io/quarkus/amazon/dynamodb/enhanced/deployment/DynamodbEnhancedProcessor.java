@@ -22,11 +22,11 @@ import org.objectweb.asm.Type;
 
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
-import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
+import io.quarkus.amazon.common.runtime.ClientUtil;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.BeanTableSchemaSubstitutionImplementation;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.DynamoDbEnhancedBuildTimeConfig;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.DynamodbEnhancedClientRecorder;
-import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.arc.processor.InjectionPointInfo;
@@ -66,21 +66,10 @@ public class DynamodbEnhancedProcessor {
     }
 
     @BuildStep
-    AdditionalBeanBuildItem additionalBeans() {
-        return AdditionalBeanBuildItem.builder()
-                .addBeanClasses(DynamoDbEnhancedClient.class, DynamoDbEnhancedAsyncClient.class)
-                .setUnremovable()
-                .setDefaultScope(io.quarkus.arc.processor.DotNames.APPLICATION_SCOPED).build();
-    }
-
-    @BuildStep
     void setup(CombinedIndexBuildItem combinedIndexBuildItem,
             DynamoDbEnhancedBuildTimeConfig buildTimeConfig,
             BeanRegistrationPhaseBuildItem beanRegistrationPhase,
-            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
-
-        Optional<DotName> syncClassName = Optional.empty();
-        Optional<DotName> asyncClassName = Optional.empty();
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
 
         // Discover all known dynamodb-enhanced-client-extension implementors
         List<String> knownDynamodbEnhancedClientExtensionImpls = combinedIndexBuildItem.getIndex()
@@ -106,15 +95,13 @@ public class DynamodbEnhancedProcessor {
             org.jboss.jandex.Type injectedType = injectionPoint.getRequiredType();
 
             if (DotNames.DYNAMODB_ENHANCED_CLIENT.equals(injectedType.name())) {
-                syncClassName = Optional.of(DotNames.DYNAMODB_CLIENT);
+                requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(DotNames.DYNAMODB_CLIENT,
+                        ClientUtil.DEFAULT_CLIENT_NAME));
             }
             if (DotNames.DYNAMODB_ENHANCED_ASYNC_CLIENT.equals(injectedType.name())) {
-                asyncClassName = Optional.of(DotNames.DYNAMODB_ASYNC_CLIENT);
+                requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(DotNames.DYNAMODB_ASYNC_CLIENT,
+                        ClientUtil.DEFAULT_CLIENT_NAME));
             }
-        }
-
-        if (syncClassName.isPresent() || asyncClassName.isPresent()) {
-            requireClientProducer.produce(new RequireAmazonClientBuildItem(syncClassName, asyncClassName));
         }
     }
 
@@ -135,23 +122,24 @@ public class DynamodbEnhancedProcessor {
                 .filter(c -> configName.equals(c.getAwsClientName()))
                 .findFirst();
 
-        if (syncClientRuntime != null || asyncClientRuntime != null) {
+        if (syncClientRuntime.isPresent() || asyncClientRuntime.isPresent()) {
             RuntimeValue<DynamoDbEnhancedClientExtension> extensions = recorder.createExtensionList();
 
-            if (syncClientRuntime != null) {
+            if (syncClientRuntime.isPresent()) {
                 syntheticBean.produce(SyntheticBeanBuildItem
                         .configure(DynamoDbEnhancedClient.class)
+                        .unremovable()
                         .defaultBean()
                         .scope(ApplicationScoped.class)
                         .setRuntimeInit()
                         .createWith(recorder.createDynamoDbEnhancedClient(extensions))
                         .addInjectionPoint(ClassType.create(DynamoDbClient.class)).done());
-
             }
 
-            if (asyncClientRuntime != null) {
+            if (asyncClientRuntime.isPresent()) {
                 syntheticBean.produce(SyntheticBeanBuildItem
                         .configure(DynamoDbEnhancedAsyncClient.class)
+                        .unremovable()
                         .defaultBean()
                         .scope(ApplicationScoped.class)
                         .setRuntimeInit()
