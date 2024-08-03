@@ -69,7 +69,9 @@ public class S3CrtProcessor {
 
             Type injectedType = getInjectedType(injectionPoint);
 
-            if (asyncClientName().equals(injectedType.name())) {
+            // Check if the injected type is S3AsyncClient
+            DotName s3AsyncClientName = DotName.createSimple(S3AsyncClient.class.getName());
+            if (s3AsyncClientName.equals(injectedType.name())) {
                 asyncClassName = Optional.of(asyncClientName());
             }
         }
