@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.quarkiverse.amazonservices</groupId>
         <artifactId>quarkus-amazon-sts-parent</artifactId>
-        <version>2.16.2</version>
+        <version>999-SNAPSHOT</version>
     </parent>
 
     <artifactId>quarkus-amazon-sts-deployment</artifactId>
