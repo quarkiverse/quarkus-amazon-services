@@ -173,7 +173,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sqs-devservices-container-properties-container-properties]]`link:#quarkus-amazon-sqs_quarkus-sqs-devservices-container-properties-container-properties[quarkus.sqs.devservices.container-properties]`
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sqs-devservices-container-properties-container-properties]]`link:#quarkus-amazon-sqs_quarkus-sqs-devservices-container-properties-container-properties[quarkus.sqs.devservices.container-properties."container-properties"]`
 
 
 [.description]
@@ -181,12 +181,13 @@ a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sqs-devservi
 Generic properties that are pass for additional container configuration.
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SQS_DEVSERVICES_CONTAINER_PROPERTIES+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SQS_DEVSERVICES_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SQS_DEVSERVICES_CONTAINER_PROPERTIES+++`
+Environment variable: `+++QUARKUS_SQS_DEVSERVICES_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++`
 endif::add-copy-button-to-env-var[]
---|`Map<String,String>` 
+--|link:https://docs.oracle.com/javase/8/docs/api/java/lang/String.html[String]
+ 
 |
 
 
