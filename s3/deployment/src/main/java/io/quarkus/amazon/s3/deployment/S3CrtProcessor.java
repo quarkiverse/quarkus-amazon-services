@@ -36,6 +36,7 @@ import software.amazon.awssdk.services.s3.internal.crt.S3CrtAsyncClient;
 public class S3CrtProcessor {
 
     public static final DotName S3CRT = DotName.createSimple(S3Crt.class);
+    private static final DotName S3_ASYNC_CLIENT = DotName.createSimple(S3AsyncClient.class.getName());
 
     S3BuildTimeConfig buildTimeConfig;
 
@@ -69,7 +70,7 @@ public class S3CrtProcessor {
 
             Type injectedType = getInjectedType(injectionPoint);
 
-            if (asyncClientName().equals(injectedType.name())) {
+            if (S3_ASYNC_CLIENT.equals(injectedType.name())) {
                 asyncClassName = Optional.of(asyncClientName());
             }
         }
