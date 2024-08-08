@@ -1,6 +1,6 @@
 # Quarkus Amazon Services
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-27-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-28-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/maven-central/v/io.quarkiverse.amazonservices/quarkus-amazon-services-bom?logo=apache-maven&style=flat-square)](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom)
@@ -148,6 +148,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/LoiueFragosoUwUr"><img src="https://avatars.githubusercontent.com/u/126754704?v=4?s=100" width="100px;" alt="Louie壮真UwUr_柔"/><br /><sub><b>Louie壮真UwUr_柔</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=LoiueFragosoUwUr" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/javaduke"><img src="https://avatars.githubusercontent.com/u/561559?v=4?s=100" width="100px;" alt="javaduke"/><br /><sub><b>javaduke</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=javaduke" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/holomekc"><img src="https://avatars.githubusercontent.com/u/30546982?v=4?s=100" width="100px;" alt="holomekc"/><br /><sub><b>holomekc</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=holomekc" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/brunoguic"><img src="https://avatars.githubusercontent.com/u/719039?v=4?s=100" width="100px;" alt="Bruno Castro"/><br /><sub><b>Bruno Castro</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=brunoguic" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>

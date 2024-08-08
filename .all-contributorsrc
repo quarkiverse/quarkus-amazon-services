@@ -250,6 +250,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "brunoguic",
+      "name": "Bruno Castro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/719039?v=4",
+      "profile": "https://github.com/brunoguic",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
