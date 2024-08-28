@@ -9,7 +9,7 @@ import org.testcontainers.containers.localstack.LocalStackContainer;
 public class EcrDevServicesProcessor extends AbstractDevServicesLocalStackProcessor {
 
     @BuildStep
-    DevServicesLocalStackProviderBuildItem setupSts(EcrBuildTimeConfig clientBuildTimeConfig) {
+    DevServicesLocalStackProviderBuildItem setupEcr(EcrBuildTimeConfig clientBuildTimeConfig) {
         return this.setup(LocalStackContainer.EnabledService.named("ecr"), clientBuildTimeConfig.devservices());
     }
 }
