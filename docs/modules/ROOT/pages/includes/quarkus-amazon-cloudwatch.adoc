@@ -338,7 +338,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-sdk-aws-sdk-client-configurations]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-sdk-aws-sdk-client-configurations[AWS SDK client configurations]
+h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatch-sdk-aws-sdk-client-configurations]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatch-sdk-aws-sdk-client-configurations[AWS SDK client configurations]
 
 h|Type
 h|Default
@@ -505,7 +505,7 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 
-h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-aws-aws-services-configurations]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-aws-aws-services-configurations[AWS services configurations]
+h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatch-aws-aws-services-configurations]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatch-aws-aws-services-configurations[AWS services configurations]
 
 h|Type
 h|Default
@@ -648,7 +648,7 @@ endif::add-copy-button-to-env-var[]
 |`default`
 
 
-h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-aws-credentials-default-provider-default-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-aws-credentials-default-provider-default-credentials-provider-configuration[Default credentials provider configuration]
+h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatch-aws-credentials-default-provider-default-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatch-aws-credentials-default-provider-default-credentials-provider-configuration[Default credentials provider configuration]
 
 h|Type
 h|Default
@@ -729,7 +729,7 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 
-h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-aws-credentials-static-provider-static-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-aws-credentials-static-provider-static-credentials-provider-configuration[Static credentials provider configuration]
+h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatch-aws-credentials-static-provider-static-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatch-aws-credentials-static-provider-static-credentials-provider-configuration[Static credentials provider configuration]
 
 h|Type
 h|Default
@@ -836,7 +836,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-aws-credentials-profile-provider-aws-profile-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-aws-credentials-profile-provider-aws-profile-credentials-provider-configuration[AWS Profile credentials provider configuration]
+h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatch-aws-credentials-profile-provider-aws-profile-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatch-aws-credentials-profile-provider-aws-profile-credentials-provider-configuration[AWS Profile credentials provider configuration]
 
 h|Type
 h|Default
@@ -879,7 +879,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-aws-credentials-process-provider-process-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-aws-credentials-process-provider-process-credentials-provider-configuration[Process credentials provider configuration]
+h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatch-aws-credentials-process-provider-process-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatch-aws-credentials-process-provider-process-credentials-provider-configuration[Process credentials provider configuration]
 
 h|Type
 h|Default
@@ -1030,7 +1030,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-aws-credentials-custom-provider-custom-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-aws-credentials-custom-provider-custom-credentials-provider-configuration[Custom credentials provider configuration]
+h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatch-aws-credentials-custom-provider-custom-credentials-provider-configuration]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatch-aws-credentials-custom-provider-custom-credentials-provider-configuration[Custom credentials provider configuration]
 
 h|Type
 h|Default
@@ -1069,7 +1069,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-sync-client-sync-http-transport-configurations]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-sync-client-sync-http-transport-configurations[Sync HTTP transport configurations]
+h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatch-sync-client-sync-http-transport-configurations]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatch-sync-client-sync-http-transport-configurations[Sync HTTP transport configurations]
 
 h|Type
 h|Default
@@ -1462,7 +1462,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-sync-client-apache-apache-http-client-specific-configurations]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-sync-client-apache-apache-http-client-specific-configurations[Apache HTTP client specific configurations]
+h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatch-sync-client-apache-apache-http-client-specific-configurations]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatch-sync-client-apache-apache-http-client-specific-configurations[Apache HTTP client specific configurations]
 
 h|Type
 h|Default
@@ -1997,7 +1997,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-sync-client-crt-aws-crt-based-http-client-specific-configurations]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-sync-client-crt-aws-crt-based-http-client-specific-configurations[AWS CRT-based HTTP client specific configurations]
+h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatch-sync-client-crt-aws-crt-based-http-client-specific-configurations]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatch-sync-client-crt-aws-crt-based-http-client-specific-configurations[AWS CRT-based HTTP client specific configurations]
 
 h|Type
 h|Default
@@ -2214,7 +2214,7 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-async-client-async-http-transport-configurations]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatchlogs-async-client-async-http-transport-configurations[Async HTTP transport configurations]
+h|[[quarkus-amazon-cloudwatch_quarkus-cloudwatch-async-client-async-http-transport-configurations]]link:#quarkus-amazon-cloudwatch_quarkus-cloudwatch-async-client-async-http-transport-configurations[Async HTTP transport configurations]
 
 h|Type
 h|Default
