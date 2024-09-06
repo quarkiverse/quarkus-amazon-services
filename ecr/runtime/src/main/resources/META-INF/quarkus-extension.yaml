@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon ECR"
+metadata:
+  keywords:
+    - "ecr"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-ecr.html
+  status: "stable"
+  config:
+  - "quarkus.ecr."

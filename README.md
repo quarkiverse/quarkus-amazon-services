@@ -11,6 +11,7 @@ This set of extensions allows you to interact with some of the AWS Services name
 
  * Cognito User Pools
  * DynamoDB / DynamoDB Enhanced
+ * ECR
  * EventBridge
  * IAM
  * Inspector / Inspector2

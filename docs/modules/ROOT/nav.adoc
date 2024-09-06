@@ -3,6 +3,7 @@
 * xref:amazon-cloudwatchlogs.adoc[CloudWatch Logs]
 * xref:amazon-cognitouserpools.adoc[Cognito User Pools]
 * xref:amazon-dynamodb.adoc[DynamoDB]
+* xref:amazon-ecr.adoc[ECR]
 * xref:amazon-eventbridge.adoc[EventBridge]
 * xref:amazon-iam.adoc[IAM]
 * xref:amazon-inspector.adoc[Inspector]

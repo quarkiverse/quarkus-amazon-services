@@ -22,6 +22,7 @@
     <module>cognito-user-pools</module>
     <module>dynamodb</module>
     <module>dynamodb-enhanced</module>
+    <module>ecr</module>
     <module>eventbridge</module>
     <module>iam</module>
     <module>inspector</module>
