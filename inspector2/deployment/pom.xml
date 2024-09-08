@@ -27,7 +27,6 @@
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-inspector2</artifactId>
-            <version>${version}</version>
         </dependency>
 
         <!-- Test dependencies -->
