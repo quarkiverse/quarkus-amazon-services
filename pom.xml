@@ -39,8 +39,6 @@
     <module>sqs</module>
     <module>ssm</module>
     <module>sts</module>
-    <module>docs</module>
-    <module>integration-tests</module>
   </modules>
   <scm>
     <connection>:git:git@github.com:quarkiverse/quarkus-amazon-services.git</connection>
@@ -91,4 +89,30 @@
       </plugins>
     </pluginManagement>
   </build>
+  <profiles>
+    <profile>
+      <id>docs</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>!true</value>
+        </property>
+      </activation>
+      <modules>
+        <module>docs</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>it</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>!true</value>
+        </property>
+      </activation>
+      <modules>
+        <module>integration-tests</module>
+      </modules>
+    </profile>
+  </profiles>
 </project>
