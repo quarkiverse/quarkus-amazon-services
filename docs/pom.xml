@@ -110,6 +110,14 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-config-doc-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <targetDirectory>${project.basedir}/modules/ROOT/pages/includes/</targetDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
@@ -121,34 +129,6 @@
                         <configuration>
                             <outputDirectory>${project.basedir}/modules/ROOT/pages/includes/</outputDirectory>
                             <resources>
-                                <resource>
-                                    <directory>${project.basedir}/../target/asciidoc/generated/config/</directory>
-                                    <includes>
-                                        <include>quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config.adoc</include>
-                                        <include>quarkus-aws-devservices-moto-moto-dev-services-build-time-config.adoc</include>
-                                        <include>quarkus-otel-instrumentation-aws-sdk-telemetry-config.adoc</include>
-                                        <include>quarkus-amazon-cloudwatch.adoc</include>
-                                        <include>quarkus-amazon-cloudwatchlogs.adoc</include>
-                                        <include>quarkus-amazon-cognitouserpools.adoc</include>
-                                        <include>quarkus-amazon-dynamodb.adoc</include>
-                                        <include>quarkus-amazon-dynamodb-enhanced.adoc</include>
-                                        <include>quarkus-amazon-ecr.adoc</include>
-                                        <include>quarkus-amazon-eventbridge.adoc</include>
-                                        <include>quarkus-amazon-iam.adoc</include>
-                                        <include>quarkus-amazon-kms.adoc</include>
-                                        <include>quarkus-amazon-kinesis.adoc</include>
-                                        <include>quarkus-amazon-lambda.adoc</include>
-                                        <include>quarkus-amazon-s3.adoc</include>
-                                        <include>quarkus-amazon-secretsmanager.adoc</include>
-                                        <include>quarkus-amazon-ses.adoc</include>
-                                        <include>quarkus-amazon-sfn.adoc</include>
-                                        <include>quarkus-amazon-sns.adoc</include>
-                                        <include>quarkus-amazon-sqs.adoc</include>
-                                        <include>quarkus-amazon-ssm.adoc</include>
-                                        <include>quarkus-amazon-sts.adoc</include>
-                                    </includes>
-                                    <filtering>false</filtering>
-                                </resource>
                                 <resource>
                                     <directory>${project.basedir}/templates/includes</directory>
                                     <include>attributes.adoc</include>

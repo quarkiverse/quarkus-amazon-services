@@ -5,14 +5,16 @@ import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.spi.DeploymentException;
 
 import org.jboss.jandex.ClassType;
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.ParameterizedType;
 import org.jboss.jandex.Type;
 
-import io.quarkus.amazon.common.deployment.AmazonClientBuildItem;
-import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientTransportBuilderBuildItem;
+import io.quarkus.amazon.common.runtime.ClientUtil;
 import io.quarkus.amazon.common.runtime.SdkAutoCloseableDestroyer;
 import io.quarkus.amazon.s3.runtime.S3BuildTimeConfig;
 import io.quarkus.amazon.s3.runtime.S3Crt;
@@ -30,6 +32,7 @@ import io.quarkus.deployment.builditem.ExecutorBuildItem;
 import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.runtime.RuntimeValue;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
+import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3CrtAsyncClientBuilder;
 import software.amazon.awssdk.services.s3.internal.crt.S3CrtAsyncClient;
 
@@ -37,6 +40,7 @@ public class S3CrtProcessor {
 
     public static final DotName S3CRT = DotName.createSimple(S3Crt.class);
     private static final DotName S3_ASYNC_CLIENT = DotName.createSimple(S3AsyncClient.class.getName());
+    private static final DotName S3_CLIENT = DotName.createSimple(S3Client.class.getName());
 
     S3BuildTimeConfig buildTimeConfig;
 
@@ -51,13 +55,12 @@ public class S3CrtProcessor {
 
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
     AdditionalBeanBuildItem qualifiers() {
-        return AdditionalBeanBuildItem.unremovableOf(S3Crt.class);
+        return new AdditionalBeanBuildItem(S3Crt.class);
     }
 
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
     void discover(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
-            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
-
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
         Optional<DotName> asyncClassName = Optional.empty();
 
         // Discover all clients injections in order to determine if s3 crt async client
@@ -73,40 +76,45 @@ public class S3CrtProcessor {
             if (S3_ASYNC_CLIENT.equals(injectedType.name())) {
                 asyncClassName = Optional.of(asyncClientName());
             }
-        }
 
-        if (asyncClassName.isPresent()) {
-            requireClientProducer.produce(new RequireAmazonClientBuildItem(Optional.empty(), asyncClassName));
-        }
-    }
-
-    @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
-    void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
-            BuildProducer<AmazonClientBuildItem> clientProducer) {
-        Optional<DotName> asyncClassName = Optional.empty();
-
-        for (RequireAmazonClientBuildItem clientRequirement : clientRequirements) {
-
-            if (clientRequirement.getAsyncClassName().filter(asyncClientName()::equals).isPresent()) {
-                asyncClassName = clientRequirement.getAsyncClassName();
+            if (S3_CLIENT.equals(injectedType.name())) {
+                throw new DeploymentException("@S3Crt is only valid with S3AsyncClient instance.");
             }
         }
 
         if (asyncClassName.isPresent()) {
-            clientProducer.produce(new AmazonClientBuildItem(Optional.empty(), asyncClassName, configName(),
-                    buildTimeConfig.sdk(), buildTimeConfig.syncClient(), buildTimeConfig.asyncClient()));
+            requireClientInjectionProducer
+                    .produce(new RequireAmazonClientInjectionBuildItem(asyncClassName.get(), ClientUtil.DEFAULT_CLIENT_NAME));
+        }
+    }
+
+    @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
+    void setupClient(List<RequireAmazonClientInjectionBuildItem> clientRequirements,
+            BuildProducer<RequireAmazonClientTransportBuilderBuildItem> clientProducer) {
+        Optional<DotName> asyncClassName = Optional.empty();
+
+        for (RequireAmazonClientInjectionBuildItem clientRequirement : clientRequirements) {
+
+            if (clientRequirement.getClassName().equals(asyncClientName())) {
+                asyncClassName = Optional.of(clientRequirement.getClassName());
+            }
+        }
+
+        if (asyncClassName.isPresent()) {
+            clientProducer
+                    .produce(new RequireAmazonClientTransportBuilderBuildItem(Optional.empty(), asyncClassName, configName(),
+                            buildTimeConfig.sdk(), buildTimeConfig.syncClient(), buildTimeConfig.asyncClient()));
         }
     }
 
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void createS3CrtAsyncClient(List<AmazonClientBuildItem> amazonClients,
+    void createS3CrtAsyncClient(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             S3CrtRecorder recorder,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
             ExecutorBuildItem executorBuildItem,
             LaunchModeBuildItem launchMode) {
-
-        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+        Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
                 .findAny();
 
@@ -137,7 +145,6 @@ public class S3CrtProcessor {
                     .destroyer(SdkAutoCloseableDestroyer.class)
                     .addInjectionPoint(ClassType.create(S3CrtAsyncClientBuilder.class))
                     .done());
-
         });
     }
 

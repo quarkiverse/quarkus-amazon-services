@@ -81,10 +81,4 @@ quarkus.aws.devservices.moto.container-properties.MOTO_COGNITO_IDP_USER_POOL_ID_
 
 == Global DevServices Configuration Reference
 
-=== LocalStack Configuration
-
-include::./includes/quarkus-aws-devservices-localstack-local-stack-dev-services-build-time-config.adoc[]
-
-=== Moto Configuration
-
-include::./includes/quarkus-aws-devservices-moto-moto-dev-services-build-time-config.adoc[]
+include::./includes/quarkus-amazon_quarkus.aws.adoc[]

@@ -17,6 +17,7 @@ import jakarta.ws.rs.Produces;
 
 import org.jboss.logging.Logger;
 
+import io.quarkus.amazon.common.AmazonClient;
 import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig.AsyncClientType;
 import io.quarkus.amazon.s3.runtime.S3BuildTimeConfig;
 import io.quarkus.amazon.s3.runtime.S3Crt;
@@ -46,6 +47,7 @@ public class S3Resource {
     S3Client s3Client;
 
     @Inject
+    @AmazonClient("custom")
     S3AsyncClient s3AsyncClient;
 
     @Inject

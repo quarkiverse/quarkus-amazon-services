@@ -1,10 +1,17 @@
 package io.quarkus.amazon.common.deployment;
 
+import static io.quarkus.amazon.common.deployment.ClientDeploymentUtil.getNamedClientInjection;
+import static io.quarkus.amazon.common.deployment.ClientDeploymentUtil.injectionPointAnnotationsBuilder;
+import static io.quarkus.amazon.common.deployment.ClientDeploymentUtil.namedBuilder;
+import static io.quarkus.amazon.common.deployment.ClientDeploymentUtil.namedClient;
+
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -24,11 +31,10 @@ import io.quarkus.amazon.common.runtime.AmazonClientRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
 import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.AsyncHttpClientConfig;
-import io.quarkus.amazon.common.runtime.AwsConfig;
+import io.quarkus.amazon.common.runtime.HasAmazonClientRuntimeConfig;
 import io.quarkus.amazon.common.runtime.HasSdkBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SdkAutoCloseableDestroyer;
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
-import io.quarkus.amazon.common.runtime.SdkConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
 import io.quarkus.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
@@ -36,6 +42,7 @@ import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.arc.processor.DotNames;
 import io.quarkus.arc.processor.InjectionPointInfo;
 import io.quarkus.deployment.annotations.BuildProducer;
+import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.ExecutorBuildItem;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
@@ -62,24 +69,48 @@ abstract public class AbstractAmazonServiceProcessor {
 
     abstract protected String builtinInterceptorsPath();
 
-    protected void discoverClient(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
-            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
-        Optional<DotName> syncClassName = Optional.empty();
-        Optional<DotName> asyncClassName = Optional.empty();
+    protected void discoverClientInjectionPointsInternal(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
 
-        // Discover all clients injections in order to determine if async or sync client
-        // is required
+        // Discover all clients injections
         for (InjectionPointInfo injectionPoint : beanRegistrationPhase.getInjectionPoints()) {
 
             Type injectedType = getInjectedType(injectionPoint);
 
             if (syncClientName().equals(injectedType.name())) {
-                syncClassName = Optional.of(syncClientName());
+                requireClientInjectionProducer
+                        .produce(new RequireAmazonClientInjectionBuildItem(syncClientName(),
+                                getNamedClientInjection(injectionPoint)));
             }
             if (asyncClientName().equals(injectedType.name())) {
+                requireClientInjectionProducer
+                        .produce(new RequireAmazonClientInjectionBuildItem(asyncClientName(),
+                                getNamedClientInjection(injectionPoint)));
+            }
+            if (presignerClientName() != null && presignerClientName().equals(injectedType.name())) {
+                requireClientInjectionProducer
+                        .produce(new RequireAmazonClientInjectionBuildItem(presignerClientName(),
+                                getNamedClientInjection(injectionPoint)));
+            }
+        }
+    }
+
+    @BuildStep
+    protected void discoverClient(
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjectionPoints,
+            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
+        Optional<DotName> syncClassName = Optional.empty();
+        Optional<DotName> asyncClassName = Optional.empty();
+
+        for (RequireAmazonClientInjectionBuildItem requireInjectionPoint : amazonClientInjectionPoints) {
+            if (syncClientName().equals(requireInjectionPoint.getClassName())) {
+                syncClassName = Optional.of(syncClientName());
+            }
+            if (asyncClientName().equals(requireInjectionPoint.getClassName())) {
                 asyncClassName = Optional.of(asyncClientName());
             }
         }
+
         if (syncClassName.isPresent() || asyncClassName.isPresent()) {
             requireClientProducer.produce(new RequireAmazonClientBuildItem(syncClassName, asyncClassName));
         }
@@ -93,7 +124,7 @@ abstract public class AbstractAmazonServiceProcessor {
     }
 
     protected void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
-            BuildProducer<AmazonClientBuildItem> clientProducer,
+            BuildProducer<RequireAmazonClientTransportBuilderBuildItem> clientProducer,
             SdkBuildTimeConfig buildTimeSdkConfig,
             SyncHttpClientBuildTimeConfig buildTimeSyncConfig,
             AsyncHttpClientBuildTimeConfig buildTimeAsyncConfig) {
@@ -111,7 +142,7 @@ abstract public class AbstractAmazonServiceProcessor {
             }
         }
         if (syncClassName.isPresent() || asyncClassName.isPresent()) {
-            clientProducer.produce(new AmazonClientBuildItem(syncClassName, asyncClassName, configName(),
+            clientProducer.produce(new RequireAmazonClientTransportBuilderBuildItem(syncClassName, asyncClassName, configName(),
                     buildTimeSdkConfig, buildTimeSyncConfig, buildTimeAsyncConfig));
         }
     }
@@ -126,13 +157,13 @@ abstract public class AbstractAmazonServiceProcessor {
         interceptors.produce(new AmazonClientInterceptorsPathBuildItem(builtinInterceptorsPath()));
     }
 
-    protected void createApacheSyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
+    protected void createApacheSyncTransportBuilder(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientApacheTransportRecorder recorder,
             SyncHttpClientBuildTimeConfig buildSyncConfig,
             RuntimeValue<SyncHttpClientConfig> syncConfig,
             BuildProducer<AmazonClientSyncTransportBuildItem> clientSyncTransports) {
 
-        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+        Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
                 .findAny();
 
@@ -152,13 +183,13 @@ abstract public class AbstractAmazonServiceProcessor {
         });
     }
 
-    protected void createAwsCrtSyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
+    protected void createAwsCrtSyncTransportBuilder(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientAwsCrtTransportRecorder recorder,
             SyncHttpClientBuildTimeConfig buildSyncConfig,
             RuntimeValue<SyncHttpClientConfig> syncConfig,
             BuildProducer<AmazonClientSyncTransportBuildItem> clientSyncTransports) {
 
-        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+        Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
                 .findAny();
 
@@ -178,13 +209,13 @@ abstract public class AbstractAmazonServiceProcessor {
         });
     }
 
-    protected void createUrlConnectionSyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
+    protected void createUrlConnectionSyncTransportBuilder(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientUrlConnectionTransportRecorder recorder,
             SyncHttpClientBuildTimeConfig buildSyncConfig,
             RuntimeValue<SyncHttpClientConfig> syncConfig,
             BuildProducer<AmazonClientSyncTransportBuildItem> clientSyncTransports) {
 
-        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+        Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
                 .findAny();
 
@@ -204,14 +235,14 @@ abstract public class AbstractAmazonServiceProcessor {
         });
     }
 
-    protected void createNettyAsyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
+    protected void createNettyAsyncTransportBuilder(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientNettyTransportRecorder recorder,
             AsyncHttpClientBuildTimeConfig buildAsyncConfig,
             RuntimeValue<AsyncHttpClientConfig> asyncConfig,
             BuildProducer<AmazonClientAsyncTransportBuildItem> clientAsyncTransports,
             Supplier<EventLoopGroup> eventLoopSupplier) {
 
-        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+        Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
                 .findAny();
 
@@ -232,13 +263,13 @@ abstract public class AbstractAmazonServiceProcessor {
         });
     }
 
-    protected void createAwsCrtAsyncTransportBuilder(List<AmazonClientBuildItem> amazonClients,
+    protected void createAwsCrtAsyncTransportBuilder(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientAwsCrtTransportRecorder recorder,
             AsyncHttpClientBuildTimeConfig buildAsyncConfig,
             RuntimeValue<AsyncHttpClientConfig> asyncConfig,
             BuildProducer<AmazonClientAsyncTransportBuildItem> clientAsyncTransports) {
 
-        Optional<AmazonClientBuildItem> matchingClientBuildItem = amazonClients.stream()
+        Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
                 .findAny();
 
@@ -263,6 +294,7 @@ abstract public class AbstractAmazonServiceProcessor {
             AmazonClientCommonRecorder commonRecorder,
             AmazonClientOpenTelemetryRecorder otelRecorder,
             HasSdkBuildTimeConfig sdkBuildConfig,
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjections,
             List<RequireAmazonTelemetryBuildItem> amazonRequireTelemtryClients,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
@@ -275,17 +307,17 @@ abstract public class AbstractAmazonServiceProcessor {
             LaunchModeBuildItem launchModeBuildItem,
             ExecutorBuildItem executorBuildItem) {
 
-        RuntimeValue<SdkPresigner.Builder> presignerBuilder = null;
+        Supplier<RuntimeValue<SdkPresigner.Builder>> presignerBuilderSupplier = null;
         if (presignerBuilderClass != null) {
-            presignerBuilder = recorder.createPresignerBuilder();
+            presignerBuilderSupplier = () -> recorder.createPresignerBuilder();
         }
 
         createClientBuilders(
                 commonRecorder,
                 otelRecorder,
-                recorder.getAwsConfig(),
-                recorder.getSdkConfig(),
+                recorder.getAmazonClientsConfig(),
                 sdkBuildConfig,
+                amazonClientInjections,
                 amazonRequireTelemtryClients,
                 syncTransports,
                 asyncTransports,
@@ -295,7 +327,7 @@ abstract public class AbstractAmazonServiceProcessor {
                 (asyncTransport) -> recorder.createAsyncBuilder(asyncTransport, launchModeBuildItem.getLaunchMode(),
                         executorBuildItem.getExecutorProxy()),
                 presignerBuilderClass,
-                presignerBuilder,
+                presignerBuilderSupplier,
                 syntheticBeans,
                 clientSync,
                 clientAsync,
@@ -306,9 +338,9 @@ abstract public class AbstractAmazonServiceProcessor {
     private void createClientBuilders(
             AmazonClientCommonRecorder recorder,
             AmazonClientOpenTelemetryRecorder otelRecorder,
-            RuntimeValue<AwsConfig> awsConfigRuntime,
-            RuntimeValue<SdkConfig> sdkConfigRuntime,
+            RuntimeValue<HasAmazonClientRuntimeConfig> amazonClientConfigRuntime,
             HasSdkBuildTimeConfig sdkBuildConfig,
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjections,
             List<RequireAmazonTelemetryBuildItem> amazonRequireTelemtryClients,
             List<AmazonClientSyncTransportBuildItem> amazonClientSyncTransports,
             List<AmazonClientAsyncTransportBuildItem> amazonClientAsyncTransports,
@@ -317,7 +349,7 @@ abstract public class AbstractAmazonServiceProcessor {
             Class<?> asyncClientBuilderClass,
             Function<RuntimeValue<SdkAsyncHttpClient.Builder>, RuntimeValue<AwsClientBuilder>> asyncClientBuilderFunction,
             Class<?> presignerBuilderClass,
-            RuntimeValue<SdkPresigner.Builder> presignerBuilder,
+            Supplier<RuntimeValue<SdkPresigner.Builder>> presignerBuilderSupplier,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
             BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
             BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
@@ -340,102 +372,136 @@ abstract public class AbstractAmazonServiceProcessor {
                 .anyMatch(c -> configName.equals(c.getConfigName()));
 
         if (!syncSdkHttpClientBuilder.isPresent() && !asyncSdkAsyncHttpClientBuilder.isPresent()
-                && presignerBuilder == null) {
+                && presignerBuilderSupplier == null) {
             return;
         }
 
-        RuntimeValue<AwsClientBuilder> syncClientBuilder = syncSdkHttpClientBuilder.isPresent()
-                ? syncClientBuilderFunction.apply(syncSdkHttpClientBuilder.get())
-                : null;
-        RuntimeValue<AwsClientBuilder> asyncClientBuilder = asyncSdkAsyncHttpClientBuilder.isPresent()
-                ? asyncClientBuilderFunction.apply(asyncSdkAsyncHttpClientBuilder.get())
-                : null;
+        // requiring named clients can originate from multiple sources and we may have duplicates
+        Collection<String> syncClientNames = amazonClientInjections.stream()
+                .filter(c -> syncClientName().equals(c.getClassName()))
+                .map(c -> c.getName())
+                .distinct()
+                .collect(Collectors.toSet());
+
+        Collection<String> asyncClientNames = amazonClientInjections.stream()
+                .filter(c -> asyncClientName().equals(c.getClassName()))
+                .map(c -> c.getName())
+                .distinct()
+                .collect(Collectors.toSet());
+
+        Collection<String> presignerClientNames = amazonClientInjections.stream()
+                .filter(c -> presignerClientName() != null && presignerClientName().equals(c.getClassName()))
+                .map(c -> c.getName())
+                .distinct()
+                .collect(Collectors.toSet());
 
         ScheduledExecutorService sharedExecutorService = executorBuildItem.getExecutorProxy();
 
-        if (syncClientBuilder != null) {
-            syncClientBuilder = recorder.configure(syncClientBuilder, awsConfigRuntime, sdkConfigRuntime,
-                    sdkBuildConfig, sharedExecutorService, configName());
-            if (addOpenTelemetry) {
-                syntheticBeans.produce(SyntheticBeanBuildItem
-                        .configure(syncClientBuilderClass)
-                        .unremovable()
-                        .defaultBean()
-                        .setRuntimeInit()
-                        .scope(ApplicationScoped.class)
-                        .createWith(otelRecorder.configureSync(syncClientBuilder))
-                        .addInjectionPoint(ClassType.create(AwsSdkTelemetry.class)).done());
-            } else {
-                syntheticBeans.produce(SyntheticBeanBuildItem.configure(syncClientBuilderClass)
-                        .unremovable()
-                        .defaultBean()
-                        .setRuntimeInit()
-                        .scope(ApplicationScoped.class)
-                        .runtimeValue(syncClientBuilder)
-                        .done());
+        if (syncSdkHttpClientBuilder.isPresent() && !syncClientNames.isEmpty()) {
+            for (String clientName : syncClientNames) {
+                RuntimeValue<AwsClientBuilder> syncClientBuilder = syncClientBuilderFunction
+                        .apply(syncSdkHttpClientBuilder.get());
+
+                syncClientBuilder = recorder.configure(syncClientBuilder, amazonClientConfigRuntime,
+                        sdkBuildConfig, sharedExecutorService, configName(), clientName);
+                if (addOpenTelemetry) {
+                    syntheticBeans.produce(namedBuilder(SyntheticBeanBuildItem.configure(syncClientBuilderClass), clientName)
+                            .unremovable()
+                            .defaultBean()
+                            .setRuntimeInit()
+                            .scope(ApplicationScoped.class)
+                            .createWith(otelRecorder.configureSync(syncClientBuilder))
+                            .addInjectionPoint(ClassType.create(AwsSdkTelemetry.class)).done());
+                } else {
+                    syntheticBeans.produce(namedBuilder(SyntheticBeanBuildItem.configure(syncClientBuilderClass), clientName)
+                            .unremovable()
+                            .defaultBean()
+                            .setRuntimeInit()
+                            .scope(ApplicationScoped.class)
+                            .runtimeValue(syncClientBuilder)
+                            .done());
+                }
+                syntheticBeans
+                        .produce(
+                                namedClient(SyntheticBeanBuildItem.configure(syncClientName()), clientName)
+                                        .unremovable()
+                                        .defaultBean()
+                                        .setRuntimeInit()
+                                        .scope(ApplicationScoped.class)
+                                        .createWith(recorder.build(syncClientBuilderClass, clientName))
+                                        .addInjectionPoint(ClassType.create(syncClientBuilderClass),
+                                                injectionPointAnnotationsBuilder(clientName))
+                                        .destroyer(SdkAutoCloseableDestroyer.class)
+                                        .done());
+
+                clientSync.produce(new AmazonClientSyncResultBuildItem(configName, clientName));
             }
-            syntheticBeans.produce(SyntheticBeanBuildItem.configure(syncClientName())
-                    .unremovable()
-                    .defaultBean()
-                    .setRuntimeInit()
-                    .scope(ApplicationScoped.class)
-                    .createWith(recorder.build(syncClientBuilderClass))
-                    .addInjectionPoint(ClassType.create(syncClientBuilderClass))
-                    .destroyer(SdkAutoCloseableDestroyer.class)
-                    .done());
-            clientSync.produce(new AmazonClientSyncResultBuildItem(configName));
         }
-        if (asyncClientBuilder != null) {
-            asyncClientBuilder = recorder.configure(asyncClientBuilder, awsConfigRuntime, sdkConfigRuntime,
-                    sdkBuildConfig, sharedExecutorService, configName());
-            if (addOpenTelemetry) {
-                syntheticBeans.produce(SyntheticBeanBuildItem
-                        .configure(asyncClientBuilderClass)
-                        .unremovable()
-                        .defaultBean()
-                        .setRuntimeInit()
-                        .scope(ApplicationScoped.class)
-                        .createWith(otelRecorder.configureAsync(asyncClientBuilder))
-                        .addInjectionPoint(ClassType.create(AwsSdkTelemetry.class)).done());
-            } else {
-                syntheticBeans.produce(SyntheticBeanBuildItem.configure(asyncClientBuilderClass)
-                        .unremovable()
-                        .defaultBean()
-                        .setRuntimeInit()
-                        .scope(ApplicationScoped.class)
-                        .runtimeValue(asyncClientBuilder)
-                        .done());
+        if (asyncSdkAsyncHttpClientBuilder.isPresent() && !asyncClientNames.isEmpty()) {
+            for (String clientName : asyncClientNames) {
+                RuntimeValue<AwsClientBuilder> asyncClientBuilder = asyncClientBuilderFunction
+                        .apply(asyncSdkAsyncHttpClientBuilder.get());
+
+                asyncClientBuilder = recorder.configure(asyncClientBuilder, amazonClientConfigRuntime,
+                        sdkBuildConfig, sharedExecutorService, configName(), clientName);
+                if (addOpenTelemetry) {
+                    syntheticBeans.produce(namedBuilder(SyntheticBeanBuildItem.configure(asyncClientBuilderClass), clientName)
+                            .unremovable()
+                            .defaultBean()
+                            .setRuntimeInit()
+                            .scope(ApplicationScoped.class)
+                            .createWith(otelRecorder.configureAsync(asyncClientBuilder))
+                            .addInjectionPoint(ClassType.create(AwsSdkTelemetry.class)).done());
+                } else {
+                    syntheticBeans.produce(namedBuilder(SyntheticBeanBuildItem.configure(asyncClientBuilderClass), clientName)
+                            .unremovable()
+                            .defaultBean()
+                            .setRuntimeInit()
+                            .scope(ApplicationScoped.class)
+                            .runtimeValue(asyncClientBuilder)
+                            .done());
+                }
+                syntheticBeans.produce(
+                        namedClient(SyntheticBeanBuildItem.configure(asyncClientName()), clientName)
+                                .unremovable()
+                                .defaultBean()
+                                .setRuntimeInit()
+                                .scope(ApplicationScoped.class)
+                                .createWith(recorder.build(asyncClientBuilderClass, clientName))
+                                .addInjectionPoint(ClassType.create(asyncClientBuilderClass),
+                                        injectionPointAnnotationsBuilder(clientName))
+                                .destroyer(SdkAutoCloseableDestroyer.class)
+                                .done());
+
+                clientAsync.produce(new AmazonClientAsyncResultBuildItem(configName, clientName));
             }
-            syntheticBeans.produce(SyntheticBeanBuildItem.configure(asyncClientName())
-                    .unremovable()
-                    .defaultBean()
-                    .setRuntimeInit()
-                    .scope(ApplicationScoped.class)
-                    .createWith(recorder.build(asyncClientBuilderClass))
-                    .addInjectionPoint(ClassType.create(asyncClientBuilderClass))
-                    .destroyer(SdkAutoCloseableDestroyer.class)
-                    .done());
-            clientAsync.produce(new AmazonClientAsyncResultBuildItem(configName));
         }
-        if (presignerBuilder != null) {
-            presignerBuilder = recorder.configurePresigner(presignerBuilder, awsConfigRuntime, sdkConfigRuntime,
-                    configName());
-            syntheticBeans.produce(SyntheticBeanBuildItem.configure(presignerBuilderClass)
-                    .unremovable()
-                    .defaultBean()
-                    .setRuntimeInit()
-                    .scope(ApplicationScoped.class)
-                    .runtimeValue(presignerBuilder)
-                    .done());
-            syntheticBeans.produce(SyntheticBeanBuildItem.configure(presignerClientName())
-                    .unremovable()
-                    .defaultBean()
-                    .setRuntimeInit()
-                    .scope(ApplicationScoped.class)
-                    .createWith(recorder.build(presignerBuilderClass))
-                    .addInjectionPoint(ClassType.create(presignerBuilderClass))
-                    .destroyer(SdkAutoCloseableDestroyer.class)
-                    .done());
+        if (presignerBuilderSupplier != null && !presignerClientNames.isEmpty()) {
+            for (String clientName : presignerClientNames) {
+                RuntimeValue<SdkPresigner.Builder> presignerBuilder = presignerBuilderSupplier.get();
+
+                presignerBuilder = recorder.configurePresigner(presignerBuilder, amazonClientConfigRuntime,
+                        configName(), clientName);
+                syntheticBeans.produce(
+                        namedBuilder(SyntheticBeanBuildItem.configure(presignerBuilderClass), clientName)
+                                .unremovable()
+                                .defaultBean()
+                                .setRuntimeInit()
+                                .scope(ApplicationScoped.class)
+                                .runtimeValue(presignerBuilder)
+                                .done());
+                syntheticBeans.produce(
+                        namedClient(SyntheticBeanBuildItem.configure(presignerClientName()), clientName)
+                                .unremovable()
+                                .defaultBean()
+                                .setRuntimeInit()
+                                .scope(ApplicationScoped.class)
+                                .createWith(recorder.buildPresigner(presignerBuilderClass, clientName))
+                                .addInjectionPoint(ClassType.create(presignerBuilderClass),
+                                        injectionPointAnnotationsBuilder(clientName))
+                                .destroyer(SdkAutoCloseableDestroyer.class)
+                                .done());
+            }
         }
     }
 

@@ -12,10 +12,12 @@ import jakarta.ws.rs.Produces;
 
 import org.jboss.logging.Logger;
 
+import io.quarkus.amazon.common.AmazonClient;
 import software.amazon.awssdk.services.iam.IamAsyncClient;
 import software.amazon.awssdk.services.iam.IamClient;
 import software.amazon.awssdk.services.iam.model.CreateUserRequest;
 import software.amazon.awssdk.services.iam.model.CreateUserResponse;
+import software.amazon.awssdk.services.iam.model.GetUserResponse;
 
 @Path("/iam")
 public class IamResource {
@@ -27,6 +29,10 @@ public class IamResource {
 
     @Inject
     IamAsyncClient iamAsyncClient;
+
+    @Inject
+    @AmazonClient("custom")
+    IamClient iamClientNamedCustom;
 
     @GET
     @Path("sync")
@@ -48,5 +54,17 @@ public class IamResource {
                 .createUser(CreateUserRequest.builder().userName("quarkus-async").build());
 
         return String.valueOf(user.get().sdkHttpResponse().statusCode());
+    }
+
+    @GET
+    @Path("account")
+    @Produces(TEXT_PLAIN)
+    public String testCustomSync() throws InterruptedException, ExecutionException {
+        LOG.info("Testing Named Sync IAM client");
+
+        GetUserResponse user = iamClient.getUser();
+        GetUserResponse userNamed = iamClientNamedCustom.getUser();
+
+        return user.user().userId() + ":" + userNamed.user().userId();
     }
 }

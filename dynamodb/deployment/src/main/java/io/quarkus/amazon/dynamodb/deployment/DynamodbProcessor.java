@@ -7,12 +7,13 @@ import org.jboss.jandex.DotName;
 import io.quarkus.amazon.common.deployment.AbstractAmazonServiceProcessor;
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncTransportBuildItem;
-import io.quarkus.amazon.common.deployment.AmazonClientBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientInterceptorsPathBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncTransportBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonHttpClients;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientTransportBuilderBuildItem;
 import io.quarkus.amazon.common.deployment.RequireAmazonTelemetryBuildItem;
 import io.quarkus.amazon.common.deployment.spi.EventLoopGroupBuildItem;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
@@ -88,10 +89,18 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
     }
 
     @BuildStep
-    void discover(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
+    void discoverClientInjectionPoints(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
+
+        discoverClientInjectionPointsInternal(beanRegistrationPhase, requireClientInjectionProducer);
+    }
+
+    @BuildStep
+    void discover(
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjectionPoints,
             BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
 
-        discoverClient(beanRegistrationPhase, requireClientProducer);
+        discoverClient(amazonClientInjectionPoints, requireClientProducer);
     }
 
     @BuildStep
@@ -102,7 +111,7 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep
     void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
-            BuildProducer<AmazonClientBuildItem> clientProducer) {
+            BuildProducer<RequireAmazonClientTransportBuilderBuildItem> clientProducer) {
 
         setupClient(clientRequirements, clientProducer, buildTimeConfig.sdk(), buildTimeConfig.syncClient(),
                 buildTimeConfig.asyncClient());
@@ -110,7 +119,7 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonApacheHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupApacheSyncTransport(List<AmazonClientBuildItem> amazonClients, DynamodbRecorder recorder,
+    void setupApacheSyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, DynamodbRecorder recorder,
             AmazonClientApacheTransportRecorder transportRecorder,
             BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
 
@@ -123,7 +132,7 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupAwsCrtSyncTransport(List<AmazonClientBuildItem> amazonClients, DynamodbRecorder recorder,
+    void setupAwsCrtSyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, DynamodbRecorder recorder,
             AmazonClientAwsCrtTransportRecorder transportRecorder,
             BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
 
@@ -136,7 +145,8 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonUrlConnectionHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupUrlConnectionSyncTransport(List<AmazonClientBuildItem> amazonClients, DynamodbRecorder recorder,
+    void setupUrlConnectionSyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
+            DynamodbRecorder recorder,
             AmazonClientUrlConnectionTransportRecorder transportRecorder,
             BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
 
@@ -149,7 +159,7 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonNettyHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupNettyAsyncTransport(List<AmazonClientBuildItem> amazonClients, DynamodbRecorder recorder,
+    void setupNettyAsyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, DynamodbRecorder recorder,
             AmazonClientNettyTransportRecorder transportRecorder,
             BuildProducer<AmazonClientAsyncTransportBuildItem> asyncTransports,
             EventLoopGroupBuildItem eventLoopSupplier) {
@@ -163,7 +173,7 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupAwsCrtAsyncTransport(List<AmazonClientBuildItem> amazonClients, DynamodbRecorder recorder,
+    void setupAwsCrtAsyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, DynamodbRecorder recorder,
             AmazonClientAwsCrtTransportRecorder transportRecorder,
             BuildProducer<AmazonClientAsyncTransportBuildItem> asyncTransports) {
 
@@ -179,6 +189,7 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
     void createClientBuilders(DynamodbRecorder recorder,
             AmazonClientCommonRecorder commonRecorder,
             AmazonClientOpenTelemetryRecorder otelRecorder,
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjections,
             List<RequireAmazonTelemetryBuildItem> amazonRequireTelemtryClients,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
@@ -193,6 +204,7 @@ public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
                 commonRecorder,
                 otelRecorder,
                 buildTimeConfig,
+                amazonClientInjections,
                 amazonRequireTelemtryClients,
                 syncTransports,
                 asyncTransports,

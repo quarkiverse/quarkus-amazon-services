@@ -8,12 +8,18 @@ import io.quarkus.builder.item.MultiBuildItem;
 public final class AmazonClientSyncResultBuildItem extends MultiBuildItem {
 
     private final String awsClientName;
+    private String clientName;
 
-    public AmazonClientSyncResultBuildItem(String awsClientName) {
+    public AmazonClientSyncResultBuildItem(String awsClientName, String clientName) {
         this.awsClientName = awsClientName;
+        this.clientName = clientName;
     }
 
     public String getAwsClientName() {
         return awsClientName;
+    }
+
+    public String getClientName() {
+        return clientName;
     }
 }

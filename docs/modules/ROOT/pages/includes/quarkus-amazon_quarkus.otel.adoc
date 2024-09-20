@@ -1,21 +1,19 @@
-
-:summaryTableId: quarkus-otel-instrumentation-aws-sdk-telemetry-config
+:summaryTableId: quarkus-amazon_quarkus-otel
 [.configuration-legend]
 icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
-[.configuration-reference, cols="80,.^10,.^10"]
+[.configuration-reference.searchable, cols="80,.^10,.^10"]
 |===
 
-h|[[quarkus-otel-instrumentation-aws-sdk-telemetry-config_configuration]]link:#quarkus-otel-instrumentation-aws-sdk-telemetry-config_configuration[Configuration property]
-
+h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a| [[quarkus-otel-instrumentation-aws-sdk-telemetry-config_quarkus-otel-instrumentation-messaging-experimental-capture-headers]]`link:#quarkus-otel-instrumentation-aws-sdk-telemetry-config_quarkus-otel-instrumentation-messaging-experimental-capture-headers[quarkus.otel.instrumentation.messaging.experimental.capture-headers]`
-
+a| [[quarkus-amazon_quarkus-otel-instrumentation-messaging-experimental-capture-headers]] [.property-path]##`quarkus.otel.instrumentation.messaging.experimental.capture-headers`##
 
 [.description]
 --
 Configures the messaging headers that will be captured as span attributes.
+
 
 ifdef::add-copy-button-to-env-var[]
 Environment variable: env_var_with_copy_button:+++QUARKUS_OTEL_INSTRUMENTATION_MESSAGING_EXPERIMENTAL_CAPTURE_HEADERS+++[]
@@ -23,16 +21,16 @@ endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_MESSAGING_EXPERIMENTAL_CAPTURE_HEADERS+++`
 endif::add-copy-button-to-env-var[]
---|list of string 
+--
+|list of string
 |
 
-
-a| [[quarkus-otel-instrumentation-aws-sdk-telemetry-config_quarkus-otel-instrumentation-messaging-experimental-receive-telemetry-enabled]]`link:#quarkus-otel-instrumentation-aws-sdk-telemetry-config_quarkus-otel-instrumentation-messaging-experimental-receive-telemetry-enabled[quarkus.otel.instrumentation.messaging.experimental.receive-telemetry.enabled]`
-
+a| [[quarkus-amazon_quarkus-otel-instrumentation-messaging-experimental-receive-telemetry-enabled]] [.property-path]##`quarkus.otel.instrumentation.messaging.experimental.receive-telemetry.enabled`##
 
 [.description]
 --
 Set whether to capture the consumer message receive telemetry in messaging instrumentation. Note that this will cause the consumer side to start a new trace, with only a span link connecting it to the producer trace.
+
 
 ifdef::add-copy-button-to-env-var[]
 Environment variable: env_var_with_copy_button:+++QUARKUS_OTEL_INSTRUMENTATION_MESSAGING_EXPERIMENTAL_RECEIVE_TELEMETRY_ENABLED+++[]
@@ -40,16 +38,16 @@ endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_MESSAGING_EXPERIMENTAL_RECEIVE_TELEMETRY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
---|boolean 
+--
+|boolean
 |`false`
 
-
-a| [[quarkus-otel-instrumentation-aws-sdk-telemetry-config_quarkus-otel-instrumentation-aws-sdk-experimental-span-attributes]]`link:#quarkus-otel-instrumentation-aws-sdk-telemetry-config_quarkus-otel-instrumentation-aws-sdk-experimental-span-attributes[quarkus.otel.instrumentation.aws-sdk.experimental-span-attributes]`
-
+a| [[quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-span-attributes]] [.property-path]##`quarkus.otel.instrumentation.aws-sdk.experimental-span-attributes`##
 
 [.description]
 --
 Sets whether experimental attributes should be set to spans. These attributes may be changed or removed in the future, so only enable this if you know you do not require attributes filled by this instrumentation to be stable across versions.
+
 
 ifdef::add-copy-button-to-env-var[]
 Environment variable: env_var_with_copy_button:+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_SPAN_ATTRIBUTES+++[]
@@ -57,16 +55,16 @@ endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_SPAN_ATTRIBUTES+++`
 endif::add-copy-button-to-env-var[]
---|boolean 
+--
+|boolean
 |`false`
 
-
-a| [[quarkus-otel-instrumentation-aws-sdk-telemetry-config_quarkus-otel-instrumentation-aws-sdk-experimental-use-propagator-for-messaging]]`link:#quarkus-otel-instrumentation-aws-sdk-telemetry-config_quarkus-otel-instrumentation-aws-sdk-experimental-use-propagator-for-messaging[quarkus.otel.instrumentation.aws-sdk.experimental-use-propagator-for-messaging]`
-
+a| [[quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-use-propagator-for-messaging]] [.property-path]##`quarkus.otel.instrumentation.aws-sdk.experimental-use-propagator-for-messaging`##
 
 [.description]
 --
 Sets whether the io.opentelemetry.context.propagation.TextMapPropagator configured in the provided OpenTelemetry should be used to inject into supported messaging attributes (currently only SQS; SNS may follow). In addition, the X-Ray propagator is always used. Using the messaging propagator is needed if your tracing vendor requires special tracestate entries or legacy propagation information that cannot be transported via X-Ray headers. It may also be useful if you need to directly connect spans over messaging in your tracing backend, bypassing any intermediate spans/X-Ray segments that AWS may create in the delivery process. This option is off by default. If enabled, on extraction the configured propagator will be preferred over X-Ray if it can extract anything.
+
 
 ifdef::add-copy-button-to-env-var[]
 Environment variable: env_var_with_copy_button:+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_USE_PROPAGATOR_FOR_MESSAGING+++[]
@@ -74,16 +72,16 @@ endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_USE_PROPAGATOR_FOR_MESSAGING+++`
 endif::add-copy-button-to-env-var[]
---|boolean 
+--
+|boolean
 |`false`
 
-
-a| [[quarkus-otel-instrumentation-aws-sdk-telemetry-config_quarkus-otel-instrumentation-aws-sdk-experimental-record-individual-http-error]]`link:#quarkus-otel-instrumentation-aws-sdk-telemetry-config_quarkus-otel-instrumentation-aws-sdk-experimental-record-individual-http-error[quarkus.otel.instrumentation.aws-sdk.experimental-record-individual-http-error]`
-
+a| [[quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-record-individual-http-error]] [.property-path]##`quarkus.otel.instrumentation.aws-sdk.experimental-record-individual-http-error`##
 
 [.description]
 --
 Sets whether errors returned by each individual HTTP request should be recorded as events for the SDK span. This option is off by default. If enabled, the HTTP error code and the error message will be captured and associated with the span. This provides detailed insights into errors on a per-request basis.
+
 
 ifdef::add-copy-button-to-env-var[]
 Environment variable: env_var_with_copy_button:+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_RECORD_INDIVIDUAL_HTTP_ERROR+++[]
@@ -91,7 +89,11 @@ endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_RECORD_INDIVIDUAL_HTTP_ERROR+++`
 endif::add-copy-button-to-env-var[]
---|boolean 
+--
+|boolean
 |`false`
 
 |===
+
+
+:!summaryTableId:

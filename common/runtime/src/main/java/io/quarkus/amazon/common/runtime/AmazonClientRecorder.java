@@ -14,9 +14,7 @@ import software.amazon.awssdk.http.async.SdkAsyncHttpClient;
 
 public abstract class AmazonClientRecorder {
 
-    public abstract RuntimeValue<AwsConfig> getAwsConfig();
-
-    public abstract RuntimeValue<SdkConfig> getSdkConfig();
+    public abstract RuntimeValue<HasAmazonClientRuntimeConfig> getAmazonClientsConfig();
 
     public abstract AsyncHttpClientConfig getAsyncClientConfig();
 
@@ -40,6 +38,7 @@ public abstract class AmazonClientRecorder {
         if (transport != null) {
             builder.httpClientBuilder(transport.getValue());
         }
+
         return new RuntimeValue<>((AwsClientBuilder) builder);
     }
 

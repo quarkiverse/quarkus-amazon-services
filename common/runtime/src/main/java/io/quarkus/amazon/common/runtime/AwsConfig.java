@@ -31,6 +31,6 @@ public interface AwsConfig {
     /**
      * Defines credentials provider used
      */
-    AwsCredentialsProviderConfig credentials();
+    Optional<AwsCredentialsProviderConfig> credentials();
 
 }

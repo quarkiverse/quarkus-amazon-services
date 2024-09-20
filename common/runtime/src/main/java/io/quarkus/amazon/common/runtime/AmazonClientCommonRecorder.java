@@ -16,6 +16,8 @@ import org.apache.commons.logging.LogFactory;
 import io.quarkus.arc.SyntheticCreationalContext;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.awscore.AwsClient;
 import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder;
 import software.amazon.awssdk.awscore.presigner.SdkPresigner;
@@ -30,45 +32,57 @@ public class AmazonClientCommonRecorder {
     private static final Log LOG = LogFactory.getLog(AmazonClientCommonRecorder.class);
 
     public RuntimeValue<AwsClientBuilder> configure(RuntimeValue<? extends AwsClientBuilder> clientBuilder,
-            RuntimeValue<AwsConfig> awsConfig, RuntimeValue<SdkConfig> sdkConfig, HasSdkBuildTimeConfig sdkBuildTimeConfig,
-            ScheduledExecutorService scheduledExecutorService, String awsServiceName) {
+            RuntimeValue<HasAmazonClientRuntimeConfig> amazonClientConfigRuntime, HasSdkBuildTimeConfig sdkBuildTimeConfig,
+            ScheduledExecutorService scheduledExecutorService, String awsServiceName, String clientName) {
         AwsClientBuilder builder = clientBuilder.getValue();
 
-        initAwsClient(builder, awsServiceName, awsConfig.getValue());
-        initSdkClient(builder, awsServiceName, sdkConfig.getValue(), sdkBuildTimeConfig.sdk(), scheduledExecutorService);
+        AmazonClientConfig namedConfig = amazonClientConfigRuntime.getValue().clients().get(clientName);
+        AmazonClientConfig defaultConfig = amazonClientConfigRuntime.getValue().clients().get(ClientUtil.DEFAULT_CLIENT_NAME);
+
+        String namedExtension = ClientUtil.isDefaultClient(clientName) ? awsServiceName : awsServiceName + "." + clientName;
+        initAwsClient(builder, awsServiceName, namedExtension, namedConfig.aws(), defaultConfig.aws());
+        initSdkClient(builder, awsServiceName, namedExtension, namedConfig.sdk(), defaultConfig.sdk(), sdkBuildTimeConfig.sdk(),
+                scheduledExecutorService);
 
         return new RuntimeValue<>(builder);
     }
 
-    public void initAwsClient(AwsClientBuilder builder, String extension, AwsConfig config) {
-        config.region().ifPresent(builder::region);
+    public void initAwsClient(AwsClientBuilder builder, String extension, String namedExtension, AwsConfig namedConfig,
+            AwsConfig defaultConfig) {
+        namedConfig.region().or(() -> defaultConfig.region()).ifPresent(builder::region);
 
-        builder.credentialsProvider(config.credentials().type().create(config.credentials(), "quarkus." + extension));
+        AwsCredentialsProvider credential = namedConfig.credentials().map(c -> c.type().create(c, "quarkus." + namedExtension))
+                .or(() -> defaultConfig.credentials().map(c -> c.type().create(c, "quarkus." + extension)))
+                .orElseGet(() -> DefaultCredentialsProvider.builder().asyncCredentialUpdateEnabled(false)
+                        .reuseLastProviderEnabled(false).build());
+
+        builder.credentialsProvider(credential);
     }
 
-    public void initSdkClient(SdkClientBuilder builder, String extension, SdkConfig config, SdkBuildTimeConfig buildConfig,
+    public void initSdkClient(SdkClientBuilder builder, String extension, String namedExtension, SdkConfig namedConfig,
+            SdkConfig defaultConfig, SdkBuildTimeConfig buildConfig,
             ScheduledExecutorService scheduledExecutorService) {
-        if (config.endpointOverride().isPresent()) {
-            URI endpointOverride = config.endpointOverride().get();
-            if (StringUtils.isBlank(endpointOverride.getScheme())) {
-                throw new RuntimeConfigurationError(
-                        String.format("quarkus.%s.endpoint-override (%s) - scheme must be specified",
-                                extension,
-                                endpointOverride.toString()));
-            }
+
+        if (namedConfig.endpointOverride().isPresent()) {
+            validEndpointOverride(namedExtension, namedConfig.endpointOverride().get());
+        } else if (defaultConfig.endpointOverride().isPresent()) {
+            validEndpointOverride(extension, defaultConfig.endpointOverride().get());
         }
 
-        config.endpointOverride().filter(URI::isAbsolute).ifPresent(builder::endpointOverride);
+        namedConfig.endpointOverride().filter(URI::isAbsolute)
+                .or(() -> defaultConfig.endpointOverride().filter(URI::isAbsolute)).ifPresent(builder::endpointOverride);
 
         final ClientOverrideConfiguration.Builder overrides = ClientOverrideConfiguration.builder();
 
-        if (config.advanced().useQuarkusScheduledExecutorService()) {
+        if (namedConfig.advanced().useQuarkusScheduledExecutorService()
+                .or(() -> defaultConfig.advanced().useQuarkusScheduledExecutorService()).orElse(true)) {
             // use quarkus executor service
             overrides.scheduledExecutorService(scheduledExecutorService);
         }
 
-        config.apiCallTimeout().ifPresent(overrides::apiCallTimeout);
-        config.apiCallAttemptTimeout().ifPresent(overrides::apiCallAttemptTimeout);
+        namedConfig.apiCallTimeout().or(() -> defaultConfig.apiCallTimeout()).ifPresent(overrides::apiCallTimeout);
+        namedConfig.apiCallAttemptTimeout().or(() -> defaultConfig.apiCallAttemptTimeout())
+                .ifPresent(overrides::apiCallAttemptTimeout);
 
         buildConfig.interceptors().orElse(Collections.emptyList()).stream()
                 .map(String::trim)
@@ -78,36 +92,53 @@ public class AmazonClientCommonRecorder {
         builder.overrideConfiguration(overrides.build());
     }
 
+    private void validEndpointOverride(String namedExtension, URI endpointOverride) {
+        if (StringUtils.isBlank(endpointOverride.getScheme())) {
+            throw new RuntimeConfigurationError(
+                    String.format("quarkus.%s.endpoint-override (%s) - scheme must be specified",
+                            namedExtension,
+                            endpointOverride.toString()));
+        }
+    }
+
     public RuntimeValue<SdkPresigner.Builder> configurePresigner(
             RuntimeValue<? extends SdkPresigner.Builder> clientBuilder,
-            RuntimeValue<AwsConfig> awsConfig, RuntimeValue<SdkConfig> sdkConfig,
-            String awsServiceName) {
+            RuntimeValue<HasAmazonClientRuntimeConfig> amazonClientConfigRuntime,
+            String awsServiceName, String clientName) {
         SdkPresigner.Builder builder = clientBuilder.getValue();
 
-        initAwsPresigner(builder, awsServiceName, awsConfig.getValue());
-        initSdkPresigner(builder, awsServiceName, sdkConfig.getValue());
+        AmazonClientConfig namedConfig = amazonClientConfigRuntime.getValue().clients().get(clientName);
+        AmazonClientConfig defaultConfig = amazonClientConfigRuntime.getValue().clients().get(ClientUtil.DEFAULT_CLIENT_NAME);
+
+        String namedExtension = ClientUtil.isDefaultClient(clientName) ? awsServiceName : awsServiceName + "." + clientName;
+        initAwsPresigner(builder, awsServiceName, namedExtension, namedConfig.aws(), defaultConfig.aws());
+        initSdkPresigner(builder, awsServiceName, namedExtension, namedConfig.sdk(), defaultConfig.sdk());
 
         return new RuntimeValue<>(builder);
     }
 
-    public void initAwsPresigner(SdkPresigner.Builder builder, String extension, AwsConfig config) {
-        config.region().ifPresent(builder::region);
+    public void initAwsPresigner(SdkPresigner.Builder builder, String extension, String namedExtension, AwsConfig namedConfig,
+            AwsConfig defaultConfig) {
+        namedConfig.region().or(() -> defaultConfig.region()).ifPresent(builder::region);
 
-        builder.credentialsProvider(config.credentials().type().create(config.credentials(), "quarkus." + extension));
+        AwsCredentialsProvider credential = namedConfig.credentials().map(c -> c.type().create(c, "quarkus." + namedExtension))
+                .or(() -> defaultConfig.credentials().map(c -> c.type().create(c, "quarkus." + extension)))
+                .orElseGet(() -> DefaultCredentialsProvider.builder().asyncCredentialUpdateEnabled(false)
+                        .reuseLastProviderEnabled(false).build());
+
+        builder.credentialsProvider(credential);
     }
 
-    public void initSdkPresigner(SdkPresigner.Builder builder, String extension, SdkConfig config) {
-        if (config.endpointOverride().isPresent()) {
-            URI endpointOverride = config.endpointOverride().get();
-            if (StringUtils.isBlank(endpointOverride.getScheme())) {
-                throw new RuntimeConfigurationError(
-                        String.format("quarkus.%s.endpoint-override (%s) - scheme must be specified",
-                                extension,
-                                endpointOverride.toString()));
-            }
+    public void initSdkPresigner(SdkPresigner.Builder builder, String extension, String namedExtension, SdkConfig namedConfig,
+            SdkConfig defaultConfig) {
+        if (namedConfig.endpointOverride().isPresent()) {
+            validEndpointOverride(namedExtension, namedConfig.endpointOverride().get());
+        } else if (defaultConfig.endpointOverride().isPresent()) {
+            validEndpointOverride(extension, defaultConfig.endpointOverride().get());
         }
 
-        config.endpointOverride().filter(URI::isAbsolute).ifPresent(builder::endpointOverride);
+        namedConfig.endpointOverride().filter(URI::isAbsolute)
+                .or(() -> defaultConfig.endpointOverride().filter(URI::isAbsolute)).ifPresent(builder::endpointOverride);
     }
 
     private ExecutionInterceptor createInterceptor(String interceptorClassName) {
@@ -127,14 +158,36 @@ public class AmazonClientCommonRecorder {
         }
     }
 
-    public Function<SyntheticCreationalContext<AwsClient>, AwsClient> build(Class<?> clazz) {
+    public Function<SyntheticCreationalContext<AwsClient>, AwsClient> build(Class<?> clazz, String clientName) {
         return new Function<SyntheticCreationalContext<AwsClient>, AwsClient>() {
 
             @Override
             public AwsClient apply(SyntheticCreationalContext<AwsClient> context) {
-                SdkBuilder builder = (SdkBuilder) context.getInjectedReference(clazz);
+                SdkBuilder builder;
+                if (ClientUtil.isDefaultClient(clientName))
+                    builder = (SdkBuilder) context.getInjectedReference(clazz);
+                else
+                    builder = (SdkBuilder) context.getInjectedReference(clazz,
+                            new io.quarkus.amazon.common.AmazonClientBuilder.AmazonClientBuilderLiteral(clientName));
 
                 return (AwsClient) builder.build();
+            }
+        };
+    }
+
+    public Function<SyntheticCreationalContext<SdkPresigner>, SdkPresigner> buildPresigner(Class<?> clazz, String clientName) {
+        return new Function<SyntheticCreationalContext<SdkPresigner>, SdkPresigner>() {
+
+            @Override
+            public SdkPresigner apply(SyntheticCreationalContext<SdkPresigner> context) {
+                SdkPresigner.Builder builder;
+                if (ClientUtil.isDefaultClient(clientName))
+                    builder = (SdkPresigner.Builder) context.getInjectedReference(clazz);
+                else
+                    builder = (SdkPresigner.Builder) context.getInjectedReference(clazz,
+                            new io.quarkus.amazon.common.AmazonClientBuilder.AmazonClientBuilderLiteral(clientName));
+
+                return (SdkPresigner) builder.build();
             }
         };
     }

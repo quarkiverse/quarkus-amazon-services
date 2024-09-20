@@ -1,5 +1,9 @@
 package io.quarkus.amazon.dynamodb.enhanced.deployment;
 
+import static io.quarkus.amazon.common.deployment.ClientDeploymentUtil.getNamedClientInjection;
+import static io.quarkus.amazon.common.deployment.ClientDeploymentUtil.injectionPointAnnotationsClient;
+import static io.quarkus.amazon.common.deployment.ClientDeploymentUtil.namedClient;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +26,7 @@ import org.objectweb.asm.Type;
 
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
-import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.BeanTableSchemaSubstitutionImplementation;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.DynamoDbEnhancedBuildTimeConfig;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.DynamodbEnhancedClientRecorder;
@@ -68,10 +72,7 @@ public class DynamodbEnhancedProcessor {
     void setup(CombinedIndexBuildItem combinedIndexBuildItem,
             DynamoDbEnhancedBuildTimeConfig buildTimeConfig,
             BeanRegistrationPhaseBuildItem beanRegistrationPhase,
-            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
-
-        Optional<DotName> syncClassName = Optional.empty();
-        Optional<DotName> asyncClassName = Optional.empty();
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
 
         // Discover all known dynamodb-enhanced-client-extension implementors
         List<String> knownDynamodbEnhancedClientExtensionImpls = combinedIndexBuildItem.getIndex()
@@ -97,15 +98,13 @@ public class DynamodbEnhancedProcessor {
             org.jboss.jandex.Type injectedType = injectionPoint.getRequiredType();
 
             if (DotNames.DYNAMODB_ENHANCED_CLIENT.equals(injectedType.name())) {
-                syncClassName = Optional.of(DotNames.DYNAMODB_CLIENT);
+                requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(
+                        DotNames.DYNAMODB_CLIENT, getNamedClientInjection(injectionPoint)));
             }
             if (DotNames.DYNAMODB_ENHANCED_ASYNC_CLIENT.equals(injectedType.name())) {
-                asyncClassName = Optional.of(DotNames.DYNAMODB_ASYNC_CLIENT);
+                requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(
+                        DotNames.DYNAMODB_ASYNC_CLIENT, getNamedClientInjection(injectionPoint)));
             }
-        }
-
-        if (syncClassName.isPresent() || asyncClassName.isPresent()) {
-            requireClientProducer.produce(new RequireAmazonClientBuildItem(syncClassName, asyncClassName));
         }
     }
 
@@ -119,36 +118,44 @@ public class DynamodbEnhancedProcessor {
 
         String configName = "dynamodb";
 
-        Optional<AmazonClientSyncResultBuildItem> syncClientRuntime = syncBuilder.stream()
+        // we cannot filter by requirement origin, so we may create enhanced builder for standard client requirements
+        List<AmazonClientSyncResultBuildItem> syncClientRuntime = syncBuilder.stream()
                 .filter(c -> configName.equals(c.getAwsClientName()))
-                .findFirst();
-        Optional<AmazonClientAsyncResultBuildItem> asyncClientRuntime = asyncBuilder.stream()
+                .collect(Collectors.toList());
+        List<AmazonClientAsyncResultBuildItem> asyncClientRuntime = asyncBuilder.stream()
                 .filter(c -> configName.equals(c.getAwsClientName()))
-                .findFirst();
+                .collect(Collectors.toList());
 
-        if (syncClientRuntime.isPresent() || asyncClientRuntime.isPresent()) {
+        if (!syncClientRuntime.isEmpty() || !asyncClientRuntime.isEmpty()) {
             RuntimeValue<DynamoDbEnhancedClientExtension> extensions = recorder.createExtensionList();
 
-            if (syncClientRuntime.isPresent()) {
-                syntheticBean.produce(SyntheticBeanBuildItem
-                        .configure(DynamoDbEnhancedClient.class)
+            for (AmazonClientSyncResultBuildItem amazonClientSyncResultBuildItem : syncClientRuntime) {
+
+                syntheticBean.produce(namedClient(SyntheticBeanBuildItem
+                        .configure(DynamoDbEnhancedClient.class), amazonClientSyncResultBuildItem.getClientName())
                         .unremovable()
                         .defaultBean()
                         .scope(ApplicationScoped.class)
                         .setRuntimeInit()
-                        .createWith(recorder.createDynamoDbEnhancedClient(extensions))
-                        .addInjectionPoint(ClassType.create(DynamoDbClient.class)).done());
+                        .createWith(recorder.createDynamoDbEnhancedClient(extensions,
+                                amazonClientSyncResultBuildItem.getClientName()))
+                        .addInjectionPoint(ClassType.create(DynamoDbClient.class),
+                                injectionPointAnnotationsClient(amazonClientSyncResultBuildItem.getClientName()))
+                        .done());
             }
 
-            if (asyncClientRuntime.isPresent()) {
-                syntheticBean.produce(SyntheticBeanBuildItem
-                        .configure(DynamoDbEnhancedAsyncClient.class)
+            for (AmazonClientAsyncResultBuildItem amazonClientAsyncResultBuildItem : asyncClientRuntime) {
+                syntheticBean.produce(namedClient(SyntheticBeanBuildItem
+                        .configure(DynamoDbEnhancedAsyncClient.class), amazonClientAsyncResultBuildItem.getClientName())
                         .unremovable()
                         .defaultBean()
                         .scope(ApplicationScoped.class)
                         .setRuntimeInit()
-                        .createWith(recorder.createDynamoDbEnhancedAsyncClient(extensions))
-                        .addInjectionPoint(ClassType.create(DynamoDbAsyncClient.class)).done());
+                        .createWith(recorder.createDynamoDbEnhancedAsyncClient(extensions,
+                                amazonClientAsyncResultBuildItem.getClientName()))
+                        .addInjectionPoint(ClassType.create(DynamoDbAsyncClient.class),
+                                injectionPointAnnotationsClient(amazonClientAsyncResultBuildItem.getClientName()))
+                        .done());
             }
         }
     }

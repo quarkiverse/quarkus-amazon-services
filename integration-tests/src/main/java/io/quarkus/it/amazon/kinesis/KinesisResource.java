@@ -5,6 +5,7 @@ import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
+import jakarta.enterprise.inject.CreationException;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -37,7 +38,7 @@ public class KinesisResource {
             kinesisClient.createStream(builder -> builder.streamName(STREAM_NAME + "sync").shardCount(1));
             return kinesisClient.describeStream(builder -> builder.streamName(STREAM_NAME + "sync")).streamDescription()
                     .streamARN();
-        } catch (UnsupportedOperationException ex) {
+        } catch (CreationException ex) {
             return ex.getMessage();
         }
     }
@@ -53,7 +54,7 @@ public class KinesisResource {
                     .thenCompose(
                             discard -> kinesisAsyncClient.describeStream(builder -> builder.streamName(STREAM_NAME + "async"))
                                     .thenApply(r -> r.streamDescription().streamARN()));
-        } catch (UnsupportedOperationException ex) {
+        } catch (CreationException ex) {
             return CompletableFuture.completedStage(ex.getMessage());
         }
     }

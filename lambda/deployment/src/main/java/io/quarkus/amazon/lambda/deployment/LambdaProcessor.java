@@ -7,12 +7,13 @@ import org.jboss.jandex.DotName;
 import io.quarkus.amazon.common.deployment.AbstractAmazonServiceProcessor;
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncTransportBuildItem;
-import io.quarkus.amazon.common.deployment.AmazonClientBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientInterceptorsPathBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncTransportBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonHttpClients;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientTransportBuilderBuildItem;
 import io.quarkus.amazon.common.deployment.RequireAmazonTelemetryBuildItem;
 import io.quarkus.amazon.common.deployment.spi.EventLoopGroupBuildItem;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
@@ -79,11 +80,18 @@ public class LambdaProcessor extends AbstractAmazonServiceProcessor {
     }
 
     @BuildStep
-    void discover(
-            final BeanRegistrationPhaseBuildItem beanRegistrationPhase,
-            final BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
+    void discoverClientInjectionPoints(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
 
-        discoverClient(beanRegistrationPhase, requireClientProducer);
+        discoverClientInjectionPointsInternal(beanRegistrationPhase, requireClientInjectionProducer);
+    }
+
+    @BuildStep
+    void discover(
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjectionPoints,
+            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
+
+        discoverClient(amazonClientInjectionPoints, requireClientProducer);
     }
 
     @BuildStep
@@ -95,7 +103,7 @@ public class LambdaProcessor extends AbstractAmazonServiceProcessor {
     @BuildStep
     void setupClient(
             final List<RequireAmazonClientBuildItem> clientRequirements,
-            final BuildProducer<AmazonClientBuildItem> clientProducer) {
+            final BuildProducer<RequireAmazonClientTransportBuilderBuildItem> clientProducer) {
 
         setupClient(
                 clientRequirements,
@@ -108,7 +116,7 @@ public class LambdaProcessor extends AbstractAmazonServiceProcessor {
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonApacheHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
     void setupApacheSyncTransport(
-            final List<AmazonClientBuildItem> amazonClients,
+            final List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             final LambdaRecorder recorder,
             final AmazonClientApacheTransportRecorder transportRecorder,
             final BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
@@ -123,7 +131,7 @@ public class LambdaProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupAwsCrtSyncTransport(List<AmazonClientBuildItem> amazonClients, LambdaRecorder recorder,
+    void setupAwsCrtSyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, LambdaRecorder recorder,
             AmazonClientAwsCrtTransportRecorder transportRecorder,
             BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
 
@@ -137,7 +145,7 @@ public class LambdaProcessor extends AbstractAmazonServiceProcessor {
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonUrlConnectionHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
     void setupUrlConnectionSyncTransport(
-            final List<AmazonClientBuildItem> amazonClients,
+            final List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             final LambdaRecorder recorder,
             final AmazonClientUrlConnectionTransportRecorder transportRecorder,
             final BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
@@ -153,7 +161,7 @@ public class LambdaProcessor extends AbstractAmazonServiceProcessor {
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonNettyHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
     void setupNettyAsyncTransport(
-            final List<AmazonClientBuildItem> amazonClients,
+            final List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             final LambdaRecorder recorder,
             final AmazonClientNettyTransportRecorder transportRecorder,
             final LambdaConfig runtimeConfig,
@@ -171,7 +179,8 @@ public class LambdaProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupAwsCrtAsyncTransport(final List<AmazonClientBuildItem> amazonClients, final LambdaRecorder recorder,
+    void setupAwsCrtAsyncTransport(final List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
+            final LambdaRecorder recorder,
             final AmazonClientAwsCrtTransportRecorder transportRecorder,
             final BuildProducer<AmazonClientAsyncTransportBuildItem> asyncTransports) {
 
@@ -187,6 +196,7 @@ public class LambdaProcessor extends AbstractAmazonServiceProcessor {
     void createClientBuilders(LambdaRecorder recorder,
             AmazonClientCommonRecorder commonRecorder,
             AmazonClientOpenTelemetryRecorder otelRecorder,
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjections,
             List<RequireAmazonTelemetryBuildItem> amazonRequireTelemtryClients,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
@@ -201,6 +211,7 @@ public class LambdaProcessor extends AbstractAmazonServiceProcessor {
                 commonRecorder,
                 otelRecorder,
                 buildTimeConfig,
+                amazonClientInjections,
                 amazonRequireTelemtryClients,
                 syncTransports,
                 asyncTransports,
