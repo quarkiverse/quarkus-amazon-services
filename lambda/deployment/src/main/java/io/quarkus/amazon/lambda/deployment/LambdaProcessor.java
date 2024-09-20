@@ -23,9 +23,7 @@ import io.quarkus.amazon.common.runtime.AmazonClientOpenTelemetryRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
 import io.quarkus.amazon.lambda.runtime.LambdaBuildTimeConfig;
 import io.quarkus.amazon.lambda.runtime.LambdaConfig;
-import io.quarkus.amazon.lambda.runtime.LambdaProducer;
 import io.quarkus.amazon.lambda.runtime.LambdaRecorder;
-import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
@@ -69,11 +67,6 @@ public class LambdaProcessor extends AbstractAmazonServiceProcessor {
     @Override
     protected String builtinInterceptorsPath() {
         return "software/amazon/awssdk/services/lambda/execution.interceptors";
-    }
-
-    @BuildStep
-    AdditionalBeanBuildItem producer() {
-        return AdditionalBeanBuildItem.unremovableOf(LambdaProducer.class);
     }
 
     @BuildStep

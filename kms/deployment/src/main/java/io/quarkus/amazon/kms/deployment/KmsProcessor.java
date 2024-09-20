@@ -22,9 +22,7 @@ import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientOpenTelemetryRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
 import io.quarkus.amazon.kms.runtime.KmsBuildTimeConfig;
-import io.quarkus.amazon.kms.runtime.KmsClientProducer;
 import io.quarkus.amazon.kms.runtime.KmsRecorder;
-import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
@@ -69,11 +67,6 @@ public class KmsProcessor extends AbstractAmazonServiceProcessor {
     @Override
     protected String builtinInterceptorsPath() {
         return "software/amazon/awssdk/services/kms/execution.interceptors";
-    }
-
-    @BuildStep
-    AdditionalBeanBuildItem producer() {
-        return AdditionalBeanBuildItem.unremovableOf(KmsClientProducer.class);
     }
 
     @BuildStep

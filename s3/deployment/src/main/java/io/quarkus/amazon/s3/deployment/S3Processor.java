@@ -22,10 +22,8 @@ import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientOpenTelemetryRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
 import io.quarkus.amazon.s3.runtime.S3BuildTimeConfig;
-import io.quarkus.amazon.s3.runtime.S3ClientProducer;
 import io.quarkus.amazon.s3.runtime.S3Config;
 import io.quarkus.amazon.s3.runtime.S3Recorder;
-import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
@@ -69,13 +67,13 @@ public class S3Processor extends AbstractAmazonServiceProcessor {
     }
 
     @Override
-    protected String builtinInterceptorsPath() {
-        return "software/amazon/awssdk/services/s3/execution.interceptors";
+    protected DotName presignerClientName() {
+        return DotName.createSimple(S3Presigner.class.getName());
     }
 
-    @BuildStep
-    AdditionalBeanBuildItem producer() {
-        return AdditionalBeanBuildItem.unremovableOf(S3ClientProducer.class);
+    @Override
+    protected String builtinInterceptorsPath() {
+        return "software/amazon/awssdk/services/s3/execution.interceptors";
     }
 
     @BuildStep

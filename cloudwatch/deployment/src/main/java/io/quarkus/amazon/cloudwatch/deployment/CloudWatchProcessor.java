@@ -5,12 +5,10 @@ import java.util.List;
 import org.jboss.jandex.DotName;
 
 import io.quarkus.amazon.cloudwatch.runtime.CloudWatchBuildTimeConfig;
-import io.quarkus.amazon.cloudwatch.runtime.CloudWatchClientProducer;
 import io.quarkus.amazon.cloudwatch.runtime.CloudWatchRecorder;
 import io.quarkus.amazon.common.deployment.*;
 import io.quarkus.amazon.common.deployment.spi.EventLoopGroupBuildItem;
 import io.quarkus.amazon.common.runtime.*;
-import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
@@ -55,11 +53,6 @@ public class CloudWatchProcessor extends AbstractAmazonServiceProcessor {
     @Override
     protected String builtinInterceptorsPath() {
         return "software/amazon/awssdk/services/cloudwatch/execution.interceptors";
-    }
-
-    @BuildStep
-    AdditionalBeanBuildItem producer() {
-        return AdditionalBeanBuildItem.unremovableOf(CloudWatchClientProducer.class);
     }
 
     @BuildStep

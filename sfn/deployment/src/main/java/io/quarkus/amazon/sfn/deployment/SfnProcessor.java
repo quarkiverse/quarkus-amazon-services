@@ -22,10 +22,8 @@ import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientOpenTelemetryRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
 import io.quarkus.amazon.sfn.runtime.SfnBuildTimeConfig;
-import io.quarkus.amazon.sfn.runtime.SfnClientProducer;
 import io.quarkus.amazon.sfn.runtime.SfnConfig;
 import io.quarkus.amazon.sfn.runtime.SfnRecorder;
-import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
@@ -70,11 +68,6 @@ public class SfnProcessor extends AbstractAmazonServiceProcessor {
     @Override
     protected String builtinInterceptorsPath() {
         return "software/amazon/awssdk/services/sfn/execution.interceptors";
-    }
-
-    @BuildStep
-    AdditionalBeanBuildItem producer() {
-        return AdditionalBeanBuildItem.unremovableOf(SfnClientProducer.class);
     }
 
     @BuildStep
