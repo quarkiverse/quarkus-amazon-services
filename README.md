@@ -9,6 +9,8 @@
 
 This set of extensions allows you to interact with some of the AWS Services namely:
 
+ * CloudWatch
+ * CloudWatch Logs
  * Cognito User Pools
  * DynamoDB / DynamoDB Enhanced
  * ECR
@@ -18,7 +20,8 @@ This set of extensions allows you to interact with some of the AWS Services name
  * Kinesis
  * KMS
  * Lambda
- * S3
+ * S3 
+ * S3 Transfer Manager
  * Secrets Manager
  * SES 
  * SFN
@@ -97,14 +100,15 @@ Alternatively, you can switch to using a specific version of the Quarkus Amazon 
 
 Quarkus Amazon Services provides multiple version streams. One stream is compatible with Quarkus 2.x, while the others are designed to work with Quarkus 3.x and are aligned with Quarkus LTS.
 
-| Quarkus     | Quarkus Amazon Services | Documentation                                                                                          |
-|-------------|-------------------------|--------------------------------------------------------------------------------------------------------|
-| 2.x         | 1.6.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/1.x/index.html)                    |
-| 3.2.x (LTS) | 2.4.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.4.x/index.html)                  |
-| 3.8.x (LTS) | 2.12.x                  | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.12.x/index.html)                 |
-| >=3.x       | >=2.5                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)                    |
+| Quarkus      | Quarkus Amazon Services | Documentation                                                                                          |
+|--------------|-------------------------|--------------------------------------------------------------------------------------------------------|
+| 2.x          | 1.6.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/1.x/index.html)                    |
+| 3.15.x (LTS) | 2.18.x                  | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.18.x/index.html)                 |
+| >=3.15       | >=2.18                  | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)                    |
 
 Use the latest version of the corresponding stream, [the list of versions is available on Maven Central](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom).
+
+If you need fixes to be backported on the LTS branch, please open an issue.
 
 ## Contributors ✨
 
@@ -127,7 +131,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kdubb"><img src="https://avatars.githubusercontent.com/u/787655?v=4?s=100" width="100px;" alt="Kevin Wooten"/><br /><sub><b>Kevin Wooten</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=kdubb" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://resume.fedorenko-d.ru/"><img src="https://avatars.githubusercontent.com/u/587257?v=4?s=100" width="100px;" alt="Fedorenko Dmitrij"/><br /><sub><b>Fedorenko Dmitrij</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=c0va23" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://www.inulogic.fr"><img src="https://avatars.githubusercontent.com/u/88554524?v=4?s=100" width="100px;" alt="Sébastien CROCQUESEL"/><br /><sub><b>Sébastien CROCQUESEL</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=scrocquesel" title="Code">💻</a> <a href="#maintenance-scrocquesel" title="Maintenance">🚧</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.inulogic.fr"><img src="https://avatars.githubusercontent.com/u/88554524?v=4?s=100" width="100px;" alt="Sébastien Crocquesel"/><br /><sub><b>Sébastien Crocquesel</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=scrocquesel" title="Code">💻</a> <a href="#maintenance-scrocquesel" title="Maintenance">🚧</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/hamburml"><img src="https://avatars.githubusercontent.com/u/7239350?v=4?s=100" width="100px;" alt="Michael Hamburger"/><br /><sub><b>Michael Hamburger</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=hamburml" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.nithanim.me/"><img src="https://avatars.githubusercontent.com/u/2402064?v=4?s=100" width="100px;" alt="Nithanim"/><br /><sub><b>Nithanim</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=Nithanim" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Temdegon"><img src="https://avatars.githubusercontent.com/u/708289?v=4?s=100" width="100px;" alt="Pavel"/><br /><sub><b>Pavel</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=Temdegon" title="Code">💻</a></td>
