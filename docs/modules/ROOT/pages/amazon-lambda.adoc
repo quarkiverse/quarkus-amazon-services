@@ -38,7 +38,7 @@ You can also set up a local version of Lambda manually, first start a LocalStack
 
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run --rm --name local-lambda --publish 4566:4583 -e SERVICES=lambda -e START_WEB=0 -d localstack/localstack:3.0.1
+docker run --rm --name local-lambda --publish 4566:4583 -e SERVICES=lambda -e START_WEB=0 -d localstack/localstack:3.7.2
 ----
 This starts a Lambda instance that is accessible on port `4566`.
 

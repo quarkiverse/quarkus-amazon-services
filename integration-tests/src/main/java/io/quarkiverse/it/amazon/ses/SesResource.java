@@ -46,10 +46,11 @@ public class SesResource {
         SendEmailResponse sendEmailResponse = null;
         try {
             sendEmailResponse = sesClient.sendEmail(emailRequest());
+            return sendEmailResponse.messageId();
         } catch (Exception ex) {
             LOG.error("Error sending email", ex);
         }
-        return sendEmailResponse.messageId();
+        return "";
     }
 
     @GET

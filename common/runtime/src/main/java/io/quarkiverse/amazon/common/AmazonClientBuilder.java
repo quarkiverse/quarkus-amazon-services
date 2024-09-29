@@ -24,6 +24,7 @@ public @interface AmazonClientBuilder {
 
     String value();
 
+    @SuppressWarnings("all")
     public class AmazonClientBuilderLiteral extends AnnotationLiteral<AmazonClientBuilder> implements AmazonClientBuilder {
 
         private String name;
