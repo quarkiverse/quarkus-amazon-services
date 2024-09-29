@@ -23,7 +23,7 @@ Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_IMAGE_NAME+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`localstack/localstack:3.0.1`
+|`localstack/localstack:3.7.2`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-container-properties-container-properties]] [.property-path]##`quarkus.aws.devservices.localstack.container-properties."container-properties"`##
 

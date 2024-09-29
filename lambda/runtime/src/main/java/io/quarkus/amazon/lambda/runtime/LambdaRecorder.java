@@ -40,9 +40,4 @@ public class LambdaRecorder extends AmazonClientRecorder {
     public AwsAsyncClientBuilder<?, ?> getAsyncClientBuilder() {
         return LambdaAsyncClient.builder();
     }
-
-    private LambdaServiceClientConfiguration.Builder lambdaConfigurationBuilder() {
-        final LambdaServiceClientConfiguration.Builder lambdaConfigBuilder = LambdaServiceClientConfiguration.builder();
-        return lambdaConfigBuilder;
-    }
 }

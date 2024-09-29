@@ -36,7 +36,7 @@ You can also set up a local version of STS manually, first start a LocalStack co
 
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run --rm --name local-sts --publish 4592:4592 -e SERVICES=sts -e START_WEB=0 -d localstack/localstack:3.0.1
+docker run --rm --name local-sts --publish 4592:4592 -e SERVICES=sts -e START_WEB=0 -d localstack/localstack:3.7.2
 ----
 This starts a STS instance that is accessible on port `4592`.
 

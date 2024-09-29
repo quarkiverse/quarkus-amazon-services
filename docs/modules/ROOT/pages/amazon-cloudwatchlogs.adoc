@@ -36,7 +36,7 @@ You can also set up a local version of CloudWatch Logs manually, first start a L
 
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run --rm --name local-cloudwatchlogs --publish 4566:4582 -e SERVICES=logs -e START_WEB=0 -d localstack/localstack:3.0.1
+docker run --rm --name local-cloudwatchlogs --publish 4566:4582 -e SERVICES=logs -e START_WEB=0 -d localstack/localstack:3.7.2
 ----
 This starts CloudWatch instance that is accessible on port `4566`.
 

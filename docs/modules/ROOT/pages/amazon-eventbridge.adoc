@@ -36,7 +36,7 @@ You can also set up a local version of EventBridge manually, first start a Local
 
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run --rm --name local-eventbridge --publish 4592:4592 -e SERVICES=events -e START_WEB=0 -d localstack/localstack:3.0.1
+docker run --rm --name local-eventbridge --publish 4592:4592 -e SERVICES=events -e START_WEB=0 -d localstack/localstack:3.7.2
 ----
 This starts a EventBridge instance that is accessible on port `4592`.
 

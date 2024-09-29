@@ -24,6 +24,7 @@ public @interface AmazonClient {
 
     String value();
 
+    @SuppressWarnings("all")
     public class AmazonClientLiteral extends AnnotationLiteral<AmazonClient> implements AmazonClient {
 
         private String name;
