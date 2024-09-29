@@ -1,6 +1,7 @@
 package io.quarkiverse.amazon.common.runtime;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Optional;
 
 import io.quarkus.runtime.annotations.ConfigDocSection;
@@ -156,9 +157,9 @@ public interface AwsCredentialsProviderConfig {
         MemorySize processOutputLimit();
 
         /**
-         * The command that should be executed to retrieve credentials.
+         * The command that should be executed to retrieve credentials. Command and parameters are seperated list entries.
          */
-        Optional<String> command();
+        Optional<List<String>> command();
     }
 
     @ConfigGroup

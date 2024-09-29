@@ -559,7 +559,7 @@ a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-process-provider-c
 
 [.description]
 --
-The command that should be executed to retrieve credentials.
+The command that should be executed to retrieve credentials. Command and parameters are seperated list entries.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -569,7 +569,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_DYNAMODB_AWS_CREDENTIALS_PROCESS_PROVIDER_COMMAND+++`
 endif::add-copy-button-to-env-var[]
 --
-|string
+|list of string
 |
 
 

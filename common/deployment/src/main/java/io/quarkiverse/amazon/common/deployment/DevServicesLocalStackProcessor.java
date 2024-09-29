@@ -124,7 +124,7 @@ public class DevServicesLocalStackProcessor {
 
         }
 
-        if (!requestedServicesBySharedServiceName.isEmpty() && !dockerStatusBuildItem.isDockerAvailable()) {
+        if (!requestedServicesBySharedServiceName.isEmpty() && !dockerStatusBuildItem.isContainerRuntimeAvailable()) {
             String message = "Docker isn't working, dev services for Amazon Services is not available.";
             if (launchMode.getLaunchMode() == LaunchMode.TEST) {
                 throw new IllegalStateException(message);
@@ -255,39 +255,45 @@ public class DevServicesLocalStackProcessor {
             var devService = maybeContainerAddress.map(containerAddress -> {
                 // LocalStack default values are not statically exposed
                 // create an instance just to get those value
-                LocalStackContainer defaultValueContainerNotStarted = new LocalStackContainer(
+                try (LocalStackContainer defaultValueContainerNotStarted = new LocalStackContainer(
                         DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName())
-                                .asCompatibleSubstituteFor("localstack/localstack"));
+                                .asCompatibleSubstituteFor("localstack/localstack"))) {
 
-                requestedServicesGroup.forEach(ds -> {
-                    config.putAll(ds.getDevProvider().reuseLocalStack(new BorrowedLocalStackContainer() {
-                        public URI getEndpointOverride(EnabledService enabledService) {
-                            try {
-                                return new URI(
-                                        "http://" + containerAddress.getHost() + ":" + containerAddress.getPort());
-                            } catch (URISyntaxException e) {
-                                throw new IllegalStateException("Cannot obtain endpoint URL", e);
+                    String defaultRegion = defaultValueContainerNotStarted.getRegion();
+                    String defaultAccessKey = defaultValueContainerNotStarted.getAccessKey();
+                    String defaultSecretKey = defaultValueContainerNotStarted.getSecretKey();
+
+                    requestedServicesGroup.forEach(ds -> {
+                        config.putAll(ds.getDevProvider().reuseLocalStack(new BorrowedLocalStackContainer() {
+                            public URI getEndpointOverride(EnabledService enabledService) {
+                                try {
+                                    return new URI(
+                                            "http://" + containerAddress.getHost() + ":" + containerAddress.getPort());
+                                } catch (URISyntaxException e) {
+                                    throw new IllegalStateException("Cannot obtain endpoint URL", e);
+                                }
                             }
-                        }
 
-                        public String getRegion() {
-                            // DEFAULT_REGION env var can override default value and this is not supported
-                            return defaultValueContainerNotStarted.getRegion();
-                        }
+                            public String getRegion() {
+                                // DEFAULT_REGION env var can override default value and this is not supported
+                                return defaultRegion;
+                            }
 
-                        public String getAccessKey() {
-                            return defaultValueContainerNotStarted.getAccessKey();
-                        }
+                            public String getAccessKey() {
+                                return defaultAccessKey;
+                            }
 
-                        public String getSecretKey() {
-                            return defaultValueContainerNotStarted.getSecretKey();
-                        }
-                    }));
-                });
+                            public String getSecretKey() {
+                                return defaultSecretKey;
+                            }
+                        }));
+                    });
+                }
 
                 return new RunningDevService(devServiceName, containerAddress.getId(), null, config);
             }).orElseGet(
                     () -> {
+                        @SuppressWarnings("resource")
                         LocalStackContainer container = new LocalStackContainer(
                                 DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName())
                                         .asCompatibleSubstituteFor("localstack/localstack"))

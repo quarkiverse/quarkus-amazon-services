@@ -143,6 +143,7 @@ public class AmazonClientCommonRecorder {
 
     private ExecutionInterceptor createInterceptor(String interceptorClassName) {
         try {
+            @SuppressWarnings("unchecked")
             Class<ExecutionInterceptor> classObj = (Class<ExecutionInterceptor>) Thread.currentThread().getContextClassLoader()
                     .loadClass(interceptorClassName);
             try {

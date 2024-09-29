@@ -78,6 +78,7 @@ public class CognitoUserPoolsDevServicesProcessor {
                 loggingSetupBuildItem);
 
         try {
+            @SuppressWarnings("resource")
             MotoContainer container = new MotoContainer(
                     DockerImageName.parse(motoDevServicesBuildTimeConfig.imageName()))
                     .withEnv(motoDevServicesBuildTimeConfig.containerProperties());

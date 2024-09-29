@@ -16,6 +16,7 @@ import jakarta.inject.Qualifier;
 @Documented
 public @interface S3Crt {
 
+    @SuppressWarnings("all")
     public static final class Literal extends AnnotationLiteral<S3Crt> implements S3Crt {
         public static final Literal INSTANCE = new Literal();
 
