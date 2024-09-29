@@ -11,6 +11,7 @@ import java.util.function.Function;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import io.quarkus.amazon.common.runtime.ClientUtil;
 import io.quarkus.arc.SyntheticCreationalContext;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
@@ -78,23 +79,37 @@ public class DynamodbEnhancedClientRecorder {
     }
 
     public Function<SyntheticCreationalContext<DynamoDbEnhancedClient>, DynamoDbEnhancedClient> createDynamoDbEnhancedClient(
-            RuntimeValue<DynamoDbEnhancedClientExtension> extensions) {
+            RuntimeValue<DynamoDbEnhancedClientExtension> extensions, String clientName) {
         return new Function<SyntheticCreationalContext<DynamoDbEnhancedClient>, DynamoDbEnhancedClient>() {
             @Override
             public DynamoDbEnhancedClient apply(SyntheticCreationalContext<DynamoDbEnhancedClient> context) {
-                return DynamoDbEnhancedClient.builder().dynamoDbClient(context.getInjectedReference(DynamoDbClient.class))
+                DynamoDbClient client;
+                if (ClientUtil.isDefaultClient(clientName))
+                    client = context.getInjectedReference(DynamoDbClient.class);
+                else
+                    client = context.getInjectedReference(DynamoDbClient.class,
+                            new io.quarkus.amazon.common.AmazonClient.AmazonClientLiteral(clientName));
+
+                return DynamoDbEnhancedClient.builder().dynamoDbClient(client)
                         .extensions(extensions.getValue()).build();
             }
         };
     }
 
     public Function<SyntheticCreationalContext<DynamoDbEnhancedAsyncClient>, DynamoDbEnhancedAsyncClient> createDynamoDbEnhancedAsyncClient(
-            RuntimeValue<DynamoDbEnhancedClientExtension> extensions) {
+            RuntimeValue<DynamoDbEnhancedClientExtension> extensions, String clientName) {
         return new Function<SyntheticCreationalContext<DynamoDbEnhancedAsyncClient>, DynamoDbEnhancedAsyncClient>() {
             @Override
             public DynamoDbEnhancedAsyncClient apply(SyntheticCreationalContext<DynamoDbEnhancedAsyncClient> context) {
+                DynamoDbAsyncClient client;
+                if (ClientUtil.isDefaultClient(clientName))
+                    client = context.getInjectedReference(DynamoDbAsyncClient.class);
+                else
+                    client = context.getInjectedReference(DynamoDbAsyncClient.class,
+                            new io.quarkus.amazon.common.AmazonClient.AmazonClientLiteral(clientName));
+
                 return DynamoDbEnhancedAsyncClient.builder()
-                        .dynamoDbClient(context.getInjectedReference(DynamoDbAsyncClient.class))
+                        .dynamoDbClient(client)
                         .extensions(extensions.getValue()).build();
             }
         };

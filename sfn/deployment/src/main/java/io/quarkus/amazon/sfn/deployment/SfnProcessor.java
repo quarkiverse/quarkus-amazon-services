@@ -7,12 +7,13 @@ import org.jboss.jandex.DotName;
 import io.quarkus.amazon.common.deployment.AbstractAmazonServiceProcessor;
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientAsyncTransportBuildItem;
-import io.quarkus.amazon.common.deployment.AmazonClientBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientInterceptorsPathBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncResultBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonClientSyncTransportBuildItem;
 import io.quarkus.amazon.common.deployment.AmazonHttpClients;
 import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientTransportBuilderBuildItem;
 import io.quarkus.amazon.common.deployment.RequireAmazonTelemetryBuildItem;
 import io.quarkus.amazon.common.deployment.spi.EventLoopGroupBuildItem;
 import io.quarkus.amazon.common.runtime.AmazonClientApacheTransportRecorder;
@@ -22,10 +23,8 @@ import io.quarkus.amazon.common.runtime.AmazonClientNettyTransportRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientOpenTelemetryRecorder;
 import io.quarkus.amazon.common.runtime.AmazonClientUrlConnectionTransportRecorder;
 import io.quarkus.amazon.sfn.runtime.SfnBuildTimeConfig;
-import io.quarkus.amazon.sfn.runtime.SfnClientProducer;
 import io.quarkus.amazon.sfn.runtime.SfnConfig;
 import io.quarkus.amazon.sfn.runtime.SfnRecorder;
-import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
@@ -73,11 +72,6 @@ public class SfnProcessor extends AbstractAmazonServiceProcessor {
     }
 
     @BuildStep
-    AdditionalBeanBuildItem producer() {
-        return AdditionalBeanBuildItem.unremovableOf(SfnClientProducer.class);
-    }
-
-    @BuildStep
     void setup(
             BuildProducer<ExtensionSslNativeSupportBuildItem> extensionSslNativeSupport,
             BuildProducer<FeatureBuildItem> feature,
@@ -87,10 +81,18 @@ public class SfnProcessor extends AbstractAmazonServiceProcessor {
     }
 
     @BuildStep
-    void discover(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
+    void discoverClientInjectionPoints(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
+
+        discoverClientInjectionPointsInternal(beanRegistrationPhase, requireClientInjectionProducer);
+    }
+
+    @BuildStep
+    void discover(
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjectionPoints,
             BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
 
-        discoverClient(beanRegistrationPhase, requireClientProducer);
+        discoverClient(amazonClientInjectionPoints, requireClientProducer);
     }
 
     @BuildStep
@@ -101,7 +103,7 @@ public class SfnProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep
     void setupClient(List<RequireAmazonClientBuildItem> clientRequirements,
-            BuildProducer<AmazonClientBuildItem> clientProducer) {
+            BuildProducer<RequireAmazonClientTransportBuilderBuildItem> clientProducer) {
 
         setupClient(clientRequirements, clientProducer, buildTimeConfig.sdk(), buildTimeConfig.syncClient(),
                 buildTimeConfig.asyncClient());
@@ -109,7 +111,7 @@ public class SfnProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonApacheHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupApacheSyncTransport(List<AmazonClientBuildItem> amazonClients, SfnRecorder recorder,
+    void setupApacheSyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, SfnRecorder recorder,
             AmazonClientApacheTransportRecorder transportRecorder,
             SfnConfig runtimeConfig, BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
 
@@ -122,7 +124,7 @@ public class SfnProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupAwsCrtSyncTransport(List<AmazonClientBuildItem> amazonClients, SfnRecorder recorder,
+    void setupAwsCrtSyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, SfnRecorder recorder,
             AmazonClientAwsCrtTransportRecorder transportRecorder,
             BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
 
@@ -135,7 +137,7 @@ public class SfnProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonUrlConnectionHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupUrlConnectionSyncTransport(List<AmazonClientBuildItem> amazonClients, SfnRecorder recorder,
+    void setupUrlConnectionSyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, SfnRecorder recorder,
             AmazonClientUrlConnectionTransportRecorder transportRecorder,
             SfnConfig runtimeConfig, BuildProducer<AmazonClientSyncTransportBuildItem> syncTransports) {
 
@@ -148,7 +150,7 @@ public class SfnProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonNettyHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupNettyAsyncTransport(List<AmazonClientBuildItem> amazonClients, SfnRecorder recorder,
+    void setupNettyAsyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, SfnRecorder recorder,
             AmazonClientNettyTransportRecorder transportRecorder,
             SfnConfig runtimeConfig, BuildProducer<AmazonClientAsyncTransportBuildItem> asyncTransports,
             EventLoopGroupBuildItem eventLoopSupplier) {
@@ -162,7 +164,7 @@ public class SfnProcessor extends AbstractAmazonServiceProcessor {
 
     @BuildStep(onlyIf = AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
-    void setupAwsCrtAsyncTransport(List<AmazonClientBuildItem> amazonClients, SfnRecorder recorder,
+    void setupAwsCrtAsyncTransport(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients, SfnRecorder recorder,
             AmazonClientAwsCrtTransportRecorder transportRecorder,
             BuildProducer<AmazonClientAsyncTransportBuildItem> asyncTransports) {
 
@@ -178,6 +180,7 @@ public class SfnProcessor extends AbstractAmazonServiceProcessor {
     void createClientBuilders(SfnRecorder recorder,
             AmazonClientCommonRecorder commonRecorder,
             AmazonClientOpenTelemetryRecorder otelRecorder,
+            List<RequireAmazonClientInjectionBuildItem> amazonClientInjections,
             List<RequireAmazonTelemetryBuildItem> amazonRequireTelemtryClients,
             List<AmazonClientSyncTransportBuildItem> syncTransports,
             List<AmazonClientAsyncTransportBuildItem> asyncTransports,
@@ -192,6 +195,7 @@ public class SfnProcessor extends AbstractAmazonServiceProcessor {
                 commonRecorder,
                 otelRecorder,
                 buildTimeConfig,
+                amazonClientInjections,
                 amazonRequireTelemtryClients,
                 syncTransports,
                 asyncTransports,

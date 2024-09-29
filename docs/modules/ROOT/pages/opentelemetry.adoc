@@ -33,4 +33,4 @@ public class MyProducer {
 
 == Configuration Reference
 
-include::./includes/quarkus-otel-instrumentation-aws-sdk-telemetry-config.adoc[]
+include::./includes/quarkus-amazon_quarkus.otel.adoc[]

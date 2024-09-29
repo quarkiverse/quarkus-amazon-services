@@ -10,6 +10,8 @@ import jakarta.enterprise.inject.spi.DeploymentException;
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.Type;
 
+import io.quarkus.amazon.common.AmazonClient;
+import io.quarkus.amazon.common.AmazonClientBuilder;
 import io.quarkus.amazon.common.runtime.AsyncHttpClientBuildTimeConfig.AsyncClientType;
 import io.quarkus.amazon.common.runtime.AwsSdkTelemetryProducer;
 import io.quarkus.amazon.common.runtime.SdkBuildTimeConfig;
@@ -40,6 +42,11 @@ public class AmazonServicesClientsProcessor {
     private static final DotName EXECUTION_INTERCEPTOR_NAME = DotName.createSimple(ExecutionInterceptor.class.getName());
 
     @BuildStep
+    AdditionalBeanBuildItem additionalBeans() {
+        return new AdditionalBeanBuildItem(AmazonClient.class, AmazonClientBuilder.class);
+    }
+
+    @BuildStep
     void globalInterceptors(BuildProducer<AmazonClientInterceptorsPathBuildItem> producer) {
         producer.produce(
                 new AmazonClientInterceptorsPathBuildItem("software/amazon/awssdk/global/handlers/execution.interceptors"));
@@ -55,7 +62,7 @@ public class AmazonServicesClientsProcessor {
     void setupInterceptors(List<AmazonClientInterceptorsPathBuildItem> interceptors,
             BuildProducer<NativeImageResourceBuildItem> resource,
             CombinedIndexBuildItem combinedIndexBuildItem,
-            List<AmazonClientBuildItem> amazonClients,
+            List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             BuildProducer<ReflectiveClassBuildItem> reflectiveClasses,
             BuildProducer<UnremovableBeanBuildItem> unremovables) {
 
@@ -69,7 +76,7 @@ public class AmazonServicesClientsProcessor {
                 .map(c -> c.name().toString()).collect(Collectors.toList());
 
         //Validate configurations
-        for (AmazonClientBuildItem client : amazonClients) {
+        for (RequireAmazonClientTransportBuilderBuildItem client : amazonClients) {
             SdkBuildTimeConfig clientSdkConfig = client.getBuildTimeSdkConfig();
             if (clientSdkConfig != null) {
                 clientSdkConfig.interceptors().orElse(Collections.emptyList()).forEach(interceptorClassName -> {
@@ -125,7 +132,7 @@ public class AmazonServicesClientsProcessor {
 
     @BuildStep
     void setup(
-            List<AmazonClientBuildItem> amazonClients,
+            List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             BuildProducer<ReflectiveClassBuildItem> reflectiveClasses,
             BuildProducer<NativeImageProxyDefinitionBuildItem> proxyDefinition,
             BuildProducer<ServiceProviderBuildItem> serviceProvider) {
@@ -136,11 +143,11 @@ public class AmazonServicesClientsProcessor {
 
         boolean syncTransportNeeded = amazonClients.stream().anyMatch(item -> item.getSyncClassName().isPresent());
         boolean asyncTransportNeeded = amazonClients.stream().anyMatch(item -> item.getAsyncClassName().isPresent());
-        final Predicate<AmazonClientBuildItem> isSyncApache = client -> client
+        final Predicate<RequireAmazonClientTransportBuilderBuildItem> isSyncApache = client -> client
                 .getBuildTimeSyncConfig().type() == SyncClientType.APACHE;
-        final Predicate<AmazonClientBuildItem> isSyncCrt = client -> client
+        final Predicate<RequireAmazonClientTransportBuilderBuildItem> isSyncCrt = client -> client
                 .getBuildTimeSyncConfig().type() == SyncClientType.AWS_CRT;
-        final Predicate<AmazonClientBuildItem> isAsyncNetty = client -> client
+        final Predicate<RequireAmazonClientTransportBuilderBuildItem> isAsyncNetty = client -> client
                 .getBuildTimeAsyncConfig().type() == AsyncClientType.NETTY;
 
         // Register what's needed depending on the clients in the classpath and the configuration.

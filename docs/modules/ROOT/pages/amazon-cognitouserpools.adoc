@@ -303,4 +303,4 @@ And add the following dependency to the application `pom.xml`:
 
 == Configuration Reference
 
-include::./includes/quarkus-amazon-cognitouserpools.adoc[]
+include::./includes/quarkus-amazon-cognito-user-pools.adoc[]

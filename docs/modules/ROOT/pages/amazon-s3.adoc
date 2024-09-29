@@ -563,7 +563,7 @@ S3 Transfer Manager and the Quarkus extension supports only https://docs.aws.ama
 
 S3 Transfer Manager share the same configuration as S3 asynchronous client. See above to configure an `S3AsyncClient`.
 
-If you want to use S3 Transfer Manager, configure an `S3AsyncClient`with the desired HTTP client library and simply inject an instance of `S3TransferManager`:
+If you want to use S3 Transfer Manager, configure an `S3AsyncClient` with the desired HTTP client library and simply inject an instance of `S3TransferManager`:
 [source,java]
 ----
 // Netty or AWS CRT-based HTTP client
@@ -584,8 +584,6 @@ And add the following dependency to the application `pom.xml`:
     <artifactId>quarkus-amazon-s3-transfer-manager</artifactId>
 </dependency>
 ----
-
-You can then make call
 
 == Configuration Reference
 

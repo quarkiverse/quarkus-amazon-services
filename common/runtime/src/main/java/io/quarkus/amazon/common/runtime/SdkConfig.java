@@ -4,10 +4,10 @@ import java.net.URI;
 import java.time.Duration;
 import java.util.Optional;
 
+import io.quarkus.runtime.annotations.ConfigDocDefault;
 import io.quarkus.runtime.annotations.ConfigGroup;
 import io.quarkus.runtime.configuration.DurationConverter;
 import io.smallrye.config.WithConverter;
-import io.smallrye.config.WithDefault;
 
 /**
  * AWS SDK specific configurations
@@ -58,7 +58,7 @@ public interface SdkConfig {
          * When disabled, the default sdk behavior is to create a dedicated thread pool for each client, resulting in
          * competition for CPU resources among these thread pools.
          */
-        @WithDefault("true")
-        boolean useQuarkusScheduledExecutorService();
+        @ConfigDocDefault("true")
+        Optional<Boolean> useQuarkusScheduledExecutorService();
     }
 }

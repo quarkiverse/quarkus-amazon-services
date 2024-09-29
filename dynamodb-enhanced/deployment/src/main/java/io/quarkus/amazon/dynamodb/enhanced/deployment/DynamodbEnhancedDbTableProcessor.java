@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import jakarta.enterprise.inject.spi.DeploymentException;
@@ -20,7 +19,8 @@ import org.jboss.jandex.FieldInfo;
 import org.jboss.jandex.IndexView;
 import org.jboss.jandex.ParameterizedType;
 
-import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
+import io.quarkus.amazon.common.runtime.ClientUtil;
 import io.quarkus.amazon.dynamodb.enhanced.runtime.NamedDynamoDbTable;
 import io.quarkus.arc.SyntheticCreationalContext;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
@@ -59,16 +59,12 @@ public class DynamodbEnhancedDbTableProcessor {
 
     @BuildStep
     AdditionalBeanBuildItem additionalBeans() {
-        return AdditionalBeanBuildItem.unremovableOf(NamedDynamoDbTable.class);
+        return new AdditionalBeanBuildItem(NamedDynamoDbTable.class);
     }
 
     @BuildStep
     void discoverDynamoDbTable(CombinedIndexBuildItem combinedIndexBuildItem,
-            BuildProducer<DynamodbEnhancedTableBuildItem> tables,
-            BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
-
-        Optional<DotName> syncClassName = Optional.empty();
-        Optional<DotName> asyncClassName = Optional.empty();
+            BuildProducer<DynamodbEnhancedTableBuildItem> tables) {
 
         Set<Map.Entry<String, DotName>> asyncSeen = new HashSet<>();
         Set<Map.Entry<String, DotName>> syncSeen = new HashSet<>();
@@ -93,7 +89,6 @@ public class DynamodbEnhancedDbTableProcessor {
                         tables.produce(new DynamodbEnhancedTableBuildItem(tableName, beanClassName,
                                 DotNames.DYNAMODB_ENHANCED_CLIENT, DYNAMODB_ENHANCED_CLIENT_TABLE_METHOD,
                                 DotNames.DYNAMODB_TABLE));
-                        syncClassName = Optional.of(DotNames.DYNAMODB_CLIENT);
                     }
                 }
                 if (DotNames.DYNAMODB_ASYNC_TABLE.equals(field.type().name())) {
@@ -101,23 +96,38 @@ public class DynamodbEnhancedDbTableProcessor {
                         tables.produce(new DynamodbEnhancedTableBuildItem(tableName, beanClassName,
                                 DotNames.DYNAMODB_ENHANCED_ASYNC_CLIENT, DYNAMODB_ENHANCED_ASYNC_CLIENT_TABLE_METHOD,
                                 DotNames.DYNAMODB_ASYNC_TABLE));
-                        asyncClassName = Optional.of(DotNames.DYNAMODB_ASYNC_CLIENT);
                     }
                 }
             }
-        }
-
-        if (syncClassName.isPresent() || asyncClassName.isPresent()) {
-            requireClientProducer.produce(new RequireAmazonClientBuildItem(syncClassName, asyncClassName));
         }
     }
 
     @BuildStep
     public void produceNamedDbTableBean(List<DynamodbEnhancedTableBuildItem> tables,
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer,
             BuildProducer<SyntheticBeanBuildItem> syntheticBean) {
 
+        // produce a synthetic bean for each DynamoDb table bean
         tables.stream().map(DynamodbEnhancedDbTableProcessor::generateDynamoDbTableSyntheticBean)
                 .forEach(syntheticBean::produce);
+        // each table bean requires a DynamoDb Enhanced client
+        tables.stream()
+                .map(table -> new RequireAmazonClientInjectionBuildItem(table.getClientClassName(),
+                        ClientUtil.DEFAULT_CLIENT_NAME))
+                .forEach(requireClientInjectionProducer::produce);
+        // which in turn require a regular low-level DynamoDb client
+        tables.stream()
+                .map(table -> new RequireAmazonClientInjectionBuildItem(getLowLevelClientClassName(table.getClientClassName()),
+                        ClientUtil.DEFAULT_CLIENT_NAME))
+                .forEach(requireClientInjectionProducer::produce);
+    }
+
+    public DotName getLowLevelClientClassName(DotName enhancedClientClassName) {
+        if (DotNames.DYNAMODB_ENHANCED_CLIENT.equals(enhancedClientClassName)) {
+            return DotNames.DYNAMODB_CLIENT;
+        } else {
+            return DotNames.DYNAMODB_ASYNC_CLIENT;
+        }
     }
 
     static private SyntheticBeanBuildItem generateDynamoDbTableSyntheticBean(DynamodbEnhancedTableBuildItem table) {

@@ -1,7 +1,5 @@
 package io.quarkus.amazon.s3.deployment;
 
-import java.util.Optional;
-
 import jakarta.enterprise.context.ApplicationScoped;
 
 import org.jboss.jandex.AnnotationInstance;
@@ -9,7 +7,8 @@ import org.jboss.jandex.ClassType;
 import org.jboss.jandex.DotName;
 
 import io.quarkus.amazon.common.deployment.AmazonClientInterceptorsPathBuildItem;
-import io.quarkus.amazon.common.deployment.RequireAmazonClientBuildItem;
+import io.quarkus.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
+import io.quarkus.amazon.common.runtime.ClientUtil;
 import io.quarkus.amazon.common.runtime.SdkAutoCloseableDestroyer;
 import io.quarkus.amazon.s3.deployment.S3CrtProcessor.IsAmazonCrtS3ClientPresent;
 import io.quarkus.amazon.s3.runtime.S3Crt;
@@ -47,8 +46,9 @@ public class S3TransferManagerProcessor {
     }
 
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
-    void requireS3CrtClient(BuildProducer<RequireAmazonClientBuildItem> requireClientProducer) {
-        requireClientProducer.produce(new RequireAmazonClientBuildItem(Optional.empty(), Optional.of(S3CRT_CLIENT)));
+    void requireS3CrtClient(BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
+        requireClientInjectionProducer
+                .produce(new RequireAmazonClientInjectionBuildItem(S3CRT_CLIENT, ClientUtil.DEFAULT_CLIENT_NAME));
     }
 
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
@@ -59,8 +59,9 @@ public class S3TransferManagerProcessor {
         syntheticBeans.produce(SyntheticBeanBuildItem.configure(S3TransferManager.class)
                 .unremovable()
                 .setRuntimeInit()
+                .defaultBean()
+                .addQualifier().annotation(S3Crt.class).done()
                 .scope(ApplicationScoped.class)
-                .addQualifier(S3Crt.class)
                 .createWith(recorder.getS3CrtTransferManager())
                 .destroyer(SdkAutoCloseableDestroyer.class)
                 .addInjectionPoint(ClassType.create(S3AsyncClient.class),

@@ -1,4 +1,3 @@
-* xref:index.adoc[Quarkus Amazon Services]
 * xref:amazon-cloudwatch.adoc[CloudWatch]
 * xref:amazon-cloudwatchlogs.adoc[CloudWatch Logs]
 * xref:amazon-cognitouserpools.adoc[Cognito User Pools]
@@ -21,3 +20,5 @@
 * xref:amazon-sts.adoc[STS]
 * xref:dev-services.adoc[Dev Services for Amazon Services]
 * xref:opentelemetry.adoc[OpenTelemetry for Amazon Services]
+* xref:common-features.adoc[Common features]
+

@@ -102,9 +102,10 @@ public class S3TransferManagerResource {
                         return "ERROR";
                     });
         } catch (UnsatisfiedResolutionException ex) {
-            if (s3Config.asyncClient().type().equals(AsyncClientType.AWS_CRT))
+            if (s3Config.asyncClient().type().equals(AsyncClientType.AWS_CRT)) {
+                LOG.error("Error during async S3 operations", ex);
                 return CompletableFuture.completedStage("ERROR");
-            else
+            } else
                 return CompletableFuture.completedStage(ex.getMessage());
         }
     }
