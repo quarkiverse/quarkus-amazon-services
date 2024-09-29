@@ -259,6 +259,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ketola",
+      "name": "Sauli Ketola",
+      "avatar_url": "https://avatars.githubusercontent.com/u/966606?v=4",
+      "profile": "https://github.com/ketola",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
