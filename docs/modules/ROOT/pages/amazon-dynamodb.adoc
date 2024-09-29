@@ -678,7 +678,7 @@ package org.acme.dynamodb;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.quarkus.amazon.dynamodb.enhanced.runtime.NamedDynamoDbTable;
+import io.quarkiverse.amazon.dynamodb.enhanced.runtime.NamedDynamoDbTable;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
@@ -715,7 +715,7 @@ package org.acme.dynamodb;
 
 import java.util.List;
 
-import io.quarkus.amazon.dynamodb.enhanced.runtime.NamedDynamoDbTable;
+import io.quarkiverse.amazon.dynamodb.enhanced.runtime.NamedDynamoDbTable;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
