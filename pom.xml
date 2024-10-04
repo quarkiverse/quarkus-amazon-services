@@ -36,6 +36,7 @@
     <module>sfn</module>
     <module>sns</module>
     <module>sqs</module>
+    <module>sqs-messaging-connector</module>
     <module>ssm</module>
     <module>sts</module>
     <module>docs</module>
