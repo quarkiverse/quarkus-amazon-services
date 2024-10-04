@@ -326,12 +326,12 @@
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
-                <artifactId>quarkus-amazon-sqs-messaging-connector</artifactId>
+                <artifactId>quarkus-messaging-amazon-sqs</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
-                <artifactId>quarkus-amazon-sqs-messaging-connector-deployment</artifactId>
+                <artifactId>quarkus-messaging-amazon-sqs-deployment</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
