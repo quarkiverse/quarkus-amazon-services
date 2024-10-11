@@ -4,17 +4,17 @@
 
     <parent>
         <groupId>io.quarkiverse.amazonservices</groupId>
-        <artifactId>quarkus-amazon-sqs-messaging-connector-parent</artifactId>
+        <artifactId>quarkus-messaging-amazon-sqs-parent</artifactId>
         <version>999-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quarkus-amazon-sqs-messaging-connector-deployment</artifactId>
-    <name>Quarkus - Amazon Services - SQS Messaging Connector - Deployment</name>
+    <artifactId>quarkus-messaging-amazon-sqs-deployment</artifactId>
+    <name>Quarkus - Amazon Services - SQS Messaging - Deployment</name>
 
     <dependencies>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-sqs-messaging-connector</artifactId>
+            <artifactId>quarkus-messaging-amazon-sqs</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>

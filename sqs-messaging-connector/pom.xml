@@ -9,8 +9,8 @@
         <relativePath>../build-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>quarkus-amazon-sqs-messaging-connector-parent</artifactId>
-    <name>Quarkus - Amazon Services - SQS Messaging Connector</name>
+    <artifactId>quarkus-messaging-amazon-sqs-parent</artifactId>
+    <name>Quarkus - Amazon Services - SQS Messaging</name>
     <packaging>pom</packaging>
 
     <modules>
