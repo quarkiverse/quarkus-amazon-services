@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>quarkus-messaging-amazon-sqs</artifactId>
-    <name>Quarkus - Amazon Services - SQS Messaging - Runtime</name>
+    <name>Quarkus Messaging - Amazon Services - SQS - Runtime</name>
     <description>Connect to Amazon SQS messaging queue service</description>
 
     <dependencies>
@@ -30,14 +30,6 @@
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-sqs</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-netty</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-netty-client-internal</artifactId>
         </dependency>
     </dependencies>
 

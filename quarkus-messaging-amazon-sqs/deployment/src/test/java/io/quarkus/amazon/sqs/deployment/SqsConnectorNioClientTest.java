@@ -26,7 +26,8 @@ class SqsConnectorNioClientTest {
                             """
                                     quarkus.sqs.devservices.queues=quotes,quote-requests
                                     mp.messaging.incoming.requests.queue=quote-requests
-                                    mp.messaging.incoming.quotes-in.queue=quotes"""),
+                                    mp.messaging.incoming.quotes-in.queue=quotes
+                                    quarkus.sqs.async-client.type=netty"""),
                             "application.properties"));
 
     @Test
