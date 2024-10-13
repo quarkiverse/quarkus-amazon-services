@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>quarkus-messaging-amazon-sqs-parent</artifactId>
-    <name>Quarkus Messaging - Amazon Services - SQS</name>
+    <name>Quarkus - Messaging - Amazon Services - SQS</name>
     <packaging>pom</packaging>
 
     <modules>

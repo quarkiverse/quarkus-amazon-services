@@ -9,8 +9,8 @@
     </parent>
 
     <artifactId>quarkus-messaging-amazon-sqs</artifactId>
-    <name>Quarkus Messaging - Amazon Services - SQS - Runtime</name>
-    <description>Connect to Amazon SQS messaging queue service</description>
+    <name>Quarkus - Messaging - Amazon Services - SQS - Runtime</name>
+    <description>Connect to Amazon SQS with Reactive Messaging</description>
 
     <dependencies>
         <dependency>

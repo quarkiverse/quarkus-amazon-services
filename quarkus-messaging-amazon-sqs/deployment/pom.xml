@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>quarkus-messaging-amazon-sqs-deployment</artifactId>
-    <name>Quarkus Messaging - Amazon Services - SQS - Deployment</name>
+    <name>Quarkus - Messaging - Amazon Services - SQS - Deployment</name>
 
     <dependencies>
         <dependency>
