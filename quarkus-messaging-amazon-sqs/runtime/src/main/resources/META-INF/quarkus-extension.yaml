@@ -1,0 +1,18 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Messaging - Amazon SQS Connector"
+metadata:
+  keywords:
+    - "sqs"
+    - "aws"
+    - "amazon"
+    - "messaging"
+  categories:
+    - "data"
+    - "messaging"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-sqs.html
+  status: "preview"
+  config:
+  - "quarkus.sqs."
+  - "mp.messaging."
+  - "quarkus.messaging."
