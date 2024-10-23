@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon Api Gateway Management Api"
+metadata:
+  keywords:
+    - "apigatewaymanagementapi"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-apigatewaymanagementapi.html
+  status: "stable"
+  config:
+  - "quarkus.apigatewaymanagementapi."
