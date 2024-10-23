@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityPr
 
 public class CognitoUserPoolsProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_COGNITO_USER_POOLS = "amazon-cognito-user-pools";
+    private static final String AMAZON_CLIENT_NAME = "amazon-cognito-user-pools";
 
     CognitoUserPoolsBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_COGNITO_USER_POOLS;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override

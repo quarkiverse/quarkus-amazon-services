@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.secretsmanager.SecretsManagerClientBuilde
 
 public class SecretsManagerProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_SECRETS_MANAGER = "amazon-secretsmanager";
+    private static final String AMAZON_CLIENT_NAME = "amazon-secretsmanager";
 
     SecretsManagerBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_SECRETS_MANAGER;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override

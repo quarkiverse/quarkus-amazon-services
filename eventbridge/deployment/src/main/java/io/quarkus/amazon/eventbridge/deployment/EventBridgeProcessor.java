@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.eventbridge.EventBridgeClientBuilder;
 
 public class EventBridgeProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_KINESIS = "amazon-eventbridge";
+    private static final String AMAZON_CLIENT_NAME = "amazon-eventbridge";
 
     EventBridgeBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_KINESIS;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override

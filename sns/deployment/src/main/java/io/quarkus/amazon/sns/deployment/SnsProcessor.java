@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.sns.SnsClientBuilder;
 
 public class SnsProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_SNS = "amazon-sns";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sns";
 
     SnsBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_SNS;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override
