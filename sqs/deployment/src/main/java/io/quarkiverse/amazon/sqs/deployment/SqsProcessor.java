@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.sqs.SqsClientBuilder;
 
 public class SqsProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_SQS = "amazon-sqs";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sqs";
 
     SqsBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_SQS;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override

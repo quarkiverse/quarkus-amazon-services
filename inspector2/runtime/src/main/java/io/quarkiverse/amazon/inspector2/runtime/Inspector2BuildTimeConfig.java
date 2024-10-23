@@ -9,19 +9,19 @@ import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
 
 /**
- * Amazon Inspector build time configuration
+ * Amazon Inspector2 build time configuration
  */
 @ConfigMapping(prefix = "quarkus.inspector2")
 @ConfigRoot(phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
 public interface Inspector2BuildTimeConfig extends HasSdkBuildTimeConfig {
 
     /**
-     * Sync HTTP transport configuration for Amazon Inspector client
+     * Sync HTTP transport configuration for Amazon Inspector2 client
      */
     SyncHttpClientBuildTimeConfig syncClient();
 
     /**
-     * Async HTTP transport configuration for Amazon Inspector client
+     * Async HTTP transport configuration for Amazon Inspector2 client
      */
     AsyncHttpClientBuildTimeConfig asyncClient();
 

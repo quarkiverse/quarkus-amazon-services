@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.inspector2.Inspector2ClientBuilder;
 
 public class Inspector2Processor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_INSPECTOR2 = "amazon-inspector2";
+    private static final String AMAZON_CLIENT_NAME = "amazon-inspector2";
 
     Inspector2BuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_INSPECTOR2;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Inspector2Processor extends AbstractAmazonServiceProcessor {
 
     @Override
     protected String builtinInterceptorsPath() {
-        return "software/amazon/awssdk/services/inspector/execution.interceptors";
+        return "software/amazon/awssdk/services/inspector2/execution.interceptors";
     }
 
     @BuildStep

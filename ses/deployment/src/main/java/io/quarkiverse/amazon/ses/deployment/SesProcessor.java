@@ -42,13 +42,13 @@ import software.amazon.awssdk.services.ses.SesClientBuilder;
 
 public class SesProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_SES = "amazon-ses";
+    private static final String AMAZON_CLIENT_NAME = "amazon-ses";
 
     SesBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_SES;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override

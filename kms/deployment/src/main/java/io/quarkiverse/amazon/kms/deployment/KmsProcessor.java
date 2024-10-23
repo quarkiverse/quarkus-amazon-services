@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.kms.KmsClientBuilder;
 
 public class KmsProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_KMS = "amazon-kms";
+    private static final String AMAZON_CLIENT_NAME = "amazon-kms";
 
     KmsBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_KMS;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override

@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.inspector.InspectorClientBuilder;
 
 public class InspectorProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_INSPECTOR = "amazon-inspector";
+    private static final String AMAZON_CLIENT_NAME = "amazon-inspector";
 
     InspectorBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_INSPECTOR;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override
