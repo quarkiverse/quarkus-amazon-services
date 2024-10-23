@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon Payment Cryptography Data"
+metadata:
+  keywords:
+    - "paymentcryptographydata"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-paymentcryptographydata.html
+  status: "stable"
+  config:
+  - "quarkus.paymentcryptographydata."
