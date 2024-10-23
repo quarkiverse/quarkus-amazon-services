@@ -9,6 +9,7 @@
 
 This set of extensions allows you to interact with some of the AWS Services namely:
 
+ * Api Gateway Management Api
  * CloudWatch
  * CloudWatch Logs
  * Cognito User Pools
