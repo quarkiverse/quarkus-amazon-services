@@ -30,6 +30,8 @@
     <module>kinesis</module>
     <module>kms</module>
     <module>lambda</module>
+    <module>paymentcryptography</module>
+    <module>paymentcryptographydata</module>
     <module>s3</module>
     <module>s3-transfer-manager</module>
     <module>secretsmanager</module>
