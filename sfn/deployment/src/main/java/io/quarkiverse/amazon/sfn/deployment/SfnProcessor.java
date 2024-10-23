@@ -42,13 +42,13 @@ import software.amazon.awssdk.services.sfn.SfnClientBuilder;
 
 public class SfnProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_SFN = "amazon-sfn";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sfn";
 
     SfnBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_SFN;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override

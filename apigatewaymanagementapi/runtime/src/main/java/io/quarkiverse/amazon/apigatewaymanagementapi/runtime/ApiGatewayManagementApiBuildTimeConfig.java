@@ -9,19 +9,19 @@ import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
 
 /**
- * Amazon Inspector build time configuration
+ * Amazon Api Gateway Management Api build time configuration
  */
 @ConfigMapping(prefix = "quarkus.apigatewaymanagementapi")
 @ConfigRoot(phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
 public interface ApiGatewayManagementApiBuildTimeConfig extends HasSdkBuildTimeConfig {
 
     /**
-     * Sync HTTP transport configuration for Amazon Inspector client
+     * Sync HTTP transport configuration for Amazon Api Gateway Management Api client
      */
     SyncHttpClientBuildTimeConfig syncClient();
 
     /**
-     * Async HTTP transport configuration for Amazon Inspector client
+     * Async HTTP transport configuration for Amazon Api Gateway Management Api client
      */
     AsyncHttpClientBuildTimeConfig asyncClient();
 

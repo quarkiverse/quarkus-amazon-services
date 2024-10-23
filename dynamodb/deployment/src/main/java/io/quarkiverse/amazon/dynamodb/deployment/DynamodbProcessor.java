@@ -42,13 +42,13 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClientBuilder;
 
 public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_DYNAMODB = "amazon-dynamodb";
+    private static final String AMAZON_CLIENT_NAME = "amazon-dynamodb";
 
     DynamodbBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_DYNAMODB;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override

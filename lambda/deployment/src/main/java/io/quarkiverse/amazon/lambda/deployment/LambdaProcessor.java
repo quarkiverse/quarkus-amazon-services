@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.lambda.LambdaClient;
 import software.amazon.awssdk.services.lambda.LambdaClientBuilder;
 
 public class LambdaProcessor extends AbstractAmazonServiceProcessor {
-    private static final String AMAZON_Lambda = "amazon-lambda";
+    private static final String AMAZON_CLIENT_NAME = "amazon-lambda";
 
     LambdaBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_Lambda;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override

@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.iam.IamClientBuilder;
 
 public class IamProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_IAM = "amazon-iam";
+    private static final String AMAZON_CLIENT_NAME = "amazon-iam";
 
     IamBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_IAM;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override

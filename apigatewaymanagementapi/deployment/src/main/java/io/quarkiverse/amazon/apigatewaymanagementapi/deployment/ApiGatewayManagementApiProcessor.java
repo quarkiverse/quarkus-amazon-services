@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.apigatewaymanagementapi.ApiGatewayManagem
 
 public class ApiGatewayManagementApiProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_PAYMENTCRYPTOGRAPHYDATA = "amazon-apigatewaymanagementapi";
+    private static final String AMAZON_CLIENT_NAME = "amazon-apigatewaymanagementapi";
 
     ApiGatewayManagementApiBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_PAYMENTCRYPTOGRAPHYDATA;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ApiGatewayManagementApiProcessor extends AbstractAmazonServiceProce
 
     @Override
     protected String builtinInterceptorsPath() {
-        return "software/amazon/awssdk/services/inspector/execution.interceptors";
+        return "software/amazon/awssdk/services/apigatewaymanagementapi/execution.interceptors";
     }
 
     @BuildStep

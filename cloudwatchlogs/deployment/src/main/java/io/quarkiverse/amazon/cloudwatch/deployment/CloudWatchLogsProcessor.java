@@ -26,13 +26,13 @@ import software.amazon.awssdk.services.cloudwatchlogs.CloudWatchLogsClientBuilde
 
 public class CloudWatchLogsProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLOUDWATCH = "amazon-cloudwatchlogs";
+    private static final String AMAZON_CLIENT_NAME = "amazon-cloudwatchlogs";
 
     CloudWatchLogsBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_CLOUDWATCH;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override

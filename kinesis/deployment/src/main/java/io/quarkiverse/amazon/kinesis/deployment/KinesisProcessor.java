@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.kinesis.KinesisClientBuilder;
 
 public class KinesisProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_KINESIS = "amazon-kinesis";
+    private static final String AMAZON_CLIENT_NAME = "amazon-kinesis";
 
     KinesisBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_KINESIS;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override

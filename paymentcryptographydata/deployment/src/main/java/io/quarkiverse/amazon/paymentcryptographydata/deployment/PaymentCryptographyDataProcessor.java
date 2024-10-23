@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.paymentcryptographydata.PaymentCryptograp
 
 public class PaymentCryptographyDataProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_PAYMENTCRYPTOGRAPHYDATA = "amazon-paymentcryptographydata";
+    private static final String AMAZON_CLIENT_NAME = "amazon-paymentcryptographydata";
 
     PaymentCryptographyDataBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_PAYMENTCRYPTOGRAPHYDATA;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class PaymentCryptographyDataProcessor extends AbstractAmazonServiceProce
 
     @Override
     protected String builtinInterceptorsPath() {
-        return "software/amazon/awssdk/services/inspector/execution.interceptors";
+        return "software/amazon/awssdk/services/paymentcryptographydata/execution.interceptors";
     }
 
     @BuildStep

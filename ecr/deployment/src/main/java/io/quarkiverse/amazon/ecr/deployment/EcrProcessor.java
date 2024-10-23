@@ -41,13 +41,13 @@ import software.amazon.awssdk.services.ecr.EcrClientBuilder;
 
 public class EcrProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_ECR = "amazon-ecr";
+    private static final String AMAZON_CLIENT_NAME = "amazon-ecr";
 
     EcrBuildTimeConfig buildTimeConfig;
 
     @Override
     protected String amazonServiceClientName() {
-        return AMAZON_ECR;
+        return AMAZON_CLIENT_NAME;
     }
 
     @Override
