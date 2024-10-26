@@ -1,4 +1,4 @@
-package io.quarkus.amazon.sqs.deployment;
+package io.quarkiverse.amazon.sqs.deployment;
 
 import java.util.List;
 import java.util.UUID;
