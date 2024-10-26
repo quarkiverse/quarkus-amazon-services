@@ -1,4 +1,4 @@
-package io.quarkus.amazon.sqs.deployment;
+package io.quarkiverse.amazon.sqs.deployment;
 
 import static io.restassured.RestAssured.given;
 import static org.awaitility.Awaitility.await;
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import io.quarkus.test.QuarkusUnitTest;
 
-class SqsConnectorCrtClientTest {
+class SqsConnectorNioClientTest {
 
     @RegisterExtension
     static final QuarkusUnitTest config = new QuarkusUnitTest()
@@ -27,7 +27,7 @@ class SqsConnectorCrtClientTest {
                                     quarkus.sqs.devservices.queues=quotes,quote-requests
                                     mp.messaging.incoming.requests.queue=quote-requests
                                     mp.messaging.incoming.quotes-in.queue=quotes
-                                    quarkus.sqs.async-client.type=aws-crt"""),
+                                    quarkus.sqs.async-client.type=netty"""),
                             "application.properties"));
 
     @Test

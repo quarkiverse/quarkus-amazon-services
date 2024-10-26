@@ -1,4 +1,4 @@
-package io.quarkus.amazon.sqs.deployment;
+package io.quarkiverse.amazon.sqs.deployment;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
