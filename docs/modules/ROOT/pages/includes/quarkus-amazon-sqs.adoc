@@ -1,4 +1,3 @@
-:summaryTableId: quarkus-amazon-sqs_quarkus-sqs
 [.configuration-legend]
 icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
 [.configuration-reference.searchable, cols="80,.^10,.^10"]
@@ -58,7 +57,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_SYNC_CLIENT_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|SyncClientType
+a|`url`, `apache`, `aws-crt`
 |`url`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sqs-async-client-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-async-client-type[`quarkus.sqs.async-client.type`]##
@@ -75,7 +74,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_ASYNC_CLIENT_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|AsyncClientType
+a|`netty`, `aws-crt`
 |`netty`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sqs-devservices-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-devservices-enabled[`quarkus.sqs.devservices.enabled`]##
@@ -231,7 +230,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_API_CALL_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-api-call-attempt-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-api-call-attempt-timeout[`quarkus.sqs.api-call-attempt-timeout`]##
@@ -252,7 +251,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_API_CALL_ATTEMPT_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-advanced-use-quarkus-scheduled-executor-service]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-advanced-use-quarkus-scheduled-executor-service[`quarkus.sqs.advanced.use-quarkus-scheduled-executor-service`]##
@@ -350,7 +349,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_AWS_CREDENTIALS_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|AwsCredentialsProviderType
+a|`default`, `static`, `system-property`, `env-variable`, `profile`, `container`, `instance-profile`, `process`, `custom`, `anonymous`
 |`default`
 
 h|[[quarkus-amazon-sqs_section_quarkus-sqs-aws-credentials-default-provider]] [.section-name.section-level1]##link:#quarkus-amazon-sqs_section_quarkus-sqs-aws-credentials-default-provider[Default credentials provider configuration]##
@@ -531,7 +530,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_AWS_CREDENTIALS_PROCESS_PROVIDER_CREDENTIAL_REFRESH_THRESHOLD+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |`15S`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-aws-credentials-process-provider-process-output-limit]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-aws-credentials-process-provider-process-output-limit[`quarkus.sqs.aws.credentials.process-provider.process-output-limit`]##
@@ -550,7 +549,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_OUTPUT_LIMIT+++`
 endif::add-copy-button-to-env-var[]
 --
-|MemorySize link:#memory-size-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the MemorySize format]]
+|MemorySize link:#memory-size-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the MemorySize format]]
 |`1024`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-aws-credentials-process-provider-command[`quarkus.sqs.aws.credentials.process-provider.command`]##
@@ -616,7 +615,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_SYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |`2S`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-sync-client-socket-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-sync-client-socket-timeout[`quarkus.sqs.sync-client.socket-timeout`]##
@@ -633,7 +632,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_SYNC_CLIENT_SOCKET_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |`30S`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-sync-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-sync-client-tls-key-managers-provider-type[`quarkus.sqs.sync-client.tls-key-managers-provider.type`]##
@@ -658,7 +657,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|TlsKeyManagersProviderType
+a|`none`, `system-property`, `file-store`
 |`system-property`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-sync-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-sync-client-tls-key-managers-provider-file-store-path[`quarkus.sqs.sync-client.tls-key-managers-provider.file-store.path`]##
@@ -736,7 +735,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|TlsTrustManagersProviderType
+a|`trust-all`, `system-property`, `file-store`
 |`system-property`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-sync-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-sync-client-tls-trust-managers-provider-file-store-path[`quarkus.sqs.sync-client.tls-trust-managers-provider.file-store.path`]##
@@ -810,7 +809,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_SYNC_CLIENT_APACHE_CONNECTION_ACQUISITION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |`10S`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-sync-client-apache-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-sync-client-apache-connection-max-idle-time[`quarkus.sqs.sync-client.apache.connection-max-idle-time`]##
@@ -827,7 +826,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_SYNC_CLIENT_APACHE_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |`60S`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-sync-client-apache-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-sync-client-apache-connection-time-to-live[`quarkus.sqs.sync-client.apache.connection-time-to-live`]##
@@ -844,7 +843,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_SYNC_CLIENT_APACHE_CONNECTION_TIME_TO_LIVE+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-sync-client-apache-max-connections]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-sync-client-apache-max-connections[`quarkus.sqs.sync-client.apache.max-connections`]##
@@ -1076,7 +1075,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |`60S`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-sync-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-sync-client-crt-max-concurrency[`quarkus.sqs.sync-client.crt.max-concurrency`]##
@@ -1226,7 +1225,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_ASYNC_CLIENT_READ_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |`30S`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-async-client-write-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-async-client-write-timeout[`quarkus.sqs.async-client.write-timeout`]##
@@ -1245,7 +1244,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_ASYNC_CLIENT_WRITE_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |`30S`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-async-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-async-client-connection-timeout[`quarkus.sqs.async-client.connection-timeout`]##
@@ -1262,7 +1261,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_ASYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |`10S`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-async-client-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-async-client-connection-acquisition-timeout[`quarkus.sqs.async-client.connection-acquisition-timeout`]##
@@ -1279,7 +1278,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_ASYNC_CLIENT_CONNECTION_ACQUISITION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |`2S`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-async-client-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-async-client-connection-time-to-live[`quarkus.sqs.async-client.connection-time-to-live`]##
@@ -1296,7 +1295,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_ASYNC_CLIENT_CONNECTION_TIME_TO_LIVE+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-async-client-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-async-client-connection-max-idle-time[`quarkus.sqs.async-client.connection-max-idle-time`]##
@@ -1315,7 +1314,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_ASYNC_CLIENT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |`5S`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-async-client-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-async-client-use-idle-connection-reaper[`quarkus.sqs.async-client.use-idle-connection-reaper`]##
@@ -1368,7 +1367,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_ASYNC_CLIENT_PROTOCOL+++`
 endif::add-copy-button-to-env-var[]
 --
-a|Protocol
+a|`http1-1`, `http2`
 |`http1-1`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-async-client-ssl-provider]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-async-client-ssl-provider[`quarkus.sqs.async-client.ssl-provider`]##
@@ -1387,7 +1386,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_ASYNC_CLIENT_SSL_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|SslProviderType
+a|`jdk`, `openssl`, `openssl-refcnt`
 |
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-async-client-http2-max-streams]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-async-client-http2-max-streams[`quarkus.sqs.async-client.http2.max-streams`]##
@@ -1444,7 +1443,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_PERIOD+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-{summaryTableId}[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus-sqs[icon:question-circle[title=More information about the Duration format]]
 |`5`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-async-client-proxy-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-async-client-proxy-enabled[`quarkus.sqs.async-client.proxy.enabled`]##
@@ -1522,7 +1521,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|TlsKeyManagersProviderType
+a|`none`, `system-property`, `file-store`
 |`system-property`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-async-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-async-client-tls-key-managers-provider-file-store-path[`quarkus.sqs.async-client.tls-key-managers-provider.file-store.path`]##
@@ -1600,7 +1599,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|TlsTrustManagersProviderType
+a|`trust-all`, `system-property`, `file-store`
 |`system-property`
 
 a| [[quarkus-amazon-sqs_quarkus-sqs-async-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-async-client-tls-trust-managers-provider-file-store-path[`quarkus.sqs.async-client.tls-trust-managers-provider.file-store.path`]##
@@ -1764,5 +1763,3 @@ A size configuration option recognizes strings in this format (shown as a regula
 If no suffix is given, assume bytes.
 ====
 ifndef::no-memory-size-note[]
-
-:!summaryTableId:
