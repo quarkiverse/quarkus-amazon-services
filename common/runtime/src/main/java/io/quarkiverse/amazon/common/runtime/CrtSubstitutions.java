@@ -6,9 +6,14 @@ import java.util.zip.Checksum;
 
 import com.oracle.svm.core.annotate.Alias;
 import com.oracle.svm.core.annotate.Delete;
+import com.oracle.svm.core.annotate.KeepOriginal;
 import com.oracle.svm.core.annotate.Substitute;
 import com.oracle.svm.core.annotate.TargetClass;
 
+import software.amazon.awssdk.checksums.SdkChecksum;
+import software.amazon.awssdk.checksums.internal.CrcCombineOnMarkChecksum;
+import software.amazon.awssdk.checksums.internal.SdkCrc32CChecksum;
+import software.amazon.awssdk.crt.checksums.CRC64NVME;
 import software.amazon.awssdk.http.auth.aws.crt.internal.signer.DefaultAwsCrtV4aHttpSigner;
 import software.amazon.awssdk.http.auth.aws.internal.scheme.DefaultAwsV4aAuthScheme;
 import software.amazon.awssdk.http.auth.aws.scheme.AwsV4aAuthScheme;
@@ -16,6 +21,7 @@ import software.amazon.awssdk.http.auth.aws.signer.AwsV4aHttpSigner;
 import software.amazon.awssdk.identity.spi.AwsCredentialsIdentity;
 import software.amazon.awssdk.identity.spi.IdentityProvider;
 import software.amazon.awssdk.identity.spi.IdentityProviders;
+import software.amazon.awssdk.utils.DependencyValidate;
 
 public class CrtSubstitutions {
     static final String SOFTWARE_AMAZON_AWSSDK_CRT_PACKAGE = "software.amazon.awssdk.crt";
@@ -43,43 +49,24 @@ public class CrtSubstitutions {
         }
     }
 
-    @TargetClass(value = software.amazon.awssdk.http.auth.aws.internal.signer.checksums.Crc32CChecksum.class, onlyWith = IsCrtAbsent.class)
-    static final class Target_SignerCrc32CChecksum {
-
-        @Alias
-        private Checksum crc32c;
-
-        @Substitute
-        public Target_SignerCrc32CChecksum() {
-            crc32c = software.amazon.awssdk.http.auth.aws.internal.signer.checksums.SdkCrc32CChecksum.create();
-        }
+    /**
+     * aws sdk tries to create a java 9-based, then crt-based, then fallback to sdk-based checksum
+     * We can safely use the java 9-based
+     */
+    @TargetClass(value = software.amazon.awssdk.checksums.internal.Crc32cProvider.class)
+    @Substitute()
+    static final class Target_Crc32cProvider {
 
         @Substitute
-        private Checksum cloneChecksum(Checksum checksum) {
-            return (Checksum) ((software.amazon.awssdk.http.auth.aws.internal.signer.checksums.SdkCrc32CChecksum) checksum)
-                    .clone();
+        public static SdkChecksum create() {
+            return new CrcCombineOnMarkChecksum(new java.util.zip.CRC32C(), SdkCrc32CChecksum::combine);
         }
     }
 
-    @TargetClass(value = software.amazon.awssdk.http.auth.aws.internal.signer.checksums.Crc32Checksum.class, onlyWith = IsCrtAbsent.class)
-    static final class Target_SignerCrc32Checksum {
-
-        @Alias
-        private Checksum crc32;
-
-        @Substitute
-        public Target_SignerCrc32Checksum() {
-            crc32 = software.amazon.awssdk.http.auth.aws.internal.signer.checksums.SdkCrc32Checksum.create();
-        }
-
-        @Substitute
-        private Checksum cloneChecksum(Checksum checksum) {
-
-            return (Checksum) ((software.amazon.awssdk.http.auth.aws.internal.signer.checksums.SdkCrc32Checksum) checksum)
-                    .clone();
-        }
-    }
-
+    /**
+     * aws sdk tries to create a crt-based, then sdk-based checksum
+     * Force the sdk-based when Crt is absent
+     */
     @TargetClass(value = software.amazon.awssdk.core.checksums.Crc32Checksum.class, onlyWith = IsCrtAbsent.class)
     static final class Target_Crc32Checksum {
         @Alias
