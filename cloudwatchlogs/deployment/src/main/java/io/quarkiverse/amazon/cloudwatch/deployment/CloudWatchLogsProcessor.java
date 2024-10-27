@@ -26,7 +26,7 @@ import software.amazon.awssdk.services.cloudwatchlogs.CloudWatchLogsClientBuilde
 
 public class CloudWatchLogsProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-cloudwatchlogs";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-cloudwatchlogs";
 
     CloudWatchLogsBuildTimeConfig buildTimeConfig;
 

@@ -61,7 +61,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 public class DynamodbEnhancedProcessor {
-    private static final String FEATURE = "amazon-dynamodb-enhanced";
+    private static final String FEATURE = "amazon-sdk-dynamodb-enhanced";
 
     @BuildStep
     FeatureBuildItem feature() {

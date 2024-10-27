@@ -41,7 +41,7 @@ import software.amazon.awssdk.services.eventbridge.EventBridgeClientBuilder;
 
 public class EventBridgeProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-eventbridge";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-eventbridge";
 
     EventBridgeBuildTimeConfig buildTimeConfig;
 

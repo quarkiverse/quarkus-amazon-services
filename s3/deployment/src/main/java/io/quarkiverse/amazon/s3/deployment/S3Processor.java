@@ -43,7 +43,7 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 public class S3Processor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-s3";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-s3";
 
     S3BuildTimeConfig buildTimeConfig;
 
