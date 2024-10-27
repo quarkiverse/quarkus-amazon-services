@@ -108,7 +108,7 @@ Major version 3 introduces breaking changes (see the [release notes](https://git
 |--------------|-------------------------|--------------------------------------------------------------------------------------------------------|
 | 2.x          | 1.6.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/1.x/index.html)                    |
 | 3.15.x (LTS) | 2.18.x (bug fixes only) | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.18.x/index.html)                 |
-| >=3.15       | >=2.19 (platform)       | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.19/index.html)                   |
+| >=3.15       | >=2.19 (platform)       | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.19.x/index.html)                 |
 | >=3.15       | >=3.0.0                 | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)                    |
 
 Use the latest version of the corresponding stream, [the list of versions is available on Maven Central](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom).
