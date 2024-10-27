@@ -36,7 +36,7 @@ public class S3TransferManagerProcessor {
             BuildProducer<FeatureBuildItem> feature,
             BuildProducer<AmazonClientInterceptorsPathBuildItem> interceptors) {
 
-        feature.produce(new FeatureBuildItem("amazon-s3-transfer-manager"));
+        feature.produce(new FeatureBuildItem("amazon-sdk-s3-transfer-manager"));
     }
 
     @BuildStep

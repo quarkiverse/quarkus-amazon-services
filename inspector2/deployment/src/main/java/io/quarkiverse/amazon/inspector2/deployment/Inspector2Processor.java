@@ -41,7 +41,7 @@ import software.amazon.awssdk.services.inspector2.Inspector2ClientBuilder;
 
 public class Inspector2Processor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-inspector2";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-inspector2";
 
     Inspector2BuildTimeConfig buildTimeConfig;
 

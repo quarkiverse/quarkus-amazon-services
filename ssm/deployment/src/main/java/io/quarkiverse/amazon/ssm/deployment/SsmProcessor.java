@@ -41,7 +41,7 @@ import software.amazon.awssdk.services.ssm.SsmClientBuilder;
 
 public class SsmProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-ssm";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-ssm";
 
     SsmBuildTimeConfig buildTimeConfig;
 

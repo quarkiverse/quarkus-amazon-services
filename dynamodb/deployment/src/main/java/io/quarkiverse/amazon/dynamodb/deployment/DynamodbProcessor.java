@@ -42,7 +42,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClientBuilder;
 
 public class DynamodbProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-dynamodb";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-dynamodb";
 
     DynamodbBuildTimeConfig buildTimeConfig;
 

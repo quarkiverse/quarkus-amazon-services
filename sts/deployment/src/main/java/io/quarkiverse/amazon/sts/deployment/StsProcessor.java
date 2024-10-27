@@ -41,7 +41,7 @@ import software.amazon.awssdk.services.sts.StsClientBuilder;
 
 public class StsProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-sts";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-sts";
 
     StsBuildTimeConfig buildTimeConfig;
 

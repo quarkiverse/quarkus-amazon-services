@@ -41,7 +41,7 @@ import software.amazon.awssdk.services.sns.SnsClientBuilder;
 
 public class SnsProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-sns";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-sns";
 
     SnsBuildTimeConfig buildTimeConfig;
 

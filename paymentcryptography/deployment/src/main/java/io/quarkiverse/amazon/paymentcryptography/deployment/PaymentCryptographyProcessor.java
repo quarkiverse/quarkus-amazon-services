@@ -41,7 +41,7 @@ import software.amazon.awssdk.services.paymentcryptography.PaymentCryptographyCl
 
 public class PaymentCryptographyProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-paymentcryptography";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-paymentcryptography";
 
     PaymentCryptographyBuildTimeConfig buildTimeConfig;
 

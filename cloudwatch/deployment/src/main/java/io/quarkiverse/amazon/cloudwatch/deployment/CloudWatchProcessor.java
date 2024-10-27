@@ -26,7 +26,7 @@ import software.amazon.awssdk.services.cloudwatch.CloudWatchClientBuilder;
 
 public class CloudWatchProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-cloudwatch";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-cloudwatch";
 
     CloudWatchBuildTimeConfig buildTimeConfig;
 

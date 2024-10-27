@@ -41,7 +41,7 @@ import software.amazon.awssdk.services.kinesis.KinesisClientBuilder;
 
 public class KinesisProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-kinesis";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-kinesis";
 
     KinesisBuildTimeConfig buildTimeConfig;
 

@@ -41,7 +41,7 @@ import software.amazon.awssdk.services.iam.IamClientBuilder;
 
 public class IamProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-iam";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-iam";
 
     IamBuildTimeConfig buildTimeConfig;
 

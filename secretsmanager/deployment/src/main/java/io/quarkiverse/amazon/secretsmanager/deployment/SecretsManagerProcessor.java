@@ -41,7 +41,7 @@ import software.amazon.awssdk.services.secretsmanager.SecretsManagerClientBuilde
 
 public class SecretsManagerProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-secretsmanager";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-secretsmanager";
 
     SecretsManagerBuildTimeConfig buildTimeConfig;
 

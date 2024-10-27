@@ -41,7 +41,7 @@ import software.amazon.awssdk.services.sqs.SqsClientBuilder;
 
 public class SqsProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-sqs";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-sqs";
 
     SqsBuildTimeConfig buildTimeConfig;
 

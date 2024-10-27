@@ -41,7 +41,7 @@ import software.amazon.awssdk.services.apigatewaymanagementapi.ApiGatewayManagem
 
 public class ApiGatewayManagementApiProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-apigatewaymanagementapi";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-apigatewaymanagementapi";
 
     ApiGatewayManagementApiBuildTimeConfig buildTimeConfig;
 

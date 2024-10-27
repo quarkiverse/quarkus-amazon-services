@@ -41,7 +41,7 @@ import software.amazon.awssdk.services.ecr.EcrClientBuilder;
 
 public class EcrProcessor extends AbstractAmazonServiceProcessor {
 
-    private static final String AMAZON_CLIENT_NAME = "amazon-ecr";
+    private static final String AMAZON_CLIENT_NAME = "amazon-sdk-ecr";
 
     EcrBuildTimeConfig buildTimeConfig;
 
