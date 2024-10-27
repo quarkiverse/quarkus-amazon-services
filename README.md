@@ -43,7 +43,7 @@ Each extension provides configuration properties to configure the clients and wi
 
 ## Compatibility with Quarkus Core
 
-Quarkus Amazon Services is a component of the [Quarkus Platform](https://quarkus.io/guides/platform). If you do not require specific features from the latest release, it is recommended to use BOMs from the Quarkus Platform.
+Quarkus Amazon Services is a component of the [Quarkus Platform](https://quarkus.io/guides/platform). It is recommended to use BOMs from the Quarkus Platform.
 
 ```xml
   <properties>
@@ -71,7 +71,7 @@ Quarkus Amazon Services is a component of the [Quarkus Platform](https://quarkus
   </dependencyManagement>
 ```
 
-Alternatively, you can switch to using a specific version of the Quarkus Amazon Services BOM.
+Due to differing release schedules, the Quarkus Platform may not include the latest Quarkus Amazon release. If you need specific features from the latest release, you can switch to a specific version of the Quarkus Amazon Services BOM.
 
 ```xml
   <properties>
@@ -102,11 +102,14 @@ Alternatively, you can switch to using a specific version of the Quarkus Amazon 
 
 Quarkus Amazon Services provides multiple version streams. One stream is compatible with Quarkus 2.x, while the others are designed to work with Quarkus 3.x and are aligned with Quarkus LTS.
 
+Major version 3 introduces breaking changes (see the [release notes](https://github.com/quarkiverse/quarkus-amazon-services/releases/tag/3.0.0)) that haven’t yet been included in the Quarkus Platform. Version 2.x and 3.x will remain feature-aligned, except for these breaking changes.
+
 | Quarkus      | Quarkus Amazon Services | Documentation                                                                                          |
 |--------------|-------------------------|--------------------------------------------------------------------------------------------------------|
 | 2.x          | 1.6.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/1.x/index.html)                    |
-| 3.15.x (LTS) | 2.18.x                  | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.18.x/index.html)                 |
-| >=3.15       | >=2.18                  | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)                    |
+| 3.15.x (LTS) | 2.18.x (bug fixes only) | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.18.x/index.html)                 |
+| >=3.15       | >=2.19 (platform)       | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.19/index.html)                   |
+| >=3.15       | >=3.0.0                 | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)                    |
 
 Use the latest version of the corresponding stream, [the list of versions is available on Maven Central](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom).
 
