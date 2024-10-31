@@ -11,6 +11,7 @@
 
     <artifactId>quarkus-amazon-crt-parent</artifactId>
     <name>Quarkus - Amazon Services - CRT</name>
+    <description>Allows interaction with the AWS CRT service</description>
     <packaging>pom</packaging>
 
     <modules>
