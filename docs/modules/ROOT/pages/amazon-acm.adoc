@@ -80,7 +80,7 @@ After this, the `amazon-acm` extension has been added to your `pom.xml` as well 
 
 == Creating JSON REST service
 
-In this example, we will create an application that allows us to import external certificates into ACM using a RESTful API.
+In this example, we will create an application that allows us to request certificates for a particular domain using a RESTful API.
 The example application will demonstrate the two programming models supported by the extension.
 
 Let's start with the synchronous implementation in the `org.acme.acm.QuarkusAcmSyncResource` class.
@@ -90,12 +90,11 @@ Let's start with the synchronous implementation in the `org.acme.acm.QuarkusAcmS
 package org.acme.acm;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.FormParam;
-import jakarta.ws.rs.POST;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
-import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.services.acm.AcmClient;
 
 @Path("/sync")
@@ -104,24 +103,17 @@ public class QuarkusAcmSyncResource {
     @Inject <1>
     AcmClient acm;
 
-    @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String importCertificate(@FormParam("certificate") String certificate,
-                                    @FormParam("certificate_chain") String certificateChain,
-                                    @FormParam("private_key") String privateKey) {
-        return acm.importCertificate(r -> r
-                        .certificate(SdkBytes.fromUtf8String(certificate))
-                        .certificateChain(SdkBytes.fromUtf8String(certificateChain))
-                        .privateKey(SdkBytes.fromUtf8String(privateKey)))
-                .certificateArn();
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String requestCertificate(@QueryParam("domainName") String domainName) {
+        return acm.requestCertificate(r -> r.domainName(domainName)).certificateArn();
     }
 }
-
 ----
 
 <1> Inject the client provided by the amazon-acm extension
 
-Using the Amazon ACM SDK, we can easily import an external certificate and expose the resulting ARN.
+Using the Amazon ACM SDK, we can easily request a certificate for a domain and expose the resulting ARN.
 
 == Configuring ACM clients
 
@@ -212,14 +204,13 @@ package org.acme.acm;
 
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.FormParam;
-import jakarta.ws.rs.POST;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
-import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.services.acm.AcmAsyncClient;
-import software.amazon.awssdk.services.acm.model.ImportCertificateResponse;
+import software.amazon.awssdk.services.acm.model.RequestCertificateResponse;
 
 @Path("/async")
 public class QuarkusAcmAsyncResource {
@@ -227,16 +218,12 @@ public class QuarkusAcmAsyncResource {
     @Inject
     AcmAsyncClient acm;
 
-    @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Uni<String> importCertificate(@FormParam("certificate") String certificate,
-                                         @FormParam("certificate_chain") String certificateChain,
-                                         @FormParam("private_key") String privateKey) {
-        return Uni.createFrom().completionStage(acm.importCertificate(r -> r
-                        .certificate(SdkBytes.fromUtf8String(certificate))
-                        .certificateChain(SdkBytes.fromUtf8String(certificateChain))
-                        .privateKey(SdkBytes.fromUtf8String(privateKey)))
-                .thenApply(ImportCertificateResponse::certificateArn));
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public Uni<String> importCertificate(@QueryParam("domainName") String domainName) {
+        return Uni.createFrom().completionStage(acm
+                .requestCertificate(r -> r.domainName(domainName))
+                .thenApply(RequestCertificateResponse::certificateArn));
     }
 }
 ----
