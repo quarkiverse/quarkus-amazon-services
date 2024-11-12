@@ -1,0 +1,273 @@
+= Amazon ACM Client
+
+include::./includes/attributes.adoc[]
+
+AWS Certificate Manager is a service used to manage X.509 certificates used by other AWS services including load balancers and applications.
+
+You can find more information about ACM at https://aws.amazon.com/certificate-manager/[the AWS Certificate Manager website].
+
+NOTE: The ACM extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
+
+The Quarkus extension supports two programming models:
+
+* Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
+* https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
+
+In this guide, we see how you can get your REST services to use ACM locally and on AWS.
+
+== Prerequisites
+
+To complete this guide, you need:
+
+* JDK 17+ installed with `JAVA_HOME` configured appropriately
+* an IDE
+* Apache Maven {maven-version}
+* An AWS Account to access the ACM service
+* Docker for your system to run ACM locally for testing purposes
+
+=== Provision ACM locally via Dev Services
+
+The easiest way to start working with ACM is to run a local instance using Dev Services.
+
+=== Provision ACM locally manually
+
+You can also set up a local version of ACM manually, first start a LocalStack container:
+
+[source,bash,subs="verbatim,attributes"]
+----
+docker run --rm --name local-acm --publish 4566:4566 -e SERVICES=acm -e START_WEB=0 -d localstack/localstack:3.7.2
+----
+This starts an ACM instance that is accessible on port `4566`.
+
+Create an AWS profile for your local instance using AWS CLI:
+[source,shell,subs="verbatim,attributes"]
+----
+$ aws configure --profile localstack
+AWS Access Key ID [None]: test-key
+AWS Secret Access Key [None]: test-secret
+Default region name [None]: us-east-1
+Default output format [None]:
+----
+
+== Solution
+The application built here allows to import external certificates into ACM.
+
+We recommend that you follow the instructions in the next sections and create the application step by step.
+However, you can go right to the completed example.
+
+Clone the Git repository: `git clone {quickstarts-clone-url}`, or download an {quickstarts-archive-url}[archive].
+
+The solution is located in the `amazon-acm-quickstart` {quickstarts-tree-url}/amazon-acm-quickstart[directory].
+
+== Creating the Maven project
+
+First, we need a new project. Create a new project with the following command:
+
+[source,bash,subs=attributes+]
+----
+mvn io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:create \
+    -DprojectGroupId=org.acme \
+    -DprojectArtifactId=amazon-acm-quickstart \
+    -DclassName="org.acme.acm.QuarkusAcmSyncResource" \
+    -Dpath="/sync" \
+    -Dextensions="resteasy-reactive-jackson,amazon-acm"
+cd amazon-acm-quickstart
+----
+
+This command generates a Maven structure importing the RESTEasy Reactive/JAX-RS and Amazon ACM Client extensions.
+After this, the `amazon-acm` extension has been added to your `pom.xml` as well as the Mutiny support for RESTEasy.
+
+== Creating JSON REST service
+
+In this example, we will create an application that allows us to import external certificates into ACM using a RESTful API.
+The example application will demonstrate the two programming models supported by the extension.
+
+Let's start with the synchronous implementation in the `org.acme.acm.QuarkusAcmSyncResource` class.
+
+[source,java]
+----
+package org.acme.acm;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.MediaType;
+import software.amazon.awssdk.core.SdkBytes;
+import software.amazon.awssdk.services.acm.AcmClient;
+
+@Path("/sync")
+public class QuarkusAcmSyncResource {
+
+    @Inject <1>
+    AcmClient acm;
+
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String importCertificate(@FormParam("certificate") String certificate,
+                                    @FormParam("certificate_chain") String certificateChain,
+                                    @FormParam("private_key") String privateKey) {
+        return acm.importCertificate(r -> r
+                        .certificate(SdkBytes.fromUtf8String(certificate))
+                        .certificateChain(SdkBytes.fromUtf8String(certificateChain))
+                        .privateKey(SdkBytes.fromUtf8String(privateKey)))
+                .certificateArn();
+    }
+}
+
+----
+
+<1> Inject the client provided by the amazon-acm extension
+
+Using the Amazon ACM SDK, we can easily import an external certificate and expose the resulting ARN.
+
+== Configuring ACM clients
+
+Both ACM clients (sync and async) are configurable via the `application.properties` file that can be provided in the `src/main/resources` directory.
+Additionally, you need to add to the classpath a proper implementation of the sync client. By default, the extension uses the URL connection HTTP client, so
+you need to add a URL connection client dependency to the `pom.xml` file:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>url-connection-client</artifactId>
+</dependency>
+----
+
+If you want to use the Apache HTTP client instead, configure it as follows:
+[source,properties]
+----
+quarkus.acm.sync-client.type=apache
+----
+
+And add the following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>apache-client</artifactId>
+</dependency>
+----
+
+If you want to use the AWS CRT-based HTTP client instead, configure it as follows:
+[source,properties]
+----
+quarkus.acm.sync-client.type=aws-crt
+----
+
+And add the following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>aws-crt-client</artifactId>
+</dependency>
+----
+
+
+If you're going to use a local ACM instance, configure it as follows:
+
+[source,properties]
+----
+quarkus.acm.endpoint-override=http://localhost:4566 <1>
+
+quarkus.acm.aws.region=us-east-1 <2>
+quarkus.acm.aws.credentials.type=static <3>
+quarkus.acm.aws.credentials.static-provider.access-key-id=test-key
+quarkus.acm.aws.credentials.static-provider.secret-access-key=test-secret
+----
+
+<1> Override the ACM client to use LocalStack instead of the actual AWS service
+<2> Localstack defaults to `us-east-1`
+<3> The `static` credentials provider lets you set the `access-key-id` and `secret-access-key` directly
+
+If you want to work with an AWS account, you can simply remove or comment out all Amazon ACM related properties. By default, the ACM client extension will use the `default` credentials provider chain that looks for credentials in this order:
+
+include::./amazon-credentials.adoc[]
+
+And the region from your AWS CLI profile will be used.
+
+== Next steps
+
+=== Packaging
+
+Packaging your application is as simple as `./mvnw clean package`.
+It can then be run with `java -jar target/quarkus-app/quarkus-run.jar`.
+
+With GraalVM installed, you can also create a native executable binary: `./mvnw clean package -Dnative`.
+Depending on your system, that will take some time.
+
+=== Going asynchronous
+
+Thanks to the AWS SDK v2.x used by the Quarkus extension, you can use the asynchronous programming model out of the box.
+
+Create a `org.acme.acm.QuarkusAcmAsyncResource` REST resource that will be similar to our `QuarkusAcmSyncResource` but using an asynchronous programming model.
+
+[source,java]
+----
+package org.acme.acm;
+
+import io.smallrye.mutiny.Uni;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.MediaType;
+import software.amazon.awssdk.core.SdkBytes;
+import software.amazon.awssdk.services.acm.AcmAsyncClient;
+import software.amazon.awssdk.services.acm.model.ImportCertificateResponse;
+
+@Path("/async")
+public class QuarkusAcmAsyncResource {
+
+    @Inject
+    AcmAsyncClient acm;
+
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Uni<String> importCertificate(@FormParam("certificate") String certificate,
+                                         @FormParam("certificate_chain") String certificateChain,
+                                         @FormParam("private_key") String privateKey) {
+        return Uni.createFrom().completionStage(acm.importCertificate(r -> r
+                        .certificate(SdkBytes.fromUtf8String(certificate))
+                        .certificateChain(SdkBytes.fromUtf8String(certificateChain))
+                        .privateKey(SdkBytes.fromUtf8String(privateKey)))
+                .thenApply(ImportCertificateResponse::certificateArn));
+    }
+}
+----
+
+Note that the `AcmAsyncClient` behaves just like the `AcmClient`, but returns `CompletionStage` objects which we use to create `Uni` instances, and then transform the emitted item.
+
+To enable the asynchronous client, we also need to add the Netty HTTP client dependency to the `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>netty-nio-client</artifactId>
+</dependency>
+----
+
+If you want to use the AWS CRT-based HTTP client instead, configure it as follows:
+[source,properties]
+----
+quarkus.acm.async-client.type=aws-crt
+----
+
+And add the following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>aws-crt-client</artifactId>
+</dependency>
+----
+
+== Configuration Reference
+
+include::./includes/quarkus-amazon-acm.adoc[]
