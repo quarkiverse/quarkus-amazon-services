@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon ACM"
+metadata:
+  keywords:
+    - "acm"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-acm.html
+  status: "stable"
+  config:
+    - "quarkus.acm."
