@@ -17,6 +17,7 @@
     </description>
     <packaging>pom</packaging>
     <modules>
+        <module>acm</module>
         <module>cognito-user-pools</module>
         <module>cloudwatch</module>
         <module>cloudwatchlogs</module>

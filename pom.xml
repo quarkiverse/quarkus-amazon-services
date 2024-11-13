@@ -17,6 +17,7 @@
     <module>crt</module>
     <module>common</module>
     <module>devservices</module>
+    <module>acm</module>
     <module>apigatewaymanagementapi</module>
     <module>cloudwatch</module>
     <module>cloudwatchlogs</module>
