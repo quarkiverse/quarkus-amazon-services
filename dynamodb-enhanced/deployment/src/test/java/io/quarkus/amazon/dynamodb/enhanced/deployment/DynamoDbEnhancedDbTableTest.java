@@ -38,10 +38,14 @@ public class DynamoDbEnhancedDbTableTest {
     @Inject
     DynamoDbAsyncTable<DynamoDBExampleTableEntry> asyncTableOther;
 
+    @Inject
+    DynamoDBEnhancedDbTableConstructorInjection constructorInjection;
+
     @RegisterExtension
     static final QuarkusUnitTest config = new QuarkusUnitTest()
             .withApplicationRoot((jar) -> jar
                     .addClass(DynamoDBExampleTableEntry.class)
+                    .addClass(DynamoDBEnhancedDbTableConstructorInjection.class)
                     .addAsResource("full-config.properties", "application.properties"));
 
     @Test
@@ -53,5 +57,6 @@ public class DynamoDbEnhancedDbTableTest {
         assertEquals("async", asyncTable.tableName());
         assertEquals("async", asyncTableDuplicate.tableName());
         assertEquals("async-other", asyncTableOther.tableName());
+        assertEquals("sync", constructorInjection.getSyncTable().tableName());
     }
 }
