@@ -15,9 +15,10 @@ import org.jboss.jandex.AnnotationTarget.Kind;
 import org.jboss.jandex.ClassInfo;
 import org.jboss.jandex.ClassType;
 import org.jboss.jandex.DotName;
-import org.jboss.jandex.FieldInfo;
 import org.jboss.jandex.IndexView;
+import org.jboss.jandex.MethodParameterInfo;
 import org.jboss.jandex.ParameterizedType;
+import org.jboss.jandex.Type;
 
 import io.quarkiverse.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
 import io.quarkiverse.amazon.common.runtime.ClientUtil;
@@ -72,31 +73,50 @@ public class DynamodbEnhancedDbTableProcessor {
         IndexView index = combinedIndexBuildItem.getIndex();
         Collection<AnnotationInstance> ais = index.getAnnotations(DotNames.DYNAMODB_NAMED_TABLE);
         for (AnnotationInstance ano : ais) {
+            String tableName = ano.value().asString();
+            Type targetType = null;
+
             if (ano.target().kind().equals(Kind.FIELD)) {
-                FieldInfo field = ano.target().asField();
-                String tableName = ano.value().asString();
-                DotName beanClassName = field.type().asParameterizedType().arguments().get(0).name();
-
-                ClassInfo beanClass = index.getClassByName(beanClassName);
-                if (beanClass.annotation(DotNames.DYNAMODB_ENHANCED_BEAN) == null
-                        && beanClass.annotation(DotNames.DYNAMODB_ENHANCED_IMMUTABLE) == null) {
-                    throw new DeploymentException(String
-                            .format("'%s' must be bean annotated with @DynamoDbBean or @DynamoDbImmutable", beanClassName));
+                targetType = ano.target().asField().type();
+            } else if (ano.target().kind().equals(Kind.METHOD_PARAMETER)) {
+                MethodParameterInfo mpi = ano.target().asMethodParameter();
+                if (mpi.method().isConstructor()) {
+                    targetType = mpi.type();
                 }
+            }
 
-                if (DotNames.DYNAMODB_TABLE.equals(field.type().name())) {
-                    if (syncSeen.add(Map.entry(tableName, beanClassName))) {
-                        tables.produce(new DynamodbEnhancedTableBuildItem(tableName, beanClassName,
-                                DotNames.DYNAMODB_ENHANCED_CLIENT, DYNAMODB_ENHANCED_CLIENT_TABLE_METHOD,
-                                DotNames.DYNAMODB_TABLE));
-                    }
+            if (targetType == null) {
+                continue;
+            }
+
+            DotName beanClassName = targetType.asParameterizedType().arguments().get(0).name();
+            DotName dbTableClassName = targetType.name();
+
+            ClassInfo beanClass = index.getClassByName(beanClassName);
+
+            if (beanClass == null) {
+                throw new DeploymentException(String
+                        .format("'%s' is not in the Jandex index", beanClassName));
+            }
+
+            if (beanClass.annotation(DotNames.DYNAMODB_ENHANCED_BEAN) == null
+                    && beanClass.annotation(DotNames.DYNAMODB_ENHANCED_IMMUTABLE) == null) {
+                throw new DeploymentException(String
+                        .format("'%s' must be bean annotated with @DynamoDbBean or @DynamoDbImmutable", beanClassName));
+            }
+
+            if (DotNames.DYNAMODB_TABLE.equals(dbTableClassName)) {
+                if (syncSeen.add(Map.entry(tableName, beanClassName))) {
+                    tables.produce(new DynamodbEnhancedTableBuildItem(tableName, beanClassName,
+                            DotNames.DYNAMODB_ENHANCED_CLIENT, DYNAMODB_ENHANCED_CLIENT_TABLE_METHOD,
+                            DotNames.DYNAMODB_TABLE));
                 }
-                if (DotNames.DYNAMODB_ASYNC_TABLE.equals(field.type().name())) {
-                    if (asyncSeen.add(Map.entry(tableName, beanClassName))) {
-                        tables.produce(new DynamodbEnhancedTableBuildItem(tableName, beanClassName,
-                                DotNames.DYNAMODB_ENHANCED_ASYNC_CLIENT, DYNAMODB_ENHANCED_ASYNC_CLIENT_TABLE_METHOD,
-                                DotNames.DYNAMODB_ASYNC_TABLE));
-                    }
+            }
+            if (DotNames.DYNAMODB_ASYNC_TABLE.equals(dbTableClassName)) {
+                if (asyncSeen.add(Map.entry(tableName, beanClassName))) {
+                    tables.produce(new DynamodbEnhancedTableBuildItem(tableName, beanClassName,
+                            DotNames.DYNAMODB_ENHANCED_ASYNC_CLIENT, DYNAMODB_ENHANCED_ASYNC_CLIENT_TABLE_METHOD,
+                            DotNames.DYNAMODB_ASYNC_TABLE));
                 }
             }
         }
