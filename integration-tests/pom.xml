@@ -117,7 +117,11 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-s3-transfer-manager</artifactId>
         </dependency>
-         
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-messaging-amazon-sqs</artifactId>
+        </dependency>
+
         <!-- Needed for InMemorySpanExporter to verify captured traces -->
         <dependency>
             <groupId>io.opentelemetry</groupId>

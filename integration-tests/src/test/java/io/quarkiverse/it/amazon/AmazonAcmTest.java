@@ -1,10 +1,11 @@
 package io.quarkiverse.it.amazon;
 
-import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.RestAssured;
+import static org.hamcrest.Matchers.is;
+
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.Matchers.is;
+import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.RestAssured;
 
 @QuarkusTest
 public class AmazonAcmTest {
