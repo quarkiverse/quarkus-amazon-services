@@ -32,6 +32,7 @@
     <module>kinesis</module>
     <module>kms</module>
     <module>lambda</module>
+    <module>neptune</module>
     <module>paymentcryptography</module>
     <module>paymentcryptographydata</module>
     <module>s3</module>
