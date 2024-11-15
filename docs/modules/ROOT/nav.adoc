@@ -12,6 +12,7 @@
 * xref:amazon-kinesis.adoc[Kinesis]
 * xref:amazon-kms.adoc[KMS]
 * xref:amazon-lambda.adoc[Lambda]
+* xref:amazon-neptune.adoc[Neptune]
 * xref:amazon-paymentcryptography.adoc[Payment Cryptography]
 * xref:amazon-paymentcryptographydata.adoc[Payment Cryptography Data]
 * xref:amazon-s3.adoc[S3]

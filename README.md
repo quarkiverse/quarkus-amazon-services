@@ -22,6 +22,7 @@ This set of extensions allows you to interact with some of the AWS Services name
  * Kinesis
  * KMS
  * Lambda
+ * Neptune
  * Payment Cryptography / Payment Cryptography Data
  * S3 
  * S3 Transfer Manager
