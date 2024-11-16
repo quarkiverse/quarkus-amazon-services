@@ -1,6 +1,6 @@
 # Quarkus Amazon Services
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-30-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-31-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/maven-central/v/io.quarkiverse.amazonservices/quarkus-amazon-services-bom?logo=apache-maven&style=flat-square)](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom)
@@ -165,6 +165,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ketola"><img src="https://avatars.githubusercontent.com/u/966606?v=4?s=100" width="100px;" alt="Sauli Ketola"/><br /><sub><b>Sauli Ketola</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=ketola" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ozangunalp"><img src="https://avatars.githubusercontent.com/u/294765?v=4?s=100" width="100px;" alt="Ozan Gunalp"/><br /><sub><b>Ozan Gunalp</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=ozangunalp" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/adampoplawski"><img src="https://avatars.githubusercontent.com/u/24206314?v=4?s=100" width="100px;" alt="adampoplawski"/><br /><sub><b>adampoplawski</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=adampoplawski" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
