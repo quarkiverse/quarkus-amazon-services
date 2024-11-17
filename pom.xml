@@ -17,6 +17,7 @@
     <module>crt</module>
     <module>common</module>
     <module>devservices</module>
+    <module>acm</module>
     <module>apigatewaymanagementapi</module>
     <module>cloudwatch</module>
     <module>cloudwatchlogs</module>
@@ -31,6 +32,7 @@
     <module>kinesis</module>
     <module>kms</module>
     <module>lambda</module>
+    <module>neptune</module>
     <module>paymentcryptography</module>
     <module>paymentcryptographydata</module>
     <module>s3</module>
@@ -59,9 +61,9 @@
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <quarkus.version>3.16.0</quarkus.version>
-    <awssdk.version>2.28.29</awssdk.version>
-    <awscrt.version>0.31.3</awscrt.version>
+    <quarkus.version>3.16.3</quarkus.version>
+    <awssdk.version>2.29.14</awssdk.version>
+    <awscrt.version>0.33.0</awscrt.version>
   </properties>
   <build>
     <pluginManagement>

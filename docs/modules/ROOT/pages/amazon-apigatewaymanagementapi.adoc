@@ -6,7 +6,7 @@ Amazon API Gateway Management Api allows you to create, maintain, and secure API
 
 You can find more information about API Gateway Management Api at https://aws.amazon.com/api-gateway/[the Amazon API Gateway website].
 
-NOTE: The PAPI Gateway Management Api extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+NOTE: The API Gateway Management Api extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
 It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
 
 The Quarkus extension supports two programming models:
