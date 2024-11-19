@@ -17,16 +17,12 @@
             <artifactId>quarkus-messaging-amazon-sqs</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-sqs-deployment</artifactId>
-        </dependency>
-        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-messaging-deployment</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-common-deployment</artifactId>
+            <artifactId>quarkus-amazon-sqs-deployment</artifactId>
         </dependency>
 
         <!-- Test dependencies -->
