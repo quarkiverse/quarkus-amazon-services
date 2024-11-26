@@ -164,6 +164,16 @@
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-elasticloadbalancing</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-elasticloadbalancing-deployment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
                 <artifactId>quarkus-amazon-elasticloadbalancingv2</artifactId>
                 <version>${project.version}</version>
             </dependency>

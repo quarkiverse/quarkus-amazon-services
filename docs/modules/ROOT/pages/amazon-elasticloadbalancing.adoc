@@ -1,0 +1,17 @@
+= Amazon Elastic Load Balancing Client
+
+include::./includes/attributes.adoc[]
+
+Amazon Elastic Load Balancing automatically distributes incoming application traffic across multiple targets and virtual appliances in one or more Availability Zones (AZs).
+
+You can find more information about Elastic Load Balancing at https://docs.aws.amazon.com/elasticloadbalancing/[the Amazon Elastic Load Balancing website].
+
+NOTE: The Elastic Load Balancing extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
+
+The Quarkus extension supports two programming models:
+
+* Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
+* https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
+
+include::./includes/quarkus-amazon-elasticloadbalancing.adoc[]
