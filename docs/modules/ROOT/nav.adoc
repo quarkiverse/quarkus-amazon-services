@@ -5,6 +5,8 @@
 * xref:amazon-cognitouserpools.adoc[Cognito User Pools]
 * xref:amazon-dynamodb.adoc[DynamoDB]
 * xref:amazon-ecr.adoc[ECR]
+* xref:amazon-elasticloadbalancing.adoc[Elastic Load Balancing]
+* xref:amazon-elasticloadbalancingv2.adoc[Elastic Load Balancing v2]
 * xref:amazon-eventbridge.adoc[EventBridge]
 * xref:amazon-iam.adoc[IAM]
 * xref:amazon-inspector.adoc[Inspector]

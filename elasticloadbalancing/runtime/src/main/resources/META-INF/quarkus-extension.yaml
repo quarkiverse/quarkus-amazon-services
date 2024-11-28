@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon Elastic Load Balancing"
+metadata:
+  keywords:
+    - "elasticloadbalancing"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-elasticloadbalancing.html
+  status: "stable"
+  config:
+    - "quarkus.elasticloadbalancing."
