@@ -1,4 +1,4 @@
-package io.quarkiverse.amazon.common.deployment.spi;
+package io.quarkiverse.amazon.common.deployment.netty;
 
 import java.util.function.Supplier;
 
