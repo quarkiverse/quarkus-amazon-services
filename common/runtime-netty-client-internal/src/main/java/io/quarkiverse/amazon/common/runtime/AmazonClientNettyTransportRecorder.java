@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.function.Supplier;
 
 import io.netty.channel.EventLoopGroup;
-import io.quarkiverse.amazon.common.runtime.AsyncHttpClientConfig.SslProviderType;
+import io.netty.handler.ssl.SslProvider;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.http.TlsTrustManagersProvider;
@@ -36,7 +36,7 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
         builder.readTimeout(asyncConfig.readTimeout());
         builder.writeTimeout(asyncConfig.writeTimeout());
         builder.tcpKeepAlive(asyncConfig.tcpKeepAlive());
-        asyncConfig.sslProvider().map(SslProviderType::create).ifPresent(builder::sslProvider);
+        asyncConfig.sslProvider().map(this::map).map(SslProviderTypeNetty::create).ifPresent(builder::sslProvider);
         builder.useIdleConnectionReaper(asyncConfig.useIdleConnectionReaper());
 
         if (asyncConfig.http2().initialWindowSize().isPresent() || asyncConfig.http2().maxStreams().isPresent()) {
@@ -123,5 +123,42 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
 
         validateTlsKeyManagersProvider(extension, config.tlsKeyManagersProvider(), "async");
         validateTlsTrustManagersProvider(extension, config.tlsTrustManagersProvider(), "async");
+    }
+
+    public SslProviderTypeNetty map(AsyncHttpClientConfig.SslProviderType sslProviderType) {
+        switch (sslProviderType) {
+            case JDK:
+                return SslProviderTypeNetty.JDK;
+            case OPENSSL:
+                return SslProviderTypeNetty.OPENSSL;
+            case OPENSSL_REFCNT:
+                return SslProviderTypeNetty.OPENSSL_REFCNT;
+            default:
+                return SslProviderTypeNetty.JDK;
+        }
+    }
+
+    public enum SslProviderTypeNetty {
+
+        JDK {
+            @Override
+            SslProvider create() {
+                return io.netty.handler.ssl.SslProvider.JDK;
+            }
+        },
+        OPENSSL {
+            @Override
+            SslProvider create() {
+                return io.netty.handler.ssl.SslProvider.OPENSSL;
+            }
+        },
+        OPENSSL_REFCNT {
+            @Override
+            SslProvider create() {
+                return io.netty.handler.ssl.SslProvider.OPENSSL_REFCNT;
+            }
+        };
+
+        abstract SslProvider create();
     }
 }
