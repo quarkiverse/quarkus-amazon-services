@@ -1,9 +1,10 @@
 package io.quarkiverse.amazon.sqs.runtime;
 
 import java.net.URI;
+import java.util.function.Function;
 
 import io.opentelemetry.instrumentation.awssdk.v2_2.AwsSdkTelemetry;
-import io.quarkiverse.amazon.common.runtime.AmazonClientOpenTelemetryRecorder;
+import io.quarkus.arc.SyntheticCreationalContext;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder;
@@ -19,7 +20,7 @@ import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.SqsClientBuilder;
 
 @Recorder
-public class SqsOpenTelemetryRecorder extends AmazonClientOpenTelemetryRecorder {
+public class SqsOpenTelemetryRecorder {
 
     private final class TelemetryEnabledSqsSyncClientBuilder
             implements SqsClientBuilder {
@@ -152,22 +153,53 @@ public class SqsOpenTelemetryRecorder extends AmazonClientOpenTelemetryRecorder 
         }
     }
 
-    public SqsOpenTelemetryRecorder() {
+    public Function<SyntheticCreationalContext<AwsClientBuilder>, AwsClientBuilder> configureSync(
+            RuntimeValue<AwsClientBuilder> clientBuilder) {
+        return new Function<SyntheticCreationalContext<AwsClientBuilder>, AwsClientBuilder>() {
+            @Override
+            public AwsClientBuilder apply(SyntheticCreationalContext<AwsClientBuilder> context) {
+                AwsClientBuilder builder = clientBuilder.getValue();
+                AwsSdkTelemetry awsSdkTelemetry = context.getInjectedReference(AwsSdkTelemetry.class);
+
+                builder.overrideConfiguration(
+                        builder.overrideConfiguration().toBuilder()
+                                .addExecutionInterceptor(awsSdkTelemetry.newExecutionInterceptor())
+                                .build());
+
+                return wrapSyncClientBuilder(builder, awsSdkTelemetry);
+            }
+        };
     }
 
-    @Override
+    public Function<SyntheticCreationalContext<AwsClientBuilder>, AwsClientBuilder> configureAsync(
+            RuntimeValue<AwsClientBuilder> clientBuilder) {
+        return new Function<SyntheticCreationalContext<AwsClientBuilder>, AwsClientBuilder>() {
+            @Override
+            public AwsClientBuilder apply(SyntheticCreationalContext<AwsClientBuilder> context) {
+                AwsClientBuilder builder = clientBuilder.getValue();
+                AwsSdkTelemetry awsSdkTelemetry = context.getInjectedReference(AwsSdkTelemetry.class);
+
+                builder.overrideConfiguration(
+                        builder.overrideConfiguration().toBuilder()
+                                .addExecutionInterceptor(awsSdkTelemetry.newExecutionInterceptor())
+                                .build());
+
+                return wrapAsyncClientBuilder(builder, awsSdkTelemetry);
+            }
+        };
+    }
+
     protected AwsClientBuilder wrapSyncClientBuilder(AwsClientBuilder clientBuilder,
-            RuntimeValue<AwsSdkTelemetry> awsSdkTelemetry) {
+            AwsSdkTelemetry awsSdkTelemetry) {
 
         return (AwsClientBuilder) new TelemetryEnabledSqsSyncClientBuilder((SqsClientBuilder) clientBuilder,
-                awsSdkTelemetry.getValue());
+                awsSdkTelemetry);
     }
 
-    @Override
     protected AwsClientBuilder wrapAsyncClientBuilder(AwsClientBuilder clientBuilder,
-            RuntimeValue<AwsSdkTelemetry> awsSdkTelemetry) {
+            AwsSdkTelemetry awsSdkTelemetry) {
 
         return (AwsClientBuilder) new TelemetryEnabledSqsAsyncClientBuilder((SqsAsyncClientBuilder) clientBuilder,
-                awsSdkTelemetry.getValue());
+                awsSdkTelemetry);
     }
 }
