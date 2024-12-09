@@ -61,6 +61,13 @@
             <artifactId>aws-crt-client</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Imported manually because conditional dependencies
+         are not automatically added to test scope -->
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-crt-client-internal-deployment</artifactId> 
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>url-connection-client</artifactId>
@@ -69,6 +76,13 @@
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>apache-client</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Imported manually because conditional dependencies
+         are not automatically added to test scope -->
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-apache-client-internal-deployment</artifactId> 
             <scope>test</scope>
         </dependency>
     </dependencies>

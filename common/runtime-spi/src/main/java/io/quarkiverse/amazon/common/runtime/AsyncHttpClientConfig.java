@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
 
-import io.netty.handler.ssl.SslProvider;
+//import io.netty.handler.ssl.SslProvider;
 import io.quarkus.runtime.annotations.ConfigDocDefault;
 import io.quarkus.runtime.annotations.ConfigGroup;
 import io.quarkus.runtime.configuration.DurationConverter;
@@ -256,26 +256,8 @@ public interface AsyncHttpClientConfig {
      * An enumeration of SSL/TLS protocol providers.
      */
     public enum SslProviderType {
-
-        JDK {
-            @Override
-            SslProvider create() {
-                return io.netty.handler.ssl.SslProvider.JDK;
-            }
-        },
-        OPENSSL {
-            @Override
-            SslProvider create() {
-                return io.netty.handler.ssl.SslProvider.OPENSSL;
-            }
-        },
-        OPENSSL_REFCNT {
-            @Override
-            SslProvider create() {
-                return io.netty.handler.ssl.SslProvider.OPENSSL_REFCNT;
-            }
-        };
-
-        abstract SslProvider create();
+        JDK,
+        OPENSSL,
+        OPENSSL_REFCNT
     }
 }

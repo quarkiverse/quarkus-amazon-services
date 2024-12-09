@@ -8,6 +8,10 @@ h|Type
 h|Default
 
 a| [[quarkus-amazon_quarkus-otel-instrumentation-messaging-experimental-capture-headers]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-messaging-experimental-capture-headers[`quarkus.otel.instrumentation.messaging.experimental.capture-headers`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.otel.instrumentation.messaging.experimental.capture-headers+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -25,6 +29,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon_quarkus-otel-instrumentation-messaging-experimental-receive-telemetry-enabled]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-messaging-experimental-receive-telemetry-enabled[`quarkus.otel.instrumentation.messaging.experimental.receive-telemetry.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.otel.instrumentation.messaging.experimental.receive-telemetry.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -42,6 +50,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-span-attributes]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-span-attributes[`quarkus.otel.instrumentation.aws-sdk.experimental-span-attributes`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.otel.instrumentation.aws-sdk.experimental-span-attributes+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -59,6 +71,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-use-propagator-for-messaging]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-use-propagator-for-messaging[`quarkus.otel.instrumentation.aws-sdk.experimental-use-propagator-for-messaging`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.otel.instrumentation.aws-sdk.experimental-use-propagator-for-messaging+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -76,6 +92,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-record-individual-http-error]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-record-individual-http-error[`quarkus.otel.instrumentation.aws-sdk.experimental-record-individual-http-error`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.otel.instrumentation.aws-sdk.experimental-record-individual-http-error+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
