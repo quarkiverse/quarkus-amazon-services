@@ -24,6 +24,7 @@ import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.arc.processor.DotNames;
 import io.quarkus.arc.processor.InjectionPointInfo;
+import io.quarkus.bootstrap.classloading.QuarkusClassLoader;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
@@ -164,12 +165,7 @@ public class S3CrtProcessor {
     public static class IsAmazonCrtS3ClientPresent implements BooleanSupplier {
         @Override
         public boolean getAsBoolean() {
-            try {
-                Class.forName(AWS_S3_CRT);
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
+            return QuarkusClassLoader.isClassPresentAtRuntime(AWS_S3_CRT);
         }
     }
 }
