@@ -2,6 +2,8 @@ package io.quarkiverse.amazon.common.deployment;
 
 import java.util.function.BooleanSupplier;
 
+import io.quarkus.bootstrap.classloading.QuarkusClassLoader;
+
 public class AmazonHttpClients {
 
     public static final String APACHE_HTTP_SERVICE = "software.amazon.awssdk.http.apache.ApacheSdkHttpService";
@@ -12,48 +14,28 @@ public class AmazonHttpClients {
     public static class IsAmazonApacheHttpServicePresent implements BooleanSupplier {
         @Override
         public boolean getAsBoolean() {
-            try {
-                Class.forName(APACHE_HTTP_SERVICE);
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
+            return QuarkusClassLoader.isClassPresentAtRuntime(APACHE_HTTP_SERVICE);
         }
     };
 
     public static class IsAmazonNettyHttpServicePresent implements BooleanSupplier {
         @Override
         public boolean getAsBoolean() {
-            try {
-                Class.forName(NETTY_HTTP_SERVICE);
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
+            return QuarkusClassLoader.isClassPresentAtRuntime(NETTY_HTTP_SERVICE);
         }
     };
 
     public static class IsAmazonUrlConnectionHttpServicePresent implements BooleanSupplier {
         @Override
         public boolean getAsBoolean() {
-            try {
-                Class.forName(URL_CONNECTION_HTTP_SERVICE);
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
+            return QuarkusClassLoader.isClassPresentAtRuntime(URL_CONNECTION_HTTP_SERVICE);
         }
     };
 
     public static class IsAmazonAwsCrtHttpServicePresent implements BooleanSupplier {
         @Override
         public boolean getAsBoolean() {
-            try {
-                Class.forName(AWS_CRT_HTTP_SERVICE);
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
+            return QuarkusClassLoader.isClassPresentAtRuntime(AWS_CRT_HTTP_SERVICE);
         }
     }
 }
