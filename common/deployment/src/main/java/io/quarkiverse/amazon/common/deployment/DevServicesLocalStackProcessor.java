@@ -31,7 +31,6 @@ import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.CuratedApplicationShutdownBuildItem;
 import io.quarkus.deployment.builditem.DevServicesResultBuildItem;
 import io.quarkus.deployment.builditem.DevServicesResultBuildItem.RunningDevService;
-import io.quarkus.deployment.builditem.DevServicesSharedNetworkBuildItem;
 import io.quarkus.deployment.builditem.DockerStatusBuildItem;
 import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.deployment.console.ConsoleInstalledBuildItem;
@@ -68,7 +67,6 @@ public class DevServicesLocalStackProcessor {
             LocalStackDevServicesBuildTimeConfig localStackDevServicesBuildTimeConfig,
             List<DevServicesLocalStackProviderBuildItem> requestedServices,
             DockerStatusBuildItem dockerStatusBuildItem,
-            List<DevServicesSharedNetworkBuildItem> devServicesSharedNetworkBuildItem,
             Optional<ConsoleInstalledBuildItem> consoleInstalledBuildItem,
             CuratedApplicationShutdownBuildItem closeBuildItem,
             GlobalDevServicesConfig devServicesConfig,
@@ -149,7 +147,6 @@ public class DevServicesLocalStackProcessor {
             RunningDevService namedDevService = startLocalStack(devServiceName,
                     launchMode.getLaunchMode(),
                     localStackDevServicesBuildTimeConfig, requestedServicesGroup,
-                    !devServicesSharedNetworkBuildItem.isEmpty(),
                     devServicesConfig.timeout,
                     consoleInstalledBuildItem,
                     loggingSetupBuildItem);
@@ -229,7 +226,6 @@ public class DevServicesLocalStackProcessor {
             LaunchMode launchMode,
             LocalStackDevServicesBuildTimeConfig localStackDevServicesBuildTimeConfig,
             List<DevServicesLocalStackProviderBuildItem> requestedServicesGroup,
-            boolean useSharedNetwork,
             Optional<Duration> timeout,
             Optional<ConsoleInstalledBuildItem> consoleInstalledBuildItem,
             LoggingSetupBuildItem loggingSetupBuildItem) {
@@ -326,6 +322,7 @@ public class DevServicesLocalStackProcessor {
                         });
 
                         ConfigureUtil.configureSharedNetwork(container, devServiceName);
+                        container.withNetworkAliases(devServiceName);
 
                         timeout.ifPresent(container::withStartupTimeout);
 
