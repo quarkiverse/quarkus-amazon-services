@@ -20,6 +20,7 @@ This set of extensions allows you to interact with some of the AWS Services name
  * EventBridge
  * IAM
  * Inspector / Inspector2
+ * IoT
  * Kinesis
  * KMS
  * Lambda
