@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon IoT"
+metadata:
+  keywords:
+    - "iot"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-iot.html
+  status: "stable"
+  config:
+    - "quarkus.iot."
