@@ -32,6 +32,10 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-devservices-sqs</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.opentelemetry.instrumentation</groupId>
+            <artifactId>opentelemetry-aws-sdk-2.2</artifactId>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>

@@ -86,7 +86,8 @@ public class DynamodbEnhancedProcessor {
             for (var extension : extensions.get()) {
                 if (!knownDynamodbEnhancedClientExtensionImpls.contains(extension)) {
                     throw new ConfigurationException(
-                            "quarkus.dynamodbenhanced.client-extensions - must list only existing implementations of software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClientExtension");
+                            "quarkus.dynamodbenhanced.client-extensions - must list only existing implementations of software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClientExtension ('"
+                                    + extension + "')");
                 }
             }
         }

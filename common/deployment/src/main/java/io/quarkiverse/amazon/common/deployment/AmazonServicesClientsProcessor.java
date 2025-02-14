@@ -18,7 +18,6 @@ import io.quarkiverse.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.SyncHttpClientBuildTimeConfig.SyncClientType;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.UnremovableBeanBuildItem;
-import io.quarkus.bootstrap.classloading.QuarkusClassLoader;
 import io.quarkus.deployment.Capabilities;
 import io.quarkus.deployment.Capability;
 import io.quarkus.deployment.annotations.BuildProducer;
@@ -153,11 +152,10 @@ public class AmazonServicesClientsProcessor {
         // Register what's needed depending on the clients in the classpath and the configuration.
         // We use the configuration to guide us but if we don't have any clients configured,
         // we still register what's needed depending on what is in the classpath.
-        boolean isSyncApacheInClasspath = QuarkusClassLoader.isClassPresentAtRuntime(AmazonHttpClients.APACHE_HTTP_SERVICE);
-        boolean isSyncUrlConnectionInClasspath = QuarkusClassLoader
-                .isClassPresentAtRuntime(AmazonHttpClients.URL_CONNECTION_HTTP_SERVICE);
-        boolean isAsyncNettyInClasspath = QuarkusClassLoader.isClassPresentAtRuntime(AmazonHttpClients.NETTY_HTTP_SERVICE);
-        boolean isAwsCrtInClasspath = QuarkusClassLoader.isClassPresentAtRuntime(AmazonHttpClients.AWS_CRT_HTTP_SERVICE);
+        boolean isSyncApacheInClasspath = new AmazonHttpClients.IsAmazonApacheHttpServicePresent().getAsBoolean();
+        boolean isSyncUrlConnectionInClasspath = new AmazonHttpClients.IsAmazonUrlConnectionHttpServicePresent().getAsBoolean();
+        boolean isAsyncNettyInClasspath = new AmazonHttpClients.IsAmazonNettyHttpServicePresent().getAsBoolean();
+        boolean isAwsCrtInClasspath = new AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent().getAsBoolean();
 
         // Check that the clients required by the configuration are available
         if (syncTransportNeeded) {
