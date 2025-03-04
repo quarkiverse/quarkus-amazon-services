@@ -18,8 +18,7 @@ public class MotoContainer extends GenericContainer<MotoContainer> {
      * @param dockerImageName image name to use for Localstack
      */
     public MotoContainer(final DockerImageName dockerImageName) {
-        super(dockerImageName);
-        dockerImageName.assertCompatibleWith(DEFAULT_IMAGE_NAME);
+        super(dockerImageName.asCompatibleSubstituteFor(DEFAULT_IMAGE_NAME));
         waitingFor(Wait.forLogMessage("^ \\* Running on.*\\n", 1));
         withExposedPorts(PORT);
     }
