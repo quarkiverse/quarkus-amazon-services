@@ -293,7 +293,6 @@ public class DevServicesLocalStackProcessor {
                 return new RunningDevService(devServiceName, containerAddress.getId(), null, config);
             }).orElseGet(
                     () -> {
-                        @SuppressWarnings("resource")
                         LocalStackContainer container = new LocalStackContainer(
                                 DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName())
                                         .asCompatibleSubstituteFor("localstack/localstack"))
@@ -325,14 +324,29 @@ public class DevServicesLocalStackProcessor {
                             container.waitingFor(Wait.forLogMessage(".*" + initCompletionMsg + ".*\\n", 1));
                         });
 
-                        ConfigureUtil.configureSharedNetwork(container, devServiceName);
+                        // Apply shared network configuration if needed
+                        String hostName = null;
+                        if (useSharedNetwork) {
+                            hostName = ConfigureUtil.configureSharedNetwork(container, devServiceName);
+                            // Store the hostname as a label on the container so it can be retrieved later
+                            container.withLabel("quarkus-dev-service-hostname", hostName);
+                        }
 
                         timeout.ifPresent(container::withStartupTimeout);
 
                         container.start();
 
+                        // Configure the services with the container, passing hostname information
+                        final String finalHostName = hostName;
                         requestedServicesGroup.forEach(ds -> {
-                            config.putAll(ds.getDevProvider().prepareLocalStack(container));
+                            Map<String, String> serviceConfig = ds.getDevProvider().prepareLocalStack(container);
+
+                            // If we're using a shared network, modify endpoint URLs to use the hostname
+                            if (finalHostName != null && useSharedNetwork) {
+                                modifyEndpointUrlsForSharedNetwork(serviceConfig, finalHostName);
+                            }
+
+                            config.putAll(serviceConfig);
                         });
 
                         log.info("Amazon Dev Services for " + containerFriendlyName
@@ -379,6 +393,39 @@ public class DevServicesLocalStackProcessor {
         @Override
         public int hashCode() {
             return Objects.hash(imageName, containerProperties);
+        }
+    }
+
+    /**
+     * Helper method to modify endpoint URLs to use the hostname from shared network
+     *
+     * @param config The configuration map containing endpoint URLs
+     * @param hostname The hostname to use instead of localhost/127.0.0.1
+     */
+    private void modifyEndpointUrlsForSharedNetwork(Map<String, String> config, String hostname) {
+        for (Map.Entry<String, String> entry : new HashMap<>(config).entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+
+            if (key.endsWith("endpoint-override") && value != null) {
+                try {
+                    URI uri = new URI(value);
+                    // Only replace if it's localhost or 127.0.0.1
+                    if ("localhost".equals(uri.getHost()) || "127.0.0.1".equals(uri.getHost())) {
+                        URI modifiedUri = new URI(
+                                uri.getScheme(),
+                                uri.getUserInfo(),
+                                hostname,
+                                PORT,
+                                uri.getPath(),
+                                uri.getQuery(),
+                                uri.getFragment());
+                        config.put(key, modifiedUri.toString());
+                    }
+                } catch (URISyntaxException e) {
+                    log.warn("Could not modify endpoint URL for shared network: " + value, e);
+                }
+            }
         }
     }
 

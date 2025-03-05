@@ -26,7 +26,7 @@ public abstract class AbstractDevServicesLocalStackProcessor {
 
         String propertyConfigurationName = getPropertyConfigurationName(enabledService);
 
-        // explicitely disabled
+        // explicitly disabled
         if (!devServicesBuildTimeConfig.enabled().orElse(true)) {
             log.debugf(
                     "Not starting Dev Services for Amazon Services - %s, as it has been disabled in the config.",
@@ -49,16 +49,18 @@ public abstract class AbstractDevServicesLocalStackProcessor {
                 new DevServicesAmazonProvider() {
                     @Override
                     public Map<String, String> prepareLocalStack(LocalStackContainer localstack) {
-
                         AbstractDevServicesLocalStackProcessor.this.prepareLocalStack(
                                 devServicesBuildTimeConfig,
                                 localstack);
 
                         var config = new HashMap<String, String>();
+
+                        // Standard configuration - use the container's generated endpoint
+                        // The hostname modification for shared network is handled in DevServicesLocalStackProcessor
                         config.put(
                                 endpointOverride,
-                                localstack.getEndpointOverride(enabledService)
-                                        .toString());
+                                localstack.getEndpointOverride(enabledService).toString());
+
                         config.put(String.format(AWS_REGION, propertyConfigurationName),
                                 localstack.getRegion());
                         config.put(String.format(AWS_CREDENTIALS_TYPE,
