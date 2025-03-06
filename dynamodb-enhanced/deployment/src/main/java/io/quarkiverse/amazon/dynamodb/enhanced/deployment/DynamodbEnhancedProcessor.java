@@ -235,27 +235,27 @@ public class DynamodbEnhancedProcessor {
                 new BytecodeTransformerBuildItem(
                         ObjectGetterMethod.class.getName(),
                         new LambdaToMethodBridgeBuilderCreatorCreateMethodCallRedirectionVisitor(
-                                ObjectGetterMethod.class.getSimpleName(), 2)));
+                                ObjectGetterMethod.class.getSimpleName(), 3)));
         transformers.produce(
                 new BytecodeTransformerBuildItem(
                         BeanAttributeGetter.class.getName(),
                         new LambdaToMethodBridgeBuilderCreatorCreateMethodCallRedirectionVisitor(
-                                BeanAttributeGetter.class.getSimpleName(), 2)));
+                                BeanAttributeGetter.class.getSimpleName(), 3)));
         transformers.produce(
                 new BytecodeTransformerBuildItem(
                         BeanAttributeSetter.class.getName(),
                         new LambdaToMethodBridgeBuilderCreatorCreateMethodCallRedirectionVisitor(
-                                BeanAttributeSetter.class.getSimpleName(), 2)));
+                                BeanAttributeSetter.class.getSimpleName(), 3)));
         transformers.produce(
                 new BytecodeTransformerBuildItem(
                         ObjectConstructor.class.getName(),
                         new LambdaToMethodBridgeBuilderCreatorCreateMethodCallRedirectionVisitor(
-                                ObjectConstructor.class.getSimpleName(), 2)));
+                                ObjectConstructor.class.getSimpleName(), 3)));
         transformers.produce(
                 new BytecodeTransformerBuildItem(
                         StaticGetterMethod.class.getName(),
                         new LambdaToMethodBridgeBuilderCreatorCreateMethodCallRedirectionVisitor(
-                                StaticGetterMethod.class.getSimpleName(), 1)));
+                                StaticGetterMethod.class.getSimpleName(), 2)));
     }
 
     private static class LambdaToMethodBridgeBuilderCreatorCreateMethodCallRedirectionVisitor
