@@ -14,7 +14,6 @@ import software.amazon.awssdk.checksums.SdkChecksum;
 import software.amazon.awssdk.checksums.internal.CrcCloneOnMarkChecksum;
 import software.amazon.awssdk.checksums.internal.CrcCombineOnMarkChecksum;
 import software.amazon.awssdk.checksums.internal.SdkCrc32CChecksum;
-import software.amazon.awssdk.crt.checksums.CRC64NVME;
 import software.amazon.awssdk.http.auth.aws.crt.internal.signer.DefaultAwsCrtV4aHttpSigner;
 import software.amazon.awssdk.http.auth.aws.signer.AwsV4aHttpSigner;
 

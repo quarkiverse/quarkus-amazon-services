@@ -8,6 +8,10 @@ h|Type
 h|Default
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-image-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-image-name[`quarkus.aws.devservices.moto.image-name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.moto.image-name+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -25,6 +29,10 @@ endif::add-copy-button-to-env-var[]
 |`motoserver/moto`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-container-properties-container-properties[`quarkus.aws.devservices.moto.container-properties."container-properties"`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.moto.container-properties."container-properties"+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -42,6 +50,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-image-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-image-name[`quarkus.aws.devservices.localstack.image-name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.localstack.image-name+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -59,6 +71,10 @@ endif::add-copy-button-to-env-var[]
 |`localstack/localstack:3.7.2`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-container-properties-container-properties[`quarkus.aws.devservices.localstack.container-properties."container-properties"`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.localstack.container-properties."container-properties"+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -76,6 +92,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-init-scripts-folder]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-init-scripts-folder[`quarkus.aws.devservices.localstack.init-scripts-folder`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.localstack.init-scripts-folder+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -93,6 +113,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-init-scripts-classpath]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-init-scripts-classpath[`quarkus.aws.devservices.localstack.init-scripts-classpath`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.localstack.init-scripts-classpath+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -110,6 +134,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-init-completion-msg]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-init-completion-msg[`quarkus.aws.devservices.localstack.init-completion-msg`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.localstack.init-completion-msg+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -127,6 +155,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-port]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-port[`quarkus.aws.devservices.localstack.port`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.localstack.port+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -144,6 +176,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-enabled]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-enabled[`quarkus.aws.devservices.localstack.additional-services."additional-services".enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.localstack.additional-services."additional-services".enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -161,6 +197,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-shared]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-shared[`quarkus.aws.devservices.localstack.additional-services."additional-services".shared`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.localstack.additional-services."additional-services".shared+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -182,6 +222,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-isolated]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-isolated[`quarkus.aws.devservices.localstack.additional-services."additional-services".isolated`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.localstack.additional-services."additional-services".isolated+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -199,6 +243,10 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-service-name[`quarkus.aws.devservices.localstack.additional-services."additional-services".service-name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.localstack.additional-services."additional-services".service-name+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -218,6 +266,10 @@ endif::add-copy-button-to-env-var[]
 |`localstack`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-container-properties-container-properties[`quarkus.aws.devservices.localstack.additional-services."additional-services".container-properties."container-properties"`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.localstack.additional-services."additional-services".container-properties."container-properties"+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --

@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-common-deployment-spi</artifactId>
+            <artifactId>quarkus-amazon-common-spi-deployment</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>

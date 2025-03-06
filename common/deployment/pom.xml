@@ -27,7 +27,6 @@
         <dependency>
             <groupId>io.opentelemetry.instrumentation</groupId>
             <artifactId>opentelemetry-aws-sdk-2.2</artifactId>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
@@ -51,7 +50,7 @@
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-common-deployment-spi</artifactId>
+            <artifactId>quarkus-amazon-common-spi-deployment</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>

@@ -8,6 +8,10 @@ h|Type
 h|Default
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus-dynamodb-interceptors]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-interceptors[`quarkus.dynamodb.interceptors`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.interceptors+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -27,6 +31,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus-dynamodb-telemetry-enabled]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-telemetry-enabled[`quarkus.dynamodb.telemetry.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.telemetry.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -44,6 +52,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-type]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-type[`quarkus.dynamodb.sync-client.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.type+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -61,6 +73,10 @@ a|`url`, `apache`, `aws-crt`
 |`url`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-type]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-type[`quarkus.dynamodb.async-client.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.type+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -78,6 +94,10 @@ a|`netty`, `aws-crt`
 |`netty`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus-dynamodb-devservices-enabled]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-devservices-enabled[`quarkus.dynamodb.devservices.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.devservices.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -95,6 +115,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus-dynamodb-devservices-shared]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-devservices-shared[`quarkus.dynamodb.devservices.shared`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.devservices.shared+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -116,6 +140,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus-dynamodb-devservices-isolated]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-devservices-isolated[`quarkus.dynamodb.devservices.isolated`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.devservices.isolated+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -133,6 +161,10 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus-dynamodb-devservices-service-name]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-devservices-service-name[`quarkus.dynamodb.devservices.service-name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.devservices.service-name+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -152,6 +184,10 @@ endif::add-copy-button-to-env-var[]
 |`localstack`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb_quarkus-dynamodb-devservices-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-devservices-container-properties-container-properties[`quarkus.dynamodb.devservices.container-properties."container-properties"`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.devservices.container-properties."container-properties"+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -169,6 +205,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-enable-endpoint-discovery]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-enable-endpoint-discovery[`quarkus.dynamodb.enable-endpoint-discovery`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.enable-endpoint-discovery+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -190,8 +230,15 @@ h|Type
 h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-endpoint-override]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-endpoint-override[`quarkus.dynamodb.endpoint-override`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.endpoint-override+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".endpoint-override`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".endpoint-override+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -211,8 +258,15 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-api-call-timeout]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-api-call-timeout[`quarkus.dynamodb.api-call-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.api-call-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".api-call-timeout`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".api-call-timeout+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -234,8 +288,15 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-api-call-attempt-timeout]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-api-call-attempt-timeout[`quarkus.dynamodb.api-call-attempt-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.api-call-attempt-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".api-call-attempt-timeout`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".api-call-attempt-timeout+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -255,8 +316,15 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-advanced-use-quarkus-scheduled-executor-service]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-advanced-use-quarkus-scheduled-executor-service[`quarkus.dynamodb.advanced.use-quarkus-scheduled-executor-service`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.advanced.use-quarkus-scheduled-executor-service+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".advanced.use-quarkus-scheduled-executor-service`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".advanced.use-quarkus-scheduled-executor-service+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -281,8 +349,15 @@ h|Type
 h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-region]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-aws-region[`quarkus.dynamodb.aws.region`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.aws.region+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".aws.region`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".aws.region+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -311,8 +386,15 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-type]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-type[`quarkus.dynamodb.aws.credentials.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.aws.credentials.type+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".aws.credentials.type`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".aws.credentials.type+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -357,8 +439,15 @@ h|Type
 h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-default-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-default-provider-async-credential-update-enabled[`quarkus.dynamodb.aws.credentials.default-provider.async-credential-update-enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.aws.credentials.default-provider.async-credential-update-enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".aws.credentials.default-provider.async-credential-update-enabled`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".aws.credentials.default-provider.async-credential-update-enabled+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -378,8 +467,15 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-default-provider-reuse-last-provider-enabled]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-default-provider-reuse-last-provider-enabled[`quarkus.dynamodb.aws.credentials.default-provider.reuse-last-provider-enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.aws.credentials.default-provider.reuse-last-provider-enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".aws.credentials.default-provider.reuse-last-provider-enabled`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".aws.credentials.default-provider.reuse-last-provider-enabled+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -404,8 +500,15 @@ h|Type
 h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-static-provider-access-key-id]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-static-provider-access-key-id[`quarkus.dynamodb.aws.credentials.static-provider.access-key-id`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.aws.credentials.static-provider.access-key-id+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".aws.credentials.static-provider.access-key-id`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".aws.credentials.static-provider.access-key-id+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -423,8 +526,15 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-static-provider-secret-access-key]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-static-provider-secret-access-key[`quarkus.dynamodb.aws.credentials.static-provider.secret-access-key`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.aws.credentials.static-provider.secret-access-key+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".aws.credentials.static-provider.secret-access-key`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".aws.credentials.static-provider.secret-access-key+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -442,8 +552,15 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-static-provider-session-token]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-static-provider-session-token[`quarkus.dynamodb.aws.credentials.static-provider.session-token`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.aws.credentials.static-provider.session-token+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".aws.credentials.static-provider.session-token`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".aws.credentials.static-provider.session-token+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -466,8 +583,15 @@ h|Type
 h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-profile-provider-profile-name]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-profile-provider-profile-name[`quarkus.dynamodb.aws.credentials.profile-provider.profile-name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.aws.credentials.profile-provider.profile-name+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".aws.credentials.profile-provider.profile-name`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".aws.credentials.profile-provider.profile-name+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -492,8 +616,15 @@ h|Type
 h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-process-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-process-provider-async-credential-update-enabled[`quarkus.dynamodb.aws.credentials.process-provider.async-credential-update-enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.aws.credentials.process-provider.async-credential-update-enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".aws.credentials.process-provider.async-credential-update-enabled`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".aws.credentials.process-provider.async-credential-update-enabled+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -513,8 +644,15 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-process-provider-credential-refresh-threshold]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-process-provider-credential-refresh-threshold[`quarkus.dynamodb.aws.credentials.process-provider.credential-refresh-threshold`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.aws.credentials.process-provider.credential-refresh-threshold+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".aws.credentials.process-provider.credential-refresh-threshold`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".aws.credentials.process-provider.credential-refresh-threshold+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -534,8 +672,15 @@ endif::add-copy-button-to-env-var[]
 |`15S`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-process-provider-process-output-limit]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-process-provider-process-output-limit[`quarkus.dynamodb.aws.credentials.process-provider.process-output-limit`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.aws.credentials.process-provider.process-output-limit+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".aws.credentials.process-provider.process-output-limit`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".aws.credentials.process-provider.process-output-limit+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -553,8 +698,15 @@ endif::add-copy-button-to-env-var[]
 |`1024`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-process-provider-command[`quarkus.dynamodb.aws.credentials.process-provider.command`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.aws.credentials.process-provider.command+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".aws.credentials.process-provider.command`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".aws.credentials.process-provider.command+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -577,8 +729,15 @@ h|Type
 h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-custom-provider-name]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-aws-credentials-custom-provider-name[`quarkus.dynamodb.aws.credentials.custom-provider.name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.aws.credentials.custom-provider.name+++[]
+endif::add-copy-button-to-config-props[]
+
 
 `quarkus.dynamodb."client-name".aws.credentials.custom-provider.name`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".aws.credentials.custom-provider.name+++[]
+endif::add-copy-button-to-config-props[]
 
 [.description]
 --
@@ -602,6 +761,10 @@ h|Type
 h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-connection-timeout[`quarkus.dynamodb.sync-client.connection-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.connection-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -619,6 +782,10 @@ endif::add-copy-button-to-env-var[]
 |`2S`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-socket-timeout]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-socket-timeout[`quarkus.dynamodb.sync-client.socket-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.socket-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -636,6 +803,10 @@ endif::add-copy-button-to-env-var[]
 |`30S`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-key-managers-provider-type[`quarkus.dynamodb.sync-client.tls-key-managers-provider.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.tls-key-managers-provider.type+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -661,6 +832,10 @@ a|`none`, `system-property`, `file-store`
 |`system-property`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-key-managers-provider-file-store-path[`quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.path`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.path+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -678,6 +853,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-key-managers-provider-file-store-type[`quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.type+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -697,6 +876,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-key-managers-provider-file-store-password[`quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.tls-key-managers-provider.file-store.password+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -714,6 +897,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-trust-managers-provider-type[`quarkus.dynamodb.sync-client.tls-trust-managers-provider.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.tls-trust-managers-provider.type+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -739,6 +926,10 @@ a|`trust-all`, `system-property`, `file-store`
 |`system-property`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-trust-managers-provider-file-store-path[`quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.path`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.path+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -756,6 +947,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-trust-managers-provider-file-store-type[`quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.type+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -775,6 +970,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-tls-trust-managers-provider-file-store-password[`quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.tls-trust-managers-provider.file-store.password+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -796,6 +995,10 @@ h|Type
 h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-connection-acquisition-timeout[`quarkus.dynamodb.sync-client.apache.connection-acquisition-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.connection-acquisition-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -813,6 +1016,10 @@ endif::add-copy-button-to-env-var[]
 |`10S`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-connection-max-idle-time[`quarkus.dynamodb.sync-client.apache.connection-max-idle-time`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.connection-max-idle-time+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -830,6 +1037,10 @@ endif::add-copy-button-to-env-var[]
 |`60S`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-connection-time-to-live[`quarkus.dynamodb.sync-client.apache.connection-time-to-live`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.connection-time-to-live+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -847,6 +1058,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-max-connections]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-max-connections[`quarkus.dynamodb.sync-client.apache.max-connections`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.max-connections+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -866,6 +1081,10 @@ endif::add-copy-button-to-env-var[]
 |`50`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-expect-continue-enabled]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-expect-continue-enabled[`quarkus.dynamodb.sync-client.apache.expect-continue-enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.expect-continue-enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -883,6 +1102,10 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-use-idle-connection-reaper[`quarkus.dynamodb.sync-client.apache.use-idle-connection-reaper`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.use-idle-connection-reaper+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -902,6 +1125,10 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-tcp-keep-alive[`quarkus.dynamodb.sync-client.apache.tcp-keep-alive`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.tcp-keep-alive+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -919,6 +1146,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-enabled]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-enabled[`quarkus.dynamodb.sync-client.apache.proxy.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.proxy.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -936,6 +1167,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-endpoint[`quarkus.dynamodb.sync-client.apache.proxy.endpoint`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.proxy.endpoint+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -955,6 +1190,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-username]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-username[`quarkus.dynamodb.sync-client.apache.proxy.username`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.proxy.username+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -972,6 +1211,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-password]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-password[`quarkus.dynamodb.sync-client.apache.proxy.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.proxy.password+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -989,6 +1232,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-ntlm-domain]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-ntlm-domain[`quarkus.dynamodb.sync-client.apache.proxy.ntlm-domain`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.proxy.ntlm-domain+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1006,6 +1253,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-ntlm-workstation]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-ntlm-workstation[`quarkus.dynamodb.sync-client.apache.proxy.ntlm-workstation`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.proxy.ntlm-workstation+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1023,6 +1274,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-preemptive-basic-authentication-enabled]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-preemptive-basic-authentication-enabled[`quarkus.dynamodb.sync-client.apache.proxy.preemptive-basic-authentication-enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.proxy.preemptive-basic-authentication-enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1040,6 +1295,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-apache-proxy-non-proxy-hosts[`quarkus.dynamodb.sync-client.apache.proxy.non-proxy-hosts`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.apache.proxy.non-proxy-hosts+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1062,6 +1321,10 @@ h|Type
 h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-crt-connection-max-idle-time[`quarkus.dynamodb.sync-client.crt.connection-max-idle-time`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.crt.connection-max-idle-time+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1079,6 +1342,10 @@ endif::add-copy-button-to-env-var[]
 |`60S`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-crt-max-concurrency[`quarkus.dynamodb.sync-client.crt.max-concurrency`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.crt.max-concurrency+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1096,6 +1363,10 @@ endif::add-copy-button-to-env-var[]
 |`50`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-crt-proxy-enabled[`quarkus.dynamodb.sync-client.crt.proxy.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.crt.proxy.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1113,6 +1384,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-crt-proxy-endpoint[`quarkus.dynamodb.sync-client.crt.proxy.endpoint`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.crt.proxy.endpoint+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1132,6 +1407,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-crt-proxy-username[`quarkus.dynamodb.sync-client.crt.proxy.username`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.crt.proxy.username+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1149,6 +1428,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-sync-client-crt-proxy-password[`quarkus.dynamodb.sync-client.crt.proxy.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.sync-client.crt.proxy.password+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1172,6 +1455,10 @@ h|Type
 h|Default
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-max-concurrency]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-max-concurrency[`quarkus.dynamodb.async-client.max-concurrency`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.max-concurrency+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1191,6 +1478,10 @@ endif::add-copy-button-to-env-var[]
 |`50`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-max-pending-connection-acquires]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-max-pending-connection-acquires[`quarkus.dynamodb.async-client.max-pending-connection-acquires`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.max-pending-connection-acquires+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1210,6 +1501,10 @@ endif::add-copy-button-to-env-var[]
 |`10000`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-read-timeout]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-read-timeout[`quarkus.dynamodb.async-client.read-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.read-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1229,6 +1524,10 @@ endif::add-copy-button-to-env-var[]
 |`30S`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-write-timeout]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-write-timeout[`quarkus.dynamodb.async-client.write-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.write-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1248,6 +1547,10 @@ endif::add-copy-button-to-env-var[]
 |`30S`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-connection-timeout[`quarkus.dynamodb.async-client.connection-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.connection-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1265,6 +1568,10 @@ endif::add-copy-button-to-env-var[]
 |`10S`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-connection-acquisition-timeout[`quarkus.dynamodb.async-client.connection-acquisition-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.connection-acquisition-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1282,6 +1589,10 @@ endif::add-copy-button-to-env-var[]
 |`2S`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-connection-time-to-live[`quarkus.dynamodb.async-client.connection-time-to-live`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.connection-time-to-live+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1299,6 +1610,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-connection-max-idle-time[`quarkus.dynamodb.async-client.connection-max-idle-time`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.connection-max-idle-time+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1318,6 +1633,10 @@ endif::add-copy-button-to-env-var[]
 |`5S`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-use-idle-connection-reaper[`quarkus.dynamodb.async-client.use-idle-connection-reaper`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.use-idle-connection-reaper+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1337,6 +1656,10 @@ endif::add-copy-button-to-env-var[]
 |`true`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tcp-keep-alive[`quarkus.dynamodb.async-client.tcp-keep-alive`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.tcp-keep-alive+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1354,6 +1677,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-protocol]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-protocol[`quarkus.dynamodb.async-client.protocol`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.protocol+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1371,6 +1698,10 @@ a|`http1-1`, `http2`
 |`http1-1`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-ssl-provider]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-ssl-provider[`quarkus.dynamodb.async-client.ssl-provider`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.ssl-provider+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1390,6 +1721,10 @@ a|`jdk`, `openssl`, `openssl-refcnt`
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-http2-max-streams]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-http2-max-streams[`quarkus.dynamodb.async-client.http2.max-streams`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.http2.max-streams+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1409,6 +1744,10 @@ endif::add-copy-button-to-env-var[]
 |`4294967295`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-http2-initial-window-size]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-http2-initial-window-size[`quarkus.dynamodb.async-client.http2.initial-window-size`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.http2.initial-window-size+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1428,6 +1767,10 @@ endif::add-copy-button-to-env-var[]
 |`1048576`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-http2-health-check-ping-period]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-http2-health-check-ping-period[`quarkus.dynamodb.async-client.http2.health-check-ping-period`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.http2.health-check-ping-period+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1447,6 +1790,10 @@ endif::add-copy-button-to-env-var[]
 |`5`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-proxy-enabled]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-proxy-enabled[`quarkus.dynamodb.async-client.proxy.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.proxy.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1464,6 +1811,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-proxy-endpoint[`quarkus.dynamodb.async-client.proxy.endpoint`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.proxy.endpoint+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1483,6 +1834,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-proxy-non-proxy-hosts[`quarkus.dynamodb.async-client.proxy.non-proxy-hosts`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.proxy.non-proxy-hosts+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1500,6 +1855,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-key-managers-provider-type[`quarkus.dynamodb.async-client.tls-key-managers-provider.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.tls-key-managers-provider.type+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1525,6 +1884,10 @@ a|`none`, `system-property`, `file-store`
 |`system-property`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-key-managers-provider-file-store-path[`quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.path`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.path+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1542,6 +1905,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-key-managers-provider-file-store-type[`quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.type+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1561,6 +1928,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-key-managers-provider-file-store-password[`quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.tls-key-managers-provider.file-store.password+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1578,6 +1949,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-trust-managers-provider-type[`quarkus.dynamodb.async-client.tls-trust-managers-provider.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.tls-trust-managers-provider.type+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1603,6 +1978,10 @@ a|`trust-all`, `system-property`, `file-store`
 |`system-property`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-trust-managers-provider-file-store-path[`quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.path`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.path+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1620,6 +1999,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-trust-managers-provider-file-store-type[`quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.type+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1639,6 +2022,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-tls-trust-managers-provider-file-store-password[`quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.tls-trust-managers-provider.file-store.password+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1656,6 +2043,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-event-loop-override]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-event-loop-override[`quarkus.dynamodb.async-client.event-loop.override`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.event-loop.override+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1673,6 +2064,10 @@ endif::add-copy-button-to-env-var[]
 |`false`
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-event-loop-number-of-threads[`quarkus.dynamodb.async-client.event-loop.number-of-threads`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.event-loop.number-of-threads+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1692,6 +2087,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-event-loop-thread-name-prefix]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-event-loop-thread-name-prefix[`quarkus.dynamodb.async-client.event-loop.thread-name-prefix`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.event-loop.thread-name-prefix+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
@@ -1713,6 +2112,10 @@ endif::add-copy-button-to-env-var[]
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-advanced-use-future-completion-thread-pool]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-async-client-advanced-use-future-completion-thread-pool[`quarkus.dynamodb.async-client.advanced.use-future-completion-thread-pool`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb.async-client.advanced.use-future-completion-thread-pool+++[]
+endif::add-copy-button-to-config-props[]
+
 
 [.description]
 --
