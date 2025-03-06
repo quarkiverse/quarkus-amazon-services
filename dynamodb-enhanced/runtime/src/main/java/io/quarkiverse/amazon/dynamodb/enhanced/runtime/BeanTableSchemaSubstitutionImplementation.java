@@ -22,7 +22,7 @@ import software.amazon.awssdk.enhanced.dynamodb.internal.mapper.StaticGetterMeth
 public class BeanTableSchemaSubstitutionImplementation {
 
     public static <BeanT, GetterT> ObjectGetterMethod<BeanT, GetterT> ObjectGetterMethod_create(Class<BeanT> beanClass,
-            Method buildMethod) {
+            Method buildMethod, MethodHandles.Lookup lookup) {
         try {
             MethodHandle mh = MethodHandles.publicLookup().unreflect(buildMethod);
             return new FunctionWrapper<BeanT, GetterT>(mh);
@@ -33,13 +33,13 @@ public class BeanTableSchemaSubstitutionImplementation {
     }
 
     public static <BeanT, GetterT> BeanAttributeGetter<BeanT, GetterT> BeanAttributeGetter_create(Class<BeanT> beanClass,
-            Method getter) {
+            Method getter, MethodHandles.Lookup lookup) {
         // change back to MethodHandle after https://github.com/oracle/graal/issues/5672 is resolved
         return new GetterWrapper<BeanT, GetterT>(getter);
     }
 
     public static <BeanT, SetterT> BeanAttributeSetter<BeanT, SetterT> BeanAttributeSetter_create(Class<BeanT> beanClass,
-            Method setter) {
+            Method setter, MethodHandles.Lookup lookup) {
         try {
             MethodHandle mh = MethodHandles.publicLookup().unreflect(setter);
             return new BiConsumerWrapper<BeanT, SetterT>(mh);
@@ -50,7 +50,7 @@ public class BeanTableSchemaSubstitutionImplementation {
     }
 
     public static <BeanT> ObjectConstructor<BeanT> ObjectConstructor_create(Class<BeanT> beanClass,
-            Constructor<BeanT> noArgsConstructor) {
+            Constructor<BeanT> noArgsConstructor, MethodHandles.Lookup lookup) {
         try {
             MethodHandle mh = MethodHandles.publicLookup().unreflectConstructor(noArgsConstructor);
             return new SupplierWrapper<>(mh);
@@ -60,7 +60,8 @@ public class BeanTableSchemaSubstitutionImplementation {
         }
     }
 
-    public static <GetterT> StaticGetterMethod<GetterT> StaticGetterMethod_create(Method buildMethod) {
+    public static <GetterT> StaticGetterMethod<GetterT> StaticGetterMethod_create(Method buildMethod,
+            MethodHandles.Lookup lookup) {
         try {
             MethodHandle mh = MethodHandles.publicLookup().unreflect(buildMethod);
             return new SupplierWrapper<>(mh);
