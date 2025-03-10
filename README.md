@@ -1,6 +1,6 @@
 # Quarkus Amazon Services
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-32-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-33-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/maven-central/v/io.quarkiverse.amazonservices/quarkus-amazon-services-bom?logo=apache-maven&style=flat-square)](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom)
@@ -169,6 +169,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ozangunalp"><img src="https://avatars.githubusercontent.com/u/294765?v=4?s=100" width="100px;" alt="Ozan Gunalp"/><br /><sub><b>Ozan Gunalp</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=ozangunalp" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/adampoplawski"><img src="https://avatars.githubusercontent.com/u/24206314?v=4?s=100" width="100px;" alt="adampoplawski"/><br /><sub><b>adampoplawski</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=adampoplawski" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ruicardoso-bx"><img src="https://avatars.githubusercontent.com/u/183093049?v=4?s=100" width="100px;" alt="ruicardoso-bx"/><br /><sub><b>ruicardoso-bx</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=ruicardoso-bx" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://johnathangilday.com"><img src="https://avatars.githubusercontent.com/u/1431609?v=4?s=100" width="100px;" alt="Johnathan Gilday"/><br /><sub><b>Johnathan Gilday</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=gilday" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
