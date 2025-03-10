@@ -325,12 +325,9 @@ public class DevServicesLocalStackProcessor {
                         });
 
                         // Apply shared network configuration if needed
-                        String hostName = null;
-                        if (useSharedNetwork) {
-                            hostName = ConfigureUtil.configureSharedNetwork(container, devServiceName);
-                            // Store the hostname as a label on the container so it can be retrieved later
-                            container.withLabel("quarkus-dev-service-hostname", hostName);
-                        }
+                        final String hostName = useSharedNetwork
+                                ? ConfigureUtil.configureSharedNetwork(container, devServiceName)
+                                : null;
 
                         timeout.ifPresent(container::withStartupTimeout);
 
