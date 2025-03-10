@@ -81,25 +81,25 @@ public class OtelNewSubstitutions {
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.Response", onlyWith = {
             OtelNewSubstitutions.IsSqsAbsent.class, OtelNewSubstitutions.IsOtelAwsPresent.class,
             OtelNewSubstitutions.IsOtelNewAwsPresent.class })
-    final class Alias_Response {
+    static final class Alias_Response {
     }
 
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.SqsProcessRequest", onlyWith = {
             OtelNewSubstitutions.IsSqsAbsent.class, OtelNewSubstitutions.IsOtelAwsPresent.class,
             OtelNewSubstitutions.IsOtelNewAwsPresent.class })
-    final class Alias_ResponseSqsProcessRequest {
+    static final class Alias_ResponseSqsProcessRequest {
     }
 
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.SqsReceiveRequest", onlyWith = {
             OtelNewSubstitutions.IsSqsAbsent.class, OtelNewSubstitutions.IsOtelAwsPresent.class,
             OtelNewSubstitutions.IsOtelNewAwsPresent.class })
-    final class Alias_ResponseSqsReceiveRequest {
+    static final class Alias_ResponseSqsReceiveRequest {
     }
 
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.TracingExecutionInterceptor", onlyWith = {
             OtelNewSubstitutions.IsSqsAbsent.class, OtelNewSubstitutions.IsOtelAwsPresent.class,
             OtelNewSubstitutions.IsOtelNewAwsPresent.class })
-    final class Alias_TracingExecutionInterceptor {
+    static final class Alias_TracingExecutionInterceptor {
     }
 
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.SqsAccess", onlyWith = {
@@ -167,63 +167,63 @@ public class OtelNewSubstitutions {
             OtelNewSubstitutions.IsSqsAbsent.class, OtelNewSubstitutions.IsOtelAwsPresent.class,
             OtelNewSubstitutions.IsOtelNewAwsPresent.class })
     @Delete
-    final class Delete_SqsImpl {
+    static final class Delete_SqsImpl {
     }
 
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.SqsMessageImpl", onlyWith = {
             OtelNewSubstitutions.IsSqsAbsent.class, OtelNewSubstitutions.IsOtelAwsPresent.class,
             OtelNewSubstitutions.IsOtelNewAwsPresent.class })
     @Delete
-    final class Delete_SqsMessageImpl {
+    static final class Delete_SqsMessageImpl {
     }
 
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.SqsParentContext", onlyWith = {
             OtelNewSubstitutions.IsSqsAbsent.class, OtelNewSubstitutions.IsOtelAwsPresent.class,
             OtelNewSubstitutions.IsOtelNewAwsPresent.class })
     @Delete
-    final class Delete_SqsParentContext {
+    static final class Delete_SqsParentContext {
     }
 
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.SqsProcessRequestAttributesGetter", onlyWith = {
             OtelNewSubstitutions.IsSqsAbsent.class, OtelNewSubstitutions.IsOtelAwsPresent.class,
             OtelNewSubstitutions.IsOtelNewAwsPresent.class })
     @Delete
-    final class Delete_SqsProcessRequestAttributesGetter {
+    static final class Delete_SqsProcessRequestAttributesGetter {
     }
 
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.SqsReceiveRequestAttributesGetter", onlyWith = {
             OtelNewSubstitutions.IsSqsAbsent.class, OtelNewSubstitutions.IsOtelAwsPresent.class,
             OtelNewSubstitutions.IsOtelNewAwsPresent.class })
     @Delete
-    final class Delete_SqsReceiveRequestAttributesGetter {
+    static final class Delete_SqsReceiveRequestAttributesGetter {
     }
 
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.SqsTracingContext", onlyWith = {
             OtelNewSubstitutions.IsSqsAbsent.class, OtelNewSubstitutions.IsOtelAwsPresent.class,
             OtelNewSubstitutions.IsOtelNewAwsPresent.class })
     @Delete
-    final class Delete_SqsTracingContext {
+    static final class Delete_SqsTracingContext {
     }
 
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.TracingIterator", onlyWith = {
             OtelNewSubstitutions.IsSqsAbsent.class, OtelNewSubstitutions.IsOtelAwsPresent.class,
             OtelNewSubstitutions.IsOtelNewAwsPresent.class })
     @Delete
-    final class Delete_TracingIterator {
+    static final class Delete_TracingIterator {
     }
 
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.TracingList", onlyWith = {
             OtelNewSubstitutions.IsSqsAbsent.class, OtelNewSubstitutions.IsOtelAwsPresent.class,
             OtelNewSubstitutions.IsOtelNewAwsPresent.class })
     @Delete
-    final class Delete_TracingList {
+    static final class Delete_TracingList {
     }
 
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.SnsImpl", onlyWith = {
             OtelNewSubstitutions.IsSnsAbsent.class, OtelNewSubstitutions.IsOtelAwsPresent.class,
             OtelNewSubstitutions.IsOtelNewAwsPresent.class })
     @Delete
-    final class Delete_SnsImpl {
+    static final class Delete_SnsImpl {
     }
 
     @TargetClass(className = "io.opentelemetry.instrumentation.awssdk.v2_2.internal.SnsAccess", onlyWith = {
@@ -269,5 +269,4 @@ public class OtelNewSubstitutions {
         @RecomputeFieldValue(kind = Kind.FromAlias)
         private static boolean enabled;
     }
-
 }
