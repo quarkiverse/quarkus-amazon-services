@@ -1,8 +1,10 @@
 package io.quarkiverse.amazon.dynamodb.enhanced.deployment;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import jakarta.inject.Inject;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -35,8 +37,8 @@ public class DynamoDbEnhancedClientTest {
 
     @Test
     public void test() {
-        Assert.assertNotEquals(ClientProxy.unwrap(clientNamedTest), ClientProxy.unwrap(client));
-        Assert.assertEquals(ClientProxy.unwrap(clientSame), ClientProxy.unwrap(client));
-        Assert.assertEquals(ClientProxy.unwrap(clientNamedTestSame), ClientProxy.unwrap(clientNamedTest));
+        assertNotEquals(ClientProxy.unwrap(clientNamedTest), ClientProxy.unwrap(client));
+        assertEquals(ClientProxy.unwrap(clientSame), ClientProxy.unwrap(client));
+        assertEquals(ClientProxy.unwrap(clientNamedTestSame), ClientProxy.unwrap(clientNamedTest));
     }
 }
