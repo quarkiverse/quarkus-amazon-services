@@ -23,6 +23,36 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-devservices-bedrock</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-bedrock</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-bedrock-deployment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-devservices-bedrock-runtime</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-bedrock-runtime</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-bedrock-runtime-deployment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>software.amazon.awssdk.crt</groupId>
                 <artifactId>aws-crt</artifactId>
                 <version>${awscrt.version}</version>

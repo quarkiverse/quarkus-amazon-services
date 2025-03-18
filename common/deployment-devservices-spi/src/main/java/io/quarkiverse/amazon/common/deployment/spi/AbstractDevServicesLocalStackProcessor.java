@@ -137,7 +137,7 @@ public abstract class AbstractDevServicesLocalStackProcessor {
      * @param enabledService the LocalStack enabled service
      * @return the property configuration name
      */
-    private String getPropertyConfigurationName(LocalStackContainer.EnabledService enabledService) {
+    protected String getPropertyConfigurationName(LocalStackContainer.EnabledService enabledService) {
         if (enabledService == LocalStackContainer.Service.STEPFUNCTIONS)
             return "sfn";
         if (enabledService.getName().equals("events"))
