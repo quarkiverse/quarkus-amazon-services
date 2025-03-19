@@ -347,6 +347,23 @@
                 <artifactId>quarkus-amazon-paymentcryptographydata-deployment</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-devservices-scheduler</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-scheduler</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-scheduler-deployment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
                 <artifactId>quarkus-amazon-devservices-secretsmanager</artifactId>

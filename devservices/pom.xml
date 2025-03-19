@@ -29,6 +29,7 @@
         <module>kms</module>
         <module>lambda</module>
         <module>s3</module>
+        <module>scheduler</module>
         <module>secretsmanager</module>
         <module>ses</module>
         <module>sfn</module>

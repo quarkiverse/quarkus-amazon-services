@@ -146,6 +146,8 @@ public abstract class AbstractDevServicesLocalStackProcessor {
             return "eventbridge";
         if (enabledService == LocalStackContainer.Service.CLOUDWATCHLOGS)
             return "cloudwatchlogs";
+        if (enabledService.getName().equals("scheduler"))
+            return "eventbridge-scheduler";
         return enabledService.getName();
     }
 }
