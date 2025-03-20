@@ -18,6 +18,7 @@ This set of extensions allows you to interact with some of the AWS Services name
  * ECR
  * Elastic Load Balancing / Elastic Load Balancing v2 
  * EventBridge
+ * EventBridge Scheduler
  * IAM
  * Inspector / Inspector2
  * IoT

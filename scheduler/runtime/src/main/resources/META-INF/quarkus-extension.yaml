@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon EventBridge Scheduler"
+metadata:
+  keywords:
+    - "scheduler"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-scheduler.html
+  status: "stable"
+  config:
+    - "quarkus.eventbridge-scheduler."

@@ -40,6 +40,7 @@
     <module>paymentcryptographydata</module>
     <module>s3</module>
     <module>s3-transfer-manager</module>
+    <module>scheduler</module>
     <module>secretsmanager</module>
     <module>ses</module>
     <module>sfn</module>
