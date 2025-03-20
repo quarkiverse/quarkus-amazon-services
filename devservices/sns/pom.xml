@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>quarkus-amazon-devservices-sns</artifactId>
-    <name>Quarkus - Amazon DevServices - DynamoDB</name>
+    <name>Quarkus - Amazon DevServices - SNS</name>
     <dependencies>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>

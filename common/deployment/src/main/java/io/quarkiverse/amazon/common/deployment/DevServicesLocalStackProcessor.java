@@ -6,10 +6,12 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -199,9 +201,8 @@ public class DevServicesLocalStackProcessor {
         for (RunningDevServiceWithConfig i : currentDevServices) {
             var runningDevService = i.getRunningDevService();
             var oldContainerName = runningDevService.getName();
-            var oldDevServiceConfig = i.getConfig();
             var maybeNewDevService = requestedServicesBySharedServiceName.get(oldContainerName);
-            if (maybeNewDevService == null || !preMatchCondition || !match(oldDevServiceConfig, maybeNewDevService)) {
+            if (maybeNewDevService == null || !preMatchCondition || i.matchesOtherConfig(maybeNewDevService)) {
                 try {
                     runningDevService.close();
                 } catch (Throwable e) {
@@ -215,14 +216,6 @@ public class DevServicesLocalStackProcessor {
         }
 
         currentDevServices = keptRunningService;
-    }
-
-    private boolean match(Map<String, LocalStackDevServicesBaseConfig> oldDevServiceConfig,
-            List<DevServicesLocalStackProviderBuildItem> newDevService) {
-
-        return newDevService.stream().collect(Collectors.toMap(r -> r.getService().getName(), r -> r.getConfig()))
-                .equals(oldDevServiceConfig);
-
     }
 
     private RunningDevService startLocalStack(String devServiceName,
@@ -430,21 +423,29 @@ public class DevServicesLocalStackProcessor {
 
         private final RunningDevService runningDevService;
 
-        private final Map<String, LocalStackDevServicesBaseConfig> config;
+        private final Map<String, Set<LocalStackDevServicesBaseConfig>> config;
 
         public RunningDevServiceWithConfig(RunningDevService namedDevService,
                 List<DevServicesLocalStackProviderBuildItem> requestedServicesGroup) {
             this.runningDevService = namedDevService;
-            this.config = requestedServicesGroup.stream()
-                    .collect(Collectors.toMap(r -> r.getService().getName(), r -> r.getConfig()));
+            this.config = createComparableConfigGroup(requestedServicesGroup);
         }
 
         public RunningDevService getRunningDevService() {
             return runningDevService;
         }
 
-        public Map<String, LocalStackDevServicesBaseConfig> getConfig() {
-            return config;
+        private Map<String, Set<LocalStackDevServicesBaseConfig>> createComparableConfigGroup(
+                List<DevServicesLocalStackProviderBuildItem> servicesGroup) {
+            Map<String, Set<LocalStackDevServicesBaseConfig>> configMap = new HashMap<>();
+            for (DevServicesLocalStackProviderBuildItem item : servicesGroup) {
+                configMap.computeIfAbsent(item.getService().getName(), k -> new HashSet<>()).add(item.getConfig());
+            }
+            return configMap;
+        }
+
+        public boolean matchesOtherConfig(List<DevServicesLocalStackProviderBuildItem> otherServiceList) {
+            return this.config.equals(createComparableConfigGroup(otherServiceList));
         }
     }
 }
