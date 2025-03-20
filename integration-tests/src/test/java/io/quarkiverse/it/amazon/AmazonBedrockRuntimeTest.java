@@ -19,7 +19,7 @@ class AmazonBedrockRuntimeTest {
 
         // List invoked
         RestAssured.given().pathParam("endpoint", endpoint).when()
-                .get("/test/bedrock-runtime/{endpoint}/list-invokes")
+                .get("/test/bedrockruntime/{endpoint}/list-invokes")
                 // test at least for pro feature failure
                 .then().statusCode(501).body(any(String.class));
     }

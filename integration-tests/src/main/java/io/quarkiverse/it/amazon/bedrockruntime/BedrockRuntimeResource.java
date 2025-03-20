@@ -12,7 +12,7 @@ import jakarta.ws.rs.core.Response;
 import software.amazon.awssdk.services.bedrockruntime.model.AsyncInvokeSummary;
 import software.amazon.awssdk.services.bedrockruntime.model.BedrockRuntimeException;
 
-@Path("/bedrock-runtime")
+@Path("/bedrockruntime")
 public class BedrockRuntimeResource {
     @Inject
     BedrockRuntimeManager bedrockRuntimeManager;

@@ -39,17 +39,17 @@
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
-                <artifactId>quarkus-amazon-devservices-bedrock-runtime</artifactId>
+                <artifactId>quarkus-amazon-devservices-bedrockruntime</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
-                <artifactId>quarkus-amazon-bedrock-runtime</artifactId>
+                <artifactId>quarkus-amazon-bedrockruntime</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
-                <artifactId>quarkus-amazon-bedrock-runtime-deployment</artifactId>
+                <artifactId>quarkus-amazon-bedrockruntime-deployment</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

@@ -20,7 +20,7 @@
     <module>acm</module>
     <module>apigatewaymanagementapi</module>
     <module>bedrock</module>
-    <module>bedrock-runtime</module>
+    <module>bedrockruntime</module>
     <module>cloudwatch</module>
     <module>cloudwatchlogs</module>
     <module>cognito-user-pools</module>
