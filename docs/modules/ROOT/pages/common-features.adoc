@@ -1,5 +1,7 @@
 = Common features
 
+All configuration in this page are given for the dynamodb extension. They are similar for all the other extensions. Just replace `dynamodb` by the name of the extension you are using.
+
 == Named clients
 
 NOTE: This feature is new and was initially designed to allow overriding credentials per named client. Feel free to open an issue to propose enhancements.
@@ -27,3 +29,92 @@ quarkus.dynamodb.custom.aws.credentials.static-provider.access-key-id=xxx
 quarkus.dynamodb.custom.aws.credentials.static-provider.secret-access-key=yyy
 ----
 
+== HTTP client implementations
+
+NOTE: You need to add to the classpath a proper implementation of the client.
+
+Each extension can be used with all 4 HTTP client implementations available in the AWS SDK :
+
+* URL Connection HTTP client (default for synchronous call)
+* Apache HTTP Client
+* Netty HTTP client (default for asynchronous call)
+* AWS CRT-based HTTP client (for both synchronous and asynchronous client)
+
+=== URL Connection HTTP client
+
+If you want to use the URL Connection HTTP client, add the following dependency to the application `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>url-connection-client</artifactId>
+</dependency>
+----
+
+=== Apache HTTP Client
+
+If you want to use the Apache HTTP client, configure it as follows:
+
+[source,properties]
+----
+quarkus.dynamodb.sync-client.type=apache
+----
+
+And add following dependency to the application `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>apache-client</artifactId>
+</dependency>
+----
+
+=== Netty HTTP client
+
+If you want to use the Netty HTTP client, add the following dependency to the application `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>netty-nio-client</artifactId>
+</dependency>
+----
+
+=== AWS CRT-based HTTP client
+
+If you want to use the AWS CRT-based HTTP client, configure it as follows:
+
+[source,properties]
+----
+quarkus.dynamodb.sync-client.type=aws-crt
+quarkus.dynamodb.async-client.type=aws-crt
+----
+
+add the following dependency to the application `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>aws-crt-client</artifactId>
+</dependency>
+----
+
+edit `.dockerignore` to add:
+
+[source,text]
+----
+!target/*.so
+!target/*.properties
+----
+
+and finally edit `src/main/docker/Dockerfile.native` to add a line that copies `*.so` files and `*.properties`:
+
+[source,docker]
+----
+# Shared objects to be dynamically loaded at runtime as needed,
+COPY --chown=1001:root target/*.properties target/*.so /work/
+----
