@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon Bedrock Runtime"
+metadata:
+  keywords:
+    - "bedrock"
+    - "aws"
+    - "amazon"
+  categories:
+    - "ai"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-bedrock.html
+  status: "stable"
+  config:
+  - "quarkus.bedrockruntime."
