@@ -65,17 +65,18 @@ public class S3Recorder extends AmazonClientRecorder {
     }
 
     private void configureS3Client(S3BaseClientBuilder builder) {
-        builder.useArnRegion(config.useArnRegionEnabled())
-                .accelerate(config.accelerateMode())
+        builder
                 .serviceConfiguration(s3ConfigurationBuilder().build())
-                .forcePathStyle(config.pathStyleAccess())
                 .dualstackEnabled(config.dualstack());
     }
 
     private S3Configuration.Builder s3ConfigurationBuilder() {
         S3Configuration.Builder s3ConfigBuilder = S3Configuration.builder()
+                .accelerateModeEnabled(config.accelerateMode())
                 .checksumValidationEnabled(config.checksumValidation())
-                .chunkedEncodingEnabled(config.chunkedEncoding());
+                .chunkedEncodingEnabled(config.chunkedEncoding())
+                .pathStyleAccessEnabled(config.pathStyleAccess())
+                .useArnRegionEnabled(config.useArnRegionEnabled());
         config.profileName().ifPresent(s3ConfigBuilder::profileName);
         return s3ConfigBuilder;
     }
