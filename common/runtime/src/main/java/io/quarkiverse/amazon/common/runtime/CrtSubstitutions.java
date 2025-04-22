@@ -127,7 +127,7 @@ public class CrtSubstitutions {
 
     @TargetClass(value = DefaultAwsCrtV4aHttpSigner.class, onlyWith = IsHttpAuthAwsCrtAbsent.class)
     @Delete
-    final class Delete_DefaultAwsCrtV4aHttpSigner {
+    static final class Delete_DefaultAwsCrtV4aHttpSigner {
     }
 
     @TargetClass(value = AwsV4aHttpSigner.class, onlyWith = IsHttpAuthAwsCrtAbsent.class)
