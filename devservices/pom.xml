@@ -34,6 +34,7 @@
         <module>scheduler</module>
         <module>secretsmanager</module>
         <module>ses</module>
+        <module>sesv2</module>
         <module>sfn</module>
         <module>sns</module>
         <module>sqs</module>

@@ -9,33 +9,34 @@
 
 This set of extensions allows you to interact with some of the AWS Services namely:
 
- * ACM
- * Api Gateway Management Api
- * CloudWatch
- * CloudWatch Logs
- * Cognito User Pools
- * DynamoDB / DynamoDB Enhanced
- * ECR
- * Elastic Load Balancing / Elastic Load Balancing v2 
- * EventBridge
- * EventBridge Scheduler
- * IAM
- * Inspector / Inspector2
- * IoT
- * Kinesis
- * KMS
- * Lambda
- * Neptune
- * Payment Cryptography / Payment Cryptography Data
- * S3 
- * S3 Transfer Manager
- * Secrets Manager
- * SES 
- * SFN
- * SNS
- * SQS
- * SSM
- * STS
+* ACM
+* Api Gateway Management Api
+* Bedrock / Bedrock Runtime
+* CloudWatch
+* CloudWatch Logs
+* Cognito User Pools
+* DynamoDB / DynamoDB Enhanced
+* ECR
+* Elastic Load Balancing / Elastic Load Balancing v2
+* EventBridge
+* EventBridge Scheduler
+* IAM
+* Inspector / Inspector2
+* IoT
+* Kinesis
+* KMS
+* Lambda
+* Neptune
+* Payment Cryptography / Payment Cryptography Data
+* S3
+* S3 Transfer Manager
+* Secrets Manager
+* SES / SES v2
+* SFN
+* SNS
+* SQS
+* SSM
+* STS
 
 They also provide a common infrastructure to make it easy to add new ones.
 
