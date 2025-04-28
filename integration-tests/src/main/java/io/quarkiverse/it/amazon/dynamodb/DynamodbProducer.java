@@ -1,38 +1,5 @@
-= Common features
+package io.quarkiverse.it.amazon.dynamodb;
 
-== Named clients
-
-NOTE: This feature is new and was initially designed to allow overriding credentials per named client. Feel free to open an issue to propose enhancements.
-
-You can inject named clients with different configurations. To do this, annotate your injection point with `@AmazonClient`.
-
-[source,java]
-----
-import io.quarkiverse.amazon.common.AmazonClient;
-
-public class DynamoDbEnhancedClientTest {
-
-    @Inject
-    @AmazonClient("custom")
-    DynamoDbClient clientNamedCustom;
-
-----
-
-Named clients inherit the configuration of the unamed client but you can override them.
-
-[source,properties]
-----
-quarkus.dynamodb.custom.aws.credentials.type=static
-quarkus.dynamodb.custom.aws.credentials.static-provider.access-key-id=xxx
-quarkus.dynamodb.custom.aws.credentials.static-provider.secret-access-key=yyy
-----
-
-== Overriding the client configuration
-
-You can override the client configuration by adding a custom producer that will further configure the client builder built by the extension.
-
-[source,java]
-----
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
@@ -63,4 +30,3 @@ public class DynamodbProducer {
         return builder.build();
     }
 }
-----
