@@ -27,3 +27,60 @@ quarkus.dynamodb.custom.aws.credentials.static-provider.access-key-id=xxx
 quarkus.dynamodb.custom.aws.credentials.static-provider.secret-access-key=yyy
 ----
 
+== Overriding the client configuration
+
+You can override the client configuration by adding a custom producer that will further configure the client builder built by the extension.
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
+import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClientBuilder;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClientBuilder;
+
+@ApplicationScoped
+public class DynamodbProducer {
+
+    private static final DynamoDBModifyResponse EXECUTION_INTERCEPTOR = new io.quarkiverse.it.amazon.dynamodb.DynamoDBModifyResponse();
+
+    @Produces
+    @ApplicationScoped
+    public DynamoDbClient createDynamoDbClient(DynamoDbClientBuilder builder) {
+        builder.overrideConfiguration(
+                c -> c.addExecutionInterceptor(EXECUTION_INTERCEPTOR));
+
+        return builder.build();
+    }
+
+    @Produces
+    @ApplicationScoped
+    public DynamoDbAsyncClient createDynamoDbClient(DynamoDbAsyncClientBuilder builder) {
+        builder.overrideConfiguration(
+                c -> c.addExecutionInterceptor(EXECUTION_INTERCEPTOR));
+
+        return builder.build();
+    }
+}
+----
+
+== Docker image build with AWS CRT
+
+Since AWS CRT version 0.31.0, native library must be embedded in the docker image. This is not done by default. To do this, you need to :
+
+1. edit .dockerignore to add:
++
+[source,none]
+----
+!target/*.so
+!target/ *.properties
+----
+
+2. edit Dockerfile.native to add a line that copies *.so files and *.properties:
++
+[source,dockerfile]
+----
+# Shared objects to be dynamically loaded at runtime as needed,
+COPY --chown=1001:root target/*.properties target/*.so /work/
+----
