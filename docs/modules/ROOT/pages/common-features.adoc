@@ -64,3 +64,23 @@ public class DynamodbProducer {
     }
 }
 ----
+
+== Docker image build with AWS CRT
+
+Since AWS CRT version 0.31.0, native library must be embedded in the docker image. This is not done by default. To do this, you need to :
+
+1. edit .dockerignore to add:
++
+[source,none]
+----
+!target/*.so
+!target/ *.properties
+----
+
+2. edit Dockerfile.native to add a line that copies *.so files and *.properties:
++
+[source,dockerfile]
+----
+# Shared objects to be dynamically loaded at runtime as needed,
+COPY --chown=1001:root target/*.properties target/*.so /work/
+----
