@@ -1,5 +1,5 @@
-:quarkus-version: 3.21.3
-:quarkus-amazon-services-version: 3.4.1
+:quarkus-version: 3.22.0
+:quarkus-amazon-services-version: 3.5.0
 :maven-version: 3.8.1+
 
 :quarkus-org-url: https://github.com/quarkusio
