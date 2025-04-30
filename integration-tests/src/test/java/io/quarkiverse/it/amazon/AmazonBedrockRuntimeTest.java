@@ -1,6 +1,9 @@
 package io.quarkiverse.it.amazon;
 
-import static org.hamcrest.Matchers.any;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.oneOf;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -21,6 +24,7 @@ class AmazonBedrockRuntimeTest {
         RestAssured.given().pathParam("endpoint", endpoint).when()
                 .get("/test/bedrockruntime/{endpoint}/list-invokes")
                 // test at least for pro feature failure
-                .then().statusCode(501).body(any(String.class));
+                .then().statusCode(oneOf(501, 500)).body(anyOf(is(""), containsString(
+                        "HTTP/2 is not supported in AwsCrtHttpClient yet. Use NettyNioAsyncHttpClient instead")));
     }
 }
