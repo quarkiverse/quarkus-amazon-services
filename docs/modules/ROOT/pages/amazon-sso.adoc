@@ -1,0 +1,17 @@
+= Amazon SSO Client
+
+include::./includes/attributes.adoc[]
+
+Amazon Identity and Access Management Center, successor to AWS Single Sign-On (SSO) is a web service that makes it easy for you to assign user access to IAM Identity Center resources such as the AWS access portal. The SDKs provide a convenient way to create programmatic access to IAM Identity Center and other AWS services. 
+
+You can find more information about IAM Identity Center at https://aws.amazon.com/fr/iam/identity-center/[the Amazon IAM website].
+
+NOTE: The SSO extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
+
+The Quarkus extension supports two programming models:
+
+* Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
+* https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
+
+include::./includes/quarkus-amazon-sso.adoc[]

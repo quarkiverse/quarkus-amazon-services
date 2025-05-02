@@ -34,6 +34,8 @@ This set of extensions allows you to interact with some of the AWS Services name
 * SES / SES v2
 * SFN
 * SNS
+* SSO
+* SSO OIDC
 * SQS
 * SSM
 * STS

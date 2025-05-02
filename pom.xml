@@ -48,6 +48,8 @@
     <module>sesv2</module>
     <module>sfn</module>
     <module>sns</module>
+    <module>sso</module>
+    <module>ssooidc</module>
     <module>sqs</module>
     <module>quarkus-messaging-amazon-sqs</module>
     <module>ssm</module>
