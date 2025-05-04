@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon SSO"
+metadata:
+  keywords:
+    - "sso"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-sso.html
+  status: "stable"
+  config:
+  - "quarkus.sso."
