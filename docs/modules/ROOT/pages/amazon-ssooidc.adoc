@@ -14,4 +14,41 @@ The Quarkus extension supports two programming models:
 * Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
 * https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
 
+
+== SSO with the AWS SDK
+
+The SSO OIDC token provider requires a synchronous HTTP client implementation.
+
+If you only added an asynchronous implementation for your own code, you need to add to the classpath a proper implementation of the sync client. 
+
+If you want to use URL connection HTTP client, add following dependency to the application `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>url-connection-client</artifactId>
+</dependency>
+----
+
+If you want to use the Apache HTTP client instead, add following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>apache-client</artifactId>
+</dependency>
+----
+
+If you want to use the AWS CRT-based HTTP client instead, add the following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>aws-crt-client</artifactId>
+</dependency>
+----
+
+Refer the https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/get-started-auth.html[AWS SDK developer guide] to set up for authentication.
+
 include::./includes/quarkus-amazon-ssooidc.adoc[]
