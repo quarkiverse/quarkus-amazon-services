@@ -36,7 +36,7 @@ public class BedrockRuntimeRecorder extends AmazonClientRecorder {
     }
 
     @Override
-    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
+    public AwsSyncClientBuilder<?, ?> getSyncClientBuilder() {
         return BedrockRuntimeClient.builder();
     }
 

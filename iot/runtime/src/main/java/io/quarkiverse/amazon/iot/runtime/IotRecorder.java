@@ -36,7 +36,7 @@ public class IotRecorder extends AmazonClientRecorder {
     }
 
     @Override
-    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
+    public AwsSyncClientBuilder<?, ?> getSyncClientBuilder() {
         return IotClient.builder();
     }
 

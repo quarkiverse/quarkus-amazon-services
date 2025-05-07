@@ -36,7 +36,7 @@ public class StsRecorder extends AmazonClientRecorder {
     }
 
     @Override
-    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
+    public AwsSyncClientBuilder<?, ?> getSyncClientBuilder() {
         return StsClient.builder();
     }
 

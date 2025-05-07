@@ -36,7 +36,7 @@ public class DynamodbRecorder extends AmazonClientRecorder {
     }
 
     @Override
-    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
+    public AwsSyncClientBuilder<?, ?> getSyncClientBuilder() {
         return DynamoDbClient.builder();
     }
 

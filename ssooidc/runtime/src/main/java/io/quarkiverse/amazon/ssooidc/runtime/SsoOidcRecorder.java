@@ -36,7 +36,7 @@ public class SsoOidcRecorder extends AmazonClientRecorder {
     }
 
     @Override
-    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
+    public AwsSyncClientBuilder<?, ?> getSyncClientBuilder() {
         return SsoOidcClient.builder();
     }
 

@@ -36,7 +36,7 @@ public class Inspector2Recorder extends AmazonClientRecorder {
     }
 
     @Override
-    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
+    public AwsSyncClientBuilder<?, ?> getSyncClientBuilder() {
         return Inspector2Client.builder();
     }
 

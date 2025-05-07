@@ -36,7 +36,7 @@ public class ApiGatewayManagementApiRecorder extends AmazonClientRecorder {
     }
 
     @Override
-    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
+    public AwsSyncClientBuilder<?, ?> getSyncClientBuilder() {
         return ApiGatewayManagementApiClient.builder();
     }
 

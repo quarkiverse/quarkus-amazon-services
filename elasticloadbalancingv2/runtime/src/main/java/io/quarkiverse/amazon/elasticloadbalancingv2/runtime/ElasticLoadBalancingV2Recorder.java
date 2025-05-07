@@ -36,7 +36,7 @@ public class ElasticLoadBalancingV2Recorder extends AmazonClientRecorder {
     }
 
     @Override
-    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
+    public AwsSyncClientBuilder<?, ?> getSyncClientBuilder() {
         return ElasticLoadBalancingV2Client.builder();
     }
 

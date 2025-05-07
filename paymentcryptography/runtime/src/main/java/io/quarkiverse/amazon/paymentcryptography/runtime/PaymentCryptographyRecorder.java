@@ -36,7 +36,7 @@ public class PaymentCryptographyRecorder extends AmazonClientRecorder {
     }
 
     @Override
-    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
+    public AwsSyncClientBuilder<?, ?> getSyncClientBuilder() {
         return PaymentCryptographyClient.builder();
     }
 

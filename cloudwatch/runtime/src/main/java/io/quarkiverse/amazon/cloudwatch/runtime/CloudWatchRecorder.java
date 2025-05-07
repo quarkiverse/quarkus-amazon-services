@@ -33,7 +33,7 @@ public class CloudWatchRecorder extends AmazonClientRecorder {
     }
 
     @Override
-    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
+    public AwsSyncClientBuilder<?, ?> getSyncClientBuilder() {
         return CloudWatchClient.builder();
     }
 

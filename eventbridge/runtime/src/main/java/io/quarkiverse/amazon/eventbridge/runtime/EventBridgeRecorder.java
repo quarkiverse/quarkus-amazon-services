@@ -36,7 +36,7 @@ public class EventBridgeRecorder extends AmazonClientRecorder {
     }
 
     @Override
-    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
+    public AwsSyncClientBuilder<?, ?> getSyncClientBuilder() {
         return EventBridgeClient.builder();
     }
 
