@@ -9,6 +9,8 @@
 
 This set of extensions allows you to interact with some of the AWS Services namely:
 
+* Access Analyzer
+* Account
 * ACM
 * Api Gateway Management Api
 * Bedrock / Bedrock Runtime
@@ -28,6 +30,7 @@ This set of extensions allows you to interact with some of the AWS Services name
 * Lambda
 * Neptune
 * Payment Cryptography / Payment Cryptography Data
+* RDS / RDS Data
 * S3
 * S3 Transfer Manager
 * Secrets Manager
@@ -40,14 +43,14 @@ This set of extensions allows you to interact with some of the AWS Services name
 * SSM
 * STS
 
-They also provide a common infrastructure to make it easy to add new ones.
-
 Each extension provides configuration properties to configure the clients and wires everything via CDI injection. It allows to use all 4 HTTP client implementations available in the AWS SDK for Java 2.x :
 
 * URL Connection HTTP client (default for synchronous call)
 * Apache HTTP Client
 * Netty HTTP client (default for asynchronous call)
 * AWS CRT-based HTTP client (for both synchronous and asynchronous client)
+
+This project also provide a common infrastructure based on AWS SDK code generator to make it easy to add new ones.
 
 ## Compatibility with Quarkus Core
 
