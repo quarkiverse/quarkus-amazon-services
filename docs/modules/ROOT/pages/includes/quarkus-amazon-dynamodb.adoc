@@ -212,7 +212,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Enable DynamoDB service endpoint discovery.
+Enable service endpoint discovery.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -223,7 +223,7 @@ Environment variable: `+++QUARKUS_DYNAMODB_ENABLE_ENDPOINT_DISCOVERY+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`true for services that requires endpoint discovery.`
 
 h|[[quarkus-amazon-dynamodb_section_quarkus-dynamodb]] [.section-name.section-level0]##link:#quarkus-amazon-dynamodb_section_quarkus-dynamodb[AWS SDK client configurations]##
 h|Type

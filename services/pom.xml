@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.quarkiverse.amazonservices</groupId>
+        <artifactId>quarkus-amazon-services-build-parent</artifactId>
+        <version>999-SNAPSHOT</version>
+        <relativePath>../build-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>quarkus-amazon-services-services-parent</artifactId>
+    <name>Quarkus - Amazon Services</name>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>accessanalyzer</module>
+        <module>account</module>
+        <module>acm</module>
+        <module>apigatewaymanagementapi</module>
+        <module>bedrock</module>
+        <module>bedrockruntime</module>
+        <module>cloudwatch</module>
+        <module>cloudwatchlogs</module>
+        <module>dynamodb</module>
+        <module>ecr</module>
+        <module>elasticloadbalancing</module>
+        <module>elasticloadbalancingv2</module>
+        <module>eventbridge</module>
+        <module>iam</module>
+        <module>inspector</module>
+        <module>inspector2</module>
+        <module>iot</module>
+        <module>kinesis</module>
+        <module>kms</module>
+        <module>lambda</module>
+        <module>neptune</module>
+        <module>paymentcryptography</module>
+        <module>paymentcryptographydata</module>
+        <module>rds</module>
+        <module>rdsdata</module>
+        <module>secretsmanager</module>
+        <module>ses</module>
+        <module>sesv2</module>
+        <module>sfn</module>
+        <module>sns</module>
+        <module>sso</module>
+        <module>ssooidc</module>
+        <module>ssm</module>
+        <module>sts</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>io.quarkiverse.amazonservices</groupId>
+                    <artifactId>quarkus-amazon-codegen-maven-plugin</artifactId>
+                    <version>${project.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <codeGenResources>${basedir}/../src/main/resources/codegen-resources/</codeGenResources>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

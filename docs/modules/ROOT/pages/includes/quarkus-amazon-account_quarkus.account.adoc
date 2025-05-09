@@ -1,0 +1,2147 @@
+[.configuration-legend]
+icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
+[.configuration-reference.searchable, cols="80,.^10,.^10"]
+|===
+
+h|[.header-title]##Configuration property##
+h|Type
+h|Default
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-account_quarkus-account-interceptors]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-interceptors[`quarkus.account.interceptors`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.interceptors+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+List of execution interceptors that will have access to read and modify the request and response objects as they are processed by the AWS SDK.
+
+The list should consists of class names which implements `software.amazon.awssdk.core.interceptor.ExecutionInterceptor` interface. Classes will be attempted to be loaded via CDI first, and if no CDI beans are available, then the constructor with no parameters will be invoked to instantiate each class.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_INTERCEPTORS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_INTERCEPTORS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-account_quarkus-account-telemetry-enabled]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-telemetry-enabled[`quarkus.account.telemetry.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.telemetry.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+OpenTelemetry AWS SDK instrumentation will be enabled if the OpenTelemetry extension is present and this value is true.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_TELEMETRY_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_TELEMETRY_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`false`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-account_quarkus-account-sync-client-type]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-type[`quarkus.account.sync-client.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.type+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Type of the sync HTTP client implementation
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_TYPE+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`url`, `apache`, `aws-crt`
+|`url`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-account_quarkus-account-async-client-type]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-type[`quarkus.account.async-client.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.type+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Type of the async HTTP client implementation
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TYPE+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`netty`, `aws-crt`
+|`netty`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-account_quarkus-account-devservices-enabled]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-devservices-enabled[`quarkus.account.devservices.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.devservices.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. For all services but Cognito, the local AWS stack will be provided by LocalStack. Otherwise, it will be provided by Moto
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_DEVSERVICES_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_DEVSERVICES_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-account_quarkus-account-devservices-shared]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-devservices-shared[`quarkus.account.devservices.shared`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.devservices.shared+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Indicates if the LocalStack container managed by Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services starts a new container.
+
+The discovery uses the `quarkus-dev-service-localstack` label. The value is configured using the `service-name` property.
+
+Sharing is not supported for the Cognito extension.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_DEVSERVICES_SHARED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_DEVSERVICES_SHARED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`false`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-account_quarkus-account-devservices-isolated]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-devservices-isolated[`quarkus.account.devservices.isolated`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.devservices.isolated+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Indicates if shared LocalStack services managed by Dev Services should be isolated. When true, the service will be started in its own container and the value of the `quarkus-dev-service-localstack` label will be suffixed by the service name (s3, sqs, ...)
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_DEVSERVICES_ISOLATED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_DEVSERVICES_ISOLATED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`true`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-account_quarkus-account-devservices-service-name]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-devservices-service-name[`quarkus.account.devservices.service-name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.devservices.service-name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The value of the `quarkus-dev-service-localstack` label attached to the started container. In dev mode, when `shared` is set to `true`, before starting a container, Dev Services looks for a container with the `quarkus-dev-service-localstack` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise it starts a new container with the `quarkus-dev-service-localstack` label set to the specified value. In test mode, Dev Services will group services with the same `service-name` value in one container instance.
+
+This property is used when you need multiple shared LocalStack instances.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_DEVSERVICES_SERVICE_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_DEVSERVICES_SERVICE_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`localstack`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-account_quarkus-account-devservices-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-devservices-container-properties-container-properties[`quarkus.account.devservices.container-properties."container-properties"`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.devservices.container-properties."container-properties"+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Generic properties that are pass for additional container configuration.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_DEVSERVICES_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_DEVSERVICES_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++`
+endif::add-copy-button-to-env-var[]
+--
+|Map<String,String>
+|
+
+h|[[quarkus-amazon-account_section_quarkus-account]] [.section-name.section-level0]##link:#quarkus-amazon-account_section_quarkus-account[AWS SDK client configurations]##
+h|Type
+h|Default
+
+a| [[quarkus-amazon-account_quarkus-account-endpoint-override]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-endpoint-override[`quarkus.account.endpoint-override`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.endpoint-override+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".endpoint-override`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".endpoint-override+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+The endpoint URI with which the SDK should communicate.
+
+If not specified, an appropriate endpoint to be used for the given service and region.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ENDPOINT_OVERRIDE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ENDPOINT_OVERRIDE+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
+|
+
+a| [[quarkus-amazon-account_quarkus-account-api-call-timeout]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-api-call-timeout[`quarkus.account.api-call-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.api-call-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".api-call-timeout`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".api-call-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+The amount of time to allow the client to complete the execution of an API call.
+
+This timeout covers the entire client execution except for marshalling. This includes request handler execution, all HTTP requests including retries, unmarshalling, etc.
+
+This value should always be positive, if present.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_API_CALL_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_API_CALL_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|
+
+a| [[quarkus-amazon-account_quarkus-account-api-call-attempt-timeout]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-api-call-attempt-timeout[`quarkus.account.api-call-attempt-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.api-call-attempt-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".api-call-attempt-timeout`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".api-call-attempt-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+The amount of time to wait for the HTTP request to complete before giving up and timing out.
+
+This value should always be positive, if present.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_API_CALL_ATTEMPT_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_API_CALL_ATTEMPT_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|
+
+a| [[quarkus-amazon-account_quarkus-account-advanced-use-quarkus-scheduled-executor-service]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-advanced-use-quarkus-scheduled-executor-service[`quarkus.account.advanced.use-quarkus-scheduled-executor-service`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.advanced.use-quarkus-scheduled-executor-service+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".advanced.use-quarkus-scheduled-executor-service`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".advanced.use-quarkus-scheduled-executor-service+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+Whether the Quarkus thread pool should be used for scheduling tasks such as async retry attempts and timeout task.
+
+When disabled, the default sdk behavior is to create a dedicated thread pool for each client, resulting in competition for CPU resources among these thread pools.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ADVANCED_USE_QUARKUS_SCHEDULED_EXECUTOR_SERVICE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ADVANCED_USE_QUARKUS_SCHEDULED_EXECUTOR_SERVICE+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`true`
+
+
+h|[[quarkus-amazon-account_section_quarkus-account-aws]] [.section-name.section-level0]##link:#quarkus-amazon-account_section_quarkus-account-aws[AWS services configurations]##
+h|Type
+h|Default
+
+a| [[quarkus-amazon-account_quarkus-account-aws-region]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-region[`quarkus.account.aws.region`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.aws.region+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".aws.region`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".aws.region+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+An Amazon Web Services region that hosts the given service.
+
+It overrides region provider chain with static value of
+region with which the service client should communicate.
+
+If not set, region is retrieved via the default providers chain in the following order:
+
+* `aws.region` system property
+* `region` property from the profile file
+* Instance profile file
+
+See `software.amazon.awssdk.regions.Region` for available regions.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_AWS_REGION+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_AWS_REGION+++`
+endif::add-copy-button-to-env-var[]
+--
+|Region
+|
+
+a| [[quarkus-amazon-account_quarkus-account-aws-credentials-type]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-credentials-type[`quarkus.account.aws.credentials.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.aws.credentials.type+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".aws.credentials.type`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".aws.credentials.type+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+Configure the credentials provider that should be used to authenticate with AWS.
+
+Available values:
+
+* `default` - the provider will attempt to identify the credentials automatically using the following checks:
+** Java System Properties - `aws.accessKeyId` and `aws.secretAccessKey`
+** Environment Variables - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+** Credential profiles file at the default location (`~/.aws/credentials`) shared by all AWS SDKs and the AWS CLI
+** Credentials delivered through the Amazon EC2 container service if `AWS_CONTAINER_CREDENTIALS_RELATIVE_URI` environment variable is set and security manager has permission to access the variable.
+** Instance profile credentials delivered through the Amazon EC2 metadata service
+* `static` - the provider that uses the access key and secret access key specified in the `static-provider` section of the config.
+* `system-property` - it loads credentials from the `aws.accessKeyId`, `aws.secretAccessKey` and `aws.sessionToken` system properties.
+* `env-variable` - it loads credentials from the `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_SESSION_TOKEN` environment variables.
+* `profile` - credentials are based on AWS configuration profiles. This loads credentials from
+              a http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html[profile file],
+              allowing you to share multiple sets of AWS security credentials between different tools like the AWS SDK for Java and the AWS CLI.
+* `container` - It loads credentials from a local metadata service. Containers currently supported by the AWS SDK are
+                **Amazon Elastic Container Service (ECS)** and **AWS Greengrass**
+* `instance-profile` - It loads credentials from the Amazon EC2 Instance Metadata Service.
+* `process` - Credentials are loaded from an external process. This is used to support the credential_process setting in the profile
+              credentials file. See https://docs.aws.amazon.com/cli/latest/topic/config-vars.html#sourcing-credentials-from-external-processes[Sourcing Credentials From External Processes]
+              for more information.
+* `anonymous` - It always returns anonymous AWS credentials. Anonymous AWS credentials result in un-authenticated requests and will
+                fail unless the resource or API's policy has been configured to specifically allow anonymous access.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_TYPE+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`default`, `static`, `system-property`, `env-variable`, `profile`, `container`, `instance-profile`, `process`, `custom`, `anonymous`
+|`default`
+
+h|[[quarkus-amazon-account_section_quarkus-account-aws-credentials-default-provider]] [.section-name.section-level1]##link:#quarkus-amazon-account_section_quarkus-account-aws-credentials-default-provider[Default credentials provider configuration]##
+h|Type
+h|Default
+
+a| [[quarkus-amazon-account_quarkus-account-aws-credentials-default-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-credentials-default-provider-async-credential-update-enabled[`quarkus.account.aws.credentials.default-provider.async-credential-update-enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.aws.credentials.default-provider.async-credential-update-enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".aws.credentials.default-provider.async-credential-update-enabled`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".aws.credentials.default-provider.async-credential-update-enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+Whether this provider should fetch credentials asynchronously in the background.
+
+If this is `true`, threads are less likely to block, but additional resources are used to maintain the provider.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_DEFAULT_PROVIDER_ASYNC_CREDENTIAL_UPDATE_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_DEFAULT_PROVIDER_ASYNC_CREDENTIAL_UPDATE_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`false`
+
+a| [[quarkus-amazon-account_quarkus-account-aws-credentials-default-provider-reuse-last-provider-enabled]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-credentials-default-provider-reuse-last-provider-enabled[`quarkus.account.aws.credentials.default-provider.reuse-last-provider-enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.aws.credentials.default-provider.reuse-last-provider-enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".aws.credentials.default-provider.reuse-last-provider-enabled`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".aws.credentials.default-provider.reuse-last-provider-enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+Whether the provider should reuse the last successful credentials provider in the chain.
+
+Reusing the last successful credentials provider will typically return credentials faster than searching through the chain.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_DEFAULT_PROVIDER_REUSE_LAST_PROVIDER_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_DEFAULT_PROVIDER_REUSE_LAST_PROVIDER_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`true`
+
+
+h|[[quarkus-amazon-account_section_quarkus-account-aws-credentials-static-provider]] [.section-name.section-level1]##link:#quarkus-amazon-account_section_quarkus-account-aws-credentials-static-provider[Static credentials provider configuration]##
+h|Type
+h|Default
+
+a| [[quarkus-amazon-account_quarkus-account-aws-credentials-static-provider-access-key-id]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-credentials-static-provider-access-key-id[`quarkus.account.aws.credentials.static-provider.access-key-id`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.aws.credentials.static-provider.access-key-id+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".aws.credentials.static-provider.access-key-id`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".aws.credentials.static-provider.access-key-id+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+AWS Access key id
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-aws-credentials-static-provider-secret-access-key]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-credentials-static-provider-secret-access-key[`quarkus.account.aws.credentials.static-provider.secret-access-key`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.aws.credentials.static-provider.secret-access-key+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".aws.credentials.static-provider.secret-access-key`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".aws.credentials.static-provider.secret-access-key+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+AWS Secret access key
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-aws-credentials-static-provider-session-token]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-credentials-static-provider-session-token[`quarkus.account.aws.credentials.static-provider.session-token`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.aws.credentials.static-provider.session-token+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".aws.credentials.static-provider.session-token`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".aws.credentials.static-provider.session-token+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+AWS Session token
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_STATIC_PROVIDER_SESSION_TOKEN+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_STATIC_PROVIDER_SESSION_TOKEN+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+
+h|[[quarkus-amazon-account_section_quarkus-account-aws-credentials-profile-provider]] [.section-name.section-level1]##link:#quarkus-amazon-account_section_quarkus-account-aws-credentials-profile-provider[AWS Profile credentials provider configuration]##
+h|Type
+h|Default
+
+a| [[quarkus-amazon-account_quarkus-account-aws-credentials-profile-provider-profile-name]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-credentials-profile-provider-profile-name[`quarkus.account.aws.credentials.profile-provider.profile-name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.aws.credentials.profile-provider.profile-name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".aws.credentials.profile-provider.profile-name`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".aws.credentials.profile-provider.profile-name+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+The name of the profile that should be used by this credentials provider.
+
+If not specified, the value in `AWS_PROFILE` environment variable or `aws.profile` system property is used and defaults to `default` name.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_PROFILE_PROVIDER_PROFILE_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_PROFILE_PROVIDER_PROFILE_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+
+h|[[quarkus-amazon-account_section_quarkus-account-aws-credentials-process-provider]] [.section-name.section-level1]##link:#quarkus-amazon-account_section_quarkus-account-aws-credentials-process-provider[Process credentials provider configuration]##
+h|Type
+h|Default
+
+a| [[quarkus-amazon-account_quarkus-account-aws-credentials-process-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-credentials-process-provider-async-credential-update-enabled[`quarkus.account.aws.credentials.process-provider.async-credential-update-enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.aws.credentials.process-provider.async-credential-update-enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".aws.credentials.process-provider.async-credential-update-enabled`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".aws.credentials.process-provider.async-credential-update-enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+Whether the provider should fetch credentials asynchronously in the background.
+
+If this is true, threads are less likely to block when credentials are loaded, but additional resources are used to maintain the provider.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_PROCESS_PROVIDER_ASYNC_CREDENTIAL_UPDATE_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_PROCESS_PROVIDER_ASYNC_CREDENTIAL_UPDATE_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`false`
+
+a| [[quarkus-amazon-account_quarkus-account-aws-credentials-process-provider-credential-refresh-threshold]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-credentials-process-provider-credential-refresh-threshold[`quarkus.account.aws.credentials.process-provider.credential-refresh-threshold`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.aws.credentials.process-provider.credential-refresh-threshold+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".aws.credentials.process-provider.credential-refresh-threshold`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".aws.credentials.process-provider.credential-refresh-threshold+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+The amount of time between when the credentials expire and when the credentials should start to be refreshed.
+
+This allows the credentials to be refreshed ++*++before++*++ they are reported to expire.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_PROCESS_PROVIDER_CREDENTIAL_REFRESH_THRESHOLD+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_PROCESS_PROVIDER_CREDENTIAL_REFRESH_THRESHOLD+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|`15S`
+
+a| [[quarkus-amazon-account_quarkus-account-aws-credentials-process-provider-process-output-limit]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-credentials-process-provider-process-output-limit[`quarkus.account.aws.credentials.process-provider.process-output-limit`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.aws.credentials.process-provider.process-output-limit+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".aws.credentials.process-provider.process-output-limit`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".aws.credentials.process-provider.process-output-limit+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+The maximum size of the output that can be returned by the external process before an exception is raised.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_OUTPUT_LIMIT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_OUTPUT_LIMIT+++`
+endif::add-copy-button-to-env-var[]
+--
+|MemorySize link:#memory-size-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the MemorySize format]]
+|`1024`
+
+a| [[quarkus-amazon-account_quarkus-account-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-credentials-process-provider-command[`quarkus.account.aws.credentials.process-provider.command`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.aws.credentials.process-provider.command+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".aws.credentials.process-provider.command`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".aws.credentials.process-provider.command+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+The command that should be executed to retrieve credentials. Command and parameters are seperated list entries.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_PROCESS_PROVIDER_COMMAND+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_PROCESS_PROVIDER_COMMAND+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|
+
+
+h|[[quarkus-amazon-account_section_quarkus-account-aws-credentials-custom-provider]] [.section-name.section-level1]##link:#quarkus-amazon-account_section_quarkus-account-aws-credentials-custom-provider[Custom credentials provider configuration]##
+h|Type
+h|Default
+
+a| [[quarkus-amazon-account_quarkus-account-aws-credentials-custom-provider-name]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-credentials-custom-provider-name[`quarkus.account.aws.credentials.custom-provider.name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.aws.credentials.custom-provider.name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+`quarkus.account."client-name".aws.credentials.custom-provider.name`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account."client-name".aws.credentials.custom-provider.name+++[]
+endif::add-copy-button-to-config-props[]
+
+[.description]
+--
+The name of custom AwsCredentialsProvider bean.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_CUSTOM_PROVIDER_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_CUSTOM_PROVIDER_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+
+
+h|[[quarkus-amazon-account_section_quarkus-account-sync-client]] [.section-name.section-level0]##link:#quarkus-amazon-account_section_quarkus-account-sync-client[Sync HTTP transport configurations]##
+h|Type
+h|Default
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-connection-timeout[`quarkus.account.sync-client.connection-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.connection-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum amount of time to establish a connection before timing out.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_CONNECTION_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_CONNECTION_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|`2S`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-socket-timeout]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-socket-timeout[`quarkus.account.sync-client.socket-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.socket-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The amount of time to wait for data to be transferred over an established, open connection before the connection is timed out.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_SOCKET_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_SOCKET_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|`30S`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-tls-key-managers-provider-type[`quarkus.account.sync-client.tls-key-managers-provider.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.tls-key-managers-provider.type+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+TLS key managers provider type.
+
+Available providers:
+
+* `none` - Use this provider if you don't want the client to present any certificates to the remote TLS host.
+* `system-property` - Provider checks the standard `javax.net.ssl.keyStore`, `javax.net.ssl.keyStorePassword`, and
+                      `javax.net.ssl.keyStoreType` properties defined by the
+                       https://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html[JSSE].
+* `file-store` - Provider that loads the key store from a file.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`none`, `system-property`, `file-store`
+|`system-property`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-tls-key-managers-provider-file-store-path[`quarkus.account.sync-client.tls-key-managers-provider.file-store.path`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.tls-key-managers-provider.file-store.path+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Path to the key store.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PATH+++`
+endif::add-copy-button-to-env-var[]
+--
+|path
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-tls-key-managers-provider-file-store-type[`quarkus.account.sync-client.tls-key-managers-provider.file-store.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.tls-key-managers-provider.file-store.type+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Key store type.
+
+See the KeyStore section in the https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html++#++KeyStore++[++Java Cryptography Architecture Standard Algorithm Name Documentation++]++ for information about standard keystore types.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_TYPE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-tls-key-managers-provider-file-store-password[`quarkus.account.sync-client.tls-key-managers-provider.file-store.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.tls-key-managers-provider.file-store.password+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Key store password
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-tls-trust-managers-provider-type[`quarkus.account.sync-client.tls-trust-managers-provider.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.tls-trust-managers-provider.type+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+TLS trust managers provider type.
+
+Available providers:
+
+* `trust-all` - Use this provider to disable the validation of servers certificates and therefore trust all server certificates.
+* `system-property` - Provider checks the standard `javax.net.ssl.keyStore`, `javax.net.ssl.keyStorePassword`, and
+                      `javax.net.ssl.keyStoreType` properties defined by the
+                       https://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html[JSSE].
+* `file-store` - Provider that loads the key store from a file.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`trust-all`, `system-property`, `file-store`
+|`system-property`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-tls-trust-managers-provider-file-store-path[`quarkus.account.sync-client.tls-trust-managers-provider.file-store.path`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.tls-trust-managers-provider.file-store.path+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Path to the key store.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PATH+++`
+endif::add-copy-button-to-env-var[]
+--
+|path
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-tls-trust-managers-provider-file-store-type[`quarkus.account.sync-client.tls-trust-managers-provider.file-store.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.tls-trust-managers-provider.file-store.type+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Key store type.
+
+See the KeyStore section in the https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html++#++KeyStore++[++Java Cryptography Architecture Standard Algorithm Name Documentation++]++ for information about standard keystore types.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_TYPE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-tls-trust-managers-provider-file-store-password[`quarkus.account.sync-client.tls-trust-managers-provider.file-store.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.tls-trust-managers-provider.file-store.password+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Key store password
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+h|[[quarkus-amazon-account_section_quarkus-account-sync-client-apache]] [.section-name.section-level1]##link:#quarkus-amazon-account_section_quarkus-account-sync-client-apache[Apache HTTP client specific configurations]##
+h|Type
+h|Default
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-connection-acquisition-timeout[`quarkus.account.sync-client.apache.connection-acquisition-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.connection-acquisition-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The amount of time to wait when acquiring a connection from the pool before giving up and timing out.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_CONNECTION_ACQUISITION_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_CONNECTION_ACQUISITION_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|`10S`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-connection-max-idle-time[`quarkus.account.sync-client.apache.connection-max-idle-time`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.connection-max-idle-time+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum amount of time that a connection should be allowed to remain open while idle.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_CONNECTION_MAX_IDLE_TIME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_CONNECTION_MAX_IDLE_TIME+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|`60S`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-connection-time-to-live[`quarkus.account.sync-client.apache.connection-time-to-live`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.connection-time-to-live+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum amount of time that a connection should be allowed to remain open, regardless of usage frequency.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_CONNECTION_TIME_TO_LIVE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_CONNECTION_TIME_TO_LIVE+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-max-connections]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-max-connections[`quarkus.account.sync-client.apache.max-connections`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.max-connections+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum number of connections allowed in the connection pool.
+
+Each built HTTP client has its own private connection pool.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_MAX_CONNECTIONS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_MAX_CONNECTIONS+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`50`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-expect-continue-enabled]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-expect-continue-enabled[`quarkus.account.sync-client.apache.expect-continue-enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.expect-continue-enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Whether the client should send an HTTP expect-continue handshake before each request.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_EXPECT_CONTINUE_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_EXPECT_CONTINUE_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`true`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-use-idle-connection-reaper[`quarkus.account.sync-client.apache.use-idle-connection-reaper`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.use-idle-connection-reaper+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Whether the idle connections in the connection pool should be closed asynchronously.
+
+When enabled, connections left idling for longer than `quarkus..sync-client.connection-max-idle-time` will be closed. This will not close connections currently in use.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_USE_IDLE_CONNECTION_REAPER+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_USE_IDLE_CONNECTION_REAPER+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`true`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-tcp-keep-alive[`quarkus.account.sync-client.apache.tcp-keep-alive`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.tcp-keep-alive+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Configure whether to enable or disable TCP KeepAlive.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_TCP_KEEP_ALIVE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_TCP_KEEP_ALIVE+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`false`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-enabled]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-enabled[`quarkus.account.sync-client.apache.proxy.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.proxy.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Enable HTTP proxy
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`false`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-endpoint[`quarkus.account.sync-client.apache.proxy.endpoint`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.proxy.endpoint+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The endpoint of the proxy server that the SDK should connect through.
+
+Currently, the endpoint is limited to a host and port. Any other URI components will result in an exception being raised.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_ENDPOINT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_ENDPOINT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-username]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-username[`quarkus.account.sync-client.apache.proxy.username`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.proxy.username+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The username to use when connecting through a proxy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_USERNAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_USERNAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-password]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-password[`quarkus.account.sync-client.apache.proxy.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.proxy.password+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The password to use when connecting through a proxy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_PASSWORD+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_PASSWORD+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-ntlm-domain]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-ntlm-domain[`quarkus.account.sync-client.apache.proxy.ntlm-domain`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.proxy.ntlm-domain+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+For NTLM proxies - the Windows domain name to use when authenticating with the proxy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_NTLM_DOMAIN+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_NTLM_DOMAIN+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-ntlm-workstation]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-ntlm-workstation[`quarkus.account.sync-client.apache.proxy.ntlm-workstation`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.proxy.ntlm-workstation+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+For NTLM proxies - the Windows workstation name to use when authenticating with the proxy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_NTLM_WORKSTATION+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_NTLM_WORKSTATION+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-preemptive-basic-authentication-enabled]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-preemptive-basic-authentication-enabled[`quarkus.account.sync-client.apache.proxy.preemptive-basic-authentication-enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.proxy.preemptive-basic-authentication-enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Whether to attempt to authenticate preemptively against the proxy server using basic authentication.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_PREEMPTIVE_BASIC_AUTHENTICATION_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_PREEMPTIVE_BASIC_AUTHENTICATION_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-apache-proxy-non-proxy-hosts[`quarkus.account.sync-client.apache.proxy.non-proxy-hosts`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.apache.proxy.non-proxy-hosts+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The hosts that the client is allowed to access without going through the proxy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_NON_PROXY_HOSTS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_APACHE_PROXY_NON_PROXY_HOSTS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|
+
+
+h|[[quarkus-amazon-account_section_quarkus-account-sync-client-crt]] [.section-name.section-level1]##link:#quarkus-amazon-account_section_quarkus-account-sync-client-crt[AWS CRT-based HTTP client specific configurations]##
+h|Type
+h|Default
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-crt-connection-max-idle-time[`quarkus.account.sync-client.crt.connection-max-idle-time`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.crt.connection-max-idle-time+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum amount of time that a connection should be allowed to remain open while idle.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|`60S`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-crt-max-concurrency[`quarkus.account.sync-client.crt.max-concurrency`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.crt.max-concurrency+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum number of allowed concurrent requests.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_CRT_MAX_CONCURRENCY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_CRT_MAX_CONCURRENCY+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`50`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-crt-proxy-enabled[`quarkus.account.sync-client.crt.proxy.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.crt.proxy.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Enable HTTP proxy
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_CRT_PROXY_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_CRT_PROXY_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`false`
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-crt-proxy-endpoint[`quarkus.account.sync-client.crt.proxy.endpoint`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.crt.proxy.endpoint+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The endpoint of the proxy server that the SDK should connect through.
+
+Currently, the endpoint is limited to a host and port. Any other URI components will result in an exception being raised.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_CRT_PROXY_ENDPOINT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_CRT_PROXY_ENDPOINT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-crt-proxy-username[`quarkus.account.sync-client.crt.proxy.username`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.crt.proxy.username+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The username to use when connecting through a proxy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_CRT_PROXY_USERNAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_CRT_PROXY_USERNAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-sync-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-sync-client-crt-proxy-password[`quarkus.account.sync-client.crt.proxy.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.sync-client.crt.proxy.password+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The password to use when connecting through a proxy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_SYNC_CLIENT_CRT_PROXY_PASSWORD+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_SYNC_CLIENT_CRT_PROXY_PASSWORD+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+
+
+h|[[quarkus-amazon-account_section_quarkus-account-async-client]] [.section-name.section-level0]##link:#quarkus-amazon-account_section_quarkus-account-async-client[Async HTTP transport configurations]##
+h|Type
+h|Default
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-max-concurrency]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-max-concurrency[`quarkus.account.async-client.max-concurrency`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.max-concurrency+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum number of allowed concurrent requests.
+
+For HTTP/1.1 this is the same as max connections. For HTTP/2 the number of connections that will be used depends on the max streams allowed per connection.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_MAX_CONCURRENCY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_MAX_CONCURRENCY+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`50`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-max-pending-connection-acquires]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-max-pending-connection-acquires[`quarkus.account.async-client.max-pending-connection-acquires`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.max-pending-connection-acquires+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum number of pending acquires allowed.
+
+Once this exceeds, acquire tries will be failed.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_MAX_PENDING_CONNECTION_ACQUIRES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_MAX_PENDING_CONNECTION_ACQUIRES+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`10000`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-read-timeout]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-read-timeout[`quarkus.account.async-client.read-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.read-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The amount of time to wait for a read on a socket before an exception is thrown.
+
+Specify `0` to disable.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_READ_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_READ_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|`30S`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-write-timeout]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-write-timeout[`quarkus.account.async-client.write-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.write-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The amount of time to wait for a write on a socket before an exception is thrown.
+
+Specify `0` to disable.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_WRITE_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_WRITE_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|`30S`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-connection-timeout[`quarkus.account.async-client.connection-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.connection-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The amount of time to wait when initially establishing a connection before giving up and timing out.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_CONNECTION_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_CONNECTION_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|`10S`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-connection-acquisition-timeout[`quarkus.account.async-client.connection-acquisition-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.connection-acquisition-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The amount of time to wait when acquiring a connection from the pool before giving up and timing out.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_CONNECTION_ACQUISITION_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_CONNECTION_ACQUISITION_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|`2S`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-connection-time-to-live[`quarkus.account.async-client.connection-time-to-live`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.connection-time-to-live+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum amount of time that a connection should be allowed to remain open, regardless of usage frequency.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_CONNECTION_TIME_TO_LIVE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_CONNECTION_TIME_TO_LIVE+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-connection-max-idle-time[`quarkus.account.async-client.connection-max-idle-time`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.connection-max-idle-time+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum amount of time that a connection should be allowed to remain open while idle.
+
+Currently has no effect if `quarkus..async-client.use-idle-connection-reaper` is false.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_CONNECTION_MAX_IDLE_TIME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_CONNECTION_MAX_IDLE_TIME+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|`5S`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-use-idle-connection-reaper[`quarkus.account.async-client.use-idle-connection-reaper`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.use-idle-connection-reaper+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Whether the idle connections in the connection pool should be closed.
+
+When enabled, connections left idling for longer than `quarkus..async-client.connection-max-idle-time` will be closed. This will not close connections currently in use.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_USE_IDLE_CONNECTION_REAPER+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_USE_IDLE_CONNECTION_REAPER+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`true`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-tcp-keep-alive[`quarkus.account.async-client.tcp-keep-alive`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.tcp-keep-alive+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Configure whether to enable or disable TCP KeepAlive.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TCP_KEEP_ALIVE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TCP_KEEP_ALIVE+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`false`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-protocol]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-protocol[`quarkus.account.async-client.protocol`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.protocol+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The HTTP protocol to use.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_PROTOCOL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_PROTOCOL+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`http1-1`, `http2`
+|`http1-1`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-ssl-provider]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-ssl-provider[`quarkus.account.async-client.ssl-provider`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.ssl-provider+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The SSL Provider to be used in the Netty client.
+
+Default is `OPENSSL` if available, `JDK` otherwise.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_SSL_PROVIDER+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_SSL_PROVIDER+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`jdk`, `openssl`, `openssl-refcnt`
+|
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-http2-max-streams]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-http2-max-streams[`quarkus.account.async-client.http2.max-streams`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.http2.max-streams+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum number of concurrent streams for an HTTP/2 connection.
+
+This setting is only respected when the HTTP/2 protocol is used.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_HTTP2_MAX_STREAMS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_HTTP2_MAX_STREAMS+++`
+endif::add-copy-button-to-env-var[]
+--
+|long
+|`4294967295`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-http2-initial-window-size]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-http2-initial-window-size[`quarkus.account.async-client.http2.initial-window-size`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.http2.initial-window-size+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The initial window size for an HTTP/2 stream.
+
+This setting is only respected when the HTTP/2 protocol is used.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_HTTP2_INITIAL_WINDOW_SIZE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_HTTP2_INITIAL_WINDOW_SIZE+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`1048576`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-http2-health-check-ping-period]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-http2-health-check-ping-period[`quarkus.account.async-client.http2.health-check-ping-period`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.http2.health-check-ping-period+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Sets the period that the Netty client will send `PING` frames to the remote endpoint to check the health of the connection. To disable this feature, set a duration of 0.
+
+This setting is only respected when the HTTP/2 protocol is used.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_PERIOD+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_PERIOD+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the Duration format]]
+|`5`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-proxy-enabled]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-proxy-enabled[`quarkus.account.async-client.proxy.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.proxy.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Enable HTTP proxy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_PROXY_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_PROXY_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`false`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-proxy-endpoint[`quarkus.account.async-client.proxy.endpoint`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.proxy.endpoint+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The endpoint of the proxy server that the SDK should connect through.
+
+Currently, the endpoint is limited to a host and port. Any other URI components will result in an exception being raised.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_PROXY_ENDPOINT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_PROXY_ENDPOINT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
+|
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-proxy-non-proxy-hosts[`quarkus.account.async-client.proxy.non-proxy-hosts`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.proxy.non-proxy-hosts+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The hosts that the client is allowed to access without going through the proxy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_PROXY_NON_PROXY_HOSTS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_PROXY_NON_PROXY_HOSTS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-tls-key-managers-provider-type[`quarkus.account.async-client.tls-key-managers-provider.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.tls-key-managers-provider.type+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+TLS key managers provider type.
+
+Available providers:
+
+* `none` - Use this provider if you don't want the client to present any certificates to the remote TLS host.
+* `system-property` - Provider checks the standard `javax.net.ssl.keyStore`, `javax.net.ssl.keyStorePassword`, and
+                      `javax.net.ssl.keyStoreType` properties defined by the
+                       https://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html[JSSE].
+* `file-store` - Provider that loads the key store from a file.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`none`, `system-property`, `file-store`
+|`system-property`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-tls-key-managers-provider-file-store-path[`quarkus.account.async-client.tls-key-managers-provider.file-store.path`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.tls-key-managers-provider.file-store.path+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Path to the key store.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PATH+++`
+endif::add-copy-button-to-env-var[]
+--
+|path
+|
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-tls-key-managers-provider-file-store-type[`quarkus.account.async-client.tls-key-managers-provider.file-store.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.tls-key-managers-provider.file-store.type+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Key store type.
+
+See the KeyStore section in the https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html++#++KeyStore++[++Java Cryptography Architecture Standard Algorithm Name Documentation++]++ for information about standard keystore types.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_TYPE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-tls-key-managers-provider-file-store-password[`quarkus.account.async-client.tls-key-managers-provider.file-store.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.tls-key-managers-provider.file-store.password+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Key store password
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-tls-trust-managers-provider-type[`quarkus.account.async-client.tls-trust-managers-provider.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.tls-trust-managers-provider.type+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+TLS trust managers provider type.
+
+Available providers:
+
+* `trust-all` - Use this provider to disable the validation of servers certificates and therefore trust all server certificates.
+* `system-property` - Provider checks the standard `javax.net.ssl.keyStore`, `javax.net.ssl.keyStorePassword`, and
+                      `javax.net.ssl.keyStoreType` properties defined by the
+                       https://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html[JSSE].
+* `file-store` - Provider that loads the key store from a file.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`trust-all`, `system-property`, `file-store`
+|`system-property`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-tls-trust-managers-provider-file-store-path[`quarkus.account.async-client.tls-trust-managers-provider.file-store.path`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.tls-trust-managers-provider.file-store.path+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Path to the key store.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PATH+++`
+endif::add-copy-button-to-env-var[]
+--
+|path
+|
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-tls-trust-managers-provider-file-store-type[`quarkus.account.async-client.tls-trust-managers-provider.file-store.type`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.tls-trust-managers-provider.file-store.type+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Key store type.
+
+See the KeyStore section in the https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html++#++KeyStore++[++Java Cryptography Architecture Standard Algorithm Name Documentation++]++ for information about standard keystore types.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_TYPE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-tls-trust-managers-provider-file-store-password[`quarkus.account.async-client.tls-trust-managers-provider.file-store.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.tls-trust-managers-provider.file-store.password+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Key store password
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-event-loop-override]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-event-loop-override[`quarkus.account.async-client.event-loop.override`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.event-loop.override+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Enable the custom configuration of the Netty event loop group.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_EVENT_LOOP_OVERRIDE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_EVENT_LOOP_OVERRIDE+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`false`
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-event-loop-number-of-threads[`quarkus.account.async-client.event-loop.number-of-threads`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.event-loop.number-of-threads+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Number of threads to use for the event loop group.
+
+If not set, the default Netty thread count is used (which is double the number of available processors unless the `io.netty.eventLoopThreads` system property is set.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_EVENT_LOOP_NUMBER_OF_THREADS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_EVENT_LOOP_NUMBER_OF_THREADS+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-event-loop-thread-name-prefix]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-event-loop-thread-name-prefix[`quarkus.account.async-client.event-loop.thread-name-prefix`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.event-loop.thread-name-prefix+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The thread name prefix for threads created by this thread factory used by event loop group.
+
+The prefix will be appended with a number unique to the thread factory and a number unique to the thread.
+
+If not specified it defaults to `aws-java-sdk-NettyEventLoop`
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_EVENT_LOOP_THREAD_NAME_PREFIX+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_EVENT_LOOP_THREAD_NAME_PREFIX+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-account_quarkus-account-async-client-advanced-use-future-completion-thread-pool]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-async-client-advanced-use-future-completion-thread-pool[`quarkus.account.async-client.advanced.use-future-completion-thread-pool`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.account.async-client.advanced.use-future-completion-thread-pool+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Whether the default thread pool should be used to complete the futures returned from the HTTP client request.
+
+When disabled, futures will be completed on the Netty event loop thread.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACCOUNT_ASYNC_CLIENT_ADVANCED_USE_FUTURE_COMPLETION_THREAD_POOL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACCOUNT_ASYNC_CLIENT_ADVANCED_USE_FUTURE_COMPLETION_THREAD_POOL+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`true`
+
+
+|===
+
+ifndef::no-duration-note[]
+[NOTE]
+[id=duration-note-anchor-quarkus-amazon-account_quarkus-account]
+.About the Duration format
+====
+To write duration values, use the standard `java.time.Duration` format.
+See the link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html#parse(java.lang.CharSequence)[Duration#parse() Java API documentation] for more information.
+
+You can also use a simplified format, starting with a number:
+
+* If the value is only a number, it represents time in seconds.
+* If the value is a number followed by `ms`, it represents time in milliseconds.
+
+In other cases, the simplified format is translated to the `java.time.Duration` format for parsing:
+
+* If the value is a number followed by `h`, `m`, or `s`, it is prefixed with `PT`.
+* If the value is a number followed by `d`, it is prefixed with `P`.
+====
+endif::no-duration-note[]
+ifndef::no-memory-size-note[]
+[NOTE]
+[id=memory-size-note-anchor-quarkus-amazon-account_quarkus-account]
+.About the MemorySize format
+====
+A size configuration option recognizes strings in this format (shown as a regular expression): `[0-9]+[KkMmGgTtPpEeZzYy]?`.
+
+If no suffix is given, assume bytes.
+====
+ifndef::no-memory-size-note[]

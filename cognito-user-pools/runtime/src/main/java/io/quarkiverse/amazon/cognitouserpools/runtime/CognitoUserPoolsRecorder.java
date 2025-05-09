@@ -35,7 +35,7 @@ public class CognitoUserPoolsRecorder extends AmazonClientRecorder {
     }
 
     @Override
-    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
+    public AwsSyncClientBuilder<?, ?> getSyncClientBuilder() {
         return CognitoIdentityProviderClient.builder();
     }
 

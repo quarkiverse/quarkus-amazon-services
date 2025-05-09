@@ -42,7 +42,7 @@ public class S3Recorder extends AmazonClientRecorder {
     }
 
     @Override
-    public AwsSyncClientBuilder<?, ?> geSyncClientBuilder() {
+    public AwsSyncClientBuilder<?, ?> getSyncClientBuilder() {
         S3ClientBuilder builder = S3Client.builder();
         configureS3Client(builder);
         return builder;

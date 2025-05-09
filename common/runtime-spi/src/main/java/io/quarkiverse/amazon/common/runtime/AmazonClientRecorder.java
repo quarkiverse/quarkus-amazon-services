@@ -13,7 +13,7 @@ public abstract class AmazonClientRecorder {
 
     public abstract SyncHttpClientConfig getSyncClientConfig();
 
-    public abstract AwsSyncClientBuilder<?, ?> geSyncClientBuilder();
+    public abstract AwsSyncClientBuilder<?, ?> getSyncClientBuilder();
 
     public abstract AwsAsyncClientBuilder<?, ?> getAsyncClientBuilder();
 
@@ -26,7 +26,7 @@ public abstract class AmazonClientRecorder {
     }
 
     public RuntimeValue<AwsSyncClientBuilder<?, ?>> getSyncBuilder() {
-        return new RuntimeValue<>(geSyncClientBuilder());
+        return new RuntimeValue<>(getSyncClientBuilder());
     }
 
     public RuntimeValue<AwsAsyncClientBuilder<?, ?>> getAsyncBuilder() {

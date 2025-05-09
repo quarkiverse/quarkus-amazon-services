@@ -12,48 +12,22 @@
   <packaging>pom</packaging>
   <name>Quarkus - Amazon Services - Parent</name>
   <modules>
+    <module>bom-internal</module>
     <module>bom</module>
     <module>build-parent</module>
-    <module>crt</module>
+    <module>codegen</module>
+    <module>codegen-maven-plugin</module>
     <module>common</module>
+    <module>crt</module>    
     <module>devservices</module>
-    <module>acm</module>
-    <module>apigatewaymanagementapi</module>
-    <module>bedrock</module>
-    <module>bedrockruntime</module>
-    <module>cloudwatch</module>
-    <module>cloudwatchlogs</module>
     <module>cognito-user-pools</module>
-    <module>dynamodb</module>
     <module>dynamodb-enhanced</module>
-    <module>ecr</module>
-    <module>elasticloadbalancing</module>
-    <module>elasticloadbalancingv2</module>
-    <module>eventbridge</module>
-    <module>iam</module>
-    <module>inspector</module>
-    <module>inspector2</module>
-    <module>iot</module>
-    <module>kinesis</module>
-    <module>kms</module>
-    <module>lambda</module>
-    <module>neptune</module>
-    <module>paymentcryptography</module>
-    <module>paymentcryptographydata</module>
+    <module>scheduler</module>
     <module>s3</module>
     <module>s3-transfer-manager</module>
-    <module>scheduler</module>
-    <module>secretsmanager</module>
-    <module>ses</module>
-    <module>sesv2</module>
-    <module>sfn</module>
-    <module>sns</module>
-    <module>sso</module>
-    <module>ssooidc</module>
     <module>sqs</module>
     <module>quarkus-messaging-amazon-sqs</module>
-    <module>ssm</module>
-    <module>sts</module>
+    <module>services</module>
     <module>integration-tests</module>
   </modules>
   <scm>
@@ -73,6 +47,9 @@
     <quarkus.version>3.22.1</quarkus.version>
     <awssdk.version>2.31.32</awssdk.version>
     <awscrt.version>0.38.1</awscrt.version>
+    <javapoet.verion>1.13.0</javapoet.verion>
+    <hamcrest.version>1.3</hamcrest.version>
+    <assertj.version>3.20.2</assertj.version>
   </properties>
   <build>
     <pluginManagement>
