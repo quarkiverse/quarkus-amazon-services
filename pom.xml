@@ -46,7 +46,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.version>3.22.2</quarkus.version>
     <awssdk.version>2.31.40</awssdk.version>
-    <awscrt.version>0.38.1</awscrt.version>
+    <awscrt.version>0.38.2</awscrt.version>
     <javapoet.verion>1.13.0</javapoet.verion>
     <hamcrest.version>1.3</hamcrest.version>
     <assertj.version>3.20.2</assertj.version>
