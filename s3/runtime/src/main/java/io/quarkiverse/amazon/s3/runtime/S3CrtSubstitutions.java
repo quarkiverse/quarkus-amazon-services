@@ -43,12 +43,12 @@ public class S3CrtSubstitutions {
 
     @TargetClass(value = DefaultS3CrtAsyncClient.class, onlyWith = S3CrtSubstitutions.IsCrtAbsent.class)
     @Delete
-    final class Delete_DefaultS3CrtAsyncClient {
+    static final class Delete_DefaultS3CrtAsyncClient {
     }
 
     @TargetClass(value = S3CrtAsyncClient.class, onlyWith = S3CrtSubstitutions.IsCrtAbsent.class)
     @Delete
-    final class Delete_S3CrtAsyncClient {
+    static final class Delete_S3CrtAsyncClient {
     }
 
 }
