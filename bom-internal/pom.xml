@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>quarkus-amazon-services-bom-internal</artifactId>
+    <name>Quarkus - Amazon Services - BOM Internal</name>
     <packaging>pom</packaging>
 
     <dependencyManagement>
