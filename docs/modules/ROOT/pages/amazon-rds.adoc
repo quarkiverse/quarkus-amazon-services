@@ -1,0 +1,52 @@
+:service-name: rds
+:service-name-uppercase: RDS
+
+= Amazon RDS Client
+
+include::./includes/attributes.adoc[]
+
+Amazon Relational Database Service (AWS RDS) is a web service that makes it easier to set up, operate, and scale a relational database in the AWS Cloud. It provides cost-efficient, resizable capacity for an industry-standard relational database and manages common database administration tasks.
+
+You can find more information about RDS at https://aws.amazon.com/rds/[the Amazon RDS website].
+
+include::./amazon-configure-clients.adoc[]
+
+== IAM Authentication support with Quarkus Credential Provider
+
+When connecting to Amazon RDS, you can use IAM authentication to connect to your database. This is a secure way to authenticate without using a password.
+The Quarkus Amazon RDS extension supports IAM authentication using the Quarkus Credential Provider. This allows you to use your AWS credentials to authenticate with your RDS database.
+
+To use IAM authentication with the Quarkus Amazon RDS extension, you need to configure the following properties:
+
+[source,properties]
+----
+quarkus.rds.credentials-provider.mydatabase.use-quarkus-client=true <1>
+# Uncomment the following property if you want to provide a named client for the credentials provider. <2>
+# quarkus.rds.credentials-provider.mydatabase.name=myrdsclientforiam
+
+# configure the credentials provider
+quarkus.rds.credentials-provider.mydatabase.username=myiam
+quarkus.rds.credentials-provider.mydatabase.hostname=myhost
+quarkus.rds.credentials-provider.mydatabase.port=5432
+----
+
+<1> This will use the default Quarkus synchronous client configured in the previous section. If omitted, a default instance is created each time the credentials provider is used.
+<2> You can provide a named client if you want to. This is useful if you want to use a different client for different credentials providers. More information at xref:common-features.adoc#_named_clients[Named clients].
+
+Once defined, the `mydatabase` credentials provider can be used to authenticate with the RDS database. For instance with agroal:
+
+[source,properties]
+----
+# configure the datasource to use the credentials provider
+quarkus.datasource.db-kind=postgresql
+quarkus.datasource.password=myiam
+quarkus.datasource.credentials-provider=mydatabase
+quarkus.datasource.jdbc.url=jdbc:postgresql://myhost:5432/mydb
+----
+
+NOTE: The generated password is only valid for 15 minutes. You can find more information on how to configure your datasource with time-limited credentials at https://quarkus.io/guides/credentials-provider#time-limited-credentials[Quarkus Credentials Provider guide].
+
+
+== Configuration Reference
+
+include::./includes/quarkus-amazon-rds.adoc[]
