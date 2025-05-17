@@ -59,12 +59,14 @@ public class DynamodbEnhancedClientRecorder {
         Class<?> clazz = null;
         try {
             clazz = Class.forName(extensionClassName, false, Thread.currentThread().getContextClassLoader());
-            // try builder pattern in aws sdk
-            Method builderMethod = clazz.getMethod("builder");
-            Object builder = builderMethod.invoke(null);
-            DynamoDbEnhancedClientExtension extension = (DynamoDbEnhancedClientExtension) builder.getClass().getMethod("build")
-                    .invoke(builder);
-            return extension;
+            try {
+                Method builderMethod = clazz.getMethod("builder");
+                Object builder = builderMethod.invoke(null);
+                return (DynamoDbEnhancedClientExtension) builder.getClass().getMethod("build").invoke(builder);
+            } catch (NoSuchMethodException e) {
+                Method createMethod = clazz.getMethod("create");
+                return (DynamoDbEnhancedClientExtension) createMethod.invoke(null);
+            }
         } catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException e) {
             LOG.error("Unable to create extension " + extensionClassName, e);
             return null;
@@ -72,7 +74,7 @@ public class DynamodbEnhancedClientRecorder {
             try {
                 return (DynamoDbEnhancedClientExtension) clazz.getDeclaredConstructor().newInstance();
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
-                LOG.error("Unable to create extension " + extensionClassName, e);
+                LOG.error("Unable to create extension " + extensionClassName, ex);
                 return null;
             }
         }
