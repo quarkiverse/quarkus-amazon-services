@@ -28,6 +28,14 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-rds</artifactId>
         </dependency>
+                <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-devservices-rds</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-credentials-deployment</artifactId>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>
