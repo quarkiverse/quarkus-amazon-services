@@ -73,8 +73,7 @@ public class DynamodbEnhancedClientRecorder {
         } catch (NoSuchMethodException e) {
             try {
                 return (DynamoDbEnhancedClientExtension) clazz.getDeclaredConstructor().newInstance();
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                     NoSuchMethodException ex) {
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
                 LOG.error("Unable to create extension " + extensionClassName, ex);
                 return null;
             }
