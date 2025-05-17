@@ -34,12 +34,12 @@
         <dependency>
             <artifactId>maven-plugin-annotations</artifactId>
             <groupId>org.apache.maven.plugin-tools</groupId>
-            <version>3.9.0</version>
+            <version>3.15.1</version>
         </dependency>
         <dependency>
             <artifactId>maven-plugin-api</artifactId>
             <groupId>org.apache.maven</groupId>
-            <version>3.9.0</version>
+            <version>3.9.9</version>
             <scope>provided</scope>
         </dependency>        
         <dependency>
@@ -55,7 +55,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
-                <version>3.9.0</version>
+                <version>3.15.1</version>
                 <executions>
                     <execution>
                         <id>default-descriptor</id>
