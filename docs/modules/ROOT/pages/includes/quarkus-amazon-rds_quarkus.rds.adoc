@@ -204,6 +204,111 @@ endif::add-copy-button-to-env-var[]
 |Map<String,String>
 |
 
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-rds_quarkus-rds-credentials-provider-credentials-provider-use-quarkus-client]] [.property-path]##link:#quarkus-amazon-rds_quarkus-rds-credentials-provider-credentials-provider-use-quarkus-client[`quarkus.rds.credentials-provider."credentials-provider".use-quarkus-client`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.rds.credentials-provider."credentials-provider".use-quarkus-client+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Enables the named credentials provider to use a quarkus rds client, otherwise a default rds client will be created.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_RDS_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__USE_QUARKUS_CLIENT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_RDS_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__USE_QUARKUS_CLIENT+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`false`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-rds_quarkus-rds-credentials-provider-credentials-provider-name]] [.property-path]##link:#quarkus-amazon-rds_quarkus-rds-credentials-provider-credentials-provider-name[`quarkus.rds.credentials-provider."credentials-provider".name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.rds.credentials-provider."credentials-provider".name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The name of the quarkus rds client to use.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_RDS_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_RDS_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-rds_quarkus-rds-credentials-provider-credentials-provider-username]] [.property-path]##link:#quarkus-amazon-rds_quarkus-rds-credentials-provider-credentials-provider-username[`quarkus.rds.credentials-provider."credentials-provider".username`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.rds.credentials-provider."credentials-provider".username+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The username to use for the RDS IAM authentication.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_RDS_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__USERNAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_RDS_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__USERNAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a| [[quarkus-amazon-rds_quarkus-rds-credentials-provider-credentials-provider-hostname]] [.property-path]##link:#quarkus-amazon-rds_quarkus-rds-credentials-provider-credentials-provider-hostname[`quarkus.rds.credentials-provider."credentials-provider".hostname`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.rds.credentials-provider."credentials-provider".hostname+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The hostname of the RDS instance.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_RDS_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__HOSTNAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_RDS_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__HOSTNAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a| [[quarkus-amazon-rds_quarkus-rds-credentials-provider-credentials-provider-port]] [.property-path]##link:#quarkus-amazon-rds_quarkus-rds-credentials-provider-credentials-provider-port[`quarkus.rds.credentials-provider."credentials-provider".port`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.rds.credentials-provider."credentials-provider".port+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The port of the RDS instance.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_RDS_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__PORT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_RDS_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__PORT+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`0`
+
 h|[[quarkus-amazon-rds_section_quarkus-rds]] [.section-name.section-level0]##link:#quarkus-amazon-rds_section_quarkus-rds[AWS SDK client configurations]##
 h|Type
 h|Default

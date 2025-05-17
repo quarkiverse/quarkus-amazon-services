@@ -30,6 +30,7 @@
         <module>kinesis</module>
         <module>kms</module>
         <module>lambda</module>
+        <module>rds</module>
         <module>s3</module>
         <module>scheduler</module>
         <module>secretsmanager</module>
