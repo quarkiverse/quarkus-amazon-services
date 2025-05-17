@@ -37,6 +37,9 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
     @Parameter(property = "remoteCodegenResourcesRelativePath", defaultValue = "")
     private String remoteCodegenResourcesRelativePath;
 
+    @Parameter(property = "codeGenResources", defaultValue = "${basedir}/../src/main/resources/codegen-resources/")
+    private String codeGenResources;
+
     @Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}")
     private String outputDirectory;
 
@@ -57,7 +60,7 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
         this.sourcesDirectory = Paths.get(outputDirectory).resolve("generated-sources").resolve("sdk");
         this.resourcesDirectory = Paths.get(outputDirectory).resolve("generated-resources").resolve("sdk-resources");
         this.testsDirectory = Paths.get(outputDirectory).resolve("generated-test-sources").resolve("sdk-tests");
-        this.codeGenResourcesPath = Paths.get(outputDirectory).resolve("codegen-resources");
+        this.codeGenResourcesPath = Paths.get(codeGenResources);
 
         downloadModelIfNotExists(project);
 

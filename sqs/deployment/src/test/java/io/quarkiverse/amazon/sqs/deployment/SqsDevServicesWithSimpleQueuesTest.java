@@ -22,7 +22,7 @@ class SqsDevServicesWithSimpleQueuesTest {
     @RegisterExtension
     static final QuarkusUnitTest config = new QuarkusUnitTest()
             .withApplicationRoot((jar) -> jar.addAsResource(
-                    new StringAsset("quarkus.sqs.devservices.queues=queue1,queue2"),
+                    new StringAsset("quarkus.sqs.devservices.queues=queue1,queue2.fifo"),
                     "application.properties"));
 
     @Test
@@ -31,6 +31,6 @@ class SqsDevServicesWithSimpleQueuesTest {
         List<String> queueUrls = client.get().listQueues().queueUrls();
         assertEquals(2, queueUrls.size());
         assertTrue(queueUrls.get(0).endsWith("/queue1"));
-        assertTrue(queueUrls.get(1).endsWith("/queue2"));
+        assertTrue(queueUrls.get(1).endsWith("/queue2.fifo"));
     }
 }

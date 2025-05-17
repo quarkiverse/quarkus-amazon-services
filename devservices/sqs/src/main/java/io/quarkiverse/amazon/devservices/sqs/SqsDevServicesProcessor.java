@@ -2,7 +2,9 @@ package io.quarkiverse.amazon.devservices.sqs;
 
 import static java.util.Collections.emptyList;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,6 +23,7 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsClient;
+import software.amazon.awssdk.services.sqs.model.QueueAttributeName;
 
 public class SqsDevServicesProcessor extends AbstractDevServicesLocalStackProcessor {
 
@@ -43,7 +46,11 @@ public class SqsDevServicesProcessor extends AbstractDevServicesLocalStackProces
                 .httpClientBuilder(UrlConnectionHttpClient.builder())
                 .build()) {
             for (var queueName : configuration.queues) {
-                client.createQueue(b -> b.queueName(queueName));
+                Map<QueueAttributeName, String> attributes = new HashMap<>();
+                if (queueName.endsWith(".fifo")) {
+                    attributes.put(QueueAttributeName.FIFO_QUEUE, Boolean.TRUE.toString());
+                }
+                client.createQueue(b -> b.queueName(queueName).attributes(attributes));
             }
         }
     }
