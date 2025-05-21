@@ -1,0 +1,16 @@
+:service-name: rdsdata
+:service-name-uppercase: RDSDATA
+
+= Amazon RDS Data Client
+
+include::./includes/attributes.adoc[]
+
+The Amazon RDS Data API is a web service that enables you to run SQL statements on an Amazon RDS database without having to manage a connection to the database.
+
+You can find more information about RDS at https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html[the Amazon RDS Data website].
+
+include::./amazon-configure-clients.adoc[]
+
+== Configuration Reference
+
+include::./includes/quarkus-amazon-rdsdata.adoc[]
