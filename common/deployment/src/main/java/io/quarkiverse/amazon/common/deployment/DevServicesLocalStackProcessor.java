@@ -38,7 +38,7 @@ import io.quarkus.deployment.builditem.DockerStatusBuildItem;
 import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.deployment.console.ConsoleInstalledBuildItem;
 import io.quarkus.deployment.console.StartupLogCompressor;
-import io.quarkus.deployment.dev.devservices.GlobalDevServicesConfig;
+import io.quarkus.deployment.dev.devservices.DevServicesConfig;
 import io.quarkus.deployment.logging.LoggingSetupBuildItem;
 import io.quarkus.devservices.common.ConfigureUtil;
 import io.quarkus.devservices.common.ContainerAddress;
@@ -64,7 +64,7 @@ public class DevServicesLocalStackProcessor {
 
     private static final ContainerLocator containerLocator = new ContainerLocator(DEV_SERVICE_LABEL, PORT);
 
-    @BuildStep(onlyIfNot = IsNormal.class, onlyIf = GlobalDevServicesConfig.Enabled.class)
+    @BuildStep(onlyIfNot = IsNormal.class, onlyIf = DevServicesConfig.Enabled.class)
     public void startLocalStackDevService(
             LaunchModeBuildItem launchMode,
             LocalStackDevServicesBuildTimeConfig localStackDevServicesBuildTimeConfig,
@@ -73,7 +73,7 @@ public class DevServicesLocalStackProcessor {
             List<DevServicesSharedNetworkBuildItem> devServicesSharedNetworkBuildItem,
             Optional<ConsoleInstalledBuildItem> consoleInstalledBuildItem,
             CuratedApplicationShutdownBuildItem closeBuildItem,
-            GlobalDevServicesConfig devServicesConfig,
+            DevServicesConfig devServicesConfig,
             BuildProducer<DevServicesResultBuildItem> devServicesResultBuildItemBuildProducer,
             LoggingSetupBuildItem loggingSetupBuildItem) {
 
@@ -146,13 +146,16 @@ public class DevServicesLocalStackProcessor {
             newRunningDevServices.addAll(currentDevServices);
         }
 
+        boolean useSharedNetwork = DevServicesSharedNetworkBuildItem.isSharedNetworkRequired(devServicesConfig,
+                devServicesSharedNetworkBuildItem);
+
         // start new or modified container
         requestedServicesBySharedServiceName.forEach((devServiceName, requestedServicesGroup) -> {
             RunningDevService namedDevService = startLocalStack(devServiceName,
                     launchMode.getLaunchMode(),
                     localStackDevServicesBuildTimeConfig, requestedServicesGroup,
-                    !devServicesSharedNetworkBuildItem.isEmpty(),
-                    devServicesConfig.timeout,
+                    useSharedNetwork,
+                    devServicesConfig.timeout(),
                     consoleInstalledBuildItem,
                     loggingSetupBuildItem);
             if (namedDevService != null) {
