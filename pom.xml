@@ -45,7 +45,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.version>3.22.2</quarkus.version>
-    <awssdk.version>2.31.51</awssdk.version>
+    <awssdk.version>2.31.56</awssdk.version>
     <awscrt.version>0.38.3</awscrt.version>
     <javapoet.verion>1.13.0</javapoet.verion>
     <hamcrest.version>1.3</hamcrest.version>
