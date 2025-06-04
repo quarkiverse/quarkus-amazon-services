@@ -17,6 +17,8 @@
         <module>accessanalyzer</module>
         <module>account</module>
         <module>acm</module>
+        <module>apigateway</module>
+        <module>apigatewayv2</module>
         <module>apigatewaymanagementapi</module>
         <module>bedrock</module>
         <module>bedrockruntime</module>

@@ -1,5 +1,7 @@
 * xref:amazon-acm.adoc[ACM]
 * xref:amazon-apigatewaymanagementapi.adoc[Api Gateway Management Api]
+* xref:amazon-apigateway.adoc[Api Gateway]
+* xref:amazon-apigatewayv2.adoc[Api Gateway v2]
 * xref:amazon-bedrock.adoc[Bedrock]
 * xref:amazon-bedrockruntime.adoc[Bedrock Runtime]
 * xref:amazon-cloudwatch.adoc[CloudWatch]
