@@ -10,11 +10,78 @@ Markdown
 ## Dependency
 
 ```xml
-<dependency>
-  <groupId>io.quarkus</groupId>
-  <artifactId>quarkus-amazon-services</artifactId>
-  <version>YOUR_VERSION_HERE</version>
-</dependency>
+<
+# Quarkus Amazon Services
+
+[![Build](https://github.com/loomidi/quarkus-amazon-services/actions/workflows/build.yml/badge.svg)](https://github.com/loomidi/quarkus-amazon-services/actions/workflows/build.yml)
+
+---
+
+## Fork Notes
+
+This is a fork of [quarkiverse/quarkus-amazon-services](https://github.com/quarkiverse/quarkus-amazon-services).
+
+- Exploring the **"hermes fetch"** idea for smarter, more flexible package management and delivery.
+- Experimenting with package management and delivery improvements.
+- This fork may be ahead of the upstream; all new development and customizations are tracked here.
+- The repository is large, so builds may take longer.
+
+---
+
+## 🎉 Hermes Fun Section
+
+```text
+ _   _ ______ _____ __  __ ______ _____ 
+| | | |  ____|_   _|  \/  |  ____|  __ \
+| | | | |__    | | | \  / | |__  | |__) |
+| | | |  __|   | | | |\/| |  __| |  _  /
+| |_| | |____ _| |_| |  | | |____| | \ \
+ \___/|______|_____|_|  |_|______|_|  \_\
+```
+
+```text
+           __
+         /    \__
+        /         \
+       /  /     \  \
+      |  |       |  |
+      |  |       |  |
+       \  \     /  /
+        \         /
+         \_______/
+          //   \\
+         ((     ))
+          \\___//
+            | |
+            | |
+           /   \
+          /     \
+         /       \
+        (         )
+         |  | |  |
+         |  | |  |
+         |  | |  |
+         |  | |  |
+        /   | |   \
+       /    | |    \
+      (     | |     )
+       \    | |    /
+        \   | |   /
+         \  | |  /
+          \ | | /
+           \| |/
+            | |
+            | |
+           (   )
+            `-'
+       ~ HERMES ~
+```
+
+We believe a little creativity and fun goes a long way—because software should be fun and a little bit **awesome**!
+
+---
+
+Build  
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-35-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -23,109 +90,20 @@ Markdown
 
 ## Introduction
 
-This set of extensions allows you to interact with some of the AWS Services namely:
+_(...keep your existing introduction and service lists here...)_
 
-* Access Analyzer
-* Account
-* ACM
-* Api Gateway Management Api
-* Bedrock / Bedrock Runtime
-* CloudWatch
-* CloudWatch Logs
-* Cognito User Pools
-* DynamoDB / DynamoDB Enhanced
-* ECR
-* Elastic Load Balancing / Elastic Load Balancing v2
-* EventBridge
-* EventBridge Scheduler
-* IAM
-* Inspector / Inspector2
-* IoT
-* Kinesis
-* KMS
-* Lambda
-* Neptune
-* Payment Cryptography / Payment Cryptography Data
-* RDS / RDS Data / RDS IAM Authentication Quarkus Credential Provider
-* S3
-* S3 Transfer Manager
-* Secrets Manager
-* SES / SES v2
-* SFN
-* SNS
-* SSO
-* SSO OIDC
-* SQS
-* SSM
-* STS
+## Contributors ✨
 
-Each extension provides configuration properties to configure the clients and wires everything via CDI injection. It allows to use all 4 HTTP client implementations available in the AWS SDK for Java 2.x :
+_(...contributor table here...)_
 
-* URL Connection HTTP client (default for synchronous call)
-* Apache HTTP Client
-* Netty HTTP client (default for asynchronous call)
-* AWS CRT-based HTTP client (for both synchronous and asynchronous client)
+---
 
-This project also provide a common infrastructure based on AWS SDK code generator to make it easy to add new ones.
+_This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!_
 
-## Compatibility with Quarkus Core
+---
 
-Quarkus Amazon Services is a component of the [Quarkus Platform](https://quarkus.io/guides/platform). It is recommended to use BOMs from the Quarkus Platform.
-
-```xml
-  <properties>
-    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
-    <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>3.8.0</quarkus.platform.version>
-  </properties>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>${quarkus.platform.group-id}</groupId>
-        <artifactId>${quarkus.platform.artifact-id}</artifactId>
-        <version>${quarkus.platform.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>${quarkus.platform.group-id}</groupId>
-        <artifactId>quarkus-amazon-services-bom</artifactId>
-        <version>${quarkus.platform.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-```
-
-Due to differing release schedules, the Quarkus Platform may not include the latest Quarkus Amazon release. If you need specific features from the latest release, you can switch to a specific version of the Quarkus Amazon Services BOM.
-
-```xml
-  <properties>
-    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
-    <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>3.8.0</quarkus.platform.version>
-    <quarkus-amazon-services.version>2.12.0</quarkus-amazon-services.version>
-  </properties>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>${quarkus.platform.group-id}</groupId>
-        <artifactId>${quarkus.platform.artifact-id}</artifactId>
-        <version>${quarkus.platform.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>io.quarkiverse.amazonservices</groupId>
-        <artifactId>quarkus-amazon-services-bom</artifactId>
-        <version>${quarkus-amazon-services.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-```
+**Want to help shape the future?**  
+Leave your ideas, suggestions, or feedback in [Discussions](https://github.com/loomidi/quarkus-amazon-services/discussions) or [Issues](https://github.com/loomidi/quarkus-amazon-services/issues)—your input makes this project better!
 
 Quarkus Amazon Services provides multiple version streams. One stream is compatible with Quarkus 2.x, while the others are designed to work with Quarkus 3.x and are aligned with Quarkus LTS.
 
