@@ -2,13 +2,6 @@
 
 
 
-Example Badges
-Markdown
-[![Build Status](https://github.com/loomidi/quarkus-amazon-services/actions/workflows/main.yml/badge.svg)](https://github.com/loomidi/quarkus-amazon-services/actions)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Maven Central](https://img.shields.io/maven-central/v/io.quarkus/quarkus-amazon-services.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:io.quarkus%20AND%20a:quarkus-amazon-services)
-Example Quarkus
-
 Markdown
 [![Build Status](https://github.com/loomidi/quarkus-amazon-services/actions/workflows/main.yml/badge.svg)](https://github.com/loomidi/quarkus-amazon-services/actions)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
