@@ -65,6 +65,59 @@ public class DynamodbProducer {
 }
 ----
 
+== Custom AWS credentials provider
+
+When configuring credentials type for a given client, you may not find the supported methods fit your context. In such case, you can implement
+and provide your own `AwsCredentialsProvider` as a bean.
+
+As an example, we will implement a provider for a S3 client application hosted in EKS.
+
+The provider named `eks-iam` can be implemented with a `@Produces` method:
+
+[source,java]
+----
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.WebIdentityTokenFileCredentialsProvider;
+
+@Produces
+@ApplicationScoped
+@Named("eks-iam")
+public AwsCredentialsProvider getAwsCredentialProvider() {
+
+    String tokenFile = System.getenv("AWS_WEB_IDENTITY_TOKEN_FILE");
+    String roleArn = System.getenv("AWS_ROLE_ARN");
+    
+    return (tokenFile != null && roleArn != null) 
+        ? WebIdentityTokenFileCredentialsProvider.builder()
+            .webIdentityTokenFile(Paths.get(tokenFile))
+            .roleArn(roleArn)
+            .build()
+        : DefaultCredentialsProvider.create();
+}
+----
+
+Configure the default S3 client to use the custom provider for authentication:
+
+[source,properties]
+----
+quarkus.s3.aws.credentials.type=custom
+quarkus.s3.aws.credentials.custom-provider.name=eks-iam
+----
+
+As this provider use `WebIdentityTokenFileCredentialsProvider`, add the following dependency to the application `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>io.quarkiverse.amazonservices</groupId>
+    <artifactId>quarkus-amazon-sts</artifactId>
+</dependency>
+----
+
+
 == Docker image build with AWS CRT
 
 Since AWS CRT version 0.31.0, native library must be embedded in the docker image. This is not done by default. To do this, you need to :
@@ -84,3 +137,4 @@ Since AWS CRT version 0.31.0, native library must be embedded in the docker imag
 # Shared objects to be dynamically loaded at runtime as needed,
 COPY --chown=1001:root target/*.properties target/*.so /work/
 ----
+
