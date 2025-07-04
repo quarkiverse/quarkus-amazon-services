@@ -1,3 +1,6 @@
+:service-name: textract
+:service-name-uppercase: Textract
+
 = Amazon Textract Client
 
 include::./includes/attributes.adoc[]
