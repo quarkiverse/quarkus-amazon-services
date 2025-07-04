@@ -1,0 +1,184 @@
+{
+  "version": "2.0",
+  "metadata": {
+    "apiVersion": "2010-03-31",
+    "endpointPrefix": "textract",
+    "protocol": "query",
+    "protocols": [
+      "query"
+    ],
+    "serviceAbbreviation": "Amazon Textract",
+    "serviceFullName": "Amazon Textract Service",
+    "serviceId": "Textract",
+    "signatureVersion": "v4",
+    "uid": "textract-2010-03-31",
+    "xmlNamespace": "http://textract.amazonaws.com/doc/2010-03-31/",
+    "auth": [
+      "aws.auth#sigv4"
+    ]
+  },
+  "operations": {
+    "analyzeDocument": {
+      "name": "analyzeDocument",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "analyzeDocumentInput"
+      },
+      "output": {
+        "shape": "analyzeDocumentResponse",
+        "resultWrapper": "analyzeDocumentResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for analyzeDocument</p>"
+    },
+    "analyzeExpense": {
+      "name": "analyzeExpense",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "analyzeExpenseInput"
+      },
+      "output": {
+        "shape": "analyzeExpenseResponse",
+        "resultWrapper": "analyzeExpenseResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for analyzeExpense</p>"
+    },
+    "analyzeID": {
+      "name": "analyzeID",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "analyzeIDInput"
+      },
+      "output": {
+        "shape": "analyzeIDResponse",
+        "resultWrapper": "analyzeIDResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for analyzeID</p>"
+    },
+    "detectDocumentText": {
+      "name": "detectDocumentText",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "detectDocumentTextInput"
+      },
+      "output": {
+        "shape": "detectDocumentTextResponse",
+        "resultWrapper": "detectDocumentTextResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for detectDocumentText</p>"
+    },
+    "getDocumentAnalysis": {
+      "name": "getDocumentAnalysis",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "getDocumentAnalysisInput"
+      },
+      "output": {
+        "shape": "getDocumentAnalysisResponse",
+        "resultWrapper": "getDocumentAnalysisResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for getDocumentAnalysis</p>"
+    },
+    "getDocumentTextDetection": {
+      "name": "getDocumentTextDetection",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "getDocumentTextDetectionInput"
+      },
+      "output": {
+        "shape": "getDocumentTextDetectionResponse",
+        "resultWrapper": "getDocumentTextDetectionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for getDocumentTextDetection</p>"
+    },
+    "getExpenseAnalysis": {
+      "name": "getExpenseAnalysis",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "getExpenseAnalysisInput"
+      },
+      "output": {
+        "shape": "getExpenseAnalysisResponse",
+        "resultWrapper": "getExpenseAnalysisResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for getExpenseAnalysis</p>"
+    },
+    "startDocumentAnalysis": {
+      "name": "startDocumentAnalysis",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "startDocumentAnalysisInput"
+      },
+      "output": {
+        "shape": "startDocumentAnalysisResponse",
+        "resultWrapper": "startDocumentAnalysisResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for startDocumentAnalysis</p>"
+    },
+    "startDocumentTextDetection": {
+      "name": "startDocumentTextDetection",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "startDocumentTextDetectionInput"
+      },
+      "output": {
+        "shape": "startDocumentTextDetectionResponse",
+        "resultWrapper": "startDocumentTextDetectionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for startDocumentTextDetection</p>"
+    },
+    "startExpenseAnalysis": {
+      "name": "startExpenseAnalysis",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "startExpenseAnalysisInput"
+      },
+      "output": {
+        "shape": "startExpenseAnalysisResponse",
+        "resultWrapper": "startExpenseAnalysisResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for startExpenseAnalysis</p>"
+    }
+  },
+  "documentation": "<fullname>Amazon Textract Service</fullname> <p>Amazon Textract Service (Amazon Textract) is a web service that makes it easy for developers to extract printed text, handwriting, layout elements, and data from any document.</a>. </p>",
+  "enableGenerateCompiledEndpointRules": true
+}

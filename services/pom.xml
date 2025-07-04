@@ -50,6 +50,7 @@
         <module>ssooidc</module>
         <module>ssm</module>
         <module>sts</module>
+        <module>textract</module>
     </modules>
 
     <build>

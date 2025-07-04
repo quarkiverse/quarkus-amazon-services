@@ -42,6 +42,7 @@ This set of extensions allows you to interact with some of the AWS Services name
 * SQS
 * SSM
 * STS
+* Textract
 
 Each extension provides configuration properties to configure the clients and wires everything via CDI injection. It allows to use all 4 HTTP client implementations available in the AWS SDK for Java 2.x :
 

@@ -1,0 +1,86 @@
+= Amazon Textract Client
+:extension-status: preview
+:summary: Interact with Amazon Textract from your Quarkus applications using AWS SDK for Java 2.x.
+:categories: cloud, amazon, ai
+:keywords: aws, textract, document-analysis, quarkus
+:guide: https://quarkus.io/guides/amazon-textract
+:artifact-id: quarkus-amazon-textract
+
+== Introduction
+
+This extension allows you to interact with Amazon Textract, a fully managed machine learning service that automatically extracts text, forms, and tables from scanned documents.
+
+You can use this extension to integrate Textract capabilities in your Quarkus applications using the AWS SDK for Java 2.x.
+
+== Prerequisites
+
+To use this extension, you will need:
+— An AWS account with Textract permissions
+— AWS credentials configured via environment variables, system properties, or the default credentials provider
+— Quarkus 2.0 or later
+
+== Installation
+
+To enable the Amazon Textract extension, add the following dependency to your `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-amazon-textract</artifactId>
+</dependency>
+----
+
+== Configuration
+
+You can configure the Textract client via `application.properties` or `application.yaml`.
+
+[source,properties]
+----
+quarkus.amazon.textract.sync-client.type=apache
+quarkus.amazon.textract.region=us-east-1
+quarkus.amazon.textract.credentials.type=default
+----
+
+For full configuration options, check the Quarkus [Amazon Textract Configuration Reference](https://quarkus.io/guides/amazon-textract#configuration-reference).
+
+== Usage
+
+You can inject the Textract client in your Quarkus beans using:
+
+[source,java]
+----
+import software.amazon.awssdk.services.textract.TextractClient;
+
+import jakarta.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+public class TextractService {
+
+    @Inject
+    TextractClient textractClient;
+
+    public void analyzeDocument(ByteBuffer documentBytes) {
+        AnalyzeDocumentRequest request = AnalyzeDocumentRequest.builder()
+            .featureTypes(FeatureType.FORMS, FeatureType.TABLES)
+            .document(Document.builder().bytes(SdkBytes.fromByteBuffer(documentBytes)).build())
+            .build();
+
+        AnalyzeDocumentResponse response = textractClient.analyzeDocument(request);
+        // Handle response...
+    }
+}
+----
+
+== Dev Services
+
+If you want to use Dev Services with Textract (mocked), you'll need to configure local emulation manually as AWS does not offer a native local Textract service.
+
+A common choice is [LocalStack](https://docs.localstack.cloud/user-guide/aws/textract/), which can be configured alongside Dev Services for integration testing.
+
+== Related Guides
+
+For more information, check out:
+- https://quarkus.io/guides/amazon-textract[Quarkus Amazon Textract Guide]
+- https://docs.aws.amazon.com/textract/latest/dg/what-is.html[AWS Textract Documentation]
