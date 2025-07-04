@@ -1,20 +1,22 @@
-package io.quarkiverse.amazon.sns.deployment;
+package io.quarkiverse.amazon.textract.deployment;
 
-import io.quarkus.test.QuarkusUnitTest;
 import jakarta.inject.Inject;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import software.amazon.awssdk.services.textract.TextractAsyncClient;
-import software.amazon.awssdk.services.textract.TextractClient;
 
-public class TextractClientFullConfigTest {
+import io.quarkus.test.QuarkusUnitTest;
+import software.amazon.awssdk.services.sns.SnsAsyncClient;
+import software.amazon.awssdk.services.sns.SnsClient;
+
+public class SnsSyncClientFullConfigTest {
 
     @Inject
-    TextractClient client;
+    SnsClient client;
 
     @Inject
-    TextractAsyncClient async;
+    SnsAsyncClient async;
 
     @RegisterExtension
     static final QuarkusUnitTest config = new QuarkusUnitTest()
