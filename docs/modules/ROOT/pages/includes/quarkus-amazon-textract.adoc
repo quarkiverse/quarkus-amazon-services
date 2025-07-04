@@ -73,12 +73,6 @@ public class TextractService {
 }
 ----
 
-== Dev Services
-
-If you want to use Dev Services with Textract (mocked), you'll need to configure local emulation manually as AWS does not offer a native local Textract service.
-
-A common choice is [LocalStack](https://docs.localstack.cloud/user-guide/aws/textract/), which can be configured alongside Dev Services for integration testing.
-
 == Related Guides
 
 For more information, check out:
