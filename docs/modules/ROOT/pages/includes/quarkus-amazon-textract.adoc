@@ -1,49 +1,7 @@
-= Amazon Textract Client
-:extension-status: preview
-:summary: Interact with Amazon Textract from your Quarkus applications using AWS SDK for Java 2.x.
-:categories: cloud, amazon, ai
-:keywords: aws, textract, document-analysis, quarkus
-:guide: https://quarkus.io/guides/amazon-textract
-:artifact-id: quarkus-amazon-textract
-
-== Introduction
-
-This extension allows you to interact with Amazon Textract, a fully managed machine learning service that automatically extracts text, forms, and tables from scanned documents.
 
 You can use this extension to integrate Textract capabilities in your Quarkus applications using the AWS SDK for Java 2.x.
 
-== Prerequisites
-
-To use this extension, you will need:
-— An AWS account with Textract permissions
-— AWS credentials configured via environment variables, system properties, or the default credentials provider
-— Quarkus 2.0 or later
-
-== Installation
-
-To enable the Amazon Textract extension, add the following dependency to your `pom.xml`:
-
-[source,xml]
-----
-<dependency>
-    <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-amazon-textract</artifactId>
-</dependency>
-----
-
-== Configuration
-
-You can configure the Textract client via `application.properties` or `application.yaml`.
-
-[source,properties]
-----
-quarkus.amazon.textract.sync-client.type=apache
-quarkus.amazon.textract.region=us-east-1
-quarkus.amazon.textract.credentials.type=default
-----
-
-For full configuration options, check the Quarkus [Amazon Textract Configuration Reference](https://quarkus.io/guides/amazon-textract#configuration-reference).
-
+include::./amazon-configure-clients.adoc[]
 == Usage
 
 You can inject the Textract client in your Quarkus beans using:
