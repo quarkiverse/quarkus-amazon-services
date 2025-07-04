@@ -6,7 +6,7 @@ Amazon Textract is a fully managed service that makes it easy for developers to 
 
 You can find more information about Textract at https://aws.amazon.com/textract/[the Amazon Textract website].
 
-NOTE: The API Gateway extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+NOTE: The Textract extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
 It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
 
 The Quarkus extension supports two programming models:
