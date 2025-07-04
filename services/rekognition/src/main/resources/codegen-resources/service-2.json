@@ -1,0 +1,1032 @@
+{
+  "version": "2.0",
+  "metadata": {
+    "apiVersion": "2016-06-27",
+    "endpointPrefix": "rekognition",
+    "protocol": "json",
+    "protocols": [
+      "json"
+    ],
+    "serviceAbbreviation": "Amazon Rekognition",
+    "serviceFullName": "Amazon Rekognition Service",
+    "serviceId": "Rekognition",
+    "signatureVersion": "v4",
+    "uid": "rekognition-2016-06-27",
+    "xmlNamespace": "http://rekognition.amazonaws.com/doc/2016-06-27/",
+    "auth": [
+      "aws.auth#sigv4"
+    ]
+  },
+  "operations": {
+    "compareFaces": {
+      "name": "compareFaces",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "compareFacesInput"
+      },
+      "output": {
+        "shape": "compareFacesResponse",
+        "resultWrapper": "compareFacesResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for compareFaces</p>"
+    },
+    "copyProjectVersion": {
+      "name": "copyProjectVersion",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "copyProjectVersionInput"
+      },
+      "output": {
+        "shape": "copyProjectVersionResponse",
+        "resultWrapper": "copyProjectVersionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for copyProjectVersion</p>"
+    },
+    "createCollection": {
+      "name": "createCollection",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "createCollectionInput"
+      },
+      "output": {
+        "shape": "createCollectionResponse",
+        "resultWrapper": "createCollectionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for createCollection</p>"
+    },
+    "createDataset": {
+      "name": "createDataset",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "createDatasetInput"
+      },
+      "output": {
+        "shape": "createDatasetResponse",
+        "resultWrapper": "createDatasetResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for createDataset</p>"
+    },
+    "createProject": {
+      "name": "createProject",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "createProjectInput"
+      },
+      "output": {
+        "shape": "createProjectResponse",
+        "resultWrapper": "createProjectResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for createProject</p>"
+    },
+    "createProjectVersion": {
+      "name": "createProjectVersion",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "createProjectVersionInput"
+      },
+      "output": {
+        "shape": "createProjectVersionResponse",
+        "resultWrapper": "createProjectVersionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for createProjectVersion</p>"
+    },
+    "createStreamProcessor": {
+      "name": "createStreamProcessor",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "createStreamProcessorInput"
+      },
+      "output": {
+        "shape": "createStreamProcessorResponse",
+        "resultWrapper": "createStreamProcessorResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for createStreamProcessor</p>"
+    },
+    "deleteCollection": {
+      "name": "deleteCollection",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "deleteCollectionInput"
+      },
+      "output": {
+        "shape": "deleteCollectionResponse",
+        "resultWrapper": "deleteCollectionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for deleteCollection</p>"
+    },
+    "deleteDataset": {
+      "name": "deleteDataset",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "deleteDatasetInput"
+      },
+      "output": {
+        "shape": "deleteDatasetResponse",
+        "resultWrapper": "deleteDatasetResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for deleteDataset</p>"
+    },
+    "deleteFaces": {
+      "name": "deleteFaces",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "deleteFacesInput"
+      },
+      "output": {
+        "shape": "deleteFacesResponse",
+        "resultWrapper": "deleteFacesResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for deleteFaces</p>"
+    },
+    "deleteProject": {
+      "name": "deleteProject",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "deleteProjectInput"
+      },
+      "output": {
+        "shape": "deleteProjectResponse",
+        "resultWrapper": "deleteProjectResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for deleteProject</p>"
+    },
+    "deleteProjectPolicy": {
+      "name": "deleteProjectPolicy",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "deleteProjectPolicyInput"
+      },
+      "output": {
+        "shape": "deleteProjectPolicyResponse",
+        "resultWrapper": "deleteProjectPolicyResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for deleteProjectPolicy</p>"
+    },
+    "deleteProjectVersion": {
+      "name": "deleteProjectVersion",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "deleteProjectVersionInput"
+      },
+      "output": {
+        "shape": "deleteProjectVersionResponse",
+        "resultWrapper": "deleteProjectVersionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for deleteProjectVersion</p>"
+    },
+    "deleteStreamProcessor": {
+      "name": "deleteStreamProcessor",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "deleteStreamProcessorInput"
+      },
+      "output": {
+        "shape": "deleteStreamProcessorResponse",
+        "resultWrapper": "deleteStreamProcessorResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for deleteStreamProcessor</p>"
+    },
+    "describeCollection": {
+      "name": "describeCollection",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "describeCollectionInput"
+      },
+      "output": {
+        "shape": "describeCollectionResponse",
+        "resultWrapper": "describeCollectionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for describeCollection</p>"
+    },
+    "describeDataset": {
+      "name": "describeDataset",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "describeDatasetInput"
+      },
+      "output": {
+        "shape": "describeDatasetResponse",
+        "resultWrapper": "describeDatasetResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for describeDataset</p>"
+    },
+    "describeProjectVersions": {
+      "name": "describeProjectVersions",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "describeProjectVersionsInput"
+      },
+      "output": {
+        "shape": "describeProjectVersionsResponse",
+        "resultWrapper": "describeProjectVersionsResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for describeProjectVersions</p>"
+    },
+    "describeProjects": {
+      "name": "describeProjects",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "describeProjectsInput"
+      },
+      "output": {
+        "shape": "describeProjectsResponse",
+        "resultWrapper": "describeProjectsResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for describeProjects</p>"
+    },
+    "describeStreamProcessor": {
+      "name": "describeStreamProcessor",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "describeStreamProcessorInput"
+      },
+      "output": {
+        "shape": "describeStreamProcessorResponse",
+        "resultWrapper": "describeStreamProcessorResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for describeStreamProcessor</p>"
+    },
+    "detectCustomLabels": {
+      "name": "detectCustomLabels",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "detectCustomLabelsInput"
+      },
+      "output": {
+        "shape": "detectCustomLabelsResponse",
+        "resultWrapper": "detectCustomLabelsResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for detectCustomLabels</p>"
+    },
+    "detectFaces": {
+      "name": "detectFaces",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "detectFacesInput"
+      },
+      "output": {
+        "shape": "detectFacesResponse",
+        "resultWrapper": "detectFacesResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for detectFaces</p>"
+    },
+    "detectLabels": {
+      "name": "detectLabels",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "detectLabelsInput"
+      },
+      "output": {
+        "shape": "detectLabelsResponse",
+        "resultWrapper": "detectLabelsResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for detectLabels</p>"
+    },
+    "detectModerationLabels": {
+      "name": "detectModerationLabels",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "detectModerationLabelsInput"
+      },
+      "output": {
+        "shape": "detectModerationLabelsResponse",
+        "resultWrapper": "detectModerationLabelsResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for detectModerationLabels</p>"
+    },
+    "detectProtectiveEquipment": {
+      "name": "detectProtectiveEquipment",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "detectProtectiveEquipmentInput"
+      },
+      "output": {
+        "shape": "detectProtectiveEquipmentResponse",
+        "resultWrapper": "detectProtectiveEquipmentResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for detectProtectiveEquipment</p>"
+    },
+    "detectText": {
+      "name": "detectText",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "detectTextInput"
+      },
+      "output": {
+        "shape": "detectTextResponse",
+        "resultWrapper": "detectTextResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for detectText</p>"
+    },
+    "distributeDatasetEntries": {
+      "name": "distributeDatasetEntries",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "distributeDatasetEntriesInput"
+      },
+      "output": {
+        "shape": "distributeDatasetEntriesResponse",
+        "resultWrapper": "distributeDatasetEntriesResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for distributeDatasetEntries</p>"
+    },
+    "getCelebrityInfo": {
+      "name": "getCelebrityInfo",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "getCelebrityInfoInput"
+      },
+      "output": {
+        "shape": "getCelebrityInfoResponse",
+        "resultWrapper": "getCelebrityInfoResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for getCelebrityInfo</p>"
+    },
+    "getCelebrityRecognition": {
+      "name": "getCelebrityRecognition",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "getCelebrityRecognitionInput"
+      },
+      "output": {
+        "shape": "getCelebrityRecognitionResponse",
+        "resultWrapper": "getCelebrityRecognitionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for getCelebrityRecognition</p>"
+    },
+    "getContentModeration": {
+      "name": "getContentModeration",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "getContentModerationInput"
+      },
+      "output": {
+        "shape": "getContentModerationResponse",
+        "resultWrapper": "getContentModerationResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for getContentModeration</p>"
+    },
+    "getFaceDetection": {
+      "name": "getFaceDetection",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "getFaceDetectionInput"
+      },
+      "output": {
+        "shape": "getFaceDetectionResponse",
+        "resultWrapper": "getFaceDetectionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for getFaceDetection</p>"
+    },
+    "getFaceSearch": {
+      "name": "getFaceSearch",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "getFaceSearchInput"
+      },
+      "output": {
+        "shape": "getFaceSearchResponse",
+        "resultWrapper": "getFaceSearchResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for getFaceSearch</p>"
+    },
+    "getLabelDetection": {
+      "name": "getLabelDetection",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "getLabelDetectionInput"
+      },
+      "output": {
+        "shape": "getLabelDetectionResponse",
+        "resultWrapper": "getLabelDetectionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for getLabelDetection</p>"
+    },
+    "getPersonTracking": {
+      "name": "getPersonTracking",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "getPersonTrackingInput"
+      },
+      "output": {
+        "shape": "getPersonTrackingResponse",
+        "resultWrapper": "getPersonTrackingResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for getPersonTracking</p>"
+    },
+    "getSegmentDetection": {
+      "name": "getSegmentDetection",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "getSegmentDetectionInput"
+      },
+      "output": {
+        "shape": "getSegmentDetectionResponse",
+        "resultWrapper": "getSegmentDetectionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for getSegmentDetection</p>"
+    },
+    "getTextDetection": {
+      "name": "getTextDetection",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "getTextDetectionInput"
+      },
+      "output": {
+        "shape": "getTextDetectionResponse",
+        "resultWrapper": "getTextDetectionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for getTextDetection</p>"
+    },
+    "indexFaces": {
+      "name": "indexFaces",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "indexFacesInput"
+      },
+      "output": {
+        "shape": "indexFacesResponse",
+        "resultWrapper": "indexFacesResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for indexFaces</p>"
+    },
+    "listCollections": {
+      "name": "listCollections",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "listCollectionsInput"
+      },
+      "output": {
+        "shape": "listCollectionsResponse",
+        "resultWrapper": "listCollectionsResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for listCollections</p>"
+    },
+    "listDatasetEntries": {
+      "name": "listDatasetEntries",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "listDatasetEntriesInput"
+      },
+      "output": {
+        "shape": "listDatasetEntriesResponse",
+        "resultWrapper": "listDatasetEntriesResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for listDatasetEntries</p>"
+    },
+    "listDatasetLabels": {
+      "name": "listDatasetLabels",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "listDatasetLabelsInput"
+      },
+      "output": {
+        "shape": "listDatasetLabelsResponse",
+        "resultWrapper": "listDatasetLabelsResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for listDatasetLabels</p>"
+    },
+    "listFaces": {
+      "name": "listFaces",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "listFacesInput"
+      },
+      "output": {
+        "shape": "listFacesResponse",
+        "resultWrapper": "listFacesResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for listFaces</p>"
+    },
+    "listProjectPolicies": {
+      "name": "listProjectPolicies",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "listProjectPoliciesInput"
+      },
+      "output": {
+        "shape": "listProjectPoliciesResponse",
+        "resultWrapper": "listProjectPoliciesResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for listProjectPolicies</p>"
+    },
+    "listStreamProcessors": {
+      "name": "listStreamProcessors",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "listStreamProcessorsInput"
+      },
+      "output": {
+        "shape": "listStreamProcessorsResponse",
+        "resultWrapper": "listStreamProcessorsResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for listStreamProcessors</p>"
+    },
+    "listTagsForResource": {
+      "name": "listTagsForResource",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "listTagsForResourceInput"
+      },
+      "output": {
+        "shape": "listTagsForResourceResponse",
+        "resultWrapper": "listTagsForResourceResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for listTagsForResource</p>"
+    },
+    "putProjectPolicy": {
+      "name": "putProjectPolicy",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "putProjectPolicyInput"
+      },
+      "output": {
+        "shape": "putProjectPolicyResponse",
+        "resultWrapper": "putProjectPolicyResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for putProjectPolicy</p>"
+    },
+    "recognizeCelebrities": {
+      "name": "recognizeCelebrities",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "recognizeCelebritiesInput"
+      },
+      "output": {
+        "shape": "recognizeCelebritiesResponse",
+        "resultWrapper": "recognizeCelebritiesResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for recognizeCelebrities</p>"
+    },
+    "searchFaces": {
+      "name": "searchFaces",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "searchFacesInput"
+      },
+      "output": {
+        "shape": "searchFacesResponse",
+        "resultWrapper": "searchFacesResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for searchFaces</p>"
+    },
+    "searchFacesByImage": {
+      "name": "searchFacesByImage",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "searchFacesByImageInput"
+      },
+      "output": {
+        "shape": "searchFacesByImageResponse",
+        "resultWrapper": "searchFacesByImageResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for searchFacesByImage</p>"
+    },
+    "startCelebrityRecognition": {
+      "name": "startCelebrityRecognition",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "startCelebrityRecognitionInput"
+      },
+      "output": {
+        "shape": "startCelebrityRecognitionResponse",
+        "resultWrapper": "startCelebrityRecognitionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for startCelebrityRecognition</p>"
+    },
+    "startContentModeration": {
+      "name": "startContentModeration",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "startContentModerationInput"
+      },
+      "output": {
+        "shape": "startContentModerationResponse",
+        "resultWrapper": "startContentModerationResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for startContentModeration</p>"
+    },
+    "startFaceDetection": {
+      "name": "startFaceDetection",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "startFaceDetectionInput"
+      },
+      "output": {
+        "shape": "startFaceDetectionResponse",
+        "resultWrapper": "startFaceDetectionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for startFaceDetection</p>"
+    },
+    "startFaceSearch": {
+      "name": "startFaceSearch",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "startFaceSearchInput"
+      },
+      "output": {
+        "shape": "startFaceSearchResponse",
+        "resultWrapper": "startFaceSearchResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for startFaceSearch</p>"
+    },
+    "startLabelDetection": {
+      "name": "startLabelDetection",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "startLabelDetectionInput"
+      },
+      "output": {
+        "shape": "startLabelDetectionResponse",
+        "resultWrapper": "startLabelDetectionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for startLabelDetection</p>"
+    },
+    "startPersonTracking": {
+      "name": "startPersonTracking",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "startPersonTrackingInput"
+      },
+      "output": {
+        "shape": "startPersonTrackingResponse",
+        "resultWrapper": "startPersonTrackingResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for startPersonTracking</p>"
+    },
+    "startProjectVersion": {
+      "name": "startProjectVersion",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "startProjectVersionInput"
+      },
+      "output": {
+        "shape": "startProjectVersionResponse",
+        "resultWrapper": "startProjectVersionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for startProjectVersion</p>"
+    },
+    "startSegmentDetection": {
+      "name": "startSegmentDetection",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "startSegmentDetectionInput"
+      },
+      "output": {
+        "shape": "startSegmentDetectionResponse",
+        "resultWrapper": "startSegmentDetectionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for startSegmentDetection</p>"
+    },
+    "startStreamProcessor": {
+      "name": "startStreamProcessor",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "startStreamProcessorInput"
+      },
+      "output": {
+        "shape": "startStreamProcessorResponse",
+        "resultWrapper": "startStreamProcessorResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for startStreamProcessor</p>"
+    },
+    "startTextDetection": {
+      "name": "startTextDetection",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "startTextDetectionInput"
+      },
+      "output": {
+        "shape": "startTextDetectionResponse",
+        "resultWrapper": "startTextDetectionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for startTextDetection</p>"
+    },
+    "stopProjectVersion": {
+      "name": "stopProjectVersion",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "stopProjectVersionInput"
+      },
+      "output": {
+        "shape": "stopProjectVersionResponse",
+        "resultWrapper": "stopProjectVersionResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for stopProjectVersion</p>"
+    },
+    "stopStreamProcessor": {
+      "name": "stopStreamProcessor",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "stopStreamProcessorInput"
+      },
+      "output": {
+        "shape": "stopStreamProcessorResponse",
+        "resultWrapper": "stopStreamProcessorResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for stopStreamProcessor</p>"
+    },
+    "tagResource": {
+      "name": "tagResource",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "tagResourceInput"
+      },
+      "output": {
+        "shape": "tagResourceResponse",
+        "resultWrapper": "tagResourceResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for tagResource</p>"
+    },
+    "untagResource": {
+      "name": "untagResource",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "untagResourceInput"
+      },
+      "output": {
+        "shape": "untagResourceResponse",
+        "resultWrapper": "untagResourceResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for untagResource</p>"
+    },
+    "updateDatasetEntries": {
+      "name": "updateDatasetEntries",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "updateDatasetEntriesInput"
+      },
+      "output": {
+        "shape": "updateDatasetEntriesResponse",
+        "resultWrapper": "updateDatasetEntriesResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for updateDatasetEntries</p>"
+    },
+    "updateStreamProcessor": {
+      "name": "updateStreamProcessor",
+      "http": {
+        "method": "POST",
+        "requestUri": "/"
+      },
+      "input": {
+        "shape": "updateStreamProcessorInput"
+      },
+      "output": {
+        "shape": "updateStreamProcessorResponse",
+        "resultWrapper": "updateStreamProcessorResult"
+      },
+      "errors": [],
+      "documentation": "<p>Auto-generated operation for updateStreamProcessor</p>"
+    }
+  },
+  "documentation": "<fullname>Amazon Rekognition Service</fullname> <p>Amazon Rekognition is a service that makes it easy to add image and video analysis to your applications.</p>",
+  "enableGenerateCompiledEndpointRules": true
+}
