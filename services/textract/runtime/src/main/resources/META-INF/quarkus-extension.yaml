@@ -8,6 +8,7 @@ metadata:
     - "amazon"
   categories:
     - "data"
+    - "AI"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-textract.html
   status: "stable"
   config:
