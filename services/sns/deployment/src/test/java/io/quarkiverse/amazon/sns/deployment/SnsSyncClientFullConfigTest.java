@@ -1,4 +1,4 @@
-package io.quarkiverse.amazon.textract.deployment;
+package io.quarkiverse.amazon.sns.deployment;
 
 import jakarta.inject.Inject;
 
