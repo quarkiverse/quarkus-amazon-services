@@ -36,6 +36,7 @@
 * xref:amazon-sso.adoc[SSO]
 * xref:amazon-ssooidc.adoc[SSOOIDC]
 * xref:amazon-sts.adoc[STS]
+* xref:amazon-textract.adoc[Textract]
 * xref:dev-services.adoc[Dev Services for Amazon Services]
 * xref:opentelemetry.adoc[OpenTelemetry for Amazon Services]
 * xref:common-features.adoc[Common features]

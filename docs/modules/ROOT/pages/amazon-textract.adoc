@@ -1,0 +1,60 @@
+:service-name: textract
+:service-name-uppercase: Textract
+
+= Amazon Textract Client
+
+include::./includes/attributes.adoc[]
+
+Amazon Textract is a fully managed service that makes it easy for developers to extract printed text, handwriting, layout elements, and data from any document.
+
+You can find more information about Textract at https://aws.amazon.com/textract/[the Amazon Textract website].
+
+NOTE: The Textract extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
+
+The Quarkus extension supports two programming models:
+
+* Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
+* https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
+
+You can use this extension to integrate Textract capabilities in your Quarkus applications using the AWS SDK for Java 2.x.
+
+include::./amazon-configure-clients.adoc[]
+
+== Usage
+
+You can inject the Textract client in your Quarkus beans using:
+
+[source,java]
+----
+import software.amazon.awssdk.services.textract.TextractClient;
+
+import jakarta.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+public class TextractService {
+
+    @Inject
+    TextractClient textractClient;
+
+    public void analyzeDocument(ByteBuffer documentBytes) {
+        AnalyzeDocumentRequest request = AnalyzeDocumentRequest.builder()
+            .featureTypes(FeatureType.FORMS, FeatureType.TABLES)
+            .document(Document.builder().bytes(SdkBytes.fromByteBuffer(documentBytes)).build())
+            .build();
+
+        AnalyzeDocumentResponse response = textractClient.analyzeDocument(request);
+        // Handle response...
+    }
+}
+----
+
+== Configuration Reference
+
+include::./includes/quarkus-amazon-textract.adoc[]
+
+== Related Guides
+
+For more information, check out:
+- https://docs.aws.amazon.com/textract/latest/dg/what-is.html[AWS Textract Documentation]

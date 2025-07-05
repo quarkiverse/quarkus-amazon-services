@@ -1,0 +1,15 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon Textract"
+metadata:
+  keywords:
+    - "textract"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+    - "AI"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-textract.html
+  status: "stable"
+  config:
+  - "quarkus.textract."
