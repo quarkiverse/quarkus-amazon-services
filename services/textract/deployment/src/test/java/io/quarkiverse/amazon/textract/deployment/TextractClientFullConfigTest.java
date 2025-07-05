@@ -1,10 +1,12 @@
 package io.quarkiverse.amazon.textract.deployment;
 
-import io.quarkus.test.QuarkusUnitTest;
 import jakarta.inject.Inject;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
+import io.quarkus.test.QuarkusUnitTest;
 import software.amazon.awssdk.services.textract.TextractAsyncClient;
 import software.amazon.awssdk.services.textract.TextractClient;
 
