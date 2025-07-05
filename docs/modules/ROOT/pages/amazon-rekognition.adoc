@@ -1,0 +1,20 @@
+:service-name: rekognition
+:service-name-uppercase: Rekognition
+
+= Amazon Rekognition
+
+include::./includes/attributes.adoc[]
+
+Amazon Rekognition is a fully managed service that makes it easy for developers to analyze images and videos to identify objects, people, text, scenes, activities, and inappropriate content, as well as perform facial analysis and facial search.
+
+You can find more information about Rekognition at https://aws.amazon.com/rekognition/[the Amazon Rekognition website].
+
+NOTE: The Rekognition extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
+
+The Quarkus extension supports two programming models:
+
+* Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
+* https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
+
+include::./includes/quarkus-amazon-rekognition.adoc[]

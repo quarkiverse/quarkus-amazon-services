@@ -25,6 +25,7 @@
 * xref:amazon-paymentcryptographydata.adoc[Payment Cryptography Data]
 * xref:amazon-rds.adoc[RDS]
 * xref:amazon-rdsdata.adoc[RDS Data]
+* xref:amazon-rekognition.adoc[Rekognition]
 * xref:amazon-s3.adoc[S3]
 * xref:amazon-secretsmanager.adoc[Secret Manager]
 * xref:amazon-ses.adoc[SES]

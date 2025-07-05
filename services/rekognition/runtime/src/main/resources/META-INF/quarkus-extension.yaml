@@ -1,0 +1,15 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon Rekognition"
+metadata:
+  keywords:
+    - "rekognition"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+    - "AI"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-rekognition.html
+  status: "stable"
+  config:
+  - "quarkus.rekognition."
