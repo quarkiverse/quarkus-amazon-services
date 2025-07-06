@@ -31,6 +31,7 @@ This set of extensions allows you to interact with some of the AWS Services name
 * Neptune
 * Payment Cryptography / Payment Cryptography Data
 * RDS / RDS Data / RDS IAM Authentication Quarkus Credential Provider
+* Rekognition
 * S3
 * S3 Transfer Manager
 * Secrets Manager
