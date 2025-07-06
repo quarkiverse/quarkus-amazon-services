@@ -1,6 +1,6 @@
 # Quarkus Amazon Services
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-35-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-36-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/maven-central/v/io.quarkiverse.amazonservices/quarkus-amazon-services-bom?logo=apache-maven&style=flat-square)](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom)
@@ -43,6 +43,7 @@ This set of extensions allows you to interact with some of the AWS Services name
 * SQS
 * SSM
 * STS
+* Textract
 
 Each extension provides configuration properties to configure the clients and wires everything via CDI injection. It allows to use all 4 HTTP client implementations available in the AWS SDK for Java 2.x :
 
@@ -179,6 +180,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://johnathangilday.com"><img src="https://avatars.githubusercontent.com/u/1431609?v=4?s=100" width="100px;" alt="Johnathan Gilday"/><br /><sub><b>Johnathan Gilday</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=gilday" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/pcasaes"><img src="https://avatars.githubusercontent.com/u/1569429?v=4?s=100" width="100px;" alt="Paulo Casaes"/><br /><sub><b>Paulo Casaes</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=pcasaes" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Fabccc"><img src="https://avatars.githubusercontent.com/u/33267330?v=4?s=100" width="100px;" alt="Fabien C."/><br /><sub><b>Fabien C.</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=Fabccc" title="Code">💻</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/raphael5178"><img src="https://avatars.githubusercontent.com/u/85692804?v=4?s=100" width="100px;" alt="Raphael Santos"/><br /><sub><b>Raphael Santos</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=raphael5178" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
