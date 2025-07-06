@@ -420,6 +420,7 @@ Available values:
 * `process` - Credentials are loaded from an external process. This is used to support the credential_process setting in the profile
               credentials file. See https://docs.aws.amazon.com/cli/latest/topic/config-vars.html#sourcing-credentials-from-external-processes[Sourcing Credentials From External Processes]
               for more information.
+* `custom` - Credentials are loaded from a registered bean of type `AwsCredentialsProvider` matching the specified name.
 * `anonymous` - It always returns anonymous AWS credentials. Anonymous AWS credentials result in un-authenticated requests and will
                 fail unless the resource or API's policy has been configured to specifically allow anonymous access.
 
