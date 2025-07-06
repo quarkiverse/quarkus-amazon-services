@@ -17,4 +17,45 @@ The Quarkus extension supports two programming models:
 * Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
 * https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
 
+You can use this extension to integrate Rekognition capabilities in your Quarkus applications using the AWS SDK for Java 2.x.
+
+include::./amazon-configure-clients.adoc[]
+
+== Usage
+
+You can inject the Rekognition client in your Quarkus beans using:
+
+[source,java]
+----
+import software.amazon.awssdk.services.rekognition.RekognitionClient;
+import jakarta.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import software.amazon.awssdk.services.rekognition.model.*;
+
+@ApplicationScoped
+public class RekognitionService {
+
+    @Inject
+    RekognitionClient rekognitionClient;
+
+    public void detectLabels(ByteBuffer imageBytes) {
+        DetectLabelsRequest request = DetectLabelsRequest.builder()
+            .image(Image.builder().bytes(SdkBytes.fromByteBuffer(imageBytes)).build())
+            .maxLabels(10)
+            .minConfidence(75F)
+            .build();
+
+        DetectLabelsResponse response = rekognitionClient.detectLabels(request);
+        // Handle response...
+    }
+}
+----
+
+== Configuration Reference
+
 include::./includes/quarkus-amazon-rekognition.adoc[]
+
+== Related Guides
+
+For more information, check out:
+https://docs.aws.amazon.com/rekognition/latest/dg/what-is.html[AWS Rekognition Documentation]
