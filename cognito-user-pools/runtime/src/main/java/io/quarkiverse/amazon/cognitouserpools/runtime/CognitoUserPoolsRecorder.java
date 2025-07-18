@@ -2,7 +2,6 @@ package io.quarkiverse.amazon.cognitouserpools.runtime;
 
 import io.quarkiverse.amazon.common.runtime.AmazonClientRecorder;
 import io.quarkiverse.amazon.common.runtime.AsyncHttpClientConfig;
-import io.quarkiverse.amazon.common.runtime.HasAmazonClientRuntimeConfig;
 import io.quarkiverse.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
@@ -13,25 +12,25 @@ import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityPr
 
 @Recorder
 public class CognitoUserPoolsRecorder extends AmazonClientRecorder {
-    final CognitoUserPoolsConfig config;
+    final RuntimeValue<CognitoUserPoolsConfig> config;
 
-    public CognitoUserPoolsRecorder(CognitoUserPoolsConfig config) {
+    public CognitoUserPoolsRecorder(RuntimeValue<CognitoUserPoolsConfig> config) {
         this.config = config;
     }
 
     @Override
-    public RuntimeValue<HasAmazonClientRuntimeConfig> getAmazonClientsConfig() {
-        return new RuntimeValue<>(config);
+    public RuntimeValue<CognitoUserPoolsConfig> getAmazonClientsConfig() {
+        return config;
     }
 
     @Override
     public AsyncHttpClientConfig getAsyncClientConfig() {
-        return config.asyncClient();
+        return config.getValue().asyncClient();
     }
 
     @Override
     public SyncHttpClientConfig getSyncClientConfig() {
-        return config.syncClient();
+        return config.getValue().syncClient();
     }
 
     @Override

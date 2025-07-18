@@ -21,9 +21,9 @@ import software.amazon.awssdk.utils.StringUtils;
 @Recorder
 public class S3CrtRecorder {
 
-    final S3Config config;
+    final RuntimeValue<S3Config> config;
 
-    public S3CrtRecorder(S3Config config) {
+    public S3CrtRecorder(RuntimeValue<S3Config> config) {
         this.config = config;
     }
 
@@ -36,19 +36,19 @@ public class S3CrtRecorder {
 
     private void configureS3Client(S3CrtAsyncClientBuilder builder, String awsServiceName) {
         builder
-                .accelerate(config.accelerateMode())
-                .checksumValidationEnabled(config.checksumValidation())
-                .crossRegionAccessEnabled(config.useArnRegionEnabled())
-                .forcePathStyle(config.pathStyleAccess());
+                .accelerate(config.getValue().accelerateMode())
+                .checksumValidationEnabled(config.getValue().checksumValidation())
+                .crossRegionAccessEnabled(config.getValue().useArnRegionEnabled())
+                .forcePathStyle(config.getValue().pathStyleAccess());
 
-        config.crtClient().initialReadBufferSizeInBytes().ifPresent(builder::initialReadBufferSizeInBytes);
-        config.crtClient().maxConcurrency().ifPresent(builder::maxConcurrency);
-        config.crtClient().minimumPartSizeInBytes().ifPresent(builder::minimumPartSizeInBytes);
-        config.crtClient().targetThroughputInGbps().ifPresent(builder::targetThroughputInGbps);
-        config.crtClient().maxNativeMemoryLimitInBytes().ifPresent(builder::maxNativeMemoryLimitInBytes);
+        config.getValue().crtClient().initialReadBufferSizeInBytes().ifPresent(builder::initialReadBufferSizeInBytes);
+        config.getValue().crtClient().maxConcurrency().ifPresent(builder::maxConcurrency);
+        config.getValue().crtClient().minimumPartSizeInBytes().ifPresent(builder::minimumPartSizeInBytes);
+        config.getValue().crtClient().targetThroughputInGbps().ifPresent(builder::targetThroughputInGbps);
+        config.getValue().crtClient().maxNativeMemoryLimitInBytes().ifPresent(builder::maxNativeMemoryLimitInBytes);
 
-        AwsConfig awsConfig = config.clients().get(ClientUtil.DEFAULT_CLIENT_NAME).aws();
-        SdkConfig sdkConfig = config.clients().get(ClientUtil.DEFAULT_CLIENT_NAME).sdk();
+        AwsConfig awsConfig = config.getValue().clients().get(ClientUtil.DEFAULT_CLIENT_NAME).aws();
+        SdkConfig sdkConfig = config.getValue().clients().get(ClientUtil.DEFAULT_CLIENT_NAME).sdk();
 
         awsConfig.region().ifPresent(builder::region);
         AwsCredentialsProvider credential = awsConfig.credentials().map(c -> c.type().create(c, "quarkus." + awsServiceName))

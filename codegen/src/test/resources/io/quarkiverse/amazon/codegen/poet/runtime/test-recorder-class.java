@@ -15,26 +15,26 @@ import software.amazon.awssdk.services.ecr.EcrClient;
 @Generated("io.quarkiverse.amazon:codegen")
 @Recorder
 public class EcrRecorder extends AmazonClientRecorder {
-    final EcrConfig config;
+    final RuntimeValue<EcrConfig> config;
 
-    public EcrRecorder(EcrConfig config) {
+    public EcrRecorder(RuntimeValue<EcrConfig> config) {
         this.config = config;
     }
 
 
     @Override
-    public RuntimeValue<HasAmazonClientRuntimeConfig> getAmazonClientsConfig() {
-        return new RuntimeValue<>(config);
+    public RuntimeValue<? extends HasAmazonClientRuntimeConfig> getAmazonClientsConfig() {
+        return config;
     }
 
     @Override
     public AsyncHttpClientConfig getAsyncClientConfig() {
-        return config.asyncClient();
+        return config.getValue().asyncClient();
     }
 
     @Override
     public SyncHttpClientConfig getSyncClientConfig() {
-        return config.syncClient();
+        return config.getValue().syncClient();
     }
 
     @Override

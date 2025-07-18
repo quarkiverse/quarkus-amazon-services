@@ -51,15 +51,16 @@ public class RecorderClass implements ClassSpec {
 
     @Override
     public TypeSpec poetSpec() {
+        ParameterizedTypeName runtimeConfig = ParameterizedTypeName.get(ClassName.get(RuntimeValue.class), configClassName);
         TypeSpec.Builder builder = PoetUtils.createClassBuilder(recorderClassName)
                 .addModifiers(PUBLIC)
                 .addAnnotation(Recorder.class)
                 .superclass(AMAZON_CLIENT_RECORDER)
                 .addField(FieldSpec
-                        .builder(configClassName, "config")
+                        .builder(runtimeConfig, "config")
                         .addModifiers(FINAL).build())
                 .addMethod(MethodSpec.constructorBuilder().addModifiers(PUBLIC)
-                        .addParameter(configClassName, "config")
+                        .addParameter(runtimeConfig, "config")
                         .addStatement("this.config = config")
                         .build());
 
@@ -76,8 +77,9 @@ public class RecorderClass implements ClassSpec {
         return MethodSpec.methodBuilder("getAmazonClientsConfig")
                 .addAnnotation(Override.class)
                 .addModifiers(PUBLIC)
-                .returns(ParameterizedTypeName.get(ClassName.get(RuntimeValue.class), AMAZON_CLIENT_RUNTIME_CONFIG))
-                .addStatement("return new RuntimeValue<>(config)")
+                .returns(ParameterizedTypeName.get(ClassName.get(RuntimeValue.class),
+                        WildcardTypeName.subtypeOf(AMAZON_CLIENT_RUNTIME_CONFIG)))
+                .addStatement("return config")
                 .build();
     }
 
@@ -86,7 +88,7 @@ public class RecorderClass implements ClassSpec {
                 .addAnnotation(Override.class)
                 .addModifiers(PUBLIC)
                 .returns(ASYNC_HTTP_CLIENT_CONFIG)
-                .addStatement("return config.asyncClient()")
+                .addStatement("return config.getValue().asyncClient()")
                 .build();
     }
 
@@ -95,7 +97,7 @@ public class RecorderClass implements ClassSpec {
                 .addAnnotation(Override.class)
                 .addModifiers(PUBLIC)
                 .returns(SYNC_HTTP_CLIENT_CONFIG)
-                .addStatement("return config.syncClient()")
+                .addStatement("return config.getValue().syncClient()")
                 .build();
     }
 
@@ -109,7 +111,7 @@ public class RecorderClass implements ClassSpec {
 
         if (model.getEndpointOperation().isPresent()) {
             builder.addStatement(
-                    "config.enableEndpointDiscovery().ifPresent(enableEndpointDiscovery -> builder.endpointDiscoveryEnabled(enableEndpointDiscovery))");
+                    "config.getValue().enableEndpointDiscovery().ifPresent(enableEndpointDiscovery -> builder.endpointDiscoveryEnabled(enableEndpointDiscovery))");
         }
 
         return builder
@@ -127,7 +129,7 @@ public class RecorderClass implements ClassSpec {
 
         if (model.getEndpointOperation().isPresent()) {
             builder.addStatement(
-                    "config.enableEndpointDiscovery().ifPresent(enableEndpointDiscovery -> builder.endpointDiscoveryEnabled(enableEndpointDiscovery))");
+                    "config.getValue().enableEndpointDiscovery().ifPresent(enableEndpointDiscovery -> builder.endpointDiscoveryEnabled(enableEndpointDiscovery))");
         }
 
         return builder
