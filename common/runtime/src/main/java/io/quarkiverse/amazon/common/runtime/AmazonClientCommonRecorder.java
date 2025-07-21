@@ -32,7 +32,8 @@ public class AmazonClientCommonRecorder {
     private static final Log LOG = LogFactory.getLog(AmazonClientCommonRecorder.class);
 
     public RuntimeValue<AwsClientBuilder> configure(RuntimeValue<? extends AwsClientBuilder> clientBuilder,
-            RuntimeValue<HasAmazonClientRuntimeConfig> amazonClientConfigRuntime, HasSdkBuildTimeConfig sdkBuildTimeConfig,
+            RuntimeValue<? extends HasAmazonClientRuntimeConfig> amazonClientConfigRuntime,
+            HasSdkBuildTimeConfig sdkBuildTimeConfig,
             ScheduledExecutorService scheduledExecutorService, String awsServiceName, String clientName) {
         AwsClientBuilder builder = clientBuilder.getValue();
 
@@ -103,7 +104,7 @@ public class AmazonClientCommonRecorder {
 
     public RuntimeValue<SdkPresigner.Builder> configurePresigner(
             RuntimeValue<? extends SdkPresigner.Builder> clientBuilder,
-            RuntimeValue<HasAmazonClientRuntimeConfig> amazonClientConfigRuntime,
+            RuntimeValue<? extends HasAmazonClientRuntimeConfig> amazonClientConfigRuntime,
             String awsServiceName, String clientName) {
         SdkPresigner.Builder builder = clientBuilder.getValue();
 

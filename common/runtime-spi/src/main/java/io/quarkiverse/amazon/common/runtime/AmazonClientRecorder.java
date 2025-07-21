@@ -7,7 +7,7 @@ import software.amazon.awssdk.awscore.presigner.SdkPresigner;
 
 public abstract class AmazonClientRecorder {
 
-    public abstract RuntimeValue<HasAmazonClientRuntimeConfig> getAmazonClientsConfig();
+    public abstract <T> RuntimeValue<? extends HasAmazonClientRuntimeConfig> getAmazonClientsConfig();
 
     public abstract AsyncHttpClientConfig getAsyncClientConfig();
 

@@ -289,7 +289,7 @@ public class AmazonClientExtensionsProcessor {
             List<AmazonClientExtensionBuilderInstanceBuildItem> builderInstances,
             AmazonClientCommonRecorder recorder,
             AmazonClientBuilderRecorder builderRecorder,
-            RuntimeValue<HasAmazonClientRuntimeConfig> amazonClientConfigRuntime,
+            RuntimeValue<? extends HasAmazonClientRuntimeConfig> amazonClientConfigRuntime,
             HasSdkBuildTimeConfig sdkBuildConfig,
             List<RequireAmazonClientInjectionBuildItem> amazonClientInjections,
             List<RequireAmazonTelemetryBuildItem> amazonRequireTelemtryClients,

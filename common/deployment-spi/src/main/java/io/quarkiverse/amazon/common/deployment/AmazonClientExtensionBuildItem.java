@@ -31,7 +31,7 @@ public final class AmazonClientExtensionBuildItem extends MultiBuildItem {
     private final Class<?> presignerBuilderClass;
     private final RuntimeValue<SyncHttpClientConfig> syncConfig;
     private final RuntimeValue<AsyncHttpClientConfig> asyncConfig;
-    private final RuntimeValue<HasAmazonClientRuntimeConfig> amazonClientsConfig;
+    private final RuntimeValue<? extends HasAmazonClientRuntimeConfig> amazonClientsConfig;
 
     public AmazonClientExtensionBuildItem(
             String configName,
@@ -108,7 +108,7 @@ public final class AmazonClientExtensionBuildItem extends MultiBuildItem {
         return hasSdkBuildTimeConfig;
     }
 
-    public RuntimeValue<HasAmazonClientRuntimeConfig> getAmazonClientsConfig() {
+    public RuntimeValue<? extends HasAmazonClientRuntimeConfig> getAmazonClientsConfig() {
         return amazonClientsConfig;
     }
 

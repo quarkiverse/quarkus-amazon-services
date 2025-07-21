@@ -2,7 +2,6 @@ package io.quarkiverse.amazon.sqs.runtime;
 
 import io.quarkiverse.amazon.common.runtime.AmazonClientRecorder;
 import io.quarkiverse.amazon.common.runtime.AsyncHttpClientConfig;
-import io.quarkiverse.amazon.common.runtime.HasAmazonClientRuntimeConfig;
 import io.quarkiverse.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
@@ -14,25 +13,25 @@ import software.amazon.awssdk.services.sqs.SqsClient;
 @Recorder
 public class SqsRecorder extends AmazonClientRecorder {
 
-    final SqsConfig config;
+    final RuntimeValue<SqsConfig> config;
 
-    public SqsRecorder(SqsConfig config) {
+    public SqsRecorder(RuntimeValue<SqsConfig> config) {
         this.config = config;
     }
 
     @Override
-    public RuntimeValue<HasAmazonClientRuntimeConfig> getAmazonClientsConfig() {
-        return new RuntimeValue<>(config);
+    public RuntimeValue<SqsConfig> getAmazonClientsConfig() {
+        return config;
     }
 
     @Override
     public AsyncHttpClientConfig getAsyncClientConfig() {
-        return config.asyncClient();
+        return config.getValue().asyncClient();
     }
 
     @Override
     public SyncHttpClientConfig getSyncClientConfig() {
-        return config.syncClient();
+        return config.getValue().syncClient();
     }
 
     @Override
