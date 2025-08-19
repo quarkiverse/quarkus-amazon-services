@@ -32,6 +32,7 @@ This set of extensions allows you to interact with some of the AWS Services name
 * Payment Cryptography / Payment Cryptography Data
 * RDS / RDS Data / RDS IAM Authentication Quarkus Credential Provider
 * Rekognition
+* Resource Groups Tagging API
 * S3
 * S3 Transfer Manager
 * Secrets Manager

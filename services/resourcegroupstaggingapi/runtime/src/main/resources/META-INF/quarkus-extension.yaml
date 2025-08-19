@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon Resource Groups Tagging API"
+metadata:
+  keywords:
+    - "resource-groups"
+    - "aws"
+    - "amazon"
+  categories:
+    - "ai"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-resourcegroupstaggingapi.html
+  status: "stable"
+  config:
+  - "quarkus.resourcegroupstaggingapi."

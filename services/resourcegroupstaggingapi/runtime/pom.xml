@@ -4,13 +4,13 @@
 
     <parent>
         <groupId>io.quarkiverse.amazonservices</groupId>
-        <artifactId>quarkus-amazon-bedrock-parent</artifactId>
+        <artifactId>quarkus-amazon-resourcegroupstaggingapi-parent</artifactId>
         <version>999-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quarkus-amazon-bedrock</artifactId>
-    <name>Quarkus - Amazon Services - Bedrock - Runtime</name>
-    <description>Connect to Amazon Bedrock service</description>
+    <artifactId>quarkus-amazon-resourcegroupstaggingapi</artifactId>
+    <name>Quarkus - Amazon Services - Resource Groups Tagging API - Runtime</name>
+    <description>Connect to Amazon Resource Groups Tagging API service</description>
 
     <dependencies>
         <dependency>
@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
-            <artifactId>bedrock</artifactId>
+            <artifactId>resourcegroupstaggingapi</artifactId>
             <exclusions>
                 <!-- we exclude them here because we want to make them optional -->
                 <exclusion>
