@@ -18,6 +18,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>acm</module>
+        <module>apigateway</module>
         <module>bedrock</module>
         <module>bedrockruntime</module>
         <module>cognito-user-pools</module>
