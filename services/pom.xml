@@ -40,8 +40,9 @@
         <module>paymentcryptography</module>
         <module>paymentcryptographydata</module>
         <module>rds</module>
-        <module>rekognition</module>
         <module>rdsdata</module>
+        <module>rekognition</module>
+        <module>resourcegroupstaggingapi</module>
         <module>secretsmanager</module>
         <module>ses</module>
         <module>sesv2</module>
