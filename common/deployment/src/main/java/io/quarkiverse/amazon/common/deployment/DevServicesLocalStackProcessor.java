@@ -30,12 +30,8 @@ import io.quarkiverse.amazon.common.runtime.LocalStackDevServicesBuildTimeConfig
 import io.quarkus.deployment.IsNormal;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
-import io.quarkus.deployment.builditem.CuratedApplicationShutdownBuildItem;
-import io.quarkus.deployment.builditem.DevServicesResultBuildItem;
+import io.quarkus.deployment.builditem.*;
 import io.quarkus.deployment.builditem.DevServicesResultBuildItem.RunningDevService;
-import io.quarkus.deployment.builditem.DevServicesSharedNetworkBuildItem;
-import io.quarkus.deployment.builditem.DockerStatusBuildItem;
-import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.deployment.console.ConsoleInstalledBuildItem;
 import io.quarkus.deployment.console.StartupLogCompressor;
 import io.quarkus.deployment.dev.devservices.DevServicesConfig;
@@ -71,6 +67,7 @@ public class DevServicesLocalStackProcessor {
             List<DevServicesLocalStackProviderBuildItem> requestedServices,
             DockerStatusBuildItem dockerStatusBuildItem,
             List<DevServicesSharedNetworkBuildItem> devServicesSharedNetworkBuildItem,
+            DevServicesComposeProjectBuildItem composeProjectBuildItem,
             Optional<ConsoleInstalledBuildItem> consoleInstalledBuildItem,
             CuratedApplicationShutdownBuildItem closeBuildItem,
             DevServicesConfig devServicesConfig,
@@ -154,6 +151,7 @@ public class DevServicesLocalStackProcessor {
             RunningDevService namedDevService = startLocalStack(devServiceName,
                     launchMode.getLaunchMode(),
                     localStackDevServicesBuildTimeConfig, requestedServicesGroup,
+                    composeProjectBuildItem.getDefaultNetworkId(),
                     useSharedNetwork,
                     devServicesConfig.timeout(),
                     consoleInstalledBuildItem,
@@ -225,13 +223,14 @@ public class DevServicesLocalStackProcessor {
             LaunchMode launchMode,
             LocalStackDevServicesBuildTimeConfig localStackDevServicesBuildTimeConfig,
             List<DevServicesLocalStackProviderBuildItem> requestedServicesGroup,
+            String defaultNetworkId,
             boolean useSharedNetwork,
             Optional<Duration> timeout,
             Optional<ConsoleInstalledBuildItem> consoleInstalledBuildItem,
             LoggingSetupBuildItem loggingSetupBuildItem) {
 
         // no service requested
-        if (requestedServicesGroup.size() == 0)
+        if (requestedServicesGroup.isEmpty())
             return null;
 
         String prettyRequestServicesName = String.join(", ",
@@ -321,9 +320,8 @@ public class DevServicesLocalStackProcessor {
                         });
 
                         // Apply shared network configuration if needed
-                        final String hostName = useSharedNetwork
-                                ? ConfigureUtil.configureSharedNetwork(container, devServiceName)
-                                : null;
+                        final String hostName = ConfigureUtil.configureNetwork(container, defaultNetworkId, useSharedNetwork,
+                                devServiceName);
 
                         timeout.ifPresent(container::withStartupTimeout);
 
