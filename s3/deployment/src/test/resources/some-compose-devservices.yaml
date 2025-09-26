@@ -1,0 +1,5 @@
+services:
+  busybox:
+    image: busybox:stable
+    command: [ "sh", "-c", "while true; do sleep 6000; done" ]
+    pull_policy: always
