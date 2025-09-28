@@ -43,7 +43,7 @@ quarkus.aws.devservices.localstack.container-properties.START_WEB=0
 quarkus.dynamodb.devservices.container-properties.DYNAMODB_HEAP_SIZE=1G
 ----
 
-Refer to the LocalStack documentation for more configuration : https://docs.localstack.cloud/aws/services/. Note that not all environment variables are supported and some may affect Dev Services for Amazon Services.
+Refer to the LocalStack documentation for more configuration : https://docs.localstack.cloud/aws/capabilities/config/configuration/. Note that not all environment variables are supported and some may affect Dev Services for Amazon Services.
 
 == Additional services
 
