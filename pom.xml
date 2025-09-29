@@ -49,7 +49,7 @@
     <awscrt.version>0.38.7</awscrt.version>
     <javapoet.verion>1.13.0</javapoet.verion>
     <hamcrest.version>1.3</hamcrest.version>
-    <assertj.version>3.27.3</assertj.version>
+    <assertj.version>3.27.6</assertj.version>
   </properties>
   <build>
     <pluginManagement>
