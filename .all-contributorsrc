@@ -331,6 +331,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "mzellho",
+      "name": "Maximilian Zellhofer",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5822722?v=4",
+      "profile": "https://github.com/mzellho",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
