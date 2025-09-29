@@ -4,7 +4,7 @@
   <parent>
     <groupId>io.quarkiverse.amazonservices</groupId>
     <artifactId>quarkus-amazon-crt-parent</artifactId>
-    <version>3.10.0</version>
+    <version>999-SNAPSHOT</version>
   </parent>
   <artifactId>quarkus-amazon-crt-deployment</artifactId>
   <name>Quarkus - Amazon Services - CRT - Deployment</name>
