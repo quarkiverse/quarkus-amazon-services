@@ -32,6 +32,7 @@
         <module>kms</module>
         <module>lambda</module>
         <module>rds</module>
+        <module>resourcegroupstaggingapi</module>
         <module>s3</module>
         <module>scheduler</module>
         <module>secretsmanager</module>

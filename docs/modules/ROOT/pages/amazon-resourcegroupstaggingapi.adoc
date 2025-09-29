@@ -1,0 +1,16 @@
+:service-name: resourcegroupstaggingapi
+:service-name-uppercase: Resource Groups Tagging API
+
+= Amazon Resource Groups Tagging API Client
+
+include::./includes/attributes.adoc[]
+
+The Amazon Resource Groups Tagging API is a web service that enables you to manage and organize your AWS resources using tags.
+
+You can find more information about Resource Groups Tagging API at https://docs.aws.amazon.com/cli/latest/reference/resourcegroupstaggingapi/index.html[the Amazon Resource Groups Tagging API website].
+
+include::./amazon-configure-clients.adoc[]
+
+== Configuration Reference
+
+include::./includes/quarkus-amazon-resourcegroupstaggingapi.adoc[]

@@ -4,12 +4,12 @@
 
     <parent>
         <groupId>io.quarkiverse.amazonservices</groupId>
-        <artifactId>quarkus-amazon-bedrockruntime-parent</artifactId>
+        <artifactId>quarkus-amazon-resourcegroupstaggingapi-parent</artifactId>
         <version>999-SNAPSHOT</version>
     </parent>
 
-    <artifactId>quarkus-amazon-bedrockruntime-deployment</artifactId>
-    <name>Quarkus - Amazon Services - Bedrock Runtime - Deployment</name>
+    <artifactId>quarkus-amazon-resourcegroupstaggingapi-deployment</artifactId>
+    <name>Quarkus - Amazon Services - Resource Groups Tagging API - Deployment</name>
 
     <dependencies>
         <dependency>
@@ -26,11 +26,11 @@
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-bedrockruntime</artifactId>
+            <artifactId>quarkus-amazon-resourcegroupstaggingapi</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-devservices-bedrockruntime</artifactId>
+            <artifactId>quarkus-amazon-devservices-resourcegroupstaggingapi</artifactId>
         </dependency>
 
         <!-- Test dependencies -->
