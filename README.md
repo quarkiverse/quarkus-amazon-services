@@ -116,13 +116,15 @@ Due to differing release schedules, the Quarkus Platform may not include the lat
 
 Quarkus Amazon Services provides multiple version streams. One stream is compatible with Quarkus 2.x, while the others are designed to work with Quarkus 3.x and are aligned with Quarkus LTS.
 
-| Quarkus      | Quarkus Amazon Services | Documentation                                                                                          |
-|--------------|-------------------------|--------------------------------------------------------------------------------------------------------|
-| 2.x          | 1.6.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/1.x/index.html)                    |
-| 3.15.x (LTS) | 2.18.x (bug fixes only) | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.18.x/index.html)                 |
-| [3.15, 3.20) | [2.19, 3.0) (platform)  | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.x/index.html)                    |
-| 3.20 (LTS)   | 3.3.x (bug fixes only)  | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/3.3.x/index.html)                  |
-| >=3.20       | >=3.0.0                 | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)                    |
+| Quarkus      | Quarkus Amazon Services | Documentation                                                                            |
+|--------------|-------------------------|------------------------------------------------------------------------------------------|
+| 2.x          | 1.6.x                   | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/1.x/index.html)      |
+| 3.15.x (LTS) | 2.18.x (bug fixes only) | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.18.x/index.html)   |
+| [3.15, 3.20) | [2.19, 3.0) (platform)  | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/2.x/index.html)      |
+| 3.20 (LTS)   | 3.3.x (bug fixes only)  | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/3.3.x/index.html)    |
+| [3.21, 3.26) | [3.3.x, 3.9)            | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/3.3.x/index.html)    |
+| 3.26         | >=3.9.0                 | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)      |
+| 3.27.x (LTS) | >=3.9.0                 | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)      |
 
 Use the latest version of the corresponding stream, [the list of versions is available on Maven Central](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom).
 
