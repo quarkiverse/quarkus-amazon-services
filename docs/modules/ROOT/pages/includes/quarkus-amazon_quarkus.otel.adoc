@@ -47,7 +47,7 @@ Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_MESSAGING_EXPERIMENTAL_RE
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-span-attributes]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-span-attributes[`quarkus.otel.instrumentation.aws-sdk.experimental-span-attributes`]##
 ifdef::add-copy-button-to-config-props[]
@@ -68,7 +68,7 @@ Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_SPAN
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-use-propagator-for-messaging]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-use-propagator-for-messaging[`quarkus.otel.instrumentation.aws-sdk.experimental-use-propagator-for-messaging`]##
 ifdef::add-copy-button-to-config-props[]
@@ -89,7 +89,7 @@ Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_USE_
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-record-individual-http-error]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-record-individual-http-error[`quarkus.otel.instrumentation.aws-sdk.experimental-record-individual-http-error`]##
 ifdef::add-copy-button-to-config-props[]
@@ -110,7 +110,7 @@ Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_RECO
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 |===
 

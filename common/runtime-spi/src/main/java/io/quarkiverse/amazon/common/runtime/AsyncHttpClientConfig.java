@@ -106,6 +106,11 @@ public interface AsyncHttpClientConfig {
     Boolean tcpKeepAlive();
 
     /**
+     * Advanced configuration for TCP KeepAlive when using CRT client.
+     */
+    CrtKeepAliveConfiguration crtKeepAlive();
+
+    /**
      * The HTTP protocol to use.
      */
     @WithDefault("http1-1")
@@ -247,6 +252,30 @@ public interface AsyncHttpClientConfig {
          */
         @WithDefault("true")
         boolean useFutureCompletionThreadPool();
+    }
+
+    @ConfigGroup
+    public interface CrtKeepAliveConfiguration {
+
+        /**
+         * Number of unacknowledged probes before connection termination.
+         */
+        @WithDefault("75ms")
+        @WithConverter(DurationConverter.class)
+        Duration keepAliveInterval();
+
+        /**
+         * Time to wait for a keepalive response before considering the connection timed out.
+         */
+        @WithDefault("7200ms")
+        @WithConverter(DurationConverter.class)
+        Duration keepAliveTimeout();
+
+        /**
+         * Number of unacknowledged probes before connection termination.
+         */
+        @WithDefault("9")
+        Integer keepAliveProbes();
     }
 
     // TODO: additionalChannelOptions
