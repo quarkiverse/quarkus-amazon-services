@@ -49,7 +49,7 @@ Environment variable: `+++QUARKUS_DYNAMODBENHANCED_CREATE_TABLE_SCHEMAS+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 |===
 

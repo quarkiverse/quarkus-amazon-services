@@ -6,6 +6,7 @@ import software.amazon.awssdk.http.SdkHttpClient;
 import software.amazon.awssdk.http.async.SdkAsyncHttpClient;
 import software.amazon.awssdk.http.crt.AwsCrtAsyncHttpClient;
 import software.amazon.awssdk.http.crt.AwsCrtHttpClient;
+import software.amazon.awssdk.http.crt.TcpKeepAliveConfiguration;
 
 @Recorder
 public class AmazonClientAwsCrtTransportRecorder extends AbstractAmazonClientTransportRecorder {
@@ -22,6 +23,15 @@ public class AmazonClientAwsCrtTransportRecorder extends AbstractAmazonClientTra
         builder.connectionMaxIdleTime(asyncConfig.connectionMaxIdleTime());
         builder.connectionTimeout(asyncConfig.connectionTimeout());
         builder.maxConcurrency(asyncConfig.maxConcurrency());
+
+        if (asyncConfig.tcpKeepAlive()) {
+            TcpKeepAliveConfiguration.Builder tcpKeepAliveBuilder = TcpKeepAliveConfiguration.builder()
+                    .keepAliveInterval(asyncConfig.crtKeepAlive().keepAliveInterval())
+                    .keepAliveProbes(asyncConfig.crtKeepAlive().keepAliveProbes())
+                    .keepAliveTimeout(asyncConfig.crtKeepAlive().keepAliveTimeout());
+
+            builder.tcpKeepAliveConfiguration(tcpKeepAliveBuilder.build());
+        }
 
         if (asyncConfig.proxy().enabled() && asyncConfig.proxy().endpoint().isPresent()) {
             software.amazon.awssdk.http.crt.ProxyConfiguration.Builder proxyBuilder = software.amazon.awssdk.http.crt.ProxyConfiguration
@@ -60,6 +70,15 @@ public class AmazonClientAwsCrtTransportRecorder extends AbstractAmazonClientTra
         builder.connectionTimeout(syncConfig.connectionTimeout());
         syncConfig.crt().connectionMaxIdleTime().ifPresent(builder::connectionMaxIdleTime);
         syncConfig.crt().maxConcurrency().ifPresent(builder::maxConcurrency);
+
+        if (syncConfig.crt().tcpKeepAlive().enabled()) {
+            TcpKeepAliveConfiguration.Builder tcpKeepAliveBuilder = TcpKeepAliveConfiguration.builder()
+                    .keepAliveInterval(syncConfig.crt().tcpKeepAlive().keepAliveInterval())
+                    .keepAliveProbes(syncConfig.crt().tcpKeepAlive().keepAliveProbes())
+                    .keepAliveTimeout(syncConfig.crt().tcpKeepAlive().keepAliveTimeout());
+
+            builder.tcpKeepAliveConfiguration(tcpKeepAliveBuilder.build());
+        }
 
         if (syncConfig.crt().proxy().enabled() && syncConfig.crt().proxy().endpoint().isPresent()) {
             software.amazon.awssdk.http.crt.ProxyConfiguration.Builder proxyBuilder = software.amazon.awssdk.http.crt.ProxyConfiguration

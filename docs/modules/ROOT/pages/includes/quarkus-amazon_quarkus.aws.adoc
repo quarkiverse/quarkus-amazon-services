@@ -7,48 +7,6 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-image-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-image-name[`quarkus.aws.devservices.moto.image-name`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.moto.image-name+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-The Moto container image to use.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MOTO_IMAGE_NAME+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MOTO_IMAGE_NAME+++`
-endif::add-copy-button-to-env-var[]
---
-|string
-|`motoserver/moto`
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-container-properties-container-properties[`quarkus.aws.devservices.moto.container-properties."container-properties"`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.moto.container-properties."container-properties"+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-Generic properties that are pass for additional container configuration.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MOTO_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MOTO_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++`
-endif::add-copy-button-to-env-var[]
---
-|Map<String,String>
-|
-
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-image-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-image-name[`quarkus.aws.devservices.localstack.image-name`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.devservices.localstack.image-name+++[]
@@ -68,7 +26,7 @@ Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_IMAGE_NAME+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`localstack/localstack:4.8.1`
+|`+++localstack/localstack:4.8.1+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-container-properties-container-properties[`quarkus.aws.devservices.localstack.container-properties."container-properties"`]##
 ifdef::add-copy-button-to-config-props[]
@@ -175,6 +133,48 @@ endif::add-copy-button-to-env-var[]
 |int
 |
 
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-image-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-image-name[`quarkus.aws.devservices.moto.image-name`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.moto.image-name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The Moto container image to use.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MOTO_IMAGE_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MOTO_IMAGE_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++motoserver/moto+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-container-properties-container-properties[`quarkus.aws.devservices.moto.container-properties."container-properties"`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.moto.container-properties."container-properties"+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Generic properties that are pass for additional container configuration.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MOTO_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MOTO_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++`
+endif::add-copy-button-to-env-var[]
+--
+|Map<String,String>
+|
+
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-enabled]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-enabled[`quarkus.aws.devservices.localstack.additional-services."additional-services".enabled`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.devservices.localstack.additional-services."additional-services".enabled+++[]
@@ -219,7 +219,7 @@ Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_ADDITIONAL_SERVICES
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-isolated]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-isolated[`quarkus.aws.devservices.localstack.additional-services."additional-services".isolated`]##
 ifdef::add-copy-button-to-config-props[]
@@ -240,7 +240,7 @@ Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_ADDITIONAL_SERVICES
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-service-name[`quarkus.aws.devservices.localstack.additional-services."additional-services".service-name`]##
 ifdef::add-copy-button-to-config-props[]
@@ -263,7 +263,7 @@ Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_ADDITIONAL_SERVICES
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`localstack`
+|`+++localstack+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-additional-services-container-properties-container-properties[`quarkus.aws.devservices.localstack.additional-services."additional-services".container-properties."container-properties"`]##
 ifdef::add-copy-button-to-config-props[]

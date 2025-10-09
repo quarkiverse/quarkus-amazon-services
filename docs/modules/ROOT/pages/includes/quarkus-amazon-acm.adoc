@@ -49,7 +49,7 @@ Environment variable: `+++QUARKUS_ACM_TELEMETRY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-acm_quarkus-acm-sync-client-type]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-type[`quarkus.acm.sync-client.type`]##
 ifdef::add-copy-button-to-config-props[]
@@ -70,7 +70,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`url`, `apache`, `aws-crt`
-|`url`
+|`+++url+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-acm_quarkus-acm-async-client-type]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-type[`quarkus.acm.async-client.type`]##
 ifdef::add-copy-button-to-config-props[]
@@ -91,7 +91,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`netty`, `aws-crt`
-|`netty`
+|`+++netty+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-acm_quarkus-acm-devservices-enabled]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-devservices-enabled[`quarkus.acm.devservices.enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -137,7 +137,7 @@ Environment variable: `+++QUARKUS_ACM_DEVSERVICES_SHARED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-acm_quarkus-acm-devservices-isolated]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-devservices-isolated[`quarkus.acm.devservices.isolated`]##
 ifdef::add-copy-button-to-config-props[]
@@ -158,7 +158,7 @@ Environment variable: `+++QUARKUS_ACM_DEVSERVICES_ISOLATED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-acm_quarkus-acm-devservices-service-name]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-devservices-service-name[`quarkus.acm.devservices.service-name`]##
 ifdef::add-copy-button-to-config-props[]
@@ -181,7 +181,7 @@ Environment variable: `+++QUARKUS_ACM_DEVSERVICES_SERVICE_NAME+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`localstack`
+|`+++localstack+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-acm_quarkus-acm-devservices-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-devservices-container-properties-container-properties[`quarkus.acm.devservices.container-properties."container-properties"`]##
 ifdef::add-copy-button-to-config-props[]
@@ -320,7 +320,7 @@ Environment variable: `+++QUARKUS_ACM_ADVANCED_USE_QUARKUS_SCHEDULED_EXECUTOR_SE
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 
 h|[[quarkus-amazon-acm_section_quarkus-acm-aws]] [.section-name.section-level0]##link:#quarkus-amazon-acm_section_quarkus-acm-aws[AWS services configurations]##
@@ -412,7 +412,7 @@ Environment variable: `+++QUARKUS_ACM_AWS_CREDENTIALS_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`default`, `static`, `system-property`, `env-variable`, `profile`, `container`, `instance-profile`, `process`, `custom`, `anonymous`
-|`default`
+|`+++default+++`
 
 h|[[quarkus-amazon-acm_section_quarkus-acm-aws-credentials-default-provider]] [.section-name.section-level1]##link:#quarkus-amazon-acm_section_quarkus-acm-aws-credentials-default-provider[Default credentials provider configuration]##
 h|Type
@@ -444,7 +444,7 @@ Environment variable: `+++QUARKUS_ACM_AWS_CREDENTIALS_DEFAULT_PROVIDER_ASYNC_CRE
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-aws-credentials-default-provider-reuse-last-provider-enabled]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-aws-credentials-default-provider-reuse-last-provider-enabled[`quarkus.acm.aws.credentials.default-provider.reuse-last-provider-enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -472,7 +472,7 @@ Environment variable: `+++QUARKUS_ACM_AWS_CREDENTIALS_DEFAULT_PROVIDER_REUSE_LAS
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 
 h|[[quarkus-amazon-acm_section_quarkus-acm-aws-credentials-static-provider]] [.section-name.section-level1]##link:#quarkus-amazon-acm_section_quarkus-acm-aws-credentials-static-provider[Static credentials provider configuration]##
@@ -621,7 +621,7 @@ Environment variable: `+++QUARKUS_ACM_AWS_CREDENTIALS_PROCESS_PROVIDER_ASYNC_CRE
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-aws-credentials-process-provider-credential-refresh-threshold]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-aws-credentials-process-provider-credential-refresh-threshold[`quarkus.acm.aws.credentials.process-provider.credential-refresh-threshold`]##
 ifdef::add-copy-button-to-config-props[]
@@ -649,7 +649,7 @@ Environment variable: `+++QUARKUS_ACM_AWS_CREDENTIALS_PROCESS_PROVIDER_CREDENTIA
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
-|`15S`
+|`+++15S+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-aws-credentials-process-provider-process-output-limit]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-aws-credentials-process-provider-process-output-limit[`quarkus.acm.aws.credentials.process-provider.process-output-limit`]##
 ifdef::add-copy-button-to-config-props[]
@@ -675,7 +675,7 @@ Environment variable: `+++QUARKUS_ACM_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_O
 endif::add-copy-button-to-env-var[]
 --
 |MemorySize link:#memory-size-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the MemorySize format]]
-|`1024`
+|`+++1024+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-aws-credentials-process-provider-command[`quarkus.acm.aws.credentials.process-provider.command`]##
 ifdef::add-copy-button-to-config-props[]
@@ -759,7 +759,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
-|`2S`
+|`+++2S+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-socket-timeout]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-socket-timeout[`quarkus.acm.sync-client.socket-timeout`]##
 ifdef::add-copy-button-to-config-props[]
@@ -780,7 +780,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_SOCKET_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
-|`30S`
+|`+++30S+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-tls-key-managers-provider-type[`quarkus.acm.sync-client.tls-key-managers-provider.type`]##
 ifdef::add-copy-button-to-config-props[]
@@ -809,7 +809,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE
 endif::add-copy-button-to-env-var[]
 --
 a|`none`, `system-property`, `file-store`
-|`system-property`
+|`+++system-property+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-tls-key-managers-provider-file-store-path[`quarkus.acm.sync-client.tls-key-managers-provider.file-store.path`]##
 ifdef::add-copy-button-to-config-props[]
@@ -903,7 +903,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TY
 endif::add-copy-button-to-env-var[]
 --
 a|`trust-all`, `system-property`, `file-store`
-|`system-property`
+|`+++system-property+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-tls-trust-managers-provider-file-store-path[`quarkus.acm.sync-client.tls-trust-managers-provider.file-store.path`]##
 ifdef::add-copy-button-to-config-props[]
@@ -993,7 +993,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_APACHE_CONNECTION_ACQUISITION_
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
-|`10S`
+|`+++10S+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-apache-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-apache-connection-max-idle-time[`quarkus.acm.sync-client.apache.connection-max-idle-time`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1014,7 +1014,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_APACHE_CONNECTION_MAX_IDLE_TIM
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
-|`60S`
+|`+++60S+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-apache-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-apache-connection-time-to-live[`quarkus.acm.sync-client.apache.connection-time-to-live`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1058,7 +1058,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_APACHE_MAX_CONNECTIONS+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`50`
+|`+++50+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-apache-expect-continue-enabled]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-apache-expect-continue-enabled[`quarkus.acm.sync-client.apache.expect-continue-enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1079,7 +1079,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_APACHE_EXPECT_CONTINUE_ENABLED
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-apache-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-apache-use-idle-connection-reaper[`quarkus.acm.sync-client.apache.use-idle-connection-reaper`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1102,7 +1102,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_APACHE_USE_IDLE_CONNECTION_REA
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-apache-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-apache-tcp-keep-alive[`quarkus.acm.sync-client.apache.tcp-keep-alive`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1123,7 +1123,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_APACHE_TCP_KEEP_ALIVE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-apache-proxy-enabled]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-apache-proxy-enabled[`quarkus.acm.sync-client.apache.proxy.enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1144,7 +1144,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_APACHE_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-apache-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-apache-proxy-endpoint[`quarkus.acm.sync-client.apache.proxy.endpoint`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1319,7 +1319,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME++
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
-|`60S`
+|`+++60S+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-crt-max-concurrency[`quarkus.acm.sync-client.crt.max-concurrency`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1340,7 +1340,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_CRT_MAX_CONCURRENCY+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`50`
+|`+++50+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-crt-proxy-enabled[`quarkus.acm.sync-client.crt.proxy.enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1361,7 +1361,7 @@ Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_CRT_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-sync-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-crt-proxy-endpoint[`quarkus.acm.sync-client.crt.proxy.endpoint`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1428,6 +1428,90 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
+a| [[quarkus-amazon-acm_quarkus-acm-sync-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-crt-tcp-keep-alive-enabled[`quarkus.acm.sync-client.crt.tcp-keep-alive.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.acm.sync-client.crt.tcp-keep-alive.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Configure whether to enable or disable TCP KeepAlive.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACM_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a| [[quarkus-amazon-acm_quarkus-acm-sync-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-crt-tcp-keep-alive-keep-alive-interval[`quarkus.acm.sync-client.crt.tcp-keep-alive.keep-alive-interval`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.acm.sync-client.crt.tcp-keep-alive.keep-alive-interval+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Number of unacknowledged probes before connection termination.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACM_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
+|`+++75MS+++`
+
+a| [[quarkus-amazon-acm_quarkus-acm-sync-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-crt-tcp-keep-alive-keep-alive-timeout[`quarkus.acm.sync-client.crt.tcp-keep-alive.keep-alive-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.acm.sync-client.crt.tcp-keep-alive.keep-alive-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Time to wait for a keepalive response before considering the connection timed out.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACM_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
+|`+++7200MS+++`
+
+a| [[quarkus-amazon-acm_quarkus-acm-sync-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-sync-client-crt-tcp-keep-alive-keep-alive-probes[`quarkus.acm.sync-client.crt.tcp-keep-alive.keep-alive-probes`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.acm.sync-client.crt.tcp-keep-alive.keep-alive-probes+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Number of unacknowledged probes before connection termination.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACM_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACM_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++9+++`
+
 
 
 h|[[quarkus-amazon-acm_section_quarkus-acm-async-client]] [.section-name.section-level0]##link:#quarkus-amazon-acm_section_quarkus-acm-async-client[Async HTTP transport configurations]##
@@ -1455,7 +1539,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_MAX_CONCURRENCY+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`50`
+|`+++50+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-max-pending-connection-acquires]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-max-pending-connection-acquires[`quarkus.acm.async-client.max-pending-connection-acquires`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1478,7 +1562,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_MAX_PENDING_CONNECTION_ACQUIR
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`10000`
+|`+++10000+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-read-timeout]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-read-timeout[`quarkus.acm.async-client.read-timeout`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1501,7 +1585,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_READ_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
-|`30S`
+|`+++30S+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-write-timeout]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-write-timeout[`quarkus.acm.async-client.write-timeout`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1524,7 +1608,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_WRITE_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
-|`30S`
+|`+++30S+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-connection-timeout[`quarkus.acm.async-client.connection-timeout`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1545,7 +1629,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
-|`10S`
+|`+++10S+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-connection-acquisition-timeout[`quarkus.acm.async-client.connection-acquisition-timeout`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1566,7 +1650,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_CONNECTION_ACQUISITION_TIMEOU
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
-|`2S`
+|`+++2S+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-connection-time-to-live[`quarkus.acm.async-client.connection-time-to-live`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1610,7 +1694,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
-|`5S`
+|`+++5S+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-use-idle-connection-reaper[`quarkus.acm.async-client.use-idle-connection-reaper`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1633,7 +1717,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_USE_IDLE_CONNECTION_REAPER+++
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-tcp-keep-alive[`quarkus.acm.async-client.tcp-keep-alive`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1654,7 +1738,70 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_TCP_KEEP_ALIVE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
+
+a| [[quarkus-amazon-acm_quarkus-acm-async-client-crt-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-crt-keep-alive-keep-alive-interval[`quarkus.acm.async-client.crt-keep-alive.keep-alive-interval`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.acm.async-client.crt-keep-alive.keep-alive-interval+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Number of unacknowledged probes before connection termination.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACM_ASYNC_CLIENT_CRT_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_CRT_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
+|`+++75MS+++`
+
+a| [[quarkus-amazon-acm_quarkus-acm-async-client-crt-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-crt-keep-alive-keep-alive-timeout[`quarkus.acm.async-client.crt-keep-alive.keep-alive-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.acm.async-client.crt-keep-alive.keep-alive-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Time to wait for a keepalive response before considering the connection timed out.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACM_ASYNC_CLIENT_CRT_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_CRT_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
+|`+++7200MS+++`
+
+a| [[quarkus-amazon-acm_quarkus-acm-async-client-crt-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-crt-keep-alive-keep-alive-probes[`quarkus.acm.async-client.crt-keep-alive.keep-alive-probes`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.acm.async-client.crt-keep-alive.keep-alive-probes+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Number of unacknowledged probes before connection termination.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ACM_ASYNC_CLIENT_CRT_KEEP_ALIVE_KEEP_ALIVE_PROBES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_CRT_KEEP_ALIVE_KEEP_ALIVE_PROBES+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++9+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-protocol]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-protocol[`quarkus.acm.async-client.protocol`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1675,7 +1822,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_PROTOCOL+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`http1-1`, `http2`
-|`http1-1`
+|`+++http1-1+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-ssl-provider]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-ssl-provider[`quarkus.acm.async-client.ssl-provider`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1721,7 +1868,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_HTTP2_MAX_STREAMS+++`
 endif::add-copy-button-to-env-var[]
 --
 |long
-|`4294967295`
+|`+++4294967295+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-http2-initial-window-size]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-http2-initial-window-size[`quarkus.acm.async-client.http2.initial-window-size`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1744,7 +1891,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_HTTP2_INITIAL_WINDOW_SIZE+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`1048576`
+|`+++1048576+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-http2-health-check-ping-period]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-http2-health-check-ping-period[`quarkus.acm.async-client.http2.health-check-ping-period`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1767,7 +1914,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_PERIO
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-acm_quarkus-acm[icon:question-circle[title=More information about the Duration format]]
-|`5`
+|`+++5+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-proxy-enabled]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-proxy-enabled[`quarkus.acm.async-client.proxy.enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1788,7 +1935,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-proxy-endpoint[`quarkus.acm.async-client.proxy.endpoint`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1861,7 +2008,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYP
 endif::add-copy-button-to-env-var[]
 --
 a|`none`, `system-property`, `file-store`
-|`system-property`
+|`+++system-property+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-tls-key-managers-provider-file-store-path[`quarkus.acm.async-client.tls-key-managers-provider.file-store.path`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1955,7 +2102,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_T
 endif::add-copy-button-to-env-var[]
 --
 a|`trust-all`, `system-property`, `file-store`
-|`system-property`
+|`+++system-property+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-tls-trust-managers-provider-file-store-path[`quarkus.acm.async-client.tls-trust-managers-provider.file-store.path`]##
 ifdef::add-copy-button-to-config-props[]
@@ -2041,7 +2188,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_EVENT_LOOP_OVERRIDE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-acm_quarkus-acm-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-acm_quarkus-acm-async-client-event-loop-number-of-threads[`quarkus.acm.async-client.event-loop.number-of-threads`]##
 ifdef::add-copy-button-to-config-props[]
@@ -2112,7 +2259,7 @@ Environment variable: `+++QUARKUS_ACM_ASYNC_CLIENT_ADVANCED_USE_FUTURE_COMPLETIO
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 
 |===
