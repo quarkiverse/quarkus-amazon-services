@@ -76,7 +76,7 @@ public interface CrtHttpClientConfig {
         boolean enabled();
 
         /**
-         * Number of unacknowledged probes before connection termination.
+         * Time between TCP keepalive packets being sent to the peer.
          */
         @WithDefault("75ms")
         @WithConverter(DurationConverter.class)
@@ -90,7 +90,7 @@ public interface CrtHttpClientConfig {
         Duration keepAliveTimeout();
 
         /**
-         * Number of unacknowledged probes before connection termination.
+         * Number of keepalive probes allowed to fail before the connection is considered lost.
          */
         @WithDefault("9")
         Integer keepAliveProbes();

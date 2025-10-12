@@ -8,6 +8,7 @@ import java.util.OptionalInt;
 
 //import io.netty.handler.ssl.SslProvider;
 import io.quarkus.runtime.annotations.ConfigDocDefault;
+import io.quarkus.runtime.annotations.ConfigDocSection;
 import io.quarkus.runtime.annotations.ConfigGroup;
 import io.quarkus.runtime.configuration.DurationConverter;
 import io.smallrye.config.WithConverter;
@@ -100,15 +101,16 @@ public interface AsyncHttpClientConfig {
     boolean useIdleConnectionReaper();
 
     /**
-     * Configure whether to enable or disable TCP KeepAlive.
+     * Configure whether to enable or disable TCP KeepAlive. Applicable only to netty-nio client.
      */
     @WithDefault("false")
     Boolean tcpKeepAlive();
 
     /**
-     * Advanced configuration for TCP KeepAlive when using CRT client.
+     * AWS CRT-based HTTP client specific configurations
      */
-    CrtKeepAliveConfiguration crtKeepAlive();
+    @ConfigDocSection
+    CrtHttpClientConfig crt();
 
     /**
      * The HTTP protocol to use.
@@ -252,30 +254,6 @@ public interface AsyncHttpClientConfig {
          */
         @WithDefault("true")
         boolean useFutureCompletionThreadPool();
-    }
-
-    @ConfigGroup
-    public interface CrtKeepAliveConfiguration {
-
-        /**
-         * Number of unacknowledged probes before connection termination.
-         */
-        @WithDefault("75ms")
-        @WithConverter(DurationConverter.class)
-        Duration keepAliveInterval();
-
-        /**
-         * Time to wait for a keepalive response before considering the connection timed out.
-         */
-        @WithDefault("7200ms")
-        @WithConverter(DurationConverter.class)
-        Duration keepAliveTimeout();
-
-        /**
-         * Number of unacknowledged probes before connection termination.
-         */
-        @WithDefault("9")
-        Integer keepAliveProbes();
     }
 
     // TODO: additionalChannelOptions

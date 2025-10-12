@@ -1457,7 +1457,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Number of unacknowledged probes before connection termination.
+Time between TCP keepalive packets being sent to the peer.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -1499,7 +1499,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Number of unacknowledged probes before connection termination.
+Number of keepalive probes allowed to fail before the connection is considered lost.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -1727,7 +1727,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Configure whether to enable or disable TCP KeepAlive.
+Configure whether to enable or disable TCP KeepAlive. Applicable only to netty-nio client.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -1740,30 +1740,183 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-crt-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-crt-keep-alive-keep-alive-interval[`quarkus.inspector.async-client.crt-keep-alive.keep-alive-interval`]##
+h|[[quarkus-amazon-inspector_section_quarkus-inspector-async-client-crt]] [.section-name.section-level1]##link:#quarkus-amazon-inspector_section_quarkus-inspector-async-client-crt[AWS CRT-based HTTP client specific configurations]##
+h|Type
+h|Default
+
+a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-crt-connection-max-idle-time[`quarkus.inspector.async-client.crt.connection-max-idle-time`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.inspector.async-client.crt-keep-alive.keep-alive-interval+++[]
+config_property_copy_button:+++quarkus.inspector.async-client.crt.connection-max-idle-time+++[]
 endif::add-copy-button-to-config-props[]
 
 
 [.description]
 --
-Number of unacknowledged probes before connection termination.
+The maximum amount of time that a connection should be allowed to remain open while idle.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++`
+Environment variable: `+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-inspector_quarkus-inspector[icon:question-circle[title=More information about the Duration format]]
+|`+++60S+++`
+
+a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-crt-max-concurrency[`quarkus.inspector.async-client.crt.max-concurrency`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.inspector.async-client.crt.max-concurrency+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum number of allowed concurrent requests.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_MAX_CONCURRENCY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_MAX_CONCURRENCY+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++50+++`
+
+a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-crt-proxy-enabled[`quarkus.inspector.async-client.crt.proxy.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.inspector.async-client.crt.proxy.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Enable HTTP proxy
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_PROXY_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_PROXY_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-crt-proxy-endpoint[`quarkus.inspector.async-client.crt.proxy.endpoint`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.inspector.async-client.crt.proxy.endpoint+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The endpoint of the proxy server that the SDK should connect through.
+
+Currently, the endpoint is limited to a host and port. Any other URI components will result in an exception being raised.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_PROXY_ENDPOINT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_PROXY_ENDPOINT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
+|
+
+a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-crt-proxy-username[`quarkus.inspector.async-client.crt.proxy.username`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.inspector.async-client.crt.proxy.username+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The username to use when connecting through a proxy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_PROXY_USERNAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_PROXY_USERNAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-crt-proxy-password[`quarkus.inspector.async-client.crt.proxy.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.inspector.async-client.crt.proxy.password+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The password to use when connecting through a proxy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_PROXY_PASSWORD+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_PROXY_PASSWORD+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-crt-tcp-keep-alive-enabled[`quarkus.inspector.async-client.crt.tcp-keep-alive.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.inspector.async-client.crt.tcp-keep-alive.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Configure whether to enable or disable TCP KeepAlive.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-crt-tcp-keep-alive-keep-alive-interval[`quarkus.inspector.async-client.crt.tcp-keep-alive.keep-alive-interval`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.inspector.async-client.crt.tcp-keep-alive.keep-alive-interval+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Time between TCP keepalive packets being sent to the peer.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-inspector_quarkus-inspector[icon:question-circle[title=More information about the Duration format]]
 |`+++75MS+++`
 
-a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-crt-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-crt-keep-alive-keep-alive-timeout[`quarkus.inspector.async-client.crt-keep-alive.keep-alive-timeout`]##
+a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-crt-tcp-keep-alive-keep-alive-timeout[`quarkus.inspector.async-client.crt.tcp-keep-alive.keep-alive-timeout`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.inspector.async-client.crt-keep-alive.keep-alive-timeout+++[]
+config_property_copy_button:+++quarkus.inspector.async-client.crt.tcp-keep-alive.keep-alive-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1773,35 +1926,36 @@ Time to wait for a keepalive response before considering the connection timed ou
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++`
+Environment variable: `+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-inspector_quarkus-inspector[icon:question-circle[title=More information about the Duration format]]
 |`+++7200MS+++`
 
-a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-crt-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-crt-keep-alive-keep-alive-probes[`quarkus.inspector.async-client.crt-keep-alive.keep-alive-probes`]##
+a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-crt-tcp-keep-alive-keep-alive-probes[`quarkus.inspector.async-client.crt.tcp-keep-alive.keep-alive-probes`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.inspector.async-client.crt-keep-alive.keep-alive-probes+++[]
+config_property_copy_button:+++quarkus.inspector.async-client.crt.tcp-keep-alive.keep-alive-probes+++[]
 endif::add-copy-button-to-config-props[]
 
 
 [.description]
 --
-Number of unacknowledged probes before connection termination.
+Number of keepalive probes allowed to fail before the connection is considered lost.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_KEEP_ALIVE_KEEP_ALIVE_PROBES+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_KEEP_ALIVE_KEEP_ALIVE_PROBES+++`
+Environment variable: `+++QUARKUS_INSPECTOR_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
 |`+++9+++`
+
 
 a| [[quarkus-amazon-inspector_quarkus-inspector-async-client-protocol]] [.property-path]##link:#quarkus-amazon-inspector_quarkus-inspector-async-client-protocol[`quarkus.inspector.async-client.protocol`]##
 ifdef::add-copy-button-to-config-props[]
