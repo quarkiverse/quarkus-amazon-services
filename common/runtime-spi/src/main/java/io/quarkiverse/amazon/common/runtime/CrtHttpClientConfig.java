@@ -32,6 +32,11 @@ public interface CrtHttpClientConfig {
      */
     HttpClientProxyConfiguration proxy();
 
+    /**
+     * TCP Keep Alive configuration.
+     */
+    TcpKeepAliveConfiguration tcpKeepAlive();
+
     @ConfigGroup
     public interface HttpClientProxyConfiguration {
 
@@ -59,5 +64,35 @@ public interface CrtHttpClientConfig {
          * The password to use when connecting through a proxy.
          */
         Optional<String> password();
+    }
+
+    @ConfigGroup
+    public interface TcpKeepAliveConfiguration {
+
+        /**
+         * Configure whether to enable or disable TCP KeepAlive.
+         */
+        @WithDefault("false")
+        boolean enabled();
+
+        /**
+         * Time between TCP keepalive packets being sent to the peer.
+         */
+        @WithDefault("75ms")
+        @WithConverter(DurationConverter.class)
+        Duration keepAliveInterval();
+
+        /**
+         * Time to wait for a keepalive response before considering the connection timed out.
+         */
+        @WithDefault("7200ms")
+        @WithConverter(DurationConverter.class)
+        Duration keepAliveTimeout();
+
+        /**
+         * Number of keepalive probes allowed to fail before the connection is considered lost.
+         */
+        @WithDefault("9")
+        Integer keepAliveProbes();
     }
 }

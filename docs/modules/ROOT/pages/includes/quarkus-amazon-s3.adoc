@@ -49,7 +49,7 @@ Environment variable: `+++QUARKUS_S3_TELEMETRY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-s3_quarkus-s3-sync-client-type]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-type[`quarkus.s3.sync-client.type`]##
 ifdef::add-copy-button-to-config-props[]
@@ -70,7 +70,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`url`, `apache`, `aws-crt`
-|`url`
+|`+++url+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-s3_quarkus-s3-async-client-type]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-type[`quarkus.s3.async-client.type`]##
 ifdef::add-copy-button-to-config-props[]
@@ -91,7 +91,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`netty`, `aws-crt`
-|`netty`
+|`+++netty+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-s3_quarkus-s3-devservices-enabled]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-devservices-enabled[`quarkus.s3.devservices.enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -137,7 +137,7 @@ Environment variable: `+++QUARKUS_S3_DEVSERVICES_SHARED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-s3_quarkus-s3-devservices-isolated]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-devservices-isolated[`quarkus.s3.devservices.isolated`]##
 ifdef::add-copy-button-to-config-props[]
@@ -158,7 +158,7 @@ Environment variable: `+++QUARKUS_S3_DEVSERVICES_ISOLATED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-s3_quarkus-s3-devservices-service-name]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-devservices-service-name[`quarkus.s3.devservices.service-name`]##
 ifdef::add-copy-button-to-config-props[]
@@ -181,7 +181,7 @@ Environment variable: `+++QUARKUS_S3_DEVSERVICES_SERVICE_NAME+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|`localstack`
+|`+++localstack+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-s3_quarkus-s3-devservices-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-devservices-container-properties-container-properties[`quarkus.s3.devservices.container-properties."container-properties"`]##
 ifdef::add-copy-button-to-config-props[]
@@ -223,7 +223,7 @@ Environment variable: `+++QUARKUS_S3_DEVSERVICES_BUCKETS+++`
 endif::add-copy-button-to-env-var[]
 --
 |list of string
-|`default`
+|`+++default+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-accelerate-mode]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-accelerate-mode[`quarkus.s3.accelerate-mode`]##
 ifdef::add-copy-button-to-config-props[]
@@ -246,7 +246,7 @@ Environment variable: `+++QUARKUS_S3_ACCELERATE_MODE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-checksum-validation]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-checksum-validation[`quarkus.s3.checksum-validation`]##
 ifdef::add-copy-button-to-config-props[]
@@ -267,7 +267,7 @@ Environment variable: `+++QUARKUS_S3_CHECKSUM_VALIDATION+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-chunked-encoding]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-chunked-encoding[`quarkus.s3.chunked-encoding`]##
 ifdef::add-copy-button-to-config-props[]
@@ -288,7 +288,7 @@ Environment variable: `+++QUARKUS_S3_CHUNKED_ENCODING+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-dualstack]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-dualstack[`quarkus.s3.dualstack`]##
 ifdef::add-copy-button-to-config-props[]
@@ -309,7 +309,7 @@ Environment variable: `+++QUARKUS_S3_DUALSTACK+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-path-style-access]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-path-style-access[`quarkus.s3.path-style-access`]##
 ifdef::add-copy-button-to-config-props[]
@@ -330,7 +330,7 @@ Environment variable: `+++QUARKUS_S3_PATH_STYLE_ACCESS+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-use-arn-region-enabled]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-use-arn-region-enabled[`quarkus.s3.use-arn-region-enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -351,7 +351,7 @@ Environment variable: `+++QUARKUS_S3_USE_ARN_REGION_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-profile-name]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-profile-name[`quarkus.s3.profile-name`]##
 ifdef::add-copy-button-to-config-props[]
@@ -492,7 +492,7 @@ Environment variable: `+++QUARKUS_S3_ADVANCED_USE_QUARKUS_SCHEDULED_EXECUTOR_SER
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 
 h|[[quarkus-amazon-s3_section_quarkus-s3-aws]] [.section-name.section-level0]##link:#quarkus-amazon-s3_section_quarkus-s3-aws[AWS services configurations]##
@@ -584,7 +584,7 @@ Environment variable: `+++QUARKUS_S3_AWS_CREDENTIALS_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`default`, `static`, `system-property`, `env-variable`, `profile`, `container`, `instance-profile`, `process`, `custom`, `anonymous`
-|`default`
+|`+++default+++`
 
 h|[[quarkus-amazon-s3_section_quarkus-s3-aws-credentials-default-provider]] [.section-name.section-level1]##link:#quarkus-amazon-s3_section_quarkus-s3-aws-credentials-default-provider[Default credentials provider configuration]##
 h|Type
@@ -616,7 +616,7 @@ Environment variable: `+++QUARKUS_S3_AWS_CREDENTIALS_DEFAULT_PROVIDER_ASYNC_CRED
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-aws-credentials-default-provider-reuse-last-provider-enabled]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-aws-credentials-default-provider-reuse-last-provider-enabled[`quarkus.s3.aws.credentials.default-provider.reuse-last-provider-enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -644,7 +644,7 @@ Environment variable: `+++QUARKUS_S3_AWS_CREDENTIALS_DEFAULT_PROVIDER_REUSE_LAST
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 
 h|[[quarkus-amazon-s3_section_quarkus-s3-aws-credentials-static-provider]] [.section-name.section-level1]##link:#quarkus-amazon-s3_section_quarkus-s3-aws-credentials-static-provider[Static credentials provider configuration]##
@@ -793,7 +793,7 @@ Environment variable: `+++QUARKUS_S3_AWS_CREDENTIALS_PROCESS_PROVIDER_ASYNC_CRED
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-aws-credentials-process-provider-credential-refresh-threshold]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-aws-credentials-process-provider-credential-refresh-threshold[`quarkus.s3.aws.credentials.process-provider.credential-refresh-threshold`]##
 ifdef::add-copy-button-to-config-props[]
@@ -821,7 +821,7 @@ Environment variable: `+++QUARKUS_S3_AWS_CREDENTIALS_PROCESS_PROVIDER_CREDENTIAL
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
-|`15S`
+|`+++15S+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-aws-credentials-process-provider-process-output-limit]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-aws-credentials-process-provider-process-output-limit[`quarkus.s3.aws.credentials.process-provider.process-output-limit`]##
 ifdef::add-copy-button-to-config-props[]
@@ -847,7 +847,7 @@ Environment variable: `+++QUARKUS_S3_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_OU
 endif::add-copy-button-to-env-var[]
 --
 |MemorySize link:#memory-size-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the MemorySize format]]
-|`1024`
+|`+++1024+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-aws-credentials-process-provider-command[`quarkus.s3.aws.credentials.process-provider.command`]##
 ifdef::add-copy-button-to-config-props[]
@@ -931,7 +931,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
-|`2S`
+|`+++2S+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-socket-timeout]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-socket-timeout[`quarkus.s3.sync-client.socket-timeout`]##
 ifdef::add-copy-button-to-config-props[]
@@ -952,7 +952,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_SOCKET_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
-|`30S`
+|`+++30S+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-tls-key-managers-provider-type[`quarkus.s3.sync-client.tls-key-managers-provider.type`]##
 ifdef::add-copy-button-to-config-props[]
@@ -981,7 +981,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+
 endif::add-copy-button-to-env-var[]
 --
 a|`none`, `system-property`, `file-store`
-|`system-property`
+|`+++system-property+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-tls-key-managers-provider-file-store-path[`quarkus.s3.sync-client.tls-key-managers-provider.file-store.path`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1075,7 +1075,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYP
 endif::add-copy-button-to-env-var[]
 --
 a|`trust-all`, `system-property`, `file-store`
-|`system-property`
+|`+++system-property+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-tls-trust-managers-provider-file-store-path[`quarkus.s3.sync-client.tls-trust-managers-provider.file-store.path`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1165,7 +1165,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_APACHE_CONNECTION_ACQUISITION_T
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
-|`10S`
+|`+++10S+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-apache-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-apache-connection-max-idle-time[`quarkus.s3.sync-client.apache.connection-max-idle-time`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1186,7 +1186,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_APACHE_CONNECTION_MAX_IDLE_TIME
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
-|`60S`
+|`+++60S+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-apache-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-apache-connection-time-to-live[`quarkus.s3.sync-client.apache.connection-time-to-live`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1230,7 +1230,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_APACHE_MAX_CONNECTIONS+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`50`
+|`+++50+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-apache-expect-continue-enabled]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-apache-expect-continue-enabled[`quarkus.s3.sync-client.apache.expect-continue-enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1251,7 +1251,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_APACHE_EXPECT_CONTINUE_ENABLED+
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-apache-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-apache-use-idle-connection-reaper[`quarkus.s3.sync-client.apache.use-idle-connection-reaper`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1274,7 +1274,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_APACHE_USE_IDLE_CONNECTION_REAP
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-apache-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-apache-tcp-keep-alive[`quarkus.s3.sync-client.apache.tcp-keep-alive`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1295,7 +1295,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_APACHE_TCP_KEEP_ALIVE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-apache-proxy-enabled]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-apache-proxy-enabled[`quarkus.s3.sync-client.apache.proxy.enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1316,7 +1316,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_APACHE_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-apache-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-apache-proxy-endpoint[`quarkus.s3.sync-client.apache.proxy.endpoint`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1491,7 +1491,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
-|`60S`
+|`+++60S+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-crt-max-concurrency[`quarkus.s3.sync-client.crt.max-concurrency`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1512,7 +1512,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_CRT_MAX_CONCURRENCY+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`50`
+|`+++50+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-crt-proxy-enabled[`quarkus.s3.sync-client.crt.proxy.enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1533,7 +1533,7 @@ Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_CRT_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-sync-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-crt-proxy-endpoint[`quarkus.s3.sync-client.crt.proxy.endpoint`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1600,6 +1600,90 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
+a| [[quarkus-amazon-s3_quarkus-s3-sync-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-crt-tcp-keep-alive-enabled[`quarkus.s3.sync-client.crt.tcp-keep-alive.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.sync-client.crt.tcp-keep-alive.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Configure whether to enable or disable TCP KeepAlive.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-sync-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-crt-tcp-keep-alive-keep-alive-interval[`quarkus.s3.sync-client.crt.tcp-keep-alive.keep-alive-interval`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.sync-client.crt.tcp-keep-alive.keep-alive-interval+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Time between TCP keepalive packets being sent to the peer.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
+|`+++75MS+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-sync-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-crt-tcp-keep-alive-keep-alive-timeout[`quarkus.s3.sync-client.crt.tcp-keep-alive.keep-alive-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.sync-client.crt.tcp-keep-alive.keep-alive-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Time to wait for a keepalive response before considering the connection timed out.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
+|`+++7200MS+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-sync-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-sync-client-crt-tcp-keep-alive-keep-alive-probes[`quarkus.s3.sync-client.crt.tcp-keep-alive.keep-alive-probes`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.sync-client.crt.tcp-keep-alive.keep-alive-probes+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Number of keepalive probes allowed to fail before the connection is considered lost.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++9+++`
+
 
 
 h|[[quarkus-amazon-s3_section_quarkus-s3-async-client]] [.section-name.section-level0]##link:#quarkus-amazon-s3_section_quarkus-s3-async-client[Async HTTP transport configurations]##
@@ -1627,7 +1711,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_MAX_CONCURRENCY+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`50`
+|`+++50+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-max-pending-connection-acquires]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-max-pending-connection-acquires[`quarkus.s3.async-client.max-pending-connection-acquires`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1650,7 +1734,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_MAX_PENDING_CONNECTION_ACQUIRE
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`10000`
+|`+++10000+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-read-timeout]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-read-timeout[`quarkus.s3.async-client.read-timeout`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1673,7 +1757,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_READ_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
-|`30S`
+|`+++30S+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-write-timeout]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-write-timeout[`quarkus.s3.async-client.write-timeout`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1696,7 +1780,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_WRITE_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
-|`30S`
+|`+++30S+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-connection-timeout[`quarkus.s3.async-client.connection-timeout`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1717,7 +1801,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
-|`10S`
+|`+++10S+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-connection-acquisition-timeout[`quarkus.s3.async-client.connection-acquisition-timeout`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1738,7 +1822,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_CONNECTION_ACQUISITION_TIMEOUT
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
-|`2S`
+|`+++2S+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-connection-time-to-live[`quarkus.s3.async-client.connection-time-to-live`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1782,7 +1866,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
-|`5S`
+|`+++5S+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-use-idle-connection-reaper[`quarkus.s3.async-client.use-idle-connection-reaper`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1805,7 +1889,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_USE_IDLE_CONNECTION_REAPER+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-tcp-keep-alive[`quarkus.s3.async-client.tcp-keep-alive`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1815,7 +1899,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Configure whether to enable or disable TCP KeepAlive.
+Configure whether to enable or disable TCP KeepAlive. Applicable only to netty-nio client.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -1826,7 +1910,224 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_TCP_KEEP_ALIVE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
+
+h|[[quarkus-amazon-s3_section_quarkus-s3-async-client-crt]] [.section-name.section-level1]##link:#quarkus-amazon-s3_section_quarkus-s3-async-client-crt[AWS CRT-based HTTP client specific configurations]##
+h|Type
+h|Default
+
+a| [[quarkus-amazon-s3_quarkus-s3-async-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-crt-connection-max-idle-time[`quarkus.s3.async-client.crt.connection-max-idle-time`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.async-client.crt.connection-max-idle-time+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum amount of time that a connection should be allowed to remain open while idle.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_ASYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
+|`+++60S+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-async-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-crt-max-concurrency[`quarkus.s3.async-client.crt.max-concurrency`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.async-client.crt.max-concurrency+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The maximum number of allowed concurrent requests.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_ASYNC_CLIENT_CRT_MAX_CONCURRENCY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_CRT_MAX_CONCURRENCY+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++50+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-async-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-crt-proxy-enabled[`quarkus.s3.async-client.crt.proxy.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.async-client.crt.proxy.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Enable HTTP proxy
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_ASYNC_CLIENT_CRT_PROXY_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_CRT_PROXY_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-async-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-crt-proxy-endpoint[`quarkus.s3.async-client.crt.proxy.endpoint`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.async-client.crt.proxy.endpoint+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The endpoint of the proxy server that the SDK should connect through.
+
+Currently, the endpoint is limited to a host and port. Any other URI components will result in an exception being raised.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_ASYNC_CLIENT_CRT_PROXY_ENDPOINT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_CRT_PROXY_ENDPOINT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
+|
+
+a| [[quarkus-amazon-s3_quarkus-s3-async-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-crt-proxy-username[`quarkus.s3.async-client.crt.proxy.username`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.async-client.crt.proxy.username+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The username to use when connecting through a proxy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_ASYNC_CLIENT_CRT_PROXY_USERNAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_CRT_PROXY_USERNAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-s3_quarkus-s3-async-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-crt-proxy-password[`quarkus.s3.async-client.crt.proxy.password`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.async-client.crt.proxy.password+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The password to use when connecting through a proxy.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_ASYNC_CLIENT_CRT_PROXY_PASSWORD+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_CRT_PROXY_PASSWORD+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-s3_quarkus-s3-async-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-crt-tcp-keep-alive-enabled[`quarkus.s3.async-client.crt.tcp-keep-alive.enabled`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.async-client.crt.tcp-keep-alive.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Configure whether to enable or disable TCP KeepAlive.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-async-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-crt-tcp-keep-alive-keep-alive-interval[`quarkus.s3.async-client.crt.tcp-keep-alive.keep-alive-interval`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.async-client.crt.tcp-keep-alive.keep-alive-interval+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Time between TCP keepalive packets being sent to the peer.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
+|`+++75MS+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-async-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-crt-tcp-keep-alive-keep-alive-timeout[`quarkus.s3.async-client.crt.tcp-keep-alive.keep-alive-timeout`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.async-client.crt.tcp-keep-alive.keep-alive-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Time to wait for a keepalive response before considering the connection timed out.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
+|`+++7200MS+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-async-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-crt-tcp-keep-alive-keep-alive-probes[`quarkus.s3.async-client.crt.tcp-keep-alive.keep-alive-probes`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.async-client.crt.tcp-keep-alive.keep-alive-probes+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Number of keepalive probes allowed to fail before the connection is considered lost.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++9+++`
+
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-protocol]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-protocol[`quarkus.s3.async-client.protocol`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1847,7 +2148,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_PROTOCOL+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`http1-1`, `http2`
-|`http1-1`
+|`+++http1-1+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-ssl-provider]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-ssl-provider[`quarkus.s3.async-client.ssl-provider`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1893,7 +2194,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_HTTP2_MAX_STREAMS+++`
 endif::add-copy-button-to-env-var[]
 --
 |long
-|`4294967295`
+|`+++4294967295+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-http2-initial-window-size]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-http2-initial-window-size[`quarkus.s3.async-client.http2.initial-window-size`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1916,7 +2217,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_HTTP2_INITIAL_WINDOW_SIZE+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`1048576`
+|`+++1048576+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-http2-health-check-ping-period]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-http2-health-check-ping-period[`quarkus.s3.async-client.http2.health-check-ping-period`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1939,7 +2240,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_PERIOD
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
-|`5`
+|`+++5+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-proxy-enabled]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-proxy-enabled[`quarkus.s3.async-client.proxy.enabled`]##
 ifdef::add-copy-button-to-config-props[]
@@ -1960,7 +2261,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-proxy-endpoint[`quarkus.s3.async-client.proxy.endpoint`]##
 ifdef::add-copy-button-to-config-props[]
@@ -2033,7 +2334,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE
 endif::add-copy-button-to-env-var[]
 --
 a|`none`, `system-property`, `file-store`
-|`system-property`
+|`+++system-property+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-tls-key-managers-provider-file-store-path[`quarkus.s3.async-client.tls-key-managers-provider.file-store.path`]##
 ifdef::add-copy-button-to-config-props[]
@@ -2127,7 +2428,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TY
 endif::add-copy-button-to-env-var[]
 --
 a|`trust-all`, `system-property`, `file-store`
-|`system-property`
+|`+++system-property+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-tls-trust-managers-provider-file-store-path[`quarkus.s3.async-client.tls-trust-managers-provider.file-store.path`]##
 ifdef::add-copy-button-to-config-props[]
@@ -2213,7 +2514,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_EVENT_LOOP_OVERRIDE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`false`
+|`+++false+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-async-client-event-loop-number-of-threads[`quarkus.s3.async-client.event-loop.number-of-threads`]##
 ifdef::add-copy-button-to-config-props[]
@@ -2284,7 +2585,7 @@ Environment variable: `+++QUARKUS_S3_ASYNC_CLIENT_ADVANCED_USE_FUTURE_COMPLETION
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`true`
+|`+++true+++`
 
 
 h|[[quarkus-amazon-s3_section_quarkus-s3-crt-client]] [.section-name.section-level0]##link:#quarkus-amazon-s3_section_quarkus-s3-crt-client[AWS CRT-based S3 client configurations]##
@@ -2310,7 +2611,7 @@ Environment variable: `+++QUARKUS_S3_CRT_CLIENT_INITIAL_READ_BUFFER_SIZE_IN_BYTE
 endif::add-copy-button-to-env-var[]
 --
 |long
-|`Equal to the resolved part size * 10`
+|`+++Equal to the resolved part size * 10+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-crt-client-max-concurrency]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-crt-client-max-concurrency[`quarkus.s3.crt-client.max-concurrency`]##
 ifdef::add-copy-button-to-config-props[]
@@ -2352,7 +2653,7 @@ Environment variable: `+++QUARKUS_S3_CRT_CLIENT_MINIMUM_PART_SIZE_IN_BYTES+++`
 endif::add-copy-button-to-env-var[]
 --
 |long
-|`8MB`
+|`+++8MB+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-crt-client-target-throughput-in-gbps]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-crt-client-target-throughput-in-gbps[`quarkus.s3.crt-client.target-throughput-in-gbps`]##
 ifdef::add-copy-button-to-config-props[]
@@ -2373,7 +2674,7 @@ Environment variable: `+++QUARKUS_S3_CRT_CLIENT_TARGET_THROUGHPUT_IN_GBPS+++`
 endif::add-copy-button-to-env-var[]
 --
 |double
-|`10`
+|`+++10+++`
 
 a| [[quarkus-amazon-s3_quarkus-s3-crt-client-max-native-memory-limit-in-bytes]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-crt-client-max-native-memory-limit-in-bytes[`quarkus.s3.crt-client.max-native-memory-limit-in-bytes`]##
 ifdef::add-copy-button-to-config-props[]
@@ -2394,7 +2695,7 @@ Environment variable: `+++QUARKUS_S3_CRT_CLIENT_MAX_NATIVE_MEMORY_LIMIT_IN_BYTES
 endif::add-copy-button-to-env-var[]
 --
 |long
-|`Based on a number of parameters such as target throughput`
+|`+++Based on a number of parameters such as target throughput+++`
 
 
 |===

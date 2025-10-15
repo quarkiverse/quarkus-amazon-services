@@ -8,6 +8,7 @@ import java.util.OptionalInt;
 
 //import io.netty.handler.ssl.SslProvider;
 import io.quarkus.runtime.annotations.ConfigDocDefault;
+import io.quarkus.runtime.annotations.ConfigDocSection;
 import io.quarkus.runtime.annotations.ConfigGroup;
 import io.quarkus.runtime.configuration.DurationConverter;
 import io.smallrye.config.WithConverter;
@@ -100,10 +101,16 @@ public interface AsyncHttpClientConfig {
     boolean useIdleConnectionReaper();
 
     /**
-     * Configure whether to enable or disable TCP KeepAlive.
+     * Configure whether to enable or disable TCP KeepAlive. Applicable only to netty-nio client.
      */
     @WithDefault("false")
     Boolean tcpKeepAlive();
+
+    /**
+     * AWS CRT-based HTTP client specific configurations
+     */
+    @ConfigDocSection
+    CrtHttpClientConfig crt();
 
     /**
      * The HTTP protocol to use.
