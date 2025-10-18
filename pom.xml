@@ -44,7 +44,7 @@
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <quarkus.version>3.28.4</quarkus.version>
+    <quarkus.version>3.29.0.CR1</quarkus.version>
     <awssdk.version>2.35.10</awssdk.version>
     <awscrt.version>0.39.3</awscrt.version>
     <javapoet.version>1.13.0</javapoet.version>
