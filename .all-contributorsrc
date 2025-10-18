@@ -341,6 +341,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "majchrzw",
+      "name": "Wojciech Majchrzak",
+      "avatar_url": "https://avatars.githubusercontent.com/u/95643176?v=4",
+      "profile": "https://github.com/majchrzw",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
