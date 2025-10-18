@@ -17,7 +17,7 @@
             <dependency>
                 <groupId>com.squareup</groupId>
                 <artifactId>javapoet</artifactId>
-                <version>${javapoet.verion}</version>
+                <version>${javapoet.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hamcrest</groupId>
