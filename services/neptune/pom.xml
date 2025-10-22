@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.quarkiverse.amazonservices</groupId>
         <artifactId>quarkus-amazon-services-services-parent</artifactId>
-        <version>3.12.0</version>
+        <version>999-SNAPSHOT</version>
     </parent>
 
     <artifactId>quarkus-amazon-neptune-parent</artifactId>
