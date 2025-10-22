@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.quarkiverse.amazonservices</groupId>
         <artifactId>quarkus-amazon-services-services-parent</artifactId>
-        <version>999-SNAPSHOT</version>
+        <version>3.12.0</version>
     </parent>
 
     <artifactId>quarkus-amazon-accessanalyzer-parent</artifactId>
