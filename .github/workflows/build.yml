@@ -33,6 +33,8 @@ jobs:
             async-client-type: "netty"
           - sync-client-type: "apache"
             async-client-type: "netty"
+          - sync-client-type: "apache5"
+            async-client-type: "netty"
           - sync-client-type: "aws-crt"
             async-client-type: "aws-crt"
 
