@@ -29,7 +29,7 @@ import io.quarkiverse.amazon.common.deployment.AmazonClientSyncResultBuildItem;
 import io.quarkiverse.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
 import io.quarkiverse.amazon.dynamodb.enhanced.runtime.BeanTableSchemaSubstitutionImplementation;
 import io.quarkiverse.amazon.dynamodb.enhanced.runtime.DynamoDbEnhancedBuildTimeConfig;
-import io.quarkiverse.amazon.dynamodb.enhanced.runtime.DynamodbEnhancedClientRecorder;
+import io.quarkiverse.amazon.dynamodb.enhanced.runtime.DynamoDbEnhancedClientRecorder;
 import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.arc.processor.InjectionPointInfo;
@@ -112,7 +112,7 @@ public class DynamodbEnhancedProcessor {
     @BuildStep
     @Record(ExecutionTime.STATIC_INIT)
     void createClientBuilders(
-            DynamodbEnhancedClientRecorder recorder,
+            DynamoDbEnhancedClientRecorder recorder,
             BuildProducer<SyntheticBeanBuildItem> syntheticBean,
             List<AmazonClientSyncResultBuildItem> syncBuilder,
             List<AmazonClientAsyncResultBuildItem> asyncBuilder) {
@@ -183,7 +183,7 @@ public class DynamodbEnhancedProcessor {
     @Record(ExecutionTime.STATIC_INIT)
     public void recordTableSchema(
             DynamoDbEnhancedBuildTimeConfig config,
-            DynamodbEnhancedClientRecorder recorder,
+            DynamoDbEnhancedClientRecorder recorder,
             List<DynamodbEnhancedBeanBuildItem> dynamodbEnhancedBeanBuildItems,
             BuildProducer<ReflectiveClassBuildItem> reflectiveClass) {
 
