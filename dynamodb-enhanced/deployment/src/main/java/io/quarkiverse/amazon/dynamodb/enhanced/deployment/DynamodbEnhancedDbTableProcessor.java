@@ -22,14 +22,17 @@ import org.jboss.jandex.Type;
 
 import io.quarkiverse.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
 import io.quarkiverse.amazon.common.runtime.ClientUtil;
+import io.quarkiverse.amazon.dynamodb.enhanced.runtime.DynamoDbEnhancedTableRecorder;
 import io.quarkiverse.amazon.dynamodb.enhanced.runtime.NamedDynamoDbTable;
 import io.quarkus.arc.SyntheticCreationalContext;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
+import io.quarkus.arc.deployment.SyntheticBeanBuildItem.ExtendedBeanConfigurator;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.ExecutionTime;
+import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.CombinedIndexBuildItem;
-import io.quarkus.gizmo.MethodCreator;
 import io.quarkus.gizmo.MethodDescriptor;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbAsyncTable;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient;
@@ -123,12 +126,14 @@ public class DynamodbEnhancedDbTableProcessor {
     }
 
     @BuildStep
+    @Record(ExecutionTime.STATIC_INIT)
     public void produceNamedDbTableBean(List<DynamodbEnhancedTableBuildItem> tables,
+            DynamoDbEnhancedTableRecorder recorder,
             BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer,
             BuildProducer<SyntheticBeanBuildItem> syntheticBean) {
 
         // produce a synthetic bean for each DynamoDb table bean
-        tables.stream().map(DynamodbEnhancedDbTableProcessor::generateDynamoDbTableSyntheticBean)
+        tables.stream().map(table -> generateDynamoDbTableSyntheticBean(table, recorder))
                 .forEach(syntheticBean::produce);
         // each table bean requires a DynamoDb Enhanced client
         tables.stream()
@@ -150,39 +155,26 @@ public class DynamodbEnhancedDbTableProcessor {
         }
     }
 
-    static private SyntheticBeanBuildItem generateDynamoDbTableSyntheticBean(DynamodbEnhancedTableBuildItem table) {
-        return SyntheticBeanBuildItem
+    static private SyntheticBeanBuildItem generateDynamoDbTableSyntheticBean(DynamodbEnhancedTableBuildItem table,
+            DynamoDbEnhancedTableRecorder recorder) {
+        // allows to @inject DynamoDbTable<DynamoDBExampleTableEntry> or  DynamoDbAsyncTable<DynamoDBExampleTableEntry>
+        ExtendedBeanConfigurator beanConfigurator = SyntheticBeanBuildItem
                 .configure(table.getTableClassName())
                 .addType(ParameterizedType.builder(table.getTableClassName())
                         .addArgument(ClassType.create(table.getBeanClassName())).build())
                 .scope(Singleton.class)
                 .qualifiers(AnnotationInstance.builder(NamedDynamoDbTable.class).value(table.getTableName()).build())
                 .unremovable()
-                .creator(methodCreator -> {
-                    generateDynamoDbTableSyncTableProducerMethod(methodCreator, table);
-                })
-                .addInjectionPoint(ClassType.create(table.getClientClassName()))
-                .done();
-    }
+                .param("tableName", table.getTableName())
+                .param("beanClassName", table.getBeanClassName().toString())
+                .addInjectionPoint(ClassType.create(table.getClientClassName()));
 
-    static private void generateDynamoDbTableSyncTableProducerMethod(MethodCreator methodCreator,
-            DynamodbEnhancedTableBuildItem table) {
-        // DynamoDbEnhancedClient dynamoEnhancedClient = arg0.getInjectedReferenceMethod(DynamoDbEnhancedClient.class, {})
-        // String tableName = "...";
-        // Class beanClass = Class.forName("...", TCCL)
-        // TableSchema tableSchema = TableSchema.fromClass(beanClass)
-        // dynamoEnhancedClient.table(tableName, tableSchema)
-        var dynamoEnhancedClientHandle = methodCreator.invokeInterfaceMethod(CREATION_CONTEXT_GET_INJECTED_REFERENCE_METHOD,
-                methodCreator.getMethodParam(0), methodCreator.loadClass(table.getClientClassName().toString()),
-                methodCreator.newArray(Annotation.class, 0));
-        var tableNameHandler = methodCreator.load(table.getTableName());
-        var beanClassHandler = methodCreator.loadClassFromTCCL(table.getBeanClassName().toString());
-        var tableSchemaHandle = methodCreator.invokeStaticInterfaceMethod(TABLE_SCHEMA_FROM_CLASS_METHOD,
-                beanClassHandler);
-        var mappedTableHandle = methodCreator.invokeInterfaceMethod(table.getTableMethodDescriptor(),
-                dynamoEnhancedClientHandle, tableNameHandler,
-                tableSchemaHandle);
+        if (DotNames.DYNAMODB_TABLE.equals(table.getTableClassName())) {
+            beanConfigurator.createWith(recorder.createDynamoDbTable());
+        } else {
+            beanConfigurator.createWith(recorder.createDynamoDbAsyncTable());
+        }
 
-        methodCreator.returnValue(mappedTableHandle);
+        return beanConfigurator.done();
     }
 }

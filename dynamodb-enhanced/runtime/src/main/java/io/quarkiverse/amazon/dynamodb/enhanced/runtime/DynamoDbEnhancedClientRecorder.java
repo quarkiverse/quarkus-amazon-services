@@ -24,12 +24,12 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 @Recorder
-public class DynamodbEnhancedClientRecorder {
-    private static final Log LOG = LogFactory.getLog(DynamodbEnhancedClientRecorder.class);
+public class DynamoDbEnhancedClientRecorder {
+    private static final Log LOG = LogFactory.getLog(DynamoDbEnhancedClientRecorder.class);
 
     DynamoDbEnhancedBuildTimeConfig buildTimeConfig;
 
-    public DynamodbEnhancedClientRecorder(DynamoDbEnhancedBuildTimeConfig buildTimeConfig) {
+    public DynamoDbEnhancedClientRecorder(DynamoDbEnhancedBuildTimeConfig buildTimeConfig) {
         this.buildTimeConfig = buildTimeConfig;
     }
 
