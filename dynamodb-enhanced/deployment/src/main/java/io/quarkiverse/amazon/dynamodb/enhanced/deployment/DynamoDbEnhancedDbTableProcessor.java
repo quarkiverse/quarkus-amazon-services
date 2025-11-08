@@ -1,6 +1,5 @@
 package io.quarkiverse.amazon.dynamodb.enhanced.deployment;
 
-import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +23,6 @@ import io.quarkiverse.amazon.common.deployment.RequireAmazonClientInjectionBuild
 import io.quarkiverse.amazon.common.runtime.ClientUtil;
 import io.quarkiverse.amazon.dynamodb.enhanced.runtime.DynamoDbEnhancedTableRecorder;
 import io.quarkiverse.amazon.dynamodb.enhanced.runtime.NamedDynamoDbTable;
-import io.quarkus.arc.SyntheticCreationalContext;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem.ExtendedBeanConfigurator;
@@ -33,33 +31,8 @@ import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.CombinedIndexBuildItem;
-import io.quarkus.gizmo.MethodDescriptor;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbAsyncTable;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
-import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
-import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 
-public class DynamodbEnhancedDbTableProcessor {
-
-    //  <R> R getInjectedReference(Class<R> requiredType, Annotation... qualifiers);
-    public static final MethodDescriptor CREATION_CONTEXT_GET_INJECTED_REFERENCE_METHOD = MethodDescriptor.ofMethod(
-            SyntheticCreationalContext.class,
-            "getInjectedReference", Object.class, Class.class, Annotation[].class);
-
-    // static <T> TableSchema<T> fromClass(Class<T> annotatedClass)
-    public static final MethodDescriptor TABLE_SCHEMA_FROM_CLASS_METHOD = MethodDescriptor.ofMethod(TableSchema.class,
-            "fromClass", TableSchema.class,
-            Class.class);
-
-    // <T> DynamoDbTable<T> table(String tableName, TableSchema<T> tableSchema);
-    public static final MethodDescriptor DYNAMODB_ENHANCED_CLIENT_TABLE_METHOD = MethodDescriptor.ofMethod(
-            DynamoDbEnhancedClient.class, "table",
-            DynamoDbTable.class, String.class, TableSchema.class);
-    // <T> DynamoDbAsyncTable<T> table(String tableName, TableSchema<T> tableSchema);
-    public static final MethodDescriptor DYNAMODB_ENHANCED_ASYNC_CLIENT_TABLE_METHOD = MethodDescriptor.ofMethod(
-            DynamoDbEnhancedAsyncClient.class, "table",
-            DynamoDbAsyncTable.class, String.class, TableSchema.class);
+public class DynamoDbEnhancedDbTableProcessor {
 
     @BuildStep
     AdditionalBeanBuildItem additionalBeans() {
@@ -68,7 +41,7 @@ public class DynamodbEnhancedDbTableProcessor {
 
     @BuildStep
     void discoverDynamoDbTable(CombinedIndexBuildItem combinedIndexBuildItem,
-            BuildProducer<DynamodbEnhancedTableBuildItem> tables) {
+            BuildProducer<DynamoDbEnhancedTableBuildItem> tables) {
 
         Set<Map.Entry<String, DotName>> asyncSeen = new HashSet<>();
         Set<Map.Entry<String, DotName>> syncSeen = new HashSet<>();
@@ -110,16 +83,14 @@ public class DynamodbEnhancedDbTableProcessor {
 
             if (DotNames.DYNAMODB_TABLE.equals(dbTableClassName)) {
                 if (syncSeen.add(Map.entry(tableName, beanClassName))) {
-                    tables.produce(new DynamodbEnhancedTableBuildItem(tableName, beanClassName,
-                            DotNames.DYNAMODB_ENHANCED_CLIENT, DYNAMODB_ENHANCED_CLIENT_TABLE_METHOD,
-                            DotNames.DYNAMODB_TABLE));
+                    tables.produce(new DynamoDbEnhancedTableBuildItem(tableName, beanClassName,
+                            DotNames.DYNAMODB_ENHANCED_CLIENT, DotNames.DYNAMODB_TABLE));
                 }
             }
             if (DotNames.DYNAMODB_ASYNC_TABLE.equals(dbTableClassName)) {
                 if (asyncSeen.add(Map.entry(tableName, beanClassName))) {
-                    tables.produce(new DynamodbEnhancedTableBuildItem(tableName, beanClassName,
-                            DotNames.DYNAMODB_ENHANCED_ASYNC_CLIENT, DYNAMODB_ENHANCED_ASYNC_CLIENT_TABLE_METHOD,
-                            DotNames.DYNAMODB_ASYNC_TABLE));
+                    tables.produce(new DynamoDbEnhancedTableBuildItem(tableName, beanClassName,
+                            DotNames.DYNAMODB_ENHANCED_ASYNC_CLIENT, DotNames.DYNAMODB_ASYNC_TABLE));
                 }
             }
         }
@@ -127,7 +98,7 @@ public class DynamodbEnhancedDbTableProcessor {
 
     @BuildStep
     @Record(ExecutionTime.STATIC_INIT)
-    public void produceNamedDbTableBean(List<DynamodbEnhancedTableBuildItem> tables,
+    public void produceNamedDbTableBean(List<DynamoDbEnhancedTableBuildItem> tables,
             DynamoDbEnhancedTableRecorder recorder,
             BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer,
             BuildProducer<SyntheticBeanBuildItem> syntheticBean) {
@@ -155,7 +126,7 @@ public class DynamodbEnhancedDbTableProcessor {
         }
     }
 
-    static private SyntheticBeanBuildItem generateDynamoDbTableSyntheticBean(DynamodbEnhancedTableBuildItem table,
+    static private SyntheticBeanBuildItem generateDynamoDbTableSyntheticBean(DynamoDbEnhancedTableBuildItem table,
             DynamoDbEnhancedTableRecorder recorder) {
         // allows to @inject DynamoDbTable<DynamoDBExampleTableEntry> or  DynamoDbAsyncTable<DynamoDBExampleTableEntry>
         ExtendedBeanConfigurator beanConfigurator = SyntheticBeanBuildItem

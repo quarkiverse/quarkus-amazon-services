@@ -3,23 +3,19 @@ package io.quarkiverse.amazon.dynamodb.enhanced.deployment;
 import org.jboss.jandex.DotName;
 
 import io.quarkus.builder.item.MultiBuildItem;
-import io.quarkus.gizmo.MethodDescriptor;
 
-public final class DynamodbEnhancedTableBuildItem extends MultiBuildItem {
+public final class DynamoDbEnhancedTableBuildItem extends MultiBuildItem {
 
     private String tableName;
     private DotName beanClassName;
     private DotName clientClassName;
-    private MethodDescriptor tableMethodDescriptor;
     private DotName tableClassName;
 
-    public DynamodbEnhancedTableBuildItem(String tableName, DotName beanClassName, DotName clientClassName,
-            MethodDescriptor tableMethodDescriptor,
+    public DynamoDbEnhancedTableBuildItem(String tableName, DotName beanClassName, DotName clientClassName,
             DotName tableClassName) {
         this.tableName = tableName;
         this.beanClassName = beanClassName;
         this.clientClassName = clientClassName;
-        this.tableMethodDescriptor = tableMethodDescriptor;
         this.tableClassName = tableClassName;
     }
 
@@ -33,10 +29,6 @@ public final class DynamodbEnhancedTableBuildItem extends MultiBuildItem {
 
     public DotName getClientClassName() {
         return clientClassName;
-    }
-
-    public MethodDescriptor getTableMethodDescriptor() {
-        return tableMethodDescriptor;
     }
 
     public DotName getTableClassName() {

@@ -60,7 +60,7 @@ import software.amazon.awssdk.enhanced.dynamodb.internal.mapper.StaticGetterMeth
 import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
-public class DynamodbEnhancedProcessor {
+public class DynamoDbEnhancedProcessor {
     private static final String FEATURE = "amazon-sdk-dynamodb-enhanced";
 
     @BuildStep
@@ -163,19 +163,19 @@ public class DynamodbEnhancedProcessor {
 
     @BuildStep
     public void discoverDynamoDbBeans(CombinedIndexBuildItem combinedIndexBuildItem,
-            BuildProducer<DynamodbEnhancedBeanBuildItem> dynamodbEnhancedBeanBuildItems) {
+            BuildProducer<DynamoDbEnhancedBeanBuildItem> dynamodbEnhancedBeanBuildItems) {
         IndexView index = combinedIndexBuildItem.getIndex();
 
         // Discover all DynamoDbBean annotated classes and register them
         for (AnnotationInstance annotationInstance : index.getAnnotations(DotNames.DYNAMODB_ENHANCED_BEAN)) {
             ClassInfo beanClassInfo = annotationInstance.target().asClass();
-            dynamodbEnhancedBeanBuildItems.produce(new DynamodbEnhancedBeanBuildItem(beanClassInfo.name()));
+            dynamodbEnhancedBeanBuildItems.produce(new DynamoDbEnhancedBeanBuildItem(beanClassInfo.name()));
         }
 
         // Discover all DynamoDbImmutable annotated classes and register them
         for (AnnotationInstance annotationInstance : index.getAnnotations(DotNames.DYNAMODB_ENHANCED_IMMUTABLE)) {
             var beanClassInfo = annotationInstance.target().asClass();
-            dynamodbEnhancedBeanBuildItems.produce(new DynamodbEnhancedBeanBuildItem(beanClassInfo.name()));
+            dynamodbEnhancedBeanBuildItems.produce(new DynamoDbEnhancedBeanBuildItem(beanClassInfo.name()));
         }
     }
 
@@ -184,14 +184,14 @@ public class DynamodbEnhancedProcessor {
     public void recordTableSchema(
             DynamoDbEnhancedBuildTimeConfig config,
             DynamoDbEnhancedClientRecorder recorder,
-            List<DynamodbEnhancedBeanBuildItem> dynamodbEnhancedBeanBuildItems,
+            List<DynamoDbEnhancedBeanBuildItem> dynamodbEnhancedBeanBuildItems,
             BuildProducer<ReflectiveClassBuildItem> reflectiveClass) {
 
         if (!config.createTableSchemas())
             return;
 
         List<Class<?>> tableSchemaClasses = new ArrayList<>();
-        for (DynamodbEnhancedBeanBuildItem dynamodbEnhancedBeanBuildItem : dynamodbEnhancedBeanBuildItems) {
+        for (DynamoDbEnhancedBeanBuildItem dynamodbEnhancedBeanBuildItem : dynamodbEnhancedBeanBuildItems) {
             try {
                 tableSchemaClasses.add(Class.forName(dynamodbEnhancedBeanBuildItem.getClassName().toString(), false,
                         Thread.currentThread().getContextClassLoader()));
@@ -204,10 +204,10 @@ public class DynamodbEnhancedProcessor {
 
     @BuildStep(onlyIf = NativeBuild.class)
     public void registerClassesForReflectiveAccess(
-            List<DynamodbEnhancedBeanBuildItem> dynamodbEnhancedBeanBuildItems,
+            List<DynamoDbEnhancedBeanBuildItem> dynamodbEnhancedBeanBuildItems,
             BuildProducer<ReflectiveClassBuildItem> reflectiveClass) {
 
-        for (DynamodbEnhancedBeanBuildItem dynamodbEnhancedBeanBuildItem : dynamodbEnhancedBeanBuildItems) {
+        for (DynamoDbEnhancedBeanBuildItem dynamodbEnhancedBeanBuildItem : dynamodbEnhancedBeanBuildItems) {
             registerInstance(reflectiveClass, dynamodbEnhancedBeanBuildItem.getClassName());
         }
 
