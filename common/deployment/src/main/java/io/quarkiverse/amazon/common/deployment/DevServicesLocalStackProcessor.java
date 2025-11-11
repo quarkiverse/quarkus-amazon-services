@@ -288,18 +288,27 @@ public class DevServicesLocalStackProcessor {
                 return new RunningDevService(devServiceName, containerAddress.getId(), null, config);
             }).orElseGet(
                     () -> {
+                        Map<String, String> envVars = Stream.concat(
+                                requestedServicesGroup.stream()
+                                        .map(ds -> ds.getConfig().getContainerProperties())
+                                        .flatMap(ds -> ds.entrySet().stream()),
+                                localStackDevServicesBuildTimeConfig.containerProperties().entrySet()
+                                        .stream())
+                                .collect(Collectors.toMap(entry -> entry.getKey(),
+                                        entry -> entry.getValue()));
+
+                        boolean hasInitScripts = localStackDevServicesBuildTimeConfig.initScriptsFolder().isPresent()
+                                || localStackDevServicesBuildTimeConfig.initScriptsClasspath().isPresent();
+                        if (hasInitScripts && !envVars.containsKey("LOCALSTACK_HOST")) {
+                            envVars.put("LOCALSTACK_HOST", "127.0.0.1");
+                            log.debug("LocalStack init scripts detected - automatically setting LOCALSTACK_HOST=127.0.0.1 " +
+                                    "to ensure scripts can connect to LocalStack from within the container");
+                        }
+
                         LocalStackContainer container = new LocalStackContainer(
                                 DockerImageName.parse(localStackDevServicesBuildTimeConfig.imageName())
                                         .asCompatibleSubstituteFor("localstack/localstack"))
-                                .withEnv(
-                                        Stream.concat(
-                                                requestedServicesGroup.stream()
-                                                        .map(ds -> ds.getConfig().getContainerProperties())
-                                                        .flatMap(ds -> ds.entrySet().stream()),
-                                                localStackDevServicesBuildTimeConfig.containerProperties().entrySet()
-                                                        .stream())
-                                                .collect(Collectors.toMap(entry -> entry.getKey(),
-                                                        entry -> entry.getValue())))
+                                .withEnv(envVars)
                                 .withServices(requestedServicesGroup.stream().map(ds -> ds.getService())
                                         .toArray(EnabledService[]::new))
                                 .withLabel(DEV_SERVICE_LABEL, devServiceName);
