@@ -2,7 +2,6 @@ package io.quarkiverse.amazon.common.runtime;
 
 import java.util.Arrays;
 import java.util.function.BooleanSupplier;
-import java.util.zip.Checksum;
 
 import com.oracle.svm.core.annotate.Alias;
 import com.oracle.svm.core.annotate.Delete;
@@ -101,27 +100,6 @@ public class CrtSubstitutions {
         @TargetElement(name = "crc64NvmeCrtImplementation", onlyWith = IsCrtPresent.class)
         static SdkChecksum crc64NvmeCrtImplementationCrtPresent() {
             return new CrcCloneOnMarkChecksum(new software.amazon.awssdk.crt.checksums.CRC64NVME());
-        }
-    }
-
-    /**
-     * aws sdk tries to create a crt-based, then sdk-based checksum
-     * Force the sdk-based when Crt is absent
-     */
-    @TargetClass(value = software.amazon.awssdk.core.checksums.Crc32Checksum.class, onlyWith = IsCrtAbsent.class)
-    static final class Target_Crc32Checksum {
-        @Alias
-        private Checksum crc32;
-
-        @Substitute
-        public Target_Crc32Checksum() {
-            crc32 = software.amazon.awssdk.core.internal.checksums.factory.SdkCrc32.create();
-        }
-
-        @Substitute
-        private Checksum cloneChecksum(Checksum checksum) {
-
-            return (Checksum) ((software.amazon.awssdk.core.internal.checksums.factory.SdkCrc32) checksum).clone();
         }
     }
 
