@@ -4,11 +4,11 @@ import org.jboss.jandex.DotName;
 
 import io.quarkus.builder.item.MultiBuildItem;
 
-public final class DynamodbEnhancedBeanBuildItem extends MultiBuildItem {
+public final class DynamoDbEnhancedBeanBuildItem extends MultiBuildItem {
 
     private DotName className;
 
-    public DynamodbEnhancedBeanBuildItem(DotName className) {
+    public DynamoDbEnhancedBeanBuildItem(DotName className) {
         this.className = className;
     }
 
