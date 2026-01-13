@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon Transfer"
+metadata:
+  keywords:
+    - "transfer"
+    - "aws"
+    - "amazon"
+  categories:
+    - "data"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-transfer.html
+  status: "stable"
+  config:
+  - "quarkus.transfer."

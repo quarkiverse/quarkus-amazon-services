@@ -53,6 +53,7 @@
         <module>ssm</module>
         <module>sts</module>
         <module>textract</module>
+        <module>transfer</module>
     </modules>
 
     <build>
