@@ -1,0 +1,57 @@
+:service-name: transfer
+:service-name-uppercase: Transfer Family
+
+= Amazon Transfer Family Client
+
+include::./includes/attributes.adoc[]
+
+Amazon Transfer Family is a fully managed service that enables file transfers directly into and out of Amazon S3 using SFTP, FTPS, and FTP protocols.
+
+You can find more information about the Transfer Family at https://aws.amazon.com/aws-transfer-family/[the Amazon Transfer Family website].
+
+NOTE: The Transfer Family extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
+
+The Quarkus extension supports two programming models:
+
+* Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
+* https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
+
+You can use this extension to integrate Transfer Family capabilities in your Quarkus applications using the AWS SDK for Java 2.x.
+
+include::./amazon-configure-clients.adoc[]
+
+== Usage
+
+You can inject the Transfer client in your Quarkus beans using:
+
+[source,java]
+----
+import software.amazon.awssdk.services.transfer.TransferClient;
+import software.amazon.awssdk.services.transfer.model.ListServersRequest;
+import software.amazon.awssdk.services.transfer.model.ListServersResponse;
+
+import jakarta.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+public class TransferService {
+
+    @Inject
+    TransferClient transferClient;
+
+    public void listServers() {
+        ListServersResponse response = transferClient.listServers(ListServersRequest.builder().build());
+        // Handle response, e.g. iterate over response.servers()
+    }
+}
+----
+
+== Configuration Reference
+
+include::./includes/quarkus-amazon-transfer.adoc[]
+
+== Related Guides
+
+For more information, check out:
+- https://docs.aws.amazon.com/transfer/latest/userguide/what-is.html[AWS Transfer Family Documentation]
