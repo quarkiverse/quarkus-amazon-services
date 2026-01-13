@@ -46,6 +46,11 @@ public class S3CrtSubstitutions {
     static final class Delete_DefaultS3CrtAsyncClient {
     }
 
+    @TargetClass(className = "software.amazon.awssdk.services.s3.internal.crt.DefaultS3CrtAsyncClient$AttachHttpAttributesExecutionInterceptor", onlyWith = S3CrtSubstitutions.IsCrtAbsent.class)
+    @Delete
+    static final class Delete_DefaultS3CrtAsyncClient$AttachHttpAttributesExecutionInterceptor {
+    }
+
     @TargetClass(value = S3CrtAsyncClient.class, onlyWith = S3CrtSubstitutions.IsCrtAbsent.class)
     @Delete
     static final class Delete_S3CrtAsyncClient {
