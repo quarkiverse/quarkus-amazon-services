@@ -1,0 +1,57 @@
+:service-name: appconfig
+:service-name-uppercase: AppConfig
+
+= Amazon AppConfig Client
+
+include::./includes/attributes.adoc[]
+
+Amazon AppConfig is a service for managing application configurations.
+
+You can find more information about AppConfig at https://aws.amazon.com/systems-manager/features/#AppConfig[the Amazon AppConfig website].
+
+NOTE: The AppConfig extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
+
+The Quarkus extension supports two programming models:
+
+* Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
+* https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
+
+You can use this extension to integrate AppConfig capabilities in your Quarkus applications using the AWS SDK for Java 2.x.
+
+include::./amazon-configure-clients.adoc[]
+
+== Usage
+
+You can inject the AppConfig client in your Quarkus beans using:
+
+[source,java]
+----
+import software.amazon.awssdk.services.appconfig.AppConfigClient;
+import software.amazon.awssdk.services.appconfig.model.ListApplicationsRequest;
+import software.amazon.awssdk.services.appconfig.model.ListApplicationsResponse;
+
+import jakarta.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
+public class AppConfigService {
+
+    @Inject
+    AppConfigClient appConfigClient;
+
+    public void listApplications() {
+        ListApplicationsResponse response = appConfigClient.listApplications(ListApplicationsRequest.builder().build());
+        // Handle response, e.g. iterate over response.items()
+    }
+}
+----
+
+== Configuration Reference
+
+include::./amazon-configure-clients.adoc[]
+
+== Related Guides
+
+For more information, check out:
+- https://docs.aws.amazon.com/appconfig/latest/userguide/what-is-appconfig.html[AWS AppConfig Documentation]
