@@ -20,6 +20,7 @@
         <module>apigateway</module>
         <module>apigatewayv2</module>
         <module>apigatewaymanagementapi</module>
+        <module>appconfig</module>
         <module>bedrock</module>
         <module>bedrockruntime</module>
         <module>cloudwatch</module>

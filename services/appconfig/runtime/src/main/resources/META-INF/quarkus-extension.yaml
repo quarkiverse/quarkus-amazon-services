@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon AppConfig"
+metadata:
+  keywords:
+    - "appconfig"
+    - "aws"
+    - "amazon"
+  categories:
+    - "configuration"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-appconfig.html
+  status: "stable"
+  config:
+  - "quarkus.appconfig."

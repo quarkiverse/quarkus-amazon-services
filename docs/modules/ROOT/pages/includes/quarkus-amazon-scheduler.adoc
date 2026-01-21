@@ -7,9 +7,9 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-interceptors]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-interceptors[`quarkus.interceptors`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-interceptors]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-interceptors[`quarkus.eventbridge-scheduler.interceptors`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.interceptors+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.interceptors+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -21,18 +21,18 @@ The list should consists of class names which implements `software.amazon.awssdk
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_INTERCEPTORS+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_INTERCEPTORS+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_INTERCEPTORS+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_INTERCEPTORS+++`
 endif::add-copy-button-to-env-var[]
 --
 |list of string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-telemetry-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-telemetry-enabled[`quarkus.telemetry.enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-telemetry-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-telemetry-enabled[`quarkus.eventbridge-scheduler.telemetry.enabled`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.telemetry.enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.telemetry.enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -42,18 +42,18 @@ OpenTelemetry AWS SDK instrumentation will be enabled if the OpenTelemetry exten
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_TELEMETRY_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_TELEMETRY_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_TELEMETRY_ENABLED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_TELEMETRY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-type[`quarkus.sync-client.type`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-type[`quarkus.eventbridge-scheduler.sync-client.type`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.type+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.type+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -63,18 +63,18 @@ Type of the sync HTTP client implementation
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_TYPE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TYPE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_TYPE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`apache`, `aws-crt`, `url`
-|url
+a|`url`, `apache`, `aws-crt`
+|`+++url+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-type[`quarkus.async-client.type`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-type[`quarkus.eventbridge-scheduler.async-client.type`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.type+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.type+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -84,18 +84,18 @@ Type of the async HTTP client implementation
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_TYPE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TYPE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_TYPE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`aws-crt`, `netty`
-|netty
+a|`netty`, `aws-crt`
+|`+++netty+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-devservices-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-devservices-enabled[`quarkus.devservices.enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-devservices-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-devservices-enabled[`quarkus.eventbridge-scheduler.devservices.enabled`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.devservices.enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.devservices.enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -105,18 +105,18 @@ If a local AWS stack should be used. (default to true) If this is true and endpo
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_DEVSERVICES_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_DEVSERVICES_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_DEVSERVICES_ENABLED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_DEVSERVICES_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-devservices-shared]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-devservices-shared[`quarkus.devservices.shared`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-devservices-shared]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-devservices-shared[`quarkus.eventbridge-scheduler.devservices.shared`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.devservices.shared+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.devservices.shared+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -130,18 +130,18 @@ Sharing is not supported for the Cognito extension.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_DEVSERVICES_SHARED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_DEVSERVICES_SHARED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_DEVSERVICES_SHARED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_DEVSERVICES_SHARED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-devservices-isolated]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-devservices-isolated[`quarkus.devservices.isolated`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-devservices-isolated]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-devservices-isolated[`quarkus.eventbridge-scheduler.devservices.isolated`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.devservices.isolated+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.devservices.isolated+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -151,18 +151,18 @@ Indicates if shared LocalStack services managed by Dev Services should be isolat
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_DEVSERVICES_ISOLATED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_DEVSERVICES_ISOLATED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_DEVSERVICES_ISOLATED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_DEVSERVICES_ISOLATED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|`+++true+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-devservices-service-name]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-devservices-service-name[`quarkus.devservices.service-name`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-devservices-service-name]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-devservices-service-name[`quarkus.eventbridge-scheduler.devservices.service-name`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.devservices.service-name+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.devservices.service-name+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -174,18 +174,18 @@ This property is used when you need multiple shared LocalStack instances.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_DEVSERVICES_SERVICE_NAME+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_DEVSERVICES_SERVICE_NAME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_DEVSERVICES_SERVICE_NAME+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_DEVSERVICES_SERVICE_NAME+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|localstack
+|`+++localstack+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-devservices-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-devservices-container-properties-container-properties[`quarkus.devservices.container-properties."container-properties"`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-devservices-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-devservices-container-properties-container-properties[`quarkus.eventbridge-scheduler.devservices.container-properties."container-properties"`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.devservices.container-properties."container-properties"+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.devservices.container-properties."container-properties"+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -195,28 +195,28 @@ Generic properties that are pass for additional container configuration.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_DEVSERVICES_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_DEVSERVICES_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_DEVSERVICES_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_DEVSERVICES_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++`
 endif::add-copy-button-to-env-var[]
 --
 |Map<String,String>
 |
 
-h|[[quarkus-amazon-scheduler_section_quarkus]] [.section-name.section-level0]##link:#quarkus-amazon-scheduler_section_quarkus[AWS SDK client configurations]##
+h|[[quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler]] [.section-name.section-level0]##link:#quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler[AWS SDK client configurations]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-endpoint-override]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-endpoint-override[`quarkus.endpoint-override`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-endpoint-override]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-endpoint-override[`quarkus.eventbridge-scheduler.endpoint-override`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.endpoint-override+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.endpoint-override+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".endpoint-override`
+`quarkus.eventbridge-scheduler."client-name".endpoint-override`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".endpoint-override+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".endpoint-override+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -227,24 +227,24 @@ If not specified, an appropriate endpoint to be used for the given service and r
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ENDPOINT_OVERRIDE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ENDPOINT_OVERRIDE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ENDPOINT_OVERRIDE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ENDPOINT_OVERRIDE+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-api-call-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-api-call-timeout[`quarkus.api-call-timeout`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-api-call-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-api-call-timeout[`quarkus.eventbridge-scheduler.api-call-timeout`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.api-call-timeout+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.api-call-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".api-call-timeout`
+`quarkus.eventbridge-scheduler."client-name".api-call-timeout`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".api-call-timeout+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".api-call-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -257,24 +257,24 @@ This value should always be positive, if present.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_API_CALL_TIMEOUT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_API_CALL_TIMEOUT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_API_CALL_TIMEOUT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_API_CALL_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-api-call-attempt-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-api-call-attempt-timeout[`quarkus.api-call-attempt-timeout`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-api-call-attempt-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-api-call-attempt-timeout[`quarkus.eventbridge-scheduler.api-call-attempt-timeout`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.api-call-attempt-timeout+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.api-call-attempt-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".api-call-attempt-timeout`
+`quarkus.eventbridge-scheduler."client-name".api-call-attempt-timeout`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".api-call-attempt-timeout+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".api-call-attempt-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -285,24 +285,24 @@ This value should always be positive, if present.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_API_CALL_ATTEMPT_TIMEOUT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_API_CALL_ATTEMPT_TIMEOUT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_API_CALL_ATTEMPT_TIMEOUT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_API_CALL_ATTEMPT_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-advanced-use-quarkus-scheduled-executor-service]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-advanced-use-quarkus-scheduled-executor-service[`quarkus.advanced.use-quarkus-scheduled-executor-service`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-advanced-use-quarkus-scheduled-executor-service]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-advanced-use-quarkus-scheduled-executor-service[`quarkus.eventbridge-scheduler.advanced.use-quarkus-scheduled-executor-service`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.advanced.use-quarkus-scheduled-executor-service+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.advanced.use-quarkus-scheduled-executor-service+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".advanced.use-quarkus-scheduled-executor-service`
+`quarkus.eventbridge-scheduler."client-name".advanced.use-quarkus-scheduled-executor-service`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".advanced.use-quarkus-scheduled-executor-service+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".advanced.use-quarkus-scheduled-executor-service+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -313,29 +313,29 @@ When disabled, the default sdk behavior is to create a dedicated thread pool for
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ADVANCED_USE_QUARKUS_SCHEDULED_EXECUTOR_SERVICE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ADVANCED_USE_QUARKUS_SCHEDULED_EXECUTOR_SERVICE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ADVANCED_USE_QUARKUS_SCHEDULED_EXECUTOR_SERVICE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ADVANCED_USE_QUARKUS_SCHEDULED_EXECUTOR_SERVICE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|`+++true+++`
 
 
-h|[[quarkus-amazon-scheduler_section_quarkus-aws]] [.section-name.section-level0]##link:#quarkus-amazon-scheduler_section_quarkus-aws[AWS services configurations]##
+h|[[quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-aws]] [.section-name.section-level0]##link:#quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-aws[AWS services configurations]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-aws-region]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-aws-region[`quarkus.aws.region`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-region]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-region[`quarkus.eventbridge-scheduler.aws.region`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.region+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.aws.region+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.region`
+`quarkus.eventbridge-scheduler."client-name".aws.region`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".aws.region+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".aws.region+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -355,24 +355,24 @@ See `software.amazon.awssdk.regions.Region` for available regions.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_REGION+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_REGION+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_REGION+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_REGION+++`
 endif::add-copy-button-to-env-var[]
 --
 |Region
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-aws-credentials-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-aws-credentials-type[`quarkus.aws.credentials.type`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-type[`quarkus.eventbridge-scheduler.aws.credentials.type`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.credentials.type+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.aws.credentials.type+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.type`
+`quarkus.eventbridge-scheduler."client-name".aws.credentials.type`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".aws.credentials.type+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".aws.credentials.type+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -405,28 +405,28 @@ Available values:
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_CREDENTIALS_TYPE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_TYPE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_CREDENTIALS_TYPE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`anonymous`, `container`, `custom`, `default`, `env-variable`, `instance-profile`, `process`, `profile`, `static`, `system-property`
-|default
+a|`default`, `static`, `system-property`, `env-variable`, `profile`, `container`, `instance-profile`, `process`, `custom`, `anonymous`
+|`+++default+++`
 
-h|[[quarkus-amazon-scheduler_section_quarkus-aws-credentials-default-provider]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-aws-credentials-default-provider[Default credentials provider configuration]##
+h|[[quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-aws-credentials-default-provider]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-aws-credentials-default-provider[Default credentials provider configuration]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-aws-credentials-default-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-aws-credentials-default-provider-async-credential-update-enabled[`quarkus.aws.credentials.default-provider.async-credential-update-enabled`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-default-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-default-provider-async-credential-update-enabled[`quarkus.eventbridge-scheduler.aws.credentials.default-provider.async-credential-update-enabled`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.credentials.default-provider.async-credential-update-enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.aws.credentials.default-provider.async-credential-update-enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.default-provider.async-credential-update-enabled`
+`quarkus.eventbridge-scheduler."client-name".aws.credentials.default-provider.async-credential-update-enabled`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".aws.credentials.default-provider.async-credential-update-enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".aws.credentials.default-provider.async-credential-update-enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -437,24 +437,24 @@ If this is `true`, threads are less likely to block, but additional resources ar
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_CREDENTIALS_DEFAULT_PROVIDER_ASYNC_CREDENTIAL_UPDATE_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_DEFAULT_PROVIDER_ASYNC_CREDENTIAL_UPDATE_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_CREDENTIALS_DEFAULT_PROVIDER_ASYNC_CREDENTIAL_UPDATE_ENABLED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_DEFAULT_PROVIDER_ASYNC_CREDENTIAL_UPDATE_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-aws-credentials-default-provider-reuse-last-provider-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-aws-credentials-default-provider-reuse-last-provider-enabled[`quarkus.aws.credentials.default-provider.reuse-last-provider-enabled`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-default-provider-reuse-last-provider-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-default-provider-reuse-last-provider-enabled[`quarkus.eventbridge-scheduler.aws.credentials.default-provider.reuse-last-provider-enabled`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.credentials.default-provider.reuse-last-provider-enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.aws.credentials.default-provider.reuse-last-provider-enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.default-provider.reuse-last-provider-enabled`
+`quarkus.eventbridge-scheduler."client-name".aws.credentials.default-provider.reuse-last-provider-enabled`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".aws.credentials.default-provider.reuse-last-provider-enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".aws.credentials.default-provider.reuse-last-provider-enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -465,29 +465,29 @@ Reusing the last successful credentials provider will typically return credentia
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_CREDENTIALS_DEFAULT_PROVIDER_REUSE_LAST_PROVIDER_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_DEFAULT_PROVIDER_REUSE_LAST_PROVIDER_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_CREDENTIALS_DEFAULT_PROVIDER_REUSE_LAST_PROVIDER_ENABLED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_DEFAULT_PROVIDER_REUSE_LAST_PROVIDER_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|`+++true+++`
 
 
-h|[[quarkus-amazon-scheduler_section_quarkus-aws-credentials-static-provider]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-aws-credentials-static-provider[Static credentials provider configuration]##
+h|[[quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-aws-credentials-static-provider]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-aws-credentials-static-provider[Static credentials provider configuration]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-aws-credentials-static-provider-access-key-id]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-aws-credentials-static-provider-access-key-id[`quarkus.aws.credentials.static-provider.access-key-id`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-static-provider-access-key-id]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-static-provider-access-key-id[`quarkus.eventbridge-scheduler.aws.credentials.static-provider.access-key-id`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.credentials.static-provider.access-key-id+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.aws.credentials.static-provider.access-key-id+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.static-provider.access-key-id`
+`quarkus.eventbridge-scheduler."client-name".aws.credentials.static-provider.access-key-id`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".aws.credentials.static-provider.access-key-id+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".aws.credentials.static-provider.access-key-id+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -496,24 +496,24 @@ AWS Access key id
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-aws-credentials-static-provider-secret-access-key]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-aws-credentials-static-provider-secret-access-key[`quarkus.aws.credentials.static-provider.secret-access-key`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-static-provider-secret-access-key]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-static-provider-secret-access-key[`quarkus.eventbridge-scheduler.aws.credentials.static-provider.secret-access-key`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.credentials.static-provider.secret-access-key+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.aws.credentials.static-provider.secret-access-key+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.static-provider.secret-access-key`
+`quarkus.eventbridge-scheduler."client-name".aws.credentials.static-provider.secret-access-key`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".aws.credentials.static-provider.secret-access-key+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".aws.credentials.static-provider.secret-access-key+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -522,24 +522,24 @@ AWS Secret access key
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-aws-credentials-static-provider-session-token]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-aws-credentials-static-provider-session-token[`quarkus.aws.credentials.static-provider.session-token`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-static-provider-session-token]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-static-provider-session-token[`quarkus.eventbridge-scheduler.aws.credentials.static-provider.session-token`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.credentials.static-provider.session-token+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.aws.credentials.static-provider.session-token+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.static-provider.session-token`
+`quarkus.eventbridge-scheduler."client-name".aws.credentials.static-provider.session-token`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".aws.credentials.static-provider.session-token+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".aws.credentials.static-provider.session-token+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -548,29 +548,29 @@ AWS Session token
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_CREDENTIALS_STATIC_PROVIDER_SESSION_TOKEN+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_STATIC_PROVIDER_SESSION_TOKEN+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_CREDENTIALS_STATIC_PROVIDER_SESSION_TOKEN+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_STATIC_PROVIDER_SESSION_TOKEN+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
 
-h|[[quarkus-amazon-scheduler_section_quarkus-aws-credentials-profile-provider]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-aws-credentials-profile-provider[AWS Profile credentials provider configuration]##
+h|[[quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-aws-credentials-profile-provider]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-aws-credentials-profile-provider[AWS Profile credentials provider configuration]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-aws-credentials-profile-provider-profile-name]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-aws-credentials-profile-provider-profile-name[`quarkus.aws.credentials.profile-provider.profile-name`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-profile-provider-profile-name]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-profile-provider-profile-name[`quarkus.eventbridge-scheduler.aws.credentials.profile-provider.profile-name`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.credentials.profile-provider.profile-name+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.aws.credentials.profile-provider.profile-name+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.profile-provider.profile-name`
+`quarkus.eventbridge-scheduler."client-name".aws.credentials.profile-provider.profile-name`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".aws.credentials.profile-provider.profile-name+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".aws.credentials.profile-provider.profile-name+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -581,29 +581,29 @@ If not specified, the value in `AWS_PROFILE` environment variable or `aws.profil
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_CREDENTIALS_PROFILE_PROVIDER_PROFILE_NAME+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_PROFILE_PROVIDER_PROFILE_NAME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_CREDENTIALS_PROFILE_PROVIDER_PROFILE_NAME+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_PROFILE_PROVIDER_PROFILE_NAME+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
 
-h|[[quarkus-amazon-scheduler_section_quarkus-aws-credentials-process-provider]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-aws-credentials-process-provider[Process credentials provider configuration]##
+h|[[quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-aws-credentials-process-provider]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-aws-credentials-process-provider[Process credentials provider configuration]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-aws-credentials-process-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-aws-credentials-process-provider-async-credential-update-enabled[`quarkus.aws.credentials.process-provider.async-credential-update-enabled`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-process-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-process-provider-async-credential-update-enabled[`quarkus.eventbridge-scheduler.aws.credentials.process-provider.async-credential-update-enabled`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.credentials.process-provider.async-credential-update-enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.aws.credentials.process-provider.async-credential-update-enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.process-provider.async-credential-update-enabled`
+`quarkus.eventbridge-scheduler."client-name".aws.credentials.process-provider.async-credential-update-enabled`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".aws.credentials.process-provider.async-credential-update-enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".aws.credentials.process-provider.async-credential-update-enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -614,24 +614,24 @@ If this is true, threads are less likely to block when credentials are loaded, b
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_CREDENTIALS_PROCESS_PROVIDER_ASYNC_CREDENTIAL_UPDATE_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_PROCESS_PROVIDER_ASYNC_CREDENTIAL_UPDATE_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_CREDENTIALS_PROCESS_PROVIDER_ASYNC_CREDENTIAL_UPDATE_ENABLED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_PROCESS_PROVIDER_ASYNC_CREDENTIAL_UPDATE_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-aws-credentials-process-provider-credential-refresh-threshold]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-aws-credentials-process-provider-credential-refresh-threshold[`quarkus.aws.credentials.process-provider.credential-refresh-threshold`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-process-provider-credential-refresh-threshold]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-process-provider-credential-refresh-threshold[`quarkus.eventbridge-scheduler.aws.credentials.process-provider.credential-refresh-threshold`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.credentials.process-provider.credential-refresh-threshold+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.aws.credentials.process-provider.credential-refresh-threshold+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.process-provider.credential-refresh-threshold`
+`quarkus.eventbridge-scheduler."client-name".aws.credentials.process-provider.credential-refresh-threshold`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".aws.credentials.process-provider.credential-refresh-threshold+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".aws.credentials.process-provider.credential-refresh-threshold+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -642,24 +642,24 @@ This allows the credentials to be refreshed ++*++before++*++ they are reported t
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_CREDENTIALS_PROCESS_PROVIDER_CREDENTIAL_REFRESH_THRESHOLD+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_PROCESS_PROVIDER_CREDENTIAL_REFRESH_THRESHOLD+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_CREDENTIALS_PROCESS_PROVIDER_CREDENTIAL_REFRESH_THRESHOLD+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_PROCESS_PROVIDER_CREDENTIAL_REFRESH_THRESHOLD+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|15S
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++15S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-aws-credentials-process-provider-process-output-limit]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-aws-credentials-process-provider-process-output-limit[`quarkus.aws.credentials.process-provider.process-output-limit`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-process-provider-process-output-limit]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-process-provider-process-output-limit[`quarkus.eventbridge-scheduler.aws.credentials.process-provider.process-output-limit`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.credentials.process-provider.process-output-limit+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.aws.credentials.process-provider.process-output-limit+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.process-provider.process-output-limit`
+`quarkus.eventbridge-scheduler."client-name".aws.credentials.process-provider.process-output-limit`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".aws.credentials.process-provider.process-output-limit+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".aws.credentials.process-provider.process-output-limit+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -668,24 +668,24 @@ The maximum size of the output that can be returned by the external process befo
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_OUTPUT_LIMIT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_OUTPUT_LIMIT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_OUTPUT_LIMIT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_OUTPUT_LIMIT+++`
 endif::add-copy-button-to-env-var[]
 --
-|MemorySize link:#memory-size-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the MemorySize format]]
-|1024
+|MemorySize link:#memory-size-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the MemorySize format]]
+|`+++1024+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-aws-credentials-process-provider-command[`quarkus.aws.credentials.process-provider.command`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-process-provider-command[`quarkus.eventbridge-scheduler.aws.credentials.process-provider.command`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.credentials.process-provider.command+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.aws.credentials.process-provider.command+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.process-provider.command`
+`quarkus.eventbridge-scheduler."client-name".aws.credentials.process-provider.command`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".aws.credentials.process-provider.command+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".aws.credentials.process-provider.command+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -694,29 +694,29 @@ The command that should be executed to retrieve credentials. Command and paramet
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_CREDENTIALS_PROCESS_PROVIDER_COMMAND+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_PROCESS_PROVIDER_COMMAND+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_CREDENTIALS_PROCESS_PROVIDER_COMMAND+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_PROCESS_PROVIDER_COMMAND+++`
 endif::add-copy-button-to-env-var[]
 --
 |list of string
 |
 
 
-h|[[quarkus-amazon-scheduler_section_quarkus-aws-credentials-custom-provider]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-aws-credentials-custom-provider[Custom credentials provider configuration]##
+h|[[quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-aws-credentials-custom-provider]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-aws-credentials-custom-provider[Custom credentials provider configuration]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-aws-credentials-custom-provider-name]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-aws-credentials-custom-provider-name[`quarkus.aws.credentials.custom-provider.name`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-custom-provider-name]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-aws-credentials-custom-provider-name[`quarkus.eventbridge-scheduler.aws.credentials.custom-provider.name`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.credentials.custom-provider.name+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.aws.credentials.custom-provider.name+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.custom-provider.name`
+`quarkus.eventbridge-scheduler."client-name".aws.credentials.custom-provider.name`
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus."client-name".aws.credentials.custom-provider.name+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler."client-name".aws.credentials.custom-provider.name+++[]
 endif::add-copy-button-to-config-props[]
 
 [.description]
@@ -725,10 +725,10 @@ The name of custom AwsCredentialsProvider bean.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_CREDENTIALS_CUSTOM_PROVIDER_NAME+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_CUSTOM_PROVIDER_NAME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_CREDENTIALS_CUSTOM_PROVIDER_NAME+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_AWS_CREDENTIALS_CUSTOM_PROVIDER_NAME+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
@@ -736,13 +736,13 @@ endif::add-copy-button-to-env-var[]
 
 
 
-h|[[quarkus-amazon-scheduler_section_quarkus-sync-client]] [.section-name.section-level0]##link:#quarkus-amazon-scheduler_section_quarkus-sync-client[Sync HTTP transport configurations]##
+h|[[quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-sync-client]] [.section-name.section-level0]##link:#quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-sync-client[Sync HTTP transport configurations]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-connection-timeout[`quarkus.sync-client.connection-timeout`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-connection-timeout[`quarkus.eventbridge-scheduler.sync-client.connection-timeout`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.connection-timeout+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.connection-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -752,18 +752,18 @@ The maximum amount of time to establish a connection before timing out.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_CONNECTION_TIMEOUT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CONNECTION_TIMEOUT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_CONNECTION_TIMEOUT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|2S
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++2S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-socket-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-socket-timeout[`quarkus.sync-client.socket-timeout`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-socket-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-socket-timeout[`quarkus.eventbridge-scheduler.sync-client.socket-timeout`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.socket-timeout+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.socket-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -773,18 +773,18 @@ The amount of time to wait for data to be transferred over an established, open 
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_SOCKET_TIMEOUT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_SOCKET_TIMEOUT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_SOCKET_TIMEOUT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_SOCKET_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|30S
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++30S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-tls-key-managers-provider-type[`quarkus.sync-client.tls-key-managers-provider.type`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-key-managers-provider-type[`quarkus.eventbridge-scheduler.sync-client.tls-key-managers-provider.type`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.tls-key-managers-provider.type+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.tls-key-managers-provider.type+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -802,18 +802,18 @@ Available providers:
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`file-store`, `none`, `system-property`
-|system-property
+a|`none`, `system-property`, `file-store`
+|`+++system-property+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-tls-key-managers-provider-file-store-path[`quarkus.sync-client.tls-key-managers-provider.file-store.path`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-key-managers-provider-file-store-path[`quarkus.eventbridge-scheduler.sync-client.tls-key-managers-provider.file-store.path`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.tls-key-managers-provider.file-store.path+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.tls-key-managers-provider.file-store.path+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -823,18 +823,18 @@ Path to the key store.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PATH+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PATH+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PATH+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PATH+++`
 endif::add-copy-button-to-env-var[]
 --
 |path
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-tls-key-managers-provider-file-store-type[`quarkus.sync-client.tls-key-managers-provider.file-store.type`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-key-managers-provider-file-store-type[`quarkus.eventbridge-scheduler.sync-client.tls-key-managers-provider.file-store.type`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.tls-key-managers-provider.file-store.type+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.tls-key-managers-provider.file-store.type+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -846,18 +846,18 @@ See the KeyStore section in the https://docs.oracle.com/javase/8/docs/technotes/
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_TYPE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_TYPE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_TYPE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-tls-key-managers-provider-file-store-password[`quarkus.sync-client.tls-key-managers-provider.file-store.password`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-key-managers-provider-file-store-password[`quarkus.eventbridge-scheduler.sync-client.tls-key-managers-provider.file-store.password`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.tls-key-managers-provider.file-store.password+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.tls-key-managers-provider.file-store.password+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -867,18 +867,18 @@ Key store password
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-tls-trust-managers-provider-type[`quarkus.sync-client.tls-trust-managers-provider.type`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-trust-managers-provider-type[`quarkus.eventbridge-scheduler.sync-client.tls-trust-managers-provider.type`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.tls-trust-managers-provider.type+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.tls-trust-managers-provider.type+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -896,18 +896,18 @@ Available providers:
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`file-store`, `system-property`, `trust-all`
-|system-property
+a|`trust-all`, `system-property`, `file-store`
+|`+++system-property+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-tls-trust-managers-provider-file-store-path[`quarkus.sync-client.tls-trust-managers-provider.file-store.path`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-trust-managers-provider-file-store-path[`quarkus.eventbridge-scheduler.sync-client.tls-trust-managers-provider.file-store.path`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.tls-trust-managers-provider.file-store.path+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.tls-trust-managers-provider.file-store.path+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -917,18 +917,18 @@ Path to the key store.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PATH+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PATH+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PATH+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PATH+++`
 endif::add-copy-button-to-env-var[]
 --
 |path
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-tls-trust-managers-provider-file-store-type[`quarkus.sync-client.tls-trust-managers-provider.file-store.type`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-trust-managers-provider-file-store-type[`quarkus.eventbridge-scheduler.sync-client.tls-trust-managers-provider.file-store.type`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.tls-trust-managers-provider.file-store.type+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.tls-trust-managers-provider.file-store.type+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -940,18 +940,18 @@ See the KeyStore section in the https://docs.oracle.com/javase/8/docs/technotes/
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_TYPE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_TYPE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_TYPE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-tls-trust-managers-provider-file-store-password[`quarkus.sync-client.tls-trust-managers-provider.file-store.password`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-tls-trust-managers-provider-file-store-password[`quarkus.eventbridge-scheduler.sync-client.tls-trust-managers-provider.file-store.password`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.tls-trust-managers-provider.file-store.password+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.tls-trust-managers-provider.file-store.password+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -961,22 +961,22 @@ Key store password
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-h|[[quarkus-amazon-scheduler_section_quarkus-sync-client-apache]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-sync-client-apache[Apache HTTP client specific configurations]##
+h|[[quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-sync-client-apache]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-sync-client-apache[Apache HTTP client specific configurations]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-connection-acquisition-timeout[`quarkus.sync-client.apache.connection-acquisition-timeout`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-connection-acquisition-timeout[`quarkus.eventbridge-scheduler.sync-client.apache.connection-acquisition-timeout`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.connection-acquisition-timeout+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.connection-acquisition-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -986,18 +986,18 @@ The amount of time to wait when acquiring a connection from the pool before givi
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_CONNECTION_ACQUISITION_TIMEOUT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_CONNECTION_ACQUISITION_TIMEOUT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_CONNECTION_ACQUISITION_TIMEOUT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_CONNECTION_ACQUISITION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|10S
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++10S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-connection-max-idle-time[`quarkus.sync-client.apache.connection-max-idle-time`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-connection-max-idle-time[`quarkus.eventbridge-scheduler.sync-client.apache.connection-max-idle-time`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.connection-max-idle-time+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.connection-max-idle-time+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1007,18 +1007,18 @@ The maximum amount of time that a connection should be allowed to remain open wh
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_CONNECTION_MAX_IDLE_TIME+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_CONNECTION_MAX_IDLE_TIME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_CONNECTION_MAX_IDLE_TIME+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|60S
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++60S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-connection-time-to-live[`quarkus.sync-client.apache.connection-time-to-live`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-connection-time-to-live[`quarkus.eventbridge-scheduler.sync-client.apache.connection-time-to-live`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.connection-time-to-live+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.connection-time-to-live+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1028,18 +1028,18 @@ The maximum amount of time that a connection should be allowed to remain open, r
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_CONNECTION_TIME_TO_LIVE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_CONNECTION_TIME_TO_LIVE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_CONNECTION_TIME_TO_LIVE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_CONNECTION_TIME_TO_LIVE+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-max-connections]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-max-connections[`quarkus.sync-client.apache.max-connections`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-max-connections]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-max-connections[`quarkus.eventbridge-scheduler.sync-client.apache.max-connections`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.max-connections+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.max-connections+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1051,18 +1051,18 @@ Each built HTTP client has its own private connection pool.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_MAX_CONNECTIONS+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_MAX_CONNECTIONS+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_MAX_CONNECTIONS+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_MAX_CONNECTIONS+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|50
+|`+++50+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-expect-continue-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-expect-continue-enabled[`quarkus.sync-client.apache.expect-continue-enabled`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-expect-continue-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-expect-continue-enabled[`quarkus.eventbridge-scheduler.sync-client.apache.expect-continue-enabled`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.expect-continue-enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.expect-continue-enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1072,18 +1072,18 @@ Whether the client should send an HTTP expect-continue handshake before each req
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_EXPECT_CONTINUE_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_EXPECT_CONTINUE_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_EXPECT_CONTINUE_ENABLED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_EXPECT_CONTINUE_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|`+++true+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-use-idle-connection-reaper[`quarkus.sync-client.apache.use-idle-connection-reaper`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-use-idle-connection-reaper[`quarkus.eventbridge-scheduler.sync-client.apache.use-idle-connection-reaper`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.use-idle-connection-reaper+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.use-idle-connection-reaper+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1095,18 +1095,18 @@ When enabled, connections left idling for longer than `quarkus..sync-client.conn
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_USE_IDLE_CONNECTION_REAPER+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_USE_IDLE_CONNECTION_REAPER+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_USE_IDLE_CONNECTION_REAPER+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_USE_IDLE_CONNECTION_REAPER+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|`+++true+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-tcp-keep-alive[`quarkus.sync-client.apache.tcp-keep-alive`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-tcp-keep-alive[`quarkus.eventbridge-scheduler.sync-client.apache.tcp-keep-alive`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.tcp-keep-alive+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.tcp-keep-alive+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1116,18 +1116,18 @@ Configure whether to enable or disable TCP KeepAlive.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_TCP_KEEP_ALIVE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_TCP_KEEP_ALIVE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_TCP_KEEP_ALIVE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_TCP_KEEP_ALIVE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-enabled[`quarkus.sync-client.apache.proxy.enabled`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-enabled[`quarkus.eventbridge-scheduler.sync-client.apache.proxy.enabled`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.proxy.enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.proxy.enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1137,18 +1137,18 @@ Enable HTTP proxy
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_ENABLED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-endpoint[`quarkus.sync-client.apache.proxy.endpoint`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-endpoint[`quarkus.eventbridge-scheduler.sync-client.apache.proxy.endpoint`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.proxy.endpoint+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.proxy.endpoint+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1160,18 +1160,18 @@ Currently, the endpoint is limited to a host and port. Any other URI components 
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_ENDPOINT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_ENDPOINT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_ENDPOINT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_ENDPOINT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-username]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-username[`quarkus.sync-client.apache.proxy.username`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-username]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-username[`quarkus.eventbridge-scheduler.sync-client.apache.proxy.username`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.proxy.username+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.proxy.username+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1181,18 +1181,18 @@ The username to use when connecting through a proxy.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_USERNAME+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_USERNAME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_USERNAME+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_USERNAME+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-password[`quarkus.sync-client.apache.proxy.password`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-password[`quarkus.eventbridge-scheduler.sync-client.apache.proxy.password`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.proxy.password+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.proxy.password+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1202,18 +1202,18 @@ The password to use when connecting through a proxy.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_PASSWORD+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_PASSWORD+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_PASSWORD+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_PASSWORD+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-ntlm-domain]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-ntlm-domain[`quarkus.sync-client.apache.proxy.ntlm-domain`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-ntlm-domain]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-ntlm-domain[`quarkus.eventbridge-scheduler.sync-client.apache.proxy.ntlm-domain`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.proxy.ntlm-domain+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.proxy.ntlm-domain+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1223,18 +1223,18 @@ For NTLM proxies - the Windows domain name to use when authenticating with the p
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_NTLM_DOMAIN+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_NTLM_DOMAIN+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_NTLM_DOMAIN+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_NTLM_DOMAIN+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-ntlm-workstation]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-ntlm-workstation[`quarkus.sync-client.apache.proxy.ntlm-workstation`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-ntlm-workstation]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-ntlm-workstation[`quarkus.eventbridge-scheduler.sync-client.apache.proxy.ntlm-workstation`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.proxy.ntlm-workstation+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.proxy.ntlm-workstation+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1244,18 +1244,18 @@ For NTLM proxies - the Windows workstation name to use when authenticating with 
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_NTLM_WORKSTATION+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_NTLM_WORKSTATION+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_NTLM_WORKSTATION+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_NTLM_WORKSTATION+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-preemptive-basic-authentication-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-preemptive-basic-authentication-enabled[`quarkus.sync-client.apache.proxy.preemptive-basic-authentication-enabled`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-preemptive-basic-authentication-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-preemptive-basic-authentication-enabled[`quarkus.eventbridge-scheduler.sync-client.apache.proxy.preemptive-basic-authentication-enabled`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.proxy.preemptive-basic-authentication-enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.proxy.preemptive-basic-authentication-enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1265,18 +1265,18 @@ Whether to attempt to authenticate preemptively against the proxy server using b
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_PREEMPTIVE_BASIC_AUTHENTICATION_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_PREEMPTIVE_BASIC_AUTHENTICATION_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_PREEMPTIVE_BASIC_AUTHENTICATION_ENABLED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_PREEMPTIVE_BASIC_AUTHENTICATION_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-apache-proxy-non-proxy-hosts[`quarkus.sync-client.apache.proxy.non-proxy-hosts`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-apache-proxy-non-proxy-hosts[`quarkus.eventbridge-scheduler.sync-client.apache.proxy.non-proxy-hosts`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.apache.proxy.non-proxy-hosts+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.apache.proxy.non-proxy-hosts+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1286,23 +1286,23 @@ The hosts that the client is allowed to access without going through the proxy.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_NON_PROXY_HOSTS+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_NON_PROXY_HOSTS+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_NON_PROXY_HOSTS+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_APACHE_PROXY_NON_PROXY_HOSTS+++`
 endif::add-copy-button-to-env-var[]
 --
 |list of string
 |
 
 
-h|[[quarkus-amazon-scheduler_section_quarkus-sync-client-crt]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-sync-client-crt[AWS CRT-based HTTP client specific configurations]##
+h|[[quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-sync-client-crt]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-sync-client-crt[AWS CRT-based HTTP client specific configurations]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-crt-connection-max-idle-time[`quarkus.sync-client.crt.connection-max-idle-time`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-connection-max-idle-time[`quarkus.eventbridge-scheduler.sync-client.crt.connection-max-idle-time`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.crt.connection-max-idle-time+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.crt.connection-max-idle-time+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1312,18 +1312,18 @@ The maximum amount of time that a connection should be allowed to remain open wh
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|60S
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++60S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-crt-max-concurrency[`quarkus.sync-client.crt.max-concurrency`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-max-concurrency[`quarkus.eventbridge-scheduler.sync-client.crt.max-concurrency`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.crt.max-concurrency+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.crt.max-concurrency+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1333,18 +1333,18 @@ The maximum number of allowed concurrent requests.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_CRT_MAX_CONCURRENCY+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_MAX_CONCURRENCY+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_MAX_CONCURRENCY+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_MAX_CONCURRENCY+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|50
+|`+++50+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-crt-proxy-enabled[`quarkus.sync-client.crt.proxy.enabled`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-proxy-enabled[`quarkus.eventbridge-scheduler.sync-client.crt.proxy.enabled`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.crt.proxy.enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.crt.proxy.enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1354,18 +1354,18 @@ Enable HTTP proxy
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_CRT_PROXY_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_PROXY_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_PROXY_ENABLED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-crt-proxy-endpoint[`quarkus.sync-client.crt.proxy.endpoint`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-proxy-endpoint[`quarkus.eventbridge-scheduler.sync-client.crt.proxy.endpoint`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.crt.proxy.endpoint+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.crt.proxy.endpoint+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1377,18 +1377,18 @@ Currently, the endpoint is limited to a host and port. Any other URI components 
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_CRT_PROXY_ENDPOINT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_PROXY_ENDPOINT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_PROXY_ENDPOINT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_PROXY_ENDPOINT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-crt-proxy-username[`quarkus.sync-client.crt.proxy.username`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-proxy-username[`quarkus.eventbridge-scheduler.sync-client.crt.proxy.username`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.crt.proxy.username+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.crt.proxy.username+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1398,18 +1398,18 @@ The username to use when connecting through a proxy.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_CRT_PROXY_USERNAME+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_PROXY_USERNAME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_PROXY_USERNAME+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_PROXY_USERNAME+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-crt-proxy-password[`quarkus.sync-client.crt.proxy.password`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-proxy-password[`quarkus.eventbridge-scheduler.sync-client.crt.proxy.password`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.crt.proxy.password+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.crt.proxy.password+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1419,18 +1419,18 @@ The password to use when connecting through a proxy.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_CRT_PROXY_PASSWORD+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_PROXY_PASSWORD+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_PROXY_PASSWORD+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_PROXY_PASSWORD+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-crt-tcp-keep-alive-enabled[`quarkus.sync-client.crt.tcp-keep-alive.enabled`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-tcp-keep-alive-enabled[`quarkus.eventbridge-scheduler.sync-client.crt.tcp-keep-alive.enabled`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.crt.tcp-keep-alive.enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.crt.tcp-keep-alive.enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1440,18 +1440,18 @@ Configure whether to enable or disable TCP KeepAlive.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-interval[`quarkus.sync-client.crt.tcp-keep-alive.keep-alive-interval`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-tcp-keep-alive-keep-alive-interval[`quarkus.eventbridge-scheduler.sync-client.crt.tcp-keep-alive.keep-alive-interval`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.crt.tcp-keep-alive.keep-alive-interval+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.crt.tcp-keep-alive.keep-alive-interval+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1461,18 +1461,18 @@ Time between TCP keepalive packets being sent to the peer.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|75MS
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++75MS+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-timeout[`quarkus.sync-client.crt.tcp-keep-alive.keep-alive-timeout`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-tcp-keep-alive-keep-alive-timeout[`quarkus.eventbridge-scheduler.sync-client.crt.tcp-keep-alive.keep-alive-timeout`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.crt.tcp-keep-alive.keep-alive-timeout+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.crt.tcp-keep-alive.keep-alive-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1482,18 +1482,18 @@ Time to wait for a keepalive response before considering the connection timed ou
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|7200MS
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++7200MS+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-probes[`quarkus.sync-client.crt.tcp-keep-alive.keep-alive-probes`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-sync-client-crt-tcp-keep-alive-keep-alive-probes[`quarkus.eventbridge-scheduler.sync-client.crt.tcp-keep-alive.keep-alive-probes`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.sync-client.crt.tcp-keep-alive.keep-alive-probes+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.sync-client.crt.tcp-keep-alive.keep-alive-probes+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1503,24 +1503,24 @@ Number of keepalive probes allowed to fail before the connection is considered l
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|9
+|`+++9+++`
 
 
 
-h|[[quarkus-amazon-scheduler_section_quarkus-async-client]] [.section-name.section-level0]##link:#quarkus-amazon-scheduler_section_quarkus-async-client[Async HTTP transport configurations]##
+h|[[quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-async-client]] [.section-name.section-level0]##link:#quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-async-client[Async HTTP transport configurations]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-max-concurrency]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-max-concurrency[`quarkus.async-client.max-concurrency`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-max-concurrency]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-max-concurrency[`quarkus.eventbridge-scheduler.async-client.max-concurrency`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.max-concurrency+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.max-concurrency+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1532,18 +1532,18 @@ For HTTP/1.1 this is the same as max connections. For HTTP/2 the number of conne
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_MAX_CONCURRENCY+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_MAX_CONCURRENCY+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_MAX_CONCURRENCY+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_MAX_CONCURRENCY+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|50
+|`+++50+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-max-pending-connection-acquires]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-max-pending-connection-acquires[`quarkus.async-client.max-pending-connection-acquires`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-max-pending-connection-acquires]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-max-pending-connection-acquires[`quarkus.eventbridge-scheduler.async-client.max-pending-connection-acquires`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.max-pending-connection-acquires+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.max-pending-connection-acquires+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1555,18 +1555,18 @@ Once this exceeds, acquire tries will be failed.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_MAX_PENDING_CONNECTION_ACQUIRES+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_MAX_PENDING_CONNECTION_ACQUIRES+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_MAX_PENDING_CONNECTION_ACQUIRES+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_MAX_PENDING_CONNECTION_ACQUIRES+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|10000
+|`+++10000+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-read-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-read-timeout[`quarkus.async-client.read-timeout`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-read-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-read-timeout[`quarkus.eventbridge-scheduler.async-client.read-timeout`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.read-timeout+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.read-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1578,18 +1578,18 @@ Specify `0` to disable.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_READ_TIMEOUT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_READ_TIMEOUT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_READ_TIMEOUT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_READ_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|30S
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++30S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-write-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-write-timeout[`quarkus.async-client.write-timeout`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-write-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-write-timeout[`quarkus.eventbridge-scheduler.async-client.write-timeout`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.write-timeout+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.write-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1601,18 +1601,18 @@ Specify `0` to disable.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_WRITE_TIMEOUT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_WRITE_TIMEOUT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_WRITE_TIMEOUT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_WRITE_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|30S
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++30S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-connection-timeout[`quarkus.async-client.connection-timeout`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-connection-timeout[`quarkus.eventbridge-scheduler.async-client.connection-timeout`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.connection-timeout+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.connection-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1622,18 +1622,18 @@ The amount of time to wait when initially establishing a connection before givin
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CONNECTION_TIMEOUT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CONNECTION_TIMEOUT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CONNECTION_TIMEOUT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|10S
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++10S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-connection-acquisition-timeout[`quarkus.async-client.connection-acquisition-timeout`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-connection-acquisition-timeout[`quarkus.eventbridge-scheduler.async-client.connection-acquisition-timeout`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.connection-acquisition-timeout+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.connection-acquisition-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1643,18 +1643,18 @@ The amount of time to wait when acquiring a connection from the pool before givi
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CONNECTION_ACQUISITION_TIMEOUT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CONNECTION_ACQUISITION_TIMEOUT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CONNECTION_ACQUISITION_TIMEOUT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CONNECTION_ACQUISITION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|2S
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++2S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-connection-time-to-live[`quarkus.async-client.connection-time-to-live`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-connection-time-to-live[`quarkus.eventbridge-scheduler.async-client.connection-time-to-live`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.connection-time-to-live+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.connection-time-to-live+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1664,18 +1664,18 @@ The maximum amount of time that a connection should be allowed to remain open, r
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CONNECTION_TIME_TO_LIVE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CONNECTION_TIME_TO_LIVE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CONNECTION_TIME_TO_LIVE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CONNECTION_TIME_TO_LIVE+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-connection-max-idle-time[`quarkus.async-client.connection-max-idle-time`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-connection-max-idle-time[`quarkus.eventbridge-scheduler.async-client.connection-max-idle-time`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.connection-max-idle-time+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.connection-max-idle-time+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1687,18 +1687,18 @@ Currently has no effect if `quarkus..async-client.use-idle-connection-reaper` is
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CONNECTION_MAX_IDLE_TIME+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CONNECTION_MAX_IDLE_TIME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CONNECTION_MAX_IDLE_TIME+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|5S
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++5S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-use-idle-connection-reaper[`quarkus.async-client.use-idle-connection-reaper`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-use-idle-connection-reaper[`quarkus.eventbridge-scheduler.async-client.use-idle-connection-reaper`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.use-idle-connection-reaper+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.use-idle-connection-reaper+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1710,18 +1710,18 @@ When enabled, connections left idling for longer than `quarkus..async-client.con
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_USE_IDLE_CONNECTION_REAPER+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_USE_IDLE_CONNECTION_REAPER+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_USE_IDLE_CONNECTION_REAPER+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_USE_IDLE_CONNECTION_REAPER+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|`+++true+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-tcp-keep-alive[`quarkus.async-client.tcp-keep-alive`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tcp-keep-alive[`quarkus.eventbridge-scheduler.async-client.tcp-keep-alive`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.tcp-keep-alive+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.tcp-keep-alive+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1731,22 +1731,22 @@ Configure whether to enable or disable TCP KeepAlive. Applicable only to netty-n
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_TCP_KEEP_ALIVE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TCP_KEEP_ALIVE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_TCP_KEEP_ALIVE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TCP_KEEP_ALIVE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-h|[[quarkus-amazon-scheduler_section_quarkus-async-client-crt]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-async-client-crt[AWS CRT-based HTTP client specific configurations]##
+h|[[quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-async-client-crt]] [.section-name.section-level1]##link:#quarkus-amazon-scheduler_section_quarkus-eventbridge-scheduler-async-client-crt[AWS CRT-based HTTP client specific configurations]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-crt-connection-max-idle-time[`quarkus.async-client.crt.connection-max-idle-time`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-connection-max-idle-time[`quarkus.eventbridge-scheduler.async-client.crt.connection-max-idle-time`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.crt.connection-max-idle-time+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.crt.connection-max-idle-time+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1756,18 +1756,18 @@ The maximum amount of time that a connection should be allowed to remain open wh
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|60S
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++60S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-crt-max-concurrency[`quarkus.async-client.crt.max-concurrency`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-max-concurrency[`quarkus.eventbridge-scheduler.async-client.crt.max-concurrency`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.crt.max-concurrency+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.crt.max-concurrency+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1777,18 +1777,18 @@ The maximum number of allowed concurrent requests.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CRT_MAX_CONCURRENCY+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_MAX_CONCURRENCY+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_MAX_CONCURRENCY+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_MAX_CONCURRENCY+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|50
+|`+++50+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-crt-proxy-enabled[`quarkus.async-client.crt.proxy.enabled`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-proxy-enabled[`quarkus.eventbridge-scheduler.async-client.crt.proxy.enabled`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.crt.proxy.enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.crt.proxy.enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1798,18 +1798,18 @@ Enable HTTP proxy
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CRT_PROXY_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_PROXY_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_PROXY_ENABLED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-crt-proxy-endpoint[`quarkus.async-client.crt.proxy.endpoint`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-proxy-endpoint[`quarkus.eventbridge-scheduler.async-client.crt.proxy.endpoint`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.crt.proxy.endpoint+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.crt.proxy.endpoint+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1821,18 +1821,18 @@ Currently, the endpoint is limited to a host and port. Any other URI components 
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CRT_PROXY_ENDPOINT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_PROXY_ENDPOINT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_PROXY_ENDPOINT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_PROXY_ENDPOINT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-crt-proxy-username[`quarkus.async-client.crt.proxy.username`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-proxy-username[`quarkus.eventbridge-scheduler.async-client.crt.proxy.username`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.crt.proxy.username+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.crt.proxy.username+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1842,18 +1842,18 @@ The username to use when connecting through a proxy.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CRT_PROXY_USERNAME+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_PROXY_USERNAME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_PROXY_USERNAME+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_PROXY_USERNAME+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-crt-proxy-password[`quarkus.async-client.crt.proxy.password`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-proxy-password[`quarkus.eventbridge-scheduler.async-client.crt.proxy.password`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.crt.proxy.password+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.crt.proxy.password+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1863,18 +1863,18 @@ The password to use when connecting through a proxy.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CRT_PROXY_PASSWORD+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_PROXY_PASSWORD+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_PROXY_PASSWORD+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_PROXY_PASSWORD+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-crt-tcp-keep-alive-enabled[`quarkus.async-client.crt.tcp-keep-alive.enabled`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-tcp-keep-alive-enabled[`quarkus.eventbridge-scheduler.async-client.crt.tcp-keep-alive.enabled`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.crt.tcp-keep-alive.enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.crt.tcp-keep-alive.enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1884,18 +1884,18 @@ Configure whether to enable or disable TCP KeepAlive.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-crt-tcp-keep-alive-keep-alive-interval[`quarkus.async-client.crt.tcp-keep-alive.keep-alive-interval`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-tcp-keep-alive-keep-alive-interval[`quarkus.eventbridge-scheduler.async-client.crt.tcp-keep-alive.keep-alive-interval`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.crt.tcp-keep-alive.keep-alive-interval+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.crt.tcp-keep-alive.keep-alive-interval+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1905,18 +1905,18 @@ Time between TCP keepalive packets being sent to the peer.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|75MS
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++75MS+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-crt-tcp-keep-alive-keep-alive-timeout[`quarkus.async-client.crt.tcp-keep-alive.keep-alive-timeout`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-tcp-keep-alive-keep-alive-timeout[`quarkus.eventbridge-scheduler.async-client.crt.tcp-keep-alive.keep-alive-timeout`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.crt.tcp-keep-alive.keep-alive-timeout+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.crt.tcp-keep-alive.keep-alive-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1926,18 +1926,18 @@ Time to wait for a keepalive response before considering the connection timed ou
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|7200MS
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++7200MS+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-crt-tcp-keep-alive-keep-alive-probes[`quarkus.async-client.crt.tcp-keep-alive.keep-alive-probes`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-crt-tcp-keep-alive-keep-alive-probes[`quarkus.eventbridge-scheduler.async-client.crt.tcp-keep-alive.keep-alive-probes`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.crt.tcp-keep-alive.keep-alive-probes+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.crt.tcp-keep-alive.keep-alive-probes+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1947,19 +1947,19 @@ Number of keepalive probes allowed to fail before the connection is considered l
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROBES+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|9
+|`+++9+++`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-protocol]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-protocol[`quarkus.async-client.protocol`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-protocol]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-protocol[`quarkus.eventbridge-scheduler.async-client.protocol`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.protocol+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.protocol+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1969,18 +1969,18 @@ The HTTP protocol to use.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_PROTOCOL+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_PROTOCOL+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_PROTOCOL+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_PROTOCOL+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`http1-1`, `http2`
-|http1-1
+|`+++http1-1+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-ssl-provider]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-ssl-provider[`quarkus.async-client.ssl-provider`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-ssl-provider]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-ssl-provider[`quarkus.eventbridge-scheduler.async-client.ssl-provider`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.ssl-provider+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.ssl-provider+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -1992,18 +1992,18 @@ Default is `OPENSSL` if available, `JDK` otherwise.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_SSL_PROVIDER+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_SSL_PROVIDER+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_SSL_PROVIDER+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_SSL_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`jdk`, `openssl`, `openssl-refcnt`
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-http2-max-streams]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-http2-max-streams[`quarkus.async-client.http2.max-streams`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-http2-max-streams]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-http2-max-streams[`quarkus.eventbridge-scheduler.async-client.http2.max-streams`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.http2.max-streams+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.http2.max-streams+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2015,18 +2015,18 @@ This setting is only respected when the HTTP/2 protocol is used.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_HTTP2_MAX_STREAMS+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_HTTP2_MAX_STREAMS+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_HTTP2_MAX_STREAMS+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_HTTP2_MAX_STREAMS+++`
 endif::add-copy-button-to-env-var[]
 --
 |long
-|4294967295
+|`+++4294967295+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-http2-initial-window-size]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-http2-initial-window-size[`quarkus.async-client.http2.initial-window-size`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-http2-initial-window-size]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-http2-initial-window-size[`quarkus.eventbridge-scheduler.async-client.http2.initial-window-size`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.http2.initial-window-size+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.http2.initial-window-size+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2038,18 +2038,18 @@ This setting is only respected when the HTTP/2 protocol is used.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_HTTP2_INITIAL_WINDOW_SIZE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_HTTP2_INITIAL_WINDOW_SIZE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_HTTP2_INITIAL_WINDOW_SIZE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_HTTP2_INITIAL_WINDOW_SIZE+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|1048576
+|`+++1048576+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-http2-health-check-ping-period]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-http2-health-check-ping-period[`quarkus.async-client.http2.health-check-ping-period`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-http2-health-check-ping-period]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-http2-health-check-ping-period[`quarkus.eventbridge-scheduler.async-client.http2.health-check-ping-period`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.http2.health-check-ping-period+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.http2.health-check-ping-period+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2061,18 +2061,18 @@ This setting is only respected when the HTTP/2 protocol is used.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_PERIOD+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_PERIOD+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_PERIOD+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_PERIOD+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus[icon:question-circle[title=More information about the Duration format]]
-|5
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler[icon:question-circle[title=More information about the Duration format]]
+|`+++5+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-proxy-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-proxy-enabled[`quarkus.async-client.proxy.enabled`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-proxy-enabled]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-proxy-enabled[`quarkus.eventbridge-scheduler.async-client.proxy.enabled`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.proxy.enabled+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.proxy.enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2082,18 +2082,18 @@ Enable HTTP proxy.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_PROXY_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_PROXY_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_PROXY_ENABLED+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-proxy-endpoint[`quarkus.async-client.proxy.endpoint`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-proxy-endpoint[`quarkus.eventbridge-scheduler.async-client.proxy.endpoint`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.proxy.endpoint+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.proxy.endpoint+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2105,18 +2105,18 @@ Currently, the endpoint is limited to a host and port. Any other URI components 
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_PROXY_ENDPOINT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_PROXY_ENDPOINT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_PROXY_ENDPOINT+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_PROXY_ENDPOINT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-proxy-non-proxy-hosts[`quarkus.async-client.proxy.non-proxy-hosts`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-proxy-non-proxy-hosts[`quarkus.eventbridge-scheduler.async-client.proxy.non-proxy-hosts`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.proxy.non-proxy-hosts+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.proxy.non-proxy-hosts+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2126,18 +2126,18 @@ The hosts that the client is allowed to access without going through the proxy.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_PROXY_NON_PROXY_HOSTS+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_PROXY_NON_PROXY_HOSTS+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_PROXY_NON_PROXY_HOSTS+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_PROXY_NON_PROXY_HOSTS+++`
 endif::add-copy-button-to-env-var[]
 --
 |list of string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-tls-key-managers-provider-type[`quarkus.async-client.tls-key-managers-provider.type`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-key-managers-provider-type[`quarkus.eventbridge-scheduler.async-client.tls-key-managers-provider.type`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.tls-key-managers-provider.type+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.tls-key-managers-provider.type+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2155,18 +2155,18 @@ Available providers:
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`file-store`, `none`, `system-property`
-|system-property
+a|`none`, `system-property`, `file-store`
+|`+++system-property+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-tls-key-managers-provider-file-store-path[`quarkus.async-client.tls-key-managers-provider.file-store.path`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-key-managers-provider-file-store-path[`quarkus.eventbridge-scheduler.async-client.tls-key-managers-provider.file-store.path`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.tls-key-managers-provider.file-store.path+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.tls-key-managers-provider.file-store.path+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2176,18 +2176,18 @@ Path to the key store.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PATH+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PATH+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PATH+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PATH+++`
 endif::add-copy-button-to-env-var[]
 --
 |path
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-tls-key-managers-provider-file-store-type[`quarkus.async-client.tls-key-managers-provider.file-store.type`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-key-managers-provider-file-store-type[`quarkus.eventbridge-scheduler.async-client.tls-key-managers-provider.file-store.type`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.tls-key-managers-provider.file-store.type+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.tls-key-managers-provider.file-store.type+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2199,18 +2199,18 @@ See the KeyStore section in the https://docs.oracle.com/javase/8/docs/technotes/
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_TYPE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_TYPE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_TYPE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-tls-key-managers-provider-file-store-password[`quarkus.async-client.tls-key-managers-provider.file-store.password`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-key-managers-provider-file-store-password[`quarkus.eventbridge-scheduler.async-client.tls-key-managers-provider.file-store.password`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.tls-key-managers-provider.file-store.password+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.tls-key-managers-provider.file-store.password+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2220,18 +2220,18 @@ Key store password
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-tls-trust-managers-provider-type[`quarkus.async-client.tls-trust-managers-provider.type`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-trust-managers-provider-type[`quarkus.eventbridge-scheduler.async-client.tls-trust-managers-provider.type`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.tls-trust-managers-provider.type+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.tls-trust-managers-provider.type+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2249,18 +2249,18 @@ Available providers:
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`file-store`, `system-property`, `trust-all`
-|system-property
+a|`trust-all`, `system-property`, `file-store`
+|`+++system-property+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-tls-trust-managers-provider-file-store-path[`quarkus.async-client.tls-trust-managers-provider.file-store.path`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-trust-managers-provider-file-store-path[`quarkus.eventbridge-scheduler.async-client.tls-trust-managers-provider.file-store.path`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.tls-trust-managers-provider.file-store.path+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.tls-trust-managers-provider.file-store.path+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2270,18 +2270,18 @@ Path to the key store.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PATH+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PATH+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PATH+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PATH+++`
 endif::add-copy-button-to-env-var[]
 --
 |path
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-tls-trust-managers-provider-file-store-type[`quarkus.async-client.tls-trust-managers-provider.file-store.type`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-trust-managers-provider-file-store-type[`quarkus.eventbridge-scheduler.async-client.tls-trust-managers-provider.file-store.type`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.tls-trust-managers-provider.file-store.type+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.tls-trust-managers-provider.file-store.type+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2293,18 +2293,18 @@ See the KeyStore section in the https://docs.oracle.com/javase/8/docs/technotes/
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_TYPE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_TYPE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_TYPE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-tls-trust-managers-provider-file-store-password[`quarkus.async-client.tls-trust-managers-provider.file-store.password`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-tls-trust-managers-provider-file-store-password[`quarkus.eventbridge-scheduler.async-client.tls-trust-managers-provider.file-store.password`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.tls-trust-managers-provider.file-store.password+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.tls-trust-managers-provider.file-store.password+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2314,18 +2314,18 @@ Key store password
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_FILE_STORE_PASSWORD+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-event-loop-override]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-event-loop-override[`quarkus.async-client.event-loop.override`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-event-loop-override]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-event-loop-override[`quarkus.eventbridge-scheduler.async-client.event-loop.override`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.event-loop.override+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.event-loop.override+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2335,18 +2335,18 @@ Enable the custom configuration of the Netty event loop group.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_EVENT_LOOP_OVERRIDE+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_EVENT_LOOP_OVERRIDE+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_EVENT_LOOP_OVERRIDE+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_EVENT_LOOP_OVERRIDE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-event-loop-number-of-threads[`quarkus.async-client.event-loop.number-of-threads`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-event-loop-number-of-threads[`quarkus.eventbridge-scheduler.async-client.event-loop.number-of-threads`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.event-loop.number-of-threads+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.event-loop.number-of-threads+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2358,18 +2358,18 @@ If not set, the default Netty thread count is used (which is double the number o
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_EVENT_LOOP_NUMBER_OF_THREADS+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_EVENT_LOOP_NUMBER_OF_THREADS+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_EVENT_LOOP_NUMBER_OF_THREADS+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_EVENT_LOOP_NUMBER_OF_THREADS+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-event-loop-thread-name-prefix]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-event-loop-thread-name-prefix[`quarkus.async-client.event-loop.thread-name-prefix`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-event-loop-thread-name-prefix]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-event-loop-thread-name-prefix[`quarkus.eventbridge-scheduler.async-client.event-loop.thread-name-prefix`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.event-loop.thread-name-prefix+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.event-loop.thread-name-prefix+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2383,18 +2383,18 @@ If not specified it defaults to `aws-java-sdk-NettyEventLoop`
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_EVENT_LOOP_THREAD_NAME_PREFIX+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_EVENT_LOOP_THREAD_NAME_PREFIX+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_EVENT_LOOP_THREAD_NAME_PREFIX+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_EVENT_LOOP_THREAD_NAME_PREFIX+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-scheduler_quarkus-async-client-advanced-use-future-completion-thread-pool]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-async-client-advanced-use-future-completion-thread-pool[`quarkus.async-client.advanced.use-future-completion-thread-pool`]##
+a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-advanced-use-future-completion-thread-pool]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-advanced-use-future-completion-thread-pool[`quarkus.eventbridge-scheduler.async-client.advanced.use-future-completion-thread-pool`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.async-client.advanced.use-future-completion-thread-pool+++[]
+config_property_copy_button:+++quarkus.eventbridge-scheduler.async-client.advanced.use-future-completion-thread-pool+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -2406,21 +2406,21 @@ When disabled, futures will be completed on the Netty event loop thread.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_ADVANCED_USE_FUTURE_COMPLETION_THREAD_POOL+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_ADVANCED_USE_FUTURE_COMPLETION_THREAD_POOL+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_ASYNC_CLIENT_ADVANCED_USE_FUTURE_COMPLETION_THREAD_POOL+++`
+Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_ADVANCED_USE_FUTURE_COMPLETION_THREAD_POOL+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|`+++true+++`
 
 
 |===
 
 ifndef::no-duration-note[]
 [NOTE]
-[id=duration-note-anchor-quarkus-amazon-scheduler_quarkus]
+[id=duration-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler]
 .About the Duration format
 ====
 To write duration values, use the standard `java.time.Duration` format.
@@ -2439,7 +2439,7 @@ In other cases, the simplified format is translated to the `java.time.Duration` 
 endif::no-duration-note[]
 ifndef::no-memory-size-note[]
 [NOTE]
-[id=memory-size-note-anchor-quarkus-amazon-scheduler_quarkus]
+[id=memory-size-note-anchor-quarkus-amazon-scheduler_quarkus-eventbridge-scheduler]
 .About the MemorySize format
 ====
 A size configuration option recognizes strings in this format (shown as a regular expression): `[0-9]+[KkMmGgTtPpEeZzYy]?`.
