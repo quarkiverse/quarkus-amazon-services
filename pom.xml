@@ -51,7 +51,7 @@
     <awssdk.version>2.41.18</awssdk.version>
     
     <!-- https://github.com/awslabs/aws-crt-java/releases -->
-    <awscrt.version>0.42.2</awscrt.version>
+    <awscrt.version>0.43.1</awscrt.version>
     
     <javapoet.version>1.13.0</javapoet.version>
     <hamcrest.version>1.3</hamcrest.version>
