@@ -76,9 +76,13 @@ public class DynamoDbEnhancedProcessor {
 
         // Discover all known dynamodb-enhanced-client-extension implementors
         List<String> knownDynamodbEnhancedClientExtensionImpls = combinedIndexBuildItem.getIndex()
-                .getAllKnownImplementors(DotNames.DYNAMODB_ENHANCED_CLIENT_EXTENSION_NAME)
+                .getKnownDirectImplementations(DotNames.DYNAMODB_ENHANCED_CLIENT_EXTENSION_NAME)
                 .stream()
                 .map(c -> c.name().toString()).collect(Collectors.toList());
+
+        for (DotName extension : DynamoDbEnhancedClientExtensionsDotNames.WELL_KNOWN_CLIENT_EXTENSIONS_LIST) {
+            knownDynamodbEnhancedClientExtensionImpls.add(extension.toString());
+        }
 
         // Validate configurations
         Optional<List<String>> extensions = buildTimeConfig.clientExtensions();
