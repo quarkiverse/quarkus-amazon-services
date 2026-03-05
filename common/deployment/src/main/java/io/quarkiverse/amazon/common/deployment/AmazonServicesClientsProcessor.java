@@ -18,11 +18,11 @@ import io.quarkiverse.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.SyncHttpClientBuildTimeConfig.SyncClientType;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.UnremovableBeanBuildItem;
+import io.quarkus.bootstrap.classloading.QuarkusClassLoader;
 import io.quarkus.deployment.Capabilities;
 import io.quarkus.deployment.Capability;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
-import io.quarkus.deployment.builditem.AdditionalApplicationArchiveMarkerBuildItem;
 import io.quarkus.deployment.builditem.CombinedIndexBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageProxyDefinitionBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
@@ -30,29 +30,10 @@ import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ServiceProviderBuildItem;
 import io.quarkus.runtime.configuration.ConfigurationException;
-import software.amazon.awssdk.awscore.eventstream.EventStreamInitialRequestInterceptor;
-import software.amazon.awssdk.awscore.interceptor.GlobalServiceExecutionInterceptor;
-import software.amazon.awssdk.awscore.interceptor.HelpfulUnknownHostExceptionInterceptor;
-import software.amazon.awssdk.awscore.interceptor.TraceIdExecutionInterceptor;
-import software.amazon.awssdk.core.interceptor.ExecutionInterceptor;
 import software.amazon.awssdk.http.SdkHttpService;
 import software.amazon.awssdk.http.async.SdkAsyncHttpService;
 
 public class AmazonServicesClientsProcessor {
-    public static final String AWS_SDK_APPLICATION_ARCHIVE_MARKERS = "software/amazon/awssdk";
-    public static final String AWS_SDK_XRAY_ARCHIVE_MARKER = "com/amazonaws/xray";
-
-    private static final DotName EXECUTION_INTERCEPTOR_NAME = DotName.createSimple(ExecutionInterceptor.class.getName());
-
-    // well-known interceptor
-    private static final DotName TRACE_ID_EXECUTION_INTERCEPTOR_NAME = DotName
-            .createSimple(TraceIdExecutionInterceptor.class.getName());
-    private static final DotName HELPFUL_UNKNOWN_HOST_EXCEPTION_INTERCEPTOR_NAME = DotName
-            .createSimple(HelpfulUnknownHostExceptionInterceptor.class.getName());
-    private static final DotName GLOBAL_SERVICE_EXECUTION_INTERCEPTOR_NAME = DotName
-            .createSimple(GlobalServiceExecutionInterceptor.class.getName());
-    private static final DotName EVENT_STREAM_INITIAL_REQUEST_INTERCEPTOR_NAME = DotName
-            .createSimple(EventStreamInitialRequestInterceptor.class.getName());
 
     @BuildStep
     AdditionalBeanBuildItem additionalBeans() {
@@ -63,11 +44,6 @@ public class AmazonServicesClientsProcessor {
     void globalInterceptors(BuildProducer<AmazonClientInterceptorsPathBuildItem> producer) {
         producer.produce(
                 new AmazonClientInterceptorsPathBuildItem("software/amazon/awssdk/global/handlers/execution.interceptors"));
-    }
-
-    @BuildStep
-    void awsAppArchiveMarkers(BuildProducer<AdditionalApplicationArchiveMarkerBuildItem> archiveMarker) {
-        archiveMarker.produce(new AdditionalApplicationArchiveMarkerBuildItem(AWS_SDK_XRAY_ARCHIVE_MARKER));
     }
 
     @BuildStep
@@ -83,13 +59,16 @@ public class AmazonServicesClientsProcessor {
 
         //Discover all interceptor implementations
         List<String> knownInterceptorImpls = combinedIndexBuildItem.getIndex()
-                .getKnownDirectImplementations(EXECUTION_INTERCEPTOR_NAME)
+                .getKnownDirectImplementations(AmazonInterceptorDotNames.EXECUTION_INTERCEPTOR_NAME)
                 .stream()
                 .map(c -> c.name().toString()).collect(Collectors.toList());
-        knownInterceptorImpls.add(TRACE_ID_EXECUTION_INTERCEPTOR_NAME.toString());
-        knownInterceptorImpls.add(HELPFUL_UNKNOWN_HOST_EXCEPTION_INTERCEPTOR_NAME.toString());
-        knownInterceptorImpls.add(GLOBAL_SERVICE_EXECUTION_INTERCEPTOR_NAME.toString());
-        knownInterceptorImpls.add(EVENT_STREAM_INITIAL_REQUEST_INTERCEPTOR_NAME.toString());
+        knownInterceptorImpls.add(AmazonInterceptorDotNames.TRACE_ID_EXECUTION_INTERCEPTOR_NAME.toString());
+        knownInterceptorImpls.add(AmazonInterceptorDotNames.HELPFUL_UNKNOWN_HOST_EXCEPTION_INTERCEPTOR_NAME.toString());
+        knownInterceptorImpls.add(AmazonInterceptorDotNames.GLOBAL_SERVICE_EXECUTION_INTERCEPTOR_NAME.toString());
+        knownInterceptorImpls.add(AmazonInterceptorDotNames.EVENT_STREAM_INITIAL_REQUEST_INTERCEPTOR_NAME.toString());
+        if (QuarkusClassLoader.isClassPresentAtRuntime(AmazonInterceptorDotNames.XRAY_TRACING_INTERCEPTOR_NAME.toString())) {
+            knownInterceptorImpls.add(AmazonInterceptorDotNames.XRAY_TRACING_INTERCEPTOR_NAME.toString());
+        }
 
         //Validate configurations
         for (RequireAmazonClientTransportBuilderBuildItem client : amazonClients) {

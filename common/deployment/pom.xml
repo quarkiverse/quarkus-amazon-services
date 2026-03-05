@@ -60,6 +60,21 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-devservices-deployment</artifactId>
         </dependency>
+
+        
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-junit-internal</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-xray-recorder-sdk-aws-sdk-v2</artifactId>
+            <version>2.20.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
