@@ -1,6 +1,5 @@
 package io.quarkiverse.amazon.common.deployment;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.jboss.jandex.DotName;
@@ -29,11 +28,12 @@ final class AmazonInterceptorDotNames {
     static final DotName XRAY_TRACING_INTERCEPTOR_NAME = DotName
             .createSimple("com.amazonaws.xray.interceptors.TracingInterceptor");
 
-    static final List<DotName> WELL_KNOWN_INTERCEPTOR_LIST = Arrays.asList(TRACE_ID_EXECUTION_INTERCEPTOR_NAME,
+    static final List<DotName> SDK_INTERCEPTOR_LIST = List.of(TRACE_ID_EXECUTION_INTERCEPTOR_NAME,
             HELPFUL_UNKNOWN_HOST_EXCEPTION_INTERCEPTOR_NAME,
             GLOBAL_SERVICE_EXECUTION_INTERCEPTOR_NAME,
-            EVENT_STREAM_INITIAL_REQUEST_INTERCEPTOR_NAME,
-            XRAY_TRACING_INTERCEPTOR_NAME);
+            EVENT_STREAM_INITIAL_REQUEST_INTERCEPTOR_NAME);
+
+    static final List<DotName> XRAY_TRACING_INTERCEPTOR_LIST = List.of(XRAY_TRACING_INTERCEPTOR_NAME);
 
     private AmazonInterceptorDotNames() {
     }

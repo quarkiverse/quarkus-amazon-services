@@ -62,12 +62,10 @@ public class AmazonServicesClientsProcessor {
                 .getKnownDirectImplementations(AmazonInterceptorDotNames.EXECUTION_INTERCEPTOR_NAME)
                 .stream()
                 .map(c -> c.name().toString()).collect(Collectors.toList());
-        knownInterceptorImpls.add(AmazonInterceptorDotNames.TRACE_ID_EXECUTION_INTERCEPTOR_NAME.toString());
-        knownInterceptorImpls.add(AmazonInterceptorDotNames.HELPFUL_UNKNOWN_HOST_EXCEPTION_INTERCEPTOR_NAME.toString());
-        knownInterceptorImpls.add(AmazonInterceptorDotNames.GLOBAL_SERVICE_EXECUTION_INTERCEPTOR_NAME.toString());
-        knownInterceptorImpls.add(AmazonInterceptorDotNames.EVENT_STREAM_INITIAL_REQUEST_INTERCEPTOR_NAME.toString());
+        knownInterceptorImpls.addAll(AmazonInterceptorDotNames.SDK_INTERCEPTOR_LIST.stream().map(DotName::toString).toList());
         if (QuarkusClassLoader.isClassPresentAtRuntime(AmazonInterceptorDotNames.XRAY_TRACING_INTERCEPTOR_NAME.toString())) {
-            knownInterceptorImpls.add(AmazonInterceptorDotNames.XRAY_TRACING_INTERCEPTOR_NAME.toString());
+            knownInterceptorImpls
+                    .addAll(AmazonInterceptorDotNames.XRAY_TRACING_INTERCEPTOR_LIST.stream().map(DotName::toString).toList());
         }
 
         //Validate configurations

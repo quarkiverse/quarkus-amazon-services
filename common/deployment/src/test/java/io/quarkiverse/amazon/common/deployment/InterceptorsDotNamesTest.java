@@ -37,13 +37,30 @@ public class InterceptorsDotNamesTest {
     }
 
     @Test
-    public void testNoMissingInterceptorClasses() {
+    public void testNoMissingSdkInterceptorClasses() {
         Set<String> expectedClasses = new TreeSet<>();
         for (ClassInfo clazz : awsCoreIndex.getKnownClasses()) {
             if (isInterceptor(clazz)) {
                 expectedClasses.add(clazz.name().toString());
             }
         }
+
+        // Simulate what happens when we create build items to register classes for reflection
+        Set<String> actualClasses = new TreeSet<>();
+        for (DotName clazz : AmazonInterceptorDotNames.SDK_INTERCEPTOR_LIST) {
+            actualClasses.add(clazz.toString());
+        }
+
+        assertThat("No ExecutionInterceptor implementations found in aws-core", expectedClasses,
+                not(emptyIterable()));
+        assertThat(
+                "Hard-coded interceptor list in AmazonInterceptorDotNames.SDK_INTERCEPTOR_LIST is missing interceptors. Update the list with the discovered implementations.",
+                actualClasses, containsInAnyOrder(expectedClasses.toArray(new String[0])));
+    }
+
+    @Test
+    public void testNoMissingXrayInterceptorClasses() {
+        Set<String> expectedClasses = new TreeSet<>();
         for (ClassInfo clazz : awsXrayRecorderIndex.getKnownClasses()) {
             if (isInterceptor(clazz)) {
                 expectedClasses.add(clazz.name().toString());
@@ -52,14 +69,14 @@ public class InterceptorsDotNamesTest {
 
         // Simulate what happens when we create build items to register classes for reflection
         Set<String> actualClasses = new TreeSet<>();
-        for (DotName clazz : AmazonInterceptorDotNames.WELL_KNOWN_INTERCEPTOR_LIST) {
+        for (DotName clazz : AmazonInterceptorDotNames.XRAY_TRACING_INTERCEPTOR_LIST) {
             actualClasses.add(clazz.toString());
         }
 
-        assertThat("No ExecutionInterceptor implementations found in aws-core or aws-xray-recorder-sdk", expectedClasses,
+        assertThat("No ExecutionInterceptor implementations found in aws-xray-recorder-sdk", expectedClasses,
                 not(emptyIterable()));
         assertThat(
-                "Hard-coded interceptor list in AmazonInterceptorDotNames.WELL_KNOWN_INTERCEPTOR_LIST is missing interceptors. Update the list with the discovered implementations.",
+                "Hard-coded interceptor list in AmazonInterceptorDotNames.XRAY_TRACING_INTERCEPTOR_LIST is missing interceptors. Update the list with the discovered implementations.",
                 actualClasses, containsInAnyOrder(expectedClasses.toArray(new String[0])));
     }
 
