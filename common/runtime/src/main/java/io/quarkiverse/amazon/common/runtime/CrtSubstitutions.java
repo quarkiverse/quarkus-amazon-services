@@ -13,8 +13,11 @@ import software.amazon.awssdk.checksums.SdkChecksum;
 import software.amazon.awssdk.checksums.internal.CrcCloneOnMarkChecksum;
 import software.amazon.awssdk.checksums.internal.CrcCombineOnMarkChecksum;
 import software.amazon.awssdk.checksums.internal.SdkCrc32CChecksum;
+import software.amazon.awssdk.checksums.internal.XxHashChecksum;
+import software.amazon.awssdk.checksums.spi.ChecksumAlgorithm;
 import software.amazon.awssdk.http.auth.aws.crt.internal.signer.DefaultAwsCrtV4aHttpSigner;
 import software.amazon.awssdk.http.auth.aws.signer.AwsV4aHttpSigner;
+import software.amazon.awssdk.utils.Lazy;
 
 public class CrtSubstitutions {
     static final String SOFTWARE_AMAZON_AWSSDK_CRT_PACKAGE = "software.amazon.awssdk.crt";
@@ -55,7 +58,7 @@ public class CrtSubstitutions {
      * aws sdk tries to create a java 9-based, then crt-based, then fallback to sdk-based checksum
      * We can safely use the java 9-based in all cases (java 17 is the minimum since quarkus 3.7)
      */
-    @TargetClass(value = software.amazon.awssdk.checksums.internal.CrcChecksumProvider.class)
+    @TargetClass(value = software.amazon.awssdk.checksums.internal.ChecksumProvider.class)
     @Substitute()
     static final class Target_CrcChecksumProvider {
 
@@ -63,6 +66,20 @@ public class CrtSubstitutions {
         private static final String CRT_MODULE = null;
         @Alias
         private static final String CRT_CRC64NVME_PATH = null;
+        @Alias
+        private static final String CRT_XXHASH_PATH = null;
+
+        @Delete
+        private static Lazy<Boolean> isXxHashAvailable;
+        @Delete
+        private static Lazy<Boolean> isCrc64NvmeAvailable;
+        @Delete
+        private static Lazy<Boolean> isCrc32CAvailable;
+
+        @Delete
+        private static Lazy<Boolean> checkCrtAvailability(String fqcn) {
+            return new Lazy<>(() -> false);
+        }
 
         @Substitute
         public static SdkChecksum crc32cImplementation() {
@@ -88,9 +105,12 @@ public class CrtSubstitutions {
             return null;
         }
 
+        /**
+         * optimize the original version which use reflection
+         */
         @Substitute
-        @TargetElement(onlyWith = IsCrtAbsent.class)
-        static SdkChecksum crc64NvmeCrtImplementation() {
+        @TargetElement(name = "crc64NvmeCrtImplementation", onlyWith = IsCrtAbsent.class)
+        static SdkChecksum crc64NvmeCrtImplementationCrtAbsent() {
             throw new RuntimeException(
                     "Could not load " + CRT_CRC64NVME_PATH + ". Add dependency on '" + CRT_MODULE
                             + "' module to enable CRC64NVME feature.");
@@ -100,6 +120,23 @@ public class CrtSubstitutions {
         @TargetElement(name = "crc64NvmeCrtImplementation", onlyWith = IsCrtPresent.class)
         static SdkChecksum crc64NvmeCrtImplementationCrtPresent() {
             return new CrcCloneOnMarkChecksum(new software.amazon.awssdk.crt.checksums.CRC64NVME());
+        }
+
+        /**
+         * optimize the original version which use reflection
+         */
+        @Substitute
+        @TargetElement(name = "crtXxHash", onlyWith = IsCrtAbsent.class)
+        static SdkChecksum crtXxHashCrtAbsent(ChecksumAlgorithm algorithm) {
+            throw new RuntimeException(
+                    String.format("Could not load %s for algorithm: %s. Add dependency on '%s' module.", CRT_XXHASH_PATH,
+                            algorithm.algorithmId(), CRT_MODULE));
+        }
+
+        @Substitute
+        @TargetElement(name = "crtXxHash", onlyWith = IsCrtPresent.class)
+        static SdkChecksum crtXxHashCrtPresent(ChecksumAlgorithm algorithm) {
+            return new XxHashChecksum(algorithm);
         }
     }
 
