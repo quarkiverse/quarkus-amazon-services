@@ -7,7 +7,7 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb-enhanced_quarkus-dynamodbenhanced-client-extensions]] [.property-path]##link:#quarkus-amazon-dynamodb-enhanced_quarkus-dynamodbenhanced-client-extensions[`quarkus.dynamodbenhanced.client-extensions`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb-enhanced_quarkus-dynamodbenhanced-client-extensions]] [.property-path]##link:#quarkus-amazon-dynamodb-enhanced_quarkus-dynamodbenhanced-client-extensions[`+++quarkus.dynamodbenhanced.client-extensions+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.dynamodbenhanced.client-extensions+++[]
 endif::add-copy-button-to-config-props[]
@@ -28,7 +28,7 @@ endif::add-copy-button-to-env-var[]
 |list of string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb-enhanced_quarkus-dynamodbenhanced-create-table-schemas]] [.property-path]##link:#quarkus-amazon-dynamodb-enhanced_quarkus-dynamodbenhanced-create-table-schemas[`quarkus.dynamodbenhanced.create-table-schemas`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-dynamodb-enhanced_quarkus-dynamodbenhanced-create-table-schemas]] [.property-path]##link:#quarkus-amazon-dynamodb-enhanced_quarkus-dynamodbenhanced-create-table-schemas[`+++quarkus.dynamodbenhanced.create-table-schemas+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.dynamodbenhanced.create-table-schemas+++[]
 endif::add-copy-button-to-config-props[]
