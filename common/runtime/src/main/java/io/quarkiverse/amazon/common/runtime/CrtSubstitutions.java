@@ -2,6 +2,7 @@ package io.quarkiverse.amazon.common.runtime;
 
 import java.util.Arrays;
 import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
 
 import com.oracle.svm.core.annotate.Alias;
 import com.oracle.svm.core.annotate.Delete;
@@ -59,15 +60,14 @@ public class CrtSubstitutions {
      * We can safely use the java 9-based in all cases (java 17 is the minimum since quarkus 3.7)
      */
     @TargetClass(value = software.amazon.awssdk.checksums.internal.ChecksumProvider.class)
-    @Substitute()
     static final class Target_CrcChecksumProvider {
 
         @Alias
-        private static final String CRT_MODULE = null;
+        private static String CRT_MODULE;
         @Alias
-        private static final String CRT_CRC64NVME_PATH = null;
+        private static String CRT_CRC64NVME_PATH;
         @Alias
-        private static final String CRT_XXHASH_PATH = null;
+        private static String CRT_XXHASH_PATH;
 
         @Delete
         private static Lazy<Boolean> isXxHashAvailable;
@@ -78,7 +78,12 @@ public class CrtSubstitutions {
 
         @Delete
         private static Lazy<Boolean> checkCrtAvailability(String fqcn) {
-            return new Lazy<>(() -> false);
+            return new Lazy<>(new Supplier<Boolean>() {
+                @Override
+                public Boolean get() {
+                    return false;
+                }
+            });
         }
 
         @Substitute

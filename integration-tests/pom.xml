@@ -265,6 +265,7 @@
             </dependencies>
             <properties>
                 <sync-client.type>aws-crt</sync-client.type>
+                <crt-ispresent>true</crt-ispresent>
             </properties>
         </profile>
         <profile>
