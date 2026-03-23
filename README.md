@@ -13,7 +13,7 @@ This set of extensions allows you to interact with some of the AWS Services name
 * Account
 * ACM
 * Api Gateway Management Api
-* AppConfig
+* AppConfig / AppConfigData
 * Bedrock / Bedrock Runtime
 * CloudWatch
 * CloudWatch Logs
