@@ -12,11 +12,11 @@ public class AmazonKmsTest {
 
     @Test
     public void testKmsAsync() {
-        RestAssured.when().get("/test/kms/async").then().body(is("Quarkus is awsome"));
+        RestAssured.when().get("/test/kms/async").then().body(is("Quarkus is awesome"));
     }
 
     @Test
     public void testKmsSync() {
-        RestAssured.when().get("/test/kms/sync").then().body(is("Quarkus is awsome"));
+        RestAssured.when().get("/test/kms/sync").then().body(is("Quarkus is awesome"));
     }
 }

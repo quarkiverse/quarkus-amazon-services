@@ -1,4 +1,4 @@
-package io.quarkiverse.amazon.secretsmanager.deployment;
+package io.quarkiverse.amazon.secretsmanager.runtime.deployment;
 
 import jakarta.inject.Inject;
 

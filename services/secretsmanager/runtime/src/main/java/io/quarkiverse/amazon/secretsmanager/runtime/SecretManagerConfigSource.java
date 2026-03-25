@@ -1,0 +1,126 @@
+package io.quarkiverse.amazon.secretsmanager.runtime;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.jboss.logging.Logger;
+
+import io.smallrye.config.common.AbstractConfigSource;
+import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
+import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse;
+import software.amazon.awssdk.services.secretsmanager.model.ListSecretsRequest;
+import software.amazon.awssdk.services.secretsmanager.model.ListSecretsResponse;
+import software.amazon.awssdk.services.secretsmanager.model.SecretListEntry;
+
+/**
+ * A MicroProfile ConfigSource backed by AWS Secrets Manager.
+ * <p>
+ * At startup, this source lists secrets and fetches their values. Optionally, a lookup map can be
+ * provided to expose selected secrets under arbitrary configuration property names.
+ */
+public class SecretManagerConfigSource extends AbstractConfigSource {
+
+    private static final String CONFIG_SOURCE_NAME = "quarkus.secretsmanager.config";
+    private static final Logger LOG = Logger.getLogger(SecretManagerConfigSource.class);
+    private final Map<String, String> lookup;
+    private final Map<String, String> secrets;
+
+    public SecretManagerConfigSource(SecretsManagerClient secretsManagerClient, Map<String, String> lookup, int ordinal) {
+        super(CONFIG_SOURCE_NAME, ordinal);
+        this.lookup = lookup;
+
+        // Load secrets once; ConfigSource lookups should be fast and side-effect free.
+        this.secrets = loadAllSecrets(secretsManagerClient);
+    }
+
+    private Map<String, String> loadAllSecrets(SecretsManagerClient client) {
+        LOG.info("Loading config values from AWS Secrets Manager...");
+        Map<String, String> result = new LinkedHashMap<>();
+
+        List<SecretListEntry> secrets = listAllSecrets(client);
+
+        for (SecretListEntry entry : secrets) {
+            String name = entry.name();
+
+            // When a lookup mapping is provided, only fetch secrets referenced by the mapping values.
+            if (!this.lookup.isEmpty() && !this.lookup.containsValue(name)) {
+                continue;
+            }
+
+            try {
+                String value = getSecretValue(client, name);
+                result.put(name, value);
+            } catch (Exception e) {
+                // Handle access denied, deleted secrets, throttling, etc.
+                // Keep going so one bad secret doesn't prevent application startup.
+                LOG.errorf(e, "Failed to fetch secret '%s' from AWS Secrets Manager.", name);
+            }
+        }
+
+        LOG.infof("ConfigSource loaded %d secrets from AWS Secrets Manager.", result.size());
+        return result;
+    }
+
+    private List<SecretListEntry> listAllSecrets(SecretsManagerClient client) {
+        List<SecretListEntry> secrets = new ArrayList<>();
+
+        String nextToken = null;
+
+        do {
+            ListSecretsRequest request = ListSecretsRequest.builder()
+                    .nextToken(nextToken)
+                    .build();
+
+            ListSecretsResponse response = client.listSecrets(request);
+            secrets.addAll(response.secretList());
+
+            nextToken = response.nextToken();
+
+        } while (nextToken != null);
+
+        return secrets;
+    }
+
+    private String getSecretValue(SecretsManagerClient client, String secretId) {
+        GetSecretValueRequest request = GetSecretValueRequest.builder()
+                .secretId(secretId)
+                .build();
+
+        GetSecretValueResponse response = client.getSecretValue(request);
+
+        if (response.secretString() != null) {
+            return response.secretString();
+        } else {
+            // Binary secrets are returned as bytes; expose them as UTF-8 text.
+            return response.secretBinary().asUtf8String();
+        }
+    }
+
+    @Override
+    public Set<String> getPropertyNames() {
+        // If a lookup mapping is provided, expose the mapping keys as the available property names.
+        // Otherwise, expose every fetched secret name directly.
+        return this.lookup.isEmpty() ? secrets.keySet() : this.lookup.keySet();
+    }
+
+    @Override
+    public String getValue(String propertyName) {
+        if (!this.lookup.isEmpty() && !lookup.containsKey(propertyName)) {
+            return null;
+        }
+
+        // When a mapping is configured, resolve propertyName -> secretName -> secretValue.
+        String secretName = this.lookup.isEmpty() ? null : lookup.get(propertyName);
+        String value = secretName == null ? null : secrets.get(secretName);
+        if (value != null) {
+            return value;
+        }
+
+        // Fallback: allow directly referencing the secret by name even when a mapping exists.
+        return secrets.get(propertyName);
+    }
+}

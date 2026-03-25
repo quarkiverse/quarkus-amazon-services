@@ -20,7 +20,7 @@ import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRespon
 public class SecretsManagerResource {
 
     private static final Logger LOG = Logger.getLogger(SecretsManagerResource.class);
-    public final static String TEXT = "Quarkus is awsome";
+    public final static String TEXT = "Quarkus is awesome";
     private static final String SYNC_PARAM = "quarkus/sync-" + UUID.randomUUID().toString();
     private static final String ASYNC_PARAM = "quarkus/async-" + UUID.randomUUID().toString();
 

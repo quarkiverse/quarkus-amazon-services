@@ -21,7 +21,7 @@ import software.amazon.awssdk.services.ses.model.SendEmailResponse;
 public class SesResource {
 
     private static final Logger LOG = Logger.getLogger(SesResource.class);
-    public final static String EMAIL_TXT_BODY = "Quarkus is awsome";
+    public final static String EMAIL_TXT_BODY = "Quarkus is awesome";
     public final static String EMAIL_SUBJECT = "Quarkus";
     public final static String SYNC_FROM = "sync-sender@example.com";
     public final static String SYNC_TO = "sync-recipient@example.com";
