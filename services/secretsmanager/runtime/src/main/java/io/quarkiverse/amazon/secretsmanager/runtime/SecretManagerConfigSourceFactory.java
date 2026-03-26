@@ -50,9 +50,9 @@ public class SecretManagerConfigSourceFactory implements
         final Optional<URI> endpoint = microprofileConfig.getOptionalValue(
                 "quarkus.secretsmanager.endpoint-override",
                 URI.class);
-        final Optional<Region> region = microprofileConfig.getOptionalValue(
+        final Optional<String> region = microprofileConfig.getOptionalValue(
                 "quarkus.secretsmanager.aws.region",
-                Region.class);
+                String.class);
         final Optional<String> accessKey = microprofileConfig.getOptionalValue(
                 "quarkus.secretsmanager.aws.credentials.static-provider.access-key-id",
                 String.class);
@@ -61,7 +61,7 @@ public class SecretManagerConfigSourceFactory implements
                 String.class);
 
         endpoint.ifPresent(builder::endpointOverride);
-        region.ifPresent(builder::region);
+        region.ifPresent(r -> builder.region(Region.of(r)));
 
         if (accessKey.isPresent() && secretAccessKey.isPresent()) {
             builder.credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials
