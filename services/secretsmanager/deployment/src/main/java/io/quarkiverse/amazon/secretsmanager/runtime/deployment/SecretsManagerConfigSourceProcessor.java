@@ -6,7 +6,7 @@ import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.RunTimeConfigBuilderBuildItem;
 
-public class SecretManagerConfigSourceProcessor {
+public class SecretsManagerConfigSourceProcessor {
 
     static final String FEATURE = "aws-secrets-manager-config-source";
 
