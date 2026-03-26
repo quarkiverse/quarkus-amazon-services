@@ -54,10 +54,10 @@ public class SecretManagerConfigSourceFactory implements
                 "quarkus.secretsmanager.aws.region",
                 Region.class);
         final Optional<String> accessKey = microprofileConfig.getOptionalValue(
-                "quarkus.secretsmanager.credentials.static-provider.access-key-id",
+                "quarkus.secretsmanager.aws.credentials.static-provider.access-key-id",
                 String.class);
         final Optional<String> secretAccessKey = microprofileConfig.getOptionalValue(
-                "quarkus.secretsmanager.credentials.static-provider.secret-access-key",
+                "quarkus.secretsmanager.aws.credentials.static-provider.secret-access-key",
                 String.class);
 
         endpoint.ifPresent(builder::endpointOverride);
