@@ -31,13 +31,13 @@ public class SecretsManagerResource {
     @Inject
     SecretsManagerAsyncClient secretsManagerAsyncClient;
 
-    @ConfigProperty(name = "postgres.username")
+    @ConfigProperty(name = "postgres.username", defaultValue = "N/A")
     String postgresUsername;
 
-    @ConfigProperty(name = "postgres.password")
+    @ConfigProperty(name = "postgres.password", defaultValue = "N/A")
     String postgresPassword;
 
-    @ConfigProperty(name = "postgres.url")
+    @ConfigProperty(name = "postgres.url", defaultValue = "N/A")
     String postgresUrl;
 
     boolean secretsManagerConfigEnabled;

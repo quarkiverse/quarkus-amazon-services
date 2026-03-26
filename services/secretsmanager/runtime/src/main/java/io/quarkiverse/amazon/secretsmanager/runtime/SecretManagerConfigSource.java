@@ -41,7 +41,13 @@ public class SecretManagerConfigSource extends AbstractConfigSource {
         LOG.info("Loading config values from AWS Secrets Manager...");
         Map<String, String> result = new LinkedHashMap<>();
 
-        List<SecretListEntry> secrets = listAllSecrets(client);
+        List<SecretListEntry> secrets;
+        try {
+            secrets = listAllSecrets(client);
+        } catch (Exception e) {
+            LOG.errorf(e, "Failed to list secrets from AWS Secrets Manager.");
+            return result;
+        }
 
         for (SecretListEntry entry : secrets) {
             String name = entry.name();
