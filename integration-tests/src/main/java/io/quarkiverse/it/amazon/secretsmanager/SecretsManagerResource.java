@@ -10,6 +10,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerAsyncClient;
@@ -29,6 +30,17 @@ public class SecretsManagerResource {
 
     @Inject
     SecretsManagerAsyncClient secretsManagerAsyncClient;
+
+    @ConfigProperty(name = "postgres.username")
+    String postgresUsername;
+
+    @ConfigProperty(name = "postgres.password")
+    String postgresPassword;
+
+    @ConfigProperty(name = "postgres.url")
+    String postgresUrl;
+
+    boolean secretsManagerConfigEnabled;
 
     @GET
     @Path("sync")
@@ -50,5 +62,13 @@ public class SecretsManagerResource {
         return secretsManagerAsyncClient.createSecret(r -> r.name(ASYNC_PARAM).secretString(TEXT))
                 .thenCompose(result -> secretsManagerAsyncClient.getSecretValue(r -> r.secretId(ASYNC_PARAM)))
                 .thenApply(GetSecretValueResponse::secretString);
+    }
+
+    @GET
+    @Path("config")
+    @Produces(TEXT_PLAIN)
+    public String testConfig() {
+        return "postgresUsername: " + postgresUsername + ", postgresPassword: " + postgresPassword + ", postgresUrl: "
+                + postgresUrl;
     }
 }
