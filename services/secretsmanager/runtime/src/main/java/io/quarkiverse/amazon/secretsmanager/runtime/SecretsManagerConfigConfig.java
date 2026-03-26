@@ -9,7 +9,7 @@ import io.smallrye.config.WithDefault;
 
 @ConfigMapping(prefix = "quarkus.secretsmanager.config")
 @ConfigRoot(phase = ConfigPhase.RUN_TIME)
-public interface SecretManagerConfigConfig {
+public interface SecretsManagerConfigConfig {
     /**
      * Whether to enable the AWS Secrets Manager ConfigSource ({@code quarkus.secretsmanager.config}).
      * <p>

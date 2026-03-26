@@ -22,14 +22,14 @@ import software.amazon.awssdk.services.secretsmanager.model.SecretListEntry;
  * At startup, this source lists secrets and fetches their values. Optionally, a lookup map can be
  * provided to expose selected secrets under arbitrary configuration property names.
  */
-public class SecretManagerConfigSource extends AbstractConfigSource {
+public class SecretsManagerConfigSource extends AbstractConfigSource {
 
     private static final String CONFIG_SOURCE_NAME = "quarkus.secretsmanager.config";
-    private static final Logger LOG = Logger.getLogger(SecretManagerConfigSource.class);
+    private static final Logger LOG = Logger.getLogger(SecretsManagerConfigSource.class);
     private final Map<String, String> lookup;
     private final Map<String, String> secrets;
 
-    public SecretManagerConfigSource(SecretsManagerClient secretsManagerClient, Map<String, String> lookup, int ordinal) {
+    public SecretsManagerConfigSource(SecretsManagerClient secretsManagerClient, Map<String, String> lookup, int ordinal) {
         super(CONFIG_SOURCE_NAME, ordinal);
         this.lookup = lookup;
 

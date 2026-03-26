@@ -41,14 +41,17 @@ public class AmazonClientCommonRecorder {
         AmazonClientConfig defaultConfig = amazonClientConfigRuntime.getValue().clients().get(ClientUtil.DEFAULT_CLIENT_NAME);
 
         String namedExtension = ClientUtil.isDefaultClient(clientName) ? awsServiceName : awsServiceName + "." + clientName;
-        initAwsClient(builder, awsServiceName, namedExtension, namedConfig.aws(), defaultConfig.aws());
-        initSdkClient(builder, awsServiceName, namedExtension, namedConfig.sdk(), defaultConfig.sdk(), sdkBuildTimeConfig.sdk(),
+        initAwsClient(builder, awsServiceName, namedExtension, namedConfig.aws(),
+                defaultConfig.aws());
+        initSdkClientEndpoint(builder, awsServiceName, namedExtension, namedConfig.sdk(), defaultConfig.sdk());
+        initSdkClient(builder, awsServiceName, namedExtension, namedConfig.sdk(),
+                defaultConfig.sdk(), sdkBuildTimeConfig.sdk(),
                 scheduledExecutorService);
 
         return new RuntimeValue<>(builder);
     }
 
-    public void initAwsClient(AwsClientBuilder builder, String extension, String namedExtension, AwsConfig namedConfig,
+    public static void initAwsClient(AwsClientBuilder builder, String extension, String namedExtension, AwsConfig namedConfig,
             AwsConfig defaultConfig) {
         namedConfig.region().or(() -> defaultConfig.region()).ifPresent(builder::region);
 
@@ -60,18 +63,22 @@ public class AmazonClientCommonRecorder {
         builder.credentialsProvider(credential);
     }
 
-    public void initSdkClient(SdkClientBuilder builder, String extension, String namedExtension, SdkConfig namedConfig,
-            SdkConfig defaultConfig, SdkBuildTimeConfig buildConfig,
-            ScheduledExecutorService scheduledExecutorService) {
-
+    public static void initSdkClientEndpoint(SdkClientBuilder builder, String extension, String namedExtension,
+            SdkConfig namedConfig,
+            SdkConfig defaultConfig) {
         if (namedConfig.endpointOverride().isPresent()) {
-            validEndpointOverride(namedExtension, namedConfig.endpointOverride().get());
+            AmazonClientCommonRecorder.validEndpointOverride(namedExtension, namedConfig.endpointOverride().get());
         } else if (defaultConfig.endpointOverride().isPresent()) {
-            validEndpointOverride(extension, defaultConfig.endpointOverride().get());
+            AmazonClientCommonRecorder.validEndpointOverride(extension, defaultConfig.endpointOverride().get());
         }
 
         namedConfig.endpointOverride().filter(URI::isAbsolute)
                 .or(() -> defaultConfig.endpointOverride().filter(URI::isAbsolute)).ifPresent(builder::endpointOverride);
+    }
+
+    public static void initSdkClient(SdkClientBuilder builder, String extension, String namedExtension, SdkConfig namedConfig,
+            SdkConfig defaultConfig, SdkBuildTimeConfig buildConfig,
+            ScheduledExecutorService scheduledExecutorService) {
 
         final ClientOverrideConfiguration.Builder overrides = ClientOverrideConfiguration.builder();
 
@@ -87,13 +94,13 @@ public class AmazonClientCommonRecorder {
 
         buildConfig.interceptors().orElse(Collections.emptyList()).stream()
                 .map(String::trim)
-                .map(this::createInterceptor)
+                .map(AmazonClientCommonRecorder::createInterceptor)
                 .filter(Objects::nonNull)
                 .forEach(overrides::addExecutionInterceptor);
         builder.overrideConfiguration(overrides.build());
     }
 
-    private void validEndpointOverride(String namedExtension, URI endpointOverride) {
+    private static void validEndpointOverride(String namedExtension, URI endpointOverride) {
         if (StringUtils.isBlank(endpointOverride.getScheme())) {
             throw new RuntimeConfigurationError(
                     String.format("quarkus.%s.endpoint-override (%s) - scheme must be specified",
@@ -118,7 +125,8 @@ public class AmazonClientCommonRecorder {
         return new RuntimeValue<>(builder);
     }
 
-    public void initAwsPresigner(SdkPresigner.Builder builder, String extension, String namedExtension, AwsConfig namedConfig,
+    public static void initAwsPresigner(SdkPresigner.Builder builder, String extension, String namedExtension,
+            AwsConfig namedConfig,
             AwsConfig defaultConfig) {
         namedConfig.region().or(() -> defaultConfig.region()).ifPresent(builder::region);
 
@@ -130,19 +138,20 @@ public class AmazonClientCommonRecorder {
         builder.credentialsProvider(credential);
     }
 
-    public void initSdkPresigner(SdkPresigner.Builder builder, String extension, String namedExtension, SdkConfig namedConfig,
+    public static void initSdkPresigner(SdkPresigner.Builder builder, String extension, String namedExtension,
+            SdkConfig namedConfig,
             SdkConfig defaultConfig) {
         if (namedConfig.endpointOverride().isPresent()) {
-            validEndpointOverride(namedExtension, namedConfig.endpointOverride().get());
+            AmazonClientCommonRecorder.validEndpointOverride(namedExtension, namedConfig.endpointOverride().get());
         } else if (defaultConfig.endpointOverride().isPresent()) {
-            validEndpointOverride(extension, defaultConfig.endpointOverride().get());
+            AmazonClientCommonRecorder.validEndpointOverride(extension, defaultConfig.endpointOverride().get());
         }
 
         namedConfig.endpointOverride().filter(URI::isAbsolute)
                 .or(() -> defaultConfig.endpointOverride().filter(URI::isAbsolute)).ifPresent(builder::endpointOverride);
     }
 
-    private ExecutionInterceptor createInterceptor(String interceptorClassName) {
+    private static ExecutionInterceptor createInterceptor(String interceptorClassName) {
         try {
             @SuppressWarnings("unchecked")
             Class<ExecutionInterceptor> classObj = (Class<ExecutionInterceptor>) Thread.currentThread().getContextClassLoader()
