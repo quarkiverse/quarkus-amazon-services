@@ -204,6 +204,136 @@ endif::add-copy-button-to-env-var[]
 |Map<String,String>
 |
 
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-enabled]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-enabled[`+++quarkus.appconfigdata.config.enabled+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Whether to enable the AWS AppConfig Data ConfigSource (`quarkus.appconfigdata.config`).
+
+When disabled, no configuration values are loaded from AppConfig Data.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-application]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-application[`+++quarkus.appconfigdata.config.application+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.application+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+AppConfig application ID or name for `software.amazon.awssdk.services.appconfigdata.model.StartConfigurationSessionRequest`.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_APPLICATION+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_APPLICATION+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-environment]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-environment[`+++quarkus.appconfigdata.config.environment+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.environment+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+AppConfig environment ID or name for `software.amazon.awssdk.services.appconfigdata.model.StartConfigurationSessionRequest`.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_ENVIRONMENT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_ENVIRONMENT+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-configuration-profile]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-configuration-profile[`+++quarkus.appconfigdata.config.configuration-profile+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.configuration-profile+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+AppConfig configuration profile ID or name for `software.amazon.awssdk.services.appconfigdata.model.StartConfigurationSessionRequest`.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_CONFIGURATION_PROFILE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_CONFIGURATION_PROFILE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-required-minimum-poll-interval-in-seconds]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-required-minimum-poll-interval-in-seconds[`+++quarkus.appconfigdata.config.required-minimum-poll-interval-in-seconds+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.required-minimum-poll-interval-in-seconds+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Optional minimum interval between `GetLatestConfiguration` calls for the session.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_REQUIRED_MINIMUM_POLL_INTERVAL_IN_SECONDS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_REQUIRED_MINIMUM_POLL_INTERVAL_IN_SECONDS+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|
+
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-update-interval-minutes]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-update-interval-minutes[`+++quarkus.appconfigdata.config.update-interval-minutes+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.update-interval-minutes+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Interval in minutes between polling for configuration updates after the initial fetch.
+
+Set to `0` to disable periodic polling (only the initial load runs).
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_UPDATE_INTERVAL_MINUTES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_UPDATE_INTERVAL_MINUTES+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++5+++`
+
 h|[[quarkus-amazon-appconfigdata_section_quarkus-appconfigdata]] [.section-name.section-level0]##link:#quarkus-amazon-appconfigdata_section_quarkus-appconfigdata[AWS SDK client configurations]##
 h|Type
 h|Default
