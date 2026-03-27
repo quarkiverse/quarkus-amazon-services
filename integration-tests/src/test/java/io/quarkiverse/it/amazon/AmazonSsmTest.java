@@ -12,11 +12,11 @@ public class AmazonSsmTest {
 
     @Test
     public void testSsmAsync() {
-        RestAssured.when().get("/test/ssm/async").then().body(is("Quarkus is awsome"));
+        RestAssured.when().get("/test/ssm/async").then().body(is("Quarkus is awesome"));
     }
 
     @Test
     public void testSsmSync() {
-        RestAssured.when().get("/test/ssm/sync").then().body(is("Quarkus is awsome"));
+        RestAssured.when().get("/test/ssm/sync").then().body(is("Quarkus is awesome"));
     }
 }

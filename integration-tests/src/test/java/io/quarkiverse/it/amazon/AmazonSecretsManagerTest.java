@@ -12,11 +12,17 @@ public class AmazonSecretsManagerTest {
 
     @Test
     public void testSecretsManagerAsync() {
-        RestAssured.when().get("/test/secretsmanager/async").then().body(is("Quarkus is awsome"));
+        RestAssured.when().get("/test/secretsmanager/async").then().body(is("Quarkus is awesome"));
     }
 
     @Test
     public void testSecretsManagerSync() {
-        RestAssured.when().get("/test/secretsmanager/sync").then().body(is("Quarkus is awsome"));
+        RestAssured.when().get("/test/secretsmanager/sync").then().body(is("Quarkus is awesome"));
+    }
+
+    @Test
+    public void testSecretsManagerConfigSource() {
+        RestAssured.when().get("/test/secretsmanager/config").then().body(is(
+                "postgresUsername: quarkus, postgresPassword: quarkus, postgresUrl: jdbc:postgresql://localhost:5432/quarkus"));
     }
 }

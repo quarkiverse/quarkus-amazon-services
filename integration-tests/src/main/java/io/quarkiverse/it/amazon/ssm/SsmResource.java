@@ -22,7 +22,7 @@ import software.amazon.awssdk.services.ssm.model.ParameterType;
 public class SsmResource {
 
     private static final Logger LOG = Logger.getLogger(SsmResource.class);
-    public final static String TEXT = "Quarkus is awsome";
+    public final static String TEXT = "Quarkus is awesome";
     private static final String SYNC_PARAM = "/quarkus/sync-" + UUID.randomUUID().toString();
     private static final String ASYNC_PARAM = "/quarkus/async-" + UUID.randomUUID().toString();
 

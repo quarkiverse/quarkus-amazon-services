@@ -25,7 +25,7 @@ import software.amazon.awssdk.services.kms.model.GenerateDataKeyResponse;
 public class KmsResource {
 
     private static final Logger LOG = Logger.getLogger(KmsResource.class);
-    public final static String TEXT = "Quarkus is awsome";
+    public final static String TEXT = "Quarkus is awesome";
 
     @Inject
     KmsClient kmsClient;
