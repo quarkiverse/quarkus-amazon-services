@@ -8,6 +8,7 @@ metadata:
     - "amazon"
   categories:
     - "data"
+    - "configuration"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-ssm.html
   status: "stable"
   config:
