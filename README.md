@@ -1,6 +1,6 @@
 # Quarkus Amazon Services
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-41-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-42-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/maven-central/v/io.quarkiverse.amazonservices/quarkus-amazon-services-bom?logo=apache-maven&style=flat-square)](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom)
@@ -195,6 +195,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/jcarranzan"><img src="https://avatars.githubusercontent.com/u/75727563?v=4?s=100" width="100px;" alt="Jose Carranza"/><br /><sub><b>Jose Carranza</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=jcarranzan" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://foivos.zakkak.net"><img src="https://avatars.githubusercontent.com/u/1435395?v=4?s=100" width="100px;" alt="Foivos Zakkak"/><br /><sub><b>Foivos Zakkak</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=zakkak" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://melloware.com"><img src="https://avatars.githubusercontent.com/u/4399574?v=4?s=100" width="100px;" alt="Melloware"/><br /><sub><b>Melloware</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=melloware" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/brucej72gg"><img src="https://avatars.githubusercontent.com/u/230523548?v=4?s=100" width="100px;" alt="brucej72gg"/><br /><sub><b>brucej72gg</b></sub></a><br /><a href="#ideas-brucej72gg" title="Ideas, Planning, & Feedback">🤔</a> <a href="#example-brucej72gg" title="Examples">💡</a></td>
     </tr>
   </tbody>
 </table>
