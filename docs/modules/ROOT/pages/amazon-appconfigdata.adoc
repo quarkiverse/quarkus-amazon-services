@@ -41,15 +41,84 @@ public class AppConfigDataService {
     AppConfigDataClient appConfigDataClient;
 
     public void listApplications() {
-        GetLatestConfigurationResponse response = client.getLatestConfiguration(GetLatestConfigurationRequest.builder().build());
+        GetLatestConfigurationResponse response = appConfigDataClient.getLatestConfiguration(GetLatestConfigurationRequest.builder().build());
         // Handle response, e.g. iterate over response.items()
     }
 }
 ----
 
+== Using AWS AppConfig Data as a Quarkus Config Source
+
+In addition to injecting `AppConfigDataClient` / `AppConfigDataAsyncClient`, you can use the AWS AppConfig *Data* API as a configuration source.
+When enabled, Quarkus starts a configuration session for your hosted configuration, loads the document, and exposes its entries as MicroProfile configuration properties.
+The source then polls for updates on a fixed interval (unless you disable polling).
+
+=== Enable the Config Source
+
+Enable the config source by setting:
+
+[source,properties]
+----
+quarkus.appconfigdata.config.enabled=true
+----
+
+=== Application, environment, and configuration profile
+
+The config source calls `StartConfigurationSession` with the following identifiers (IDs or names, as accepted by AWS):
+
+[source,properties]
+----
+quarkus.appconfigdata.config.enabled=true
+
+quarkus.appconfigdata.config.application=my-application
+quarkus.appconfigdata.config.environment=production
+quarkus.appconfigdata.config.configuration-profile=my-profile
+----
+
+With these properties in place, you can read values like any other Quarkus configuration (for example via `@ConfigProperty` or `@ConfigMapping`), using the keys described below.
+
+=== Optional polling settings
+
+* `quarkus.appconfigdata.config.required-minimum-poll-interval-in-seconds` -- optional; sets the minimum interval between `GetLatestConfiguration` calls for the session, when required by your configuration profile.
+* `quarkus.appconfigdata.config.update-interval-minutes` -- interval between polls after the initial load (default: `5`). Set to `0` to fetch only once at startup and skip periodic polling.
+
+=== How configuration keys are exposed
+
+The hosted configuration body is parsed into a flat map of string keys and string values:
+
+* If the document is **JSON**, nested objects are turned into dotted keys (for example `featureFlags.newCheckoutFlow` with value `true`).
+* JSON **arrays** use index segments (for example `items[0].name`).
+* If the document is **Java properties** format, standard `key=value` entries are exposed using those keys.
+
+Boolean and numeric JSON values are exposed as strings (`true`, `false`, and the number's string form).
+
+=== Credentials, region, and endpoint
+
+The config source uses the same AppConfig Data client configuration as the rest of the extension (credentials provider chain, region, and optional endpoint override).
+This is useful for LocalStack or custom endpoints:
+
+[source,properties]
+----
+quarkus.appconfigdata.endpoint-override=http://localhost:4566
+quarkus.appconfigdata.aws.region=us-east-1
+quarkus.appconfigdata.aws.credentials.type=static
+quarkus.appconfigdata.aws.credentials.static-provider.access-key-id=test-key
+quarkus.appconfigdata.aws.credentials.static-provider.secret-access-key=test-secret
+
+quarkus.appconfigdata.config.enabled=true
+quarkus.appconfigdata.config.application=my-application
+quarkus.appconfigdata.config.environment=production
+quarkus.appconfigdata.config.configuration-profile=my-profile
+----
+
+=== Notes and limitations
+
+* The config source keeps an internal snapshot that is updated when polling succeeds; components that only read configuration at startup will not see later changes unless they observe configuration dynamically.
+* If identifiers are missing or AppConfig Data returns an error during session start or fetch, Quarkus logs the error and the config source may expose no entries from AppConfig for that attempt.
+
 == Configuration Reference
 
-include::./amazon-configure-clients.adoc[]
+include::./includes/quarkus-amazon-appconfigdata.adoc[]
 
 == Related Guides
 

@@ -204,6 +204,134 @@ endif::add-copy-button-to-env-var[]
 |Map<String,String>
 |
 
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-enabled]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-enabled[`+++quarkus.ssm.config.enabled+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Whether to enable the AWS Systems Manager Parameter Store ConfigSource (`quarkus.ssm.config`).
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-path]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-path[`+++quarkus.ssm.config.path+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.path+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Parameter Store path passed to `software.amazon.awssdk.services.ssm.model.GetParametersByPathRequest`. When set, all parameters under this path are loaded (subject to `recursive()`).
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_PATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_PATH+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-names]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-names[`+++quarkus.ssm.config.names+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.names+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Individual parameter names (full paths, for example `/myapp/prod/db/url`) passed to `software.amazon.awssdk.services.ssm.model.GetParametersRequest`. Batched in groups of ten per AWS limit.
+
+You can combine this with `path()`; the merged result is exposed as configuration keys.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_NAMES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_NAMES+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-recursive]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-recursive[`+++quarkus.ssm.config.recursive+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.recursive+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+When using `path()`, whether to load parameters in sub-paths recursively.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_RECURSIVE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_RECURSIVE+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++true+++`
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-with-decryption]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-with-decryption[`+++quarkus.ssm.config.with-decryption+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.with-decryption+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Whether to decrypt `SecureString` parameters when fetching values.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_WITH_DECRYPTION+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_WITH_DECRYPTION+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++true+++`
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-update-interval-minutes]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-update-interval-minutes[`+++quarkus.ssm.config.update-interval-minutes+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.update-interval-minutes+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Interval in minutes between reloads after the initial fetch. Set to `0` to fetch only once at startup.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_UPDATE_INTERVAL_MINUTES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_UPDATE_INTERVAL_MINUTES+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++5+++`
+
 h|[[quarkus-amazon-ssm_section_quarkus-ssm]] [.section-name.section-level0]##link:#quarkus-amazon-ssm_section_quarkus-ssm[AWS SDK client configurations]##
 h|Type
 h|Default

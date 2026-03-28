@@ -282,6 +282,80 @@ include::./amazon-credentials.adoc[]
 
 And the region from your AWS CLI profile will be used.
 
+== Using AWS Systems Manager Parameter Store as a Quarkus Config Source
+
+In addition to injecting `SsmClient` / `SsmAsyncClient`, you can load configuration values from Parameter Store as a MicroProfile config source.
+When enabled, Quarkus fetches parameters (by path and/or by explicit name), maps them to configuration keys, and optionally reloads on a fixed interval.
+
+=== Enable the Config Source
+
+[source,properties]
+----
+quarkus.ssm.config.enabled=true
+----
+
+You must also configure at least one of **path** or **names** (see below). If both are unset, the config source is not registered.
+
+=== Load parameters by path
+
+Use `GetParametersByPath` for every parameter under a hierarchy (for example `/myapp/prod/`):
+
+[source,properties]
+----
+quarkus.ssm.config.enabled=true
+quarkus.ssm.config.path=/myapp/prod/
+
+# Optional (defaults shown)
+quarkus.ssm.config.recursive=true
+quarkus.ssm.config.with-decryption=true
+----
+
+=== Load parameters by name
+
+List full parameter names (up to ten per AWS request; the extension batches larger lists automatically):
+
+[source,properties]
+----
+quarkus.ssm.config.enabled=true
+quarkus.ssm.config.names[0]=/myapp/prod/db/url
+quarkus.ssm.config.names[1]=/myapp/prod/db/user
+----
+
+You can combine `quarkus.ssm.config.path` and `quarkus.ssm.config.names`; keys from both are merged into one config source.
+
+=== Optional polling
+
+`quarkus.ssm.config.update-interval-minutes` controls how often parameters are re-fetched after startup (default: `5`). Set to `0` to load only once at startup.
+
+=== How configuration keys are exposed
+
+* The Parameter Store name is normalized into a key prefix: a leading `/` is removed and remaining `/` characters become `.` (for example `/myapp/prod/url` → `myapp.prod.url`).
+* If the parameter **value** is JSON (object or array), it is flattened to dotted keys and prefixed (same idea as the AppConfig Data config source).
+* If the value contains an **equals sign**, it is parsed as Java `Properties` text; each property key is appended under the normalized parameter prefix.
+* Otherwise the whole value is exposed as a single property using the normalized parameter name as the key.
+
+=== Credentials, region, and endpoint
+
+The config source uses the same SSM client configuration as the rest of the extension:
+
+[source,properties]
+----
+quarkus.ssm.endpoint-override=http://localhost:4566
+quarkus.ssm.aws.region=us-east-1
+quarkus.ssm.aws.credentials.type=static
+quarkus.ssm.aws.credentials.static-provider.access-key-id=test-key
+quarkus.ssm.aws.credentials.static-provider.secret-access-key=test-secret
+
+quarkus.ssm.config.enabled=true
+quarkus.ssm.config.path=/myapp/prod/
+----
+
+=== Notes and limitations
+
+* The config source keeps an internal snapshot that is updated when a scheduled reload succeeds; components that only bind configuration at startup may not observe later changes.
+* If a reload fails, Quarkus logs the error and the previous snapshot (if any) is left in place.
+* `GetParameters` returns an `invalidParameters` list for names that do not exist; those names are logged at warn level.
+
 == Next steps
 
 === Packaging
