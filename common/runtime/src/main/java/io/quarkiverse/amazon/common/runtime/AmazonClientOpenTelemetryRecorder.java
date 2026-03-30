@@ -20,7 +20,7 @@ public class AmazonClientOpenTelemetryRecorder {
 
                 builder.overrideConfiguration(
                         builder.overrideConfiguration().toBuilder()
-                                .addExecutionInterceptor(awsSdkTelemetry.newExecutionInterceptor())
+                                .addExecutionInterceptor(awsSdkTelemetry.createExecutionInterceptor())
                                 .build());
 
                 return builder;

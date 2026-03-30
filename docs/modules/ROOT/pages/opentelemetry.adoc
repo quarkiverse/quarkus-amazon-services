@@ -6,6 +6,8 @@ Adding the `quarkus-opentelemetry` extension will automatically inject an interc
 
 Quarkus Amazon Services supports the OpenTelemetry Autoconfiguration for Traces. The configurations match what you can see at OpenTelemetry SDK Autoconfigure with the `quarkus.*` prefix.
 
+NOTE: It is not necessary to wrap Sqs or Bedrock Runtime clients, the extensions does it for you when telemetry is enabled for those clients.
+
 If necessary, you can provide your own AwsSdkTelemetry instance used to instrument all clients.
 
 [source,java]

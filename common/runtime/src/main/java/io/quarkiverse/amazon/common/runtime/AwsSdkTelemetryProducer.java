@@ -19,10 +19,11 @@ public class AwsSdkTelemetryProducer {
 
         config.messaging().experimental().captureHeaders().ifPresent(builder::setCapturedHeaders);
         config.messaging().experimental().receiveTelemetryEnabled()
-                .ifPresent(builder::setMessagingReceiveInstrumentationEnabled);
+                .ifPresent(builder::setMessagingReceiveTelemetryEnabled);
         config.awsSdk().experimentalUsePropagatorForMessaging().ifPresent(builder::setUseConfiguredPropagatorForMessaging);
         config.awsSdk().experimentalRecordIndividualHttpError().ifPresent(builder::setRecordIndividualHttpError);
         config.awsSdk().experimentalSpanAttributes().ifPresent(builder::setCaptureExperimentalSpanAttributes);
+        config.genai().captureMessageContent().ifPresent(builder::setGenaiCaptureMessageContent);
 
         return builder.build();
     }

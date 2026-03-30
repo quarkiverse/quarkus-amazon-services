@@ -24,6 +24,11 @@ public interface AwsSdkTelemetryConfig {
      */
     AwsSdkConfig awsSdk();
 
+    /**
+     * Gen AI configuration
+     */
+    GenAIConfig genai();
+
     @ConfigGroup
     public interface AwsSdkConfig {
         /**
@@ -95,5 +100,18 @@ public interface AwsSdkTelemetryConfig {
             @WithDefault("false")
             Optional<Boolean> receiveTelemetryEnabled();
         }
+    }
+
+    @ConfigGroup
+    public interface GenAIConfig {
+        /**
+         * Set whether Generative AI events include full content of user and
+         * assistant messages.
+         *
+         * Note that full content can have data privacy and size concerns and care
+         * should be taken when enabling this.
+         */
+        @WithDefault("false")
+        Optional<Boolean> captureMessageContent();
     }
 }
