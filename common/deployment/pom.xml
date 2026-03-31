@@ -71,7 +71,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-xray-recorder-sdk-aws-sdk-v2</artifactId>
-            <version>2.20.0</version>
+            <version>2.21.0</version>
             <scope>test</scope>
         </dependency>
 
