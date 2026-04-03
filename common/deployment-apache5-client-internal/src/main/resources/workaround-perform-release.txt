@@ -1,0 +1,2 @@
+This file should cause that -source.jar and -javadoc.jar are created.
+See https://github.com/jreleaser/jreleaser/issues/1751

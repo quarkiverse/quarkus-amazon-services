@@ -15,6 +15,7 @@ public interface SyncHttpClientBuildTimeConfig {
     public enum SyncClientType {
         URL,
         APACHE,
+        APACHE5,
         AWS_CRT
     }
 }

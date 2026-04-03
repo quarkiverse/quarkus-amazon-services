@@ -7,6 +7,7 @@ import io.quarkus.bootstrap.classloading.QuarkusClassLoader;
 public class AmazonHttpClients {
 
     public static final String APACHE_HTTP_SERVICE = "software.amazon.awssdk.http.apache.ApacheSdkHttpService";
+    public static final String APACHE5_HTTP_SERVICE = "software.amazon.awssdk.http.apache5.Apache5SdkHttpService";
     public static final String NETTY_HTTP_SERVICE = "software.amazon.awssdk.http.nio.netty.NettySdkAsyncHttpService";
     public static final String URL_CONNECTION_HTTP_SERVICE = "software.amazon.awssdk.http.urlconnection.UrlConnectionSdkHttpService";
     public static final String AWS_CRT_HTTP_SERVICE = "software.amazon.awssdk.http.crt.AwsCrtSdkHttpService";
@@ -15,6 +16,13 @@ public class AmazonHttpClients {
         @Override
         public boolean getAsBoolean() {
             return QuarkusClassLoader.isClassPresentAtRuntime(APACHE_HTTP_SERVICE);
+        }
+    };
+
+    public static class IsAmazonApache5HttpServicePresent implements BooleanSupplier {
+        @Override
+        public boolean getAsBoolean() {
+            return QuarkusClassLoader.isClassPresentAtRuntime(APACHE5_HTTP_SERVICE);
         }
     };
 

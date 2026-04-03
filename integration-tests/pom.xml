@@ -232,6 +232,24 @@
             </properties>
         </profile>
         <profile>
+            <id>sync-client-type-apache5</id>
+            <activation>
+                <property>
+                  <name>sync-client-type</name>
+                  <value>apache5</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>software.amazon.awssdk</groupId>
+                    <artifactId>apache5-client</artifactId>
+                </dependency>
+            </dependencies>
+            <properties>
+                <sync-client.type>apache5</sync-client.type>
+            </properties>
+        </profile>
+        <profile>
             <id>sync-client-type-url</id>
             <activation>
                 <property>
