@@ -14,7 +14,7 @@ public interface LocalStackDevServicesBuildTimeConfig {
     /**
      * The LocalStack container image to use.
      */
-    @WithDefault(value = "localstack/localstack:4.13")
+    @WithDefault(value = "ministackorg/ministack:1.2")
     String imageName();
 
     /**
@@ -36,6 +36,7 @@ public interface LocalStackDevServicesBuildTimeConfig {
      * Specific container log message to be waiting for localstack init scripts
      * completion.
      */
+    @WithDefault(value = "Application startup complete")
     Optional<String> initCompletionMsg();
 
     /**
