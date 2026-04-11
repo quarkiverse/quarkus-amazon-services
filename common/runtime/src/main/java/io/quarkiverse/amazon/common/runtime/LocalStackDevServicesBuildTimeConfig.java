@@ -14,7 +14,7 @@ public interface LocalStackDevServicesBuildTimeConfig {
     /**
      * The LocalStack container image to use.
      */
-    @WithDefault(value = "localstack/localstack:4.13")
+    @WithDefault(value = "hectorvent/floci:1.5.1")
     String imageName();
 
     /**
@@ -36,6 +36,7 @@ public interface LocalStackDevServicesBuildTimeConfig {
      * Specific container log message to be waiting for localstack init scripts
      * completion.
      */
+    @WithDefault(value = "AWS Local Emulator Ready")
     Optional<String> initCompletionMsg();
 
     /**
