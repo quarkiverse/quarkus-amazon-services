@@ -14,7 +14,7 @@ public interface LocalStackDevServicesBuildTimeConfig {
     /**
      * The LocalStack container image to use.
      */
-    @WithDefault(value = "ministackorg/ministack:1.2.6")
+    @WithDefault(value = "ministackorg/ministack:1.2.8")
     String imageName();
 
     /**
