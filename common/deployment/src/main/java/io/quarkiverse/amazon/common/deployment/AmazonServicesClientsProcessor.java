@@ -23,12 +23,14 @@ import io.quarkus.deployment.Capabilities;
 import io.quarkus.deployment.Capability;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.Produce;
 import io.quarkus.deployment.builditem.CombinedIndexBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageProxyDefinitionBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ServiceProviderBuildItem;
+import io.quarkus.deployment.pkg.builditem.ArtifactResultBuildItem;
 import io.quarkus.runtime.configuration.ConfigurationException;
 import software.amazon.awssdk.http.SdkHttpService;
 import software.amazon.awssdk.http.async.SdkAsyncHttpService;
@@ -124,6 +126,7 @@ public class AmazonServicesClientsProcessor {
     }
 
     @BuildStep
+    @Produce(ArtifactResultBuildItem.class)
     void setup(
             List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             BuildProducer<ReflectiveClassBuildItem> reflectiveClasses,
@@ -138,6 +141,8 @@ public class AmazonServicesClientsProcessor {
         boolean asyncTransportNeeded = amazonClients.stream().anyMatch(item -> item.getAsyncClassName().isPresent());
         final Predicate<RequireAmazonClientTransportBuilderBuildItem> isSyncApache = client -> client
                 .getBuildTimeSyncConfig().type() == SyncClientType.APACHE;
+        final Predicate<RequireAmazonClientTransportBuilderBuildItem> isSyncApache5 = client -> client
+                .getBuildTimeSyncConfig().type() == SyncClientType.APACHE5;
         final Predicate<RequireAmazonClientTransportBuilderBuildItem> isSyncCrt = client -> client
                 .getBuildTimeSyncConfig().type() == SyncClientType.AWS_CRT;
         final Predicate<RequireAmazonClientTransportBuilderBuildItem> isAsyncNetty = client -> client
@@ -147,6 +152,7 @@ public class AmazonServicesClientsProcessor {
         // We use the configuration to guide us but if we don't have any clients configured,
         // we still register what's needed depending on what is in the classpath.
         boolean isSyncApacheInClasspath = new AmazonHttpClients.IsAmazonApacheHttpServicePresent().getAsBoolean();
+        boolean isSyncApache5InClasspath = new AmazonHttpClients.IsAmazonApache5HttpServicePresent().getAsBoolean();
         boolean isSyncUrlConnectionInClasspath = new AmazonHttpClients.IsAmazonUrlConnectionHttpServicePresent().getAsBoolean();
         boolean isAsyncNettyInClasspath = new AmazonHttpClients.IsAmazonNettyHttpServicePresent().getAsBoolean();
         boolean isAwsCrtInClasspath = new AmazonHttpClients.IsAmazonAwsCrtHttpServicePresent().getAsBoolean();
@@ -158,6 +164,12 @@ public class AmazonServicesClientsProcessor {
                     registerSyncApacheClient(proxyDefinition, serviceProvider);
                 } else {
                     throw missingDependencyException("apache-client");
+                }
+            } else if (amazonClients.stream().filter(isSyncApache5).findAny().isPresent()) {
+                if (isSyncApache5InClasspath) {
+                    registerSyncApache5Client(proxyDefinition, serviceProvider);
+                } else {
+                    throw missingDependencyException("apache5-client");
                 }
             } else if (amazonClients.stream().filter(isSyncCrt).findAny().isPresent()) {
                 if (isAwsCrtInClasspath) {
@@ -177,6 +189,8 @@ public class AmazonServicesClientsProcessor {
             // but this time only based on the classpath.
             if (isSyncApacheInClasspath) {
                 registerSyncApacheClient(proxyDefinition, serviceProvider);
+            } else if (isSyncApache5InClasspath) {
+                registerSyncApache5Client(proxyDefinition, serviceProvider);
             } else if (isSyncUrlConnectionInClasspath) {
                 registerSyncUrlConnectionClient(serviceProvider);
             }
@@ -216,6 +230,12 @@ public class AmazonServicesClientsProcessor {
 
         serviceProvider.produce(
                 new ServiceProviderBuildItem(SdkHttpService.class.getName(), AmazonHttpClients.APACHE_HTTP_SERVICE));
+    }
+
+    private static void registerSyncApache5Client(BuildProducer<NativeImageProxyDefinitionBuildItem> proxyDefinition,
+            BuildProducer<ServiceProviderBuildItem> serviceProvider) {
+        serviceProvider.produce(
+                new ServiceProviderBuildItem(SdkHttpService.class.getName(), AmazonHttpClients.APACHE5_HTTP_SERVICE));
     }
 
     private static void registerSyncAwsCrtClient(BuildProducer<ServiceProviderBuildItem> serviceProvider) {

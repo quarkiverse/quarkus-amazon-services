@@ -81,6 +81,11 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-apache5-client-internal</artifactId> 
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>commons-logging-jboss-logging</artifactId>
         </dependency>
