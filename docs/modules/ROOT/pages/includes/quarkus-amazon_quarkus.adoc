@@ -7,9 +7,9 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a| [[quarkus-amazon_quarkus-otel-instrumentation-messaging-experimental-capture-headers]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-messaging-experimental-capture-headers[`+++quarkus.otel.instrumentation.messaging.experimental.capture-headers+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-messaging-experimental-capture-headers]] [.property-path]##link:#quarkus-amazon_quarkus-messaging-experimental-capture-headers[`+++quarkus.messaging.experimental.capture-headers+++`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.otel.instrumentation.messaging.experimental.capture-headers+++[]
+config_property_copy_button:+++quarkus.messaging.experimental.capture-headers+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -19,18 +19,18 @@ Configures the messaging headers that will be captured as span attributes.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_OTEL_INSTRUMENTATION_MESSAGING_EXPERIMENTAL_CAPTURE_HEADERS+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_MESSAGING_EXPERIMENTAL_CAPTURE_HEADERS+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_MESSAGING_EXPERIMENTAL_CAPTURE_HEADERS+++`
+Environment variable: `+++QUARKUS_MESSAGING_EXPERIMENTAL_CAPTURE_HEADERS+++`
 endif::add-copy-button-to-env-var[]
 --
 |list of string
 |
 
-a| [[quarkus-amazon_quarkus-otel-instrumentation-messaging-experimental-receive-telemetry-enabled]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-messaging-experimental-receive-telemetry-enabled[`+++quarkus.otel.instrumentation.messaging.experimental.receive-telemetry.enabled+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-messaging-experimental-receive-telemetry-enabled]] [.property-path]##link:#quarkus-amazon_quarkus-messaging-experimental-receive-telemetry-enabled[`+++quarkus.messaging.experimental.receive-telemetry.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.otel.instrumentation.messaging.experimental.receive-telemetry.enabled+++[]
+config_property_copy_button:+++quarkus.messaging.experimental.receive-telemetry.enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -40,18 +40,18 @@ Set whether to capture the consumer message receive telemetry in messaging instr
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_OTEL_INSTRUMENTATION_MESSAGING_EXPERIMENTAL_RECEIVE_TELEMETRY_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_MESSAGING_EXPERIMENTAL_RECEIVE_TELEMETRY_ENABLED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_MESSAGING_EXPERIMENTAL_RECEIVE_TELEMETRY_ENABLED+++`
+Environment variable: `+++QUARKUS_MESSAGING_EXPERIMENTAL_RECEIVE_TELEMETRY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-span-attributes]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-span-attributes[`+++quarkus.otel.instrumentation.aws-sdk.experimental-span-attributes+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-sdk-experimental-span-attributes]] [.property-path]##link:#quarkus-amazon_quarkus-aws-sdk-experimental-span-attributes[`+++quarkus.aws-sdk.experimental-span-attributes+++`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.otel.instrumentation.aws-sdk.experimental-span-attributes+++[]
+config_property_copy_button:+++quarkus.aws-sdk.experimental-span-attributes+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -61,18 +61,18 @@ Sets whether experimental attributes should be set to spans. These attributes ma
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_SPAN_ATTRIBUTES+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_SDK_EXPERIMENTAL_SPAN_ATTRIBUTES+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_SPAN_ATTRIBUTES+++`
+Environment variable: `+++QUARKUS_AWS_SDK_EXPERIMENTAL_SPAN_ATTRIBUTES+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-use-propagator-for-messaging]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-use-propagator-for-messaging[`+++quarkus.otel.instrumentation.aws-sdk.experimental-use-propagator-for-messaging+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-sdk-experimental-use-propagator-for-messaging]] [.property-path]##link:#quarkus-amazon_quarkus-aws-sdk-experimental-use-propagator-for-messaging[`+++quarkus.aws-sdk.experimental-use-propagator-for-messaging+++`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.otel.instrumentation.aws-sdk.experimental-use-propagator-for-messaging+++[]
+config_property_copy_button:+++quarkus.aws-sdk.experimental-use-propagator-for-messaging+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -82,18 +82,18 @@ Sets whether the io.opentelemetry.context.propagation.TextMapPropagator configur
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_USE_PROPAGATOR_FOR_MESSAGING+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_SDK_EXPERIMENTAL_USE_PROPAGATOR_FOR_MESSAGING+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_USE_PROPAGATOR_FOR_MESSAGING+++`
+Environment variable: `+++QUARKUS_AWS_SDK_EXPERIMENTAL_USE_PROPAGATOR_FOR_MESSAGING+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-record-individual-http-error]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-aws-sdk-experimental-record-individual-http-error[`+++quarkus.otel.instrumentation.aws-sdk.experimental-record-individual-http-error+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-sdk-experimental-record-individual-http-error]] [.property-path]##link:#quarkus-amazon_quarkus-aws-sdk-experimental-record-individual-http-error[`+++quarkus.aws-sdk.experimental-record-individual-http-error+++`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.otel.instrumentation.aws-sdk.experimental-record-individual-http-error+++[]
+config_property_copy_button:+++quarkus.aws-sdk.experimental-record-individual-http-error+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -103,18 +103,18 @@ Sets whether errors returned by each individual HTTP request should be recorded 
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_RECORD_INDIVIDUAL_HTTP_ERROR+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_SDK_EXPERIMENTAL_RECORD_INDIVIDUAL_HTTP_ERROR+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_AWS_SDK_EXPERIMENTAL_RECORD_INDIVIDUAL_HTTP_ERROR+++`
+Environment variable: `+++QUARKUS_AWS_SDK_EXPERIMENTAL_RECORD_INDIVIDUAL_HTTP_ERROR+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon_quarkus-otel-instrumentation-genai-capture-message-content]] [.property-path]##link:#quarkus-amazon_quarkus-otel-instrumentation-genai-capture-message-content[`+++quarkus.otel.instrumentation.genai.capture-message-content+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-genai-capture-message-content]] [.property-path]##link:#quarkus-amazon_quarkus-genai-capture-message-content[`+++quarkus.genai.capture-message-content+++`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.otel.instrumentation.genai.capture-message-content+++[]
+config_property_copy_button:+++quarkus.genai.capture-message-content+++[]
 endif::add-copy-button-to-config-props[]
 
 
@@ -124,10 +124,10 @@ Set whether Generative AI events include full content of user and assistant mess
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_GENAI_CAPTURE_MESSAGE_CONTENT+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT+++`
+Environment variable: `+++QUARKUS_GENAI_CAPTURE_MESSAGE_CONTENT+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
