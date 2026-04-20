@@ -39,7 +39,7 @@
         <dependency>
             <artifactId>maven-plugin-api</artifactId>
             <groupId>org.apache.maven</groupId>
-            <version>3.9.14</version>
+            <version>3.9.15</version>
             <scope>provided</scope>
         </dependency>        
         <dependency>
