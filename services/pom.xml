@@ -38,6 +38,7 @@
         <module>kinesis</module>
         <module>kms</module>
         <module>lambda</module>
+        <module>marketplaceentitlement</module>
         <module>marketplacemetering</module>
         <module>neptune</module>
         <module>paymentcryptography</module>

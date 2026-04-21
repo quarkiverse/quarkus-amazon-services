@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon Marketplace Entitlement"
+metadata:
+  keywords:
+    - "marketplaceentitlement"
+    - "aws"
+    - "amazon"
+  categories:
+    - "ai"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-marketplacemetering.html
+  status: "stable"
+  config:
+  - "quarkus.marketplaceentitlement."
