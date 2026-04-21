@@ -437,6 +437,16 @@
             </dependency>
             <dependency>
                 <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-marketplacemetering</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-marketplacemetering-deployment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
                 <artifactId>quarkus-amazon-neptune</artifactId>
                 <version>${project.version}</version>
             </dependency>

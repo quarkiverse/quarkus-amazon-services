@@ -21,7 +21,7 @@
         <module>apigatewayv2</module>
         <module>apigatewaymanagementapi</module>
         <module>appconfig</module>
-		<module>appconfigdata</module>
+        <module>appconfigdata</module>
         <module>bedrock</module>
         <module>bedrockruntime</module>
         <module>cloudwatch</module>
@@ -38,6 +38,7 @@
         <module>kinesis</module>
         <module>kms</module>
         <module>lambda</module>
+        <module>marketplacemetering</module>
         <module>neptune</module>
         <module>paymentcryptography</module>
         <module>paymentcryptographydata</module>
