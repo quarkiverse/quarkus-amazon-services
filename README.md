@@ -29,6 +29,8 @@ This set of extensions allows you to interact with some of the AWS Services name
 * Kinesis
 * KMS
 * Lambda
+* Marketplace Entitlements
+* Marketplace Metering
 * Neptune
 * Payment Cryptography / Payment Cryptography Data
 * RDS / RDS Data / RDS IAM Authentication Quarkus Credential Provider
