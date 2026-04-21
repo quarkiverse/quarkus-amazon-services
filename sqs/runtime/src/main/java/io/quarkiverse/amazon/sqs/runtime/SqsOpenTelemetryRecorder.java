@@ -163,7 +163,7 @@ public class SqsOpenTelemetryRecorder {
 
                 builder.overrideConfiguration(
                         builder.overrideConfiguration().toBuilder()
-                                .addExecutionInterceptor(awsSdkTelemetry.newExecutionInterceptor())
+                                .addExecutionInterceptor(awsSdkTelemetry.createExecutionInterceptor())
                                 .build());
 
                 return wrapSyncClientBuilder(builder, awsSdkTelemetry);
@@ -181,7 +181,7 @@ public class SqsOpenTelemetryRecorder {
 
                 builder.overrideConfiguration(
                         builder.overrideConfiguration().toBuilder()
-                                .addExecutionInterceptor(awsSdkTelemetry.newExecutionInterceptor())
+                                .addExecutionInterceptor(awsSdkTelemetry.createExecutionInterceptor())
                                 .build());
 
                 return wrapAsyncClientBuilder(builder, awsSdkTelemetry);

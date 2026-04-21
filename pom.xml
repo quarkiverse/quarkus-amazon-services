@@ -45,13 +45,13 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- https://github.com/quarkusio/quarkus/releases -->
-    <quarkus.version>3.34.1</quarkus.version>
+    <quarkus.version>3.35.0.CR1</quarkus.version>
 
     <!-- https://github.com/aws/aws-sdk-java-v2/releases -->
-    <awssdk.version>2.42.22</awssdk.version>
+    <awssdk.version>2.42.27</awssdk.version>
     
     <!-- https://github.com/awslabs/aws-crt-java/releases -->
-    <awscrt.version>0.43.9</awscrt.version>
+    <awscrt.version>0.45.1</awscrt.version>
     
     <javapoet.version>1.13.0</javapoet.version>
     <hamcrest.version>1.3</hamcrest.version>
