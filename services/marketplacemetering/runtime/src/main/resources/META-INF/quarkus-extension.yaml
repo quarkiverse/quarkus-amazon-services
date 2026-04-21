@@ -8,7 +8,7 @@ metadata:
     - "amazon"
   categories:
     - "ai"
-  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-bedrock.html
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-marketplacemetering.html
   status: "stable"
   config:
   - "quarkus.marketplacemetering."
