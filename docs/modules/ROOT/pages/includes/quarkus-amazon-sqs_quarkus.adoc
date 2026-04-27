@@ -7,7 +7,7 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-interceptors]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-interceptors[`quarkus.interceptors`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-interceptors]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-interceptors[`+++quarkus.interceptors+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.interceptors+++[]
 endif::add-copy-button-to-config-props[]
@@ -30,7 +30,7 @@ endif::add-copy-button-to-env-var[]
 |list of string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-telemetry-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-telemetry-enabled[`quarkus.telemetry.enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-telemetry-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-telemetry-enabled[`+++quarkus.telemetry.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.telemetry.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -49,9 +49,9 @@ Environment variable: `+++QUARKUS_TELEMETRY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-type[`quarkus.sync-client.type`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-type[`+++quarkus.sync-client.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -70,9 +70,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`apache`, `aws-crt`, `url`
-|url
+|`+++url+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-type[`quarkus.async-client.type`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-type[`+++quarkus.async-client.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -91,9 +91,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`aws-crt`, `netty`
-|netty
+|`+++netty+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-devservices-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-devservices-enabled[`quarkus.devservices.enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-devservices-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-devservices-enabled[`+++quarkus.devservices.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.devservices.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -114,7 +114,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-devservices-shared]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-devservices-shared[`quarkus.devservices.shared`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-devservices-shared]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-devservices-shared[`+++quarkus.devservices.shared+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.devservices.shared+++[]
 endif::add-copy-button-to-config-props[]
@@ -137,9 +137,9 @@ Environment variable: `+++QUARKUS_DEVSERVICES_SHARED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-devservices-isolated]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-devservices-isolated[`quarkus.devservices.isolated`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-devservices-isolated]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-devservices-isolated[`+++quarkus.devservices.isolated+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.devservices.isolated+++[]
 endif::add-copy-button-to-config-props[]
@@ -158,9 +158,9 @@ Environment variable: `+++QUARKUS_DEVSERVICES_ISOLATED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|`+++true+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-devservices-service-name]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-devservices-service-name[`quarkus.devservices.service-name`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-devservices-service-name]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-devservices-service-name[`+++quarkus.devservices.service-name+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.devservices.service-name+++[]
 endif::add-copy-button-to-config-props[]
@@ -181,9 +181,9 @@ Environment variable: `+++QUARKUS_DEVSERVICES_SERVICE_NAME+++`
 endif::add-copy-button-to-env-var[]
 --
 |string
-|localstack
+|`+++localstack+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-devservices-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-devservices-container-properties-container-properties[`quarkus.devservices.container-properties."container-properties"`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-devservices-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-devservices-container-properties-container-properties[`+++quarkus.devservices.container-properties."container-properties"+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.devservices.container-properties."container-properties"+++[]
 endif::add-copy-button-to-config-props[]
@@ -204,7 +204,30 @@ endif::add-copy-button-to-env-var[]
 |Map<String,String>
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-devservices-queues]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-devservices-queues[`quarkus.devservices.queues`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-devservices-stack]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-devservices-stack[`+++quarkus.devservices.provider+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.devservices.provider+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The dev services stack implementation to use for this service. If not specified, the global setting from quarkus.aws.devservices.provider is used. Supported values: "localstack", "ministack"
+
+This allows per-service override of the global stack selection.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_DEVSERVICES_STACK+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_DEVSERVICES_STACK+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-devservices-queues]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-devservices-queues[`+++quarkus.devservices.queues+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.devservices.queues+++[]
 endif::add-copy-button-to-config-props[]
@@ -229,13 +252,13 @@ h|[[quarkus-amazon-sqs_section_quarkus]] [.section-name.section-level0]##link:#q
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-endpoint-override]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-endpoint-override[`quarkus.endpoint-override`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-endpoint-override]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-endpoint-override[`+++quarkus.endpoint-override+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.endpoint-override+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".endpoint-override`
+`+++quarkus."client-name".endpoint-override+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".endpoint-override+++[]
 endif::add-copy-button-to-config-props[]
@@ -257,13 +280,13 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-api-call-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-api-call-timeout[`quarkus.api-call-timeout`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-api-call-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-api-call-timeout[`+++quarkus.api-call-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.api-call-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".api-call-timeout`
+`+++quarkus."client-name".api-call-timeout+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".api-call-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -287,13 +310,13 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-api-call-attempt-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-api-call-attempt-timeout[`quarkus.api-call-attempt-timeout`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-api-call-attempt-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-api-call-attempt-timeout[`+++quarkus.api-call-attempt-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.api-call-attempt-timeout+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".api-call-attempt-timeout`
+`+++quarkus."client-name".api-call-attempt-timeout+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".api-call-attempt-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -315,13 +338,13 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-advanced-use-quarkus-scheduled-executor-service]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-advanced-use-quarkus-scheduled-executor-service[`quarkus.advanced.use-quarkus-scheduled-executor-service`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-advanced-use-quarkus-scheduled-executor-service]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-advanced-use-quarkus-scheduled-executor-service[`+++quarkus.advanced.use-quarkus-scheduled-executor-service+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.advanced.use-quarkus-scheduled-executor-service+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".advanced.use-quarkus-scheduled-executor-service`
+`+++quarkus."client-name".advanced.use-quarkus-scheduled-executor-service+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".advanced.use-quarkus-scheduled-executor-service+++[]
 endif::add-copy-button-to-config-props[]
@@ -341,20 +364,20 @@ Environment variable: `+++QUARKUS_ADVANCED_USE_QUARKUS_SCHEDULED_EXECUTOR_SERVIC
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|
 
 
 h|[[quarkus-amazon-sqs_section_quarkus-aws]] [.section-name.section-level0]##link:#quarkus-amazon-sqs_section_quarkus-aws[AWS services configurations]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-region]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-region[`quarkus.aws.region`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-region]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-region[`+++quarkus.aws.region+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.region+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.region`
+`+++quarkus."client-name".aws.region+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".aws.region+++[]
 endif::add-copy-button-to-config-props[]
@@ -385,13 +408,13 @@ endif::add-copy-button-to-env-var[]
 |Region
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-type[`quarkus.aws.credentials.type`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-type[`+++quarkus.aws.credentials.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.credentials.type+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.type`
+`+++quarkus."client-name".aws.credentials.type+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".aws.credentials.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -433,19 +456,19 @@ Environment variable: `+++QUARKUS_AWS_CREDENTIALS_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`anonymous`, `container`, `custom`, `default`, `env-variable`, `instance-profile`, `process`, `profile`, `static`, `system-property`
-|default
+|`+++default+++`
 
 h|[[quarkus-amazon-sqs_section_quarkus-aws-credentials-default-provider]] [.section-name.section-level1]##link:#quarkus-amazon-sqs_section_quarkus-aws-credentials-default-provider[Default credentials provider configuration]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-default-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-default-provider-async-credential-update-enabled[`quarkus.aws.credentials.default-provider.async-credential-update-enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-default-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-default-provider-async-credential-update-enabled[`+++quarkus.aws.credentials.default-provider.async-credential-update-enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.credentials.default-provider.async-credential-update-enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.default-provider.async-credential-update-enabled`
+`+++quarkus."client-name".aws.credentials.default-provider.async-credential-update-enabled+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".aws.credentials.default-provider.async-credential-update-enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -465,15 +488,15 @@ Environment variable: `+++QUARKUS_AWS_CREDENTIALS_DEFAULT_PROVIDER_ASYNC_CREDENT
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-default-provider-reuse-last-provider-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-default-provider-reuse-last-provider-enabled[`quarkus.aws.credentials.default-provider.reuse-last-provider-enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-default-provider-reuse-last-provider-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-default-provider-reuse-last-provider-enabled[`+++quarkus.aws.credentials.default-provider.reuse-last-provider-enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.credentials.default-provider.reuse-last-provider-enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.default-provider.reuse-last-provider-enabled`
+`+++quarkus."client-name".aws.credentials.default-provider.reuse-last-provider-enabled+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".aws.credentials.default-provider.reuse-last-provider-enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -493,20 +516,20 @@ Environment variable: `+++QUARKUS_AWS_CREDENTIALS_DEFAULT_PROVIDER_REUSE_LAST_PR
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|`+++true+++`
 
 
 h|[[quarkus-amazon-sqs_section_quarkus-aws-credentials-static-provider]] [.section-name.section-level1]##link:#quarkus-amazon-sqs_section_quarkus-aws-credentials-static-provider[Static credentials provider configuration]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-static-provider-access-key-id]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-static-provider-access-key-id[`quarkus.aws.credentials.static-provider.access-key-id`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-static-provider-access-key-id]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-static-provider-access-key-id[`+++quarkus.aws.credentials.static-provider.access-key-id+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.credentials.static-provider.access-key-id+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.static-provider.access-key-id`
+`+++quarkus."client-name".aws.credentials.static-provider.access-key-id+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".aws.credentials.static-provider.access-key-id+++[]
 endif::add-copy-button-to-config-props[]
@@ -526,13 +549,13 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-static-provider-secret-access-key]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-static-provider-secret-access-key[`quarkus.aws.credentials.static-provider.secret-access-key`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-static-provider-secret-access-key]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-static-provider-secret-access-key[`+++quarkus.aws.credentials.static-provider.secret-access-key+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.credentials.static-provider.secret-access-key+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.static-provider.secret-access-key`
+`+++quarkus."client-name".aws.credentials.static-provider.secret-access-key+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".aws.credentials.static-provider.secret-access-key+++[]
 endif::add-copy-button-to-config-props[]
@@ -552,13 +575,13 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-static-provider-session-token]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-static-provider-session-token[`quarkus.aws.credentials.static-provider.session-token`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-static-provider-session-token]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-static-provider-session-token[`+++quarkus.aws.credentials.static-provider.session-token+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.credentials.static-provider.session-token+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.static-provider.session-token`
+`+++quarkus."client-name".aws.credentials.static-provider.session-token+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".aws.credentials.static-provider.session-token+++[]
 endif::add-copy-button-to-config-props[]
@@ -583,13 +606,13 @@ h|[[quarkus-amazon-sqs_section_quarkus-aws-credentials-profile-provider]] [.sect
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-profile-provider-profile-name]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-profile-provider-profile-name[`quarkus.aws.credentials.profile-provider.profile-name`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-profile-provider-profile-name]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-profile-provider-profile-name[`+++quarkus.aws.credentials.profile-provider.profile-name+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.credentials.profile-provider.profile-name+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.profile-provider.profile-name`
+`+++quarkus."client-name".aws.credentials.profile-provider.profile-name+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".aws.credentials.profile-provider.profile-name+++[]
 endif::add-copy-button-to-config-props[]
@@ -616,13 +639,13 @@ h|[[quarkus-amazon-sqs_section_quarkus-aws-credentials-process-provider]] [.sect
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-async-credential-update-enabled[`quarkus.aws.credentials.process-provider.async-credential-update-enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-async-credential-update-enabled[`+++quarkus.aws.credentials.process-provider.async-credential-update-enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.credentials.process-provider.async-credential-update-enabled+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.process-provider.async-credential-update-enabled`
+`+++quarkus."client-name".aws.credentials.process-provider.async-credential-update-enabled+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".aws.credentials.process-provider.async-credential-update-enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -642,15 +665,15 @@ Environment variable: `+++QUARKUS_AWS_CREDENTIALS_PROCESS_PROVIDER_ASYNC_CREDENT
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-credential-refresh-threshold]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-credential-refresh-threshold[`quarkus.aws.credentials.process-provider.credential-refresh-threshold`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-credential-refresh-threshold]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-credential-refresh-threshold[`+++quarkus.aws.credentials.process-provider.credential-refresh-threshold+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.credentials.process-provider.credential-refresh-threshold+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.process-provider.credential-refresh-threshold`
+`+++quarkus."client-name".aws.credentials.process-provider.credential-refresh-threshold+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".aws.credentials.process-provider.credential-refresh-threshold+++[]
 endif::add-copy-button-to-config-props[]
@@ -670,15 +693,15 @@ Environment variable: `+++QUARKUS_AWS_CREDENTIALS_PROCESS_PROVIDER_CREDENTIAL_RE
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|15S
+|`+++15S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-process-output-limit]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-process-output-limit[`quarkus.aws.credentials.process-provider.process-output-limit`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-process-output-limit]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-process-output-limit[`+++quarkus.aws.credentials.process-provider.process-output-limit+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.credentials.process-provider.process-output-limit+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.process-provider.process-output-limit`
+`+++quarkus."client-name".aws.credentials.process-provider.process-output-limit+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".aws.credentials.process-provider.process-output-limit+++[]
 endif::add-copy-button-to-config-props[]
@@ -696,15 +719,15 @@ Environment variable: `+++QUARKUS_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_OUTPU
 endif::add-copy-button-to-env-var[]
 --
 |MemorySize link:#memory-size-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the MemorySize format]]
-|1024
+|`+++1024+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-command[`quarkus.aws.credentials.process-provider.command`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-process-provider-command[`+++quarkus.aws.credentials.process-provider.command+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.credentials.process-provider.command+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.process-provider.command`
+`+++quarkus."client-name".aws.credentials.process-provider.command+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".aws.credentials.process-provider.command+++[]
 endif::add-copy-button-to-config-props[]
@@ -729,13 +752,13 @@ h|[[quarkus-amazon-sqs_section_quarkus-aws-credentials-custom-provider]] [.secti
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-custom-provider-name]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-custom-provider-name[`quarkus.aws.credentials.custom-provider.name`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-aws-credentials-custom-provider-name]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-aws-credentials-custom-provider-name[`+++quarkus.aws.credentials.custom-provider.name+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.credentials.custom-provider.name+++[]
 endif::add-copy-button-to-config-props[]
 
 
-`quarkus."client-name".aws.credentials.custom-provider.name`
+`+++quarkus."client-name".aws.credentials.custom-provider.name+++`
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus."client-name".aws.credentials.custom-provider.name+++[]
 endif::add-copy-button-to-config-props[]
@@ -761,7 +784,7 @@ h|[[quarkus-amazon-sqs_section_quarkus-sync-client]] [.section-name.section-leve
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-connection-timeout[`quarkus.sync-client.connection-timeout`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-connection-timeout[`+++quarkus.sync-client.connection-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.connection-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -780,9 +803,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|2S
+|`+++2S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-socket-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-socket-timeout[`quarkus.sync-client.socket-timeout`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-socket-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-socket-timeout[`+++quarkus.sync-client.socket-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.socket-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -801,9 +824,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_SOCKET_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|30S
+|`+++30S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-type[`quarkus.sync-client.tls-key-managers-provider.type`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-type[`+++quarkus.sync-client.tls-key-managers-provider.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.tls-key-managers-provider.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -830,9 +853,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`file-store`, `none`, `system-property`
-|system-property
+|`+++system-property+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-file-store-path[`quarkus.sync-client.tls-key-managers-provider.file-store.path`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-file-store-path[`+++quarkus.sync-client.tls-key-managers-provider.file-store.path+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.tls-key-managers-provider.file-store.path+++[]
 endif::add-copy-button-to-config-props[]
@@ -853,7 +876,7 @@ endif::add-copy-button-to-env-var[]
 |path
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-file-store-type[`quarkus.sync-client.tls-key-managers-provider.file-store.type`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-file-store-type[`+++quarkus.sync-client.tls-key-managers-provider.file-store.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.tls-key-managers-provider.file-store.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -876,7 +899,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-file-store-password[`quarkus.sync-client.tls-key-managers-provider.file-store.password`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-key-managers-provider-file-store-password[`+++quarkus.sync-client.tls-key-managers-provider.file-store.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.tls-key-managers-provider.file-store.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -897,7 +920,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-type[`quarkus.sync-client.tls-trust-managers-provider.type`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-type[`+++quarkus.sync-client.tls-trust-managers-provider.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.tls-trust-managers-provider.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -924,9 +947,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE++
 endif::add-copy-button-to-env-var[]
 --
 a|`file-store`, `system-property`, `trust-all`
-|system-property
+|`+++system-property+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-file-store-path[`quarkus.sync-client.tls-trust-managers-provider.file-store.path`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-file-store-path[`+++quarkus.sync-client.tls-trust-managers-provider.file-store.path+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.tls-trust-managers-provider.file-store.path+++[]
 endif::add-copy-button-to-config-props[]
@@ -947,7 +970,7 @@ endif::add-copy-button-to-env-var[]
 |path
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-file-store-type[`quarkus.sync-client.tls-trust-managers-provider.file-store.type`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-file-store-type[`+++quarkus.sync-client.tls-trust-managers-provider.file-store.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.tls-trust-managers-provider.file-store.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -970,7 +993,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-file-store-password[`quarkus.sync-client.tls-trust-managers-provider.file-store.password`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-tls-trust-managers-provider-file-store-password[`+++quarkus.sync-client.tls-trust-managers-provider.file-store.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.tls-trust-managers-provider.file-store.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -995,7 +1018,7 @@ h|[[quarkus-amazon-sqs_section_quarkus-sync-client-apache]] [.section-name.secti
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-connection-acquisition-timeout[`quarkus.sync-client.apache.connection-acquisition-timeout`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-connection-acquisition-timeout[`+++quarkus.sync-client.apache.connection-acquisition-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.connection-acquisition-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1014,9 +1037,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_CONNECTION_ACQUISITION_TIME
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|10S
+|`+++10S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-connection-max-idle-time[`quarkus.sync-client.apache.connection-max-idle-time`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-connection-max-idle-time[`+++quarkus.sync-client.apache.connection-max-idle-time+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.connection-max-idle-time+++[]
 endif::add-copy-button-to-config-props[]
@@ -1035,9 +1058,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_CONNECTION_MAX_IDLE_TIME+++
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|60S
+|`+++60S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-connection-time-to-live[`quarkus.sync-client.apache.connection-time-to-live`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-connection-time-to-live[`+++quarkus.sync-client.apache.connection-time-to-live+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.connection-time-to-live+++[]
 endif::add-copy-button-to-config-props[]
@@ -1058,7 +1081,7 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-max-connections]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-max-connections[`quarkus.sync-client.apache.max-connections`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-max-connections]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-max-connections[`+++quarkus.sync-client.apache.max-connections+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.max-connections+++[]
 endif::add-copy-button-to-config-props[]
@@ -1079,9 +1102,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_MAX_CONNECTIONS+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|50
+|`+++50+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-expect-continue-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-expect-continue-enabled[`quarkus.sync-client.apache.expect-continue-enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-expect-continue-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-expect-continue-enabled[`+++quarkus.sync-client.apache.expect-continue-enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.expect-continue-enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1100,9 +1123,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_EXPECT_CONTINUE_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|`+++true+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-use-idle-connection-reaper[`quarkus.sync-client.apache.use-idle-connection-reaper`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-use-idle-connection-reaper[`+++quarkus.sync-client.apache.use-idle-connection-reaper+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.use-idle-connection-reaper+++[]
 endif::add-copy-button-to-config-props[]
@@ -1123,9 +1146,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_USE_IDLE_CONNECTION_REAPER+
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|`+++true+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-tcp-keep-alive[`quarkus.sync-client.apache.tcp-keep-alive`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-tcp-keep-alive[`+++quarkus.sync-client.apache.tcp-keep-alive+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.tcp-keep-alive+++[]
 endif::add-copy-button-to-config-props[]
@@ -1144,9 +1167,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_TCP_KEEP_ALIVE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-enabled[`quarkus.sync-client.apache.proxy.enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-enabled[`+++quarkus.sync-client.apache.proxy.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.proxy.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1165,9 +1188,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_APACHE_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-endpoint[`quarkus.sync-client.apache.proxy.endpoint`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-endpoint[`+++quarkus.sync-client.apache.proxy.endpoint+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.proxy.endpoint+++[]
 endif::add-copy-button-to-config-props[]
@@ -1190,7 +1213,7 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-username]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-username[`quarkus.sync-client.apache.proxy.username`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-username]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-username[`+++quarkus.sync-client.apache.proxy.username+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.proxy.username+++[]
 endif::add-copy-button-to-config-props[]
@@ -1211,7 +1234,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-password[`quarkus.sync-client.apache.proxy.password`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-password[`+++quarkus.sync-client.apache.proxy.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.proxy.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -1232,7 +1255,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-ntlm-domain]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-ntlm-domain[`quarkus.sync-client.apache.proxy.ntlm-domain`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-ntlm-domain]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-ntlm-domain[`+++quarkus.sync-client.apache.proxy.ntlm-domain+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.proxy.ntlm-domain+++[]
 endif::add-copy-button-to-config-props[]
@@ -1253,7 +1276,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-ntlm-workstation]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-ntlm-workstation[`quarkus.sync-client.apache.proxy.ntlm-workstation`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-ntlm-workstation]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-ntlm-workstation[`+++quarkus.sync-client.apache.proxy.ntlm-workstation+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.proxy.ntlm-workstation+++[]
 endif::add-copy-button-to-config-props[]
@@ -1274,7 +1297,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-preemptive-basic-authentication-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-preemptive-basic-authentication-enabled[`quarkus.sync-client.apache.proxy.preemptive-basic-authentication-enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-preemptive-basic-authentication-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-preemptive-basic-authentication-enabled[`+++quarkus.sync-client.apache.proxy.preemptive-basic-authentication-enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.proxy.preemptive-basic-authentication-enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1295,7 +1318,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-non-proxy-hosts[`quarkus.sync-client.apache.proxy.non-proxy-hosts`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-apache-proxy-non-proxy-hosts[`+++quarkus.sync-client.apache.proxy.non-proxy-hosts+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.apache.proxy.non-proxy-hosts+++[]
 endif::add-copy-button-to-config-props[]
@@ -1321,7 +1344,7 @@ h|[[quarkus-amazon-sqs_section_quarkus-sync-client-crt]] [.section-name.section-
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-connection-max-idle-time[`quarkus.sync-client.crt.connection-max-idle-time`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-connection-max-idle-time[`+++quarkus.sync-client.crt.connection-max-idle-time+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.crt.connection-max-idle-time+++[]
 endif::add-copy-button-to-config-props[]
@@ -1340,9 +1363,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|60S
+|
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-max-concurrency[`quarkus.sync-client.crt.max-concurrency`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-max-concurrency[`+++quarkus.sync-client.crt.max-concurrency+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.crt.max-concurrency+++[]
 endif::add-copy-button-to-config-props[]
@@ -1361,9 +1384,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_MAX_CONCURRENCY+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|50
+|
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-enabled[`quarkus.sync-client.crt.proxy.enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-enabled[`+++quarkus.sync-client.crt.proxy.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.crt.proxy.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1382,9 +1405,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-endpoint[`quarkus.sync-client.crt.proxy.endpoint`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-endpoint[`+++quarkus.sync-client.crt.proxy.endpoint+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.crt.proxy.endpoint+++[]
 endif::add-copy-button-to-config-props[]
@@ -1407,7 +1430,7 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-username[`quarkus.sync-client.crt.proxy.username`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-username[`+++quarkus.sync-client.crt.proxy.username+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.crt.proxy.username+++[]
 endif::add-copy-button-to-config-props[]
@@ -1428,7 +1451,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-password[`quarkus.sync-client.crt.proxy.password`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-proxy-password[`+++quarkus.sync-client.crt.proxy.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.crt.proxy.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -1449,7 +1472,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-enabled[`quarkus.sync-client.crt.tcp-keep-alive.enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-enabled[`+++quarkus.sync-client.crt.tcp-keep-alive.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.crt.tcp-keep-alive.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1468,9 +1491,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-interval[`quarkus.sync-client.crt.tcp-keep-alive.keep-alive-interval`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-interval[`+++quarkus.sync-client.crt.tcp-keep-alive.keep-alive-interval+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.crt.tcp-keep-alive.keep-alive-interval+++[]
 endif::add-copy-button-to-config-props[]
@@ -1489,9 +1512,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTE
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|75MS
+|`+++75MS+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-timeout[`quarkus.sync-client.crt.tcp-keep-alive.keep-alive-timeout`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-timeout[`+++quarkus.sync-client.crt.tcp-keep-alive.keep-alive-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.crt.tcp-keep-alive.keep-alive-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1510,9 +1533,9 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIME
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|7200MS
+|`+++7200MS+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-probes[`quarkus.sync-client.crt.tcp-keep-alive.keep-alive-probes`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sync-client-crt-tcp-keep-alive-keep-alive-probes[`+++quarkus.sync-client.crt.tcp-keep-alive.keep-alive-probes+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.sync-client.crt.tcp-keep-alive.keep-alive-probes+++[]
 endif::add-copy-button-to-config-props[]
@@ -1531,7 +1554,7 @@ Environment variable: `+++QUARKUS_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PROB
 endif::add-copy-button-to-env-var[]
 --
 |int
-|9
+|`+++9+++`
 
 
 
@@ -1539,7 +1562,7 @@ h|[[quarkus-amazon-sqs_section_quarkus-async-client]] [.section-name.section-lev
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-max-concurrency]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-max-concurrency[`quarkus.async-client.max-concurrency`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-max-concurrency]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-max-concurrency[`+++quarkus.async-client.max-concurrency+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.max-concurrency+++[]
 endif::add-copy-button-to-config-props[]
@@ -1560,9 +1583,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_MAX_CONCURRENCY+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|50
+|`+++50+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-max-pending-connection-acquires]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-max-pending-connection-acquires[`quarkus.async-client.max-pending-connection-acquires`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-max-pending-connection-acquires]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-max-pending-connection-acquires[`+++quarkus.async-client.max-pending-connection-acquires+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.max-pending-connection-acquires+++[]
 endif::add-copy-button-to-config-props[]
@@ -1583,9 +1606,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_MAX_PENDING_CONNECTION_ACQUIRES++
 endif::add-copy-button-to-env-var[]
 --
 |int
-|10000
+|`+++10000+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-read-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-read-timeout[`quarkus.async-client.read-timeout`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-read-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-read-timeout[`+++quarkus.async-client.read-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.read-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1606,9 +1629,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_READ_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|30S
+|`+++30S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-write-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-write-timeout[`quarkus.async-client.write-timeout`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-write-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-write-timeout[`+++quarkus.async-client.write-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.write-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1629,9 +1652,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_WRITE_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|30S
+|`+++30S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-connection-timeout[`quarkus.async-client.connection-timeout`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-connection-timeout[`+++quarkus.async-client.connection-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.connection-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1650,9 +1673,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|10S
+|`+++10S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-connection-acquisition-timeout[`quarkus.async-client.connection-acquisition-timeout`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-connection-acquisition-timeout[`+++quarkus.async-client.connection-acquisition-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.connection-acquisition-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1671,9 +1694,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_CONNECTION_ACQUISITION_TIMEOUT+++
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|2S
+|`+++2S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-connection-time-to-live[`quarkus.async-client.connection-time-to-live`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-connection-time-to-live[`+++quarkus.async-client.connection-time-to-live+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.connection-time-to-live+++[]
 endif::add-copy-button-to-config-props[]
@@ -1694,7 +1717,7 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-connection-max-idle-time[`quarkus.async-client.connection-max-idle-time`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-connection-max-idle-time[`+++quarkus.async-client.connection-max-idle-time+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.connection-max-idle-time+++[]
 endif::add-copy-button-to-config-props[]
@@ -1715,9 +1738,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|5S
+|`+++5S+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-use-idle-connection-reaper[`quarkus.async-client.use-idle-connection-reaper`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-use-idle-connection-reaper[`+++quarkus.async-client.use-idle-connection-reaper+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.use-idle-connection-reaper+++[]
 endif::add-copy-button-to-config-props[]
@@ -1738,9 +1761,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_USE_IDLE_CONNECTION_REAPER+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|`+++true+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tcp-keep-alive[`quarkus.async-client.tcp-keep-alive`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tcp-keep-alive[`+++quarkus.async-client.tcp-keep-alive+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.tcp-keep-alive+++[]
 endif::add-copy-button-to-config-props[]
@@ -1759,13 +1782,13 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_TCP_KEEP_ALIVE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
 h|[[quarkus-amazon-sqs_section_quarkus-async-client-crt]] [.section-name.section-level1]##link:#quarkus-amazon-sqs_section_quarkus-async-client-crt[AWS CRT-based HTTP client specific configurations]##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-connection-max-idle-time[`quarkus.async-client.crt.connection-max-idle-time`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-connection-max-idle-time[`+++quarkus.async-client.crt.connection-max-idle-time+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.crt.connection-max-idle-time+++[]
 endif::add-copy-button-to-config-props[]
@@ -1784,9 +1807,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|60S
+|
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-max-concurrency[`quarkus.async-client.crt.max-concurrency`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-max-concurrency[`+++quarkus.async-client.crt.max-concurrency+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.crt.max-concurrency+++[]
 endif::add-copy-button-to-config-props[]
@@ -1805,9 +1828,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_MAX_CONCURRENCY+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|50
+|
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-proxy-enabled[`quarkus.async-client.crt.proxy.enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-proxy-enabled[`+++quarkus.async-client.crt.proxy.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.crt.proxy.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1826,9 +1849,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-proxy-endpoint[`quarkus.async-client.crt.proxy.endpoint`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-proxy-endpoint[`+++quarkus.async-client.crt.proxy.endpoint+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.crt.proxy.endpoint+++[]
 endif::add-copy-button-to-config-props[]
@@ -1851,7 +1874,7 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-proxy-username[`quarkus.async-client.crt.proxy.username`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-proxy-username[`+++quarkus.async-client.crt.proxy.username+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.crt.proxy.username+++[]
 endif::add-copy-button-to-config-props[]
@@ -1872,7 +1895,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-proxy-password[`quarkus.async-client.crt.proxy.password`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-proxy-password[`+++quarkus.async-client.crt.proxy.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.crt.proxy.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -1893,7 +1916,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-enabled[`quarkus.async-client.crt.tcp-keep-alive.enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-enabled[`+++quarkus.async-client.crt.tcp-keep-alive.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.crt.tcp-keep-alive.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1912,9 +1935,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-keep-alive-interval[`quarkus.async-client.crt.tcp-keep-alive.keep-alive-interval`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-keep-alive-interval[`+++quarkus.async-client.crt.tcp-keep-alive.keep-alive-interval+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.crt.tcp-keep-alive.keep-alive-interval+++[]
 endif::add-copy-button-to-config-props[]
@@ -1933,9 +1956,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INT
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|75MS
+|`+++75MS+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-keep-alive-timeout[`quarkus.async-client.crt.tcp-keep-alive.keep-alive-timeout`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-keep-alive-timeout[`+++quarkus.async-client.crt.tcp-keep-alive.keep-alive-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.crt.tcp-keep-alive.keep-alive-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1954,9 +1977,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIM
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|7200MS
+|`+++7200MS+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-keep-alive-probes[`quarkus.async-client.crt.tcp-keep-alive.keep-alive-probes`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-crt-tcp-keep-alive-keep-alive-probes[`+++quarkus.async-client.crt.tcp-keep-alive.keep-alive-probes+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.crt.tcp-keep-alive.keep-alive-probes+++[]
 endif::add-copy-button-to-config-props[]
@@ -1975,10 +1998,10 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_PRO
 endif::add-copy-button-to-env-var[]
 --
 |int
-|9
+|`+++9+++`
 
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-protocol]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-protocol[`quarkus.async-client.protocol`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-protocol]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-protocol[`+++quarkus.async-client.protocol+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.protocol+++[]
 endif::add-copy-button-to-config-props[]
@@ -1997,9 +2020,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_PROTOCOL+++`
 endif::add-copy-button-to-env-var[]
 --
 a|`http1-1`, `http2`
-|http1-1
+|`+++http1-1+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-ssl-provider]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-ssl-provider[`quarkus.async-client.ssl-provider`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-ssl-provider]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-ssl-provider[`+++quarkus.async-client.ssl-provider+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.ssl-provider+++[]
 endif::add-copy-button-to-config-props[]
@@ -2022,7 +2045,7 @@ endif::add-copy-button-to-env-var[]
 a|`jdk`, `openssl`, `openssl-refcnt`
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-http2-max-streams]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-http2-max-streams[`quarkus.async-client.http2.max-streams`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-http2-max-streams]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-http2-max-streams[`+++quarkus.async-client.http2.max-streams+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.http2.max-streams+++[]
 endif::add-copy-button-to-config-props[]
@@ -2043,9 +2066,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_HTTP2_MAX_STREAMS+++`
 endif::add-copy-button-to-env-var[]
 --
 |long
-|4294967295
+|
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-http2-initial-window-size]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-http2-initial-window-size[`quarkus.async-client.http2.initial-window-size`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-http2-initial-window-size]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-http2-initial-window-size[`+++quarkus.async-client.http2.initial-window-size+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.http2.initial-window-size+++[]
 endif::add-copy-button-to-config-props[]
@@ -2066,9 +2089,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_HTTP2_INITIAL_WINDOW_SIZE+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|1048576
+|
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-http2-health-check-ping-period]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-http2-health-check-ping-period[`quarkus.async-client.http2.health-check-ping-period`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-http2-health-check-ping-period]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-http2-health-check-ping-period[`+++quarkus.async-client.http2.health-check-ping-period+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.http2.health-check-ping-period+++[]
 endif::add-copy-button-to-config-props[]
@@ -2089,9 +2112,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_PERIOD+++
 endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-sqs_quarkus[icon:question-circle[title=More information about the Duration format]]
-|5
+|
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-proxy-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-proxy-enabled[`quarkus.async-client.proxy.enabled`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-proxy-enabled]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-proxy-enabled[`+++quarkus.async-client.proxy.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.proxy.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -2110,9 +2133,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_PROXY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-proxy-endpoint[`quarkus.async-client.proxy.endpoint`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-proxy-endpoint[`+++quarkus.async-client.proxy.endpoint+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.proxy.endpoint+++[]
 endif::add-copy-button-to-config-props[]
@@ -2135,7 +2158,7 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-proxy-non-proxy-hosts[`quarkus.async-client.proxy.non-proxy-hosts`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-proxy-non-proxy-hosts[`+++quarkus.async-client.proxy.non-proxy-hosts+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.proxy.non-proxy-hosts+++[]
 endif::add-copy-button-to-config-props[]
@@ -2156,7 +2179,7 @@ endif::add-copy-button-to-env-var[]
 |list of string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-type[`quarkus.async-client.tls-key-managers-provider.type`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-type[`+++quarkus.async-client.tls-key-managers-provider.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.tls-key-managers-provider.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -2183,9 +2206,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_TLS_KEY_MANAGERS_PROVIDER_TYPE+++
 endif::add-copy-button-to-env-var[]
 --
 a|`file-store`, `none`, `system-property`
-|system-property
+|`+++system-property+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-file-store-path[`quarkus.async-client.tls-key-managers-provider.file-store.path`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-file-store-path[`+++quarkus.async-client.tls-key-managers-provider.file-store.path+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.tls-key-managers-provider.file-store.path+++[]
 endif::add-copy-button-to-config-props[]
@@ -2206,7 +2229,7 @@ endif::add-copy-button-to-env-var[]
 |path
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-file-store-type[`quarkus.async-client.tls-key-managers-provider.file-store.type`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-file-store-type[`+++quarkus.async-client.tls-key-managers-provider.file-store.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.tls-key-managers-provider.file-store.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -2229,7 +2252,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-file-store-password[`quarkus.async-client.tls-key-managers-provider.file-store.password`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-key-managers-provider-file-store-password[`+++quarkus.async-client.tls-key-managers-provider.file-store.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.tls-key-managers-provider.file-store.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -2250,7 +2273,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-type[`quarkus.async-client.tls-trust-managers-provider.type`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-type[`+++quarkus.async-client.tls-trust-managers-provider.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.tls-trust-managers-provider.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -2277,9 +2300,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_TLS_TRUST_MANAGERS_PROVIDER_TYPE+
 endif::add-copy-button-to-env-var[]
 --
 a|`file-store`, `system-property`, `trust-all`
-|system-property
+|`+++system-property+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-file-store-path[`quarkus.async-client.tls-trust-managers-provider.file-store.path`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-file-store-path[`+++quarkus.async-client.tls-trust-managers-provider.file-store.path+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.tls-trust-managers-provider.file-store.path+++[]
 endif::add-copy-button-to-config-props[]
@@ -2300,7 +2323,7 @@ endif::add-copy-button-to-env-var[]
 |path
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-file-store-type[`quarkus.async-client.tls-trust-managers-provider.file-store.type`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-file-store-type[`+++quarkus.async-client.tls-trust-managers-provider.file-store.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.tls-trust-managers-provider.file-store.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -2323,7 +2346,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-file-store-password[`quarkus.async-client.tls-trust-managers-provider.file-store.password`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-tls-trust-managers-provider-file-store-password[`+++quarkus.async-client.tls-trust-managers-provider.file-store.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.tls-trust-managers-provider.file-store.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -2344,7 +2367,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-event-loop-override]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-event-loop-override[`quarkus.async-client.event-loop.override`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-event-loop-override]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-event-loop-override[`+++quarkus.async-client.event-loop.override+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.event-loop.override+++[]
 endif::add-copy-button-to-config-props[]
@@ -2363,9 +2386,9 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_EVENT_LOOP_OVERRIDE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|false
+|`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-event-loop-number-of-threads[`quarkus.async-client.event-loop.number-of-threads`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-event-loop-number-of-threads[`+++quarkus.async-client.event-loop.number-of-threads+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.event-loop.number-of-threads+++[]
 endif::add-copy-button-to-config-props[]
@@ -2388,7 +2411,7 @@ endif::add-copy-button-to-env-var[]
 |int
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-event-loop-thread-name-prefix]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-event-loop-thread-name-prefix[`quarkus.async-client.event-loop.thread-name-prefix`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-event-loop-thread-name-prefix]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-event-loop-thread-name-prefix[`+++quarkus.async-client.event-loop.thread-name-prefix+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.event-loop.thread-name-prefix+++[]
 endif::add-copy-button-to-config-props[]
@@ -2413,7 +2436,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-advanced-use-future-completion-thread-pool]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-advanced-use-future-completion-thread-pool[`quarkus.async-client.advanced.use-future-completion-thread-pool`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-async-client-advanced-use-future-completion-thread-pool]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-async-client-advanced-use-future-completion-thread-pool[`+++quarkus.async-client.advanced.use-future-completion-thread-pool+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.async-client.advanced.use-future-completion-thread-pool+++[]
 endif::add-copy-button-to-config-props[]
@@ -2434,7 +2457,7 @@ Environment variable: `+++QUARKUS_ASYNC_CLIENT_ADVANCED_USE_FUTURE_COMPLETION_TH
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|true
+|`+++true+++`
 
 
 |===

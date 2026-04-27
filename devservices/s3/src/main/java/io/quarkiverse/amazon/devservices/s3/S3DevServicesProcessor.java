@@ -4,13 +4,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.testcontainers.containers.localstack.LocalStackContainer;
 import org.testcontainers.containers.localstack.LocalStackContainer.Service;
 
 import io.quarkiverse.amazon.common.deployment.spi.AbstractDevServicesLocalStackProcessor;
+import io.quarkiverse.amazon.common.deployment.spi.AwsStackContainer;
 import io.quarkiverse.amazon.common.deployment.spi.DevServicesLocalStackProviderBuildItem;
 import io.quarkiverse.amazon.common.deployment.spi.LocalStackDevServicesBaseConfig;
 import io.quarkiverse.amazon.common.runtime.DevServicesBuildTimeConfig;
+import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.s3.runtime.S3BuildTimeConfig;
 import io.quarkiverse.amazon.s3.runtime.S3DevServicesBuildTimeConfig;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -25,12 +26,13 @@ public class S3DevServicesProcessor extends AbstractDevServicesLocalStackProcess
     private static final String AWS_PATH_STYLE_ACCESS = "quarkus.s3.path-style-access";
 
     @BuildStep
-    DevServicesLocalStackProviderBuildItem setupS3(S3BuildTimeConfig clientBuildTimeConfig) {
-        return this.setup(Service.S3, clientBuildTimeConfig.devservices());
+    DevServicesLocalStackProviderBuildItem setupS3(S3BuildTimeConfig clientBuildTimeConfig,
+            GlobalDevServicesBuildTimeConfig globalConfig) {
+        return this.setup(Service.S3, clientBuildTimeConfig.devservices(), globalConfig);
     }
 
     @Override
-    protected void prepareLocalStack(DevServicesBuildTimeConfig clientBuildTimeConfig, LocalStackContainer localstack) {
+    protected void prepareLocalStack(DevServicesBuildTimeConfig clientBuildTimeConfig, AwsStackContainer localstack) {
         createBuckets(localstack, getConfiguration((S3DevServicesBuildTimeConfig) clientBuildTimeConfig));
     }
 
@@ -42,9 +44,9 @@ public class S3DevServicesProcessor extends AbstractDevServicesLocalStackProcess
         defaultConfig.put(AWS_PATH_STYLE_ACCESS, "true");
     }
 
-    public void createBuckets(LocalStackContainer localstack, S3DevServiceCfg configuration) {
+    public void createBuckets(AwsStackContainer localstack, S3DevServiceCfg configuration) {
         try (S3Client client = S3Client.builder()
-                .endpointOverride(localstack.getEndpointOverride(LocalStackContainer.Service.S3))
+                .endpointOverride(localstack.getEndpoint())
                 .region(Region.of(localstack.getRegion()))
                 .forcePathStyle(true)
                 .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials

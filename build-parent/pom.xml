@@ -28,6 +28,16 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.ministack</groupId>
+                <artifactId>testcontainers-ministack</artifactId>
+                <version>${testcontainers-ministack.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.floci</groupId>
+                <artifactId>testcontainers-floci</artifactId>
+                <version>${testcontainers-floci.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>

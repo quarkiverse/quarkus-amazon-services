@@ -1,4 +1,5 @@
 #!/bin/bash
+echo $LOCALSTACK_HOST
 echo "#### Create lambda function ####"
 # https://docs.localstack.cloud/user-guide/aws/lambda/#create-a-lambda-function
 cat > index.js <<'EOF'

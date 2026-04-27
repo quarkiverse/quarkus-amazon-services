@@ -1,15 +1,19 @@
 package io.quarkiverse.it.amazon;
 
 import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 
 import org.junit.jupiter.api.Test;
 
+import io.quarkus.test.common.DevServicesContext;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 
 @QuarkusTest
 public class AmazonS3Test {
+    DevServicesContext context;
 
     @Test
     public void testS3Async() {
@@ -36,5 +40,21 @@ public class AmazonS3Test {
     public void testCopyS3CrtAsync() {
         RestAssured.when().get("/test/s3-transfer-manager/crt-async").then().body(anyOf(is("sample S3 object"),
                 is("No bean found for required type [interface software.amazon.awssdk.services.s3.S3AsyncClient] and qualifiers [[@io.quarkiverse.amazon.s3.runtime.S3Crt()]]")));
+    }
+
+    @Test
+    public void testS3Presign() {
+        RestAssured.when().get("/test/s3/presign").then().and()
+                // ministack returns a different endpoint format in CI, so we need to accept both formats
+                // http://sync-0222f07f-7b49-4ccd-b36c-9eda070f95b8.localhost:32790/
+                .body(anyOf(
+                        startsWith(context.devServicesProperties().get("quarkus.s3.endpoint-override") + "/sync-"),
+                        startsWith("http://sync-")))
+                .body(containsString("X-Amz-Algorithm"))
+                .body(containsString("X-Amz-Date"))
+                .body(containsString("X-Amz-SignedHeaders"))
+                .body(containsString("X-Amz-Expires"))
+                .body(containsString("X-Amz-Credential"))
+                .body(containsString("X-Amz-Signature"));
     }
 }

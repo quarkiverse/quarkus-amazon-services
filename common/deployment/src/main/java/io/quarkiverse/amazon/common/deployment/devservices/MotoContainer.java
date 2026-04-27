@@ -1,8 +1,6 @@
-package io.quarkiverse.amazon.devservices.cognitouserpools;
+package io.quarkiverse.amazon.common.deployment.devservices;
 
 import java.net.InetAddress;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 
 import org.testcontainers.containers.GenericContainer;
@@ -23,14 +21,14 @@ public class MotoContainer extends GenericContainer<MotoContainer> {
         withExposedPorts(PORT);
     }
 
-    public URI getEndpointOverride() {
+    public String getEndpoint() {
         try {
             final String address = getHost();
             String ipAddress = address;
             // resolve IP address and use that as the endpoint so that path-style access is automatically used by client
             ipAddress = InetAddress.getByName(address).getHostAddress();
-            return new URI("http://" + ipAddress + ":" + getMappedPort(PORT));
-        } catch (UnknownHostException | URISyntaxException e) {
+            return "http://" + ipAddress + ":" + getMappedPort(PORT);
+        } catch (UnknownHostException e) {
             throw new IllegalStateException("Cannot obtain endpoint URL", e);
         }
     }

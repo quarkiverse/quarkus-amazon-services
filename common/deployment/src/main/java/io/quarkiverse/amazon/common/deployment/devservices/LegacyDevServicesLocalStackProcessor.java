@@ -1,4 +1,4 @@
-package io.quarkiverse.amazon.common.deployment;
+package io.quarkiverse.amazon.common.deployment.devservices;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,13 +23,14 @@ import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
-import io.quarkiverse.amazon.common.deployment.spi.BorrowedLocalStackContainer;
+import io.quarkiverse.amazon.common.deployment.spi.AwsStackContainer;
 import io.quarkiverse.amazon.common.deployment.spi.DevServicesLocalStackProviderBuildItem;
 import io.quarkiverse.amazon.common.deployment.spi.LocalStackDevServicesBaseConfig;
 import io.quarkiverse.amazon.common.runtime.LocalStackDevServicesBuildTimeConfig;
 import io.quarkus.deployment.IsNormal;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.BuildSteps;
 import io.quarkus.deployment.builditem.*;
 import io.quarkus.deployment.builditem.DevServicesResultBuildItem.RunningDevService;
 import io.quarkus.deployment.console.ConsoleInstalledBuildItem;
@@ -42,9 +43,11 @@ import io.quarkus.devservices.common.ContainerLocator;
 import io.quarkus.devservices.common.ContainerShutdownCloseable;
 import io.quarkus.runtime.LaunchMode;
 
-public class DevServicesLocalStackProcessor {
+@BuildSteps(onlyIfNot = IsNormal.class, onlyIf = { DevServicesConfig.Enabled.class,
+        LocalStackDevServicesBuildTimeConfig.LegacyModeEnabled.class })
+public class LegacyDevServicesLocalStackProcessor {
 
-    private static final Logger log = Logger.getLogger(DevServicesLocalStackProcessor.class);
+    private static final Logger log = Logger.getLogger(LegacyDevServicesLocalStackProcessor.class);
 
     static volatile List<RunningDevServiceWithConfig> currentDevServices;
 
@@ -60,7 +63,7 @@ public class DevServicesLocalStackProcessor {
 
     private static final ContainerLocator containerLocator = new ContainerLocator(DEV_SERVICE_LABEL, PORT);
 
-    @BuildStep(onlyIfNot = IsNormal.class, onlyIf = DevServicesConfig.Enabled.class)
+    @BuildStep
     public void startLocalStackDevService(
             LaunchModeBuildItem launchMode,
             LocalStackDevServicesBuildTimeConfig localStackDevServicesBuildTimeConfig,
@@ -259,8 +262,8 @@ public class DevServicesLocalStackProcessor {
                     String defaultSecretKey = defaultValueContainerNotStarted.getSecretKey();
 
                     requestedServicesGroup.forEach(ds -> {
-                        config.putAll(ds.getDevProvider().reuseLocalStack(new BorrowedLocalStackContainer() {
-                            public URI getEndpointOverride(EnabledService enabledService) {
+                        config.putAll(ds.getDevProvider().reuseLocalStack(new AwsStackContainer() {
+                            public URI getEndpoint() {
                                 try {
                                     return new URI(
                                             "http://" + containerAddress.getHost() + ":" + containerAddress.getPort());
@@ -339,7 +342,8 @@ public class DevServicesLocalStackProcessor {
                         // Configure the services with the container, passing hostname information
                         final String finalHostName = hostName;
                         requestedServicesGroup.forEach(ds -> {
-                            Map<String, String> serviceConfig = ds.getDevProvider().prepareLocalStack(container);
+                            Map<String, String> serviceConfig = ds.getDevProvider()
+                                    .prepareLocalStack(new AwsStackContainerWrapper(container));
 
                             // If we're using a shared network, modify endpoint URLs to use the hostname
                             if (finalHostName != null && useSharedNetwork) {
@@ -363,6 +367,35 @@ public class DevServicesLocalStackProcessor {
         } catch (Throwable t) {
             compressor.closeAndDumpCaptured();
             throw new RuntimeException(t);
+        }
+    }
+
+    private static final class AwsStackContainerWrapper implements AwsStackContainer {
+
+        private final LocalStackContainer localStackContainer;
+
+        public AwsStackContainerWrapper(LocalStackContainer localStackContainer) {
+            this.localStackContainer = localStackContainer;
+        }
+
+        @Override
+        public URI getEndpoint() {
+            return localStackContainer.getEndpoint();
+        }
+
+        @Override
+        public String getRegion() {
+            return localStackContainer.getRegion();
+        }
+
+        @Override
+        public String getAccessKey() {
+            return localStackContainer.getAccessKey();
+        }
+
+        @Override
+        public String getSecretKey() {
+            return localStackContainer.getSecretKey();
         }
     }
 

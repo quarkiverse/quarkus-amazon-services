@@ -33,6 +33,14 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers-localstack</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.ministack</groupId>
+            <artifactId>testcontainers-ministack</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.floci</groupId>
+            <artifactId>testcontainers-floci</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

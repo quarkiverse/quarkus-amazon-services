@@ -8,13 +8,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.testcontainers.containers.localstack.LocalStackContainer;
 import org.testcontainers.containers.localstack.LocalStackContainer.Service;
 
 import io.quarkiverse.amazon.common.deployment.spi.AbstractDevServicesLocalStackProcessor;
+import io.quarkiverse.amazon.common.deployment.spi.AwsStackContainer;
 import io.quarkiverse.amazon.common.deployment.spi.DevServicesLocalStackProviderBuildItem;
 import io.quarkiverse.amazon.common.deployment.spi.LocalStackDevServicesBaseConfig;
 import io.quarkiverse.amazon.common.runtime.DevServicesBuildTimeConfig;
+import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.sqs.runtime.SqsBuildTimeConfig;
 import io.quarkiverse.amazon.sqs.runtime.SqsDevServicesBuildTimeConfig;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -28,18 +29,19 @@ import software.amazon.awssdk.services.sqs.model.QueueAttributeName;
 public class SqsDevServicesProcessor extends AbstractDevServicesLocalStackProcessor {
 
     @BuildStep
-    DevServicesLocalStackProviderBuildItem setupSqs(SqsBuildTimeConfig clientBuildTimeConfig) {
-        return this.setup(Service.SQS, clientBuildTimeConfig.devservices());
+    DevServicesLocalStackProviderBuildItem setupSqs(SqsBuildTimeConfig clientBuildTimeConfig,
+            GlobalDevServicesBuildTimeConfig globalConfig) {
+        return this.setup(Service.SQS, clientBuildTimeConfig.devservices(), globalConfig);
     }
 
     @Override
-    protected void prepareLocalStack(DevServicesBuildTimeConfig clientBuildTimeConfig, LocalStackContainer localstack) {
+    protected void prepareLocalStack(DevServicesBuildTimeConfig clientBuildTimeConfig, AwsStackContainer localstack) {
         createQueues(localstack, getConfiguration((SqsDevServicesBuildTimeConfig) clientBuildTimeConfig));
     }
 
-    public void createQueues(LocalStackContainer localstack, SqsDevServiceCfg configuration) {
+    public void createQueues(AwsStackContainer localstack, SqsDevServiceCfg configuration) {
         try (SqsClient client = SqsClient.builder()
-                .endpointOverride(localstack.getEndpointOverride(LocalStackContainer.Service.SQS))
+                .endpointOverride(localstack.getEndpoint())
                 .region(Region.of(localstack.getRegion()))
                 .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials
                         .create(localstack.getAccessKey(), localstack.getSecretKey())))

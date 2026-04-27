@@ -1,37 +1,111 @@
 = Dev services for Amazon Services
 
-Quarkus Amazon Services automatically starts a LocalStack container in dev mode and when running tests. So, you don't have to start one manually. The extension client is configured automatically.
+Quarkus Amazon Services automatically starts a containerized AWS stack in dev mode and when running tests. So, you don't have to start one manually. The extension client is configured automatically.
+
+== Choosing a Stack Provider
+
+Dev Services for Amazon Services supports multiple stack providers:
+
+* **LocalStack**: The default stack provider, using the LocalStack container
+* **MiniStack**: An alternative stack provider
+* **Moto**: A lightweight AWS service mock library, using the motoserver container
+* **Floci**: Another alternative stack provider
+
+[WARNING]
+====
+Dev Services for Amazon Services does not verify if the chosen stack actually implements a mock for a given service. It will start the container and provide the configuration to the client to connect to it, regardless of whether the service is actually supported by that stack provider.
+====
+
+You can configure the stack provider globally or per-service:
+
+[source,properties]
+----
+# Global configuration (default: localstack)
+quarkus.aws.devservices.provider=localstack
+
+# Per-service configuration (overrides global setting)
+quarkus.dynamodb.devservices.provider=ministack
+quarkus.cognito-user-pools.devservices.provider=moto
+quarkus.s3.devservices.provider=floci
+----
 
 == Enabling / Disabling Dev Services for Amazon Services
 
 Dev Services for Amazon Services is automatically enabled for each extensions added to `pom.xml` except in the following situations:
 
 * `quarkus.devservices.enabled` is set to `false`
-* `devservices.enabled` is set to `false` per extension (eg. `quarkus.s3.devservices.enabled=false`) 
-* the `endpoint-override` is configured  (eg. `quarkus.s3.endpoint-override=http://localhost:4566`)
+* `devservices.enabled` is set to `false` per extension (eg. `quarkus.dynamodb.devservices.enabled=false`)
+* the `endpoint-override` is configured  (eg. `quarkus.dynamodb.endpoint-override=http://localhost:4566`)
 * Your environment does not support Docker. In test mode, it will cause the test to fail. Either disable Dev Services or configure the `endpoint-override`.
 
 == Shared services
 
-By default, Dev Services for Amazon Services will start one LocalStack container with only the needed services.
+By default, Dev Services for Amazon Services will start one stack container with only the needed services.
 
 If you need to share a particular service between applications, Dev Services for Amazon Services implements a service discovery mechanism for your multiple Quarkus applications running in dev mode to share a single container.
 
-Dev Services for Amazon Services starts the container with the `quarkus-dev-service-localstack` label and service name as the value, which is used to identify the container.
-If you need multiple (shared) container, you can configure the `devservices.service-name` attribute for a given extension (eg. `quarkus.s3.devservices.service-name`) and indicate the container name. It looks for a container with the same value, or starts a new one if none can be found. The default service name is `localstack`.
+Dev Services for Amazon Services starts the container with the `quarkus-dev-service-{stack}` label (where `{stack}` is the stack provider name, e.g., `localstack`, `ministack`, `moto`, or `floci`) and service name as the value, which is used to identify the container.
+If you need multiple (shared) container, you can configure the `devservices.service-name` attribute for a given extension (eg. `quarkus.dynamodb.devservices.service-name`) and indicate the container name. It looks for a container with the same value, or starts a new one if none can be found. The default service name is the stack provider name (`localstack`, `ministack`, `moto`, or `floci`).
 
-By default, to ease sharing containers across multiple applications, each service will be started in its own container (the value of the `quarkus-dev-service-localstack` label is suffixed by the extension name). However, sometimes, some services need to communicate with each other inside the same container (e.g., subscribing an Amazon SQS queue to an Amazon SNS topic). In this case, you can disable this behavior by setting the `devservices.isolated` attribute for a given extension to `false`.
+=== Isolation (Legacy mode LocalStack)
+NOTE: Deprecated, only applies to LocalStack in legacy modeand will be removed in a future release.
 
-Sharing is disabled by default in dev mode, and is always disabled in test mode. You can enable the sharing with `devservices.shared=true` for a given extension (e.g. `quarkus.s3.devservices.shared=true`). All other non-shared services will be grouped in another container.
+By default, to ease sharing containers across multiple applications, each service will be started in its own container (the value of the `quarkus-dev-service-{stack}` label is suffixed by the extension name). However, sometimes, some services need to communicate with each other inside the same container (e.g., subscribing an Amazon SQS queue to an Amazon SNS topic). In this case, you can disable this behavior by setting the `devservices.isolated` attribute for a given extension to `false`.
+
+Sharing is disabled by default in dev mode, and is always disabled in test mode. You can enable the sharing with `devservices.shared=true` for a given extension (e.g. `quarkus.dynamodb.devservices.shared=true`). All other non-shared services will be grouped in another container.
 
 == Configuring the image
 
-Dev Services for Amazon Services uses `localstack/localstack` image. You can configure the image and version using the `quarkus.aws.devservices.localstack.image-name` property:
+Dev Services for Amazon Services uses different default images depending on the stack provider:
+
+* **LocalStack**: `localstack/localstack:4.13` (latest community version)
+* **MiniStack**: `ministackorg/ministack:latest` (not a fixed version as MiniStack is still in early development)
+* **Moto**: `motoserver/moto:latest` (latest version)
+* **Floci**: `hectorvent/floci:latest` (latest version)
+
+You can configure the image and version using the stack-specific properties:
 
 [source,properties]
 ----
-quarkus.aws.devservices.localstack.image-name=localstack/localstack:3.7.2
+# Global LocalStack configuration
+quarkus.aws.devservices.localstack.image-name=localstack/localstack:4.13
+
+# Global MiniStack configuration
+quarkus.aws.devservices.ministack.image-name=ministackorg/ministack:latest
+
+# Global Moto configuration
+quarkus.aws.devservices.moto.image-name=motoserver/moto:latest
+
+# Global Floci configuration
+quarkus.aws.devservices.floci.image-name=floci/floci:latest
+
+# Per-service LocalStack configuration (overrides global)
+quarkus.dynamodb.devservices.localstack.image-name=localstack/localstack:4.13
+
+# Per-service MiniStack configuration (overrides global)
+quarkus.dynamodb.devservices.ministack.image-name=ministackorg/ministack:latest
+
+# Per-service Moto configuration (overrides global)
+quarkus.dynamodb.devservices.moto.image-name=motoserver/moto:latest
+
+# Per-service Floci configuration (overrides global)
+quarkus.dynamodb.devservices.floci.image-name=floci/floci:latest
 ----
+
+=== LocalStack Pro
+
+To use LocalStack Pro, you need to configure the Pro image and provide your authentication token:
+
+[source,properties]
+----
+# Use LocalStack Pro image
+quarkus.aws.devservices.localstack.image-name=localstack/localstack-pro:latest
+
+# Set the authentication token as a container environment variable
+quarkus.aws.devservices.localstack.container-env.LOCALSTACK_AUTH_TOKEN=your-auth-token-here
+----
+
+You can obtain your LocalStack Pro authentication token from your LocalStack account dashboard. The token is required to access Pro features and services.
 
 == Specific configuration
 
@@ -39,11 +113,26 @@ Dev Services for Amazon Services can support specific properties sent to the con
 
 [source,properties]
 ----
+# Global LocalStack configuration
 quarkus.aws.devservices.localstack.container-properties.START_WEB=0
-quarkus.dynamodb.devservices.container-properties.DYNAMODB_HEAP_SIZE=1G
+
+# Global MiniStack configuration
+quarkus.aws.devservices.ministack.container-properties.SOME_PROPERTY=value
+
+# Global Moto configuration
+quarkus.aws.devservices.moto.container-properties.SOME_MOTO_PROPERTY=value
+
+# Per-service LocalStack configuration (overrides global)
+quarkus.dynamodb.devservices.localstack.container-properties.DYNAMODB_HEAP_SIZE=1G
+
+# Per-service MiniStack configuration (overrides global)
+quarkus.dynamodb.devservices.ministack.container-properties.SOME_PROPERTY=value
+
+# Per-service Moto configuration (overrides global)
+quarkus.dynamodb.devservices.moto.container-properties.SOME_MOTO_PROPERTY=value
 ----
 
-Refer to the LocalStack documentation for more configuration : https://docs.localstack.cloud/aws/capabilities/config/configuration/. Note that not all environment variables are supported and some may affect Dev Services for Amazon Services.
+Refer to the LocalStack documentation for LocalStack configuration: https://docs.localstack.cloud/aws/capabilities/config/configuration/. For MiniStack, refer to its documentation. For Moto, refer to the Moto documentation. Note that not all environment variables are supported and some may affect Dev Services for Amazon Services.
 
 == Additional services
 
@@ -51,33 +140,50 @@ To start additional services for which a Quarkus extension does not exist or is 
 
 [source,properties]
 ----
+# Global LocalStack configuration
 quarkus.aws.devservices.localstack.additional-services."kinesis".enabled=true
 quarkus.aws.devservices.localstack.additional-services."redshift".enabled=true
+
+# Global MiniStack configuration
+quarkus.aws.devservices.ministack.additional-services."kinesis".enabled=true
+quarkus.aws.devservices.ministack.additional-services."redshift".enabled=true
 ----
 
-The key is the name of the service to enable and must be a valid LocalStack service name.
+The key is the name of the service to enable and must be a valid service name for the chosen stack provider.
+
+== Init scripts
+
+You can configure init scripts to be executed during stack startup:
+
+[source,properties]
+----
+# Global LocalStack configuration
+quarkus.aws.devservices.localstack.init-scripts-folder=src/test/resources/localstack-init
+quarkus.aws.devservices.localstack.init-scripts-classpath=init-scripts
+
+# Global MiniStack configuration
+quarkus.aws.devservices.ministack.init-scripts-folder=src/test/resources/ministack-init
+quarkus.aws.devservices.ministack.init-scripts-classpath=init-scripts
+
+# Global Moto configuration
+quarkus.aws.devservices.moto.init-scripts-folder=src/test/resources/moto-init
+quarkus.aws.devservices.moto.init-scripts-classpath=init-scripts
+
+# Per-service LocalStack configuration (overrides global)
+quarkus.dynamodb.devservices.localstack.init-scripts-folder=src/test/resources/dynamodb-init
+
+# Per-service MiniStack configuration (overrides global)
+quarkus.dynamodb.devservices.ministack.init-scripts-folder=src/test/resources/dynamodb-init
+
+# Per-service Moto configuration (overrides global)
+quarkus.dynamodb.devservices.moto.init-scripts-folder=src/test/resources/dynamodb-init
+----
+
+The `init-scripts-folder` property points to a folder containing init scripts, while `init-scripts-classpath` points to a classpath resource. The folder-based configuration takes precedence.
 
 == Additional setup
 
 Some extensions support additional configuration to be applied at startup. Refer to the extension documentation.
-
-== Cognito
-
-The Cognito extension is not using LocalStack but Moto.
-
-Dev Services for Amazon Services uses the latest `motoserver/moto` image. You can configure the image and version using the `quarkus.aws.devservices.moto.image-name` property:
-
-[source,properties]
-----
-quarkus.aws.devservices.moto.image-name=motoserver/moto:3.0.2
-----
-
-Dev Services for Amazon Services can support specific properties sent to the container as follows:
-
-[source,properties]
-----
-quarkus.aws.devservices.moto.container-properties.MOTO_COGNITO_IDP_USER_POOL_ID_STRATEGY=HASH
-----
 
 == Global DevServices Configuration Reference
 

@@ -7,127 +7,347 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-messaging-experimental-capture-headers]] [.property-path]##link:#quarkus-amazon_quarkus-messaging-experimental-capture-headers[`+++quarkus.messaging.experimental.capture-headers+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-image-name]] [.property-path]##link:#quarkus-amazon_quarkus-image-name[`+++quarkus.image-name+++`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.messaging.experimental.capture-headers+++[]
+config_property_copy_button:+++quarkus.image-name+++[]
 endif::add-copy-button-to-config-props[]
 
 
 [.description]
 --
-Configures the messaging headers that will be captured as span attributes.
+The LocalStack container image to use.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_MESSAGING_EXPERIMENTAL_CAPTURE_HEADERS+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_IMAGE_NAME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_MESSAGING_EXPERIMENTAL_CAPTURE_HEADERS+++`
+Environment variable: `+++QUARKUS_IMAGE_NAME+++`
 endif::add-copy-button-to-env-var[]
 --
-|list of string
+|string
+|`+++localstack/localstack:4.13+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-enabled]] [.property-path]##link:#quarkus-amazon_quarkus-enabled[`+++quarkus.enabled+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+If Dev Services for Amazon Services has been explicitly enabled or disabled. Dev Services are generally enabled by default, unless there is an existing configuration present. For Amazon Services, Dev Services starts a container unless `aws.endpoint-override` is set.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-messaging-experimental-receive-telemetry-enabled]] [.property-path]##link:#quarkus-amazon_quarkus-messaging-experimental-receive-telemetry-enabled[`+++quarkus.messaging.experimental.receive-telemetry.enabled+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-shared]] [.property-path]##link:#quarkus-amazon_quarkus-shared[`+++quarkus.shared+++`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.messaging.experimental.receive-telemetry.enabled+++[]
+config_property_copy_button:+++quarkus.shared+++[]
 endif::add-copy-button-to-config-props[]
 
 
 [.description]
 --
-Set whether to capture the consumer message receive telemetry in messaging instrumentation. Note that this will cause the consumer side to start a new trace, with only a span link connecting it to the producer trace.
+Indicates if the stack container managed by Quarkus Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services for Amazon Services starts a new container. Container sharing is only used in dev mode.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_MESSAGING_EXPERIMENTAL_RECEIVE_TELEMETRY_ENABLED+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SHARED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_MESSAGING_EXPERIMENTAL_RECEIVE_TELEMETRY_ENABLED+++`
+Environment variable: `+++QUARKUS_SHARED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++true+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-init-scripts-folder]] [.property-path]##link:#quarkus-amazon_quarkus-init-scripts-folder[`+++quarkus.init-scripts-folder+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.init-scripts-folder+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Path to init scripts folder executed during stack startup.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INIT_SCRIPTS_FOLDER+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_INIT_SCRIPTS_FOLDER+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-init-scripts-classpath]] [.property-path]##link:#quarkus-amazon_quarkus-init-scripts-classpath[`+++quarkus.init-scripts-classpath+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.init-scripts-classpath+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Classpath to init scripts folder executed during stack startup. initScriptsFolder has higher precedence.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INIT_SCRIPTS_CLASSPATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_INIT_SCRIPTS_CLASSPATH+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-init-completion-msg]] [.property-path]##link:#quarkus-amazon_quarkus-init-completion-msg[`+++quarkus.init-completion-msg+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.init-completion-msg+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Specific container log message to be waiting for stack init scripts completion.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INIT_COMPLETION_MSG+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_INIT_COMPLETION_MSG+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-additional-services-service-name-enabled]] [.property-path]##link:#quarkus-amazon_quarkus-additional-services-service-name-enabled[`+++quarkus.additional-services."service-name".enabled+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.additional-services."service-name".enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. For all services but Cognito, the local AWS stack will be provided by LocalStack. Otherwise, it will be provided by Moto
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ADDITIONAL_SERVICES__SERVICE_NAME__ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ADDITIONAL_SERVICES__SERVICE_NAME__ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-additional-services-service-name-shared]] [.property-path]##link:#quarkus-amazon_quarkus-additional-services-service-name-shared[`+++quarkus.additional-services."service-name".shared+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.additional-services."service-name".shared+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Indicates if the container managed by Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services starts a new container.
+
+The discovery uses the `quarkus-dev-service-++*++` label. The value is configured using the `service-name` property.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ADDITIONAL_SERVICES__SERVICE_NAME__SHARED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ADDITIONAL_SERVICES__SERVICE_NAME__SHARED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
 |`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-sdk-experimental-span-attributes]] [.property-path]##link:#quarkus-amazon_quarkus-aws-sdk-experimental-span-attributes[`+++quarkus.aws-sdk.experimental-span-attributes+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-additional-services-service-name-isolated]] [.property-path]##link:#quarkus-amazon_quarkus-additional-services-service-name-isolated[`+++quarkus.additional-services."service-name".isolated+++`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws-sdk.experimental-span-attributes+++[]
+config_property_copy_button:+++quarkus.additional-services."service-name".isolated+++[]
 endif::add-copy-button-to-config-props[]
 
 
 [.description]
 --
-Sets whether experimental attributes should be set to spans. These attributes may be changed or removed in the future, so only enable this if you know you do not require attributes filled by this instrumentation to be stable across versions.
+Indicates if shared LocalStack services managed by Dev Services should be isolated. When true, the service will be started in its own container and the value of the `quarkus-dev-service-localstack` label will be suffixed by the service name (s3, sqs, ...)
+
+DEPRECATED: This will work only with the LocalStack legacy mode.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_SDK_EXPERIMENTAL_SPAN_ATTRIBUTES+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ADDITIONAL_SERVICES__SERVICE_NAME__ISOLATED+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_SDK_EXPERIMENTAL_SPAN_ATTRIBUTES+++`
+Environment variable: `+++QUARKUS_ADDITIONAL_SERVICES__SERVICE_NAME__ISOLATED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++false+++`
+|`+++true+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-sdk-experimental-use-propagator-for-messaging]] [.property-path]##link:#quarkus-amazon_quarkus-aws-sdk-experimental-use-propagator-for-messaging[`+++quarkus.aws-sdk.experimental-use-propagator-for-messaging+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-additional-services-service-name-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-additional-services-service-name-service-name[`+++quarkus.additional-services."service-name".service-name+++`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws-sdk.experimental-use-propagator-for-messaging+++[]
+config_property_copy_button:+++quarkus.additional-services."service-name".service-name+++[]
 endif::add-copy-button-to-config-props[]
 
 
 [.description]
 --
-Sets whether the io.opentelemetry.context.propagation.TextMapPropagator configured in the provided OpenTelemetry should be used to inject into supported messaging attributes (currently only SQS; SNS may follow). In addition, the X-Ray propagator is always used. Using the messaging propagator is needed if your tracing vendor requires special tracestate entries or legacy propagation information that cannot be transported via X-Ray headers. It may also be useful if you need to directly connect spans over messaging in your tracing backend, bypassing any intermediate spans/X-Ray segments that AWS may create in the delivery process. This option is off by default. If enabled, on extraction the configured propagator will be preferred over X-Ray if it can extract anything.
+The value of the `quarkus-dev-service-++*++` label attached to the started container. In dev mode, when `shared` is set to `true`, before starting a container, Dev Services looks for a container with the `quarkus-dev-service-++*++` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise it starts a new container with the `quarkus-dev-service-++*++` label set to the specified value. In test mode, Dev Services will group services with the same `service-name` value in one container instance.
+
+This property is used when you need multiple shared container instances.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_SDK_EXPERIMENTAL_USE_PROPAGATOR_FOR_MESSAGING+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ADDITIONAL_SERVICES__SERVICE_NAME__SERVICE_NAME+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_SDK_EXPERIMENTAL_USE_PROPAGATOR_FOR_MESSAGING+++`
+Environment variable: `+++QUARKUS_ADDITIONAL_SERVICES__SERVICE_NAME__SERVICE_NAME+++`
 endif::add-copy-button-to-env-var[]
 --
-|boolean
-|`+++false+++`
+|string
+|`+++awsstack+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-sdk-experimental-record-individual-http-error]] [.property-path]##link:#quarkus-amazon_quarkus-aws-sdk-experimental-record-individual-http-error[`+++quarkus.aws-sdk.experimental-record-individual-http-error+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-additional-services-service-name-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon_quarkus-additional-services-service-name-container-properties-container-properties[`+++quarkus.additional-services."service-name".container-properties."container-properties"+++`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws-sdk.experimental-record-individual-http-error+++[]
+config_property_copy_button:+++quarkus.additional-services."service-name".container-properties."container-properties"+++[]
 endif::add-copy-button-to-config-props[]
 
 
 [.description]
 --
-Sets whether errors returned by each individual HTTP request should be recorded as events for the SDK span. This option is off by default. If enabled, the HTTP error code and the error message will be captured and associated with the span. This provides detailed insights into errors on a per-request basis.
+Generic properties that are pass for additional container configuration.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_SDK_EXPERIMENTAL_RECORD_INDIVIDUAL_HTTP_ERROR+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ADDITIONAL_SERVICES__SERVICE_NAME__CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_SDK_EXPERIMENTAL_RECORD_INDIVIDUAL_HTTP_ERROR+++`
+Environment variable: `+++QUARKUS_ADDITIONAL_SERVICES__SERVICE_NAME__CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++`
 endif::add-copy-button-to-env-var[]
 --
-|boolean
-|`+++false+++`
+|Map<String,String>
+|
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-genai-capture-message-content]] [.property-path]##link:#quarkus-amazon_quarkus-genai-capture-message-content[`+++quarkus.genai.capture-message-content+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-additional-services-service-name-stack]] [.property-path]##link:#quarkus-amazon_quarkus-additional-services-service-name-stack[`+++quarkus.additional-services."service-name".stack+++`]##
 ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.genai.capture-message-content+++[]
+config_property_copy_button:+++quarkus.additional-services."service-name".stack+++[]
 endif::add-copy-button-to-config-props[]
 
 
 [.description]
 --
-Set whether Generative AI events include full content of user and assistant messages. Note that full content can have data privacy and size concerns and care should be taken when enabling this.
+The dev services stack implementation to use for this service. If not specified, the global setting from quarkus.aws.devservices.provider is used. Supported values: "localstack", "ministack"
+
+This allows per-service override of the global stack selection.
 
 
 ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_GENAI_CAPTURE_MESSAGE_CONTENT+++[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ADDITIONAL_SERVICES__SERVICE_NAME__STACK+++[]
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_GENAI_CAPTURE_MESSAGE_CONTENT+++`
+Environment variable: `+++QUARKUS_ADDITIONAL_SERVICES__SERVICE_NAME__STACK+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`localstack`, `ministack`
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-service-name[`+++quarkus.service-name+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.service-name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The value of the `quarkus-dev-service-localstack` label attached to the started container.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SERVICE_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SERVICE_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++localstack+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-container-properties-environment-variable-name]] [.property-path]##link:#quarkus-amazon_quarkus-container-properties-environment-variable-name[`+++quarkus.container-properties."environment-variable-name"+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.container-properties."environment-variable-name"+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Environment variables that are passed to the container.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_CONTAINER_PROPERTIES__ENVIRONMENT_VARIABLE_NAME_+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_CONTAINER_PROPERTIES__ENVIRONMENT_VARIABLE_NAME_+++`
+endif::add-copy-button-to-env-var[]
+--
+|Map<String,String>
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-port]] [.property-path]##link:#quarkus-amazon_quarkus-port[`+++quarkus.port+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.port+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Optional fixed port the stack will listen to.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_PORT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_PORT+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-legacy-mode]] [.property-path]##link:#quarkus-amazon_quarkus-legacy-mode[`+++quarkus.legacy-mode+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.legacy-mode+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+When legacy mode is enabled, Dev Services for LocalStack will use the old approach to manage the container lifecycle.
+
+DEPRECATED: This mode is deprecated and should not be used. It is only provided as a fallback for users who rely on the old behavior and need more time to migrate to the new approach.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_LEGACY_MODE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_LEGACY_MODE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean

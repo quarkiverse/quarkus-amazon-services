@@ -10,7 +10,7 @@ import io.quarkus.builder.item.MultiBuildItem;
  */
 public final class DevServicesLocalStackProviderBuildItem extends MultiBuildItem {
     private final EnabledService service;
-    private final DevServicesAmazonProvider devProvider;
+    private final DevServicesLocalStackAmazonProvider devProvider;
     private final LocalStackDevServicesBaseConfig config;
 
     /**
@@ -22,7 +22,7 @@ public final class DevServicesLocalStackProviderBuildItem extends MultiBuildItem
      */
     public DevServicesLocalStackProviderBuildItem(EnabledService enabledService,
             LocalStackDevServicesBaseConfig config,
-            DevServicesAmazonProvider devProvider) {
+            DevServicesLocalStackAmazonProvider devProvider) {
         this.service = enabledService;
         this.config = config;
         this.devProvider = devProvider;
@@ -32,7 +32,7 @@ public final class DevServicesLocalStackProviderBuildItem extends MultiBuildItem
         return service;
     }
 
-    public DevServicesAmazonProvider getDevProvider() {
+    public DevServicesLocalStackAmazonProvider getDevProvider() {
         return devProvider;
     }
 

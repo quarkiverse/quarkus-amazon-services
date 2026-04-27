@@ -36,7 +36,7 @@ You can also set up a local version of ACM manually, first start a LocalStack co
 
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run --rm --name local-acm --publish 4566:4566 -e SERVICES=acm -e START_WEB=0 -d localstack/localstack:3.7.2
+docker run --rm --name local-acm --publish 4566:4566 -e SERVICES=acm -e START_WEB=0 -d localstack/localstack:4.13
 ----
 This starts an ACM instance that is accessible on port `4566`.
 

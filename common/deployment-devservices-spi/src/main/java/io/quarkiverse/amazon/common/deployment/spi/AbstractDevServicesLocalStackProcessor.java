@@ -9,6 +9,7 @@ import org.testcontainers.containers.localstack.LocalStackContainer.EnabledServi
 
 import io.quarkiverse.amazon.common.runtime.AwsCredentialsProviderType;
 import io.quarkiverse.amazon.common.runtime.DevServicesBuildTimeConfig;
+import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkus.runtime.configuration.ConfigUtils;
 
 public abstract class AbstractDevServicesLocalStackProcessor {
@@ -22,9 +23,19 @@ public abstract class AbstractDevServicesLocalStackProcessor {
     private static final String AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY = "quarkus.%s.aws.credentials.static-provider.secret-access-key";
 
     protected DevServicesLocalStackProviderBuildItem setup(EnabledService enabledService,
-            DevServicesBuildTimeConfig devServicesBuildTimeConfig) {
+            DevServicesBuildTimeConfig devServicesBuildTimeConfig,
+            GlobalDevServicesBuildTimeConfig globalConfig) {
 
         String propertyConfigurationName = getPropertyConfigurationName(enabledService);
+
+        // Check stack configuration - only emit BuildItem if stack is "localstack"
+        GlobalDevServicesBuildTimeConfig.AwsStack stack = devServicesBuildTimeConfig.provider().orElse(globalConfig.provider());
+        if (stack != GlobalDevServicesBuildTimeConfig.AwsStack.LOCALSTACK) {
+            log.debugf(
+                    "Not starting Dev Services for Amazon Services - %s, stack is configured to '%s' (not 'localstack').",
+                    enabledService.getName(), stack);
+            return null;
+        }
 
         // explicitly disabled
         if (!devServicesBuildTimeConfig.enabled().orElse(true)) {
@@ -46,9 +57,9 @@ public abstract class AbstractDevServicesLocalStackProcessor {
 
         return new DevServicesLocalStackProviderBuildItem(enabledService,
                 sharedConfig,
-                new DevServicesAmazonProvider() {
+                new DevServicesLocalStackAmazonProvider() {
                     @Override
-                    public Map<String, String> prepareLocalStack(LocalStackContainer localstack) {
+                    public Map<String, String> prepareLocalStack(AwsStackContainer localstack) {
                         AbstractDevServicesLocalStackProcessor.this.prepareLocalStack(
                                 devServicesBuildTimeConfig,
                                 localstack);
@@ -59,7 +70,7 @@ public abstract class AbstractDevServicesLocalStackProcessor {
                         // The hostname modification for shared network is handled in DevServicesLocalStackProcessor
                         config.put(
                                 endpointOverride,
-                                localstack.getEndpointOverride(enabledService).toString());
+                                localstack.getEndpoint().toString());
 
                         config.put(String.format(AWS_REGION, propertyConfigurationName),
                                 localstack.getRegion());
@@ -80,10 +91,10 @@ public abstract class AbstractDevServicesLocalStackProcessor {
 
                     @Override
                     public Map<String, String> reuseLocalStack(
-                            BorrowedLocalStackContainer localstack) {
+                            AwsStackContainer localstack) {
                         return Map.of(
                                 endpointOverride,
-                                localstack.getEndpointOverride(enabledService)
+                                localstack.getEndpoint()
                                         .toString(),
                                 String.format(AWS_REGION, propertyConfigurationName),
                                 localstack.getRegion(),
@@ -125,7 +136,7 @@ public abstract class AbstractDevServicesLocalStackProcessor {
      * @param localstack the new localStack container to prepare
      */
     protected void prepareLocalStack(DevServicesBuildTimeConfig devServicesBuildTimeConfig,
-            LocalStackContainer localstack) {
+            AwsStackContainer localstack) {
     }
 
     /**

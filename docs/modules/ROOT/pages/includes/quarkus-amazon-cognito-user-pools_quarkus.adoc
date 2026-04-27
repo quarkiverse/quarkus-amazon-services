@@ -1,0 +1,231 @@
+[.configuration-legend]
+icon:lock[title=Fixed at build time] Configuration property fixed at build time - All other configuration properties are overridable at runtime
+[.configuration-reference.searchable, cols="80,.^10,.^10"]
+|===
+
+h|[.header-title]##Configuration property##
+h|Type
+h|Default
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cognito-user-pools_quarkus-interceptors]] [.property-path]##link:#quarkus-amazon-cognito-user-pools_quarkus-interceptors[`+++quarkus.interceptors+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.interceptors+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+List of execution interceptors that will have access to read and modify the request and response objects as they are processed by the AWS SDK.
+
+The list should consists of class names which implements `software.amazon.awssdk.core.interceptor.ExecutionInterceptor` interface. Classes will be attempted to be loaded via CDI first, and if no CDI beans are available, then the constructor with no parameters will be invoked to instantiate each class.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_INTERCEPTORS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_INTERCEPTORS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cognito-user-pools_quarkus-telemetry-enabled]] [.property-path]##link:#quarkus-amazon-cognito-user-pools_quarkus-telemetry-enabled[`+++quarkus.telemetry.enabled+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.telemetry.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+OpenTelemetry AWS SDK instrumentation will be enabled if the OpenTelemetry extension is present and this value is true.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_TELEMETRY_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_TELEMETRY_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cognito-user-pools_quarkus-sync-client-type]] [.property-path]##link:#quarkus-amazon-cognito-user-pools_quarkus-sync-client-type[`+++quarkus.sync-client.type+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.sync-client.type+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Type of the sync HTTP client implementation
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SYNC_CLIENT_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SYNC_CLIENT_TYPE+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`apache`, `aws-crt`, `url`
+|`+++url+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cognito-user-pools_quarkus-async-client-type]] [.property-path]##link:#quarkus-amazon-cognito-user-pools_quarkus-async-client-type[`+++quarkus.async-client.type+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.async-client.type+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Type of the async HTTP client implementation
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_ASYNC_CLIENT_TYPE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_ASYNC_CLIENT_TYPE+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`aws-crt`, `netty`
+|`+++netty+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cognito-user-pools_quarkus-devservices-enabled]] [.property-path]##link:#quarkus-amazon-cognito-user-pools_quarkus-devservices-enabled[`+++quarkus.devservices.enabled+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.devservices.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. For all services but Cognito, the local AWS stack will be provided by LocalStack. Otherwise, it will be provided by Moto
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_DEVSERVICES_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_DEVSERVICES_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cognito-user-pools_quarkus-devservices-shared]] [.property-path]##link:#quarkus-amazon-cognito-user-pools_quarkus-devservices-shared[`+++quarkus.devservices.shared+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.devservices.shared+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Indicates if the LocalStack container managed by Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services starts a new container.
+
+The discovery uses the `quarkus-dev-service-localstack` label. The value is configured using the `service-name` property.
+
+Sharing is not supported for the Cognito extension.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_DEVSERVICES_SHARED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_DEVSERVICES_SHARED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cognito-user-pools_quarkus-devservices-isolated]] [.property-path]##link:#quarkus-amazon-cognito-user-pools_quarkus-devservices-isolated[`+++quarkus.devservices.isolated+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.devservices.isolated+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Indicates if shared LocalStack services managed by Dev Services should be isolated. When true, the service will be started in its own container and the value of the `quarkus-dev-service-localstack` label will be suffixed by the service name (s3, sqs, ...)
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_DEVSERVICES_ISOLATED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_DEVSERVICES_ISOLATED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++true+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cognito-user-pools_quarkus-devservices-service-name]] [.property-path]##link:#quarkus-amazon-cognito-user-pools_quarkus-devservices-service-name[`+++quarkus.devservices.service-name+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.devservices.service-name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The value of the `quarkus-dev-service-localstack` label attached to the started container. In dev mode, when `shared` is set to `true`, before starting a container, Dev Services looks for a container with the `quarkus-dev-service-localstack` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise it starts a new container with the `quarkus-dev-service-localstack` label set to the specified value. In test mode, Dev Services will group services with the same `service-name` value in one container instance.
+
+This property is used when you need multiple shared LocalStack instances.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_DEVSERVICES_SERVICE_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_DEVSERVICES_SERVICE_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++awsstack+++`
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cognito-user-pools_quarkus-devservices-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon-cognito-user-pools_quarkus-devservices-container-properties-container-properties[`+++quarkus.devservices.container-properties."container-properties"+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.devservices.container-properties."container-properties"+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Generic properties that are pass for additional container configuration.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_DEVSERVICES_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_DEVSERVICES_CONTAINER_PROPERTIES__CONTAINER_PROPERTIES_+++`
+endif::add-copy-button-to-env-var[]
+--
+|Map<String,String>
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-cognito-user-pools_quarkus-devservices-stack]] [.property-path]##link:#quarkus-amazon-cognito-user-pools_quarkus-devservices-stack[`+++quarkus.devservices.provider+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.devservices.provider+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The dev services stack implementation to use for this service. If not specified, the global setting from quarkus.aws.devservices.provider is used. Supported values: "localstack", "ministack"
+
+This allows per-service override of the global stack selection.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_DEVSERVICES_STACK+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_DEVSERVICES_STACK+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+|===
+

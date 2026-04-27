@@ -20,16 +20,14 @@ public interface DevServicesBuildTimeConfig {
     Optional<Boolean> enabled();
 
     /**
-     * Indicates if the LocalStack container managed by Dev Services is shared.
+     * Indicates if the container managed by Dev Services is shared.
      * When shared, Quarkus looks for running containers using label-based service discovery.
      * If a matching container is found, it is used, and so a second one is not started.
      * Otherwise, Dev Services starts a new container.
      * <p>
-     * The discovery uses the {@code quarkus-dev-service-localstack} label.
+     * The discovery uses the {@code quarkus-dev-service-{provider}} label.
      * The value is configured using the {@code service-name} property.
-     * <p>
-     * Sharing is not supported for the Cognito extension.
-     * <p>
+     * </p>
      */
     @WithDefault(value = "false")
     boolean shared();
@@ -38,26 +36,39 @@ public interface DevServicesBuildTimeConfig {
      * Indicates if shared LocalStack services managed by Dev Services should be isolated.
      * When true, the service will be started in its own container and the value of
      * the {@code quarkus-dev-service-localstack} label will be suffixed by the service name (s3, sqs, ...)
+     * <p>
+     * DEPRECATED: This will work only with the LocalStack legacy mode.
+     * </p>
      */
     @WithDefault(value = "true")
     boolean isolated();
 
     /**
-     * The value of the {@code quarkus-dev-service-localstack} label attached to the started container.
+     * The value of the {@code quarkus-dev-service-{provider}} label attached to the started container.
      * In dev mode, when {@code shared} is set to {@code true}, before starting a container, Dev Services looks for a container
      * with the
-     * {@code quarkus-dev-service-localstack} label
+     * {@code quarkus-dev-service-{provider}} label
      * set to the configured value. If found, it will use this container instead of starting a new one. Otherwise it
-     * starts a new container with the {@code quarkus-dev-service-localstack} label set to the specified value.
+     * starts a new container with the {@code quarkus-dev-service-{provider}} label set to the specified value.
      * In test mode, Dev Services will group services with the same {@code service-name} value in one container instance.
      * <p>
-     * This property is used when you need multiple shared LocalStack instances.
+     * This property is used when you need multiple shared container instances.
      */
-    @WithDefault(value = "localstack")
+    @WithDefault(value = "awsstack")
     String serviceName();
 
     /**
      * Generic properties that are pass for additional container configuration.
      */
     Map<String, String> containerProperties();
+
+    /**
+     * The dev services stack provider to use for this service.
+     * If not specified, the global setting from quarkus.aws.devservices.provider is used.
+     * Supported values: "localstack", "ministack"
+     * <p>
+     * This allows per-service override of the global stack selection.
+     * </p>
+     */
+    Optional<GlobalDevServicesBuildTimeConfig.AwsStack> provider();
 }

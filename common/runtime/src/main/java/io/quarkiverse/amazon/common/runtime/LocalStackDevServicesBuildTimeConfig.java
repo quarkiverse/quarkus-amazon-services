@@ -1,7 +1,6 @@
 package io.quarkiverse.amazon.common.runtime;
 
-import java.util.Map;
-import java.util.Optional;
+import java.util.function.BooleanSupplier;
 
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
@@ -10,42 +9,44 @@ import io.smallrye.config.WithDefault;
 
 @ConfigMapping(prefix = "quarkus.aws.devservices.localstack")
 @ConfigRoot(phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
-public interface LocalStackDevServicesBuildTimeConfig {
+public interface LocalStackDevServicesBuildTimeConfig extends AwsStackDevServicesBuildTimeConfig {
+
+    /**
+     * The value of the {@code quarkus-dev-service-localstack} label attached to the started container.
+     */
+    @WithDefault("localstack")
+    @Override
+    String serviceName();
+
     /**
      * The LocalStack container image to use.
      */
     @WithDefault(value = "localstack/localstack:4.13")
+    @Override
     String imageName();
 
     /**
-     * Generic properties that are pass for additional container configuration.
+     * When legacy mode is enabled, Dev Services for LocalStack will use the old approach to manage the container lifecycle.
+     * <p>
+     * DEPRECATED:
+     * This mode is deprecated and should not be used. It is only provided as a fallback for users who rely on the old behavior
+     * and need more time to migrate to the new approach.
+     * </p>
      */
-    Map<String, String> containerProperties();
+    @WithDefault("false")
+    Boolean legacyMode();
 
-    /**
-     * Path to init scripts folder executed during localstack startup.
-     */
-    Optional<String> initScriptsFolder();
+    class LegacyModeEnabled implements BooleanSupplier {
 
-    /**
-     * Classpath to init scripts folder executed during localstack startup. initScriptsFolder has higher precedence.
-     */
-    Optional<String> initScriptsClasspath();
+        final LocalStackDevServicesBuildTimeConfig config;
 
-    /**
-     * Specific container log message to be waiting for localstack init scripts
-     * completion.
-     */
-    Optional<String> initCompletionMsg();
+        public LegacyModeEnabled(LocalStackDevServicesBuildTimeConfig config) {
+            this.config = config;
+        }
 
-    /**
-     * Additional services to be started. Use this property if the service
-     * you want is not covered by the extension
-     */
-    Map<String, DevServicesBuildTimeConfig> additionalServices();
-
-    /**
-     * Optional fixed port localstack will listen to.
-     */
-    Optional<Integer> port();
+        @Override
+        public boolean getAsBoolean() {
+            return config.legacyMode();
+        }
+    }
 }
