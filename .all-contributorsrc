@@ -396,6 +396,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jgrumboe",
+      "name": "Johannes Grumböck",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5127047?v=4",
+      "profile": "https://github.com/jgrumboe",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
