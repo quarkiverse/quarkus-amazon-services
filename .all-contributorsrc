@@ -387,6 +387,15 @@
         "ideas",
         "example"
       ]
+    },
+    {
+      "login": "timhamoni",
+      "name": "Tim Hurman",
+      "avatar_url": "https://avatars.githubusercontent.com/u/189804614?v=4",
+      "profile": "https://www.hamoni.ai",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
