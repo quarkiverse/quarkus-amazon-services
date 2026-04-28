@@ -11,7 +11,7 @@ public interface FlociDevServicesBuildTimeConfig extends AwsStackDevServicesBuil
     /**
      * The Floci container image to use.
      */
-    @WithDefault(value = "hectorvent/floci:latest")
+    @WithDefault(value = "floci/floci:latest")
     @Override
     String imageName();
 
