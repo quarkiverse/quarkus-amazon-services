@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.testcontainers.containers.BindMode;
-import org.testcontainers.containers.localstack.LocalStackContainer;
-import org.testcontainers.containers.localstack.LocalStackContainer.EnabledService;
 import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.localstack.LocalStackContainer;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
@@ -126,7 +125,7 @@ public class LocalStackDevServiceProcessor extends AbstractDevServicesAwsStackPr
 
     @Override
     protected AwsStackContainer createAwsStackContainerFromEndpoint(String endpoint) {
-        try (LocalStackContainer localStack = new LocalStackContainer("latest")) {
+        try (LocalStackContainer localStack = new LocalStackContainer("localstack/localstack:latest")) {
             var region = localStack.getRegion();
             var accessKey = localStack.getAccessKey();
             var secretKey = localStack.getSecretKey();
@@ -152,28 +151,5 @@ public class LocalStackDevServiceProcessor extends AbstractDevServicesAwsStackPr
                 }
             };
         }
-    }
-
-    /**
-     * Returns the property configuration name for the given {@link LocalStackContainer.EnabledService}.
-     * <p>
-     * The property configuration name is the name of the service, which is the same as the AWSSDK artifact id.
-     * The only exception is the Step Functions service, which is named "sfn" in the AWSSDK, "stepfunctions"
-     * and "logs" in the LocalStack configuration.
-     * <p>
-     *
-     * @param enabledService the LocalStack enabled service
-     * @return the property configuration name
-     */
-    protected String getPropertyConfigurationName(LocalStackContainer.EnabledService enabledService) {
-        if (enabledService == LocalStackContainer.Service.STEPFUNCTIONS)
-            return "sfn";
-        if (enabledService.getName().equals("events"))
-            return "eventbridge";
-        if (enabledService == LocalStackContainer.Service.CLOUDWATCHLOGS)
-            return "cloudwatchlogs";
-        if (enabledService.getName().equals("scheduler"))
-            return "eventbridge-scheduler";
-        return enabledService.getName();
     }
 }

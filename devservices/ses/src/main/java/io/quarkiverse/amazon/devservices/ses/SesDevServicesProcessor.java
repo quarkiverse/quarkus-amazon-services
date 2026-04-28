@@ -2,13 +2,13 @@ package io.quarkiverse.amazon.devservices.ses;
 
 import org.testcontainers.containers.localstack.LocalStackContainer.Service;
 
-import io.quarkiverse.amazon.common.deployment.spi.AbstractDevServicesLocalStackProcessor;
 import io.quarkiverse.amazon.common.deployment.spi.DevServicesLocalStackProviderBuildItem;
+import io.quarkiverse.amazon.common.deployment.spi.LegacyAbstractDevServicesLocalStackProcessor;
 import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.ses.runtime.SesBuildTimeConfig;
 import io.quarkus.deployment.annotations.BuildStep;
 
-public class SesDevServicesProcessor extends AbstractDevServicesLocalStackProcessor {
+public class SesDevServicesProcessor extends LegacyAbstractDevServicesLocalStackProcessor {
 
     @BuildStep
     DevServicesLocalStackProviderBuildItem setupSes(SesBuildTimeConfig clientBuildTimeConfig,

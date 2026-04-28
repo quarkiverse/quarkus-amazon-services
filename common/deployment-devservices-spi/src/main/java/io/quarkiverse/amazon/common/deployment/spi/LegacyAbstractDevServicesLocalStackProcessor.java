@@ -12,9 +12,10 @@ import io.quarkiverse.amazon.common.runtime.DevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkus.runtime.configuration.ConfigUtils;
 
-public abstract class AbstractDevServicesLocalStackProcessor {
+@Deprecated(forRemoval = true)
+public abstract class LegacyAbstractDevServicesLocalStackProcessor {
 
-    private static final Logger log = Logger.getLogger(AbstractDevServicesLocalStackProcessor.class);
+    private static final Logger log = Logger.getLogger(LegacyAbstractDevServicesLocalStackProcessor.class);
 
     private static final String ENDPOINT_OVERRIDE = "quarkus.%s.endpoint-override";
     private static final String AWS_REGION = "quarkus.%s.aws.region";
@@ -60,7 +61,7 @@ public abstract class AbstractDevServicesLocalStackProcessor {
                 new DevServicesLocalStackAmazonProvider() {
                     @Override
                     public Map<String, String> prepareLocalStack(AwsStackContainer localstack) {
-                        AbstractDevServicesLocalStackProcessor.this.prepareLocalStack(
+                        LegacyAbstractDevServicesLocalStackProcessor.this.prepareLocalStack(
                                 devServicesBuildTimeConfig,
                                 localstack);
 

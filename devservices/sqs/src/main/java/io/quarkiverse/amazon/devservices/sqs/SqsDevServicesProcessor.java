@@ -10,9 +10,9 @@ import java.util.Set;
 
 import org.testcontainers.containers.localstack.LocalStackContainer.Service;
 
-import io.quarkiverse.amazon.common.deployment.spi.AbstractDevServicesLocalStackProcessor;
 import io.quarkiverse.amazon.common.deployment.spi.AwsStackContainer;
 import io.quarkiverse.amazon.common.deployment.spi.DevServicesLocalStackProviderBuildItem;
+import io.quarkiverse.amazon.common.deployment.spi.LegacyAbstractDevServicesLocalStackProcessor;
 import io.quarkiverse.amazon.common.deployment.spi.LocalStackDevServicesBaseConfig;
 import io.quarkiverse.amazon.common.runtime.DevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
@@ -26,7 +26,7 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.QueueAttributeName;
 
-public class SqsDevServicesProcessor extends AbstractDevServicesLocalStackProcessor {
+public class SqsDevServicesProcessor extends LegacyAbstractDevServicesLocalStackProcessor {
 
     @BuildStep
     DevServicesLocalStackProviderBuildItem setupSqs(SqsBuildTimeConfig clientBuildTimeConfig,

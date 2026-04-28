@@ -6,14 +6,15 @@ import java.util.stream.Collectors;
 
 import org.testcontainers.containers.localstack.LocalStackContainer.EnabledService;
 
-import io.quarkiverse.amazon.common.deployment.spi.AbstractDevServicesLocalStackProcessor;
 import io.quarkiverse.amazon.common.deployment.spi.DevServicesLocalStackProviderBuildItem;
+import io.quarkiverse.amazon.common.deployment.spi.LegacyAbstractDevServicesLocalStackProcessor;
 import io.quarkiverse.amazon.common.runtime.DevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.LocalStackDevServicesBuildTimeConfig;
 import io.quarkus.deployment.annotations.BuildStep;
 
-public class LegacyDevServicesAdditionalServicesLocalStackServiceProcessor extends AbstractDevServicesLocalStackProcessor {
+public class LegacyDevServicesAdditionalServicesLocalStackServiceProcessor
+        extends LegacyAbstractDevServicesLocalStackProcessor {
 
     @BuildStep
     List<DevServicesLocalStackProviderBuildItem> setupServices(

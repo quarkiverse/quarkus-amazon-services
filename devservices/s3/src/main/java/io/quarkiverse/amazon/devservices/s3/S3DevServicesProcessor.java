@@ -6,9 +6,9 @@ import java.util.Set;
 
 import org.testcontainers.containers.localstack.LocalStackContainer.Service;
 
-import io.quarkiverse.amazon.common.deployment.spi.AbstractDevServicesLocalStackProcessor;
 import io.quarkiverse.amazon.common.deployment.spi.AwsStackContainer;
 import io.quarkiverse.amazon.common.deployment.spi.DevServicesLocalStackProviderBuildItem;
+import io.quarkiverse.amazon.common.deployment.spi.LegacyAbstractDevServicesLocalStackProcessor;
 import io.quarkiverse.amazon.common.deployment.spi.LocalStackDevServicesBaseConfig;
 import io.quarkiverse.amazon.common.runtime.DevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
@@ -21,7 +21,7 @@ import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 
-public class S3DevServicesProcessor extends AbstractDevServicesLocalStackProcessor {
+public class S3DevServicesProcessor extends LegacyAbstractDevServicesLocalStackProcessor {
 
     private static final String AWS_PATH_STYLE_ACCESS = "quarkus.s3.path-style-access";
 
