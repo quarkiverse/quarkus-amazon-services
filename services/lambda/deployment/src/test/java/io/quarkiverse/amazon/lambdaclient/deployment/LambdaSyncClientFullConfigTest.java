@@ -8,7 +8,7 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import software.amazon.awssdk.services.lambda.LambdaClient;
 
 public class LambdaSyncClientFullConfigTest {
@@ -17,7 +17,7 @@ public class LambdaSyncClientFullConfigTest {
     Instance<LambdaClient> client;
 
     @RegisterExtension
-    static final QuarkusUnitTest config = new QuarkusUnitTest()
+    static final QuarkusExtensionTest config = new QuarkusExtensionTest()
             .withApplicationRoot((jar) -> jar
                     .addAsResource("sync-urlconn-full-config.properties", "application.properties"));
 

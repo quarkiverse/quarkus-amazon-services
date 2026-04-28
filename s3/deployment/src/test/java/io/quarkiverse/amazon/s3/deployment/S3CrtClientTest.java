@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import io.quarkiverse.amazon.s3.runtime.S3Crt;
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 
 public class S3CrtClientTest {
@@ -19,7 +19,7 @@ public class S3CrtClientTest {
     Instance<S3AsyncClient> client;
 
     @RegisterExtension
-    static final QuarkusUnitTest config = new QuarkusUnitTest()
+    static final QuarkusExtensionTest config = new QuarkusExtensionTest()
             .withApplicationRoot((jar) -> jar
                     .addAsResource("sync-urlconn-full-config.properties", "application.properties"));
 

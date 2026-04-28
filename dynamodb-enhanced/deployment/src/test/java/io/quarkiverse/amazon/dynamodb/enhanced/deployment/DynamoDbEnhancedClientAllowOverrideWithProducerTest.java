@@ -5,7 +5,7 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 
 public class DynamoDbEnhancedClientAllowOverrideWithProducerTest {
@@ -14,7 +14,7 @@ public class DynamoDbEnhancedClientAllowOverrideWithProducerTest {
     DynamoDbEnhancedClient client;
 
     @RegisterExtension
-    static final QuarkusUnitTest config = new QuarkusUnitTest()
+    static final QuarkusExtensionTest config = new QuarkusExtensionTest()
             .withApplicationRoot((jar) -> jar
                     .addClass(DynamoDbEnhancedClientProducer.class)
                     .addAsResource("full-config.properties", "application.properties"));

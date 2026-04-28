@@ -9,7 +9,7 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.*;
 
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import software.amazon.awssdk.services.s3.S3Client;
 
 class S3CustomCredentialsProviderMissedBeanTest {
@@ -18,7 +18,7 @@ class S3CustomCredentialsProviderMissedBeanTest {
     Instance<S3Client> client;
 
     @RegisterExtension
-    static final QuarkusUnitTest config = new QuarkusUnitTest()
+    static final QuarkusExtensionTest config = new QuarkusExtensionTest()
             .assertException(throwable -> {
                 assertThat(throwable.getMessage(),
                         equalTo("cannot find bean 'missed-bean' specified in quarkus.s3.aws.credentials.custom-provider.name"));

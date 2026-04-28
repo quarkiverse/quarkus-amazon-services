@@ -8,7 +8,7 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.*;
 
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 public class InitTest {
@@ -17,7 +17,7 @@ public class InitTest {
     DynamoDbClient client;
 
     @RegisterExtension
-    static final QuarkusUnitTest config = new QuarkusUnitTest()
+    static final QuarkusExtensionTest config = new QuarkusExtensionTest()
             .withApplicationRoot((jar) -> jar
                     .addAsResource("localstack-init-script-config.properties", "application.properties"));
 

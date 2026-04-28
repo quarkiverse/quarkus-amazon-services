@@ -13,7 +13,7 @@ import jakarta.inject.Named;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.*;
 
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.exception.SdkClientException;
@@ -25,7 +25,7 @@ class S3CustomCredentialsProviderTest {
     Instance<S3Client> client;
 
     @RegisterExtension
-    static final QuarkusUnitTest config = new QuarkusUnitTest()
+    static final QuarkusExtensionTest config = new QuarkusExtensionTest()
             .withApplicationRoot((jar) -> jar
                     .addAsResource("custom-credentials-provider.properties", "application.properties"));
 

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import io.quarkiverse.amazon.dynamodb.enhanced.runtime.NamedDynamoDbTable;
-import io.quarkus.test.QuarkusUnitTest;
+import io.quarkus.test.QuarkusExtensionTest;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbAsyncTable;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 
@@ -42,7 +42,7 @@ public class DynamoDbEnhancedDbTableTest {
     DynamoDBEnhancedDbTableConstructorInjection constructorInjection;
 
     @RegisterExtension
-    static final QuarkusUnitTest config = new QuarkusUnitTest()
+    static final QuarkusExtensionTest config = new QuarkusExtensionTest()
             .withApplicationRoot((jar) -> jar
                     .addClass(DynamoDBExampleTableEntry.class)
                     .addClass(DynamoDBEnhancedDbTableConstructorInjection.class)
