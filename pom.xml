@@ -57,7 +57,7 @@
     <hamcrest.version>1.3</hamcrest.version>
     <assertj.version>3.27.7</assertj.version>
 
-    <testcontainers-ministack.version>0.1.0</testcontainers-ministack.version>
+    <testcontainers-ministack.version>0.1.5</testcontainers-ministack.version>
     <testcontainers-floci.version>2.1.0</testcontainers-floci.version>
 
   </properties>
