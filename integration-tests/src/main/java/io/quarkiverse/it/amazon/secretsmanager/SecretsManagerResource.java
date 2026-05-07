@@ -40,7 +40,12 @@ public class SecretsManagerResource {
     @ConfigProperty(name = "postgres.url", defaultValue = "N/A")
     String postgresUrl;
 
-    boolean secretsManagerConfigEnabled;
+    // Injected values from JSON secrets (flattened)
+    @ConfigProperty(name = "db.host", defaultValue = "N/A")
+    String dbHost;
+
+    @ConfigProperty(name = "db.port", defaultValue = "N/A")
+    String dbPort;
 
     @GET
     @Path("sync")
@@ -70,5 +75,13 @@ public class SecretsManagerResource {
     public String testConfig() {
         return "postgresUsername: " + postgresUsername + ", postgresPassword: " + postgresPassword + ", postgresUrl: "
                 + postgresUrl;
+    }
+
+    @GET
+    @Path("config-json")
+    @Produces(TEXT_PLAIN)
+    public String testConfigJson() {
+        LOG.info("Testing Secrets Manager JSON config parsing");
+        return "db.host: " + dbHost + ", db.port: " + dbPort;
     }
 }

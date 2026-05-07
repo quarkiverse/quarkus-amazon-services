@@ -25,4 +25,10 @@ public class AmazonSecretsManagerTest {
         RestAssured.when().get("/test/secretsmanager/config").then().body(is(
                 "postgresUsername: quarkus, postgresPassword: quarkus, postgresUrl: jdbc:postgresql://localhost:5432/quarkus"));
     }
+
+    @Test
+    public void testSecretsManagerJsonConfigSource() {
+        RestAssured.when().get("/test/secretsmanager/config-json").then()
+                .body(is("db.host: localhost, db.port: 5432"));
+    }
 }

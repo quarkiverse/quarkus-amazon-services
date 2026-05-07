@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.jboss.logging.Logger;
 
+import io.quarkiverse.amazon.common.runtime.JsonConfigFlattener;
 import io.smallrye.config.common.AbstractConfigSource;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
@@ -50,24 +51,43 @@ public class SecretsManagerConfigSource extends AbstractConfigSource {
         }
 
         for (SecretListEntry entry : secrets) {
-            String name = entry.name();
+            String secretName = entry.name();
 
             // When a lookup mapping is provided, only fetch secrets referenced by the mapping values.
-            if (!this.lookup.isEmpty() && !this.lookup.containsValue(name)) {
+            if (!this.lookup.isEmpty() && !this.lookup.containsValue(secretName)) {
                 continue;
             }
 
             try {
-                String value = getSecretValue(client, name);
-                result.put(name, value);
+                String value = getSecretValue(client, secretName);
+
+                // Find the prefix to use for flattening
+                // If the secret is mapped, use the mapped property name as prefix
+                // Otherwise, use the secret name
+                String prefix;
+                if (!this.lookup.isEmpty()) {
+                    // Find the mapped property name for this secret
+                    prefix = this.lookup.entrySet().stream()
+                            .filter(e -> e.getValue().equals(secretName))
+                            .map(Map.Entry::getKey)
+                            .findFirst()
+                            .orElse(secretName);
+                } else {
+                    prefix = secretName;
+                }
+
+                // Expand the secret value (flatten if JSON)
+                Map<String, String> expanded = JsonConfigFlattener.expandValue(prefix, value);
+                result.putAll(expanded);
+
             } catch (Exception e) {
                 // Handle access denied, deleted secrets, throttling, etc.
                 // Keep going so one bad secret doesn't prevent application startup.
-                LOG.errorf(e, "Failed to fetch secret '%s' from AWS Secrets Manager.", name);
+                LOG.errorf(e, "Failed to fetch secret '%s' from AWS Secrets Manager.", secretName);
             }
         }
 
-        LOG.infof("ConfigSource loaded %d secrets from AWS Secrets Manager.", result.size());
+        LOG.infof("ConfigSource loaded %d config entries from AWS Secrets Manager.", result.size());
         return result;
     }
 
@@ -108,25 +128,13 @@ public class SecretsManagerConfigSource extends AbstractConfigSource {
 
     @Override
     public Set<String> getPropertyNames() {
-        // If a lookup mapping is provided, expose the mapping keys as the available property names.
-        // Otherwise, expose every fetched secret name directly.
-        return this.lookup.isEmpty() ? secrets.keySet() : this.lookup.keySet();
+        // Return all flattened keys from the secrets map
+        return secrets.keySet();
     }
 
     @Override
     public String getValue(String propertyName) {
-        if (!this.lookup.isEmpty() && !lookup.containsKey(propertyName)) {
-            return null;
-        }
-
-        // When a mapping is configured, resolve propertyName -> secretName -> secretValue.
-        String secretName = this.lookup.isEmpty() ? null : lookup.get(propertyName);
-        String value = secretName == null ? null : secrets.get(secretName);
-        if (value != null) {
-            return value;
-        }
-
-        // Fallback: allow directly referencing the secret by name even when a mapping exists.
+        // Directly look up the property name in the flattened secrets map
         return secrets.get(propertyName);
     }
 }

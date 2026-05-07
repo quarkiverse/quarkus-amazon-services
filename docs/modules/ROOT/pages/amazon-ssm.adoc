@@ -330,9 +330,45 @@ You can combine `quarkus.ssm.config.path` and `quarkus.ssm.config.names`; keys f
 === How configuration keys are exposed
 
 * The Parameter Store name is normalized into a key prefix: a leading `/` is removed and remaining `/` characters become `.` (for example `/myapp/prod/url` → `myapp.prod.url`).
-* If the parameter **value** is JSON (object or array), it is flattened to dotted keys and prefixed (same idea as the AppConfig Data config source).
+* If the parameter **value** is JSON (object or array), it is automatically detected and flattened to dotted keys and prefixed (same idea as the AppConfig Data config source). JSON detection is automatic—no configuration needed.
 * If the value contains an **equals sign**, it is parsed as Java `Properties` text; each property key is appended under the normalized parameter prefix.
 * Otherwise the whole value is exposed as a single property using the normalized parameter name as the key.
+
+==== JSON Flattening Examples
+
+When a parameter contains a JSON object like `{"host":"localhost","port":5432}`, it is automatically flattened into individual configuration keys:
+
+[source]
+----
+# Parameter: /myapp/config = {"host":"localhost","port":5432}
+# Exposed as:
+myapp.config.host = localhost
+myapp.config.port = 5432
+----
+
+Nested JSON objects are also flattened with dot notation:
+
+[source]
+----
+# Parameter: /myapp/db = {"connection":{"host":"db.example.com","port":5432}}
+# Exposed as:
+myapp.db.connection.host = db.example.com
+myapp.db.connection.port = 5432
+----
+
+JSON arrays use index notation:
+
+[source]
+----
+# Parameter: /myapp/servers = [{"name":"s1","ip":"1.1.1.1"},{"name":"s2","ip":"2.2.2.2"}]
+# Exposed as:
+myapp.servers[0].name = s1
+myapp.servers[0].ip = 1.1.1.1
+myapp.servers[1].name = s2
+myapp.servers[1].ip = 2.2.2.2
+----
+
+If JSON parsing fails or the value is empty JSON (`{}` or `[]`), the raw string value is used as a fallback.
 
 === Credentials, region, and endpoint
 

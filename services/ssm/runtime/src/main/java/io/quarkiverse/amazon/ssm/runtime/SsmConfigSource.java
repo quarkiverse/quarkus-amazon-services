@@ -16,15 +16,9 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import jakarta.json.Json;
-import jakarta.json.JsonArray;
-import jakarta.json.JsonObject;
-import jakarta.json.JsonReader;
-import jakarta.json.JsonString;
-import jakarta.json.JsonValue;
-
 import org.jboss.logging.Logger;
 
+import io.quarkiverse.amazon.common.runtime.JsonConfigFlattener;
 import io.smallrye.config.common.AbstractConfigSource;
 import software.amazon.awssdk.services.ssm.SsmClient;
 import software.amazon.awssdk.services.ssm.model.GetParametersByPathRequest;
@@ -175,24 +169,14 @@ public class SsmConfigSource extends AbstractConfigSource implements AutoCloseab
         if (trimmed.isEmpty()) {
             return Map.of();
         }
-        if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
-            try (JsonReader reader = Json.createReader(new StringReader(trimmed))) {
-                Map<String, String> flat = new LinkedHashMap<>();
-                flattenJson("", reader.readValue(), flat);
-                if (flat.isEmpty()) {
-                    return Map.of(prefix, value);
-                }
-                Map<String, String> out = new LinkedHashMap<>();
-                for (Map.Entry<String, String> e : flat.entrySet()) {
-                    String k = e.getKey().isEmpty() ? prefix : prefix + "." + e.getKey();
-                    out.put(k, e.getValue());
-                }
-                return out;
-            } catch (Exception e) {
-                LOG.warnf(e, "Failed to parse JSON for SSM parameter '%s'; exposing raw string.", awsName);
-                return Map.of(prefix, value);
-            }
+
+        // Use shared JsonConfigFlattener for JSON detection and flattening
+        Map<String, String> flattened = JsonConfigFlattener.expandValue(prefix, trimmed);
+        if (!flattened.isEmpty()) {
+            return flattened;
         }
+
+        // Handle properties format: if contains '=', parse as Java properties
         if (trimmed.contains("=")) {
             Properties p = new Properties();
             try {
@@ -209,39 +193,6 @@ public class SsmConfigSource extends AbstractConfigSource implements AutoCloseab
             }
         }
         return Map.of(prefix, value);
-    }
-
-    private static void flattenJson(String keyPrefix, JsonValue value, Map<String, String> out) {
-        switch (value.getValueType()) {
-            case OBJECT:
-                JsonObject obj = value.asJsonObject();
-                for (String key : obj.keySet()) {
-                    String p = keyPrefix.isEmpty() ? key : keyPrefix + "." + key;
-                    flattenJson(p, obj.get(key), out);
-                }
-                break;
-            case ARRAY:
-                JsonArray arr = value.asJsonArray();
-                for (int i = 0; i < arr.size(); i++) {
-                    flattenJson(keyPrefix + "[" + i + "]", arr.get(i), out);
-                }
-                break;
-            case STRING:
-                out.put(keyPrefix, ((JsonString) value).getString());
-                break;
-            case NUMBER:
-                out.put(keyPrefix, value.toString());
-                break;
-            case TRUE:
-                out.put(keyPrefix, "true");
-                break;
-            case FALSE:
-                out.put(keyPrefix, "false");
-                break;
-            case NULL:
-            default:
-                break;
-        }
     }
 
     private static <T> List<List<T>> partition(List<T> list, int size) {

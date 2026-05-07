@@ -10,4 +10,7 @@ awslocal secretsmanager create-secret \
 awslocal secretsmanager create-secret \
     --name pgsql/jdbc \
     --secret-string "jdbc:postgresql://localhost:5432/quarkus"
-    
+
+awslocal secretsmanager create-secret \
+    --name app-db-config \
+    --secret-string '{"host": "localhost", "port": 5432 }'
