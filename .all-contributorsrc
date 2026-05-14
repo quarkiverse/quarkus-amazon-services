@@ -405,6 +405,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "anisikram",
+      "name": "Anis Ikram",
+      "avatar_url": "https://avatars.githubusercontent.com/u/98950164?v=4",
+      "profile": "https://www.linkedin.com/in/anis-ikram-1ab910146/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
