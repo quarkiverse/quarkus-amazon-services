@@ -46,61 +46,61 @@ public class SecretsManagerConfigSource extends AbstractConfigSource {
         LOG.info("Loading config values from AWS Secrets Manager...");
         Map<String, String> result = new LinkedHashMap<>();
 
-        List<SecretListEntry> listedSecrets;
+        Iterable<String> secretNames;
         try {
-            listedSecrets = listAllSecrets(client);
+            secretNames = discoverSecretNames(client);
         } catch (Exception e) {
-            if (!this.lookup.isEmpty()) {
-                LOG.warnf(
-                        "Failed to list secrets from AWS Secrets Manager; loading only secrets referenced by the lookup map. %s",
-                        e.getMessage());
-                fetchSecretValues(client, new LinkedHashSet<>(this.lookup.values()), result);
-                LOG.infof("ConfigSource loaded %d secrets from AWS Secrets Manager.", result.size());
+            if (this.lookup.isEmpty()) {
+                LOG.errorf(e, "Failed to list secrets from AWS Secrets Manager.");
                 return result;
             }
-            LOG.errorf(e, "Failed to list secrets from AWS Secrets Manager.");
-            return result;
+            LOG.warnf(
+                    "Failed to list secrets from AWS Secrets Manager; loading only secrets referenced by the lookup map. %s",
+                    e.getMessage());
+            secretNames = new LinkedHashSet<>(this.lookup.values());
         }
 
-        for (SecretListEntry entry : listedSecrets) {
-            String secretName = entry.name();
-
-            // When a lookup mapping is provided, only fetch secrets referenced by the mapping values.
-            if (!this.lookup.isEmpty() && !this.lookup.containsValue(secretName)) {
-                continue;
-            }
-
-            try {
-                String value = getSecretValue(client, secretName);
-
-                // Find the prefix to use for flattening
-                // If the secret is mapped, use the mapped property name as prefix
-                // Otherwise, use the secret name
-                String prefix;
-                if (!this.lookup.isEmpty()) {
-                    // Find the mapped property name for this secret
-                    prefix = this.lookup.entrySet().stream()
-                            .filter(e -> e.getValue().equals(secretName))
-                            .map(Map.Entry::getKey)
-                            .findFirst()
-                            .orElse(secretName);
-                } else {
-                    prefix = secretName;
-                }
-
-                // Expand the secret value (flatten if JSON)
-                Map<String, String> expanded = JsonConfigFlattener.expandValue(prefix, value);
-                result.putAll(expanded);
-
-            } catch (Exception e) {
-                // Handle access denied, deleted secrets, throttling, etc.
-                // Keep going so one bad secret doesn't prevent application startup.
-                LOG.errorf(e, "Failed to fetch secret '%s' from AWS Secrets Manager.", secretName);
-            }
+        for (String secretName : secretNames) {
+            mergeExpandedSecret(client, secretName, flatteningPrefix(secretName), result);
         }
 
         LOG.infof("ConfigSource loaded %d config entries from AWS Secrets Manager.", result.size());
         return result;
+    }
+
+    private List<String> discoverSecretNames(SecretsManagerClient client) {
+        List<String> names = new ArrayList<>();
+        for (SecretListEntry entry : listAllSecrets(client)) {
+            String secretName = entry.name();
+            if (!this.lookup.isEmpty() && !this.lookup.containsValue(secretName)) {
+                continue;
+            }
+            names.add(secretName);
+        }
+        return names;
+    }
+
+    private String flatteningPrefix(String secretName) {
+        if (this.lookup.isEmpty()) {
+            return secretName;
+        }
+        return this.lookup.entrySet().stream()
+                .filter(e -> e.getValue().equals(secretName))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(secretName);
+    }
+
+    private void mergeExpandedSecret(SecretsManagerClient client, String secretName, String prefix,
+            Map<String, String> result) {
+        try {
+            String value = getSecretValue(client, secretName);
+            result.putAll(JsonConfigFlattener.expandValue(prefix, value));
+        } catch (Exception e) {
+            // Handle access denied, deleted secrets, throttling, etc.
+            // Keep going so one bad secret doesn't prevent application startup.
+            LOG.errorf(e, "Failed to fetch secret '%s' from AWS Secrets Manager.", secretName);
+        }
     }
 
     private List<SecretListEntry> listAllSecrets(SecretsManagerClient client) {
@@ -121,22 +121,6 @@ public class SecretsManagerConfigSource extends AbstractConfigSource {
         } while (nextToken != null);
 
         return secrets;
-    }
-
-    private void fetchSecretValues(SecretsManagerClient client, Iterable<String> secretIds, Map<String, String> into) {
-        for (String name : secretIds) {
-            if (into.containsKey(name)) {
-                continue;
-            }
-            try {
-                String value = getSecretValue(client, name);
-                into.put(name, value);
-            } catch (Exception e) {
-                // Handle access denied, deleted secrets, throttling, etc.
-                // Keep going so one bad secret doesn't prevent application startup.
-                LOG.errorf(e, "Failed to fetch secret '%s' from AWS Secrets Manager.", name);
-            }
-        }
     }
 
     private String getSecretValue(SecretsManagerClient client, String secretId) {
