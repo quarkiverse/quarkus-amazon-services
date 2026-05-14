@@ -61,7 +61,7 @@ Dev Services for Amazon Services uses different default images depending on the 
 * **LocalStack**: `localstack/localstack:4.13` (latest community version)
 * **MiniStack**: `ministackorg/ministack:latest` (not a fixed version as MiniStack is still in early development)
 * **Moto**: `motoserver/moto:latest` (latest version)
-* **Floci**: `hectorvent/floci:latest` (latest version)
+* **Floci**: `floci/floci:latest` (latest version)
 
 You can configure the image and version using the stack-specific properties:
 
