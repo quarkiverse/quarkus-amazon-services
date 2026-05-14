@@ -2,6 +2,7 @@ package io.quarkiverse.amazon.secretsmanager.runtime;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,7 +22,10 @@ import software.amazon.awssdk.services.secretsmanager.model.SecretListEntry;
  * A MicroProfile ConfigSource backed by AWS Secrets Manager.
  * <p>
  * At startup, this source lists secrets and fetches their values. Optionally, a lookup map can be
- * provided to expose selected secrets under arbitrary configuration property names.
+ * provided to expose selected secrets under arbitrary configuration property names. If listing
+ * secrets is not permitted (for example, missing {@code secretsmanager:ListSecrets}), listing
+ * failures are ignored when a non-empty lookup map is configured and only those referenced secrets
+ * are fetched via {@code GetSecretValue}.
  */
 public class SecretsManagerConfigSource extends AbstractConfigSource {
 
@@ -42,15 +46,23 @@ public class SecretsManagerConfigSource extends AbstractConfigSource {
         LOG.info("Loading config values from AWS Secrets Manager...");
         Map<String, String> result = new LinkedHashMap<>();
 
-        List<SecretListEntry> secrets;
+        List<SecretListEntry> listedSecrets;
         try {
-            secrets = listAllSecrets(client);
+            listedSecrets = listAllSecrets(client);
         } catch (Exception e) {
+            if (!this.lookup.isEmpty()) {
+                LOG.warnf(
+                        "Failed to list secrets from AWS Secrets Manager; loading only secrets referenced by the lookup map. %s",
+                        e.getMessage());
+                fetchSecretValues(client, new LinkedHashSet<>(this.lookup.values()), result);
+                LOG.infof("ConfigSource loaded %d secrets from AWS Secrets Manager.", result.size());
+                return result;
+            }
             LOG.errorf(e, "Failed to list secrets from AWS Secrets Manager.");
             return result;
         }
 
-        for (SecretListEntry entry : secrets) {
+        for (SecretListEntry entry : listedSecrets) {
             String secretName = entry.name();
 
             // When a lookup mapping is provided, only fetch secrets referenced by the mapping values.
@@ -109,6 +121,22 @@ public class SecretsManagerConfigSource extends AbstractConfigSource {
         } while (nextToken != null);
 
         return secrets;
+    }
+
+    private void fetchSecretValues(SecretsManagerClient client, Iterable<String> secretIds, Map<String, String> into) {
+        for (String name : secretIds) {
+            if (into.containsKey(name)) {
+                continue;
+            }
+            try {
+                String value = getSecretValue(client, name);
+                into.put(name, value);
+            } catch (Exception e) {
+                // Handle access denied, deleted secrets, throttling, etc.
+                // Keep going so one bad secret doesn't prevent application startup.
+                LOG.errorf(e, "Failed to fetch secret '%s' from AWS Secrets Manager.", name);
+            }
+        }
     }
 
     private String getSecretValue(SecretsManagerClient client, String secretId) {
