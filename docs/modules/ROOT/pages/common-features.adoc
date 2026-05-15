@@ -27,6 +27,141 @@ quarkus.dynamodb.custom.aws.credentials.static-provider.access-key-id=xxx
 quarkus.dynamodb.custom.aws.credentials.static-provider.secret-access-key=yyy
 ----
 
+== Synthetic bean injection
+
+Synthetic beans require manual registration of the client usage. This is because synthetic beans are only scanned
+for dependencies after standard beans. Due to this, when the bean `BeanRegistrationPhaseBuildItem` is consumed,
+and injection points are scanned, injection points the synthetic beans are not found.
+
+To create a synthetic bean, use to following pattern. This example uses the async ECR client, however, the same
+principle applies to all clients. Refer to the generated test cases for an example of each client.
+
+=== Create the processor class
+
+If developing an extension, the processor class is placed into the deployment module. General practice
+is to place it in the `<package name>.deployment` package.
+
+[source,java]
+----
+import io.quarkiverse.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
+import io.quarkiverse.amazon.common.runtime.ClientUtil;
+import io.quarkiverse.amazon.ecr.EcrTestRecorder;
+import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
+import io.quarkus.arc.processor.DotNames;
+import io.quarkus.deployment.annotations.BuildProducer;
+import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.ExecutionTime;
+import io.quarkus.deployment.annotations.Record;
+import jakarta.inject.Singleton;
+import org.jboss.jandex.ClassType;
+import org.jboss.jandex.DotName;
+import org.jboss.jandex.ParameterizedType;
+import software.amazon.awssdk.services.ecr.EcrAsyncClient;
+
+public class ExampleProcessor {
+    @Record(ExecutionTime.STATIC_INIT) // <1>
+    @BuildStep
+    public void registerExampleBean(
+            EcrTestRecorder recorder,
+            BuildProducer<SyntheticBeanBuildItem> syntheticBeanProducer,
+            BuildProducer<RequireAmazonClientInjectionBuildItem> requireAmazonClientInjectionProducer) {
+
+        var clientClassName = DotName.createSimple(EcrAsyncClient.class); // <2>
+        syntheticBeanProducer.produce(
+                SyntheticBeanBuildItem.configure(SyntheticBean.class) // <3>
+                        .scope(Singleton.class) // <4>
+                        .addInjectionPoint(ParameterizedType.create(
+                                DotNames.INSTANCE,
+                                ClassType.create(clientClassName)
+                        ))
+                        .createWith(recorder.createBean()) // <5>
+                        .done()
+        );
+
+        requireAmazonClientInjectionProducer.produce( // <6>
+                new RequireAmazonClientInjectionBuildItem(clientClassName, ClientUtil.DEFAULT_CLIENT_NAME) // <7>
+        );
+    }
+}
+----
+<1> Can also be RUNTIME_INIT if required.
+<2> The client class required
+<3> The Synthetic bean you being created
+<4> Or a different scope that is required (ApplicationScoped etc)
+<5> The recorder function. If using `SyntheticBeanBuildItem#createWith(Function)`, the bytecode produced by the
+    function will be recorded, allowing for injection. This will not work with
+    `SyntheticBeanBuildItem#runtimeValue(RuntimeValue)`. However, if using
+    `SyntheticBeanBuildItem#runtimeValue(RuntimeValue)`, this approach can still be used to force the client inclusion
+    and then use dynamic bean lookups to obtain the actual client.
+<6> Force the inclusion of the client into the build. Without this line, the client bean will be unresolved.
+<7> If a different `@Named` annotation is required, set the name at this point.
+
+As a side note, if creating a processor in the test sources, do not rely on the processor being found
+in the `META-INF/quarkus-build-steps.list` from the `QuarkusExtensionTest`. The Quarkus bootstrap does not
+examine the test (generated) sources for this file. Do not adjust the classpath to include the file, it will
+create a race-condition where one test loads the processor list for a different test. Always manually create
+the `META-INF/quarkus-build-steps.list` manually using `ShrinkWrap#addAsResource`.
+
+=== Create the recorder class
+
+If developing an extension, the processor class is placed into the runtime module. General practice
+is to place it in the `<package name>` package.
+
+[source,java]
+----
+import io.quarkus.arc.SyntheticCreationalContext;
+import io.quarkus.runtime.annotations.Recorder;
+import jakarta.enterprise.inject.Instance;
+import jakarta.enterprise.util.TypeLiteral;
+import java.util.function.Function;
+import software.amazon.awssdk.services.ecr.EcrAsyncClient;
+
+@Recorder
+public class EcrTestRecorder {
+    public EcrTestRecorder() {}
+
+    public Function<SyntheticCreationalContext<SyntheticBean>, SyntheticBean> createBean() {
+        return context -> { // <1>
+            var ref = context.getInjectedReference(new TypeLiteral<Instance<EcrAsyncClient>>() {}); // <2>
+            return new SyntheticBean(ref);
+        };
+    }
+}
+----
+<1> The `Function` return. The result of this call, i.e. the `Function` lambda is recorded at build time
+    and replayed at runtime to create the bean. The lambda itself is *not* evaluated at build time.
+<2> Get a reference to the injected bean, which is then passed to the constructor. Do not use the actual
+    bean, or resolve it through `Instance#get()` at this point as the client bean may not have been created.
+
+=== Create the bean class
+
+If developing an extension, the processor class is placed into the runtime module. General practice
+is to place it in the `<package name>.runtime` package.
+
+[source,java]
+----
+import jakarta.enterprise.inject.Instance;
+import software.amazon.awssdk.services.ecr.EcrAsyncClient;
+
+public class SyntheticBean {
+    private Instance<EcrAsyncClient> client;
+
+    public SyntheticBean(Instance<EcrAsyncClient> bean) { // <1>
+        this.bean = bean;
+    }
+
+    public void invoke() {
+        this.bean.get(); // <2>
+    }
+}
+----
+<1> The bean instance is injected at this point. Since this is during startup, the actual
+    bean may not be ready for use yet.
+<2> Invoke actions on the bean.
+
+The synthetic bean class can be injected into any other class using the standard `@Inject SyntheticBean bean`
+approach. Be sure to only call methods invoking the bean after full startup of the CDI container.
+
 == Overriding the client configuration
 
 You can override the client configuration by adding a custom producer that will further configure the client builder built by the extension.

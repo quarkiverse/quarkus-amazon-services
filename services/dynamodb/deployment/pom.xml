@@ -85,6 +85,13 @@
             <artifactId>quarkus-amazon-apache-client-internal-deployment</artifactId> 
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-dynamodb</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

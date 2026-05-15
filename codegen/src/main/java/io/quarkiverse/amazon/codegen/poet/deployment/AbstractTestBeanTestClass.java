@@ -1,0 +1,198 @@
+package io.quarkiverse.amazon.codegen.poet.deployment;
+
+import static javax.lang.model.element.Modifier.FINAL;
+import static javax.lang.model.element.Modifier.PUBLIC;
+import static javax.lang.model.element.Modifier.STATIC;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.FieldSpec;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeSpec;
+
+import io.quarkiverse.amazon.codegen.poet.PoetUtils;
+import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
+import software.amazon.awssdk.codegen.poet.ClassSpec;
+
+/**
+ * Abstract Base class for all constructed unit tests.
+ */
+public abstract class AbstractTestBeanTestClass implements ClassSpec {
+    protected final IntermediateModel model;
+    protected final ClassName testClassName;
+
+    protected final String basePackage;
+    protected final String quarkusBasePackage;
+    protected final String quarkusDeploymentPackage;
+    protected final String quarkusRuntimePackage;
+    protected final String quarkusTestPackage;
+
+    protected final ClassName junitAssertionsClassName = ClassName.get("org.junit.jupiter.api", "Assertions");
+    protected final ClassName junitTestClassName = ClassName.get("org.junit.jupiter.api", "Test");
+    protected final ClassName junitRegisterExtensionClassName = ClassName.get("org.junit.jupiter.api.extension",
+            "RegisterExtension");
+    protected final ClassName jakartaInjectClassName = ClassName.get("jakarta.inject", "Inject");
+    protected final ClassName quarkusQuarkusExtensionTestClassName = ClassName.get("io.quarkus.test", "QuarkusExtensionTest");
+    protected final ClassName shrinkwrapJavaArchiveClassName = ClassName.get("org.jboss.shrinkwrap.api.spec", "JavaArchive");
+    protected final ClassName shrinkwrapShrinkWrapClassName = ClassName.get("org.jboss.shrinkwrap.api", "ShrinkWrap");
+    protected final ClassName shrinkwrapStringAssetClassName = ClassName.get("org.jboss.shrinkwrap.api.asset", "StringAsset");
+
+    public AbstractTestBeanTestClass(IntermediateModel model, String testClassName) {
+        this.model = model;
+        this.basePackage = model.getMetadata().getFullClientPackageName();
+        this.quarkusBasePackage = "io.quarkiverse.amazon." + model.getMetadata().getClientPackageName();
+        this.quarkusDeploymentPackage = quarkusBasePackage + ".deployment";
+        this.quarkusRuntimePackage = quarkusBasePackage + ".runtime";
+        this.quarkusTestPackage = quarkusBasePackage + ".test";
+
+        this.testClassName = ClassName.get(this.quarkusTestPackage, model.getMetadata().getServiceName() + testClassName);
+    }
+
+    /**
+     * Override this to add processors into the test class
+     *
+     * @return A list of processors to be added to the test class.
+     */
+    protected Set<ClassName> getTestProcessors() {
+        return Collections.emptySet();
+    }
+
+    /**
+     * Override this to add extra classes into the test class
+     *
+     * @return A list of extra classes to be added to the test class.
+     */
+    protected Set<ClassName> getTestAdditionalClasses() {
+        return Collections.emptySet();
+    }
+
+    /**
+     * Override this to add extra properties
+     *
+     * @return A set of properties to include.
+     */
+    protected Properties getTestProperties() {
+        var serviceName = model.getMetadata().getServiceName().toLowerCase();
+        return Stream.of(
+                "quarkus.%s.endpoint-override=http://localhost:9090",
+                "quarkus.%s.aws.region=us-east-2",
+                "quarkus.%s.aws.credentials.type=static",
+                "quarkus.%s.aws.credentials.static-provider.access-key-id=test-key",
+                "quarkus.%s.aws.credentials.static-provider.secret-access-key=test-secret")
+                .map(it -> {
+                    var parts = it.split("=", 2);
+                    return Map.entry(String.format(parts[0], serviceName), parts[1]);
+                })
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (v1, v2) -> v1, Properties::new));
+    }
+
+    /**
+     * ShrinkWrap customiser for the test
+     *
+     * @param shrinkWrapBuilder The builder for the ShrinkWrap lambda.
+     */
+    protected void customiseShrinkWrap(CodeBlock.Builder shrinkWrapBuilder) {
+        // The archive lambda
+        // Need to add the quarkus-build-steps.list from the test-classes explicitly because the way the bootstrap loader
+        // works, the contents of the META-INF directory is not available in the 'resolved-paths' and therefore not visible
+        // to the Bootstrap. Worse, the file gets generated by each QuarkusExtensionTest, which results in a race condition.
+        // Therefore, we need to generate this as a new static content. Huge Quarkus oversight and not documented at all.
+
+        var allClasses = new HashSet<ClassName>();
+        var additionalClasses = getTestAdditionalClasses();
+        if (null != additionalClasses) {
+            allClasses.addAll(additionalClasses);
+        }
+
+        var processorClasses = getTestProcessors();
+        if (null != processorClasses) {
+            allClasses.addAll(processorClasses);
+        }
+
+        // Add all classes for the test
+        if (!allClasses.isEmpty()) {
+            var param = new StringBuilder(".addClasses(");
+            param.append("$T.class,".repeat(allClasses.size()));
+            param.replace(param.length() - 1, param.length(), ")");
+            shrinkWrapBuilder.add(param.toString(), allClasses.toArray());
+        }
+
+        // Register the processors
+        if (null != processorClasses && !processorClasses.isEmpty()) {
+            var param = processorClasses.stream().map(ClassName::toString).collect(Collectors.joining("\n"));
+            shrinkWrapBuilder.add(".addAsResource(new $T($S), $S)", shrinkwrapStringAssetClassName, param,
+                    "META-INF/quarkus-build-steps.list");
+        }
+
+        // Add the properties
+        var properties = getTestProperties().entrySet().stream()
+                .map(it -> it.getKey().toString() + "=" + it.getValue().toString())
+                .collect(Collectors.joining("\n"));
+        shrinkWrapBuilder.add(".addAsResource(new $T($S), $S)", shrinkwrapStringAssetClassName, properties,
+                "application.properties");
+    }
+
+    /**
+     * class customiser for the test class
+     *
+     * @param classBuilder The builder for the class.
+     */
+    protected void customiseClass(TypeSpec.Builder classBuilder) {
+    }
+
+    @Override
+    public TypeSpec poetSpec() {
+        TypeSpec.Builder builder = PoetUtils.createClassBuilder(testClassName)
+                .addModifiers(PUBLIC)
+                .addMethod(MethodSpec.constructorBuilder().addModifiers(PUBLIC).build());
+
+        var archiveProducerLambdaBuilder = CodeBlock.builder()
+                .add("() -> $T.create($T.class)", shrinkwrapShrinkWrapClassName, shrinkwrapJavaArchiveClassName);
+        customiseShrinkWrap(archiveProducerLambdaBuilder);
+        var archiveProducerLambda = archiveProducerLambdaBuilder.build();
+
+        // Add beans
+        customiseClass(builder);
+        builder.addField(
+                // Add static test initialiser
+                FieldSpec.builder(quarkusQuarkusExtensionTestClassName, "extension", STATIC, FINAL)
+                        .addAnnotation(junitRegisterExtensionClassName)
+                        .initializer(
+                                CodeBlock.builder()
+                                        .add("new $T()", quarkusQuarkusExtensionTestClassName)
+                                        .add(".setArchiveProducer($L)", archiveProducerLambda)
+                                        .build())
+                        .build());
+
+        // Add test methods. Search for methods with a pattern of "addXXXTest" returning MethodSpec.
+        var testMethodPattern = Pattern.compile("^add.+Test$");
+        Arrays.stream(this.getClass().getDeclaredMethods())
+                .filter(it -> testMethodPattern.matcher(it.getName()).matches() &&
+                        it.getReturnType().isAssignableFrom(MethodSpec.class) &&
+                        it.getParameterCount() == 0)
+                .forEach(it -> {
+                    try {
+                        builder.addMethod((MethodSpec) it.invoke(this));
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        throw new RuntimeException("Failed to invoke test method '" + it.getName() + "'", e);
+                    }
+                });
+        return builder.build();
+    }
+
+    @Override
+    public ClassName className() {
+        return testClassName;
+    }
+}

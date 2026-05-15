@@ -71,12 +71,25 @@
                         <execution>
                             <goals>
                                 <goal>generate</goal>
+                                <goal>generate-tests</goal>
                             </goals>
                         </execution>
                     </executions>
                     <configuration>
                         <codeGenResources>${basedir}/../src/main/resources/codegen-resources/</codeGenResources>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven.jar.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>test-jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
