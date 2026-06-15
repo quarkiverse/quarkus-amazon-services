@@ -24,6 +24,7 @@
         <module>appconfigdata</module>
         <module>bedrock</module>
         <module>bedrockruntime</module>
+        <module>ce</module>
         <module>cloudwatch</module>
         <module>cloudwatchlogs</module>
         <module>dynamodb</module>
