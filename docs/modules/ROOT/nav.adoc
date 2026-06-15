@@ -6,6 +6,7 @@
 * xref:amazon-appconfigdata.adoc[App Config Data]
 * xref:amazon-bedrock.adoc[Bedrock]
 * xref:amazon-bedrockruntime.adoc[Bedrock Runtime]
+* xref:amazon-ce.adoc[Cost Explorer]
 * xref:amazon-cloudwatch.adoc[CloudWatch]
 * xref:amazon-cloudwatchlogs.adoc[CloudWatch Logs]
 * xref:amazon-cognitouserpools.adoc[Cognito User Pools]

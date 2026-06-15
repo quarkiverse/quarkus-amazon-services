@@ -1,0 +1,15 @@
+= Amazon Cost Explorer Client
+
+include::./includes/attributes.adoc[]
+
+AWS Cost Explorer is a built-in AWS tool that lets you visualize, understand, and manage your cloud spending and usage over time. It features an intuitive dashboard for analyzing historical spend up to 13 months, forecasting future costs, and identifying optimization opportunities. For more information about the necessary permissions to use this API, see https://docs.aws.amazon.com/account-billing/[AWS Billing and Cost Management Documentation].
+
+NOTE: The Cost Explorer extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
+
+The Quarkus extension supports two programming models:
+
+* Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
+* https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
+
+include::./includes/quarkus-amazon-ce.adoc[]
