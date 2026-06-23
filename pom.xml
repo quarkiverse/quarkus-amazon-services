@@ -29,6 +29,7 @@
     <module>quarkus-messaging-amazon-sqs</module>
     <module>services</module>
     <module>integration-tests</module>
+    <module>docs-rag</module>
   </modules>
   <scm>
     <connection>:git:git@github.com:quarkiverse/quarkus-amazon-services.git</connection>
