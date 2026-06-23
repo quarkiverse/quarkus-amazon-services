@@ -34,7 +34,6 @@ public interface CrtHttpClientConfig {
     @WithConverter(DurationConverter.class)
     Optional<Duration> connectionAcquisitionTimeout();
 
-
     /**
      * HTTP proxy configuration
      */

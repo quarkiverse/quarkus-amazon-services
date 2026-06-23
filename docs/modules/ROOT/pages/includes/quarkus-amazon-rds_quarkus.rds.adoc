@@ -1470,6 +1470,27 @@ endif::add-copy-button-to-env-var[]
 |int
 |`+++50+++`
 
+a| [[quarkus-amazon-rds_quarkus-rds-sync-client-crt-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-rds_quarkus-rds-sync-client-crt-connection-acquisition-timeout[`+++quarkus.rds.sync-client.crt.connection-acquisition-timeout+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.rds.sync-client.crt.connection-acquisition-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The amount of time to wait when acquiring a connection from the pool before giving up and timing out.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_RDS_SYNC_CLIENT_CRT_CONNECTION_ACQUISITION_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_RDS_SYNC_CLIENT_CRT_CONNECTION_ACQUISITION_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-rds_quarkus-rds[icon:question-circle[title=More information about the Duration format]]
+|`+++10S+++`
+
 a| [[quarkus-amazon-rds_quarkus-rds-sync-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-rds_quarkus-rds-sync-client-crt-proxy-enabled[`+++quarkus.rds.sync-client.crt.proxy.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.rds.sync-client.crt.proxy.enabled+++[]
@@ -1913,6 +1934,27 @@ endif::add-copy-button-to-env-var[]
 --
 |int
 |`+++50+++`
+
+a| [[quarkus-amazon-rds_quarkus-rds-async-client-crt-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-rds_quarkus-rds-async-client-crt-connection-acquisition-timeout[`+++quarkus.rds.async-client.crt.connection-acquisition-timeout+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.rds.async-client.crt.connection-acquisition-timeout+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The amount of time to wait when acquiring a connection from the pool before giving up and timing out.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_RDS_ASYNC_CLIENT_CRT_CONNECTION_ACQUISITION_TIMEOUT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_RDS_ASYNC_CLIENT_CRT_CONNECTION_ACQUISITION_TIMEOUT+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-rds_quarkus-rds[icon:question-circle[title=More information about the Duration format]]
+|`+++10S+++`
 
 a| [[quarkus-amazon-rds_quarkus-rds-async-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-rds_quarkus-rds-async-client-crt-proxy-enabled[`+++quarkus.rds.async-client.crt.proxy.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
