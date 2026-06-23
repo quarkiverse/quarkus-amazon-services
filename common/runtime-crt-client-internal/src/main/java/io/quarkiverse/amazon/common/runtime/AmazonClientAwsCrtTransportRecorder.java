@@ -24,6 +24,8 @@ public class AmazonClientAwsCrtTransportRecorder extends AbstractAmazonClientTra
         builder.connectionTimeout(asyncConfig.connectionTimeout());
         builder.maxConcurrency(asyncConfig.maxConcurrency());
 
+        asyncConfig.crt().connectionAcquisitionTimeout().ifPresent(builder::connectionAcquisitionTimeout);
+
         if (asyncConfig.crt().tcpKeepAlive().enabled()) {
             TcpKeepAliveConfiguration.Builder tcpKeepAliveBuilder = TcpKeepAliveConfiguration.builder()
                     .keepAliveInterval(asyncConfig.crt().tcpKeepAlive().keepAliveInterval())
@@ -70,6 +72,7 @@ public class AmazonClientAwsCrtTransportRecorder extends AbstractAmazonClientTra
         builder.connectionTimeout(syncConfig.connectionTimeout());
         syncConfig.crt().connectionMaxIdleTime().ifPresent(builder::connectionMaxIdleTime);
         syncConfig.crt().maxConcurrency().ifPresent(builder::maxConcurrency);
+        syncConfig.crt().connectionAcquisitionTimeout().ifPresent(builder::connectionAcquisitionTimeout);
 
         if (syncConfig.crt().tcpKeepAlive().enabled()) {
             TcpKeepAliveConfiguration.Builder tcpKeepAliveBuilder = TcpKeepAliveConfiguration.builder()
