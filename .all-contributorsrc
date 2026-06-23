@@ -414,6 +414,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "kanwhoa",
+      "name": "kanwhoa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14856878?v=4",
+      "profile": "https://www.hamoni.ai",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
