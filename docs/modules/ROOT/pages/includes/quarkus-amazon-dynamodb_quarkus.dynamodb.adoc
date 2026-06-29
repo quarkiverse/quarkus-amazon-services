@@ -1394,7 +1394,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The amount of time to wait when acquiring a connection from the pool before giving up and timing out.
+The amount of time to wait when initially establishing a connection before giving up and timing out.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -1859,7 +1859,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The amount of time to wait when acquiring a connection from the pool before giving up and timing out.
+The amount of time to wait when initially establishing a connection before giving up and timing out.
 
 
 ifdef::add-copy-button-to-env-var[]

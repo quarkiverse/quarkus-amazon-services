@@ -28,7 +28,8 @@ public interface CrtHttpClientConfig {
     Optional<Integer> maxConcurrency();
 
     /**
-     * The amount of time to wait when acquiring a connection from the pool before giving up and timing out.
+     * The amount of time to wait when initially establishing a connection before
+     * giving up and timing out.
      */
     @ConfigDocDefault("10S")
     @WithConverter(DurationConverter.class)
