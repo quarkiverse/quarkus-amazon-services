@@ -193,9 +193,10 @@ public interface AsyncHttpClientConfig {
 
         /**
          * Enable the custom configuration of the Netty event loop group.
+         * This option is only available when using Quarkus 3.x.
+         * With Quarkus 4, the AWS SDK always uses its own event loop.
          */
-        @WithDefault("false")
-        boolean override();
+        Optional<Boolean> override();
 
         /**
          * Number of threads to use for the event loop group.

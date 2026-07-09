@@ -2,7 +2,10 @@ package io.quarkiverse.amazon.common.runtime;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.function.Supplier;
+
+import org.jboss.logging.Logger;
 
 import io.netty.channel.EventLoopGroup;
 import io.netty.handler.ssl.SslProvider;
@@ -17,6 +20,8 @@ import software.amazon.awssdk.utils.ThreadFactoryBuilder;
 
 @Recorder
 public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTransportRecorder {
+
+    private static final Logger log = Logger.getLogger(AmazonClientNettyTransportRecorder.class);
 
     @SuppressWarnings("rawtypes")
     @Override
@@ -69,11 +74,18 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
     }
 
     public RuntimeValue<SdkAsyncHttpClient.Builder> configureNettyAsync(RuntimeValue<SdkAsyncHttpClient.Builder> builderRuntime,
-            Supplier<EventLoopGroup> eventLoopSupplier, RuntimeValue<AsyncHttpClientConfig> asyncConfigRuntime) {
+            String configName,
+            Supplier<EventLoopGroup> eventLoopSupplier, RuntimeValue<AsyncHttpClientConfig> asyncConfigRuntime,
+            boolean isNetty42) {
         AsyncHttpClientConfig asyncConfig = asyncConfigRuntime.getValue();
         NettyNioAsyncHttpClient.Builder builder = (NettyNioAsyncHttpClient.Builder) builderRuntime.getValue();
-
-        if (asyncConfig.eventLoop().override()) {
+        Optional<Boolean> override = asyncConfig.eventLoop().override();
+        if (override.orElse(false) || isNetty42) {
+            if (override.isPresent() && !override.get()) {
+                log.warnf(
+                        "The AWS SDK Client cannot reuse the Quarkus Netty Event Loops when using Quarkus 4/Netty 4.2 - Ignoring `quarkus.%s.async-client.event-loop.override`",
+                        configName);
+            }
             SdkEventLoopGroup.Builder eventLoopBuilder = SdkEventLoopGroup.builder();
             asyncConfig.eventLoop().numberOfThreads().ifPresent(eventLoopBuilder::numberOfThreads);
             if (asyncConfig.eventLoop().threadNamePrefix().isPresent()) {
@@ -110,7 +122,7 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
                     String.format("quarkus.%s.async-client.max-pending-connection-acquires may not be negative or zero.",
                             extension));
         }
-        if (config.eventLoop().override()) {
+        if (config.eventLoop().override().orElse(false)) {
             if (config.eventLoop().numberOfThreads().isPresent() && config.eventLoop().numberOfThreads().getAsInt() <= 0) {
                 throw new RuntimeConfigurationError(
                         String.format("quarkus.%s.async-client.event-loop.number-of-threads may not be negative or zero.",
