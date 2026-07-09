@@ -32,7 +32,7 @@ public class StsResource {
     public String testSync() {
         LOG.info("Testing Sync STS client");
         AssumeRoleResponse assumeRoleResponse = stsClient
-                .assumeRole(builder -> builder.roleArn("arn:aws:sts::000000000000:assumed-role/test-role")
+                .assumeRole(builder -> builder.roleArn("arn:aws:iam::000000000000:role/test-role")
                         .roleSessionName("session-test").build());
         return assumeRoleResponse.assumedRoleUser().arn();
     }
@@ -42,7 +42,7 @@ public class StsResource {
     @Produces(TEXT_PLAIN)
     public CompletionStage<String> testAsync() {
         LOG.info("Testing Async STS client");
-        return stsAsyncClient.assumeRole(builder -> builder.roleArn("arn:aws:sts::000000000000:assumed-role/test-role")
+        return stsAsyncClient.assumeRole(builder -> builder.roleArn("arn:aws:iam::000000000000:role/test-role")
                 .roleSessionName("session-test").build())
                 .thenApply(response -> response.assumedRoleUser().arn());
     }
