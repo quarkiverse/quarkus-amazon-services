@@ -1,6 +1,6 @@
 # Quarkus Amazon Services
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-47-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-48-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Version](https://img.shields.io/maven-central/v/io.quarkiverse.amazonservices/quarkus-amazon-services-bom?logo=apache-maven&style=flat-square)](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom)
@@ -207,6 +207,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/anis-ikram-1ab910146/"><img src="https://avatars.githubusercontent.com/u/98950164?v=4?s=100" width="100px;" alt="Anis Ikram"/><br /><sub><b>Anis Ikram</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=anisikram" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.hamoni.ai"><img src="https://avatars.githubusercontent.com/u/14856878?v=4?s=100" width="100px;" alt="kanwhoa"/><br /><sub><b>kanwhoa</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=kanwhoa" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/sgdesmet"><img src="https://avatars.githubusercontent.com/u/1021366?v=4?s=100" width="100px;" alt="Stein Desmet"/><br /><sub><b>Stein Desmet</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=sgdesmet" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/luneo7"><img src="https://avatars.githubusercontent.com/u/8834774?v=4?s=100" width="100px;" alt="Lucas Rogerio Caetano Ferreira"/><br /><sub><b>Lucas Rogerio Caetano Ferreira</b></sub></a><br /><a href="https://github.com/quarkiverse/quarkus-amazon-services/commits?author=luneo7" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
