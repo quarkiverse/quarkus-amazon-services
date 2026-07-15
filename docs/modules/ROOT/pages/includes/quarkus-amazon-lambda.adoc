@@ -2396,7 +2396,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Enable the custom configuration of the Netty event loop group.
+Enable the custom configuration of the Netty event loop group. This option is only available when using Quarkus 3.x. With Quarkus 4, the AWS SDK always uses its own event loop.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -2407,7 +2407,7 @@ Environment variable: `+++QUARKUS_LAMBDA_ASYNC_CLIENT_EVENT_LOOP_OVERRIDE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++false+++`
+|
 
 a| [[quarkus-amazon-lambda_quarkus-lambda-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-lambda_quarkus-lambda-async-client-event-loop-number-of-threads[`+++quarkus.lambda.async-client.event-loop.number-of-threads+++`]##
 ifdef::add-copy-button-to-config-props[]
