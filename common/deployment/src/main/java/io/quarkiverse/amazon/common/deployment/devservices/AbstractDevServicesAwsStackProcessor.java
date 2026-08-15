@@ -126,11 +126,6 @@ public abstract class AbstractDevServicesAwsStackProcessor {
      * returns a bare {@code host:port} string, which {@link java.net.URI#create(String)}
      * misinterprets — treating the host as the URI scheme.
      * <p>
-     * This mirrors the approach used in
-     * {@link LegacyDevServicesLocalStackProcessor} (which explicitly prepends
-     * {@code "http://"} when constructing the endpoint for reused containers)
-     * and in {@link MotoContainer#getEndpoint()} (which builds the URL with
-     * an {@code "http://"} prefix).
      *
      * @param endpoint the endpoint string, possibly without a scheme
      * @return the endpoint with an {@code http://} scheme, or unchanged if
