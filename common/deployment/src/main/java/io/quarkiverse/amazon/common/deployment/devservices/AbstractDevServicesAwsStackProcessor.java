@@ -99,8 +99,9 @@ public abstract class AbstractDevServicesAwsStackProcessor {
                         launchMode.getLaunchMode(), useSharedNetwork))
                 .map(containerAddress -> {
                     // Found existing container - reuse it
-                    reuseStackContainer(containerAddress.getUrl(), config, requestedServices);
-                    Map<String, String> discoveredConfig = buildDiscoveredConfig(containerAddress.getUrl(), requestedServices);
+                    var endpoint = ensureScheme(containerAddress.getUrl());
+                    reuseStackContainer(endpoint, config, requestedServices);
+                    Map<String, String> discoveredConfig = buildDiscoveredConfig(endpoint, requestedServices);
                     return DevServicesResultBuildItem.discovered()
                             .feature(getFeatureName())
                             .containerId(containerAddress.getId())
@@ -117,6 +118,27 @@ public abstract class AbstractDevServicesAwsStackProcessor {
                             .postStartHook(s -> logStartedAndPrepareStackContainer(s, requestedServices))
                             .build();
                 });
+    }
+
+    /**
+     * Prepends {@code http://} to an endpoint string if it does not already
+     * have a scheme. {@link io.quarkus.devservices.common.ContainerAddress#getUrl()}
+     * returns a bare {@code host:port} string, which {@link java.net.URI#create(String)}
+     * misinterprets — treating the host as the URI scheme.
+     * <p>
+     *
+     * @param endpoint the endpoint string, possibly without a scheme
+     * @return the endpoint with an {@code http://} scheme, or unchanged if
+     *         it already has one, or {@code null} if the input is {@code null}
+     */
+    static String ensureScheme(String endpoint) {
+        if (endpoint == null) {
+            return null;
+        }
+        if (endpoint.startsWith("http://") || endpoint.startsWith("https://")) {
+            return endpoint;
+        }
+        return "http://" + endpoint;
     }
 
     private void logStartedAndPrepareStackContainer(Startable s,
