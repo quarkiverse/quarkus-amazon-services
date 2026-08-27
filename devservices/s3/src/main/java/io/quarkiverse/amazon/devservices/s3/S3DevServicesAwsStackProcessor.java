@@ -1,5 +1,8 @@
 package io.quarkiverse.amazon.devservices.s3;
 
+import java.util.Map;
+import java.util.function.Function;
+
 import io.quarkiverse.amazon.common.deployment.spi.AbstractDevServicesAwsStackProcessor;
 import io.quarkiverse.amazon.common.deployment.spi.AwsStackContainer;
 import io.quarkiverse.amazon.common.deployment.spi.DevServicesAwsStackProviderBuildItem;
@@ -20,6 +23,11 @@ public class S3DevServicesAwsStackProcessor extends AbstractDevServicesAwsStackP
     DevServicesAwsStackProviderBuildItem setupS3(S3BuildTimeConfig clientBuildTimeConfig,
             GlobalDevServicesBuildTimeConfig globalConfig) {
         return this.setup("s3", clientBuildTimeConfig.devservices(), globalConfig);
+    }
+
+    @Override
+    protected void overrideAwsStackClientConfig(Map<String, Function<AwsStackContainer, String>> config) {
+        config.put("quarkus.s3.path-style-access", awsStackContainer -> "true");
     }
 
     @Override
