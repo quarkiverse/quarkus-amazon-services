@@ -20,6 +20,7 @@ This set of extensions allows you to interact with some of the AWS Services name
 * Cognito User Pools
 * DynamoDB / DynamoDB Enhanced
 * ECR
+* ECS
 * Elastic Load Balancing / Elastic Load Balancing v2
 * EventBridge
 * EventBridge Scheduler
