@@ -450,6 +450,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "danielmaison",
+      "name": "Daniel Maison",
+      "avatar_url": "https://avatars.githubusercontent.com/u/724769?v=4",
+      "profile": "https://github.com/danielmaison",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
