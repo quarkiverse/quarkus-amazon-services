@@ -2407,7 +2407,7 @@ Environment variable: `+++QUARKUS_KINESIS_ASYNC_CLIENT_EVENT_LOOP_OVERRIDE+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++false+++`
+|
 
 a| [[quarkus-amazon-kinesis_quarkus-kinesis-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-kinesis_quarkus-kinesis-async-client-event-loop-number-of-threads[`+++quarkus.kinesis.async-client.event-loop.number-of-threads+++`]##
 ifdef::add-copy-button-to-config-props[]

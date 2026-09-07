@@ -2407,7 +2407,7 @@ Environment variable: `+++QUARKUS_EVENTBRIDGE_SCHEDULER_ASYNC_CLIENT_EVENT_LOOP_
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++false+++`
+|
 
 a| [[quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-scheduler_quarkus-eventbridge-scheduler-async-client-event-loop-number-of-threads[`+++quarkus.eventbridge-scheduler.async-client.event-loop.number-of-threads+++`]##
 ifdef::add-copy-button-to-config-props[]

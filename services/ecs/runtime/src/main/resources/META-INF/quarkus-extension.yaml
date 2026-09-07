@@ -1,0 +1,14 @@
+---
+artifact: ${project.groupId}:${project.artifactId}:${project.version}
+name: "Amazon ECS"
+metadata:
+  keywords:
+    - "ecs"
+    - "aws"
+    - "amazon"
+  categories:
+    - "cloud"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-ecs.html
+  status: "stable"
+  config:
+  - "quarkus.ecs."

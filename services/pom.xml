@@ -29,6 +29,7 @@
         <module>cloudwatchlogs</module>
         <module>dynamodb</module>
         <module>ecr</module>
+        <module>ecs</module>
         <module>elasticloadbalancing</module>
         <module>elasticloadbalancingv2</module>
         <module>eventbridge</module>

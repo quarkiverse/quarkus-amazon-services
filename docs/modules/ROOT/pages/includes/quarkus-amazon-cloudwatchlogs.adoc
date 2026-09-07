@@ -2407,7 +2407,7 @@ Environment variable: `+++QUARKUS_CLOUDWATCHLOGS_ASYNC_CLIENT_EVENT_LOOP_OVERRID
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++false+++`
+|
 
 a| [[quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-cloudwatchlogs_quarkus-cloudwatchlogs-async-client-event-loop-number-of-threads[`+++quarkus.cloudwatchlogs.async-client.event-loop.number-of-threads+++`]##
 ifdef::add-copy-button-to-config-props[]

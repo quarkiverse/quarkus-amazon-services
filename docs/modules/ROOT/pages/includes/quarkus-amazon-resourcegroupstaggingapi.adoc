@@ -2407,7 +2407,7 @@ Environment variable: `+++QUARKUS_RESOURCEGROUPSTAGGINGAPI_ASYNC_CLIENT_EVENT_LO
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++false+++`
+|
 
 a| [[quarkus-amazon-resourcegroupstaggingapi_quarkus-resourcegroupstaggingapi-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-resourcegroupstaggingapi_quarkus-resourcegroupstaggingapi-async-client-event-loop-number-of-threads[`+++quarkus.resourcegroupstaggingapi.async-client.event-loop.number-of-threads+++`]##
 ifdef::add-copy-button-to-config-props[]
