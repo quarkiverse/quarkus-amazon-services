@@ -1,3 +1,6 @@
+:service-name: ecs
+:service-name-uppercase: ECS
+
 = Amazon ECS Client
 
 include::./includes/attributes.adoc[]
@@ -6,12 +9,8 @@ Amazon Elastic Container Service (Amazon ECS) is a fully managed container orche
 
 You can find more information about ECS at https://aws.amazon.com/ecs/[the Amazon ECS website].
 
-NOTE: The ECS extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
-It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
+include::./amazon-configure-clients.adoc[]
 
-The Quarkus extension supports two programming models:
-
-* Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
-* https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
+== Configuration Reference
 
 include::./includes/quarkus-amazon-ecs.adoc[]

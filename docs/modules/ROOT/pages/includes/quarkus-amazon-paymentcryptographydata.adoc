@@ -2407,7 +2407,7 @@ Environment variable: `+++QUARKUS_PAYMENTCRYPTOGRAPHYDATA_ASYNC_CLIENT_EVENT_LOO
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++false+++`
+|
 
 a| [[quarkus-amazon-paymentcryptographydata_quarkus-paymentcryptographydata-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-paymentcryptographydata_quarkus-paymentcryptographydata-async-client-event-loop-number-of-threads[`+++quarkus.paymentcryptographydata.async-client.event-loop.number-of-threads+++`]##
 ifdef::add-copy-button-to-config-props[]

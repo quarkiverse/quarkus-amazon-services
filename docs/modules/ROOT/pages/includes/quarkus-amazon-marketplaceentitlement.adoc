@@ -2407,7 +2407,7 @@ Environment variable: `+++QUARKUS_MARKETPLACEENTITLEMENT_ASYNC_CLIENT_EVENT_LOOP
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++false+++`
+|
 
 a| [[quarkus-amazon-marketplaceentitlement_quarkus-marketplaceentitlement-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-marketplaceentitlement_quarkus-marketplaceentitlement-async-client-event-loop-number-of-threads[`+++quarkus.marketplaceentitlement.async-client.event-loop.number-of-threads+++`]##
 ifdef::add-copy-button-to-config-props[]

@@ -2568,7 +2568,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Enable the custom configuration of the Netty event loop group. This option is only available when using Quarkus 3.x. With Quarkus 4, the AWS SDK always uses its own event loop.
+Enable the custom configuration of the Netty event loop group.
 
 
 ifdef::add-copy-button-to-env-var[]

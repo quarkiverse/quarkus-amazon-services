@@ -26,6 +26,7 @@
         <module>cloudwatchlogs</module>
         <module>dynamodb</module>
         <module>ecr</module>
+        <module>ecs</module>
         <module>eventbridge</module>
         <module>iam</module>
         <module>kinesis</module>

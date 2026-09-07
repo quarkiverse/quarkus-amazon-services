@@ -2407,7 +2407,7 @@ Environment variable: `+++QUARKUS_ELASTICLOADBALANCINGV2_ASYNC_CLIENT_EVENT_LOOP
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++false+++`
+|
 
 a| [[quarkus-amazon-elasticloadbalancingv2_quarkus-elasticloadbalancingv2-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-elasticloadbalancingv2_quarkus-elasticloadbalancingv2-async-client-event-loop-number-of-threads[`+++quarkus.elasticloadbalancingv2.async-client.event-loop.number-of-threads+++`]##
 ifdef::add-copy-button-to-config-props[]

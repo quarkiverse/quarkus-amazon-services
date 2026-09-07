@@ -2407,7 +2407,7 @@ Environment variable: `+++QUARKUS_APIGATEWAYMANAGEMENTAPI_ASYNC_CLIENT_EVENT_LOO
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++false+++`
+|
 
 a| [[quarkus-amazon-apigatewaymanagementapi_quarkus-apigatewaymanagementapi-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-apigatewaymanagementapi_quarkus-apigatewaymanagementapi-async-client-event-loop-number-of-threads[`+++quarkus.apigatewaymanagementapi.async-client.event-loop.number-of-threads+++`]##
 ifdef::add-copy-button-to-config-props[]
