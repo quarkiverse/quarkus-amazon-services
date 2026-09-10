@@ -203,7 +203,7 @@ public interface AsyncHttpClientConfig {
          * <p>
          * If not set, the default Netty thread count is used (which is double the
          * number of available processors unless the
-         * `io.netty.eventLoopThreads` system property is set.
+         * `io.netty.eventLoopThreads` system property is set).
          */
         OptionalInt numberOfThreads();
 
