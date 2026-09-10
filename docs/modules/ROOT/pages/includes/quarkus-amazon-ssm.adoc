@@ -826,7 +826,7 @@ Environment variable: `+++QUARKUS_SSM_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_O
 endif::add-copy-button-to-env-var[]
 --
 |MemorySize link:#memory-size-note-anchor-quarkus-amazon-ssm_quarkus-ssm[icon:question-circle[title=More information about the MemorySize format]]
-|`+++1024+++`
+|`+++1M+++`
 
 a| [[quarkus-amazon-ssm_quarkus-ssm-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-aws-credentials-process-provider-command[`+++quarkus.ssm.aws.credentials.process-provider.command+++`]##
 ifdef::add-copy-button-to-config-props[]
@@ -2547,7 +2547,7 @@ endif::add-copy-button-to-config-props[]
 --
 Number of threads to use for the event loop group.
 
-If not set, the default Netty thread count is used (which is double the number of available processors unless the `io.netty.eventLoopThreads` system property is set.
+If not set, the default Netty thread count is used (which is double the number of available processors unless the `io.netty.eventLoopThreads` system property is set).
 
 
 ifdef::add-copy-button-to-env-var[]

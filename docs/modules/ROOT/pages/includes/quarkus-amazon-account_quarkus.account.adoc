@@ -698,7 +698,7 @@ Environment variable: `+++QUARKUS_ACCOUNT_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCE
 endif::add-copy-button-to-env-var[]
 --
 |MemorySize link:#memory-size-note-anchor-quarkus-amazon-account_quarkus-account[icon:question-circle[title=More information about the MemorySize format]]
-|`+++1024+++`
+|`+++1M+++`
 
 a| [[quarkus-amazon-account_quarkus-account-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-account_quarkus-account-aws-credentials-process-provider-command[`+++quarkus.account.aws.credentials.process-provider.command+++`]##
 ifdef::add-copy-button-to-config-props[]
@@ -2396,7 +2396,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Enable the custom configuration of the Netty event loop group.
+Enable the custom configuration of the Netty event loop group. This option is only available when using Quarkus 3.x. With Quarkus 4, the AWS SDK always uses its own event loop.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -2419,7 +2419,7 @@ endif::add-copy-button-to-config-props[]
 --
 Number of threads to use for the event loop group.
 
-If not set, the default Netty thread count is used (which is double the number of available processors unless the `io.netty.eventLoopThreads` system property is set.
+If not set, the default Netty thread count is used (which is double the number of available processors unless the `io.netty.eventLoopThreads` system property is set).
 
 
 ifdef::add-copy-button-to-env-var[]
