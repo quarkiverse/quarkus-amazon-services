@@ -12,4 +12,4 @@ The Quarkus extension supports two programming models:
 * Blocking access using URL Connection HTTP client (by default) or the Apache HTTP Client
 * https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client
 
-include::./includes/quarkus-amazon-ce.adoc[]
+include::./includes/quarkus-amazon-costexplorer.adoc[]

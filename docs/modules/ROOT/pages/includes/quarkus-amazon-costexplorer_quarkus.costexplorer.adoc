@@ -7,7 +7,7 @@ h|[.header-title]##Configuration property##
 h|Type
 h|Default
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-ce_quarkus-costexplorer-interceptors]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-interceptors[`+++quarkus.costexplorer.interceptors+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-costexplorer_quarkus-costexplorer-interceptors]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-interceptors[`+++quarkus.costexplorer.interceptors+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.interceptors+++[]
 endif::add-copy-button-to-config-props[]
@@ -30,7 +30,7 @@ endif::add-copy-button-to-env-var[]
 |list of string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-ce_quarkus-costexplorer-telemetry-enabled]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-telemetry-enabled[`+++quarkus.costexplorer.telemetry.enabled+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-costexplorer_quarkus-costexplorer-telemetry-enabled]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-telemetry-enabled[`+++quarkus.costexplorer.telemetry.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.telemetry.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -51,7 +51,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-type]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-type[`+++quarkus.costexplorer.sync-client.type+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-type]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-type[`+++quarkus.costexplorer.sync-client.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -72,7 +72,7 @@ endif::add-copy-button-to-env-var[]
 a|`url`, `apache`, `apache5`, `aws-crt`
 |`+++url+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-ce_quarkus-costexplorer-async-client-type]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-type[`+++quarkus.costexplorer.async-client.type+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-type]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-type[`+++quarkus.costexplorer.async-client.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -93,7 +93,7 @@ endif::add-copy-button-to-env-var[]
 a|`netty`, `aws-crt`
 |`+++netty+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-ce_quarkus-costexplorer-devservices-enabled]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-devservices-enabled[`+++quarkus.costexplorer.devservices.enabled+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-costexplorer_quarkus-costexplorer-devservices-enabled]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-devservices-enabled[`+++quarkus.costexplorer.devservices.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.devservices.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -114,7 +114,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-ce_quarkus-costexplorer-devservices-shared]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-devservices-shared[`+++quarkus.costexplorer.devservices.shared+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-costexplorer_quarkus-costexplorer-devservices-shared]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-devservices-shared[`+++quarkus.costexplorer.devservices.shared+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.devservices.shared+++[]
 endif::add-copy-button-to-config-props[]
@@ -137,7 +137,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-ce_quarkus-costexplorer-devservices-isolated]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-devservices-isolated[`+++quarkus.costexplorer.devservices.isolated+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-costexplorer_quarkus-costexplorer-devservices-isolated]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-devservices-isolated[`+++quarkus.costexplorer.devservices.isolated+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.devservices.isolated+++[]
 endif::add-copy-button-to-config-props[]
@@ -160,7 +160,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++true+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-ce_quarkus-costexplorer-devservices-service-name]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-devservices-service-name[`+++quarkus.costexplorer.devservices.service-name+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-costexplorer_quarkus-costexplorer-devservices-service-name]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-devservices-service-name[`+++quarkus.costexplorer.devservices.service-name+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.devservices.service-name+++[]
 endif::add-copy-button-to-config-props[]
@@ -183,7 +183,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |`+++awsstack+++`
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-ce_quarkus-costexplorer-devservices-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-devservices-container-properties-container-properties[`+++quarkus.costexplorer.devservices.container-properties."container-properties"+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-costexplorer_quarkus-costexplorer-devservices-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-devservices-container-properties-container-properties[`+++quarkus.costexplorer.devservices.container-properties."container-properties"+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.devservices.container-properties."container-properties"+++[]
 endif::add-copy-button-to-config-props[]
@@ -204,7 +204,7 @@ endif::add-copy-button-to-env-var[]
 |Map<String,String>
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon-ce_quarkus-costexplorer-devservices-provider]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-devservices-provider[`+++quarkus.costexplorer.devservices.provider+++`]##
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-costexplorer_quarkus-costexplorer-devservices-provider]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-devservices-provider[`+++quarkus.costexplorer.devservices.provider+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.devservices.provider+++[]
 endif::add-copy-button-to-config-props[]
@@ -227,11 +227,11 @@ endif::add-copy-button-to-env-var[]
 a|`localstack`, `ministack`, `moto`, `floci`
 |
 
-h|[[quarkus-amazon-ce_section_quarkus-costexplorer]] [.section-name.section-level0]##link:#quarkus-amazon-ce_section_quarkus-costexplorer[AWS SDK client configurations]##
+h|[[quarkus-amazon-costexplorer_section_quarkus-costexplorer]] [.section-name.section-level0]##link:#quarkus-amazon-costexplorer_section_quarkus-costexplorer[AWS SDK client configurations]##
 h|Type
 h|Default
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-endpoint-override]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-endpoint-override[`+++quarkus.costexplorer.endpoint-override+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-endpoint-override]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-endpoint-override[`+++quarkus.costexplorer.endpoint-override+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.endpoint-override+++[]
 endif::add-copy-button-to-config-props[]
@@ -259,7 +259,7 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-api-call-timeout]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-api-call-timeout[`+++quarkus.costexplorer.api-call-timeout+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-api-call-timeout]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-api-call-timeout[`+++quarkus.costexplorer.api-call-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.api-call-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -286,10 +286,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_API_CALL_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-api-call-attempt-timeout]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-api-call-attempt-timeout[`+++quarkus.costexplorer.api-call-attempt-timeout+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-api-call-attempt-timeout]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-api-call-attempt-timeout[`+++quarkus.costexplorer.api-call-attempt-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.api-call-attempt-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -314,10 +314,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_API_CALL_ATTEMPT_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-advanced-use-quarkus-scheduled-executor-service]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-advanced-use-quarkus-scheduled-executor-service[`+++quarkus.costexplorer.advanced.use-quarkus-scheduled-executor-service+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-advanced-use-quarkus-scheduled-executor-service]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-advanced-use-quarkus-scheduled-executor-service[`+++quarkus.costexplorer.advanced.use-quarkus-scheduled-executor-service+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.advanced.use-quarkus-scheduled-executor-service+++[]
 endif::add-copy-button-to-config-props[]
@@ -346,11 +346,11 @@ endif::add-copy-button-to-env-var[]
 |`+++true+++`
 
 
-h|[[quarkus-amazon-ce_section_quarkus-costexplorer-aws]] [.section-name.section-level0]##link:#quarkus-amazon-ce_section_quarkus-costexplorer-aws[AWS services configurations]##
+h|[[quarkus-amazon-costexplorer_section_quarkus-costexplorer-aws]] [.section-name.section-level0]##link:#quarkus-amazon-costexplorer_section_quarkus-costexplorer-aws[AWS services configurations]##
 h|Type
 h|Default
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-aws-region]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-aws-region[`+++quarkus.costexplorer.aws.region+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-aws-region]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-aws-region[`+++quarkus.costexplorer.aws.region+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.aws.region+++[]
 endif::add-copy-button-to-config-props[]
@@ -387,7 +387,7 @@ endif::add-copy-button-to-env-var[]
 |Region
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-type]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-type[`+++quarkus.costexplorer.aws.credentials.type+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-type]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-type[`+++quarkus.costexplorer.aws.credentials.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.aws.credentials.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -437,11 +437,11 @@ endif::add-copy-button-to-env-var[]
 a|`default`, `static`, `system-property`, `env-variable`, `profile`, `container`, `instance-profile`, `process`, `custom`, `anonymous`
 |`+++default+++`
 
-h|[[quarkus-amazon-ce_section_quarkus-costexplorer-aws-credentials-default-provider]] [.section-name.section-level1]##link:#quarkus-amazon-ce_section_quarkus-costexplorer-aws-credentials-default-provider[Default credentials provider configuration]##
+h|[[quarkus-amazon-costexplorer_section_quarkus-costexplorer-aws-credentials-default-provider]] [.section-name.section-level1]##link:#quarkus-amazon-costexplorer_section_quarkus-costexplorer-aws-credentials-default-provider[Default credentials provider configuration]##
 h|Type
 h|Default
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-default-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-default-provider-async-credential-update-enabled[`+++quarkus.costexplorer.aws.credentials.default-provider.async-credential-update-enabled+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-default-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-default-provider-async-credential-update-enabled[`+++quarkus.costexplorer.aws.credentials.default-provider.async-credential-update-enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.aws.credentials.default-provider.async-credential-update-enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -469,7 +469,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-default-provider-reuse-last-provider-enabled]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-default-provider-reuse-last-provider-enabled[`+++quarkus.costexplorer.aws.credentials.default-provider.reuse-last-provider-enabled+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-default-provider-reuse-last-provider-enabled]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-default-provider-reuse-last-provider-enabled[`+++quarkus.costexplorer.aws.credentials.default-provider.reuse-last-provider-enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.aws.credentials.default-provider.reuse-last-provider-enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -498,11 +498,11 @@ endif::add-copy-button-to-env-var[]
 |`+++true+++`
 
 
-h|[[quarkus-amazon-ce_section_quarkus-costexplorer-aws-credentials-static-provider]] [.section-name.section-level1]##link:#quarkus-amazon-ce_section_quarkus-costexplorer-aws-credentials-static-provider[Static credentials provider configuration]##
+h|[[quarkus-amazon-costexplorer_section_quarkus-costexplorer-aws-credentials-static-provider]] [.section-name.section-level1]##link:#quarkus-amazon-costexplorer_section_quarkus-costexplorer-aws-credentials-static-provider[Static credentials provider configuration]##
 h|Type
 h|Default
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-static-provider-access-key-id]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-static-provider-access-key-id[`+++quarkus.costexplorer.aws.credentials.static-provider.access-key-id+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-static-provider-access-key-id]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-static-provider-access-key-id[`+++quarkus.costexplorer.aws.credentials.static-provider.access-key-id+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.aws.credentials.static-provider.access-key-id+++[]
 endif::add-copy-button-to-config-props[]
@@ -528,7 +528,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-static-provider-secret-access-key]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-static-provider-secret-access-key[`+++quarkus.costexplorer.aws.credentials.static-provider.secret-access-key+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-static-provider-secret-access-key]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-static-provider-secret-access-key[`+++quarkus.costexplorer.aws.credentials.static-provider.secret-access-key+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.aws.credentials.static-provider.secret-access-key+++[]
 endif::add-copy-button-to-config-props[]
@@ -554,7 +554,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-static-provider-session-token]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-static-provider-session-token[`+++quarkus.costexplorer.aws.credentials.static-provider.session-token+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-static-provider-session-token]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-static-provider-session-token[`+++quarkus.costexplorer.aws.credentials.static-provider.session-token+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.aws.credentials.static-provider.session-token+++[]
 endif::add-copy-button-to-config-props[]
@@ -581,11 +581,11 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-ce_section_quarkus-costexplorer-aws-credentials-profile-provider]] [.section-name.section-level1]##link:#quarkus-amazon-ce_section_quarkus-costexplorer-aws-credentials-profile-provider[AWS Profile credentials provider configuration]##
+h|[[quarkus-amazon-costexplorer_section_quarkus-costexplorer-aws-credentials-profile-provider]] [.section-name.section-level1]##link:#quarkus-amazon-costexplorer_section_quarkus-costexplorer-aws-credentials-profile-provider[AWS Profile credentials provider configuration]##
 h|Type
 h|Default
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-profile-provider-profile-name]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-profile-provider-profile-name[`+++quarkus.costexplorer.aws.credentials.profile-provider.profile-name+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-profile-provider-profile-name]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-profile-provider-profile-name[`+++quarkus.costexplorer.aws.credentials.profile-provider.profile-name+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.aws.credentials.profile-provider.profile-name+++[]
 endif::add-copy-button-to-config-props[]
@@ -614,11 +614,11 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-ce_section_quarkus-costexplorer-aws-credentials-process-provider]] [.section-name.section-level1]##link:#quarkus-amazon-ce_section_quarkus-costexplorer-aws-credentials-process-provider[Process credentials provider configuration]##
+h|[[quarkus-amazon-costexplorer_section_quarkus-costexplorer-aws-credentials-process-provider]] [.section-name.section-level1]##link:#quarkus-amazon-costexplorer_section_quarkus-costexplorer-aws-credentials-process-provider[Process credentials provider configuration]##
 h|Type
 h|Default
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-process-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-process-provider-async-credential-update-enabled[`+++quarkus.costexplorer.aws.credentials.process-provider.async-credential-update-enabled+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-process-provider-async-credential-update-enabled]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-process-provider-async-credential-update-enabled[`+++quarkus.costexplorer.aws.credentials.process-provider.async-credential-update-enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.aws.credentials.process-provider.async-credential-update-enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -646,7 +646,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-process-provider-credential-refresh-threshold]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-process-provider-credential-refresh-threshold[`+++quarkus.costexplorer.aws.credentials.process-provider.credential-refresh-threshold+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-process-provider-credential-refresh-threshold]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-process-provider-credential-refresh-threshold[`+++quarkus.costexplorer.aws.credentials.process-provider.credential-refresh-threshold+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.aws.credentials.process-provider.credential-refresh-threshold+++[]
 endif::add-copy-button-to-config-props[]
@@ -671,10 +671,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_AWS_CREDENTIALS_PROCESS_PROVIDER_CREDENTIAL_REFRESH_THRESHOLD+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++15S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-process-provider-process-output-limit]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-process-provider-process-output-limit[`+++quarkus.costexplorer.aws.credentials.process-provider.process-output-limit+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-process-provider-process-output-limit]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-process-provider-process-output-limit[`+++quarkus.costexplorer.aws.credentials.process-provider.process-output-limit+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.aws.credentials.process-provider.process-output-limit+++[]
 endif::add-copy-button-to-config-props[]
@@ -697,10 +697,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_OUTPUT_LIMIT+++`
 endif::add-copy-button-to-env-var[]
 --
-|MemorySize link:#memory-size-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the MemorySize format]]
+|MemorySize link:#memory-size-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the MemorySize format]]
 |`+++1M+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-process-provider-command[`+++quarkus.costexplorer.aws.credentials.process-provider.command+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-process-provider-command[`+++quarkus.costexplorer.aws.credentials.process-provider.command+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.aws.credentials.process-provider.command+++[]
 endif::add-copy-button-to-config-props[]
@@ -727,11 +727,11 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-ce_section_quarkus-costexplorer-aws-credentials-custom-provider]] [.section-name.section-level1]##link:#quarkus-amazon-ce_section_quarkus-costexplorer-aws-credentials-custom-provider[Custom credentials provider configuration]##
+h|[[quarkus-amazon-costexplorer_section_quarkus-costexplorer-aws-credentials-custom-provider]] [.section-name.section-level1]##link:#quarkus-amazon-costexplorer_section_quarkus-costexplorer-aws-credentials-custom-provider[Custom credentials provider configuration]##
 h|Type
 h|Default
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-custom-provider-name]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-aws-credentials-custom-provider-name[`+++quarkus.costexplorer.aws.credentials.custom-provider.name+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-custom-provider-name]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-aws-credentials-custom-provider-name[`+++quarkus.costexplorer.aws.credentials.custom-provider.name+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.aws.credentials.custom-provider.name+++[]
 endif::add-copy-button-to-config-props[]
@@ -759,11 +759,11 @@ endif::add-copy-button-to-env-var[]
 
 
 
-h|[[quarkus-amazon-ce_section_quarkus-costexplorer-sync-client]] [.section-name.section-level0]##link:#quarkus-amazon-ce_section_quarkus-costexplorer-sync-client[Sync HTTP transport configurations]##
+h|[[quarkus-amazon-costexplorer_section_quarkus-costexplorer-sync-client]] [.section-name.section-level0]##link:#quarkus-amazon-costexplorer_section_quarkus-costexplorer-sync-client[Sync HTTP transport configurations]##
 h|Type
 h|Default
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-connection-timeout[`+++quarkus.costexplorer.sync-client.connection-timeout+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-connection-timeout[`+++quarkus.costexplorer.sync-client.connection-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.connection-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -781,10 +781,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_SYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++2S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-socket-timeout]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-socket-timeout[`+++quarkus.costexplorer.sync-client.socket-timeout+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-socket-timeout]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-socket-timeout[`+++quarkus.costexplorer.sync-client.socket-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.socket-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -802,10 +802,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_SYNC_CLIENT_SOCKET_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++30S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-key-managers-provider-type[`+++quarkus.costexplorer.sync-client.tls-key-managers-provider.type+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-key-managers-provider-type[`+++quarkus.costexplorer.sync-client.tls-key-managers-provider.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.tls-key-managers-provider.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -834,7 +834,7 @@ endif::add-copy-button-to-env-var[]
 a|`none`, `system-property`, `file-store`
 |`+++system-property+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-key-managers-provider-file-store-path[`+++quarkus.costexplorer.sync-client.tls-key-managers-provider.file-store.path+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-key-managers-provider-file-store-path[`+++quarkus.costexplorer.sync-client.tls-key-managers-provider.file-store.path+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.tls-key-managers-provider.file-store.path+++[]
 endif::add-copy-button-to-config-props[]
@@ -855,7 +855,7 @@ endif::add-copy-button-to-env-var[]
 |path
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-key-managers-provider-file-store-type[`+++quarkus.costexplorer.sync-client.tls-key-managers-provider.file-store.type+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-key-managers-provider-file-store-type[`+++quarkus.costexplorer.sync-client.tls-key-managers-provider.file-store.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.tls-key-managers-provider.file-store.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -878,7 +878,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-key-managers-provider-file-store-password[`+++quarkus.costexplorer.sync-client.tls-key-managers-provider.file-store.password+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-key-managers-provider-file-store-password[`+++quarkus.costexplorer.sync-client.tls-key-managers-provider.file-store.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.tls-key-managers-provider.file-store.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -899,7 +899,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-trust-managers-provider-type[`+++quarkus.costexplorer.sync-client.tls-trust-managers-provider.type+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-trust-managers-provider-type[`+++quarkus.costexplorer.sync-client.tls-trust-managers-provider.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.tls-trust-managers-provider.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -928,7 +928,7 @@ endif::add-copy-button-to-env-var[]
 a|`trust-all`, `system-property`, `file-store`
 |`+++system-property+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-trust-managers-provider-file-store-path[`+++quarkus.costexplorer.sync-client.tls-trust-managers-provider.file-store.path+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-trust-managers-provider-file-store-path[`+++quarkus.costexplorer.sync-client.tls-trust-managers-provider.file-store.path+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.tls-trust-managers-provider.file-store.path+++[]
 endif::add-copy-button-to-config-props[]
@@ -949,7 +949,7 @@ endif::add-copy-button-to-env-var[]
 |path
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-trust-managers-provider-file-store-type[`+++quarkus.costexplorer.sync-client.tls-trust-managers-provider.file-store.type+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-trust-managers-provider-file-store-type[`+++quarkus.costexplorer.sync-client.tls-trust-managers-provider.file-store.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.tls-trust-managers-provider.file-store.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -972,7 +972,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-tls-trust-managers-provider-file-store-password[`+++quarkus.costexplorer.sync-client.tls-trust-managers-provider.file-store.password+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-tls-trust-managers-provider-file-store-password[`+++quarkus.costexplorer.sync-client.tls-trust-managers-provider.file-store.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.tls-trust-managers-provider.file-store.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -993,11 +993,11 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-h|[[quarkus-amazon-ce_section_quarkus-costexplorer-sync-client-apache]] [.section-name.section-level1]##link:#quarkus-amazon-ce_section_quarkus-costexplorer-sync-client-apache[Apache HTTP client specific configurations]##
+h|[[quarkus-amazon-costexplorer_section_quarkus-costexplorer-sync-client-apache]] [.section-name.section-level1]##link:#quarkus-amazon-costexplorer_section_quarkus-costexplorer-sync-client-apache[Apache HTTP client specific configurations]##
 h|Type
 h|Default
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-connection-acquisition-timeout[`+++quarkus.costexplorer.sync-client.apache.connection-acquisition-timeout+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-connection-acquisition-timeout[`+++quarkus.costexplorer.sync-client.apache.connection-acquisition-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.connection-acquisition-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1015,10 +1015,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_SYNC_CLIENT_APACHE_CONNECTION_ACQUISITION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++10S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-connection-max-idle-time[`+++quarkus.costexplorer.sync-client.apache.connection-max-idle-time+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-connection-max-idle-time[`+++quarkus.costexplorer.sync-client.apache.connection-max-idle-time+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.connection-max-idle-time+++[]
 endif::add-copy-button-to-config-props[]
@@ -1036,10 +1036,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_SYNC_CLIENT_APACHE_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++60S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-connection-time-to-live[`+++quarkus.costexplorer.sync-client.apache.connection-time-to-live+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-connection-time-to-live[`+++quarkus.costexplorer.sync-client.apache.connection-time-to-live+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.connection-time-to-live+++[]
 endif::add-copy-button-to-config-props[]
@@ -1057,10 +1057,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_SYNC_CLIENT_APACHE_CONNECTION_TIME_TO_LIVE+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-max-connections]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-max-connections[`+++quarkus.costexplorer.sync-client.apache.max-connections+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-max-connections]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-max-connections[`+++quarkus.costexplorer.sync-client.apache.max-connections+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.max-connections+++[]
 endif::add-copy-button-to-config-props[]
@@ -1083,7 +1083,7 @@ endif::add-copy-button-to-env-var[]
 |int
 |`+++50+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-expect-continue-enabled]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-expect-continue-enabled[`+++quarkus.costexplorer.sync-client.apache.expect-continue-enabled+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-expect-continue-enabled]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-expect-continue-enabled[`+++quarkus.costexplorer.sync-client.apache.expect-continue-enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.expect-continue-enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1104,7 +1104,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++true+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-use-idle-connection-reaper[`+++quarkus.costexplorer.sync-client.apache.use-idle-connection-reaper+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-use-idle-connection-reaper[`+++quarkus.costexplorer.sync-client.apache.use-idle-connection-reaper+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.use-idle-connection-reaper+++[]
 endif::add-copy-button-to-config-props[]
@@ -1127,7 +1127,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++true+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-tcp-keep-alive[`+++quarkus.costexplorer.sync-client.apache.tcp-keep-alive+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-tcp-keep-alive[`+++quarkus.costexplorer.sync-client.apache.tcp-keep-alive+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.tcp-keep-alive+++[]
 endif::add-copy-button-to-config-props[]
@@ -1148,7 +1148,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-enabled]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-enabled[`+++quarkus.costexplorer.sync-client.apache.proxy.enabled+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-enabled]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-enabled[`+++quarkus.costexplorer.sync-client.apache.proxy.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.proxy.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1169,7 +1169,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-endpoint[`+++quarkus.costexplorer.sync-client.apache.proxy.endpoint+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-endpoint[`+++quarkus.costexplorer.sync-client.apache.proxy.endpoint+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.proxy.endpoint+++[]
 endif::add-copy-button-to-config-props[]
@@ -1192,7 +1192,7 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-username]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-username[`+++quarkus.costexplorer.sync-client.apache.proxy.username+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-username]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-username[`+++quarkus.costexplorer.sync-client.apache.proxy.username+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.proxy.username+++[]
 endif::add-copy-button-to-config-props[]
@@ -1213,7 +1213,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-password]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-password[`+++quarkus.costexplorer.sync-client.apache.proxy.password+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-password]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-password[`+++quarkus.costexplorer.sync-client.apache.proxy.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.proxy.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -1234,7 +1234,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-ntlm-domain]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-ntlm-domain[`+++quarkus.costexplorer.sync-client.apache.proxy.ntlm-domain+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-ntlm-domain]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-ntlm-domain[`+++quarkus.costexplorer.sync-client.apache.proxy.ntlm-domain+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.proxy.ntlm-domain+++[]
 endif::add-copy-button-to-config-props[]
@@ -1255,7 +1255,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-ntlm-workstation]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-ntlm-workstation[`+++quarkus.costexplorer.sync-client.apache.proxy.ntlm-workstation+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-ntlm-workstation]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-ntlm-workstation[`+++quarkus.costexplorer.sync-client.apache.proxy.ntlm-workstation+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.proxy.ntlm-workstation+++[]
 endif::add-copy-button-to-config-props[]
@@ -1276,7 +1276,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-preemptive-basic-authentication-enabled]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-preemptive-basic-authentication-enabled[`+++quarkus.costexplorer.sync-client.apache.proxy.preemptive-basic-authentication-enabled+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-preemptive-basic-authentication-enabled]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-preemptive-basic-authentication-enabled[`+++quarkus.costexplorer.sync-client.apache.proxy.preemptive-basic-authentication-enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.proxy.preemptive-basic-authentication-enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1297,7 +1297,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-apache-proxy-non-proxy-hosts[`+++quarkus.costexplorer.sync-client.apache.proxy.non-proxy-hosts+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-apache-proxy-non-proxy-hosts[`+++quarkus.costexplorer.sync-client.apache.proxy.non-proxy-hosts+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.apache.proxy.non-proxy-hosts+++[]
 endif::add-copy-button-to-config-props[]
@@ -1319,11 +1319,11 @@ endif::add-copy-button-to-env-var[]
 |
 
 
-h|[[quarkus-amazon-ce_section_quarkus-costexplorer-sync-client-crt]] [.section-name.section-level1]##link:#quarkus-amazon-ce_section_quarkus-costexplorer-sync-client-crt[AWS CRT-based HTTP client specific configurations]##
+h|[[quarkus-amazon-costexplorer_section_quarkus-costexplorer-sync-client-crt]] [.section-name.section-level1]##link:#quarkus-amazon-costexplorer_section_quarkus-costexplorer-sync-client-crt[AWS CRT-based HTTP client specific configurations]##
 h|Type
 h|Default
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-connection-max-idle-time[`+++quarkus.costexplorer.sync-client.crt.connection-max-idle-time+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-connection-max-idle-time[`+++quarkus.costexplorer.sync-client.crt.connection-max-idle-time+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.crt.connection-max-idle-time+++[]
 endif::add-copy-button-to-config-props[]
@@ -1341,10 +1341,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_SYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++60S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-max-concurrency[`+++quarkus.costexplorer.sync-client.crt.max-concurrency+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-max-concurrency[`+++quarkus.costexplorer.sync-client.crt.max-concurrency+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.crt.max-concurrency+++[]
 endif::add-copy-button-to-config-props[]
@@ -1365,7 +1365,7 @@ endif::add-copy-button-to-env-var[]
 |int
 |`+++50+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-connection-acquisition-timeout[`+++quarkus.costexplorer.sync-client.crt.connection-acquisition-timeout+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-connection-acquisition-timeout[`+++quarkus.costexplorer.sync-client.crt.connection-acquisition-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.crt.connection-acquisition-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1383,10 +1383,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_SYNC_CLIENT_CRT_CONNECTION_ACQUISITION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++10S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-proxy-enabled[`+++quarkus.costexplorer.sync-client.crt.proxy.enabled+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-proxy-enabled[`+++quarkus.costexplorer.sync-client.crt.proxy.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.crt.proxy.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1407,7 +1407,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-proxy-endpoint[`+++quarkus.costexplorer.sync-client.crt.proxy.endpoint+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-proxy-endpoint[`+++quarkus.costexplorer.sync-client.crt.proxy.endpoint+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.crt.proxy.endpoint+++[]
 endif::add-copy-button-to-config-props[]
@@ -1430,7 +1430,7 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-proxy-username[`+++quarkus.costexplorer.sync-client.crt.proxy.username+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-proxy-username[`+++quarkus.costexplorer.sync-client.crt.proxy.username+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.crt.proxy.username+++[]
 endif::add-copy-button-to-config-props[]
@@ -1451,7 +1451,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-proxy-password[`+++quarkus.costexplorer.sync-client.crt.proxy.password+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-proxy-password[`+++quarkus.costexplorer.sync-client.crt.proxy.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.crt.proxy.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -1472,7 +1472,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-enabled[`+++quarkus.costexplorer.sync-client.crt.tcp-keep-alive.enabled+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-enabled[`+++quarkus.costexplorer.sync-client.crt.tcp-keep-alive.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.crt.tcp-keep-alive.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1493,7 +1493,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-keep-alive-interval[`+++quarkus.costexplorer.sync-client.crt.tcp-keep-alive.keep-alive-interval+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-keep-alive-interval[`+++quarkus.costexplorer.sync-client.crt.tcp-keep-alive.keep-alive-interval+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.crt.tcp-keep-alive.keep-alive-interval+++[]
 endif::add-copy-button-to-config-props[]
@@ -1511,10 +1511,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++75MS+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-keep-alive-timeout[`+++quarkus.costexplorer.sync-client.crt.tcp-keep-alive.keep-alive-timeout+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-keep-alive-timeout[`+++quarkus.costexplorer.sync-client.crt.tcp-keep-alive.keep-alive-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.crt.tcp-keep-alive.keep-alive-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1532,10 +1532,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_SYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++7200MS+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-keep-alive-probes[`+++quarkus.costexplorer.sync-client.crt.tcp-keep-alive.keep-alive-probes+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-sync-client-crt-tcp-keep-alive-keep-alive-probes[`+++quarkus.costexplorer.sync-client.crt.tcp-keep-alive.keep-alive-probes+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.sync-client.crt.tcp-keep-alive.keep-alive-probes+++[]
 endif::add-copy-button-to-config-props[]
@@ -1558,11 +1558,11 @@ endif::add-copy-button-to-env-var[]
 
 
 
-h|[[quarkus-amazon-ce_section_quarkus-costexplorer-async-client]] [.section-name.section-level0]##link:#quarkus-amazon-ce_section_quarkus-costexplorer-async-client[Async HTTP transport configurations]##
+h|[[quarkus-amazon-costexplorer_section_quarkus-costexplorer-async-client]] [.section-name.section-level0]##link:#quarkus-amazon-costexplorer_section_quarkus-costexplorer-async-client[Async HTTP transport configurations]##
 h|Type
 h|Default
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-max-concurrency]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-max-concurrency[`+++quarkus.costexplorer.async-client.max-concurrency+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-max-concurrency]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-max-concurrency[`+++quarkus.costexplorer.async-client.max-concurrency+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.max-concurrency+++[]
 endif::add-copy-button-to-config-props[]
@@ -1585,7 +1585,7 @@ endif::add-copy-button-to-env-var[]
 |int
 |`+++50+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-max-pending-connection-acquires]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-max-pending-connection-acquires[`+++quarkus.costexplorer.async-client.max-pending-connection-acquires+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-max-pending-connection-acquires]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-max-pending-connection-acquires[`+++quarkus.costexplorer.async-client.max-pending-connection-acquires+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.max-pending-connection-acquires+++[]
 endif::add-copy-button-to-config-props[]
@@ -1608,7 +1608,7 @@ endif::add-copy-button-to-env-var[]
 |int
 |`+++10000+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-read-timeout]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-read-timeout[`+++quarkus.costexplorer.async-client.read-timeout+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-read-timeout]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-read-timeout[`+++quarkus.costexplorer.async-client.read-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.read-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1628,10 +1628,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_ASYNC_CLIENT_READ_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++30S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-write-timeout]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-write-timeout[`+++quarkus.costexplorer.async-client.write-timeout+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-write-timeout]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-write-timeout[`+++quarkus.costexplorer.async-client.write-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.write-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1651,10 +1651,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_ASYNC_CLIENT_WRITE_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++30S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-connection-timeout[`+++quarkus.costexplorer.async-client.connection-timeout+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-connection-timeout]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-connection-timeout[`+++quarkus.costexplorer.async-client.connection-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.connection-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1672,10 +1672,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_ASYNC_CLIENT_CONNECTION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++10S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-connection-acquisition-timeout[`+++quarkus.costexplorer.async-client.connection-acquisition-timeout+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-connection-acquisition-timeout[`+++quarkus.costexplorer.async-client.connection-acquisition-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.connection-acquisition-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1693,10 +1693,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_ASYNC_CLIENT_CONNECTION_ACQUISITION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++2S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-connection-time-to-live[`+++quarkus.costexplorer.async-client.connection-time-to-live+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-connection-time-to-live]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-connection-time-to-live[`+++quarkus.costexplorer.async-client.connection-time-to-live+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.connection-time-to-live+++[]
 endif::add-copy-button-to-config-props[]
@@ -1714,10 +1714,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_ASYNC_CLIENT_CONNECTION_TIME_TO_LIVE+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-connection-max-idle-time[`+++quarkus.costexplorer.async-client.connection-max-idle-time+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-connection-max-idle-time[`+++quarkus.costexplorer.async-client.connection-max-idle-time+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.connection-max-idle-time+++[]
 endif::add-copy-button-to-config-props[]
@@ -1737,10 +1737,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_ASYNC_CLIENT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++5S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-use-idle-connection-reaper[`+++quarkus.costexplorer.async-client.use-idle-connection-reaper+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-use-idle-connection-reaper]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-use-idle-connection-reaper[`+++quarkus.costexplorer.async-client.use-idle-connection-reaper+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.use-idle-connection-reaper+++[]
 endif::add-copy-button-to-config-props[]
@@ -1763,7 +1763,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++true+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-tcp-keep-alive[`+++quarkus.costexplorer.async-client.tcp-keep-alive+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tcp-keep-alive]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tcp-keep-alive[`+++quarkus.costexplorer.async-client.tcp-keep-alive+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.tcp-keep-alive+++[]
 endif::add-copy-button-to-config-props[]
@@ -1784,11 +1784,11 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-h|[[quarkus-amazon-ce_section_quarkus-costexplorer-async-client-crt]] [.section-name.section-level1]##link:#quarkus-amazon-ce_section_quarkus-costexplorer-async-client-crt[AWS CRT-based HTTP client specific configurations]##
+h|[[quarkus-amazon-costexplorer_section_quarkus-costexplorer-async-client-crt]] [.section-name.section-level1]##link:#quarkus-amazon-costexplorer_section_quarkus-costexplorer-async-client-crt[AWS CRT-based HTTP client specific configurations]##
 h|Type
 h|Default
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-connection-max-idle-time[`+++quarkus.costexplorer.async-client.crt.connection-max-idle-time+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-connection-max-idle-time]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-connection-max-idle-time[`+++quarkus.costexplorer.async-client.crt.connection-max-idle-time+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.crt.connection-max-idle-time+++[]
 endif::add-copy-button-to-config-props[]
@@ -1806,10 +1806,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_ASYNC_CLIENT_CRT_CONNECTION_MAX_IDLE_TIME+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++60S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-max-concurrency[`+++quarkus.costexplorer.async-client.crt.max-concurrency+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-max-concurrency]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-max-concurrency[`+++quarkus.costexplorer.async-client.crt.max-concurrency+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.crt.max-concurrency+++[]
 endif::add-copy-button-to-config-props[]
@@ -1830,7 +1830,7 @@ endif::add-copy-button-to-env-var[]
 |int
 |`+++50+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-connection-acquisition-timeout[`+++quarkus.costexplorer.async-client.crt.connection-acquisition-timeout+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-connection-acquisition-timeout]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-connection-acquisition-timeout[`+++quarkus.costexplorer.async-client.crt.connection-acquisition-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.crt.connection-acquisition-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1848,10 +1848,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_ASYNC_CLIENT_CRT_CONNECTION_ACQUISITION_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++10S+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-proxy-enabled[`+++quarkus.costexplorer.async-client.crt.proxy.enabled+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-proxy-enabled]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-proxy-enabled[`+++quarkus.costexplorer.async-client.crt.proxy.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.crt.proxy.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1872,7 +1872,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-proxy-endpoint[`+++quarkus.costexplorer.async-client.crt.proxy.endpoint+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-proxy-endpoint[`+++quarkus.costexplorer.async-client.crt.proxy.endpoint+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.crt.proxy.endpoint+++[]
 endif::add-copy-button-to-config-props[]
@@ -1895,7 +1895,7 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-proxy-username[`+++quarkus.costexplorer.async-client.crt.proxy.username+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-proxy-username]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-proxy-username[`+++quarkus.costexplorer.async-client.crt.proxy.username+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.crt.proxy.username+++[]
 endif::add-copy-button-to-config-props[]
@@ -1916,7 +1916,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-proxy-password[`+++quarkus.costexplorer.async-client.crt.proxy.password+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-proxy-password]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-proxy-password[`+++quarkus.costexplorer.async-client.crt.proxy.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.crt.proxy.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -1937,7 +1937,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-tcp-keep-alive-enabled[`+++quarkus.costexplorer.async-client.crt.tcp-keep-alive.enabled+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-tcp-keep-alive-enabled]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-tcp-keep-alive-enabled[`+++quarkus.costexplorer.async-client.crt.tcp-keep-alive.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.crt.tcp-keep-alive.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -1958,7 +1958,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-tcp-keep-alive-keep-alive-interval[`+++quarkus.costexplorer.async-client.crt.tcp-keep-alive.keep-alive-interval+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-tcp-keep-alive-keep-alive-interval]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-tcp-keep-alive-keep-alive-interval[`+++quarkus.costexplorer.async-client.crt.tcp-keep-alive.keep-alive-interval+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.crt.tcp-keep-alive.keep-alive-interval+++[]
 endif::add-copy-button-to-config-props[]
@@ -1976,10 +1976,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_INTERVAL+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++75MS+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-tcp-keep-alive-keep-alive-timeout[`+++quarkus.costexplorer.async-client.crt.tcp-keep-alive.keep-alive-timeout+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-tcp-keep-alive-keep-alive-timeout]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-tcp-keep-alive-keep-alive-timeout[`+++quarkus.costexplorer.async-client.crt.tcp-keep-alive.keep-alive-timeout+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.crt.tcp-keep-alive.keep-alive-timeout+++[]
 endif::add-copy-button-to-config-props[]
@@ -1997,10 +1997,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_ASYNC_CLIENT_CRT_TCP_KEEP_ALIVE_KEEP_ALIVE_TIMEOUT+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++7200MS+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-crt-tcp-keep-alive-keep-alive-probes[`+++quarkus.costexplorer.async-client.crt.tcp-keep-alive.keep-alive-probes+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-tcp-keep-alive-keep-alive-probes]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-crt-tcp-keep-alive-keep-alive-probes[`+++quarkus.costexplorer.async-client.crt.tcp-keep-alive.keep-alive-probes+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.crt.tcp-keep-alive.keep-alive-probes+++[]
 endif::add-copy-button-to-config-props[]
@@ -2022,7 +2022,7 @@ endif::add-copy-button-to-env-var[]
 |`+++9+++`
 
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-protocol]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-protocol[`+++quarkus.costexplorer.async-client.protocol+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-protocol]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-protocol[`+++quarkus.costexplorer.async-client.protocol+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.protocol+++[]
 endif::add-copy-button-to-config-props[]
@@ -2043,7 +2043,7 @@ endif::add-copy-button-to-env-var[]
 a|`http1-1`, `http2`
 |`+++http1-1+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-ssl-provider]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-ssl-provider[`+++quarkus.costexplorer.async-client.ssl-provider+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-ssl-provider]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-ssl-provider[`+++quarkus.costexplorer.async-client.ssl-provider+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.ssl-provider+++[]
 endif::add-copy-button-to-config-props[]
@@ -2066,7 +2066,7 @@ endif::add-copy-button-to-env-var[]
 a|`jdk`, `openssl`, `openssl-refcnt`
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-http2-max-streams]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-http2-max-streams[`+++quarkus.costexplorer.async-client.http2.max-streams+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-http2-max-streams]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-http2-max-streams[`+++quarkus.costexplorer.async-client.http2.max-streams+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.http2.max-streams+++[]
 endif::add-copy-button-to-config-props[]
@@ -2089,7 +2089,7 @@ endif::add-copy-button-to-env-var[]
 |long
 |`+++4294967295+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-http2-initial-window-size]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-http2-initial-window-size[`+++quarkus.costexplorer.async-client.http2.initial-window-size+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-http2-initial-window-size]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-http2-initial-window-size[`+++quarkus.costexplorer.async-client.http2.initial-window-size+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.http2.initial-window-size+++[]
 endif::add-copy-button-to-config-props[]
@@ -2112,7 +2112,7 @@ endif::add-copy-button-to-env-var[]
 |int
 |`+++1048576+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-http2-health-check-ping-period]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-http2-health-check-ping-period[`+++quarkus.costexplorer.async-client.http2.health-check-ping-period+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-http2-health-check-ping-period]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-http2-health-check-ping-period[`+++quarkus.costexplorer.async-client.http2.health-check-ping-period+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.http2.health-check-ping-period+++[]
 endif::add-copy-button-to-config-props[]
@@ -2132,10 +2132,10 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COSTEXPLORER_ASYNC_CLIENT_HTTP2_HEALTH_CHECK_PING_PERIOD+++`
 endif::add-copy-button-to-env-var[]
 --
-|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer[icon:question-circle[title=More information about the Duration format]]
 |`+++5+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-proxy-enabled]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-proxy-enabled[`+++quarkus.costexplorer.async-client.proxy.enabled+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-proxy-enabled]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-proxy-enabled[`+++quarkus.costexplorer.async-client.proxy.enabled+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.proxy.enabled+++[]
 endif::add-copy-button-to-config-props[]
@@ -2156,7 +2156,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-proxy-endpoint[`+++quarkus.costexplorer.async-client.proxy.endpoint+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-proxy-endpoint]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-proxy-endpoint[`+++quarkus.costexplorer.async-client.proxy.endpoint+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.proxy.endpoint+++[]
 endif::add-copy-button-to-config-props[]
@@ -2179,7 +2179,7 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html[URI]
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-proxy-non-proxy-hosts[`+++quarkus.costexplorer.async-client.proxy.non-proxy-hosts+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-proxy-non-proxy-hosts]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-proxy-non-proxy-hosts[`+++quarkus.costexplorer.async-client.proxy.non-proxy-hosts+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.proxy.non-proxy-hosts+++[]
 endif::add-copy-button-to-config-props[]
@@ -2200,7 +2200,7 @@ endif::add-copy-button-to-env-var[]
 |list of string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-key-managers-provider-type[`+++quarkus.costexplorer.async-client.tls-key-managers-provider.type+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-key-managers-provider-type]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-key-managers-provider-type[`+++quarkus.costexplorer.async-client.tls-key-managers-provider.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.tls-key-managers-provider.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -2229,7 +2229,7 @@ endif::add-copy-button-to-env-var[]
 a|`none`, `system-property`, `file-store`
 |`+++system-property+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-key-managers-provider-file-store-path[`+++quarkus.costexplorer.async-client.tls-key-managers-provider.file-store.path+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-key-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-key-managers-provider-file-store-path[`+++quarkus.costexplorer.async-client.tls-key-managers-provider.file-store.path+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.tls-key-managers-provider.file-store.path+++[]
 endif::add-copy-button-to-config-props[]
@@ -2250,7 +2250,7 @@ endif::add-copy-button-to-env-var[]
 |path
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-key-managers-provider-file-store-type[`+++quarkus.costexplorer.async-client.tls-key-managers-provider.file-store.type+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-key-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-key-managers-provider-file-store-type[`+++quarkus.costexplorer.async-client.tls-key-managers-provider.file-store.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.tls-key-managers-provider.file-store.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -2273,7 +2273,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-key-managers-provider-file-store-password[`+++quarkus.costexplorer.async-client.tls-key-managers-provider.file-store.password+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-key-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-key-managers-provider-file-store-password[`+++quarkus.costexplorer.async-client.tls-key-managers-provider.file-store.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.tls-key-managers-provider.file-store.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -2294,7 +2294,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-trust-managers-provider-type[`+++quarkus.costexplorer.async-client.tls-trust-managers-provider.type+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-trust-managers-provider-type]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-trust-managers-provider-type[`+++quarkus.costexplorer.async-client.tls-trust-managers-provider.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.tls-trust-managers-provider.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -2323,7 +2323,7 @@ endif::add-copy-button-to-env-var[]
 a|`trust-all`, `system-property`, `file-store`
 |`+++system-property+++`
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-trust-managers-provider-file-store-path[`+++quarkus.costexplorer.async-client.tls-trust-managers-provider.file-store.path+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-trust-managers-provider-file-store-path]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-trust-managers-provider-file-store-path[`+++quarkus.costexplorer.async-client.tls-trust-managers-provider.file-store.path+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.tls-trust-managers-provider.file-store.path+++[]
 endif::add-copy-button-to-config-props[]
@@ -2344,7 +2344,7 @@ endif::add-copy-button-to-env-var[]
 |path
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-trust-managers-provider-file-store-type[`+++quarkus.costexplorer.async-client.tls-trust-managers-provider.file-store.type+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-trust-managers-provider-file-store-type]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-trust-managers-provider-file-store-type[`+++quarkus.costexplorer.async-client.tls-trust-managers-provider.file-store.type+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.tls-trust-managers-provider.file-store.type+++[]
 endif::add-copy-button-to-config-props[]
@@ -2367,7 +2367,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-tls-trust-managers-provider-file-store-password[`+++quarkus.costexplorer.async-client.tls-trust-managers-provider.file-store.password+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-trust-managers-provider-file-store-password]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-tls-trust-managers-provider-file-store-password[`+++quarkus.costexplorer.async-client.tls-trust-managers-provider.file-store.password+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.tls-trust-managers-provider.file-store.password+++[]
 endif::add-copy-button-to-config-props[]
@@ -2388,7 +2388,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-event-loop-override]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-event-loop-override[`+++quarkus.costexplorer.async-client.event-loop.override+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-event-loop-override]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-event-loop-override[`+++quarkus.costexplorer.async-client.event-loop.override+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.event-loop.override+++[]
 endif::add-copy-button-to-config-props[]
@@ -2409,7 +2409,7 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-event-loop-number-of-threads[`+++quarkus.costexplorer.async-client.event-loop.number-of-threads+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-event-loop-number-of-threads]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-event-loop-number-of-threads[`+++quarkus.costexplorer.async-client.event-loop.number-of-threads+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.event-loop.number-of-threads+++[]
 endif::add-copy-button-to-config-props[]
@@ -2419,7 +2419,7 @@ endif::add-copy-button-to-config-props[]
 --
 Number of threads to use for the event loop group.
 
-If not set, the default Netty thread count is used (which is double the number of available processors unless the `io.netty.eventLoopThreads` system property is set).
+If not set, the default Netty thread count is used (which is double the number of available processors unless the `io.netty.eventLoopThreads` system property is set.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -2432,7 +2432,7 @@ endif::add-copy-button-to-env-var[]
 |int
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-event-loop-thread-name-prefix]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-event-loop-thread-name-prefix[`+++quarkus.costexplorer.async-client.event-loop.thread-name-prefix+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-event-loop-thread-name-prefix]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-event-loop-thread-name-prefix[`+++quarkus.costexplorer.async-client.event-loop.thread-name-prefix+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.event-loop.thread-name-prefix+++[]
 endif::add-copy-button-to-config-props[]
@@ -2457,7 +2457,7 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a| [[quarkus-amazon-ce_quarkus-costexplorer-async-client-advanced-use-future-completion-thread-pool]] [.property-path]##link:#quarkus-amazon-ce_quarkus-costexplorer-async-client-advanced-use-future-completion-thread-pool[`+++quarkus.costexplorer.async-client.advanced.use-future-completion-thread-pool+++`]##
+a| [[quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-advanced-use-future-completion-thread-pool]] [.property-path]##link:#quarkus-amazon-costexplorer_quarkus-costexplorer-async-client-advanced-use-future-completion-thread-pool[`+++quarkus.costexplorer.async-client.advanced.use-future-completion-thread-pool+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.costexplorer.async-client.advanced.use-future-completion-thread-pool+++[]
 endif::add-copy-button-to-config-props[]
@@ -2485,7 +2485,7 @@ endif::add-copy-button-to-env-var[]
 
 ifndef::no-duration-note[]
 [NOTE]
-[id=duration-note-anchor-quarkus-amazon-ce_quarkus-costexplorer]
+[id=duration-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer]
 .About the Duration format
 ====
 To write duration values, use the standard `java.time.Duration` format.
@@ -2504,7 +2504,7 @@ In other cases, the simplified format is translated to the `java.time.Duration` 
 endif::no-duration-note[]
 ifndef::no-memory-size-note[]
 [NOTE]
-[id=memory-size-note-anchor-quarkus-amazon-ce_quarkus-costexplorer]
+[id=memory-size-note-anchor-quarkus-amazon-costexplorer_quarkus-costexplorer]
 .About the MemorySize format
 ====
 A size configuration option recognizes strings in this format (shown as a regular expression): `[0-9]+[KkMmGgTtPpEeZzYy]?`.
