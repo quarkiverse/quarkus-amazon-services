@@ -907,7 +907,7 @@
         {"shape":"InternalServiceError"},
         {"shape":"ServiceUnavailableException"}
       ],
-      "documentation":"<p>Retrieves a list of the contents of a directory from a remote SFTP server. You specify the connector ID, the output path, and the remote directory path. You can also specify the optional <code>MaxItems</code> value to control the maximum number of items that are listed from the remote directory. This API returns a list of all files and directories in the remote directory (up to the maximum value), but does not return files or folders in sub-directories. That is, it only returns a list of files and directories one-level deep.</p> <p>After you receive the listing file, you can provide the files that you want to transfer to the <code>RetrieveFilePaths</code> parameter of the <code>StartFileTransfer</code> API call.</p> <p>The naming convention for the output file is <code> <i>connector-ID</i>-<i>listing-ID</i>.json</code>. The output file contains the following information:</p> <ul> <li> <p> <code>filePath</code>: the complete path of a remote file, relative to the directory of the listing request for your SFTP connector on the remote server.</p> </li> <li> <p> <code>modifiedTimestamp</code>: the last time the file was modified, in UTC time format. This field is optional. If the remote file attributes don't contain a timestamp, it is omitted from the file listing.</p> </li> <li> <p> <code>size</code>: the size of the file, in bytes. This field is optional. If the remote file attributes don't contain a file size, it is omitted from the file listing.</p> </li> <li> <p> <code>path</code>: the complete path of a remote directory, relative to the directory of the listing request for your SFTP connector on the remote server.</p> </li> <li> <p> <code>truncated</code>: a flag indicating whether the list output contains all of the items contained in the remote directory or not. If your <code>Truncated</code> output value is true, you can increase the value provided in the optional <code>max-items</code> input attribute to be able to list more items (up to the maximum allowed list size of 10,000 items).</p> </li> </ul>"
+      "documentation":"<p>Retrieves a list of the contents of a directory from a remote SFTP server. You specify the connector ID, the output path, and the remote directory path. You can also specify the optional <code>MaxItems</code> value to control the maximum number of items that are listed from the remote directory. This API returns a list of all files and directories in the remote directory (up to the maximum value), but does not return files or folders in sub-directories. That is, it only returns a list of files and directories one-level deep.</p> <p>After you receive the listing file, you can provide the files that you want to transfer to the <code>RetrieveFilePaths</code> parameter of the <code>StartFileTransfer</code> API call.</p> <p>The naming convention for the output file is <code> <i>connector-ID</i>-<i>listing-ID</i>.json</code>. The output file contains the following information:</p> <ul> <li> <p> <code>filePath</code>: the complete path of a remote file, relative to the directory of the listing request for your SFTP connector on the remote server.</p> </li> <li> <p> <code>modifiedTimestamp</code>: the last time the file was modified, in UTC time format. This field is optional. If the remote file attributes don't contain a timestamp, it is omitted from the file listing.</p> </li> <li> <p> <code>size</code>: the size of the file, in bytes. This field is optional. If the remote file attributes don't contain a file size, it is omitted from the file listing.</p> </li> <li> <p> <code>path</code>: the complete path of a remote directory, relative to the directory of the listing request for your SFTP connector on the remote server.</p> </li> <li> <p> <code>truncated</code>: a flag indicating whether the list output contains all of the items contained in the remote directory or not. If your <code>Truncated</code> output value is true, you can increase the value provided in the optional <code>max-items</code> input attribute to be able to list more items (up to the maximum allowed list size of 200,000 items).</p> </li> </ul>"
     },
     "StartFileTransfer":{
       "name":"StartFileTransfer",
@@ -1266,6 +1266,26 @@
       "min":20,
       "pattern":"arn:\\S+"
     },
+    "As2AsyncMdnConnectorConfig":{
+      "type":"structure",
+      "members":{
+        "Url":{
+          "shape":"Url",
+          "documentation":"<p>The URL endpoint where asynchronous MDN responses should be sent.</p>"
+        },
+        "ServerIds":{
+          "shape":"As2AsyncMdnServerIds",
+          "documentation":"<p>A list of server identifiers that can handle asynchronous MDN responses. You can specify between 1 and 10 server IDs.</p>"
+        }
+      },
+      "documentation":"<p>Contains the configuration details for asynchronous Message Disposition Notification (MDN) responses in AS2 connectors. This configuration specifies where asynchronous MDN responses should be sent and which servers should handle them.</p>"
+    },
+    "As2AsyncMdnServerIds":{
+      "type":"list",
+      "member":{"shape":"ServerId"},
+      "max":10,
+      "min":1
+    },
     "As2ConnectorConfig":{
       "type":"structure",
       "members":{
@@ -1299,7 +1319,7 @@
         },
         "MdnResponse":{
           "shape":"MdnResponse",
-          "documentation":"<p>Used for outbound requests (from an Transfer Family connector to a partner AS2 server) to determine whether the partner response for transfers is synchronous or asynchronous. Specify either of the following values:</p> <ul> <li> <p> <code>SYNC</code>: The system expects a synchronous MDN response, confirming that the file was transferred successfully (or not).</p> </li> <li> <p> <code>NONE</code>: Specifies that no MDN response is required.</p> </li> </ul>"
+          "documentation":"<p>Used for outbound requests (from an Transfer Family connector to a partner AS2 server) to determine whether the partner response for transfers is synchronous or asynchronous. Specify either of the following values:</p> <ul> <li> <p> <code>ASYNC</code>: The system expects an asynchronous MDN response, confirming that the file was transferred successfully (or not).</p> </li> <li> <p> <code>SYNC</code>: The system expects a synchronous MDN response, confirming that the file was transferred successfully (or not).</p> </li> <li> <p> <code>NONE</code>: Specifies that no MDN response is required.</p> </li> </ul>"
         },
         "BasicAuthSecretId":{
           "shape":"As2ConnectorSecretId",
@@ -1308,6 +1328,10 @@
         "PreserveContentType":{
           "shape":"PreserveContentType",
           "documentation":"<p>Allows you to use the Amazon S3 <code>Content-Type</code> that is associated with objects in S3 instead of having the content type mapped based on the file extension. This parameter is enabled by default when you create an AS2 connector from the console, but disabled by default when you create an AS2 connector by calling the API directly.</p>"
+        },
+        "AsyncMdnConfig":{
+          "shape":"As2AsyncMdnConnectorConfig",
+          "documentation":"<p>Configuration settings for asynchronous Message Disposition Notification (MDN) responses. This allows you to configure where asynchronous MDN responses should be sent and which servers should handle them.</p>"
         }
       },
       "documentation":"<p>Contains the details for an AS2 connector object. The connector object is used for AS2 outbound processes, to connect the Transfer Family customer with the trading partner.</p>"
@@ -1321,7 +1345,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"[\\p{Print}\\s]*"
+      "pattern":"[\\u0020-\\u007E\\s]*"
     },
     "As2Transport":{
       "type":"string",
@@ -1344,7 +1368,7 @@
       "type":"string",
       "max":48,
       "min":0,
-      "pattern":"[\\p{XDigit}{2}:?]*"
+      "pattern":"[0-9a-fA-F{}:?]*"
     },
     "Certificate":{
       "type":"string",
@@ -1355,14 +1379,14 @@
       "type":"string",
       "max":16384,
       "min":1,
-      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]*",
+      "pattern":"[\\t\\n\\r\\u0020-\\u00FF]+",
       "sensitive":true
     },
     "CertificateChainType":{
       "type":"string",
       "max":2097152,
       "min":1,
-      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]*",
+      "pattern":"[\\t\\n\\r\\u0020-\\u00FF]+",
       "sensitive":true
     },
     "CertificateId":{
@@ -1499,6 +1523,13 @@
         }
       },
       "documentation":"<p>VPC_LATTICE egress configuration that specifies the Resource Configuration ARN and port for connecting to SFTP servers through customer VPCs. Requires a valid Resource Configuration with appropriate network access.</p>"
+    },
+    "ConnectorsIpAddressType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "DUALSTACK"
+      ]
     },
     "CopyStepDetails":{
       "type":"structure",
@@ -1678,6 +1709,10 @@
         "EgressConfig":{
           "shape":"ConnectorEgressConfig",
           "documentation":"<p>Specifies the egress configuration for the connector, which determines how traffic is routed from the connector to the SFTP server. When set to VPC, enables routing through customer VPCs using VPC_LATTICE for private connectivity.</p>"
+        },
+        "IpAddressType":{
+          "shape":"ConnectorsIpAddressType",
+          "documentation":"<p>Specifies the IP address type for the connector's network connections. When set to <code>IPV4</code>, the connector uses IPv4 addresses only. When set to <code>DUALSTACK</code>, the connector supports both IPv4 and IPv6 addresses, with IPv6 preferred when available.</p>"
         }
       }
     },
@@ -1984,6 +2019,39 @@
         }
       },
       "documentation":"<p>Contains Amazon S3 locations for storing specific types of AS2 message files.</p>"
+    },
+    "CustomHttpHeader":{
+      "type":"structure",
+      "members":{
+        "Key":{
+          "shape":"CustomHttpHeaderKeyType",
+          "documentation":"<p>The name of the custom HTTP header.</p>"
+        },
+        "Value":{
+          "shape":"CustomHttpHeaderValueType",
+          "documentation":"<p>The value of the custom HTTP header.</p>"
+        }
+      },
+      "documentation":"<p>Represents a custom HTTP header that can be included in AS2 messages. Each header consists of a key-value pair.</p>",
+      "sensitive":true
+    },
+    "CustomHttpHeaderKeyType":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-]+",
+      "sensitive":true
+    },
+    "CustomHttpHeaderValueType":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9 +\\-./:=@_]*",
+      "sensitive":true
+    },
+    "CustomHttpHeaders":{
+      "type":"list",
+      "member":{"shape":"CustomHttpHeader"}
     },
     "CustomStepDetails":{
       "type":"structure",
@@ -2769,6 +2837,10 @@
         "Status":{
           "shape":"ConnectorStatus",
           "documentation":"<p>Current status of the connector. PENDING indicates creation/update in progress, ACTIVE means ready for operations, and ERRORED indicates a failure requiring attention.</p>"
+        },
+        "IpAddressType":{
+          "shape":"ConnectorsIpAddressType",
+          "documentation":"<p>IP address type for the connector's network connections. When set to <code>IPV4</code>, the connector uses IPv4 addresses only. When set to <code>DUALSTACK</code>, the connector supports both IPv4 and IPv6 addresses, with IPv6 preferred when available.</p>"
         }
       },
       "documentation":"<p>Describes the parameters for the connector, as identified by the <code>ConnectorId</code>.</p>"
@@ -3262,7 +3334,7 @@
       "type":"string",
       "max":200,
       "min":1,
-      "pattern":"[\\p{Graph}]+"
+      "pattern":"[\\u0021-\\u007E]+"
     },
     "DirectoryId":{
       "type":"string",
@@ -4662,7 +4734,6 @@
     "MaxItems":{
       "type":"integer",
       "box":true,
-      "max":10000,
       "min":1
     },
     "MaxResults":{
@@ -4675,7 +4746,8 @@
       "type":"string",
       "enum":[
         "SYNC",
-        "NONE"
+        "NONE",
+        "ASYNC"
       ]
     },
     "MdnSigningAlg":{
@@ -4694,7 +4766,8 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"[\\p{Print}\\p{Blank}]+"
+      "pattern":"[\\u0020-\\u007E\\t]+",
+      "sensitive":true
     },
     "MoveId":{
       "type":"string",
@@ -4806,7 +4879,7 @@
       "type":"string",
       "max":16384,
       "min":1,
-      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]*",
+      "pattern":"[\\t\\n\\r\\u0020-\\u00FF]+",
       "sensitive":true
     },
     "ProfileId":{
@@ -5016,6 +5089,17 @@
       "max":2048,
       "min":1
     },
+    "SecretVersionStage":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "SecretVersionStageList":{
+      "type":"list",
+      "member":{"shape":"SecretVersionStage"},
+      "max":2,
+      "min":1
+    },
     "SecurityGroupId":{
       "type":"string",
       "max":20,
@@ -5168,6 +5252,10 @@
         "MaxConcurrentConnections":{
           "shape":"MaxConcurrentConnections",
           "documentation":"<p>Specify the number of concurrent connections that your connector creates to the remote server. The default value is <code>1</code>. The maximum values is <code>5</code>.</p> <note> <p>If you are using the Amazon Web Services Management Console, the default value is <code>5</code>.</p> </note> <p>This parameter specifies the number of active connections that your connector can establish with the remote server at the same time. Increasing this value can enhance connector performance when transferring large file batches by enabling parallel operations.</p>"
+        },
+        "OrderedUserSecretVersionStages":{
+          "shape":"SecretVersionStageList",
+          "documentation":"<p>An ordered list of Amazon Web Services Secrets Manager version stages (staging labels, such as <code>AWSCURRENT</code> and <code>AWSPREVIOUS</code>) for the secret identified by <code>UserSecretId</code>. When establishing a connection, the connector attempts to retrieve the SFTP user's credentials from each version stage in the order listed, and uses the first version it can successfully retrieve. This lets you rotate the user secret without interrupting connector operations.</p>"
         }
       },
       "documentation":"<p>Contains the details for an SFTP connector object. The connector object is used for transferring files to and from a partner's SFTP server.</p>"
@@ -5337,6 +5425,10 @@
         "RemoteDirectoryPath":{
           "shape":"FilePath",
           "documentation":"<p>For an outbound transfer, the <code>RemoteDirectoryPath</code> specifies the destination for one or more files that are transferred to the partner's SFTP server. If you don't specify a <code>RemoteDirectoryPath</code>, the destination for transferred files is the SFTP user's home directory.</p>"
+        },
+        "CustomHttpHeaders":{
+          "shape":"CustomHttpHeaders",
+          "documentation":"<p>An array of key-value pairs that represent custom HTTP headers to include in AS2 messages. These headers are added to the AS2 message when sending files to your trading partner.</p>"
         }
       }
     },
@@ -5863,6 +5955,10 @@
         "EgressConfig":{
           "shape":"UpdateConnectorEgressConfig",
           "documentation":"<p>Updates the egress configuration for the connector, allowing you to modify how traffic is routed from the connector to the SFTP server. Changes to VPC configuration may require connector restart.</p>"
+        },
+        "IpAddressType":{
+          "shape":"ConnectorsIpAddressType",
+          "documentation":"<p>Specifies the IP address type for the connector's network connections. When set to <code>IPV4</code>, the connector uses IPv4 addresses only. When set to <code>DUALSTACK</code>, the connector supports both IPv4 and IPv6 addresses, with IPv6 preferred when available.</p>"
         }
       }
     },
@@ -6202,6 +6298,10 @@
         "SubnetIds":{
           "shape":"SubnetIds",
           "documentation":"<p>The list of subnet IDs within the VPC where the web app endpoint should be deployed during the update operation.</p>"
+        },
+        "IpAddressType":{
+          "shape":"WebAppVpcEndpointIpAddressType",
+          "documentation":"<p>The IP address type for the web app's VPC endpoint. This determines whether the endpoint is accessible over IPv4 only, or over both IPv4 and IPv6.</p>"
         }
       },
       "documentation":"<p>Contains the VPC configuration settings for updating a web app endpoint, including the subnet IDs where the endpoint should be deployed.</p>"
@@ -6361,9 +6461,20 @@
         "SecurityGroupIds":{
           "shape":"SecurityGroupIds",
           "documentation":"<p>The list of security group IDs that control access to the web app endpoint. These security groups determine which sources can access the endpoint based on IP addresses and port configurations.</p>"
+        },
+        "IpAddressType":{
+          "shape":"WebAppVpcEndpointIpAddressType",
+          "documentation":"<p>The IP address type for the web app's VPC endpoint. This determines whether the endpoint is accessible over IPv4 only, or over both IPv4 and IPv6.</p>"
         }
       },
       "documentation":"<p>Contains the VPC configuration settings for hosting a web app endpoint, including the VPC ID, subnet IDs, and security group IDs for access control.</p>"
+    },
+    "WebAppVpcEndpointIpAddressType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "DUALSTACK"
+      ]
     },
     "WorkflowDescription":{
       "type":"string",
@@ -6462,5 +6573,5 @@
       "min":0
     }
   },
-  "documentation":"<p>Transfer Family is a fully managed service that enables the transfer of files over the File Transfer Protocol (FTP), File Transfer Protocol over SSL (FTPS), or Secure Shell (SSH) File Transfer Protocol (SFTP) directly into and out of Amazon Simple Storage Service (Amazon S3) or Amazon EFS. Additionally, you can use Applicability Statement 2 (AS2) to transfer files into and out of Amazon S3. Amazon Web Services helps you seamlessly migrate your file transfer workflows to Transfer Family by integrating with existing authentication systems, and providing DNS routing with Amazon Route 53 so nothing changes for your customers and partners, or their applications. With your data in Amazon S3, you can use it with Amazon Web Services services for processing, analytics, machine learning, and archiving. Getting started with Transfer Family is easy since there is no infrastructure to buy and set up.</p>"
+  "documentation":"<p>Transfer Family offers fully managed support for the transfer of files over SFTP, AS2, FTPS, FTP, and web browser-based transfers directly into and out of Amazon Web Services storage services.</p> <p>File transfer protocols are used in data exchange workflows across different industries such as financial services, healthcare, advertising, and retail, among others. Transfer Family simplifies the migration of file transfer workflows to Amazon Web Services.</p> <p>To use the Transfer Family service, you instantiate a server in the Amazon Web Services Region of your choice. You can create the server, list available servers, and update and delete servers. The server is the entity that requests file operations from Transfer Family. Servers have a number of important properties. The server is a named instance as identified by a system assigned <code>ServerId</code> identifier. You can optionally assign a hostname, or even a custom hostname to a server. The service bills for any instantiated servers (even ones <code>OFFLINE</code>), and for the amount of data transferred.</p> <p>Users must be known to the server that requests file operations. A user as identified by their username is assigned to a server. Usernames are used to authenticate requests. A server can have only one authentication method: <code>AWS_DIRECTORY_SERVICE</code>, <code>SERVICE_MANAGED</code>, <code>AWS_LAMBDA</code>, or <code>API_GATEWAY</code>.</p> <p>Transfer Family also supports web applications that provide browser-based file transfer capabilities. Web applications can be configured with VPC endpoints to enable secure, private connectivity within your Virtual Private Cloud (VPC). This allows you to control network access and route traffic through your VPC infrastructure while maintaining the managed benefits of Transfer Family.</p> <p>This API interface reference for Transfer Family contains documentation for a programming interface that you can use to manage Transfer Family. The reference structure is as follows:</p> <ul> <li> <p>For the alphabetical list of API actions, see .</p> </li> <li> <p>For the alphabetical list of data types, see .</p> </li> <li> <p>For a list of common query parameters, see <a>CommonParameters</a>.</p> </li> <li> <p>For descriptions of the error codes, see <a>CommonErrors</a>.</p> </li> </ul> <note> <p>Rather than actually running a command, you can use the <code>--generate-cli-skeleton</code> parameter with any API call to generate and display a parameter template. You can then use the generated template to customize and use as input on a later command. For details, see <a href=\"https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-skeleton.html#cli-usage-skeleton-generate\">Generate and use a parameter skeleton file</a>.</p> </note>"
 }
