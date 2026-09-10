@@ -698,7 +698,7 @@ Environment variable: `+++QUARKUS_SFN_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_O
 endif::add-copy-button-to-env-var[]
 --
 |MemorySize link:#memory-size-note-anchor-quarkus-amazon-sfn_quarkus-sfn[icon:question-circle[title=More information about the MemorySize format]]
-|`+++1024+++`
+|`+++1M+++`
 
 a| [[quarkus-amazon-sfn_quarkus-sfn-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-sfn_quarkus-sfn-aws-credentials-process-provider-command[`+++quarkus.sfn.aws.credentials.process-provider.command+++`]##
 ifdef::add-copy-button-to-config-props[]

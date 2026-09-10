@@ -698,7 +698,7 @@ Environment variable: `+++QUARKUS_KMS_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCESS_O
 endif::add-copy-button-to-env-var[]
 --
 |MemorySize link:#memory-size-note-anchor-quarkus-amazon-kms_quarkus-kms[icon:question-circle[title=More information about the MemorySize format]]
-|`+++1024+++`
+|`+++1M+++`
 
 a| [[quarkus-amazon-kms_quarkus-kms-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-kms_quarkus-kms-aws-credentials-process-provider-command[`+++quarkus.kms.aws.credentials.process-provider.command+++`]##
 ifdef::add-copy-button-to-config-props[]

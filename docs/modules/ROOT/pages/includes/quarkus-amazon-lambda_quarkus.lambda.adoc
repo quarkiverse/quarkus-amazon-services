@@ -698,7 +698,7 @@ Environment variable: `+++QUARKUS_LAMBDA_AWS_CREDENTIALS_PROCESS_PROVIDER_PROCES
 endif::add-copy-button-to-env-var[]
 --
 |MemorySize link:#memory-size-note-anchor-quarkus-amazon-lambda_quarkus-lambda[icon:question-circle[title=More information about the MemorySize format]]
-|`+++1024+++`
+|`+++1M+++`
 
 a| [[quarkus-amazon-lambda_quarkus-lambda-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-lambda_quarkus-lambda-aws-credentials-process-provider-command[`+++quarkus.lambda.aws.credentials.process-provider.command+++`]##
 ifdef::add-copy-button-to-config-props[]

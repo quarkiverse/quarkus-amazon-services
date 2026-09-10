@@ -698,7 +698,7 @@ Environment variable: `+++QUARKUS_COGNITO_USER_POOLS_AWS_CREDENTIALS_PROCESS_PRO
 endif::add-copy-button-to-env-var[]
 --
 |MemorySize link:#memory-size-note-anchor-quarkus-amazon-cognito-user-pools_quarkus-cognito-user-pools[icon:question-circle[title=More information about the MemorySize format]]
-|`+++1024+++`
+|`+++1M+++`
 
 a| [[quarkus-amazon-cognito-user-pools_quarkus-cognito-user-pools-aws-credentials-process-provider-command]] [.property-path]##link:#quarkus-amazon-cognito-user-pools_quarkus-cognito-user-pools-aws-credentials-process-provider-command[`+++quarkus.cognito-user-pools.aws.credentials.process-provider.command+++`]##
 ifdef::add-copy-button-to-config-props[]

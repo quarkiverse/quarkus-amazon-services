@@ -8,7 +8,6 @@ import io.quarkus.runtime.annotations.ConfigDocSection;
 import io.quarkus.runtime.annotations.ConfigGroup;
 import io.quarkus.runtime.configuration.DurationConverter;
 import io.quarkus.runtime.configuration.MemorySize;
-import io.quarkus.runtime.configuration.MemorySizeConverter;
 import io.smallrye.config.WithConverter;
 import io.smallrye.config.WithDefault;
 
@@ -153,8 +152,7 @@ public interface AwsCredentialsProviderConfig {
         /**
          * The maximum size of the output that can be returned by the external process before an exception is raised.
          */
-        @WithDefault("1024")
-        @WithConverter(MemorySizeConverter.class)
+        @WithDefault("1M")
         MemorySize processOutputLimit();
 
         /**
