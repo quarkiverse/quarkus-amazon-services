@@ -9,8 +9,16 @@
     </parent>
 
     <artifactId>quarkus-amazon-ce-parent</artifactId>
-    <name>Quarkus - Amazon Services - Cost Explorer</name>
+    <name>Quarkus - Amazon Services - Relocations - quarkus-amazon-ce-parent</name>
     <packaging>pom</packaging>
+
+    <distributionManagement>
+        <relocation>
+            <artifactId>quarkus-amazon-costexplorer-parent</artifactId>
+            <version>${project.version}</version>
+            <message>quarkus-amazon-ce-parent has been relocated to quarkus-amazon-costexplorer-parent. Please update your pom.xml.</message>
+        </relocation>
+    </distributionManagement>
 
     <modules>
         <module>runtime</module>

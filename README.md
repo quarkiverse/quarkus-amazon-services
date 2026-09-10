@@ -18,6 +18,7 @@ This set of extensions allows you to interact with some of the AWS Services name
 * CloudWatch
 * CloudWatch Logs
 * Cognito User Pools
+* Cost Explorer
 * DynamoDB / DynamoDB Enhanced
 * ECR
 * ECS
