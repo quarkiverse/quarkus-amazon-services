@@ -49,6 +49,9 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}", readonly = true)
     private MavenProject project;
 
+    @Parameter(property = "noCache", defaultValue = "false")
+    private boolean noCache;
+
     private Path sourcesDirectory;
     private Path resourcesDirectory;
     private Path testsDirectory;
@@ -111,7 +114,7 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
     }
 
     private void downloadFileIfNotExists(String url, File destination) throws MojoExecutionException {
-        if (!destination.exists()) {
+        if (!destination.exists() || noCache) {
             try {
                 downloadFile(url, destination);
             } catch (IOException e) {
