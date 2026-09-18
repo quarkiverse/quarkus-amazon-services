@@ -8,7 +8,7 @@ metadata:
     - "amazon"
   categories:
     - "ai"
-  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-ce.html
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-costexplorer.html
   status: "stable"
   config:
   - "quarkus.ce."
