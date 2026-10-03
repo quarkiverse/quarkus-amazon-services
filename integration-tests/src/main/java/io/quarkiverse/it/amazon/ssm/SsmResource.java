@@ -10,6 +10,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 import software.amazon.awssdk.services.ssm.SsmAsyncClient;
@@ -32,6 +33,28 @@ public class SsmResource {
     @Inject
     SsmAsyncClient ssmAsyncClient;
 
+    @ConfigProperty(name = "pgsql.user", defaultValue = "N/A")
+    String postgresUsername;
+
+    @ConfigProperty(name = "pgsql.password", defaultValue = "N/A")
+    String postgresPassword;
+
+    @ConfigProperty(name = "pgsql.jdbc", defaultValue = "N/A")
+    String postgresUrl;
+
+    // Injected values from JSON secrets (flattened) and fetched recursively
+    @ConfigProperty(name = "app-db-config.db1.host", defaultValue = "N/A")
+    String db1Host;
+
+    @ConfigProperty(name = "app-db-config.db1.port", defaultValue = "N/A")
+    String db1Port;
+
+    @ConfigProperty(name = "app-db-config.db2.host", defaultValue = "N/A")
+    String db2Host;
+
+    @ConfigProperty(name = "app-db-config.db2.port", defaultValue = "N/A")
+    String db2Port;
+
     @GET
     @Path("sync")
     @Produces(TEXT_PLAIN)
@@ -53,5 +76,21 @@ public class SsmResource {
                 .thenCompose(result -> ssmAsyncClient.getParameter(r -> r.name(ASYNC_PARAM).withDecryption(Boolean.TRUE)))
                 .thenApply(GetParameterResponse::parameter)
                 .thenApply(Parameter::value);
+    }
+
+    @GET
+    @Path("config")
+    @Produces(TEXT_PLAIN)
+    public String testConfig() {
+        return "postgresUsername: " + postgresUsername + ", postgresPassword: " + postgresPassword + ", postgresUrl: "
+                + postgresUrl;
+    }
+
+    @GET
+    @Path("config-json")
+    @Produces(TEXT_PLAIN)
+    public String testConfigJson() {
+        LOG.info("Testing Secrets Manager JSON config parsing");
+        return "db1.host: " + db1Host + ", db1.port: " + db1Port + ", db2.host: " + db2Host + ", db2.port: " + db2Port;
     }
 }
