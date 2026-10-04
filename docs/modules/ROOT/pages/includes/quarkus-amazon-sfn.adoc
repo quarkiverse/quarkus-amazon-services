@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SFN_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 h|[[quarkus-amazon-sfn_section_quarkus-sfn]] [.section-name.section-level0]##link:#quarkus-amazon-sfn_section_quarkus-sfn[AWS SDK client configurations]##

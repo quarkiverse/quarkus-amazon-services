@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_MARKETPLACEMETERING_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 h|[[quarkus-amazon-marketplacemetering_section_quarkus-marketplacemetering]] [.section-name.section-level0]##link:#quarkus-amazon-marketplacemetering_section_quarkus-marketplacemetering[AWS SDK client configurations]##

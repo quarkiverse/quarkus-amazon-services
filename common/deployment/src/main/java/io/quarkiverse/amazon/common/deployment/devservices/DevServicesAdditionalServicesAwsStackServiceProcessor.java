@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import io.quarkiverse.amazon.common.deployment.spi.AbstractDevServicesAwsStackProcessor;
 import io.quarkiverse.amazon.common.deployment.spi.DevServicesAwsStackProviderBuildItem;
 import io.quarkiverse.amazon.common.runtime.DevServicesBuildTimeConfig;
+import io.quarkiverse.amazon.common.runtime.FlociDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.LocalStackDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.MiniStackDevServicesBuildTimeConfig;
@@ -29,6 +30,16 @@ public class DevServicesAdditionalServicesAwsStackServiceProcessor extends Abstr
             LocalStackDevServicesBuildTimeConfig localStackDevServicesBuildTimeConfig,
             GlobalDevServicesBuildTimeConfig globalConfig) {
         return localStackDevServicesBuildTimeConfig.additionalServices().entrySet().stream()
+                .map(entry -> setupService(entry.getKey(), entry.getValue(), globalConfig))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    @BuildStep
+    List<DevServicesAwsStackProviderBuildItem> setupServices(
+            FlociDevServicesBuildTimeConfig flociDevServicesBuildTimeConfig,
+            GlobalDevServicesBuildTimeConfig globalConfig) {
+        return flociDevServicesBuildTimeConfig.additionalServices().entrySet().stream()
                 .map(entry -> setupService(entry.getKey(), entry.getValue(), globalConfig))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());

@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_S3_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-s3_quarkus-s3-devservices-buckets]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-devservices-buckets[`+++quarkus.s3.devservices.buckets+++`]##

@@ -6,10 +6,10 @@ Quarkus Amazon Services automatically starts a containerized AWS stack in dev mo
 
 Dev Services for Amazon Services supports multiple stack providers:
 
-* **LocalStack**: The default stack provider, using the LocalStack container
-* **MiniStack**: An alternative stack provider
-* **Moto**: A lightweight AWS service mock library, using the motoserver container
-* **Floci**: Another alternative stack provider
+* **Floci**: A lightweight AWS service mock library built with Quarkus. It is the default stack provider. Not all services are supported yet, but it is actively developed and new services are added regularly.
+* **MiniStack**: An alternative stack provider that runs real services in a containerized environment.
+* **Moto**: A lightweight AWS service mock library, using the motoserver container (historically used for Cognito User Pools)
+* **LocalStack**: The industry standard for local AWS stack emulation. This stack is supported till version 4.13 (latest free community version).
 
 [WARNING]
 ====
@@ -20,8 +20,8 @@ You can configure the stack provider globally or per-service:
 
 [source,properties]
 ----
-# Global configuration (default: localstack)
-quarkus.aws.devservices.provider=localstack
+# Global configuration (default: floci)
+quarkus.aws.devservices.provider=floci
 
 # Per-service configuration (overrides global setting)
 quarkus.dynamodb.devservices.provider=ministack
@@ -48,8 +48,10 @@ Stack containers are shared between Quarkus applications in dev mode by default.
 quarkus.aws.devservices.shared=false
 
 # Override the global setting for individual stack providers
-quarkus.aws.devservices.localstack.shared=true
+quarkus.aws.devservices.floci.shared=false
 quarkus.aws.devservices.ministack.shared=false
+quarkus.aws.devservices.moto.shared=false
+quarkus.aws.devservices.localstack.shared=false
 ----
 
 In test mode, sharing is always disabled. Containers are identified by the `quarkus-dev-service-{stack}` label, where `{stack}` is the provider name (`localstack`, `ministack`, `moto`, or `floci`). Each stack provider uses its own name by default. To use multiple shared containers for the same provider, set its `service-name` property (for example, `quarkus.aws.devservices.localstack.service-name`).
@@ -58,7 +60,7 @@ In test mode, sharing is always disabled. Containers are identified by the `quar
 
 Dev Services for Amazon Services uses different default images depending on the stack provider:
 
-* **LocalStack**: `localstack/localstack:4.13` (latest community version)
+* **LocalStack**: `localstack/localstack:4.13`
 * **MiniStack**: `ministackorg/ministack:latest` (not a fixed version as MiniStack is still in early development)
 * **Moto**: `motoserver/moto:latest` (latest version)
 * **Floci**: `floci/floci:latest` (latest version)
@@ -67,8 +69,8 @@ You can configure the image and version using the stack-specific properties:
 
 [source,properties]
 ----
-# Global LocalStack configuration
-quarkus.aws.devservices.localstack.image-name=localstack/localstack:4.13
+# Global Floci configuration
+quarkus.aws.devservices.floci.image-name=floci/floci:latest
 
 # Global MiniStack configuration
 quarkus.aws.devservices.ministack.image-name=ministackorg/ministack:latest
@@ -76,11 +78,11 @@ quarkus.aws.devservices.ministack.image-name=ministackorg/ministack:latest
 # Global Moto configuration
 quarkus.aws.devservices.moto.image-name=motoserver/moto:latest
 
-# Global Floci configuration
-quarkus.aws.devservices.floci.image-name=floci/floci:latest
+# Global LocalStack configuration
+quarkus.aws.devservices.localstack.image-name=localstack/localstack:4.13
 
-# Per-service LocalStack configuration (overrides global)
-quarkus.dynamodb.devservices.localstack.image-name=localstack/localstack:4.13
+# Per-service Floci configuration (overrides global)
+quarkus.dynamodb.devservices.floci.image-name=floci/floci:latest
 
 # Per-service MiniStack configuration (overrides global)
 quarkus.dynamodb.devservices.ministack.image-name=ministackorg/ministack:latest
@@ -88,18 +90,18 @@ quarkus.dynamodb.devservices.ministack.image-name=ministackorg/ministack:latest
 # Per-service Moto configuration (overrides global)
 quarkus.dynamodb.devservices.moto.image-name=motoserver/moto:latest
 
-# Per-service Floci configuration (overrides global)
-quarkus.dynamodb.devservices.floci.image-name=floci/floci:latest
+# Per-service LocalStack configuration (overrides global)
+quarkus.dynamodb.devservices.localstack.image-name=localstack/localstack:4.13
 ----
 
-=== LocalStack Pro
+=== LocalStack Auth Token
 
-To use LocalStack Pro, you need to configure the Pro image and provide your authentication token:
+To use LocalStack latest version, you need to configure the image and provide your auth token:
 
 [source,properties]
 ----
-# Use LocalStack Pro image
-quarkus.aws.devservices.localstack.image-name=localstack/localstack-pro:latest
+# Use the latest LocalStack image
+quarkus.aws.devservices.localstack.image-name=localstack/localstack:latest
 
 # Set the authentication token as a container environment variable
 quarkus.aws.devservices.localstack.container-env.LOCALSTACK_AUTH_TOKEN=your-auth-token-here

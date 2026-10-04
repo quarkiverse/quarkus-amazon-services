@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_CLOUDWATCHLOGS_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 h|[[quarkus-amazon-cloudwatchlogs_section_quarkus-cloudwatchlogs]] [.section-name.section-level0]##link:#quarkus-amazon-cloudwatchlogs_section_quarkus-cloudwatchlogs[AWS SDK client configurations]##

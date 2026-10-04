@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_COGNITO_USER_POOLS_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 h|[[quarkus-amazon-cognito-user-pools_section_quarkus-cognito-user-pools]] [.section-name.section-level0]##link:#quarkus-amazon-cognito-user-pools_section_quarkus-cognito-user-pools[AWS SDK client configurations]##

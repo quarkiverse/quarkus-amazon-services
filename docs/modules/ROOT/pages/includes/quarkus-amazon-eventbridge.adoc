@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_EVENTBRIDGE_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 h|[[quarkus-amazon-eventbridge_section_quarkus-eventbridge]] [.section-name.section-level0]##link:#quarkus-amazon-eventbridge_section_quarkus-eventbridge[AWS SDK client configurations]##

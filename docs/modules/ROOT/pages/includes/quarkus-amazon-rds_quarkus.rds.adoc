@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_RDS_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-rds_quarkus-rds-credentials-provider-credentials-provider-use-quarkus-client]] [.property-path]##link:#quarkus-amazon-rds_quarkus-rds-credentials-provider-credentials-provider-use-quarkus-client[`+++quarkus.rds.credentials-provider."credentials-provider".use-quarkus-client+++`]##

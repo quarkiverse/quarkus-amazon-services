@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_INSPECTOR_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 h|[[quarkus-amazon-inspector_section_quarkus-inspector]] [.section-name.section-level0]##link:#quarkus-amazon-inspector_section_quarkus-inspector[AWS SDK client configurations]##

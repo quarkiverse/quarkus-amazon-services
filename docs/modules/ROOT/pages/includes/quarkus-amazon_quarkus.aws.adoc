@@ -218,8 +218,8 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_AWS_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
-|`+++localstack+++`
+a|`floci`, `localstack`, `ministack`, `moto`
+|`+++floci+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-shared]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-shared[`+++quarkus.aws.devservices.shared+++`]##
 ifdef::add-copy-button-to-config-props[]
@@ -875,7 +875,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_AWS_DEVSERVICES_FLOCI_ADDITIONAL_SERVICES__SERVICE_NAME__PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-service-name-enabled]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-service-name-enabled[`+++quarkus.aws.devservices.localstack.additional-services."service-name".enabled+++`]##
@@ -940,7 +940,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_ADDITIONAL_SERVICES__SERVICE_NAME__PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-ministack-additional-services-service-name-enabled]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-ministack-additional-services-service-name-enabled[`+++quarkus.aws.devservices.ministack.additional-services."service-name".enabled+++`]##
@@ -1005,7 +1005,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MINISTACK_ADDITIONAL_SERVICES__SERVICE_NAME__PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-additional-services-service-name-enabled]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-additional-services-service-name-enabled[`+++quarkus.aws.devservices.moto.additional-services."service-name".enabled+++`]##
@@ -1070,7 +1070,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MOTO_ADDITIONAL_SERVICES__SERVICE_NAME__PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 |===

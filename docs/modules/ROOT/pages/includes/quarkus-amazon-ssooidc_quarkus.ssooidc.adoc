@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SSOOIDC_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 h|[[quarkus-amazon-ssooidc_section_quarkus-ssooidc]] [.section-name.section-level0]##link:#quarkus-amazon-ssooidc_section_quarkus-ssooidc[AWS SDK client configurations]##

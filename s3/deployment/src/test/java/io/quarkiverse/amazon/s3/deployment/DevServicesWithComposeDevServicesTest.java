@@ -19,7 +19,7 @@ public class DevServicesWithComposeDevServicesTest {
     @Test
     public void test() {
         var networkName = DockerClientFactory.lazyClient().listContainersCmd().exec().stream()
-                .filter(container -> container.getImage().contains("localstack")).toList()
+                .filter(container -> container.getImage().contains("floci")).toList()
                 .get(0)
                 .getNetworkSettings().getNetworks().keySet().stream().toList().get(0);
         assertTrue(

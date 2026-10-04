@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_SQS_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sqs_quarkus-sqs-devservices-queues]] [.property-path]##link:#quarkus-amazon-sqs_quarkus-sqs-devservices-queues[`+++quarkus.sqs.devservices.queues+++`]##

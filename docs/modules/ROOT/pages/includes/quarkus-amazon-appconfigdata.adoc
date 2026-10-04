@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_APPCONFIGDATA_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-enabled]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-enabled[`+++quarkus.appconfigdata.config.enabled+++`]##

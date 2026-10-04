@@ -21,7 +21,7 @@ public interface GlobalDevServicesBuildTimeConfig {
      * devservices.provider configuration.
      * </p>
      */
-    @WithDefault(value = "localstack")
+    @WithDefault(value = "floci")
     AwsStack provider();
 
     /**
@@ -32,9 +32,9 @@ public interface GlobalDevServicesBuildTimeConfig {
     boolean shared();
 
     enum AwsStack {
+        FLOCI,
         LOCALSTACK,
         MINISTACK,
         MOTO,
-        FLOCI
     }
 }
