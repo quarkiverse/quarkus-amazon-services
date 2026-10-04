@@ -134,7 +134,8 @@ Quarkus Amazon Services provides multiple version streams. One stream is compati
 | [3.29, 3.33) | [3.12.0, 3.15)          | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/3.13.x/index.html)   |
 | 3.33.x (LTS) | 3.15.x (bug fixes only) | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/3.15.x/index.html)   |
 | [3.34]       | [3.16]                  | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/3.16.x/index.html)   |
-| [3.35, )     | [3.17, )                | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)      |
+| 3.40 (LTS)   | 3.23.x (LTS)            | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/3.23.x/index.html)   |
+| [4.x, )      | [4.x, ) ()              | [Documentation](https://docs.quarkiverse.io/quarkus-amazon-services/dev/index.html)      |
 
 Use the latest version of the corresponding stream, [the list of versions is available on Maven Central](https://search.maven.org/artifact/io.quarkiverse.amazonservices/quarkus-amazon-services-bom).
 
