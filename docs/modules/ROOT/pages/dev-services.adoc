@@ -40,19 +40,19 @@ Dev Services for Amazon Services is automatically enabled for each extensions ad
 
 == Shared services
 
-By default, Dev Services for Amazon Services will start one stack container with only the needed services.
+Stack containers are shared between Quarkus applications in dev mode by default. Set `quarkus.aws.devservices.shared=false` to disable sharing globally. A stack-specific setting overrides the global value:
 
-If you need to share a particular service between applications, Dev Services for Amazon Services implements a service discovery mechanism for your multiple Quarkus applications running in dev mode to share a single container.
+[source,properties]
+----
+# Disable sharing for all stack providers
+quarkus.aws.devservices.shared=false
 
-Dev Services for Amazon Services starts the container with the `quarkus-dev-service-{stack}` label (where `{stack}` is the stack provider name, e.g., `localstack`, `ministack`, `moto`, or `floci`) and service name as the value, which is used to identify the container.
-If you need multiple (shared) container, you can configure the `devservices.service-name` attribute for a given extension (eg. `quarkus.dynamodb.devservices.service-name`) and indicate the container name. It looks for a container with the same value, or starts a new one if none can be found. The default service name is the stack provider name (`localstack`, `ministack`, `moto`, or `floci`).
+# Override the global setting for individual stack providers
+quarkus.aws.devservices.localstack.shared=true
+quarkus.aws.devservices.ministack.shared=false
+----
 
-=== Isolation (Legacy mode LocalStack)
-NOTE: Deprecated, only applies to LocalStack in legacy modeand will be removed in a future release.
-
-By default, to ease sharing containers across multiple applications, each service will be started in its own container (the value of the `quarkus-dev-service-{stack}` label is suffixed by the extension name). However, sometimes, some services need to communicate with each other inside the same container (e.g., subscribing an Amazon SQS queue to an Amazon SNS topic). In this case, you can disable this behavior by setting the `devservices.isolated` attribute for a given extension to `false`.
-
-Sharing is disabled by default in dev mode, and is always disabled in test mode. You can enable the sharing with `devservices.shared=true` for a given extension (e.g. `quarkus.dynamodb.devservices.shared=true`). All other non-shared services will be grouped in another container.
+In test mode, sharing is always disabled. Containers are identified by the `quarkus-dev-service-{stack}` label, where `{stack}` is the provider name (`localstack`, `ministack`, `moto`, or `floci`). Each stack provider uses its own name by default. To use multiple shared containers for the same provider, set its `service-name` property (for example, `quarkus.aws.devservices.localstack.service-name`).
 
 == Configuring the image
 

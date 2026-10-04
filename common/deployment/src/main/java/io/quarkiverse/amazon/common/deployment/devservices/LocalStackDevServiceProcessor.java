@@ -37,7 +37,7 @@ import io.quarkus.devservices.common.StartableContainer;
  * Processor for LocalStack dev services.
  */
 @BuildSteps(onlyIf = { IsDevServicesSupportedByLaunchMode.class,
-        DevServicesConfig.Enabled.class }, onlyIfNot = LocalStackDevServicesBuildTimeConfig.LegacyModeEnabled.class)
+        DevServicesConfig.Enabled.class })
 public class LocalStackDevServiceProcessor extends AbstractDevServicesAwsStackProcessor {
 
     private static final String DEV_SERVICE_LABEL = "quarkus-dev-service-localstack";
