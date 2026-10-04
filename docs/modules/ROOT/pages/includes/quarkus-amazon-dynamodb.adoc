@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_DYNAMODB_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 a| [[quarkus-amazon-dynamodb_quarkus-dynamodb-enable-endpoint-discovery]] [.property-path]##link:#quarkus-amazon-dynamodb_quarkus-dynamodb-enable-endpoint-discovery[`+++quarkus.dynamodb.enable-endpoint-discovery+++`]##

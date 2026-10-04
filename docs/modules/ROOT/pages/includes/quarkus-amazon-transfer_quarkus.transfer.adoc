@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_TRANSFER_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 h|[[quarkus-amazon-transfer_section_quarkus-transfer]] [.section-name.section-level0]##link:#quarkus-amazon-transfer_section_quarkus-transfer[AWS SDK client configurations]##

@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_RESOURCEGROUPSTAGGINGAPI_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 h|[[quarkus-amazon-resourcegroupstaggingapi_section_quarkus-resourcegroupstaggingapi]] [.section-name.section-level0]##link:#quarkus-amazon-resourcegroupstaggingapi_section_quarkus-resourcegroupstaggingapi[AWS SDK client configurations]##

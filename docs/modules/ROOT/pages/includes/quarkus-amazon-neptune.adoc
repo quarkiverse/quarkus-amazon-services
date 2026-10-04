@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_NEPTUNE_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 h|[[quarkus-amazon-neptune_section_quarkus-neptune]] [.section-name.section-level0]##link:#quarkus-amazon-neptune_section_quarkus-neptune[AWS SDK client configurations]##

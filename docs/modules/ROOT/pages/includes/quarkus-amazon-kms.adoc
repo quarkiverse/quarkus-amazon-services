@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_KMS_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 h|[[quarkus-amazon-kms_section_quarkus-kms]] [.section-name.section-level0]##link:#quarkus-amazon-kms_section_quarkus-kms[AWS SDK client configurations]##

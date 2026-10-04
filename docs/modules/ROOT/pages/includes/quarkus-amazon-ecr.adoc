@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_ECR_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 h|[[quarkus-amazon-ecr_section_quarkus-ecr]] [.section-name.section-level0]##link:#quarkus-amazon-ecr_section_quarkus-ecr[AWS SDK client configurations]##

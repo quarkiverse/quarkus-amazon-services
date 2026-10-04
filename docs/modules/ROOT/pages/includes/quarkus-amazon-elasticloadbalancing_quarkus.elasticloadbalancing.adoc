@@ -155,7 +155,7 @@ ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_ELASTICLOADBALANCING_DEVSERVICES_PROVIDER+++`
 endif::add-copy-button-to-env-var[]
 --
-a|`localstack`, `ministack`, `moto`, `floci`
+a|`floci`, `localstack`, `ministack`, `moto`
 |
 
 h|[[quarkus-amazon-elasticloadbalancing_section_quarkus-elasticloadbalancing]] [.section-name.section-level0]##link:#quarkus-amazon-elasticloadbalancing_section_quarkus-elasticloadbalancing[AWS SDK client configurations]##
