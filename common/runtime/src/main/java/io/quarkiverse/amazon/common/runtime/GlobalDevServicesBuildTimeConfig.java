@@ -24,6 +24,13 @@ public interface GlobalDevServicesBuildTimeConfig {
     @WithDefault(value = "localstack")
     AwsStack provider();
 
+    /**
+     * Indicates if stack containers are shared by Dev Services. Defaults to {@code true}; stack-specific configuration
+     * can override this value with {@code quarkus.aws.devservices.<stack>.shared}.
+     */
+    @WithDefault("true")
+    boolean shared();
+
     enum AwsStack {
         LOCALSTACK,
         MINISTACK,

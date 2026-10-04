@@ -90,11 +90,12 @@ public abstract class AbstractDevServicesAwsStackProcessor {
         if (devServiceDisabled(dockerStatusBuildItem, config, requestedServices)) {
             return null;
         }
+        boolean shared = config.shared().orElse(globalConfig.shared());
         boolean useSharedNetwork = DevServicesSharedNetworkBuildItem.isSharedNetworkRequired(devServicesConfig, sharedNetwork);
 
         // Try to locate an existing shared container
         ContainerLocator containerLocator = getContainerLocator();
-        return containerLocator.locateContainer(config.serviceName(), config.shared(), launchMode.getLaunchMode())
+        return containerLocator.locateContainer(config.serviceName(), shared, launchMode.getLaunchMode())
                 .or(() -> ComposeLocator.locateContainer(compose, List.of(config.imageName()), getStackPort(),
                         launchMode.getLaunchMode(), useSharedNetwork))
                 .map(containerAddress -> {

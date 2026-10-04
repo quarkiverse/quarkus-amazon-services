@@ -57,7 +57,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Indicates if the stack container managed by Quarkus Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services for Amazon Services starts a new container. Container sharing is only used in dev mode.
+Indicates if the stack container managed by Quarkus Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services for Amazon Services starts a new container. Container sharing is only used in dev mode. If unset, the global `quarkus.aws.devservices.shared` value is used.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -68,7 +68,30 @@ Environment variable: `+++QUARKUS_AWS_DEVSERVICES_FLOCI_SHARED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++true+++`
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-floci-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-floci-service-name[`+++quarkus.aws.devservices.floci.service-name+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.floci.service-name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The value of the `quarkus-dev-service-floci` label attached to the started container. This property is used when `shared` is set to `true`. In this case, before starting a container, Dev Services for Floci looks for a container with the `quarkus-dev-service-floci` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise, it starts a new container with the `quarkus-dev-service-floci` label set to the specified value.
+
+This property is used when you need multiple shared Floci containers.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_FLOCI_SERVICE_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_AWS_DEVSERVICES_FLOCI_SERVICE_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++floci+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-floci-init-scripts-folder]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-floci-init-scripts-folder[`+++quarkus.aws.devservices.floci.init-scripts-folder+++`]##
 ifdef::add-copy-button-to-config-props[]
@@ -132,29 +155,6 @@ endif::add-copy-button-to-env-var[]
 --
 |string
 |
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-floci-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-floci-service-name[`+++quarkus.aws.devservices.floci.service-name+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.floci.service-name+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-The value of the `quarkus-dev-service-floci` label attached to the started container. This property is used when `shared` is set to `true`. In this case, before starting a container, Dev Services for Floci looks for a container with the `quarkus-dev-service-floci` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise, it starts a new container with the `quarkus-dev-service-floci` label set to the specified value.
-
-This property is used when you need multiple shared Floci containers.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_FLOCI_SERVICE_NAME+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_FLOCI_SERVICE_NAME+++`
-endif::add-copy-button-to-env-var[]
---
-|string
-|`+++floci+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-floci-container-properties-environment-variable-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-floci-container-properties-environment-variable-name[`+++quarkus.aws.devservices.floci.container-properties."environment-variable-name"+++`]##
 ifdef::add-copy-button-to-config-props[]
@@ -221,6 +221,27 @@ endif::add-copy-button-to-env-var[]
 a|`localstack`, `ministack`, `moto`, `floci`
 |`+++localstack+++`
 
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-shared]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-shared[`+++quarkus.aws.devservices.shared+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.shared+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Indicates if stack containers are shared by Dev Services. Defaults to `true`; stack-specific configuration can override this value with `quarkus.aws.devservices.<stack>.shared`.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_SHARED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_AWS_DEVSERVICES_SHARED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++true+++`
+
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-image-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-image-name[`+++quarkus.aws.devservices.localstack.image-name+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.devservices.localstack.image-name+++[]
@@ -271,7 +292,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Indicates if the stack container managed by Quarkus Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services for Amazon Services starts a new container. Container sharing is only used in dev mode.
+Indicates if the stack container managed by Quarkus Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services for Amazon Services starts a new container. Container sharing is only used in dev mode. If unset, the global `quarkus.aws.devservices.shared` value is used.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -282,7 +303,28 @@ Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_SHARED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++true+++`
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-service-name[`+++quarkus.aws.devservices.localstack.service-name+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.localstack.service-name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The value of the `quarkus-dev-service-localstack` label attached to the started container.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_SERVICE_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_SERVICE_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++localstack+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-init-scripts-folder]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-init-scripts-folder[`+++quarkus.aws.devservices.localstack.init-scripts-folder+++`]##
 ifdef::add-copy-button-to-config-props[]
@@ -347,27 +389,6 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-service-name[`+++quarkus.aws.devservices.localstack.service-name+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.localstack.service-name+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-The value of the `quarkus-dev-service-localstack` label attached to the started container.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_SERVICE_NAME+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_SERVICE_NAME+++`
-endif::add-copy-button-to-env-var[]
---
-|string
-|`+++localstack+++`
-
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-container-properties-environment-variable-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-container-properties-environment-variable-name[`+++quarkus.aws.devservices.localstack.container-properties."environment-variable-name"+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.devservices.localstack.container-properties."environment-variable-name"+++[]
@@ -409,29 +430,6 @@ endif::add-copy-button-to-env-var[]
 --
 |int
 |
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-legacy-mode]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-legacy-mode[`+++quarkus.aws.devservices.localstack.legacy-mode+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.localstack.legacy-mode+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-When legacy mode is enabled, Dev Services for LocalStack will use the old approach to manage the container lifecycle.
-
-DEPRECATED: This mode is deprecated and should not be used. It is only provided as a fallback for users who rely on the old behavior and need more time to migrate to the new approach.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_LEGACY_MODE+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_LEGACY_MODE+++`
-endif::add-copy-button-to-env-var[]
---
-|boolean
-|`+++false+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-ministack-image-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-ministack-image-name[`+++quarkus.aws.devservices.ministack.image-name+++`]##
 ifdef::add-copy-button-to-config-props[]
@@ -483,7 +481,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Indicates if the stack container managed by Quarkus Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services for Amazon Services starts a new container. Container sharing is only used in dev mode.
+Indicates if the stack container managed by Quarkus Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services for Amazon Services starts a new container. Container sharing is only used in dev mode. If unset, the global `quarkus.aws.devservices.shared` value is used.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -494,7 +492,30 @@ Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MINISTACK_SHARED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++true+++`
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-ministack-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-ministack-service-name[`+++quarkus.aws.devservices.ministack.service-name+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.ministack.service-name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The value of the `quarkus-dev-service-ministack` label attached to the started container. This property is used when `shared` is set to `true`. In this case, before starting a container, Dev Services for MiniStack looks for a container with the `quarkus-dev-service-ministack` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise, it starts a new container with the `quarkus-dev-service-ministack` label set to the specified value.
+
+This property is used when you need multiple shared MiniStack containers.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MINISTACK_SERVICE_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MINISTACK_SERVICE_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++ministack+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-ministack-init-scripts-folder]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-ministack-init-scripts-folder[`+++quarkus.aws.devservices.ministack.init-scripts-folder+++`]##
 ifdef::add-copy-button-to-config-props[]
@@ -558,29 +579,6 @@ endif::add-copy-button-to-env-var[]
 --
 |string
 |
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-ministack-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-ministack-service-name[`+++quarkus.aws.devservices.ministack.service-name+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.ministack.service-name+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-The value of the `quarkus-dev-service-ministack` label attached to the started container. This property is used when `shared` is set to `true`. In this case, before starting a container, Dev Services for MiniStack looks for a container with the `quarkus-dev-service-ministack` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise, it starts a new container with the `quarkus-dev-service-ministack` label set to the specified value.
-
-This property is used when you need multiple shared MiniStack containers.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MINISTACK_SERVICE_NAME+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MINISTACK_SERVICE_NAME+++`
-endif::add-copy-button-to-env-var[]
---
-|string
-|`+++ministack+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-ministack-container-properties-environment-variable-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-ministack-container-properties-environment-variable-name[`+++quarkus.aws.devservices.ministack.container-properties."environment-variable-name"+++`]##
 ifdef::add-copy-button-to-config-props[]
@@ -674,7 +672,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Indicates if the stack container managed by Quarkus Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services for Amazon Services starts a new container. Container sharing is only used in dev mode.
+Indicates if the stack container managed by Quarkus Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services for Amazon Services starts a new container. Container sharing is only used in dev mode. If unset, the global `quarkus.aws.devservices.shared` value is used.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -685,7 +683,30 @@ Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MOTO_SHARED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++true+++`
+|
+
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-service-name[`+++quarkus.aws.devservices.moto.service-name+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.devservices.moto.service-name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The value of the `quarkus-dev-service-moto` label attached to the started container. This property is used when `shared` is set to `true`. In this case, before starting a container, Dev Services for Moto looks for a container with the `quarkus-dev-service-moto` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise, it starts a new container with the `quarkus-dev-service-moto` label set to the specified value.
+
+This property is used when you need multiple shared Moto containers.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MOTO_SERVICE_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MOTO_SERVICE_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++moto+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-init-scripts-folder]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-init-scripts-folder[`+++quarkus.aws.devservices.moto.init-scripts-folder+++`]##
 ifdef::add-copy-button-to-config-props[]
@@ -750,29 +771,6 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-service-name[`+++quarkus.aws.devservices.moto.service-name+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.moto.service-name+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-The value of the `quarkus-dev-service-moto` label attached to the started container. This property is used when `shared` is set to `true`. In this case, before starting a container, Dev Services for Moto looks for a container with the `quarkus-dev-service-moto` label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise, it starts a new container with the `quarkus-dev-service-moto` label set to the specified value.
-
-This property is used when you need multiple shared Moto containers.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MOTO_SERVICE_NAME+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MOTO_SERVICE_NAME+++`
-endif::add-copy-button-to-env-var[]
---
-|string
-|`+++moto+++`
-
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-container-properties-environment-variable-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-container-properties-environment-variable-name[`+++quarkus.aws.devservices.moto.container-properties."environment-variable-name"+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.devservices.moto.container-properties."environment-variable-name"+++[]
@@ -835,75 +833,6 @@ endif::add-copy-button-to-env-var[]
 --
 |boolean
 |
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-floci-additional-services-service-name-shared]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-floci-additional-services-service-name-shared[`+++quarkus.aws.devservices.floci.additional-services."service-name".shared+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.floci.additional-services."service-name".shared+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-Indicates if the container managed by Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services starts a new container.
-
-The discovery uses the `quarkus-dev-service-++{++provider`++}++ label. The value is configured using the `service-name` property.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_FLOCI_ADDITIONAL_SERVICES__SERVICE_NAME__SHARED+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_FLOCI_ADDITIONAL_SERVICES__SERVICE_NAME__SHARED+++`
-endif::add-copy-button-to-env-var[]
---
-|boolean
-|`+++false+++`
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-floci-additional-services-service-name-isolated]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-floci-additional-services-service-name-isolated[`+++quarkus.aws.devservices.floci.additional-services."service-name".isolated+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.floci.additional-services."service-name".isolated+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-Indicates if shared LocalStack services managed by Dev Services should be isolated. When true, the service will be started in its own container and the value of the `quarkus-dev-service-localstack` label will be suffixed by the service name (s3, sqs, ...)
-
-DEPRECATED: This will work only with the LocalStack legacy mode.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_FLOCI_ADDITIONAL_SERVICES__SERVICE_NAME__ISOLATED+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_FLOCI_ADDITIONAL_SERVICES__SERVICE_NAME__ISOLATED+++`
-endif::add-copy-button-to-env-var[]
---
-|boolean
-|`+++true+++`
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-floci-additional-services-service-name-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-floci-additional-services-service-name-service-name[`+++quarkus.aws.devservices.floci.additional-services."service-name".service-name+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.floci.additional-services."service-name".service-name+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-The value of the `quarkus-dev-service-++{++provider`++}++ label attached to the started container. In dev mode, when `shared` is set to `true`, before starting a container, Dev Services looks for a container with the `quarkus-dev-service-++{++provider`++}++ label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise it starts a new container with the `quarkus-dev-service-++{++provider`++}++ label set to the specified value. In test mode, Dev Services will group services with the same `service-name` value in one container instance.
-
-This property is used when you need multiple shared container instances.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_FLOCI_ADDITIONAL_SERVICES__SERVICE_NAME__SERVICE_NAME+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_FLOCI_ADDITIONAL_SERVICES__SERVICE_NAME__SERVICE_NAME+++`
-endif::add-copy-button-to-env-var[]
---
-|string
-|`+++awsstack+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-floci-additional-services-service-name-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-floci-additional-services-service-name-container-properties-container-properties[`+++quarkus.aws.devservices.floci.additional-services."service-name".container-properties."container-properties"+++`]##
 ifdef::add-copy-button-to-config-props[]
@@ -970,75 +899,6 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-service-name-shared]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-service-name-shared[`+++quarkus.aws.devservices.localstack.additional-services."service-name".shared+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.localstack.additional-services."service-name".shared+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-Indicates if the container managed by Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services starts a new container.
-
-The discovery uses the `quarkus-dev-service-++{++provider`++}++ label. The value is configured using the `service-name` property.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_ADDITIONAL_SERVICES__SERVICE_NAME__SHARED+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_ADDITIONAL_SERVICES__SERVICE_NAME__SHARED+++`
-endif::add-copy-button-to-env-var[]
---
-|boolean
-|`+++false+++`
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-service-name-isolated]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-service-name-isolated[`+++quarkus.aws.devservices.localstack.additional-services."service-name".isolated+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.localstack.additional-services."service-name".isolated+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-Indicates if shared LocalStack services managed by Dev Services should be isolated. When true, the service will be started in its own container and the value of the `quarkus-dev-service-localstack` label will be suffixed by the service name (s3, sqs, ...)
-
-DEPRECATED: This will work only with the LocalStack legacy mode.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_ADDITIONAL_SERVICES__SERVICE_NAME__ISOLATED+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_ADDITIONAL_SERVICES__SERVICE_NAME__ISOLATED+++`
-endif::add-copy-button-to-env-var[]
---
-|boolean
-|`+++true+++`
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-service-name-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-service-name-service-name[`+++quarkus.aws.devservices.localstack.additional-services."service-name".service-name+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.localstack.additional-services."service-name".service-name+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-The value of the `quarkus-dev-service-++{++provider`++}++ label attached to the started container. In dev mode, when `shared` is set to `true`, before starting a container, Dev Services looks for a container with the `quarkus-dev-service-++{++provider`++}++ label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise it starts a new container with the `quarkus-dev-service-++{++provider`++}++ label set to the specified value. In test mode, Dev Services will group services with the same `service-name` value in one container instance.
-
-This property is used when you need multiple shared container instances.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_ADDITIONAL_SERVICES__SERVICE_NAME__SERVICE_NAME+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_LOCALSTACK_ADDITIONAL_SERVICES__SERVICE_NAME__SERVICE_NAME+++`
-endif::add-copy-button-to-env-var[]
---
-|string
-|`+++awsstack+++`
-
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-service-name-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-localstack-additional-services-service-name-container-properties-container-properties[`+++quarkus.aws.devservices.localstack.additional-services."service-name".container-properties."container-properties"+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.devservices.localstack.additional-services."service-name".container-properties."container-properties"+++[]
@@ -1104,75 +964,6 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |
 
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-ministack-additional-services-service-name-shared]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-ministack-additional-services-service-name-shared[`+++quarkus.aws.devservices.ministack.additional-services."service-name".shared+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.ministack.additional-services."service-name".shared+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-Indicates if the container managed by Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services starts a new container.
-
-The discovery uses the `quarkus-dev-service-++{++provider`++}++ label. The value is configured using the `service-name` property.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MINISTACK_ADDITIONAL_SERVICES__SERVICE_NAME__SHARED+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MINISTACK_ADDITIONAL_SERVICES__SERVICE_NAME__SHARED+++`
-endif::add-copy-button-to-env-var[]
---
-|boolean
-|`+++false+++`
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-ministack-additional-services-service-name-isolated]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-ministack-additional-services-service-name-isolated[`+++quarkus.aws.devservices.ministack.additional-services."service-name".isolated+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.ministack.additional-services."service-name".isolated+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-Indicates if shared LocalStack services managed by Dev Services should be isolated. When true, the service will be started in its own container and the value of the `quarkus-dev-service-localstack` label will be suffixed by the service name (s3, sqs, ...)
-
-DEPRECATED: This will work only with the LocalStack legacy mode.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MINISTACK_ADDITIONAL_SERVICES__SERVICE_NAME__ISOLATED+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MINISTACK_ADDITIONAL_SERVICES__SERVICE_NAME__ISOLATED+++`
-endif::add-copy-button-to-env-var[]
---
-|boolean
-|`+++true+++`
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-ministack-additional-services-service-name-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-ministack-additional-services-service-name-service-name[`+++quarkus.aws.devservices.ministack.additional-services."service-name".service-name+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.ministack.additional-services."service-name".service-name+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-The value of the `quarkus-dev-service-++{++provider`++}++ label attached to the started container. In dev mode, when `shared` is set to `true`, before starting a container, Dev Services looks for a container with the `quarkus-dev-service-++{++provider`++}++ label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise it starts a new container with the `quarkus-dev-service-++{++provider`++}++ label set to the specified value. In test mode, Dev Services will group services with the same `service-name` value in one container instance.
-
-This property is used when you need multiple shared container instances.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MINISTACK_ADDITIONAL_SERVICES__SERVICE_NAME__SERVICE_NAME+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MINISTACK_ADDITIONAL_SERVICES__SERVICE_NAME__SERVICE_NAME+++`
-endif::add-copy-button-to-env-var[]
---
-|string
-|`+++awsstack+++`
-
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-ministack-additional-services-service-name-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-ministack-additional-services-service-name-container-properties-container-properties[`+++quarkus.aws.devservices.ministack.additional-services."service-name".container-properties."container-properties"+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.aws.devservices.ministack.additional-services."service-name".container-properties."container-properties"+++[]
@@ -1237,75 +1028,6 @@ endif::add-copy-button-to-env-var[]
 --
 |boolean
 |
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-additional-services-service-name-shared]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-additional-services-service-name-shared[`+++quarkus.aws.devservices.moto.additional-services."service-name".shared+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.moto.additional-services."service-name".shared+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-Indicates if the container managed by Dev Services is shared. When shared, Quarkus looks for running containers using label-based service discovery. If a matching container is found, it is used, and so a second one is not started. Otherwise, Dev Services starts a new container.
-
-The discovery uses the `quarkus-dev-service-++{++provider`++}++ label. The value is configured using the `service-name` property.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MOTO_ADDITIONAL_SERVICES__SERVICE_NAME__SHARED+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MOTO_ADDITIONAL_SERVICES__SERVICE_NAME__SHARED+++`
-endif::add-copy-button-to-env-var[]
---
-|boolean
-|`+++false+++`
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-additional-services-service-name-isolated]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-additional-services-service-name-isolated[`+++quarkus.aws.devservices.moto.additional-services."service-name".isolated+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.moto.additional-services."service-name".isolated+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-Indicates if shared LocalStack services managed by Dev Services should be isolated. When true, the service will be started in its own container and the value of the `quarkus-dev-service-localstack` label will be suffixed by the service name (s3, sqs, ...)
-
-DEPRECATED: This will work only with the LocalStack legacy mode.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MOTO_ADDITIONAL_SERVICES__SERVICE_NAME__ISOLATED+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MOTO_ADDITIONAL_SERVICES__SERVICE_NAME__ISOLATED+++`
-endif::add-copy-button-to-env-var[]
---
-|boolean
-|`+++true+++`
-
-a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-additional-services-service-name-service-name]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-additional-services-service-name-service-name[`+++quarkus.aws.devservices.moto.additional-services."service-name".service-name+++`]##
-ifdef::add-copy-button-to-config-props[]
-config_property_copy_button:+++quarkus.aws.devservices.moto.additional-services."service-name".service-name+++[]
-endif::add-copy-button-to-config-props[]
-
-
-[.description]
---
-The value of the `quarkus-dev-service-++{++provider`++}++ label attached to the started container. In dev mode, when `shared` is set to `true`, before starting a container, Dev Services looks for a container with the `quarkus-dev-service-++{++provider`++}++ label set to the configured value. If found, it will use this container instead of starting a new one. Otherwise it starts a new container with the `quarkus-dev-service-++{++provider`++}++ label set to the specified value. In test mode, Dev Services will group services with the same `service-name` value in one container instance.
-
-This property is used when you need multiple shared container instances.
-
-
-ifdef::add-copy-button-to-env-var[]
-Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_DEVSERVICES_MOTO_ADDITIONAL_SERVICES__SERVICE_NAME__SERVICE_NAME+++[]
-endif::add-copy-button-to-env-var[]
-ifndef::add-copy-button-to-env-var[]
-Environment variable: `+++QUARKUS_AWS_DEVSERVICES_MOTO_ADDITIONAL_SERVICES__SERVICE_NAME__SERVICE_NAME+++`
-endif::add-copy-button-to-env-var[]
---
-|string
-|`+++awsstack+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon_quarkus-aws-devservices-moto-additional-services-service-name-container-properties-container-properties]] [.property-path]##link:#quarkus-amazon_quarkus-aws-devservices-moto-additional-services-service-name-container-properties-container-properties[`+++quarkus.aws.devservices.moto.additional-services."service-name".container-properties."container-properties"+++`]##
 ifdef::add-copy-button-to-config-props[]

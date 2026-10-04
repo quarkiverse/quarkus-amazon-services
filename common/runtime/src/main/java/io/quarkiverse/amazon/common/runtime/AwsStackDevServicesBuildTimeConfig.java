@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import io.quarkus.runtime.annotations.ConfigDocMapKey;
-import io.smallrye.config.WithDefault;
 
 /**
  * Base interface for AWS stack dev services build time configuration.
@@ -31,9 +30,21 @@ public interface AwsStackDevServicesBuildTimeConfig {
      * If a matching container is found, it is used, and so a second one is not started.
      * Otherwise, Dev Services for Amazon Services starts a new container.
      * Container sharing is only used in dev mode.
+     * If unset, the global {@code quarkus.aws.devservices.shared} value is used.
      */
-    @WithDefault("true")
-    boolean shared();
+    Optional<Boolean> shared();
+
+    /**
+     * The value of the {@code quarkus-dev-service-{provider}} label attached to the started container.
+     * This property is used when {@code shared} is set to {@code true}.
+     * In this case, before starting a container, Dev Services for MiniStack looks for a container with the
+     * {@code quarkus-dev-service-{provider}} label
+     * set to the configured value. If found, it will use this container instead of starting a new one. Otherwise, it
+     * starts a new container with the {@code quarkus-dev-service-{provider}} label set to the specified value.
+     * <p>
+     * This property is used when you need multiple shared stack containers.
+     */
+    String serviceName();
 
     /**
      * Path to init scripts folder executed during stack startup.
@@ -57,18 +68,6 @@ public interface AwsStackDevServicesBuildTimeConfig {
      */
     @ConfigDocMapKey("service-name")
     Map<String, DevServicesBuildTimeConfig> additionalServices();
-
-    /**
-     * The value of the {@code quarkus-dev-service-{provider}} label attached to the started container.
-     * This property is used when {@code shared} is set to {@code true}.
-     * In this case, before starting a container, Dev Services for MiniStack looks for a container with the
-     * {@code quarkus-dev-service-{provider}} label
-     * set to the configured value. If found, it will use this container instead of starting a new one. Otherwise, it
-     * starts a new container with the {@code quarkus-dev-service-{provider}} label set to the specified value.
-     * <p>
-     * This property is used when you need multiple shared stack containers.
-     */
-    String serviceName();
 
     /**
      * Environment variables that are passed to the container.

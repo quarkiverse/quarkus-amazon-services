@@ -1,7 +1,5 @@
 package io.quarkiverse.amazon.common.runtime;
 
-import java.util.function.BooleanSupplier;
-
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
@@ -25,28 +23,4 @@ public interface LocalStackDevServicesBuildTimeConfig extends AwsStackDevService
     @Override
     String imageName();
 
-    /**
-     * When legacy mode is enabled, Dev Services for LocalStack will use the old approach to manage the container lifecycle.
-     * <p>
-     * DEPRECATED:
-     * This mode is deprecated and should not be used. It is only provided as a fallback for users who rely on the old behavior
-     * and need more time to migrate to the new approach.
-     * </p>
-     */
-    @WithDefault("false")
-    Boolean legacyMode();
-
-    class LegacyModeEnabled implements BooleanSupplier {
-
-        final LocalStackDevServicesBuildTimeConfig config;
-
-        public LegacyModeEnabled(LocalStackDevServicesBuildTimeConfig config) {
-            this.config = config;
-        }
-
-        @Override
-        public boolean getAsBoolean() {
-            return config.legacyMode();
-        }
-    }
 }
