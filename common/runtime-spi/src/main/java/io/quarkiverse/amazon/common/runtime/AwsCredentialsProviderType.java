@@ -122,10 +122,5 @@ public enum AwsCredentialsProviderType {
         }
     };
 
-    @Deprecated
-    public final AwsCredentialsProvider create(AwsCredentialsProviderConfig config) {
-        return create(config, "");
-    }
-
     public abstract AwsCredentialsProvider create(AwsCredentialsProviderConfig config, String configKeyRoot);
 }
