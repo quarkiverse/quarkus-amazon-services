@@ -1,7 +1,6 @@
 package io.quarkiverse.amazon.devservices.s3;
 
 import java.util.Map;
-import java.util.function.Function;
 
 import io.quarkiverse.amazon.common.deployment.spi.AbstractDevServicesAwsStackProcessor;
 import io.quarkiverse.amazon.common.deployment.spi.AwsStackContainer;
@@ -26,8 +25,8 @@ public class S3DevServicesAwsStackProcessor extends AbstractDevServicesAwsStackP
     }
 
     @Override
-    protected void overrideAwsStackClientConfig(Map<String, Function<AwsStackContainer, String>> config) {
-        config.put("quarkus.s3.path-style-access", awsStackContainer -> "true");
+    protected void overrideAwsStackClientConfig(AwsStackContainer awsStackContainer, Map<String, String> config) {
+        config.put("quarkus.s3.path-style-access", "true");
     }
 
     @Override

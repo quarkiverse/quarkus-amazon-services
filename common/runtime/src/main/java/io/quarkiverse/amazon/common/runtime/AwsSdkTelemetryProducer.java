@@ -1,17 +1,19 @@
 package io.quarkiverse.amazon.common.runtime;
 
+import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.Reserve;
 import jakarta.inject.Singleton;
 
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.instrumentation.awssdk.v2_2.AwsSdkTelemetry;
-import io.quarkus.arc.DefaultBean;
 
 @ApplicationScoped
 public class AwsSdkTelemetryProducer {
 
-    @DefaultBean
+    @Reserve
+    @Priority(0)
     @Produces
     @Singleton
     public AwsSdkTelemetry defaultAwsSdkTelemetry(OpenTelemetry openTelemetry, AwsSdkTelemetryConfig config) {

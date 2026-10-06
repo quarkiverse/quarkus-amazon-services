@@ -1,11 +1,12 @@
 package io.quarkiverse.amazon.s3.runtime;
 
 import jakarta.annotation.PreDestroy;
+import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.Produces;
+import jakarta.enterprise.inject.Reserve;
 
-import io.quarkus.arc.DefaultBean;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.transfer.s3.S3TransferManager;
 
@@ -19,7 +20,8 @@ public class S3TransferManagerProducer {
                 .s3Client(asyncClientInstance.get()).build() : null;
     }
 
-    @DefaultBean
+    @Reserve
+    @Priority(0)
     @Produces
     @ApplicationScoped
     public S3TransferManager client() {

@@ -25,9 +25,9 @@ public interface DevServicesAwsStackExtensionProvider {
     void prepareAwsStackContainer(AwsStackContainer awsStack);
 
     /**
-     * Reuse an existing Ministack container not owned by this application.
+     * Reuse an existing stack container not owned by this application.
      * <p>
-     * This method is called when a Ministack container is being reused across multiple
+     * This method is called when a stack container is being reused across multiple
      * applications or tests.
      * </p>
      *
@@ -37,7 +37,7 @@ public interface DevServicesAwsStackExtensionProvider {
     void reuseAwsStackContainer(AwsStackContainer awsStack);
 
     /**
-     * Get client configuration properties for a Ministack container.
+     * Get client configuration properties for a stack container.
      * <p>
      * This method retrieves the AWS SDK client configuration for a running container
      * without any side effects. It is used by the dev services config provider to
@@ -46,5 +46,5 @@ public interface DevServicesAwsStackExtensionProvider {
      *
      * @return properties to configure the AWS SDK client
      */
-    Map<String, Function<AwsStackContainer, String>> getClientConfig();
+    Function<AwsStackContainer, Map<String, String>> getClientConfig();
 }

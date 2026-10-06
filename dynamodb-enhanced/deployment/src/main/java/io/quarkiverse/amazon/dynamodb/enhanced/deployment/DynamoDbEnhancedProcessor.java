@@ -139,7 +139,8 @@ public class DynamoDbEnhancedProcessor {
                 syntheticBean.produce(namedClient(SyntheticBeanBuildItem
                         .configure(DynamoDbEnhancedClient.class), amazonClientSyncResultBuildItem.getClientName())
                         .unremovable()
-                        .defaultBean()
+                        .reserve(true)
+                        .priority(0)
                         .scope(ApplicationScoped.class)
                         .setRuntimeInit()
                         .createWith(recorder.createDynamoDbEnhancedClient(extensions,
@@ -153,7 +154,8 @@ public class DynamoDbEnhancedProcessor {
                 syntheticBean.produce(namedClient(SyntheticBeanBuildItem
                         .configure(DynamoDbEnhancedAsyncClient.class), amazonClientAsyncResultBuildItem.getClientName())
                         .unremovable()
-                        .defaultBean()
+                        .reserve(true)
+                        .priority(0)
                         .scope(ApplicationScoped.class)
                         .setRuntimeInit()
                         .createWith(recorder.createDynamoDbEnhancedAsyncClient(extensions,
