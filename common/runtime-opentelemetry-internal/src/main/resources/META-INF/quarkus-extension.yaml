@@ -1,4 +1,4 @@
 ---
 artifact: ${project.groupId}:${project.artifactId}:${project.version}
 metadata:
-  unlisted: "true"
+  unlisted: true

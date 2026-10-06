@@ -73,11 +73,14 @@ public abstract class AbstractDevServicesAwsStackProcessor {
                     }
 
                     @Override
-                    public Map<String, Function<AwsStackContainer, String>> getClientConfig() {
-                        Map<String, Function<AwsStackContainer, String>> clientConfig = getAwsStackClientConfig(serviceName,
-                                null);
-                        overrideAwsStackClientConfig(clientConfig);
-                        return clientConfig;
+                    public Function<AwsStackContainer, Map<String, String>> getClientConfig() {
+
+                        return awsStackContainer -> {
+                            Map<String, String> clientConfig = getAwsStackClientConfig(serviceName).apply(awsStackContainer);
+
+                            overrideAwsStackClientConfig(awsStackContainer, clientConfig);
+                            return clientConfig;
+                        };
                     }
                 });
     }
@@ -108,18 +111,19 @@ public abstract class AbstractDevServicesAwsStackProcessor {
      * @param serviceName the service name for configuration prefix
      * @return map of configuration properties
      */
-    protected Map<String, Function<AwsStackContainer, String>> getAwsStackClientConfig(String serviceName,
-            AwsStackContainer awsStack) {
-        Map<String, Function<AwsStackContainer, String>> config = new HashMap<>();
-        config.put(String.format(ENDPOINT_OVERRIDE, serviceName),
-                awsStackContainer -> awsStackContainer.getEndpoint().toString());
-        config.put(String.format(AWS_REGION, serviceName), AwsStackContainer::getRegion);
-        config.put(String.format(AWS_CREDENTIALS_TYPE, serviceName), awsStackContainer -> "static");
-        config.put(String.format(AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID, serviceName),
-                AwsStackContainer::getAccessKey);
-        config.put(String.format(AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY, serviceName),
-                AwsStackContainer::getSecretKey);
-        return config;
+    protected Function<AwsStackContainer, Map<String, String>> getAwsStackClientConfig(String serviceName) {
+        return awsStackContainer -> {
+            Map<String, String> config = new HashMap<>();
+            config.put(String.format(ENDPOINT_OVERRIDE, serviceName),
+                    awsStackContainer.getEndpoint().toString());
+            config.put(String.format(AWS_REGION, serviceName), awsStackContainer.getRegion());
+            config.put(String.format(AWS_CREDENTIALS_TYPE, serviceName), "static");
+            config.put(String.format(AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID, serviceName),
+                    awsStackContainer.getAccessKey());
+            config.put(String.format(AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY, serviceName),
+                    awsStackContainer.getSecretKey());
+            return config;
+        };
     }
 
     /**
@@ -132,7 +136,7 @@ public abstract class AbstractDevServicesAwsStackProcessor {
      *
      * @param config the current configuration map
      */
-    protected void overrideAwsStackClientConfig(Map<String, Function<AwsStackContainer, String>> config) {
+    protected void overrideAwsStackClientConfig(AwsStackContainer awsStackContainer, Map<String, String> config) {
         // Override in subclasses if needed
     }
 }

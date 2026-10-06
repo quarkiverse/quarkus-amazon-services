@@ -199,38 +199,29 @@ public abstract class AbstractDevServicesAwsStackProcessor {
     private Map<String, String> buildDiscoveredConfig(String endpoint,
             List<DevServicesAwsStackProviderBuildItem> requestedServices) {
         Map<String, String> config = new HashMap<>();
+        AwsStackContainer awsStackContainer = createAwsStackContainerFromEndpoint(endpoint);
 
-        AwsStackContainer container = createAwsStackContainerFromEndpoint(endpoint);
-
-        for (DevServicesAwsStackProviderBuildItem service : requestedServices) {
-            var applicationConfigProvider = service.getDevProvider().getClientConfig();
-
-            applicationConfigProvider.forEach((key, valueFunction) -> {
-                config.put(key, valueFunction.apply(container));
-            });
+        for (DevServicesAwsStackProviderBuildItem requestedService : requestedServices) {
+            DevServicesAwsStackExtensionProvider provider = requestedService.getDevProvider();
+            config.putAll(provider.getClientConfig().apply(awsStackContainer));
         }
 
         return config;
     }
 
-    private Map<String, Function<Startable, String>> buildConfigProvider(
+    private Function<Startable, Map<String, String>> buildConfigProvider(
             List<DevServicesAwsStackProviderBuildItem> requestedServices) {
-        Map<String, Function<Startable, String>> configProvider = new HashMap<>();
+        return startable -> {
+            Map<String, String> config = new HashMap<>();
+            AwsStackContainer awsStackContainer = createAwsStackContainerFromEndpoint(startable.getConnectionInfo());
 
-        for (DevServicesAwsStackProviderBuildItem requestedService : requestedServices) {
-            DevServicesAwsStackExtensionProvider provider = requestedService.getDevProvider();
+            for (DevServicesAwsStackProviderBuildItem requestedService : requestedServices) {
+                DevServicesAwsStackExtensionProvider provider = requestedService.getDevProvider();
+                config.putAll(provider.getClientConfig().apply(awsStackContainer));
+            }
 
-            var sampleConfig = provider.getClientConfig();
-
-            sampleConfig.forEach((key, valueFunction) -> {
-                configProvider.put(key, startable -> {
-                    AwsStackContainer awsStackContainer = createAwsStackContainerFromEndpoint(startable.getConnectionInfo());
-                    return valueFunction.apply(awsStackContainer);
-                });
-            });
-        }
-
-        return configProvider;
+            return config;
+        };
     }
 
     private ServiceConfig buildServiceConfig(

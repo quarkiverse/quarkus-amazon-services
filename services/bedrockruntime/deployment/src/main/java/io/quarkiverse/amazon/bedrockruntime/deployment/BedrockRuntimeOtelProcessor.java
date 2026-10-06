@@ -43,7 +43,8 @@ public class BedrockRuntimeOtelProcessor {
                 syntheticBeans.produce(namedBuilder(SyntheticBeanBuildItem.configure(clientBuilder.getBuilderClass()),
                         clientBuilder.getClientName())
                         .unremovable()
-                        .defaultBean()
+                        .reserve(true)
+                        .priority(0)
                         .setRuntimeInit()
                         .scope(ApplicationScoped.class)
                         .createWith(otelRecorder.configureAsync(clientBuilder.getClientBuilder()))
