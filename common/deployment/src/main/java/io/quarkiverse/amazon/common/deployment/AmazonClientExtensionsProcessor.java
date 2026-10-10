@@ -271,7 +271,6 @@ public class AmazonClientExtensionsProcessor {
                 extension.getAsyncClientName(),
                 extension.getAsyncClientBuilderClass(),
                 (asyncBuilder, asyncTransport) -> builderRecorder.createAsyncBuilder(asyncBuilder, asyncTransport,
-                        launchModeBuildItem.getLaunchMode(),
                         executorBuildItem.getExecutorProxy(), extension.getAsyncConfig()),
                 extension.getPresignerClientName(),
                 extension.getPresignerBuilderClass(),
