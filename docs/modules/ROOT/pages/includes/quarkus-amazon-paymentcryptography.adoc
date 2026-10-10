@@ -49,7 +49,7 @@ Environment variable: `+++QUARKUS_PAYMENTCRYPTOGRAPHY_TELEMETRY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++false+++`
+|`+++true when quarkus-opentelemetry is present, false otherwise+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-paymentcryptography_quarkus-paymentcryptography-sync-client-type]] [.property-path]##link:#quarkus-amazon-paymentcryptography_quarkus-paymentcryptography-sync-client-type[`+++quarkus.paymentcryptography.sync-client.type+++`]##
 ifdef::add-copy-button-to-config-props[]

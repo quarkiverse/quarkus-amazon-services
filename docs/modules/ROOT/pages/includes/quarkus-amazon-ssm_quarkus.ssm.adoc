@@ -49,7 +49,7 @@ Environment variable: `+++QUARKUS_SSM_TELEMETRY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++false+++`
+|`+++true when quarkus-opentelemetry is present, false otherwise+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-ssm_quarkus-ssm-sync-client-type]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-sync-client-type[`+++quarkus.ssm.sync-client.type+++`]##
 ifdef::add-copy-button-to-config-props[]
