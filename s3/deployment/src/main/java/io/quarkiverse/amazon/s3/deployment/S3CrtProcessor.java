@@ -30,7 +30,6 @@ import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.ExecutorBuildItem;
-import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.runtime.RuntimeValue;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -113,8 +112,7 @@ public class S3CrtProcessor {
     void createS3CrtAsyncClient(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             S3CrtRecorder recorder,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
-            ExecutorBuildItem executorBuildItem,
-            LaunchModeBuildItem launchMode) {
+            ExecutorBuildItem executorBuildItem) {
         Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName()))
                 .findAny();
@@ -126,8 +124,7 @@ public class S3CrtProcessor {
 
             RuntimeValue<S3CrtAsyncClientBuilder> asyncClientBuilder = recorder.getCrtAsyncClientBuilder(configName());
 
-            asyncClientBuilder = recorder.setExecutor(asyncClientBuilder, launchMode.getLaunchMode(),
-                    executorBuildItem.getExecutorProxy());
+            asyncClientBuilder = recorder.setExecutor(asyncClientBuilder, executorBuildItem.getExecutorProxy());
 
             syntheticBeans.produce(SyntheticBeanBuildItem.configure(S3CrtAsyncClientBuilder.class)
                     .unremovable()

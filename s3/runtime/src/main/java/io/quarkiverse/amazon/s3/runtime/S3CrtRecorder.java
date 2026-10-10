@@ -9,7 +9,6 @@ import io.quarkiverse.amazon.common.runtime.ClientUtil;
 import io.quarkiverse.amazon.common.runtime.RuntimeConfigurationError;
 import io.quarkiverse.amazon.common.runtime.SdkConfig;
 import io.quarkus.arc.SyntheticCreationalContext;
-import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
@@ -71,12 +70,8 @@ public class S3CrtRecorder {
     }
 
     public RuntimeValue<S3CrtAsyncClientBuilder> setExecutor(RuntimeValue<S3CrtAsyncClientBuilder> builder,
-            LaunchMode launchMode, Executor executor) {
-        if (launchMode == LaunchMode.NORMAL) {
-            return new RuntimeValue<>(builder.getValue().futureCompletionExecutor(executor));
-        } else {
-            return new RuntimeValue<>(builder.getValue().futureCompletionExecutor(new S3CrtExecutorWrapper(executor)));
-        }
+            Executor executor) {
+        return new RuntimeValue<>(builder.getValue().futureCompletionExecutor(new S3CrtExecutorWrapper(executor)));
     }
 
     public Function<SyntheticCreationalContext<S3AsyncClient>, S3AsyncClient> getS3CrtAsyncClient() {
@@ -89,7 +84,8 @@ public class S3CrtRecorder {
     }
 
     /**
-     * Capture the current ClassLoader and restore it to support dev and test mode
+     * Capture the current ClassLoader and restore it to support dev and test mode, and threads without context ClassLoader
+     * such as the AWS CRT event loop threads
      */
     private static final class S3CrtExecutorWrapper implements Executor {
 

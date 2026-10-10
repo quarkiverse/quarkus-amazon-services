@@ -2,7 +2,6 @@ package io.quarkiverse.amazon.common.runtime;
 
 import java.util.concurrent.Executor;
 
-import io.quarkus.runtime.LaunchMode;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.awscore.client.builder.AwsAsyncClientBuilder;
@@ -26,7 +25,7 @@ public class AmazonClientBuilderRecorder {
 
     public RuntimeValue<AwsClientBuilder> createAsyncBuilder(RuntimeValue<AwsAsyncClientBuilder<?, ?>> builder,
             RuntimeValue<SdkAsyncHttpClient.Builder> transport,
-            LaunchMode launchMode, Executor executor, RuntimeValue<AsyncHttpClientConfig> config) {
+            Executor executor, RuntimeValue<AsyncHttpClientConfig> config) {
         if (transport != null) {
             builder.getValue().httpClientBuilder(transport.getValue());
         }
@@ -39,11 +38,7 @@ public class AmazonClientBuilderRecorder {
             configExecutor = executor;
         }
 
-        if (launchMode != LaunchMode.NORMAL) {
-            configExecutor = new ClassLoaderExecutorWrapper(executor);
-        }
-
-        final Executor futureCompletionExecutor = configExecutor;
+        final Executor futureCompletionExecutor = new ClassLoaderExecutorWrapper(configExecutor);
 
         builder.getValue().asyncConfiguration(asyncConfigBuilder -> asyncConfigBuilder
                 .advancedOption(SdkAdvancedAsyncClientOption.FUTURE_COMPLETION_EXECUTOR, futureCompletionExecutor));
@@ -56,7 +51,8 @@ public class AmazonClientBuilderRecorder {
     }
 
     /**
-     * Capture the current ClassLoader and restore it to support dev and test mode
+     * Capture the current ClassLoader and restore it to support dev and test mode, and threads without context ClassLoader
+     * such as the AWS CRT event loop threads
      */
     private static final class ClassLoaderExecutorWrapper implements Executor {
 
