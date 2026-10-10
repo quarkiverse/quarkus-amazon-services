@@ -2,7 +2,7 @@
 
 Quarkus Amazon Services facilitates integration of the https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/instrumentation/aws-sdk/README[AWS SDK instrumentation].
 
-Adding the `quarkus-opentelemetry` extension will automatically inject an interceptor with default AwsSdkTelemetry configuration in all produced extension clients that have opted into instrumentation. This is achieved by setting the configuration property `quarkus.<extension>.telemetry.enabled` to true. This setting is set to `false` by default.
+Adding the `quarkus-opentelemetry` extension will automatically inject an interceptor with default AwsSdkTelemetry configuration in all produced extension clients that have opted into instrumentation. This is achieved by setting the configuration property `quarkus.<extension>.telemetry.enabled` to true. This setting is set to `true` by default.
 
 Quarkus Amazon Services supports the OpenTelemetry Autoconfiguration for Traces. The configurations match what you can see at OpenTelemetry SDK Autoconfigure with the `quarkus.*` prefix.
 

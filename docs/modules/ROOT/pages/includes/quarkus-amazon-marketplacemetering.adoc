@@ -49,7 +49,7 @@ Environment variable: `+++QUARKUS_MARKETPLACEMETERING_TELEMETRY_ENABLED+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
-|`+++false+++`
+|`+++true when quarkus-opentelemetry is present, false otherwise+++`
 
 a|icon:lock[title=Fixed at build time] [[quarkus-amazon-marketplacemetering_quarkus-marketplacemetering-sync-client-type]] [.property-path]##link:#quarkus-amazon-marketplacemetering_quarkus-marketplacemetering-sync-client-type[`+++quarkus.marketplacemetering.sync-client.type+++`]##
 ifdef::add-copy-button-to-config-props[]

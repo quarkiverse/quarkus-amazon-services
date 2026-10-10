@@ -31,6 +31,8 @@ import io.quarkus.arc.deployment.BeanRegistrationPhaseBuildItem;
 import io.quarkus.arc.deployment.SyntheticBeanBuildItem;
 import io.quarkus.arc.processor.DotNames;
 import io.quarkus.arc.processor.InjectionPointInfo;
+import io.quarkus.deployment.Capabilities;
+import io.quarkus.deployment.Capability;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
@@ -152,15 +154,18 @@ public class AmazonClientExtensionsProcessor {
     @BuildStep
     void discoverTelemetry(
             List<AmazonClientExtensionBuildItem> amazonExtensions,
-            BuildProducer<RequireAmazonTelemetryBuildItem> telemetryProducer) {
+            BuildProducer<RequireAmazonTelemetryBuildItem> telemetryProducer,
+            Capabilities capabilities) {
 
-        amazonExtensions.forEach(extension -> discoverTelemetry(extension, telemetryProducer));
+        amazonExtensions.forEach(extension -> discoverTelemetry(extension, telemetryProducer, capabilities));
     }
 
     protected void discoverTelemetry(
             AmazonClientExtensionBuildItem extension,
-            BuildProducer<RequireAmazonTelemetryBuildItem> telemetryProducer) {
-        if (extension.getHasSdkBuildTimeConfig().sdk().telemetry().orElse(false)) {
+            BuildProducer<RequireAmazonTelemetryBuildItem> telemetryProducer,
+            Capabilities capabilities) {
+        if (extension.getHasSdkBuildTimeConfig().sdk().telemetry()
+                .orElse(capabilities.isPresent(Capability.OPENTELEMETRY_TRACER))) {
             telemetryProducer.produce(new RequireAmazonTelemetryBuildItem(extension.getConfigName()));
         }
     }

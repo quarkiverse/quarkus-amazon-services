@@ -31,6 +31,6 @@ public interface SdkBuildTimeConfig {
      * OpenTelemetry AWS SDK instrumentation will be enabled if the OpenTelemetry extension is present and this value is true.
      */
     @WithName("telemetry.enabled")
-    @ConfigDocDefault("false")
+    @ConfigDocDefault("true when quarkus-opentelemetry is present, false otherwise")
     Optional<Boolean> telemetry();
 }
