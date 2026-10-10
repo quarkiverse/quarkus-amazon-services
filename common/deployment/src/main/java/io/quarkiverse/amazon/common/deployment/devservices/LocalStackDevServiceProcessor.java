@@ -100,7 +100,7 @@ public class LocalStackDevServiceProcessor extends AbstractDevServicesAwsStackPr
             localStack.addEnv("LOCALSTACK_HOST", "127.0.0.1");
         }, () -> config.initScriptsClasspath().ifPresent(resourcePath -> {
             // scripts must be executable but withClasspathResourceMapping will extract file with read only for regular file
-            final MountableFile mountableFile = MountableFile.forClasspathResource(resourcePath, 555);
+            final MountableFile mountableFile = MountableFile.forClasspathResource(resourcePath, 0555);
             localStack.withCopyFileToContainer(mountableFile, "/etc/localstack/init/ready.d");
             localStack.addEnv("LOCALSTACK_HOST", "127.0.0.1");
         }));

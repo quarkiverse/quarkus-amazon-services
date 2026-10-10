@@ -98,7 +98,7 @@ public class MiniStackDevServicesProcessor extends AbstractDevServicesAwsStackPr
             miniStack.withFileSystemBind(initScriptsFolder, "/etc/localstack/init/ready.d", BindMode.READ_ONLY);
         }, () -> config.initScriptsClasspath().ifPresent(resourcePath -> {
             // scripts must be executable but withClasspathResourceMapping will extract file with read only for regular file
-            final MountableFile mountableFile = MountableFile.forClasspathResource(resourcePath, 555);
+            final MountableFile mountableFile = MountableFile.forClasspathResource(resourcePath, 0555);
             miniStack.withCopyFileToContainer(mountableFile, "/etc/localstack/init/ready.d");
         }));
 
