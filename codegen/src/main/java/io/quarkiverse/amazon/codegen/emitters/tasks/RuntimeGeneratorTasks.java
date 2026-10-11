@@ -12,8 +12,11 @@ import software.amazon.awssdk.codegen.emitters.GeneratorTaskParams;
 
 public class RuntimeGeneratorTasks extends BaseGeneratorTasks {
 
-    public RuntimeGeneratorTasks(GeneratorTaskParams dependencies) {
+    protected final boolean hasCustomDevServicesBuildTimeConfig;
+
+    public RuntimeGeneratorTasks(GeneratorTaskParams dependencies, boolean hasCustomDevServicesBuildTimeConfig) {
         super(dependencies);
+        this.hasCustomDevServicesBuildTimeConfig = hasCustomDevServicesBuildTimeConfig;
     }
 
     @Override
@@ -35,6 +38,6 @@ public class RuntimeGeneratorTasks extends BaseGeneratorTasks {
     }
 
     private GeneratorTask createBuildTimeConfigTask() throws IOException {
-        return createPoetGeneratorTaskWithEmptyHeader(new BuildTimeConfigClass(model));
+        return createPoetGeneratorTaskWithEmptyHeader(new BuildTimeConfigClass(model, hasCustomDevServicesBuildTimeConfig));
     }
 }

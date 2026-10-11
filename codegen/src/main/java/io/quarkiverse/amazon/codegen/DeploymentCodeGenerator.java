@@ -13,11 +13,11 @@ public class DeploymentCodeGenerator extends BaseCodeGenerator {
     }
 
     @Override
-    GeneratorTask createGeneratorTasks(IntermediateModel intermediateModel) {
+    GeneratorTask createGeneratorTasks(IntermediateModel intermediateModel, boolean hasCustomDevServicesBuildTimeConfig) {
         return new DeploymentGeneratorTasks(GeneratorTaskParams.create(intermediateModel,
-                sourcesDirectory,
-                testsDirectory,
-                resourcesDirectory));
+                generatedSourcesDirectory,
+                generatedTestsDirectory,
+                generatedResourcesDirectory));
     }
 
     /**
