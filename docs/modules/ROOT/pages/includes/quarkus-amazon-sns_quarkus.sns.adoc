@@ -158,6 +158,27 @@ endif::add-copy-button-to-env-var[]
 a|`floci`, `localstack`, `ministack`, `moto`
 |
 
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-sns_quarkus-sns-devservices-topics]] [.property-path]##link:#quarkus-amazon-sns_quarkus-sns-devservices-topics[`+++quarkus.sns.devservices.topics+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.sns.devservices.topics+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The topics to create on startup.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SNS_DEVSERVICES_TOPICS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SNS_DEVSERVICES_TOPICS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|
+
 h|[[quarkus-amazon-sns_section_quarkus-sns]] [.section-name.section-level0]##link:#quarkus-amazon-sns_section_quarkus-sns[AWS SDK client configurations]##
 h|Type
 h|Default
