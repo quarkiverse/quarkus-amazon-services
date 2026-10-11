@@ -52,18 +52,21 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
     @Parameter(property = "noCache", defaultValue = "false")
     private boolean noCache;
 
-    private Path sourcesDirectory;
-    private Path resourcesDirectory;
-    private Path testsDirectory;
+    private Path generatedSourcesDirectory;
+    private Path generatedResourcesDirectory;
+    private Path generatedTestsDirectory;
 
     private Path codeGenResourcesPath;
 
+    private Path sourcesDirectory;
+
     @Override
     public void execute() throws MojoExecutionException {
-        this.sourcesDirectory = Paths.get(outputDirectory).resolve("generated-sources").resolve("sdk");
-        this.resourcesDirectory = Paths.get(outputDirectory).resolve("generated-resources").resolve("sdk-resources");
-        this.testsDirectory = Paths.get(outputDirectory).resolve("generated-test-sources").resolve("sdk-tests");
+        this.generatedSourcesDirectory = Paths.get(outputDirectory).resolve("generated-sources").resolve("sdk");
+        this.generatedResourcesDirectory = Paths.get(outputDirectory).resolve("generated-resources").resolve("sdk-resources");
+        this.generatedTestsDirectory = Paths.get(outputDirectory).resolve("generated-test-sources").resolve("sdk-tests");
         this.codeGenResourcesPath = Paths.get(codeGenResources);
+        this.sourcesDirectory = project.getBasedir().toPath().resolve(project.getBuild().getSourceDirectory());
 
         downloadModelIfNotExists(project);
 
@@ -75,8 +78,8 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
                     .serviceModel(loadServiceModel(modelRootPath))
                     .build());
         });
-        project.addCompileSourceRoot(sourcesDirectory.toFile().getAbsolutePath());
-        project.addTestCompileSourceRoot(testsDirectory.toFile().getAbsolutePath());
+        project.addCompileSourceRoot(generatedSourcesDirectory.toFile().getAbsolutePath());
+        project.addTestCompileSourceRoot(generatedTestsDirectory.toFile().getAbsolutePath());
     }
 
     /**
@@ -155,9 +158,10 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
     private void generateCode(C2jModels models) {
         getCodeGeneratorBuilder(project)
                 .models(models)
+                .generatedSourcesDirectory(generatedSourcesDirectory.toFile().getAbsolutePath())
+                .generatedResourcesDirectory(generatedResourcesDirectory.toFile().getAbsolutePath())
+                .generatedTestsDirectory(generatedTestsDirectory.toFile().getAbsolutePath())
                 .sourcesDirectory(sourcesDirectory.toFile().getAbsolutePath())
-                .resourcesDirectory(resourcesDirectory.toFile().getAbsolutePath())
-                .testsDirectory(testsDirectory.toFile().getAbsolutePath())
                 .intermediateModelFileNamePrefix(intermediateModelFileNamePrefix(models))
                 .build()
                 .execute();

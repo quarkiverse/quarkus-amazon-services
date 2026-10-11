@@ -21,6 +21,7 @@ public class BuildTimeConfigClass implements ClassSpec {
     private final String clientPackageName;
     private final String up;
     private final String quarkusRuntimePackage;
+    private final ClassName devServicesBuildTimeConfigClassName;
 
     private final static TypeName HAS_SDK_BUILD_TIME_CONFIG = ClassName.get("io.quarkiverse.amazon.common.runtime",
             "HasSdkBuildTimeConfig");
@@ -29,12 +30,19 @@ public class BuildTimeConfigClass implements ClassSpec {
     private final static ClassName DEV_SERVICES_BUILD_TIME_CONFIG = ClassName.get("io.quarkiverse.amazon.common.runtime",
             "DevServicesBuildTimeConfig");
 
-    public BuildTimeConfigClass(IntermediateModel model) {
+    public BuildTimeConfigClass(IntermediateModel model, boolean hasCustomDevServicesBuildTimeConfig) {
         this.clientPackageName = model.getMetadata().getClientPackageName();
         this.up = model.getMetadata().getDescriptiveServiceName();
         this.quarkusRuntimePackage = "io.quarkiverse.amazon." + this.clientPackageName + ".runtime";
         this.buildTimeConfigClassName = ClassName.get(this.quarkusRuntimePackage,
                 model.getMetadata().getServiceName() + "BuildTimeConfig");
+
+        if (!hasCustomDevServicesBuildTimeConfig) {
+            devServicesBuildTimeConfigClassName = DEV_SERVICES_BUILD_TIME_CONFIG;
+        } else {
+            devServicesBuildTimeConfigClassName = ClassName.get(this.quarkusRuntimePackage,
+                    model.getMetadata().getServiceName() + "DevServicesBuildTimeConfig");
+        }
     }
 
     @Override
@@ -64,10 +72,11 @@ public class BuildTimeConfigClass implements ClassSpec {
     // */
     // DevServicesBuildTimeConfig devservices();
     private MethodSpec devservicesMethod() {
+
         return MethodSpec.methodBuilder("devservices")
                 .addModifiers(ABSTRACT, PUBLIC)
                 .addJavadoc("Config for dev services")
-                .returns(DEV_SERVICES_BUILD_TIME_CONFIG)
+                .returns(devServicesBuildTimeConfigClassName)
                 .build();
     }
 

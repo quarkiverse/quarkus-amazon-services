@@ -4,7 +4,7 @@ import static io.quarkiverse.amazon.codegen.poet.ClientTestModels.restJsonServic
 import static io.quarkiverse.amazon.codegen.poet.PoetMatchers.generatesTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 import org.junit.jupiter.api.Test;
 
@@ -15,13 +15,16 @@ public class BuildTimeConfigClassTest {
 
     @Test
     public void testBuildTimeConfigClass() {
-        validateGeneration(BuildTimeConfigClass::new, restJsonServiceModels(), "test-buildtimeconfig-class.java");
+        validateGeneration(BuildTimeConfigClass::new, restJsonServiceModels(), false, "test-buildtimeconfig-class.java");
+        validateGeneration(BuildTimeConfigClass::new, restJsonServiceModels(), true,
+                "test-buildtimeconfig-class-customdevservices.java");
     }
 
-    static void validateGeneration(Function<IntermediateModel, ClassSpec> generatorConstructor,
+    static void validateGeneration(BiFunction<IntermediateModel, Boolean, ClassSpec> generatorConstructor,
             IntermediateModel model,
+            boolean hasCustomDevServicesBuildTimeConfig,
             String expectedClassName) {
 
-        assertThat(generatorConstructor.apply(model), generatesTo(expectedClassName));
+        assertThat(generatorConstructor.apply(model, hasCustomDevServicesBuildTimeConfig), generatesTo(expectedClassName));
     }
 }

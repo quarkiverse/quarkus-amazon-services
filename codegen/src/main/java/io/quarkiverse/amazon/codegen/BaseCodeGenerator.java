@@ -12,6 +12,7 @@ import java.util.concurrent.ForkJoinTask;
 import com.squareup.javapoet.ClassName;
 
 import software.amazon.awssdk.codegen.C2jModels;
+import software.amazon.awssdk.codegen.CodeGenerator;
 import software.amazon.awssdk.codegen.IntermediateModelBuilder;
 import software.amazon.awssdk.codegen.emitters.GeneratorTask;
 import software.amazon.awssdk.codegen.internal.Jackson;
@@ -24,9 +25,10 @@ public abstract class BaseCodeGenerator {
     private static final String MODEL_DIR_NAME = "models";
 
     private final C2jModels models;
+    protected final String generatedSourcesDirectory;
+    protected final String generatedResourcesDirectory;
+    protected final String generatedTestsDirectory;
     protected final String sourcesDirectory;
-    protected final String resourcesDirectory;
-    protected final String testsDirectory;
 
     /**
      * The prefix for the file name that contains the intermediate model.
@@ -42,10 +44,11 @@ public abstract class BaseCodeGenerator {
 
     public BaseCodeGenerator(BaseBuilder builder) {
         this.models = builder.models;
+        this.generatedSourcesDirectory = builder.generatedSourcesDirectory;
+        this.generatedTestsDirectory = builder.generatedTestsDirectory;
+        this.generatedResourcesDirectory = builder.generatedResourcesDirectory != null ? builder.generatedResourcesDirectory
+                : builder.generatedSourcesDirectory;
         this.sourcesDirectory = builder.sourcesDirectory;
-        this.testsDirectory = builder.testsDirectory;
-        this.resourcesDirectory = builder.resourcesDirectory != null ? builder.resourcesDirectory
-                : builder.sourcesDirectory;
         this.fileNamePrefix = builder.fileNamePrefix;
     }
 
@@ -66,7 +69,13 @@ public abstract class BaseCodeGenerator {
             if (fileNamePrefix != null) {
                 writeIntermediateModel(intermediateModel);
             }
-            emitCode(intermediateModel);
+
+            File targetCustomDevServicesConfigFile = new File(sourcesDirectory,
+                    "io/quarkiverse/amazon/" + intermediateModel.getMetadata().getClientPackageName()
+                            + "/runtime/" + intermediateModel.getMetadata().getServiceName()
+                            + "DevServicesBuildTimeConfig.java");
+
+            emitCode(intermediateModel, targetCustomDevServicesConfigFile.exists());
 
         } catch (Exception e) {
             log.error(() -> "Failed to generate code. ", e);
@@ -76,10 +85,10 @@ public abstract class BaseCodeGenerator {
     }
 
     private void writeIntermediateModel(IntermediateModel model) throws IOException {
-        File modelDir = getModelDirectory(sourcesDirectory);
+        File modelDir = getModelDirectory(generatedSourcesDirectory);
         PrintWriter writer = null;
         try {
-            File outDir = new File(sourcesDirectory);
+            File outDir = new File(generatedSourcesDirectory);
             if (!outDir.exists() && !outDir.mkdirs()) {
                 throw new RuntimeException("Failed to create " + outDir.getAbsolutePath());
             }
@@ -100,11 +109,12 @@ public abstract class BaseCodeGenerator {
         }
     }
 
-    private void emitCode(IntermediateModel intermediateModel) {
-        ForkJoinTask.invokeAll(createGeneratorTasks(intermediateModel));
+    private void emitCode(IntermediateModel intermediateModel, boolean hasCustomDevServicesBuildTimeConfig) {
+        ForkJoinTask.invokeAll(createGeneratorTasks(intermediateModel, hasCustomDevServicesBuildTimeConfig));
     }
 
-    abstract GeneratorTask createGeneratorTasks(IntermediateModel intermediateModel);
+    abstract GeneratorTask createGeneratorTasks(IntermediateModel intermediateModel,
+            boolean hasCustomDevServicesBuildTimeConfig);
 
     /**
      * Builder for a {@link CodeGenerator}.
@@ -112,9 +122,10 @@ public abstract class BaseCodeGenerator {
     public static abstract class BaseBuilder {
 
         private C2jModels models;
+        private String generatedSourcesDirectory;
+        private String generatedResourcesDirectory;
+        private String generatedTestsDirectory;
         private String sourcesDirectory;
-        private String resourcesDirectory;
-        private String testsDirectory;
         private String fileNamePrefix;
 
         protected BaseBuilder() {
@@ -125,18 +136,23 @@ public abstract class BaseCodeGenerator {
             return this;
         }
 
+        public BaseBuilder generatedSourcesDirectory(String sourcesDirectory) {
+            this.generatedSourcesDirectory = sourcesDirectory;
+            return this;
+        }
+
+        public BaseBuilder generatedResourcesDirectory(String resourcesDirectory) {
+            this.generatedResourcesDirectory = resourcesDirectory;
+            return this;
+        }
+
+        public BaseBuilder generatedTestsDirectory(String smokeTestsDirectory) {
+            this.generatedTestsDirectory = smokeTestsDirectory;
+            return this;
+        }
+
         public BaseBuilder sourcesDirectory(String sourcesDirectory) {
             this.sourcesDirectory = sourcesDirectory;
-            return this;
-        }
-
-        public BaseBuilder resourcesDirectory(String resourcesDirectory) {
-            this.resourcesDirectory = resourcesDirectory;
-            return this;
-        }
-
-        public BaseBuilder testsDirectory(String smokeTestsDirectory) {
-            this.testsDirectory = smokeTestsDirectory;
             return this;
         }
 
