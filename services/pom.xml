@@ -49,6 +49,7 @@
         <module>rdsdata</module>
         <module>rekognition</module>
         <module>resourcegroupstaggingapi</module>
+        <module>scheduler</module>
         <module>secretsmanager</module>
         <module>ses</module>
         <module>sesv2</module>
