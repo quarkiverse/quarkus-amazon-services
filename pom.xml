@@ -20,7 +20,6 @@
     <module>common</module>
     <module>crt</module>    
     <module>devservices</module>
-    <module>cognito-user-pools</module>
     <module>dynamodb-enhanced</module>
     <module>s3</module>
     <module>s3-transfer-manager</module>
