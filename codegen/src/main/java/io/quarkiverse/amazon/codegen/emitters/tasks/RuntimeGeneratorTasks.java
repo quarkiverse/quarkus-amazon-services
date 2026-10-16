@@ -1,9 +1,9 @@
 package io.quarkiverse.amazon.codegen.emitters.tasks;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 import io.quarkiverse.amazon.codegen.poet.runtime.BuildTimeConfigClass;
 import io.quarkiverse.amazon.codegen.poet.runtime.ConfigClass;
 import io.quarkiverse.amazon.codegen.poet.runtime.RecorderClass;
@@ -12,32 +12,17 @@ import software.amazon.awssdk.codegen.emitters.GeneratorTaskParams;
 
 public class RuntimeGeneratorTasks extends BaseGeneratorTasks {
 
-    protected final boolean hasCustomDevServicesBuildTimeConfig;
-
-    public RuntimeGeneratorTasks(GeneratorTaskParams dependencies, boolean hasCustomDevServicesBuildTimeConfig) {
-        super(dependencies);
-        this.hasCustomDevServicesBuildTimeConfig = hasCustomDevServicesBuildTimeConfig;
+    public RuntimeGeneratorTasks(GeneratorTaskParams dependencies, QuarkusServiceModel quarkusModel) {
+        super(dependencies, quarkusModel);
     }
 
     @Override
     protected List<GeneratorTask> createTasks() throws Exception {
         List<GeneratorTask> generatorTasks = new ArrayList<>();
-        generatorTasks.add(createRecorderClassTask());
-        generatorTasks.add(createConfigClassTask());
-        generatorTasks.add(createBuildTimeConfigTask());
+        addPoetGeneratorTask(generatorTasks, new RecorderClass(quarkusModel));
+        addPoetGeneratorTask(generatorTasks, new ConfigClass(quarkusModel));
+        addPoetGeneratorTask(generatorTasks, new BuildTimeConfigClass(quarkusModel));
 
         return generatorTasks;
-    }
-
-    private GeneratorTask createRecorderClassTask() throws IOException {
-        return createPoetGeneratorTaskWithEmptyHeader(new RecorderClass(model));
-    }
-
-    private GeneratorTask createConfigClassTask() throws IOException {
-        return createPoetGeneratorTaskWithEmptyHeader(new ConfigClass(model));
-    }
-
-    private GeneratorTask createBuildTimeConfigTask() throws IOException {
-        return createPoetGeneratorTaskWithEmptyHeader(new BuildTimeConfigClass(model, hasCustomDevServicesBuildTimeConfig));
     }
 }

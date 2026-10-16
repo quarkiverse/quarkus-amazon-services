@@ -11,6 +11,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 import io.quarkiverse.amazon.codegen.poet.PoetUtils;
 import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
 import software.amazon.awssdk.codegen.poet.ClassSpec;
@@ -21,18 +22,15 @@ public class TestSyntheticBeanClass implements ClassSpec {
     private final ClassName syncClientClassName;
     private final ClassName syntheticBeanClassName;
     private final String basePackage;
-    private final String quarkusRuntimePackage;
     private final String asyncInstanceName = "asyncInstance";
     private final String syncInstanceName = "syncInstance";
 
-    public TestSyntheticBeanClass(IntermediateModel model) {
-        this.model = model;
+    public TestSyntheticBeanClass(QuarkusServiceModel quarkusModel) {
+        this.model = quarkusModel.intermediateModel();
         this.basePackage = model.getMetadata().getFullClientPackageName();
         this.asyncClientClassName = ClassName.get(basePackage, model.getMetadata().getAsyncInterface());
         this.syncClientClassName = ClassName.get(basePackage, model.getMetadata().getSyncInterface());
-        this.quarkusRuntimePackage = "io.quarkiverse.amazon." + model.getMetadata().getClientPackageName() + ".runtime";
-        this.syntheticBeanClassName = ClassName.get(this.quarkusRuntimePackage,
-                model.getMetadata().getServiceName() + "SyntheticBean");
+        this.syntheticBeanClassName = quarkusModel.runtimeClass("SyntheticBean");
     }
 
     @Override

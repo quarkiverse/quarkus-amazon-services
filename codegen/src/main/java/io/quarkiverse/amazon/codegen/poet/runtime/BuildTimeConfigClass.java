@@ -9,18 +9,17 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 import io.quarkiverse.amazon.codegen.poet.PoetUtils;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
-import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
 import software.amazon.awssdk.codegen.poet.ClassSpec;
 
 public class BuildTimeConfigClass implements ClassSpec {
     private final ClassName buildTimeConfigClassName;
-    private final String clientPackageName;
+    private final QuarkusServiceModel quarkusModel;
     private final String up;
-    private final String quarkusRuntimePackage;
     private final ClassName devServicesBuildTimeConfigClassName;
 
     private final static TypeName HAS_SDK_BUILD_TIME_CONFIG = ClassName.get("io.quarkiverse.amazon.common.runtime",
@@ -30,18 +29,15 @@ public class BuildTimeConfigClass implements ClassSpec {
     private final static ClassName DEV_SERVICES_BUILD_TIME_CONFIG = ClassName.get("io.quarkiverse.amazon.common.runtime",
             "DevServicesBuildTimeConfig");
 
-    public BuildTimeConfigClass(IntermediateModel model, boolean hasCustomDevServicesBuildTimeConfig) {
-        this.clientPackageName = model.getMetadata().getClientPackageName();
-        this.up = model.getMetadata().getDescriptiveServiceName();
-        this.quarkusRuntimePackage = "io.quarkiverse.amazon." + this.clientPackageName + ".runtime";
-        this.buildTimeConfigClassName = ClassName.get(this.quarkusRuntimePackage,
-                model.getMetadata().getServiceName() + "BuildTimeConfig");
+    public BuildTimeConfigClass(QuarkusServiceModel quarkusModel) {
+        this.quarkusModel = quarkusModel;
+        this.up = quarkusModel.intermediateModel().getMetadata().getDescriptiveServiceName();
+        this.buildTimeConfigClassName = quarkusModel.runtimeClass("BuildTimeConfig");
 
-        if (!hasCustomDevServicesBuildTimeConfig) {
+        if (!quarkusModel.hasCustomDevServicesBuildTimeConfig()) {
             devServicesBuildTimeConfigClassName = DEV_SERVICES_BUILD_TIME_CONFIG;
         } else {
-            devServicesBuildTimeConfigClassName = ClassName.get(this.quarkusRuntimePackage,
-                    model.getMetadata().getServiceName() + "DevServicesBuildTimeConfig");
+            devServicesBuildTimeConfigClassName = quarkusModel.runtimeClass("DevServicesBuildTimeConfig");
         }
     }
 
@@ -55,7 +51,7 @@ public class BuildTimeConfigClass implements ClassSpec {
                 .addJavadoc("$L build time configuration", up)
                 // @ConfigMapping(prefix = "quarkus.ecr")
                 .addAnnotation(AnnotationSpec.builder(ConfigMapping.class)
-                        .addMember("prefix", "$S", "quarkus." + clientPackageName)
+                        .addMember("prefix", "$S", quarkusModel.configPrefix())
                         .build())
                 // @ConfigRoot(phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
                 .addAnnotation(AnnotationSpec.builder(ConfigRoot.class)

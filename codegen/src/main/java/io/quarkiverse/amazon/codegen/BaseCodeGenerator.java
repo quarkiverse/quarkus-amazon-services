@@ -11,9 +11,10 @@ import java.util.concurrent.ForkJoinTask;
 
 import com.squareup.javapoet.ClassName;
 
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModelBuilder;
 import software.amazon.awssdk.codegen.C2jModels;
 import software.amazon.awssdk.codegen.CodeGenerator;
-import software.amazon.awssdk.codegen.IntermediateModelBuilder;
 import software.amazon.awssdk.codegen.emitters.GeneratorTask;
 import software.amazon.awssdk.codegen.internal.Jackson;
 import software.amazon.awssdk.codegen.internal.Utils;
@@ -25,6 +26,7 @@ public abstract class BaseCodeGenerator {
     private static final String MODEL_DIR_NAME = "models";
 
     private final C2jModels models;
+    private final QuarkusCustomizationConfig quarkusCustomizationConfig;
     protected final String generatedSourcesDirectory;
     protected final String generatedResourcesDirectory;
     protected final String generatedTestsDirectory;
@@ -44,6 +46,7 @@ public abstract class BaseCodeGenerator {
 
     public BaseCodeGenerator(BaseBuilder builder) {
         this.models = builder.models;
+        this.quarkusCustomizationConfig = builder.quarkusCustomizationConfig;
         this.generatedSourcesDirectory = builder.generatedSourcesDirectory;
         this.generatedTestsDirectory = builder.generatedTestsDirectory;
         this.generatedResourcesDirectory = builder.generatedResourcesDirectory != null ? builder.generatedResourcesDirectory
@@ -64,18 +67,16 @@ public abstract class BaseCodeGenerator {
      */
     public void execute() {
         try {
-            IntermediateModel intermediateModel = new IntermediateModelBuilder(models).build();
+            QuarkusServiceModel model = new QuarkusServiceModelBuilder(models)
+                    .quarkusCustomizationConfig(quarkusCustomizationConfig)
+                    .sourcesDirectory(sourcesDirectory)
+                    .build();
 
             if (fileNamePrefix != null) {
-                writeIntermediateModel(intermediateModel);
+                writeIntermediateModel(model.intermediateModel());
             }
 
-            File targetCustomDevServicesConfigFile = new File(sourcesDirectory,
-                    "io/quarkiverse/amazon/" + intermediateModel.getMetadata().getClientPackageName()
-                            + "/runtime/" + intermediateModel.getMetadata().getServiceName()
-                            + "DevServicesBuildTimeConfig.java");
-
-            emitCode(intermediateModel, targetCustomDevServicesConfigFile.exists());
+            emitCode(model);
 
         } catch (Exception e) {
             log.error(() -> "Failed to generate code. ", e);
@@ -109,12 +110,11 @@ public abstract class BaseCodeGenerator {
         }
     }
 
-    private void emitCode(IntermediateModel intermediateModel, boolean hasCustomDevServicesBuildTimeConfig) {
-        ForkJoinTask.invokeAll(createGeneratorTasks(intermediateModel, hasCustomDevServicesBuildTimeConfig));
+    private void emitCode(QuarkusServiceModel model) {
+        ForkJoinTask.invokeAll(createGeneratorTasks(model));
     }
 
-    abstract GeneratorTask createGeneratorTasks(IntermediateModel intermediateModel,
-            boolean hasCustomDevServicesBuildTimeConfig);
+    abstract GeneratorTask createGeneratorTasks(QuarkusServiceModel model);
 
     /**
      * Builder for a {@link CodeGenerator}.
@@ -122,6 +122,7 @@ public abstract class BaseCodeGenerator {
     public static abstract class BaseBuilder {
 
         private C2jModels models;
+        private QuarkusCustomizationConfig quarkusCustomizationConfig;
         private String generatedSourcesDirectory;
         private String generatedResourcesDirectory;
         private String generatedTestsDirectory;
@@ -133,6 +134,11 @@ public abstract class BaseCodeGenerator {
 
         public BaseBuilder models(C2jModels models) {
             this.models = models;
+            return this;
+        }
+
+        public BaseBuilder quarkusCustomizationConfig(QuarkusCustomizationConfig quarkusCustomizationConfig) {
+            this.quarkusCustomizationConfig = quarkusCustomizationConfig;
             return this;
         }
 

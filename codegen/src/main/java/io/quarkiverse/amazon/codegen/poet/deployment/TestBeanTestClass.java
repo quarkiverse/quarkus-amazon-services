@@ -9,17 +9,16 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
-import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 
 public class TestBeanTestClass extends AbstractTestBeanTestClass {
     private final ClassName beanClassName;
     private final String beanName = "bean";
 
-    public TestBeanTestClass(IntermediateModel model) {
-        super(model, "BeanTest");
+    public TestBeanTestClass(QuarkusServiceModel quarkusModel) {
+        super(quarkusModel, "BeanTest");
 
-        this.beanClassName = ClassName.get(this.quarkusRuntimePackage,
-                model.getMetadata().getServiceName() + "Bean");
+        this.beanClassName = quarkusModel.runtimeClass("Bean");
     }
 
     /**

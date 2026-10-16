@@ -23,6 +23,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 import io.quarkiverse.amazon.codegen.BaseCodeGenerator;
+import io.quarkiverse.amazon.codegen.QuarkusCustomizationConfig;
 import software.amazon.awssdk.codegen.C2jModels;
 import software.amazon.awssdk.codegen.internal.Utils;
 import software.amazon.awssdk.codegen.model.config.customization.CustomizationConfig;
@@ -33,6 +34,7 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
 
     private static final String MODEL_FILE = "service-2.json";
     private static final String CUSTOMIZATION_CONFIG_FILE = "customization.config";
+    private static final String QUARKUS_CUSTOMIZATION_CONFIG_FILE = "quarkus-customization.config";
 
     @Parameter(property = "remoteCodegenResourcesRelativePath", defaultValue = "")
     private String remoteCodegenResourcesRelativePath;
@@ -60,6 +62,8 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
 
     private Path sourcesDirectory;
 
+    private QuarkusCustomizationConfig quarkusCustomizationConfig;
+
     @Override
     public void execute() throws MojoExecutionException {
         this.generatedSourcesDirectory = Paths.get(outputDirectory).resolve("generated-sources").resolve("sdk");
@@ -67,6 +71,11 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
         this.generatedTestsDirectory = Paths.get(outputDirectory).resolve("generated-test-sources").resolve("sdk-tests");
         this.codeGenResourcesPath = Paths.get(codeGenResources);
         this.sourcesDirectory = project.getBasedir().toPath().resolve(project.getBuild().getSourceDirectory());
+
+        this.quarkusCustomizationConfig = ModelLoaderUtils.loadOptionalModel(QuarkusCustomizationConfig.class,
+                codeGenResourcesPath.resolve(QUARKUS_CUSTOMIZATION_CONFIG_FILE).toFile(),
+                true)
+                .orElse(QuarkusCustomizationConfig.create());
 
         downloadModelIfNotExists(project);
 
@@ -90,7 +99,8 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
      * where:
      * version is the version of the SDK (maven project property awssdk.version).
      * file is the name of the file to fetch.
-     * service is the name of the service it is the name of the parent folder of the project
+     * service is the name of the service, it is the sdkServiceName of the Quarkus customization config if set,
+     * otherwise the name of the parent folder of the project
      * The file is downloaded to the codeGenResourcesPath if the file doesn't exist yet.
      * If the file cannot be downloaded, a MojoExecutionException is thrown.
      *
@@ -101,7 +111,9 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
         Utils.createDirectory(codeGenResourcesPath.toAbsolutePath().toString());
 
         String version = project.getProperties().getProperty("awssdk.version");
-        String service = project.getParent().getBasedir().getName();
+        String service = quarkusCustomizationConfig.getSdkServiceName() != null
+                ? quarkusCustomizationConfig.getSdkServiceName()
+                : project.getParent().getBasedir().getName();
 
         String baseUrl = "https://raw.githubusercontent.com/aws/aws-sdk-java-v2/refs/tags/" + version + "/services/"
                 + service + "/src/main/resources/codegen-resources/";
@@ -158,6 +170,7 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
     private void generateCode(C2jModels models) {
         getCodeGeneratorBuilder(project)
                 .models(models)
+                .quarkusCustomizationConfig(quarkusCustomizationConfig)
                 .generatedSourcesDirectory(generatedSourcesDirectory.toFile().getAbsolutePath())
                 .generatedResourcesDirectory(generatedResourcesDirectory.toFile().getAbsolutePath())
                 .generatedTestsDirectory(generatedTestsDirectory.toFile().getAbsolutePath())

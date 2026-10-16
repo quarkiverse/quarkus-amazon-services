@@ -11,6 +11,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 import io.quarkiverse.amazon.codegen.poet.PoetUtils;
 import io.quarkus.runtime.annotations.ConfigDocDefault;
 import io.quarkus.runtime.annotations.ConfigDocSection;
@@ -23,8 +24,7 @@ import software.amazon.awssdk.codegen.poet.ClassSpec;
 public class ConfigClass implements ClassSpec {
     private final IntermediateModel model;
     private final ClassName configClassName;
-    private final String clientPackageName;
-    private final String quarkusRuntimePackage;
+    private final QuarkusServiceModel quarkusModel;
 
     private final static ClassName HAS_AMAZON_CLIENT_RUNTIME_CONFIG = ClassName.get("io.quarkiverse.amazon.common.runtime",
             "HasAmazonClientRuntimeConfig");
@@ -33,11 +33,10 @@ public class ConfigClass implements ClassSpec {
     private final static ClassName SYNC_HTTP_CLIENT_CONFIG = ClassName.get("io.quarkiverse.amazon.common.runtime",
             "SyncHttpClientConfig");
 
-    public ConfigClass(IntermediateModel model) {
-        this.model = model;
-        this.clientPackageName = model.getMetadata().getClientPackageName();
-        this.quarkusRuntimePackage = "io.quarkiverse.amazon." + model.getMetadata().getClientPackageName() + ".runtime";
-        this.configClassName = ClassName.get(quarkusRuntimePackage, model.getMetadata().getServiceName() + "Config");
+    public ConfigClass(QuarkusServiceModel quarkusModel) {
+        this.model = quarkusModel.intermediateModel();
+        this.quarkusModel = quarkusModel;
+        this.configClassName = quarkusModel.runtimeClass("Config");
     }
 
     @Override
@@ -47,7 +46,7 @@ public class ConfigClass implements ClassSpec {
                 .addSuperinterface(HAS_AMAZON_CLIENT_RUNTIME_CONFIG)
                 // @ConfigMapping(prefix = "quarkus.ecr")
                 .addAnnotation(AnnotationSpec.builder(ConfigMapping.class)
-                        .addMember("prefix", "$S", "quarkus." + clientPackageName)
+                        .addMember("prefix", "$S", quarkusModel.configPrefix())
                         .build())
                 // @ConfigRoot(phase = ConfigPhase.RUN_TIME)
                 .addAnnotation(AnnotationSpec.builder(ConfigRoot.class)

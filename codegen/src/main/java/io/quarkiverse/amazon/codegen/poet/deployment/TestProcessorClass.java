@@ -9,6 +9,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 import io.quarkiverse.amazon.codegen.poet.PoetUtils;
 import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
 import software.amazon.awssdk.codegen.poet.ClassSpec;
@@ -19,10 +20,8 @@ public class TestProcessorClass implements ClassSpec {
     private final ClassName syncClientClassName;
     private final ClassName processorClassName;
     private final ClassName recorderClassName;
+    private final ClassName syntheticBeanClassName;
     private final String basePackage;
-    private final String quarkusBasePackage;
-    private final String quarkusDeploymentPackage;
-    private final String quarkusRuntimePackage;
 
     private final ClassName buildProducerClassName = ClassName.get("io.quarkus.deployment.annotations", "BuildProducer");
     private final ClassName buildStepClassName = ClassName.get("io.quarkus.deployment.annotations", "BuildStep");
@@ -35,18 +34,14 @@ public class TestProcessorClass implements ClassSpec {
     private final ClassName syntheticBeanBuildItemClassName = ClassName.get("io.quarkus.arc.deployment",
             "SyntheticBeanBuildItem");
 
-    public TestProcessorClass(IntermediateModel model) {
-        this.model = model;
+    public TestProcessorClass(QuarkusServiceModel quarkusModel) {
+        this.model = quarkusModel.intermediateModel();
         this.basePackage = model.getMetadata().getFullClientPackageName();
-        this.quarkusBasePackage = "io.quarkiverse.amazon." + model.getMetadata().getClientPackageName();
         this.asyncClientClassName = ClassName.get(basePackage, model.getMetadata().getAsyncInterface());
         this.syncClientClassName = ClassName.get(basePackage, model.getMetadata().getSyncInterface());
-        this.quarkusDeploymentPackage = quarkusBasePackage + ".deployment";
-        this.quarkusRuntimePackage = quarkusBasePackage + ".runtime";
-        this.processorClassName = ClassName.get(this.quarkusDeploymentPackage,
-                model.getMetadata().getServiceName() + "TestProcessor");
-        this.recorderClassName = ClassName.get(this.quarkusBasePackage,
-                model.getMetadata().getServiceName() + "TestRecorder");
+        this.processorClassName = quarkusModel.deploymentClass("TestProcessor");
+        this.recorderClassName = quarkusModel.baseClass("TestRecorder");
+        this.syntheticBeanClassName = quarkusModel.runtimeClass("SyntheticBean");
     }
 
     @Override
@@ -66,8 +61,7 @@ public class TestProcessorClass implements ClassSpec {
         String builderName = "builder";
         String asyncClientClassNameName = "asyncClientClassName";
         String syncClientClassNameName = "syncClientClassName";
-        ClassName syntheticBeanName = ClassName.get(quarkusRuntimePackage,
-                model.getMetadata().getServiceName() + "SyntheticBean");
+        ClassName syntheticBeanName = syntheticBeanClassName;
 
         var asyncIp = CodeBlock.builder()
                 .add(

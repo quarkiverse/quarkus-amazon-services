@@ -9,7 +9,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
-import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 
 /**
  * This approach is challenging. The key issue is that the static bean generator function
@@ -20,11 +20,10 @@ public class TestSyntheticBeanTestClass extends AbstractTestBeanTestClass {
     private final ClassName beanClassName;
     private final String beanName = "bean";
 
-    public TestSyntheticBeanTestClass(IntermediateModel model) {
-        super(model, "SyntheticBeanTest");
+    public TestSyntheticBeanTestClass(QuarkusServiceModel quarkusModel) {
+        super(quarkusModel, "SyntheticBeanTest");
 
-        this.beanClassName = ClassName.get(this.quarkusRuntimePackage,
-                model.getMetadata().getServiceName() + "SyntheticBean");
+        this.beanClassName = quarkusModel.runtimeClass("SyntheticBean");
     }
 
     /**
@@ -48,7 +47,7 @@ public class TestSyntheticBeanTestClass extends AbstractTestBeanTestClass {
     @Override
     protected Set<ClassName> getTestProcessors() {
         return Set.of(
-                ClassName.get(this.quarkusDeploymentPackage, model.getMetadata().getServiceName() + "TestProcessor"));
+                quarkusModel.deploymentClass("TestProcessor"));
     }
 
     /**

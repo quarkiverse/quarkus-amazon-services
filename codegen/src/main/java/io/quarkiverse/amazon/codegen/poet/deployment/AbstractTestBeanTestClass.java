@@ -21,6 +21,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 import io.quarkiverse.amazon.codegen.poet.PoetUtils;
 import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
 import software.amazon.awssdk.codegen.poet.ClassSpec;
@@ -32,11 +33,8 @@ public abstract class AbstractTestBeanTestClass implements ClassSpec {
     protected final IntermediateModel model;
     protected final ClassName testClassName;
 
+    protected final QuarkusServiceModel quarkusModel;
     protected final String basePackage;
-    protected final String quarkusBasePackage;
-    protected final String quarkusDeploymentPackage;
-    protected final String quarkusRuntimePackage;
-    protected final String quarkusTestPackage;
 
     protected final ClassName junitAssertionsClassName = ClassName.get("org.junit.jupiter.api", "Assertions");
     protected final ClassName junitTestClassName = ClassName.get("org.junit.jupiter.api", "Test");
@@ -48,15 +46,12 @@ public abstract class AbstractTestBeanTestClass implements ClassSpec {
     protected final ClassName shrinkwrapShrinkWrapClassName = ClassName.get("org.jboss.shrinkwrap.api", "ShrinkWrap");
     protected final ClassName shrinkwrapStringAssetClassName = ClassName.get("org.jboss.shrinkwrap.api.asset", "StringAsset");
 
-    public AbstractTestBeanTestClass(IntermediateModel model, String testClassName) {
-        this.model = model;
+    public AbstractTestBeanTestClass(QuarkusServiceModel quarkusModel, String testClassName) {
+        this.model = quarkusModel.intermediateModel();
+        this.quarkusModel = quarkusModel;
         this.basePackage = model.getMetadata().getFullClientPackageName();
-        this.quarkusBasePackage = "io.quarkiverse.amazon." + model.getMetadata().getClientPackageName();
-        this.quarkusDeploymentPackage = quarkusBasePackage + ".deployment";
-        this.quarkusRuntimePackage = quarkusBasePackage + ".runtime";
-        this.quarkusTestPackage = quarkusBasePackage + ".test";
 
-        this.testClassName = ClassName.get(this.quarkusTestPackage, model.getMetadata().getServiceName() + testClassName);
+        this.testClassName = quarkusModel.testClass(testClassName);
     }
 
     /**
@@ -83,7 +78,7 @@ public abstract class AbstractTestBeanTestClass implements ClassSpec {
      * @return A set of properties to include.
      */
     protected Properties getTestProperties() {
-        var serviceName = model.getMetadata().getServiceName().toLowerCase();
+        var configName = quarkusModel.configName();
         return Stream.of(
                 "quarkus.%s.endpoint-override=http://localhost:9090",
                 "quarkus.%s.aws.region=us-east-2",
@@ -92,7 +87,7 @@ public abstract class AbstractTestBeanTestClass implements ClassSpec {
                 "quarkus.%s.aws.credentials.static-provider.secret-access-key=test-secret")
                 .map(it -> {
                     var parts = it.split("=", 2);
-                    return Map.entry(String.format(parts[0], serviceName), parts[1]);
+                    return Map.entry(String.format(parts[0], configName), parts[1]);
                 })
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (v1, v2) -> v1, Properties::new));
     }

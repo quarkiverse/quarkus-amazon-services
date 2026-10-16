@@ -13,6 +13,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 import io.quarkiverse.amazon.codegen.poet.PoetUtils;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
@@ -23,19 +24,16 @@ public class TestRecorderClass implements ClassSpec {
     private final ClassName asyncClientClassName;
     private final ClassName syncClientClassName;
     private final ClassName recorderClassName;
+    private final ClassName syntheticBeanClassName;
     private final String basePackage;
-    private final String quarkusRuntimeParentPackage;
-    private final String quarkusRuntimePackage;
 
-    public TestRecorderClass(IntermediateModel model) {
-        this.model = model;
+    public TestRecorderClass(QuarkusServiceModel quarkusModel) {
+        this.model = quarkusModel.intermediateModel();
         this.basePackage = model.getMetadata().getFullClientPackageName();
         this.asyncClientClassName = ClassName.get(basePackage, model.getMetadata().getAsyncInterface());
         this.syncClientClassName = ClassName.get(basePackage, model.getMetadata().getSyncInterface());
-        this.quarkusRuntimeParentPackage = "io.quarkiverse.amazon." + model.getMetadata().getClientPackageName();
-        this.quarkusRuntimePackage = quarkusRuntimeParentPackage + ".runtime";
-        this.recorderClassName = ClassName.get(this.quarkusRuntimeParentPackage,
-                model.getMetadata().getServiceName() + "TestRecorder");
+        this.recorderClassName = quarkusModel.baseClass("TestRecorder");
+        this.syntheticBeanClassName = quarkusModel.runtimeClass("SyntheticBean");
     }
 
     @Override
@@ -50,8 +48,7 @@ public class TestRecorderClass implements ClassSpec {
     }
 
     private MethodSpec getSyntheticBeanMethod() {
-        var syntheticBeanClass = ClassName.get(this.quarkusRuntimePackage,
-                model.getMetadata().getServiceName() + "SyntheticBean");
+        var syntheticBeanClass = syntheticBeanClassName;
 
         ParameterizedTypeName returnType = ParameterizedTypeName.get(
                 ClassName.get(Function.class),
