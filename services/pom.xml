@@ -96,4 +96,72 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+        <!-- Run the code generator on service runtime/deployment modules (outside of m2e) -->
+        <profile>
+            <id>codegen</id>
+            <activation>
+                <property>
+                    <name>!m2e.version</name>
+                </property>
+                <file>
+                    <exists>${basedir}/../src/main/resources/codegen-resources</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.quarkiverse.amazonservices</groupId>
+                        <artifactId>quarkus-amazon-codegen-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- m2e cannot resolve the in-reactor codegen plugin: only expose the sources it generated -->
+        <profile>
+            <id>m2e</id>
+            <activation>
+                <property>
+                    <name>m2e.version</name>
+                </property>
+                <file>
+                    <exists>${basedir}/../src/main/resources/codegen-resources</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>3.6.0</version>
+                        <executions>
+                            <execution>
+                                <id>add-codegen-sources</id>
+                                <goals>
+                                    <goal>add-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>${project.build.directory}/generated-sources/sdk</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>add-codegen-test-sources</id>
+                                <goals>
+                                    <goal>add-test-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>${project.build.directory}/generated-test-sources/sdk-tests</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

@@ -96,10 +96,6 @@
                 <artifactId>quarkus-extension-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>io.quarkiverse.amazonservices</groupId>
-                <artifactId>quarkus-amazon-codegen-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <annotationProcessorPaths>
