@@ -20,7 +20,7 @@ public class SchedulerResource {
 
     private static final Logger LOG = Logger.getLogger(SchedulerResource.class);
     public final static String SCHEDULE_NAME = "quarkus-schedule-";
-    public final static String TARGET_ARN = "arn:aws:sqs:us-east-1:000000000000:quarkus-messaging-test-queue";
+    public final static String TARGET_ARN = "arn:aws:sqs:us-east-1:000000000000:quarkus-scheduler-test-queue";
     public final static String TARGET_ROLE_ARN = "arn:aws:iam::000000000000:role/quarkus-schedule";
 
     @Inject

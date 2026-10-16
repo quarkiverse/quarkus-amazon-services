@@ -4,7 +4,7 @@ import static io.restassured.RestAssured.given;
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.any;
-import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
 import java.time.Duration;
@@ -50,6 +50,6 @@ public class AmazonSqsMessagingConnectorTest {
                         .assertThat()
                         .statusCode(is(Response.Status.OK.getStatusCode()))
                         .extract()
-                        .as(String[].class), arrayWithSize(3)));
+                        .as(String[].class), arrayContainingInAnyOrder(MESSAGES.toArray())));
     }
 }
