@@ -158,6 +158,27 @@ endif::add-copy-button-to-env-var[]
 a|`floci`, `localstack`, `ministack`, `moto`
 |
 
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-kms_quarkus-kms-devservices-key-aliases]] [.property-path]##link:#quarkus-amazon-kms_quarkus-kms-devservices-key-aliases[`+++quarkus.kms.devservices.key-aliases+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.kms.devservices.key-aliases+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The keys to create on startup.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_KMS_DEVSERVICES_KEY_ALIASES+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_KMS_DEVSERVICES_KEY_ALIASES+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|
+
 h|[[quarkus-amazon-kms_section_quarkus-kms]] [.section-name.section-level0]##link:#quarkus-amazon-kms_section_quarkus-kms[AWS SDK client configurations]##
 h|Type
 h|Default
