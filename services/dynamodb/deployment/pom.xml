@@ -97,13 +97,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>io.quarkiverse.amazonservices</groupId>
-                <artifactId>quarkus-amazon-codegen-maven-plugin</artifactId>
-                <configuration>
-                    <remoteCodegenResourcesRelativePath>dynamodb</remoteCodegenResourcesRelativePath>
-                </configuration>
-            </plugin>
-            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <annotationProcessorPaths>
