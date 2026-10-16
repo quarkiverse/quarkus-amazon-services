@@ -66,6 +66,11 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
+        if (getCodeGeneratorBuilder(project) == null) {
+            getLog().info("No code generator for " + project.getArtifactId() + ", skipping");
+            return;
+        }
+
         this.generatedSourcesDirectory = Paths.get(outputDirectory).resolve("generated-sources").resolve("sdk");
         this.generatedResourcesDirectory = Paths.get(outputDirectory).resolve("generated-resources").resolve("sdk-resources");
         this.generatedTestsDirectory = Paths.get(outputDirectory).resolve("generated-test-sources").resolve("sdk-tests");
@@ -180,7 +185,14 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
                 .execute();
     }
 
+    /**
+     * @return the code generator builder for the given module, or {@code null} if no code should be generated
+     */
     abstract BaseCodeGenerator.BaseBuilder getCodeGeneratorBuilder(MavenProject project);
+
+    static boolean isDevServicesModule(MavenProject project) {
+        return project.getArtifactId().startsWith("quarkus-amazon-devservices-");
+    }
 
     private String intermediateModelFileNamePrefix(C2jModels models) {
         return writeIntermediateModel ? Utils.getFileNamePrefix(models.serviceModel()) : null;

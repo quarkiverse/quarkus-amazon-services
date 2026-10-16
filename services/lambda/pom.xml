@@ -13,6 +13,7 @@
 
     <modules>
         <module>runtime</module>
+        <module>devservices</module>
         <module>deployment</module>
     </modules>
 
