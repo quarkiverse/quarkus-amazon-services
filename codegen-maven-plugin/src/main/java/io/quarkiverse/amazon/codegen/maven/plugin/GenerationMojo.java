@@ -7,6 +7,7 @@ import org.apache.maven.project.MavenProject;
 
 import io.quarkiverse.amazon.codegen.BaseCodeGenerator.BaseBuilder;
 import io.quarkiverse.amazon.codegen.DeploymentCodeGenerator;
+import io.quarkiverse.amazon.codegen.DevServicesCodeGenerator;
 import io.quarkiverse.amazon.codegen.RuntimeCodeGenerator;
 
 /**
@@ -18,7 +19,7 @@ public class GenerationMojo extends BaseGenerationMojo {
     @Override
     BaseBuilder getCodeGeneratorBuilder(MavenProject project) {
         if (isDevServicesModule(project)) {
-            return null;
+            return DevServicesCodeGenerator.builder();
         }
         if (project.getArtifactId().endsWith("-deployment")) {
             return DeploymentCodeGenerator.builder();

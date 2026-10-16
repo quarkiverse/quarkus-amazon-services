@@ -15,16 +15,16 @@ import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
  */
 public class QuarkusServiceModel {
     private final IntermediateModel intermediateModel;
-    private final String basePackage;
+    private final String packageName;
     private final String classPrefix;
     private final String configName;
     private final String featureName;
     private final String sourcesDirectory;
 
-    QuarkusServiceModel(IntermediateModel intermediateModel, String basePackage, String classPrefix, String configName,
+    QuarkusServiceModel(IntermediateModel intermediateModel, String packageName, String classPrefix, String configName,
             String featureName, String sourcesDirectory) {
         this.intermediateModel = intermediateModel;
-        this.basePackage = basePackage;
+        this.packageName = packageName;
         this.classPrefix = classPrefix;
         this.configName = configName;
         this.featureName = featureName;
@@ -36,19 +36,23 @@ public class QuarkusServiceModel {
     }
 
     public String basePackage() {
-        return basePackage;
+        return "io.quarkiverse.amazon." + packageName;
     }
 
     public String runtimePackage() {
-        return basePackage + ".runtime";
+        return basePackage() + ".runtime";
     }
 
     public String deploymentPackage() {
-        return basePackage + ".deployment";
+        return basePackage() + ".deployment";
     }
 
     public String testPackage() {
-        return basePackage + ".test";
+        return basePackage() + ".test";
+    }
+
+    public String devServicesPackage() {
+        return "io.quarkiverse.amazon.devservices." + packageName;
     }
 
     public String configName() {
@@ -72,7 +76,15 @@ public class QuarkusServiceModel {
     }
 
     public ClassName baseClass(String suffix) {
-        return ClassName.get(basePackage, classPrefix + suffix);
+        return ClassName.get(basePackage(), classPrefix + suffix);
+    }
+
+    public ClassName devServicesClass(String suffix) {
+        return ClassName.get(devServicesPackage(), classPrefix + suffix);
+    }
+
+    public String classPrefix() {
+        return classPrefix;
     }
 
     public ClassName testClass(String suffix) {
