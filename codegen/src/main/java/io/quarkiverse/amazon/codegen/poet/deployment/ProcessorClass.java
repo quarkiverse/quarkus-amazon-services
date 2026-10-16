@@ -17,6 +17,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.WildcardTypeName;
 
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 import io.quarkiverse.amazon.codegen.poet.PoetUtils;
 import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
 import software.amazon.awssdk.codegen.poet.ClassSpec;
@@ -29,10 +30,9 @@ public class ProcessorClass implements ClassSpec {
     private final ClassName processorClassName;
     private final ClassName buildTimeConfigClassName;
     private final String clientPackageName;
+    private final String configName;
     private final ClassName recorderClassName;
     private final String basePackage;
-    private final String quarkusDeploymentPackage;
-    private final String quarkusRuntimePackage;
     private final String quarkusFeatureName;
 
     private final static TypeName ABSTRACT_AMAZON_SERVICE_PROCESSOR = ClassName.get(
@@ -58,7 +58,8 @@ public class ProcessorClass implements ClassSpec {
             "io.quarkiverse.amazon.common.deployment",
             "AmazonClientExtensionBuildItem");
 
-    public ProcessorClass(IntermediateModel model) {
+    public ProcessorClass(QuarkusServiceModel quarkusModel) {
+        IntermediateModel model = quarkusModel.intermediateModel();
         this.basePackage = model.getMetadata().getFullClientPackageName();
 
         this.clientPackageName = model.getMetadata().getClientPackageName();
@@ -67,16 +68,12 @@ public class ProcessorClass implements ClassSpec {
         this.asyncClientClassName = ClassName.get(basePackage, model.getMetadata().getAsyncInterface());
         this.asyncClientBuilderClassName = ClassName.get(basePackage, model.getMetadata().getAsyncBuilderInterface());
 
-        this.quarkusDeploymentPackage = "io.quarkiverse.amazon." + this.clientPackageName + ".deployment";
-        this.quarkusRuntimePackage = "io.quarkiverse.amazon." + this.clientPackageName + ".runtime";
-        this.quarkusFeatureName = "amazon-sdk-" + this.clientPackageName;
+        this.configName = quarkusModel.configName();
+        this.quarkusFeatureName = quarkusModel.featureName();
 
-        this.processorClassName = ClassName.get(this.quarkusDeploymentPackage,
-                model.getMetadata().getServiceName() + "Processor");
-        this.buildTimeConfigClassName = ClassName.get(this.quarkusRuntimePackage,
-                model.getMetadata().getServiceName() + "BuildTimeConfig");
-        this.recorderClassName = ClassName.get(this.quarkusRuntimePackage,
-                model.getMetadata().getServiceName() + "Recorder");
+        this.processorClassName = quarkusModel.deploymentClass("Processor");
+        this.buildTimeConfigClassName = quarkusModel.runtimeClass("BuildTimeConfig");
+        this.recorderClassName = quarkusModel.runtimeClass("Recorder");
     }
 
     @Override
@@ -124,7 +121,7 @@ public class ProcessorClass implements ClassSpec {
                 .addAnnotation(Override.class)
                 .addModifiers(PROTECTED)
                 .returns(ClassName.get(String.class))
-                .addStatement("return $S", clientPackageName)
+                .addStatement("return $S", configName)
                 .build();
     }
 

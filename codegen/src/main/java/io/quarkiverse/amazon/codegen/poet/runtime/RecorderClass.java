@@ -11,6 +11,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.WildcardTypeName;
 
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 import io.quarkiverse.amazon.codegen.poet.PoetUtils;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
@@ -26,7 +27,6 @@ public class RecorderClass implements ClassSpec {
     private final ClassName recorderClassName;
     private final ClassName configClassName;
     private final String basePackage;
-    private final String quarkusRuntimePackage;
 
     private final static ClassName AMAZON_CLIENT_RUNTIME_CONFIG = ClassName.get("io.quarkiverse.amazon.common.runtime",
             "HasAmazonClientRuntimeConfig");
@@ -37,16 +37,13 @@ public class RecorderClass implements ClassSpec {
     private final static ClassName SYNC_HTTP_CLIENT_CONFIG = ClassName.get("io.quarkiverse.amazon.common.runtime",
             "SyncHttpClientConfig");
 
-    public RecorderClass(IntermediateModel model) {
-        this.model = model;
+    public RecorderClass(QuarkusServiceModel quarkusModel) {
+        this.model = quarkusModel.intermediateModel();
         this.basePackage = model.getMetadata().getFullClientPackageName();
         this.syncClientClassName = ClassName.get(basePackage, model.getMetadata().getSyncInterface());
         this.asyncClientClassName = ClassName.get(basePackage, model.getMetadata().getAsyncInterface());
-        this.quarkusRuntimePackage = "io.quarkiverse.amazon." + model.getMetadata().getClientPackageName() + ".runtime";
-        this.recorderClassName = ClassName.get(this.quarkusRuntimePackage,
-                model.getMetadata().getServiceName() + "Recorder");
-        this.configClassName = ClassName.get(this.quarkusRuntimePackage,
-                model.getMetadata().getServiceName() + "Config");
+        this.recorderClassName = quarkusModel.runtimeClass("Recorder");
+        this.configClassName = quarkusModel.runtimeClass("Config");
     }
 
     @Override

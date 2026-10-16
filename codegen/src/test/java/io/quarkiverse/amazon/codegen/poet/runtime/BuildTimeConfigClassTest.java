@@ -1,30 +1,61 @@
 package io.quarkiverse.amazon.codegen.poet.runtime;
 
-import static io.quarkiverse.amazon.codegen.poet.ClientTestModels.restJsonServiceModels;
+import static io.quarkiverse.amazon.codegen.poet.ClientTestModels.customNamesConfig;
+import static io.quarkiverse.amazon.codegen.poet.ClientTestModels.restJsonC2jModels;
+import static io.quarkiverse.amazon.codegen.poet.ClientTestModels.restJsonQuarkusModel;
 import static io.quarkiverse.amazon.codegen.poet.PoetMatchers.generatesTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.function.BiFunction;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
-import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
-import software.amazon.awssdk.codegen.poet.ClassSpec;
+import io.quarkiverse.amazon.codegen.QuarkusCustomizationConfig;
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModelBuilder;
 
 public class BuildTimeConfigClassTest {
 
+    @TempDir
+    Path sourcesDirectory;
+
     @Test
     public void testBuildTimeConfigClass() {
-        validateGeneration(BuildTimeConfigClass::new, restJsonServiceModels(), false, "test-buildtimeconfig-class.java");
-        validateGeneration(BuildTimeConfigClass::new, restJsonServiceModels(), true,
+        validateGeneration(restJsonQuarkusModel(), "test-buildtimeconfig-class.java");
+    }
+
+    @Test
+    public void testBuildTimeConfigClassWithCustomDevServices() throws IOException {
+        provideSource("io/quarkiverse/amazon/ecr/runtime/EcrDevServicesBuildTimeConfig.java");
+
+        validateGeneration(quarkusModel(QuarkusCustomizationConfig.create()),
                 "test-buildtimeconfig-class-customdevservices.java");
     }
 
-    static void validateGeneration(BiFunction<IntermediateModel, Boolean, ClassSpec> generatorConstructor,
-            IntermediateModel model,
-            boolean hasCustomDevServicesBuildTimeConfig,
-            String expectedClassName) {
+    @Test
+    public void testBuildTimeConfigClassWithCustomNames() throws IOException {
+        provideSource("io/quarkiverse/amazon/myecr/runtime/MyEcrDevServicesBuildTimeConfig.java");
 
-        assertThat(generatorConstructor.apply(model, hasCustomDevServicesBuildTimeConfig), generatesTo(expectedClassName));
+        validateGeneration(quarkusModel(customNamesConfig()), "test-buildtimeconfig-class-customnames.java");
+    }
+
+    private void provideSource(String path) throws IOException {
+        Path source = sourcesDirectory.resolve(path);
+        Files.createDirectories(source.getParent());
+        Files.writeString(source, "");
+    }
+
+    private QuarkusServiceModel quarkusModel(QuarkusCustomizationConfig config) {
+        return new QuarkusServiceModelBuilder(restJsonC2jModels())
+                .quarkusCustomizationConfig(config)
+                .sourcesDirectory(sourcesDirectory.toString())
+                .build();
+    }
+
+    static void validateGeneration(QuarkusServiceModel model, String expectedClassName) {
+        assertThat(new BuildTimeConfigClass(model), generatesTo(expectedClassName));
     }
 }

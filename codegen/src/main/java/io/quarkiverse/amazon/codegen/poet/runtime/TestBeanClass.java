@@ -9,6 +9,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 import io.quarkiverse.amazon.codegen.poet.PoetUtils;
 import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
 import software.amazon.awssdk.codegen.poet.ClassSpec;
@@ -19,18 +20,15 @@ public class TestBeanClass implements ClassSpec {
     private final ClassName syncClientClassName;
     private final ClassName beanClassName;
     private final String basePackage;
-    private final String quarkusRuntimePackage;
     private final String asyncClientName = "asyncClient";
     private final String syncClientName = "syncClient";
 
-    public TestBeanClass(IntermediateModel model) {
-        this.model = model;
+    public TestBeanClass(QuarkusServiceModel quarkusModel) {
+        this.model = quarkusModel.intermediateModel();
         this.basePackage = model.getMetadata().getFullClientPackageName();
         this.asyncClientClassName = ClassName.get(basePackage, model.getMetadata().getAsyncInterface());
         this.syncClientClassName = ClassName.get(basePackage, model.getMetadata().getSyncInterface());
-        this.quarkusRuntimePackage = "io.quarkiverse.amazon." + model.getMetadata().getClientPackageName() + ".runtime";
-        this.beanClassName = ClassName.get(this.quarkusRuntimePackage,
-                model.getMetadata().getServiceName() + "Bean");
+        this.beanClassName = quarkusModel.runtimeClass("Bean");
     }
 
     @Override

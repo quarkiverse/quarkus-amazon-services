@@ -6,25 +6,49 @@ package io.quarkiverse.amazon.codegen.poet;
 
 import java.io.File;
 
+import io.quarkiverse.amazon.codegen.QuarkusCustomizationConfig;
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModelBuilder;
 import software.amazon.awssdk.codegen.C2jModels;
-import software.amazon.awssdk.codegen.IntermediateModelBuilder;
 import software.amazon.awssdk.codegen.model.config.customization.CustomizationConfig;
-import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
 import software.amazon.awssdk.codegen.model.service.ServiceModel;
 import software.amazon.awssdk.codegen.utils.ModelLoaderUtils;
 
 public class ClientTestModels {
 
-    public static IntermediateModel restJsonServiceModels() {
+    public static QuarkusServiceModel restJsonQuarkusModel() {
+        return new QuarkusServiceModelBuilder(restJsonC2jModels()).build();
+    }
+
+    public static C2jModels restJsonC2jModels() {
         File serviceModel = new File(ClientTestModels.class.getResource("client/c2j/rest-json/service-2.json").getFile());
         File customizationModel = new File(
                 ClientTestModels.class.getResource("client/c2j/rest-json/customization.config").getFile());
-        C2jModels models = C2jModels.builder()
+        return C2jModels.builder()
                 .serviceModel(getServiceModel(serviceModel))
                 .customizationConfig(getCustomizationConfig(customizationModel))
                 .build();
+    }
 
-        return new IntermediateModelBuilder(models).build();
+    /**
+     * Quarkus model of the rest-json service, with names customized to differ from the SDK defaults.
+     */
+    public static QuarkusServiceModel customNamesQuarkusModel() {
+        return new QuarkusServiceModelBuilder(restJsonC2jModels())
+                .quarkusCustomizationConfig(customNamesConfig())
+                .build();
+    }
+
+    /**
+     * Quarkus customization with names differing from the SDK defaults.
+     */
+    public static QuarkusCustomizationConfig customNamesConfig() {
+        QuarkusCustomizationConfig config = QuarkusCustomizationConfig.create();
+        config.setPackageName("myecr");
+        config.setClassPrefix("MyEcr");
+        config.setConfigName("my-ecr");
+        config.setFeatureName("amazon-sdk-my-ecr");
+        return config;
     }
 
     private static ServiceModel getServiceModel(File file) {

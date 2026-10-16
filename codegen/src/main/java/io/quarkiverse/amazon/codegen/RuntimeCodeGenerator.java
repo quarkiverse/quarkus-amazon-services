@@ -1,10 +1,10 @@
 package io.quarkiverse.amazon.codegen;
 
 import io.quarkiverse.amazon.codegen.emitters.tasks.RuntimeGeneratorTasks;
+import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 import software.amazon.awssdk.codegen.CodeGenerator;
 import software.amazon.awssdk.codegen.emitters.GeneratorTask;
 import software.amazon.awssdk.codegen.emitters.GeneratorTaskParams;
-import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
 
 public class RuntimeCodeGenerator extends BaseCodeGenerator {
 
@@ -13,12 +13,12 @@ public class RuntimeCodeGenerator extends BaseCodeGenerator {
     }
 
     @Override
-    GeneratorTask createGeneratorTasks(IntermediateModel intermediateModel, boolean hasCustomDevServicesBuildTimeConfig) {
-        return new RuntimeGeneratorTasks(GeneratorTaskParams.create(intermediateModel,
+    GeneratorTask createGeneratorTasks(QuarkusServiceModel model) {
+        return new RuntimeGeneratorTasks(GeneratorTaskParams.create(model.intermediateModel(),
                 generatedSourcesDirectory,
                 generatedTestsDirectory,
                 generatedResourcesDirectory),
-                hasCustomDevServicesBuildTimeConfig);
+                model);
     }
 
     /**
