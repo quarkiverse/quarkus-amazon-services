@@ -43,7 +43,7 @@ public class QuarkusServiceModelBuilder {
         QuarkusCustomizationConfig config = quarkusCustomizationConfig;
 
         return new QuarkusServiceModel(model,
-                "io.quarkiverse.amazon." + (config.getPackageName() != null ? config.getPackageName() : clientPackageName),
+                config.getPackageName() != null ? config.getPackageName() : clientPackageName,
                 config.getClassPrefix() != null ? config.getClassPrefix() : model.getMetadata().getServiceName(),
                 config.getConfigName() != null ? config.getConfigName() : clientPackageName,
                 config.getFeatureName() != null ? config.getFeatureName() : "amazon-sdk-" + clientPackageName,
