@@ -17,6 +17,9 @@ public class GenerationMojo extends BaseGenerationMojo {
 
     @Override
     BaseBuilder getCodeGeneratorBuilder(MavenProject project) {
+        if (isDevServicesModule(project)) {
+            return null;
+        }
         if (project.getArtifactId().endsWith("-deployment")) {
             return DeploymentCodeGenerator.builder();
         }
