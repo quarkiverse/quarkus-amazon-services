@@ -54,6 +54,7 @@
         <module>sesv2</module>
         <module>sfn</module>
         <module>sns</module>
+        <module>sqs</module>
         <module>sso</module>
         <module>ssooidc</module>
         <module>ssm</module>
