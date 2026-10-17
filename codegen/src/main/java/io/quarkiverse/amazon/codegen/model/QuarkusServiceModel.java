@@ -1,6 +1,7 @@
 package io.quarkiverse.amazon.codegen.model;
 
 import java.io.File;
+import java.util.List;
 
 import com.squareup.javapoet.ClassName;
 
@@ -21,10 +22,13 @@ public class QuarkusServiceModel {
     private final String featureName;
     private final String displayName;
     private final String docsPageName;
+    private final List<String> keywords;
+    private final List<String> categories;
     private final String sourcesDirectory;
 
     QuarkusServiceModel(IntermediateModel intermediateModel, String packageName, String classPrefix, String configName,
-            String featureName, String displayName, String docsPageName, String sourcesDirectory) {
+            String featureName, String displayName, String docsPageName, List<String> keywords, List<String> categories,
+            String sourcesDirectory) {
         this.intermediateModel = intermediateModel;
         this.packageName = packageName;
         this.classPrefix = classPrefix;
@@ -32,6 +36,8 @@ public class QuarkusServiceModel {
         this.featureName = featureName;
         this.displayName = displayName;
         this.docsPageName = docsPageName;
+        this.keywords = keywords;
+        this.categories = categories;
         this.sourcesDirectory = sourcesDirectory;
     }
 
@@ -87,6 +93,20 @@ public class QuarkusServiceModel {
      */
     public String docsPageName() {
         return docsPageName;
+    }
+
+    /**
+     * @return the keywords of the extension descriptor, in addition to the extension name, {@code aws} and {@code amazon}
+     */
+    public List<String> keywords() {
+        return keywords;
+    }
+
+    /**
+     * @return the categories of the extension descriptor
+     */
+    public List<String> categories() {
+        return categories;
     }
 
     public ClassName runtimeClass(String suffix) {

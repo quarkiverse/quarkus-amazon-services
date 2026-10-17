@@ -1,5 +1,7 @@
 package io.quarkiverse.amazon.codegen.model;
 
+import java.util.List;
+
 import io.quarkiverse.amazon.codegen.QuarkusCustomizationConfig;
 import software.amazon.awssdk.codegen.C2jModels;
 import software.amazon.awssdk.codegen.IntermediateModelBuilder;
@@ -51,6 +53,8 @@ public class QuarkusServiceModelBuilder {
                 config.getFeatureName() != null ? config.getFeatureName() : "amazon-sdk-" + clientPackageName,
                 config.getDisplayName() != null ? config.getDisplayName() : model.getMetadata().getDescriptiveServiceName(),
                 config.getDocsPageName() != null ? config.getDocsPageName() : "amazon-" + packageName,
+                config.getKeywords() != null ? config.getKeywords() : List.of(),
+                config.getCategories() != null ? config.getCategories() : List.of("cloud"),
                 sourcesDirectory);
     }
 }
