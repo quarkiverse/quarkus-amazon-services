@@ -1,0 +1,2 @@
+* Open a browser to `http://localhost:8080/s3.html`
+* Upload new file to the current S3 bucket via the form and see the list of files in the bucket

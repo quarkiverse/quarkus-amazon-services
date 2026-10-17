@@ -54,6 +54,7 @@ The skeleton always produces the sections below, in this order. Some only appear
 | Creating the Maven project | always | — |
 | Using the … client (injection of the sync client) | always, unless replaced | `usage` (replaces) |
 | Configuring … clients (HTTP clients, local endpoint, AWS credentials, Dev Services warning) | always | `configuration` (appended) |
+| Run the application in Dev Mode | always | `run` (appended) |
 | Next steps → Packaging | always | — |
 | Next steps → Going asynchronous (injection of the async client) | always, unless replaced | `async-usage` (replaces) |
 | *(additional sections)* | — | `extras` |
@@ -163,10 +164,10 @@ An injection point is an optional file `pages/_extras/amazon-<page>-<point>.adoc
 
 | Point | Where it is included | Mode | First line of the file | Real example |
 |---|---|---|---|---|
-| `devservices` | end of « Provision … locally via Dev Services » | appended | — | [`amazon-s3-devservices.adoc`](modules/ROOT/pages/_extras/amazon-s3-devservices.adoc) (buckets created at startup) |
 | `setup` | after the manual provisioning, before « Solution » | appended | — | [`amazon-dynamodb-setup.adoc`](modules/ROOT/pages/_extras/amazon-dynamodb-setup.adoc) (create the table) |
 | `usage` | after « Creating the Maven project » | **replaces** « Using the … client » | `:custom-usage:` | [`amazon-kms-usage.adoc`](modules/ROOT/pages/_extras/amazon-kms-usage.adoc) |
-| `configuration` | end of « Configuring … clients » | appended | — | [`amazon-s3-configuration.adoc`](modules/ROOT/pages/_extras/amazon-s3-configuration.adoc) (`bucket.name`, frontend) |
+| `configuration` | end of « Configuring … clients » | appended | — | [`amazon-s3-configuration.adoc`](modules/ROOT/pages/_extras/amazon-s3-configuration.adoc) (`bucket.name`) |
+| `run` | in « Run the app... » | appended | — | [`amazon-s3-run.adoc`](modules/ROOT/pages/_extras/amazon-s3-run.adoc) (browse frontend) |
 | `async-usage` | in « Going asynchronous » | **replaces** the generic async resource | `:custom-async-usage:` | [`amazon-kms-async-usage.adoc`](modules/ROOT/pages/_extras/amazon-kms-async-usage.adoc) |
 | `extras` | after the async clients, before « Configuration Reference » | appended | — | [`amazon-appconfigdata-extras.adoc`](modules/ROOT/pages/_extras/amazon-appconfigdata-extras.adoc), [`amazon-rds-extras.adoc`](modules/ROOT/pages/_extras/amazon-rds-extras.adoc) |
 
@@ -176,7 +177,7 @@ Heading levels depend on where the file lands:
 
 - `setup`: `===` subsections to stay under « Prerequisites » (create a table, a queue, a key…), or `==` for a top-level section (SES: using SES on your AWS account).
 - `usage`, `configuration`: `==` sections.
-- `async-usage`: no heading; the text continues « Going asynchronous ».
+- `async-usage`, `run`: no heading; the text continues the section it is included in.
 - `extras`: `===` to stay under « Next steps » (DynamoDB enhanced client, S3 Transfer Manager), or `==` for a top-level section (RDS IAM authentication, config sources).
 
 ## Writing rules

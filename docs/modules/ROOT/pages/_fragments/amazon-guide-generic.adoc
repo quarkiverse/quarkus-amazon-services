@@ -52,8 +52,6 @@ The easiest way to start working with {service-name-uppercase} is to run a local
 
 NOTE: Dev Services does not check that the selected stack emulates {service-name-uppercase}. If none of the xref:dev-services.adoc[supported stacks] does, disable Dev Services with `quarkus.{service-name}.devservices.enabled=false` and use your AWS account or set `endpoint-override`.
 
-include::../_extras/{docname}-devservices.adoc[opts=optional]
-
 ifdef::has-local-stack[]
 
 === Provision {service-name-uppercase} locally manually
@@ -242,7 +240,12 @@ quarkus.{service-name}.devservices.enabled=false
 Dev Services never starts in production mode.
 ====
 
-include::../_extras/{docname}-configuration.adoc[opts=optional]
+include::../_extras/{docname}-configuration.adoc[opts=optional,leveloffset=+1]
+
+== Run the application in Dev Mode
+
+* Run `./mvnw clean quarkus:dev`
+include::../_extras/{docname}-run.adoc[opts=optional]
 
 == Next steps
 
@@ -255,6 +258,8 @@ endif::[]
 ifndef::run-args[]
 It can then be run with `java -jar target/quarkus-app/quarkus-run.jar`.
 endif::[]
+
+NOTE: Dev Services does not start in production mode, so you need to make sure that your `application.properties` file is configured to use your AWS account or a local stack.
 
 With GraalVM installed, you can also create a native executable binary: `./mvnw clean package -Dnative`.
 Depending on your system, that will take some time.
