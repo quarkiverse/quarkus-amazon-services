@@ -152,6 +152,19 @@
                                 </configuration>
                             </execution>
                             <execution>
+                                <id>add-codegen-resources</id>
+                                <goals>
+                                    <goal>add-resource</goal>
+                                </goals>
+                                <configuration>
+                                    <resources>
+                                        <resource>
+                                            <directory>${project.build.directory}/generated-resources/sdk-resources</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
                                 <id>add-codegen-test-sources</id>
                                 <goals>
                                     <goal>add-test-source</goal>

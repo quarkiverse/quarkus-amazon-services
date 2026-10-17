@@ -4,6 +4,7 @@ import java.nio.file.Paths;
 
 import io.quarkiverse.amazon.codegen.docs.DocsMetadataGenerator;
 import io.quarkiverse.amazon.codegen.emitters.tasks.RuntimeGeneratorTasks;
+import io.quarkiverse.amazon.codegen.extension.ExtensionDescriptorGenerator;
 import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 import software.amazon.awssdk.codegen.CodeGenerator;
 import software.amazon.awssdk.codegen.emitters.GeneratorTask;
@@ -33,6 +34,7 @@ public class RuntimeCodeGenerator extends BaseCodeGenerator {
 
     @Override
     protected void postGenerate(QuarkusServiceModel model) {
+        new ExtensionDescriptorGenerator(model, extensionName).write(Paths.get(generatedResourcesDirectory));
         if (docsMetadataDirectory != null) {
             new DocsMetadataGenerator(model, extensionName, hasDevServices).write(Paths.get(docsMetadataDirectory));
         }

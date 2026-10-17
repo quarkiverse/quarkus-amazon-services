@@ -67,9 +67,13 @@ The skeleton always produces the sections below, in this order. Some only appear
 3. **Description**: create `pages/_description/amazon-<page>.adoc` with the intro and, if needed, editorial attributes (see [`_description` attributes](#_description-attributes)).
 4. **Extras** (optional): add files in `pages/_extras/` only for content that the skeleton cannot produce (see [Injection points](#injection-points)).
 5. **Navigation**: add `* xref:amazon-<page>.adoc[<Service name>]` to [`nav.adoc`](modules/ROOT/nav.adoc), in alphabetical order.
-6. **Extension metadata**: in `services/<service>/runtime/src/main/resources/META-INF/quarkus-extension.yaml`:
-   - add `guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-<page>.html`;
-   - check that the `config:` prefix is `quarkus.<service-name>.`. The real prefix is visible in the generated `includes/quarkus-amazon-<extension-name>.adoc`.
+6. **Extension metadata**: the code generator also writes the extension descriptor `META-INF/quarkus-extension.yaml` in `target/generated-resources/sdk-resources` of the runtime module (not committed). Its `name` is the display name, its `guide` points to `amazon-<page>.html` and its `config` prefix is `quarkus.<service-name>.`. Its keywords are the extension name, `aws` and `amazon`, and its category is `cloud`; add keywords or replace the categories in `quarkus-customization.config`:
+   ```json
+   {
+       "keywords": ["email"],
+       "categories": ["messaging"]
+   }
+   ```
 7. **Configuration reference**: build the project (`./mvnw install -DskipTests`). This generates `pages/includes/quarkus-amazon-<extension-name>.adoc`, which is committed with the page.
 8. **Check** the rendering (see [Checking the result](#checking-the-result)).
 

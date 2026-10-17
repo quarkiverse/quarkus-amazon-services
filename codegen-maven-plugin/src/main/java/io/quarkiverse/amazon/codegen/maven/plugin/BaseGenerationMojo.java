@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.stream.Stream;
 
+import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -94,6 +95,18 @@ public abstract class BaseGenerationMojo extends AbstractMojo {
         });
         project.addCompileSourceRoot(generatedSourcesDirectory.toFile().getAbsolutePath());
         project.addTestCompileSourceRoot(generatedTestsDirectory.toFile().getAbsolutePath());
+        addResourceDirectory(generatedResourcesDirectory);
+    }
+
+    private void addResourceDirectory(Path directory) {
+        String path = directory.toFile().getAbsolutePath();
+        if (!Files.isDirectory(directory)
+                || project.getBuild().getResources().stream().anyMatch(r -> path.equals(r.getDirectory()))) {
+            return;
+        }
+        Resource resource = new Resource();
+        resource.setDirectory(path);
+        project.addResource(resource);
     }
 
     /**

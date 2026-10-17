@@ -1,5 +1,7 @@
 package io.quarkiverse.amazon.codegen;
 
+import java.util.List;
+
 /**
  * Quarkus specific customizations of the generated extension, loaded from the optional
  * {@code quarkus-customization.config} file located next to the service model.
@@ -49,6 +51,17 @@ public class QuarkusCustomizationConfig {
      * Defaults to {@code amazon-<packageName>}.
      */
     private String docsPageName;
+
+    /**
+     * The keywords of the extension descriptor, in addition to the extension name, {@code aws} and {@code amazon}.
+     */
+    private List<String> keywords;
+
+    /**
+     * The categories of the extension descriptor.
+     * Defaults to {@code cloud}.
+     */
+    private List<String> categories;
 
     public static QuarkusCustomizationConfig create() {
         return new QuarkusCustomizationConfig();
@@ -108,5 +121,21 @@ public class QuarkusCustomizationConfig {
 
     public void setDocsPageName(String docsPageName) {
         this.docsPageName = docsPageName;
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
     }
 }
