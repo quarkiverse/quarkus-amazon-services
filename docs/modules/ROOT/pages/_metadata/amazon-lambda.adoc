@@ -2,4 +2,3 @@
 :service-name: lambda
 :service-name-uppercase: AWS Lambda
 :service-class-name: Lambda
-:has-devservices:

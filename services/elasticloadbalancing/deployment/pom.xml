@@ -28,6 +28,10 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-elasticloadbalancing</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-devservices-elasticloadbalancing</artifactId>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>

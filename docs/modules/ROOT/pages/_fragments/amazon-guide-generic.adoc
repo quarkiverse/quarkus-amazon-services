@@ -33,12 +33,7 @@ The Quarkus extension supports two programming models:
 * Blocking access using URL Connection HTTP client (by default), the Apache HTTP Client or the AWS CRT-based HTTP client
 * https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client or the AWS CRT-based HTTP client
 
-ifdef::has-devservices,has-local-stack[]
 In this guide, we see how you can get your REST services to use {service-name-uppercase} locally and on AWS.
-endif::[]
-ifndef::has-devservices,has-local-stack[]
-In this guide, we see how you can get your REST services to use {service-name-uppercase} on AWS.
-endif::[]
 
 == Prerequisites
 
@@ -49,15 +44,13 @@ To complete this guide, you need:
 * Apache Maven {maven-version}
 * https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html[AWS Command Line Interface]
 * An AWS Account to access the {service-name-uppercase} service
-ifdef::has-devservices,has-local-stack[]
 * Optionally, Docker for your system to run {service-name-uppercase} locally for testing purposes
-endif::[]
 
-ifdef::has-devservices[]
 === Provision {service-name-uppercase} locally via Dev Services
 
 The easiest way to start working with {service-name-uppercase} is to run a local instance using Dev Services.
-endif::[]
+
+NOTE: Dev Services does not check that the selected stack emulates {service-name-uppercase}. If none of the xref:dev-services.adoc[supported stacks] does, disable Dev Services with `quarkus.{service-name}.devservices.enabled=false` and use your AWS account or set `endpoint-override`.
 
 include::../_extras/{docname}-devservices.adoc[opts=optional]
 
@@ -222,12 +215,7 @@ quarkus.{service-name}.aws.credentials.type=static <3>
 quarkus.{service-name}.aws.credentials.static-provider.access-key-id=test-key
 quarkus.{service-name}.aws.credentials.static-provider.secret-access-key=test-secret
 ----
-ifdef::has-devservices[]
 <1> Override the {service-name-uppercase} client to use {aws-stack-name} instead of the actual AWS service. When it is set, Dev Services does not start a local stack for {service-name-uppercase}.
-endif::[]
-ifndef::has-devservices[]
-<1> Override the {service-name-uppercase} client to use {aws-stack-name} instead of the actual AWS service
-endif::[]
 <2> {aws-stack-name} defaults to `us-east-1`
 <3> The `static` credentials provider lets you set the `access-key-id` and `secret-access-key` directly
 
@@ -240,7 +228,6 @@ If you want to work with an AWS account, you can simply remove or comment out al
 * Instance profile credentials delivered through the Amazon EC2 metadata service
 
 And the region from your AWS CLI profile will be used.
-ifdef::has-devservices[]
 
 [IMPORTANT]
 ====
@@ -254,7 +241,6 @@ quarkus.{service-name}.devservices.enabled=false
 
 Dev Services never starts in production mode.
 ====
-endif::[]
 
 include::../_extras/{docname}-configuration.adoc[opts=optional]
 

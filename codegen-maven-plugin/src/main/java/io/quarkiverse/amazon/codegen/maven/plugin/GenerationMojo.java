@@ -2,8 +2,6 @@ package io.quarkiverse.amazon.codegen.maven.plugin;
 
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 
-import java.io.File;
-
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
@@ -34,11 +32,9 @@ public class GenerationMojo extends BaseGenerationMojo {
             return DeploymentCodeGenerator.builder();
         }
 
-        // the service folder holds the runtime, deployment and devservices modules
-        File serviceDirectory = project.getParent().getBasedir();
+        // the extension name is the name of the service folder holding the runtime, deployment and devservices modules
         return RuntimeCodeGenerator.builder()
                 .docsMetadataDirectory(docsMetadataDirectory)
-                .extensionName(serviceDirectory.getName())
-                .hasDevServices(new File(serviceDirectory, "devservices/pom.xml").exists());
+                .extensionName(project.getParent().getBasedir().getName());
     }
 }

@@ -2,4 +2,3 @@
 :service-name: kinesis
 :service-name-uppercase: Amazon Kinesis Data Streams
 :service-class-name: Kinesis
-:has-devservices:

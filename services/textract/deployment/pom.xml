@@ -28,6 +28,10 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-textract</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-devservices-textract</artifactId>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>

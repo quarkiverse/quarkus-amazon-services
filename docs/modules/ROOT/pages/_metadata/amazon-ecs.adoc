@@ -2,4 +2,3 @@
 :service-name: ecs
 :service-name-uppercase: Amazon ECS
 :service-class-name: Ecs
-:has-devservices:

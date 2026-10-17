@@ -14,13 +14,11 @@ public class RuntimeCodeGenerator extends BaseCodeGenerator {
 
     private final String docsMetadataDirectory;
     private final String extensionName;
-    private final boolean hasDevServices;
 
     public RuntimeCodeGenerator(Builder builder) {
         super(builder);
         this.docsMetadataDirectory = builder.docsMetadataDirectory;
         this.extensionName = builder.extensionName;
-        this.hasDevServices = builder.hasDevServices;
     }
 
     @Override
@@ -36,7 +34,7 @@ public class RuntimeCodeGenerator extends BaseCodeGenerator {
     protected void postGenerate(QuarkusServiceModel model) {
         new ExtensionDescriptorGenerator(model, extensionName).write(Paths.get(generatedResourcesDirectory));
         if (docsMetadataDirectory != null) {
-            new DocsMetadataGenerator(model, extensionName, hasDevServices).write(Paths.get(docsMetadataDirectory));
+            new DocsMetadataGenerator(model, extensionName).write(Paths.get(docsMetadataDirectory));
         }
     }
 
@@ -51,7 +49,6 @@ public class RuntimeCodeGenerator extends BaseCodeGenerator {
 
         private String docsMetadataDirectory;
         private String extensionName;
-        private boolean hasDevServices;
 
         /**
          * Directory where the documentation metadata of the service is written. Nothing is written if not set.
@@ -63,11 +60,6 @@ public class RuntimeCodeGenerator extends BaseCodeGenerator {
 
         public Builder extensionName(String extensionName) {
             this.extensionName = extensionName;
-            return this;
-        }
-
-        public Builder hasDevServices(boolean hasDevServices) {
-            this.hasDevServices = hasDevServices;
             return this;
         }
 

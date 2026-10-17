@@ -2,4 +2,3 @@
 :service-name: ssm
 :service-name-uppercase: AWS Systems Manager
 :service-class-name: Ssm
-:has-devservices:

@@ -2,4 +2,3 @@
 :service-name: eventbridge
 :service-name-uppercase: Amazon EventBridge
 :service-class-name: EventBridge
-:has-devservices:

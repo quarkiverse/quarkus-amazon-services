@@ -2,4 +2,3 @@
 :service-name: apigateway
 :service-name-uppercase: Amazon API Gateway
 :service-class-name: ApiGateway
-:has-devservices:

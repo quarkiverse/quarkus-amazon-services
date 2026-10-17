@@ -2,4 +2,3 @@
 :service-name: resourcegroupstaggingapi
 :service-name-uppercase: AWS Resource Groups Tagging API
 :service-class-name: ResourceGroupsTaggingApi
-:has-devservices:

@@ -28,6 +28,10 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-apigatewaymanagementapi</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-devservices-apigatewaymanagementapi</artifactId>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>

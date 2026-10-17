@@ -2,4 +2,3 @@
 :service-name: iam
 :service-name-uppercase: AWS IAM
 :service-class-name: Iam
-:has-devservices:

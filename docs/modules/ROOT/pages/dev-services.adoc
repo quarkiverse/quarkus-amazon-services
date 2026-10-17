@@ -38,6 +38,10 @@ Dev Services for Amazon Services is automatically enabled for each extensions ad
 * the `endpoint-override` is configured  (eg. `quarkus.dynamodb.endpoint-override=http://localhost:4566`)
 * Your environment does not support Docker. In test mode, it will cause the test to fail. Either disable Dev Services or configure the `endpoint-override`.
 
+Every extension provides a Dev Service, including for services that none of the supported stack providers emulates.
+As explained in the WARNING above, Dev Services starts the container without checking that the selected stack actually emulates the service.
+If none of the supported stacks does, disable Dev Services for the service with `quarkus.<service>.devservices.enabled=false` and use your AWS account or set the `endpoint-override`.
+
 == Shared services
 
 Stack containers are shared between Quarkus applications in dev mode by default. Set `quarkus.aws.devservices.shared=false` to disable sharing globally. A stack-specific setting overrides the global value:

@@ -2,4 +2,3 @@
 :service-name: bedrock
 :service-name-uppercase: Amazon Bedrock
 :service-class-name: Bedrock
-:has-devservices:

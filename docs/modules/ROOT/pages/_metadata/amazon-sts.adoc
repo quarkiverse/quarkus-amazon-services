@@ -2,4 +2,3 @@
 :service-name: sts
 :service-name-uppercase: AWS STS
 :service-class-name: Sts
-:has-devservices:

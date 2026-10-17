@@ -2,4 +2,3 @@
 :service-name: sqs
 :service-name-uppercase: Amazon SQS
 :service-class-name: Sqs
-:has-devservices:

@@ -2,4 +2,3 @@
 :service-name: cloudwatch
 :service-name-uppercase: Amazon CloudWatch
 :service-class-name: CloudWatch
-:has-devservices:
