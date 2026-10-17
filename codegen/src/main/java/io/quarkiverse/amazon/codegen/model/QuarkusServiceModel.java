@@ -19,20 +19,28 @@ public class QuarkusServiceModel {
     private final String classPrefix;
     private final String configName;
     private final String featureName;
+    private final String displayName;
+    private final String docsPageName;
     private final String sourcesDirectory;
 
     QuarkusServiceModel(IntermediateModel intermediateModel, String packageName, String classPrefix, String configName,
-            String featureName, String sourcesDirectory) {
+            String featureName, String displayName, String docsPageName, String sourcesDirectory) {
         this.intermediateModel = intermediateModel;
         this.packageName = packageName;
         this.classPrefix = classPrefix;
         this.configName = configName;
         this.featureName = featureName;
+        this.displayName = displayName;
+        this.docsPageName = docsPageName;
         this.sourcesDirectory = sourcesDirectory;
     }
 
     public IntermediateModel intermediateModel() {
         return intermediateModel;
+    }
+
+    public String packageName() {
+        return packageName;
     }
 
     public String basePackage() {
@@ -65,6 +73,20 @@ public class QuarkusServiceModel {
 
     public String featureName() {
         return featureName;
+    }
+
+    /**
+     * @return the name of the service displayed in the documentation
+     */
+    public String displayName() {
+        return displayName;
+    }
+
+    /**
+     * @return the name of the documentation page, without extension
+     */
+    public String docsPageName() {
+        return docsPageName;
     }
 
     public ClassName runtimeClass(String suffix) {

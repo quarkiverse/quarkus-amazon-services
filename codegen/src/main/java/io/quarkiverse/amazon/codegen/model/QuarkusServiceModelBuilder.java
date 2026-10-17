@@ -42,11 +42,15 @@ public class QuarkusServiceModelBuilder {
         String clientPackageName = model.getMetadata().getClientPackageName();
         QuarkusCustomizationConfig config = quarkusCustomizationConfig;
 
+        String packageName = config.getPackageName() != null ? config.getPackageName() : clientPackageName;
+
         return new QuarkusServiceModel(model,
-                config.getPackageName() != null ? config.getPackageName() : clientPackageName,
+                packageName,
                 config.getClassPrefix() != null ? config.getClassPrefix() : model.getMetadata().getServiceName(),
                 config.getConfigName() != null ? config.getConfigName() : clientPackageName,
                 config.getFeatureName() != null ? config.getFeatureName() : "amazon-sdk-" + clientPackageName,
+                config.getDisplayName() != null ? config.getDisplayName() : model.getMetadata().getDescriptiveServiceName(),
+                config.getDocsPageName() != null ? config.getDocsPageName() : "amazon-" + packageName,
                 sourcesDirectory);
     }
 }

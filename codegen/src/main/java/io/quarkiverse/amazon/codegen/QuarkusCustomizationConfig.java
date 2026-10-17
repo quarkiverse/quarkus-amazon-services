@@ -38,6 +38,18 @@ public class QuarkusCustomizationConfig {
      */
     private String sdkServiceName;
 
+    /**
+     * The name of the service displayed in the documentation.
+     * Defaults to the SDK descriptive service name (the service abbreviation, or the service full name).
+     */
+    private String displayName;
+
+    /**
+     * The name of the documentation page, without extension.
+     * Defaults to {@code amazon-<packageName>}.
+     */
+    private String docsPageName;
+
     public static QuarkusCustomizationConfig create() {
         return new QuarkusCustomizationConfig();
     }
@@ -80,5 +92,21 @@ public class QuarkusCustomizationConfig {
 
     public void setSdkServiceName(String sdkServiceName) {
         this.sdkServiceName = sdkServiceName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDocsPageName() {
+        return docsPageName;
+    }
+
+    public void setDocsPageName(String docsPageName) {
+        this.docsPageName = docsPageName;
     }
 }

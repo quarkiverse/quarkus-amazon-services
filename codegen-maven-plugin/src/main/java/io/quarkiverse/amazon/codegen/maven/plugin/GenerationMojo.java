@@ -2,7 +2,10 @@ package io.quarkiverse.amazon.codegen.maven.plugin;
 
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 
+import java.io.File;
+
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 import io.quarkiverse.amazon.codegen.BaseCodeGenerator.BaseBuilder;
@@ -16,6 +19,12 @@ import io.quarkiverse.amazon.codegen.RuntimeCodeGenerator;
 @Mojo(name = "generate", defaultPhase = GENERATE_SOURCES)
 public class GenerationMojo extends BaseGenerationMojo {
 
+    /**
+     * Directory where the runtime module writes the documentation metadata of the service.
+     */
+    @Parameter(property = "docsMetadataDirectory", defaultValue = "${maven.multiModuleProjectDirectory}/docs/modules/ROOT/pages/_metadata")
+    private String docsMetadataDirectory;
+
     @Override
     BaseBuilder getCodeGeneratorBuilder(MavenProject project) {
         if (isDevServicesModule(project)) {
@@ -25,6 +34,11 @@ public class GenerationMojo extends BaseGenerationMojo {
             return DeploymentCodeGenerator.builder();
         }
 
-        return RuntimeCodeGenerator.builder();
+        // the service folder holds the runtime, deployment and devservices modules
+        File serviceDirectory = project.getParent().getBasedir();
+        return RuntimeCodeGenerator.builder()
+                .docsMetadataDirectory(docsMetadataDirectory)
+                .extensionName(serviceDirectory.getName())
+                .hasDevServices(new File(serviceDirectory, "devservices/pom.xml").exists());
     }
 }
