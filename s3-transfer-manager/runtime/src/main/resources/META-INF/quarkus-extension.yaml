@@ -10,4 +10,4 @@ metadata:
   categories:
     - "data"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-s3.html
-  status: "experimental"
+  status: "stable"

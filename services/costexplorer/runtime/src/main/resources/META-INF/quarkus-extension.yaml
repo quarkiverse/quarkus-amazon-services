@@ -4,11 +4,13 @@ name: "Amazon Cost Explorer"
 metadata:
   keywords:
     - "ce"
+    - "costexplorer"
+    - "cost explorer"
     - "aws"
     - "amazon"
   categories:
-    - "ai"
+    - "cloud"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-costexplorer.html
   status: "stable"
   config:
-  - "quarkus.ce."
+  - "quarkus.costexplorer."

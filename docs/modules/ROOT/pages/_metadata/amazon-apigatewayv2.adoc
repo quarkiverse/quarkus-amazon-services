@@ -1,0 +1,3 @@
+:service-name: apigatewayv2
+:service-name-uppercase: API Gateway v2
+:service-class-name: ApiGatewayV2

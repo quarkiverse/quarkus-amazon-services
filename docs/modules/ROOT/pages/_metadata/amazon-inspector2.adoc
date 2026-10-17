@@ -1,0 +1,3 @@
+:service-name: inspector2
+:service-name-uppercase: Inspector2
+:service-class-name: Inspector2

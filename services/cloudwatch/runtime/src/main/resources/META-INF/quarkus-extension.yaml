@@ -7,8 +7,8 @@ metadata:
     - "aws"
     - "amazon"
   categories:
-    - "data"
+    - "observability"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-cloudwatch.html
-  status: "preview"
+  status: "stable"
   config:
   - "quarkus.cloudwatch."

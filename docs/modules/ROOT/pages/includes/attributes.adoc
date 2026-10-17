@@ -1,6 +1,7 @@
 :quarkus-version: 4.0.0.Beta1
 :quarkus-amazon-services-version: 4.0.0.Beta2
 :maven-version: 3.8.1+
+:jdk-version: 21+
 
 :quarkus-org-url: https://github.com/quarkusio
 :quarkus-base-url: {quarkus-org-url}/quarkus

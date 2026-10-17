@@ -4,10 +4,11 @@ name: "Amazon SESv2"
 metadata:
   keywords:
     - "sesv2"
+    - "email"
     - "aws"
     - "amazon"
   categories:
-    - "data"
+    - "messaging"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-sesv2.html
   status: "stable"
   config:

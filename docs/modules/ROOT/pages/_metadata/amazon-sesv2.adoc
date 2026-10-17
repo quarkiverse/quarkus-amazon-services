@@ -1,0 +1,4 @@
+:service-name: sesv2
+:service-name-uppercase: SES v2
+:service-class-name: SesV2
+:has-devservices:

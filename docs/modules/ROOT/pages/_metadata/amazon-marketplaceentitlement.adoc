@@ -1,0 +1,3 @@
+:service-name: marketplaceentitlement
+:service-name-uppercase: Marketplace Entitlement
+:service-class-name: MarketplaceEntitlement

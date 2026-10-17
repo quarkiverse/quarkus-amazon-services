@@ -1,0 +1,4 @@
+:service-name: kms
+:service-name-uppercase: KMS
+:service-class-name: Kms
+:has-devservices:

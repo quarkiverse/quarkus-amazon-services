@@ -7,5 +7,5 @@ metadata:
     - "aws"
     - "amazon"
   categories:
-    - "data"
-  status: "preview"
+    - "miscellaneous"
+  status: "stable"

@@ -1,0 +1,3 @@
+:service-name: rdsdata
+:service-name-uppercase: RDS Data
+:service-class-name: RdsData

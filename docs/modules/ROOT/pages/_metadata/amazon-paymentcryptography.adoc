@@ -1,0 +1,3 @@
+:service-name: paymentcryptography
+:service-name-uppercase: Payment Cryptography
+:service-class-name: PaymentCryptography

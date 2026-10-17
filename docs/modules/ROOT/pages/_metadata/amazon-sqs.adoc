@@ -1,0 +1,4 @@
+:service-name: sqs
+:service-name-uppercase: SQS
+:service-class-name: Sqs
+:has-devservices:

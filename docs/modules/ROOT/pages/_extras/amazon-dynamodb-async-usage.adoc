@@ -1,0 +1,80 @@
+:custom-async-usage:
+
+Create a `org.acme.dynamodb.FruitAsyncService` that will be similar to our `FruitSyncService` but using an asynchronous programming model.
+
+[source,java]
+----
+package org.acme.dynamodb;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+import io.smallrye.mutiny.Uni;
+import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
+
+@ApplicationScoped
+public class FruitAsyncService extends AbstractService {
+
+    @Inject
+    DynamoDbAsyncClient dynamoDB;
+
+    public Uni<List<Fruit>> findAll() {
+        return Uni.createFrom().completionStage(() -> dynamoDB.query(queryRequest()))
+                .onItem().transform(res -> res.items().stream().map(Fruit::from).collect(Collectors.toList()));
+    }
+
+    public Uni<Void> add(Fruit fruit) {
+        return Uni.createFrom().completionStage(() -> dynamoDB.putItem(putRequest(fruit))).replaceWithVoid();
+    }
+
+    public Uni<Fruit> get(String name) {
+        return Uni.createFrom().completionStage(() -> dynamoDB.getItem(getRequest(name)))
+                .onItem().transform(resp -> Fruit.from(resp.item()));
+    }
+}
+----
+
+In the previous code, we create `Uni` instances from the `CompletionStage` objects returned by the asynchronous DynamoDB client, and then transform the emitted item.
+
+Then, create an asynchronous REST resource that consumes this async service:
+
+[source,java]
+----
+package org.acme.dynamodb;
+
+import java.util.List;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+
+import io.smallrye.mutiny.Uni;
+
+@Path("/async-fruits")
+public class FruitAsyncResource {
+
+    @Inject
+    FruitAsyncService service;
+
+    @GET
+    public Uni<List<Fruit>> getAll() {
+        return service.findAll();
+    }
+
+    @GET
+    @Path("{name}")
+    public Uni<Fruit> getSingle(String name) {
+        return service.get(name);
+    }
+
+    @POST
+    public Uni<List<Fruit>> add(Fruit fruit) {
+        return service.add(fruit)
+                .onItem().ignore().andSwitchTo(this::getAll);
+    }
+}
+----

@@ -1,0 +1,4 @@
+:service-name: sns
+:service-name-uppercase: SNS
+:service-class-name: Sns
+:has-devservices:

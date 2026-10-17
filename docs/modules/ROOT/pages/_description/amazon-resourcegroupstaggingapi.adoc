@@ -1,0 +1,6 @@
+:aws-stack: localstack
+:localstack-service: resourcegroupstaggingapi
+
+The Amazon Resource Groups Tagging API is a web service that enables you to manage and organize your AWS resources using tags.
+
+You can find more information about Resource Groups Tagging API at https://docs.aws.amazon.com/cli/latest/reference/resourcegroupstaggingapi/index.html[the Amazon Resource Groups Tagging API website].

@@ -4,11 +4,14 @@ name: "Amazon Elastic Load Balancing v2"
 metadata:
   keywords:
     - "elasticloadbalancingv2"
+    - "elb"
+    - "alb"
+    - "nlb"
     - "aws"
     - "amazon"
   categories:
-    - "data"
+    - "cloud"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-elasticloadbalancingv2.html
   status: "stable"
   config:
-    - "quarkus.elasticloadbalancingv2."
+  - "quarkus.elasticloadbalancingv2."

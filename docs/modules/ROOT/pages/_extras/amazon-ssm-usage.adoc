@@ -1,0 +1,137 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+In this example, we will create an application that allows us to store and retrieve parameters to and from SSM parameter store using a RESTful API.
+The example application will demonstrate the two programming models supported by the extension.
+
+Let's start with an abstract `org.acme.ssm.QuarkusSsmResource` class to provide the common functionality we will need for both the synchronous and asynchrounous exposures.
+
+[source,java]
+----
+package org.acme.ssm;
+
+import static java.lang.Boolean.TRUE;
+import static java.util.stream.Collectors.toMap;
+
+import java.util.Map;
+import java.util.stream.Collector;
+
+import jakarta.annotation.PostConstruct;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import software.amazon.awssdk.services.ssm.model.GetParameterRequest;
+import software.amazon.awssdk.services.ssm.model.GetParametersByPathRequest;
+import software.amazon.awssdk.services.ssm.model.Parameter;
+import software.amazon.awssdk.services.ssm.model.ParameterType;
+import software.amazon.awssdk.services.ssm.model.PutParameterRequest;
+
+public abstract class QuarkusSsmResource {
+
+    @ConfigProperty(name = "parameters.path") <1>
+    String parametersPath;
+
+    @PostConstruct <2>
+    void normalizePath() {
+        if (!parametersPath.startsWith("/")) {
+            parametersPath = "/" + parametersPath;
+        }
+        if (!parametersPath.endsWith("/")) {
+            parametersPath = parametersPath + "/";
+        }
+    }
+
+    protected Collector<Parameter, ?, Map<String, String>> parametersToMap() { <3>
+        return toMap(p -> p.name().substring(parametersPath.length()), Parameter::value);
+    }
+
+    protected GetParametersByPathRequest generateGetParametersByPathRequest() {
+        return GetParametersByPathRequest.builder() <4>
+                .path(parametersPath)
+                .withDecryption(TRUE)
+                .build();
+    }
+
+    protected PutParameterRequest generatePutParameterRequest(String name, String value, boolean secure) {
+        return PutParameterRequest.builder() <5>
+                .name(parametersPath + name)
+                .value(value)
+                .type(secure ? ParameterType.SECURE_STRING : ParameterType.STRING)
+                .overwrite(TRUE)
+                .build();
+    }
+
+    protected GetParameterRequest generateGetParameterRequest(String name) {
+        return GetParameterRequest.builder() <6>
+                .name(parametersPath + name)
+                .withDecryption(TRUE)
+                .build();
+    }
+}
+----
+
+<1> Inject a configured path under which to store parameters
+<2> Ensure the path starts and ends with `/`
+<3> Collect parameters into a map of simple names and values
+<4> Generate a request for all parameters under the configured path
+<5> Generate a request to set a specific parameter
+<6> Generate a request to get a specific parameter value
+
+Now, we can extend the class and create the synchronous implementation in the `org.acme.ssm.QuarkusSsmSyncResource` class.
+
+[source,java]
+----
+package org.acme.ssm;
+
+import java.util.Map;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DefaultValue;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+import org.jboss.resteasy.reactive.RestQuery;
+
+import software.amazon.awssdk.services.ssm.SsmClient;
+
+@Path("/sync")
+public class QuarkusSsmSyncResource extends QuarkusSsmResource {
+
+    @Inject <1>
+    SsmClient ssm;
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String, String> getParameters() {
+        return ssm.getParametersByPath(generateGetParametersByPathRequest())
+                .parameters().stream().collect(parametersToMap());
+    }
+
+    @PUT
+    @Path("/{name}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public void setParameter(String name,
+            @RestQuery("secure") @DefaultValue("false") boolean secure,
+            String value) {
+
+        ssm.putParameter(generatePutParameterRequest(name, value, secure));
+    }
+
+    @GET
+    @Path("/{name}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getParameter(String name) {
+        return ssm.getParameter(generateGetParameterRequest(name))
+                .parameter().value();
+    }
+}
+----
+
+<1> Inject the client provided by the amazon-ssm extension
+
+Using the Amazon SSM SDK, we can easily store and retrieve arbitrary name/value pairs, and we can optionally store the values in a secure manner.

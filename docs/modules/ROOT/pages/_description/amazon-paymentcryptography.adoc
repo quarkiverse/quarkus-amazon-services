@@ -1,0 +1,3 @@
+Amazon Payment Cryptography simplifies cryptography operations in your cloud-hosted payment applications. You can use Amazon Payment Cryptography to create and manage keys.
+
+You can find more information about Payment Cryptography at https://aws.amazon.com/payment-cryptography/[the Amazon Payment Cryptography website].

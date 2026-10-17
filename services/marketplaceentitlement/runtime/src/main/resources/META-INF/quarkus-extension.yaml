@@ -7,8 +7,8 @@ metadata:
     - "aws"
     - "amazon"
   categories:
-    - "ai"
-  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-marketplacemetering.html
+    - "cloud"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-marketplaceentitlement.html
   status: "stable"
   config:
   - "quarkus.marketplaceentitlement."

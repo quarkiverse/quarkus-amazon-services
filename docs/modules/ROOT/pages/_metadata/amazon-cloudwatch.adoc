@@ -1,0 +1,4 @@
+:service-name: cloudwatch
+:service-name-uppercase: CloudWatch
+:service-class-name: CloudWatch
+:has-devservices:

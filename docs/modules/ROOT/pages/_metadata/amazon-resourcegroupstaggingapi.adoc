@@ -1,0 +1,4 @@
+:service-name: resourcegroupstaggingapi
+:service-name-uppercase: Resource Groups Tagging API
+:service-class-name: ResourceGroupsTaggingApi
+:has-devservices:

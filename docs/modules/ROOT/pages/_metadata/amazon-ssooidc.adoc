@@ -1,0 +1,3 @@
+:service-name: ssooidc
+:service-name-uppercase: SSO OIDC
+:service-class-name: SsoOidc

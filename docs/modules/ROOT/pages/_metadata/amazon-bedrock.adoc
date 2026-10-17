@@ -1,0 +1,4 @@
+:service-name: bedrock
+:service-name-uppercase: Bedrock
+:service-class-name: Bedrock
+:has-devservices:

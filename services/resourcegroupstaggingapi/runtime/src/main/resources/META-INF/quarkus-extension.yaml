@@ -4,10 +4,12 @@ name: "Amazon Resource Groups Tagging API"
 metadata:
   keywords:
     - "resource-groups"
+    - "resourcegroupstaggingapi"
+    - "tagging"
     - "aws"
     - "amazon"
   categories:
-    - "ai"
+    - "cloud"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-resourcegroupstaggingapi.html
   status: "stable"
   config:

@@ -1,0 +1,8 @@
+:aws-stack: localstack
+:localstack-service: bedrock
+
+Amazon Bedrock is a fully managed service that offers a choice of high-performing foundation models (FMs) from leading AI companies like AI21 Labs, Anthropic, Cohere, DeepSeek, Luma, Meta, Mistral AI, Stability AI, and Amazon through a single API, along with a broad set of capabilities you need to build generative AI applications with security, privacy, and responsible AI.
+
+You can find more information about Bedrock at https://aws.amazon.com/bedrock/[the Amazon Bedrock website].
+
+The Bedrock Client allows you to create, manage, fine-tune and evaluate Amazon Bedrock models.

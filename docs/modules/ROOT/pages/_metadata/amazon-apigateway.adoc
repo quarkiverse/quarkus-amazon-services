@@ -1,0 +1,4 @@
+:service-name: apigateway
+:service-name-uppercase: API Gateway
+:service-class-name: ApiGateway
+:has-devservices:

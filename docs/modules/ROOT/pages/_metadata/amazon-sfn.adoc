@@ -1,0 +1,4 @@
+:service-name: sfn
+:service-name-uppercase: SFN
+:service-class-name: Sfn
+:has-devservices:

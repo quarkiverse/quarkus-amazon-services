@@ -1,0 +1,8 @@
+=== Create a S3 bucket
+
+Create a S3 bucket using AWS CLI
+
+[source,bash,subs="verbatim,attributes"]
+----
+aws s3 mb s3://quarkus.s3.quickstart --profile floci --endpoint-url=http://localhost:4566
+----

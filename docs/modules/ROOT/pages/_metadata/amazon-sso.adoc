@@ -1,0 +1,3 @@
+:service-name: sso
+:service-name-uppercase: SSO
+:service-class-name: Sso

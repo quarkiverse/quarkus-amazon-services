@@ -1,0 +1,4 @@
+:service-name: sts
+:service-name-uppercase: STS
+:service-class-name: Sts
+:has-devservices:

@@ -13,8 +13,7 @@ public interface DevServicesBuildTimeConfig {
      *
      * If this is true and endpoint-override is not configured then a local AWS stack
      * will be started and will be used instead of the given configuration.
-     * For all services but Cognito, the local AWS stack will be provided by LocalStack.
-     * Otherwise, it will be provided by Moto
+     * The local AWS stack is provided by the stack provider configured with {@code provider}.
      */
     Optional<Boolean> enabled();
 
@@ -26,7 +25,7 @@ public interface DevServicesBuildTimeConfig {
     /**
      * The dev services stack provider to use for this service.
      * If not specified, the global setting from quarkus.aws.devservices.provider is used.
-     * Supported values: "localstack", "ministack"
+     * Supported values: "floci", "localstack", "ministack", "moto"
      * <p>
      * This allows per-service override of the global stack selection.
      * </p>

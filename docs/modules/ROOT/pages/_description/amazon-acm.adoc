@@ -1,0 +1,6 @@
+:aws-stack: floci
+:solution-summary: The application built here allows to import external certificates into ACM.
+
+AWS Certificate Manager is a service used to manage X.509 certificates used by other AWS services including load balancers and applications.
+
+You can find more information about ACM at https://aws.amazon.com/certificate-manager/[the AWS Certificate Manager website].

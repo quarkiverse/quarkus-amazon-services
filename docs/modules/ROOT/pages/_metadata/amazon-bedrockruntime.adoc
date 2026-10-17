@@ -1,0 +1,4 @@
+:service-name: bedrockruntime
+:service-name-uppercase: Bedrock Runtime
+:service-class-name: BedrockRuntime
+:has-devservices:

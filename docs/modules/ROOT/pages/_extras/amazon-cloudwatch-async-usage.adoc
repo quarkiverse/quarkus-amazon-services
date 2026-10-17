@@ -1,0 +1,63 @@
+:custom-async-usage:
+
+Create a `org.acme.cloudwatch.QuarkusCloudWatchAsyncResource` REST resource that will be similar to our `QuarkusCloudWatchSyncResource` but using an asynchronous programming model.
+
+[source,java]
+----
+package org.acme.cloudwatch;
+
+import io.quarkus.logging.Log;
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import software.amazon.awssdk.services.cloudwatch.CloudWatchAsyncClient;
+import software.amazon.awssdk.services.cloudwatch.model.Metric;
+import software.amazon.awssdk.services.cloudwatch.paginators.ListMetricsPublisher;
+
+@Path("/async")
+public class QuarkusCloudWatchAsyncResource extends QuarkusCloudWatchResource {
+
+    @Inject
+    CloudWatchAsyncClient client;
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public Uni<String> listMetricsNames(@QueryParam("namespace") String namespace) {
+
+        return Multi.createFrom().<Metric>emitter((emitter) -> {
+
+                    Log.info("List Metrics for " + namespace);
+
+                    ListMetricsPublisher paginator = client
+                            .listMetricsPaginator(generateListMetricsRequest(namespace));
+
+                    paginator.doAfterOnComplete(emitter::complete)
+                            .doAfterOnError(emitter::fail)
+                            .subscribe(response -> response.metrics().forEach(emitter::emit));
+
+
+                }).map(Metric::metricName)
+                .collect().asList()
+                .map(value -> String.join(", ", value));
+
+
+    }
+
+    @PUT
+    @Produces(MediaType.TEXT_PLAIN)
+    public Uni<String> createMetric(@FormParam("namespace") String namespace,
+                                    @FormParam("name") String name) {
+
+        Log.info("Put Metrics for " + namespace + "." + name);
+        return Uni.createFrom().completionStage(
+                client.putMetricData(generatePutMetricRequest(namespace, name))
+        ).map(value -> "OK");
+
+
+    }
+}
+----
+
+Note that the `CloudWatchAsyncClient` behaves just like the `CloudWatchClient`, but returns `CompletionStage` objects which we use to create `Uni`/`Multi` instances, and then transform the emitted item.

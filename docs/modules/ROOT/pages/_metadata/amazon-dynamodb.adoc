@@ -1,0 +1,4 @@
+:service-name: dynamodb
+:service-name-uppercase: DynamoDB
+:service-class-name: DynamoDb
+:has-devservices:

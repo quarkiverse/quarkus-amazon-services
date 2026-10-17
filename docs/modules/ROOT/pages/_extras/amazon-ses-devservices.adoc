@@ -1,0 +1,1 @@
+However, a local instance of SES only mocks the SES APIs without the actual email sending capabilities. You can still use it for this guide to verify an API communication or integration test purposes.

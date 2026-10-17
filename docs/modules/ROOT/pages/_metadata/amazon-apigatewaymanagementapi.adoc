@@ -1,0 +1,3 @@
+:service-name: apigatewaymanagementapi
+:service-name-uppercase: API Gateway Management API
+:service-class-name: ApiGatewayManagementApi

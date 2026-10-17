@@ -7,7 +7,7 @@ import io.smallrye.config.WithDefault;
 
 /**
  * Global AWS DevServices configuration for selecting the dev services stack.
- * Allows switching between different stack providers like LocalStack or MiniStack.
+ * Allows switching between different stack providers like Floci, LocalStack, MiniStack or Moto.
  */
 @ConfigMapping(prefix = "quarkus.aws.devservices")
 @ConfigRoot(phase = ConfigPhase.BUILD_AND_RUN_TIME_FIXED)
@@ -15,7 +15,7 @@ public interface GlobalDevServicesBuildTimeConfig {
 
     /**
      * The dev services stack provider to use.
-     * Supported values: "localstack" (default), "ministack", "moto", "floci"
+     * Supported values: "floci" (default), "localstack", "ministack", "moto"
      * <p>
      * This is a global setting that can be overridden per-service using the service-specific
      * devservices.provider configuration.

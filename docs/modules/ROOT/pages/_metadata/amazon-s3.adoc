@@ -1,0 +1,4 @@
+:service-name: s3
+:service-name-uppercase: S3
+:service-class-name: S3
+:has-devservices:

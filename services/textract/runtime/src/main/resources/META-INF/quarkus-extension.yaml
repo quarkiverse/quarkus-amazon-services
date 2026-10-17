@@ -7,8 +7,7 @@ metadata:
     - "aws"
     - "amazon"
   categories:
-    - "data"
-    - "AI"
+    - "ai"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-textract.html
   status: "stable"
   config:

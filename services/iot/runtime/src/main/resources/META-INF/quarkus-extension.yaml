@@ -7,8 +7,8 @@ metadata:
     - "aws"
     - "amazon"
   categories:
-    - "data"
+    - "cloud"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-iot.html
   status: "stable"
   config:
-    - "quarkus.iot."
+  - "quarkus.iot."

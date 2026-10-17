@@ -1,0 +1,3 @@
+include::./_metadata/amazon-accessanalyzer.adoc[]
+
+include::./_fragments/amazon-guide-generic.adoc[]

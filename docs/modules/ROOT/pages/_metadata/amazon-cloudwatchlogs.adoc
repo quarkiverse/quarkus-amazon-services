@@ -1,0 +1,4 @@
+:service-name: cloudwatchlogs
+:service-name-uppercase: CloudWatch Logs
+:service-class-name: CloudWatchLogs
+:has-devservices:

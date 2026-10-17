@@ -1,0 +1,3 @@
+:service-name: transfer
+:service-name-uppercase: Transfer Family
+:service-class-name: Transfer

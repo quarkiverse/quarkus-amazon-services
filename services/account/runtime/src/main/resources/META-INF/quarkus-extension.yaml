@@ -8,6 +8,7 @@ metadata:
     - "amazon"
   categories:
     - "cloud"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-account.html
   status: "stable"
   config:
   - "quarkus.account."

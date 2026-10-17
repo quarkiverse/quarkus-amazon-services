@@ -1,0 +1,31 @@
+You can check if it's working with `aws dynamodb list-tables --profile floci --endpoint-url http://localhost:4566`.
+
+[source,json]
+----
+{
+    "TableNames": []
+}
+----
+
+=== Set up Dynamodb on AWS
+
+Before you can use the AWS SDKs with DynamoDB, you must get an AWS access key ID and secret access key.
+For more information, see https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SettingUp.DynamoWebService.html[Setting Up DynamoDB (Web Service)].
+
+We recommend to use the AWS CLI to provision the table:
+
+=== Create the QuarkusFruits Table
+
+All the fruits are stored under the same `partitionKey` value and sorted by their name with the `fruitName` sort key, so they can be listed in alphabetical order with a query.
+
+[source,bash,subs="verbatim,attributes"]
+----
+aws dynamodb create-table --table-name QuarkusFruits \
+                          --attribute-definitions AttributeName=partitionKey,AttributeType=S \
+                                                  AttributeName=fruitName,AttributeType=S \
+                          --key-schema AttributeName=partitionKey,KeyType=HASH \
+                                       AttributeName=fruitName,KeyType=RANGE \
+                          --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
+----
+
+Add `--profile floci --endpoint-url=http://localhost:4566` to create it on your local Floci instance.

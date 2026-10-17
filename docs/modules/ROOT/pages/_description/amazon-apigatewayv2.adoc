@@ -1,0 +1,3 @@
+Amazon API Gateway v2 enables you to create, deploy, and manage WebSocket and HTTP APIs.
+
+You can find more information about API Gateway v2 at https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api.html[the Amazon API Gateway v2 documentation].

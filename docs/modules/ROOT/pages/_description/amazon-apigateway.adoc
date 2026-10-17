@@ -1,0 +1,5 @@
+:aws-stack: floci
+
+Amazon API Gateway is a fully managed service that makes it easy for developers to create, publish, maintain, monitor, and secure APIs at any scale.
+
+You can find more information about API Gateway at https://aws.amazon.com/api-gateway/[the Amazon API Gateway website].

@@ -2,7 +2,7 @@
 artifact: ${project.groupId}:${project.artifactId}:${project.version}
 name: "Amazon RDS Data"
 metadata:
-  keywordsdata:
+  keywords:
     - "rdsdata"
     - "aws"
     - "amazon"

@@ -1,0 +1,5 @@
+:aws-stack: floci
+
+Kinesis Data Streams is a managed service provided by Amazon Web Services (AWS) that scales elastically for real-time processing of streaming big data.
+
+You can find more information about Kinesis at https://docs.aws.amazon.com/kinesis/latest/APIReference[AWS Kinesis Data Streams Service API Reference].

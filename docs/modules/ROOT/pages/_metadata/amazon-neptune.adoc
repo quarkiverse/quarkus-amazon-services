@@ -1,0 +1,3 @@
+:service-name: neptune
+:service-name-uppercase: Neptune
+:service-class-name: Neptune

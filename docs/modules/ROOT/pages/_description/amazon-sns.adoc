@@ -1,0 +1,13 @@
+:aws-stack: floci
+:run-args: -Dtopic.arn=$TOPIC_ARN
+:quickstart: amazon-sns-quickstart
+:solution-summary: The application built here allows to shoot elementary particles (quarks) into a `QuarksCollider` topic of the AWS SNS. Additionally, we create a resource that allows to subscribe to the `QuarksCollider` topic in order to receive published quarks.
+:main-class: QuarksCannonSyncResource
+:main-path: /sync-cannon
+
+Amazon Simple Notification Service (SNS) is a highly available and fully managed pub/sub messaging service.
+It provides topics for high-throughput, push-based, many-to-many messaging. Messages can fan out to a large number of subscriber endpoints for
+parallel processing, including Amazon SQS queues, AWS Lambda functions, and HTTP/S webhooks. Additionally, SNS can be used
+to fan out notifications to end users using mobile push, SMS and email.
+
+You can find more information about SNS at https://aws.amazon.com/sns/[the Amazon SNS website].

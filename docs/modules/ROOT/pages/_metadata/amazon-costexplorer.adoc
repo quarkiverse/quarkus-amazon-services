@@ -1,0 +1,3 @@
+:service-name: costexplorer
+:service-name-uppercase: Cost Explorer
+:service-class-name: CostExplorer
