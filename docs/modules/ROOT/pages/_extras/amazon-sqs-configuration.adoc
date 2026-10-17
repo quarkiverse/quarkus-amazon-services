@@ -1,0 +1,13 @@
+In both cases, set the name of the SQS queue used by the application:
+
+[source,properties]
+----
+queue.url=Quarkus
+----
+
+When using Dev Services, you can optionally configure the queues that are created on startup with the `quarkus.sqs.devservices.queues` config property.
+
+[source,properties]
+----
+quarkus.sqs.devservices.queues=${queue.url}
+----

@@ -1,1 +1,0 @@
-You can optionally configure the queues that are created on startup with the `quarkus.sqs.devservices.queues` config property.

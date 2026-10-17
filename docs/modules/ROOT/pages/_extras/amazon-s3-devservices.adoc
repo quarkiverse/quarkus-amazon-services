@@ -1,1 +1,0 @@
-You can optionally configure the buckets that are created on startup with the `quarkus.s3.devservices.buckets` config property.
