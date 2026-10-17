@@ -77,6 +77,7 @@ public abstract class BaseCodeGenerator {
             }
 
             emitCode(model);
+            postGenerate(model);
 
         } catch (Exception e) {
             log.error(() -> "Failed to generate code. ", e);
@@ -115,6 +116,12 @@ public abstract class BaseCodeGenerator {
     }
 
     abstract GeneratorTask createGeneratorTasks(QuarkusServiceModel model);
+
+    /**
+     * Called once the code has been generated.
+     */
+    protected void postGenerate(QuarkusServiceModel model) {
+    }
 
     /**
      * Builder for a {@link CodeGenerator}.
