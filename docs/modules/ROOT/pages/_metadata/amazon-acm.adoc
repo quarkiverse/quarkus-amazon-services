@@ -2,4 +2,3 @@
 :service-name: acm
 :service-name-uppercase: AWS Certificate Manager
 :service-class-name: Acm
-:has-devservices:

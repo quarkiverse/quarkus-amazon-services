@@ -3,4 +3,3 @@
 :service-name-uppercase: Amazon EventBridge Scheduler
 :service-class-name: Scheduler
 :extension-name: scheduler
-:has-devservices:

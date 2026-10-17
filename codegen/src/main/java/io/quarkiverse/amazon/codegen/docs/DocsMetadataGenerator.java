@@ -24,12 +24,10 @@ public class DocsMetadataGenerator {
 
     private final QuarkusServiceModel model;
     private final String extensionName;
-    private final boolean hasDevServices;
 
-    public DocsMetadataGenerator(QuarkusServiceModel model, String extensionName, boolean hasDevServices) {
+    public DocsMetadataGenerator(QuarkusServiceModel model, String extensionName) {
         this.model = model;
         this.extensionName = extensionName;
-        this.hasDevServices = hasDevServices;
     }
 
     /**
@@ -53,9 +51,6 @@ public class DocsMetadataGenerator {
         }
         if (!Objects.equals(model.packageName(), extension)) {
             lines.add(attribute("java-package", model.packageName()));
-        }
-        if (hasDevServices) {
-            lines.add(":has-devservices:");
         }
         return String.join("\n", lines) + "\n";
     }

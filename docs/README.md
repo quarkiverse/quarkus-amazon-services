@@ -46,8 +46,8 @@ The skeleton always produces the sections below, in this order. Some only appear
 | Title `{service-name-uppercase} Client` | always | — |
 | Intro (your text from `_description`) | always | — |
 | NOTE on the AWS SDK programming models | always | — |
-| Prerequisites | always (the Docker line only if `has-devservices` or `aws-stack`) | — |
-| Provision … locally via Dev Services | `has-devservices` | `devservices` (appended) |
+| Prerequisites | always | — |
+| Provision … locally via Dev Services | always | `devservices` (appended) |
 | Provision … locally manually (`docker run`, `aws configure`) | `aws-stack` | — |
 | *(service-specific setup)* | — | `setup` |
 | Solution | `solution-summary` (link to the quickstart only if `quickstart`) | — |
@@ -130,7 +130,6 @@ Every value is taken as is, without transformation, from the AWS service model, 
 | `extension-name` | Artifact `quarkus-amazon-<extension-name>`; names the configuration reference. Written only if it differs from `service-name`. | name of the service folder `services/<extension-name>/` | — | `scheduler` |
 | `sdk-package` | SDK package `software.amazon.awssdk.services.<sdk-package>`. Written only if it differs from `extension-name`. | the SDK client package name | — | `cognitoidentityprovider` |
 | `java-package` | Package of the example classes `org.acme.<java-package>`. Written only if it differs from `extension-name`. | the extension package name | `packageName` | `cognitouserpools` |
-| `has-devservices` | Shows the Dev Services sections and the warning about disabling them | the service folder has a `devservices/` module | — | set (no value) |
 
 The file name is `amazon-<packageName>.adoc`, which can be overridden with `docsPageName`. It must match the page name `amazon-<page>.adoc`.
 

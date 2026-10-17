@@ -2,4 +2,3 @@
 :service-name: kms
 :service-name-uppercase: AWS KMS
 :service-class-name: Kms
-:has-devservices:

@@ -4,4 +4,3 @@
 :service-class-name: CognitoIdentityProvider
 :sdk-package: cognitoidentityprovider
 :java-package: cognitouserpools
-:has-devservices:

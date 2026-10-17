@@ -2,4 +2,3 @@
 :service-name: dynamodb
 :service-name-uppercase: Amazon DynamoDB
 :service-class-name: DynamoDb
-:has-devservices:

@@ -2,4 +2,3 @@
 :service-name: bedrockruntime
 :service-name-uppercase: Amazon Bedrock Runtime
 :service-class-name: BedrockRuntime
-:has-devservices:

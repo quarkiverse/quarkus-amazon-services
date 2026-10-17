@@ -2,4 +2,3 @@
 :service-name: sfn
 :service-name-uppercase: AWS Step Functions
 :service-class-name: Sfn
-:has-devservices:

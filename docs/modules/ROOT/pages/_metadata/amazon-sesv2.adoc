@@ -2,4 +2,3 @@
 :service-name: sesv2
 :service-name-uppercase: Amazon SES V2
 :service-class-name: SesV2
-:has-devservices:

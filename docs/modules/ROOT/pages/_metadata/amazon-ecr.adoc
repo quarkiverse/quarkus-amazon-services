@@ -2,4 +2,3 @@
 :service-name: ecr
 :service-name-uppercase: Amazon ECR
 :service-class-name: Ecr
-:has-devservices:

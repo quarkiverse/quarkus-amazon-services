@@ -28,6 +28,10 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-costexplorer</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-devservices-costexplorer</artifactId>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>

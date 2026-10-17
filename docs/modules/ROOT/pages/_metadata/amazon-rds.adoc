@@ -2,4 +2,3 @@
 :service-name: rds
 :service-name-uppercase: Amazon RDS
 :service-class-name: Rds
-:has-devservices:

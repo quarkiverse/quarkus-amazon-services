@@ -24,7 +24,7 @@ public class DocsMetadataGeneratorTest {
 
     @Test
     public void defaultValues() {
-        String content = new DocsMetadataGenerator(restJsonQuarkusModel(), "ecr", false).content();
+        String content = new DocsMetadataGenerator(restJsonQuarkusModel(), "ecr").content();
 
         assertThat(content).isEqualTo(DocsMetadataGenerator.HEADER + "\n"
                 + ":service-name: ecr\n"
@@ -38,7 +38,7 @@ public class DocsMetadataGeneratorTest {
                 .quarkusCustomizationConfig(customNamesConfig())
                 .build();
 
-        String content = new DocsMetadataGenerator(model, "my-ecr-extension", true).content();
+        String content = new DocsMetadataGenerator(model, "my-ecr-extension").content();
 
         assertThat(content).isEqualTo(DocsMetadataGenerator.HEADER + "\n"
                 + ":service-name: my-ecr\n"
@@ -46,8 +46,7 @@ public class DocsMetadataGeneratorTest {
                 + ":service-class-name: Ecr\n"
                 + ":extension-name: my-ecr-extension\n"
                 + ":sdk-package: ecr\n"
-                + ":java-package: myecr\n"
-                + ":has-devservices:\n");
+                + ":java-package: myecr\n");
     }
 
     @Test
@@ -59,7 +58,7 @@ public class DocsMetadataGeneratorTest {
                 .quarkusCustomizationConfig(config)
                 .build();
 
-        Path file = new DocsMetadataGenerator(model, "ecr", false).write(tempDir);
+        Path file = new DocsMetadataGenerator(model, "ecr").write(tempDir);
 
         assertThat(file).isEqualTo(tempDir.resolve("amazon-registry.adoc"));
         assertThat(Files.readString(file)).contains(":service-name-uppercase: Elastic Container Registry\n");
@@ -67,14 +66,14 @@ public class DocsMetadataGeneratorTest {
 
     @Test
     public void defaultPageName() {
-        Path file = new DocsMetadataGenerator(restJsonQuarkusModel(), "ecr", false).write(tempDir);
+        Path file = new DocsMetadataGenerator(restJsonQuarkusModel(), "ecr").write(tempDir);
 
         assertThat(file).isEqualTo(tempDir.resolve("amazon-ecr.adoc"));
     }
 
     @Test
     public void unchangedFileIsNotRewritten() throws IOException {
-        DocsMetadataGenerator generator = new DocsMetadataGenerator(restJsonQuarkusModel(), "ecr", false);
+        DocsMetadataGenerator generator = new DocsMetadataGenerator(restJsonQuarkusModel(), "ecr");
         Path file = generator.write(tempDir);
         FileTime past = FileTime.fromMillis(0);
         Files.setLastModifiedTime(file, past);

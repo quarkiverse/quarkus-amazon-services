@@ -2,4 +2,3 @@
 :service-name: sns
 :service-name-uppercase: Amazon SNS
 :service-class-name: Sns
-:has-devservices:

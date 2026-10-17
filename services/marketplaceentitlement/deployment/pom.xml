@@ -28,6 +28,10 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-marketplaceentitlement</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-devservices-marketplaceentitlement</artifactId>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>
