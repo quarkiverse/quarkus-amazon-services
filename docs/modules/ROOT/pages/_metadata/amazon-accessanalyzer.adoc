@@ -1,0 +1,3 @@
+:service-name: accessanalyzer
+:service-name-uppercase: Access Analyzer
+:service-class-name: AccessAnalyzer

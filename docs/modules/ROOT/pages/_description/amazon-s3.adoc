@@ -1,0 +1,10 @@
+:aws-stack: floci
+:quickstart: amazon-s3-quickstart
+:solution-summary: The application built here allows to manage files stored in Amazon S3.
+:main-class: S3SyncClientResource
+:main-path: /s3
+
+Amazon S3 is an object storage service. It can be employed to store any type of object which allows for uses like storage for Internet applications,
+backup and recovery, disaster recovery, data archives, data lakes for analytics, any hybrid cloud storage.
+This extension provides functionality that allows the client to communicate with the service when running in Quarkus.
+You can find more information about S3 at https://aws.amazon.com/s3/[the Amazon S3 website].

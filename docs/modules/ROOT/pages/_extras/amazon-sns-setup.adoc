@@ -1,0 +1,26 @@
+=== Create a SNS topic
+
+Create a SNS topic using AWS CLI and store in `TOPIC_ARN` environment variable
+
+[source,bash,subs="verbatim,attributes"]
+----
+TOPIC_ARN=`aws sns create-topic --name=QuarksCollider --profile floci --endpoint-url=http://localhost:4566`
+----
+
+[WARNING]
+====
+If you are using Floci, the notifications are sent from the Floci container, so it must be able to reach your application:
+
+- Set the `quarks.shield.base.url` configuration property in your `application.properties` to an address of your host that is reachable from the container, for example `http://host.docker.internal:${quarkus.http.port}`.
+On Linux, `host.docker.internal` is only resolvable if the container is started with `--add-host=host.docker.internal:host-gateway`.
+- Set the `quarkus.http.host` configuration property in your `application.properties` to `0.0.0.0`.
+Be aware that Quarkus will then listen to all interfaces, which might be a security hazard depending on your network configuration.
+
+Otherwise your service will not receive the notifications.
+====
+
+If you want to run the demo using SNS on your AWS account, you can create a topic using AWS default profile
+[source,bash,subs="verbatim,attributes"]
+----
+TOPIC_ARN=`aws sns create-topic --name=QuarksCollider`
+----

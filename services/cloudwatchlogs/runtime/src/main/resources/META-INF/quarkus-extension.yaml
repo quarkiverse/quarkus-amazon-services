@@ -4,11 +4,13 @@ name: "Amazon CloudWatch Logs"
 metadata:
   keywords:
     - "cloudwatch"
+    - "cloudwatchlogs"
+    - "logs"
     - "aws"
     - "amazon"
   categories:
-    - "data"
+    - "observability"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-cloudwatchlogs.html
-  status: "preview"
+  status: "stable"
   config:
   - "quarkus.cloudwatchlogs."

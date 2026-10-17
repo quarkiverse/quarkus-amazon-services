@@ -1,0 +1,5 @@
+:aws-stack: floci
+
+Amazon Elastic Container Service (Amazon ECS) is a fully managed container orchestration service that helps you deploy, manage, and scale containerized applications.
+
+You can find more information about ECS at https://aws.amazon.com/ecs/[the Amazon ECS website].

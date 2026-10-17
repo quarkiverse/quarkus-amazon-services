@@ -1,0 +1,4 @@
+:service-name: lambda
+:service-name-uppercase: Lambda
+:service-class-name: Lambda
+:has-devservices:

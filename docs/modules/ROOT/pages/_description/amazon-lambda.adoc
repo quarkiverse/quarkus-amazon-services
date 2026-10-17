@@ -1,0 +1,8 @@
+:aws-stack: localstack
+:localstack-service: lambda
+
+Service client for accessing Amazon Lambda.
+
+Using the Amazon Lambda API, you can manage your AWS Lambdas.
+
+You can find more information about Lambda at https://docs.aws.amazon.com/lambda/[the AWS Lambda website].

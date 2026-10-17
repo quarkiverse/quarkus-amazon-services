@@ -206,7 +206,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The dev services stack provider to use. Supported values: "localstack" (default), "ministack", "moto", "floci"
+The dev services stack provider to use. Supported values: "floci" (default), "localstack", "ministack", "moto"
 
 This is a global setting that can be overridden per-service using the service-specific devservices.provider configuration.
 
@@ -821,7 +821,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. For all services but Cognito, the local AWS stack will be provided by LocalStack. Otherwise, it will be provided by Moto
+If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. The local AWS stack is provided by the stack provider configured with `provider`.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -863,7 +863,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The dev services stack provider to use for this service. If not specified, the global setting from quarkus.aws.devservices.provider is used. Supported values: "localstack", "ministack"
+The dev services stack provider to use for this service. If not specified, the global setting from quarkus.aws.devservices.provider is used. Supported values: "floci", "localstack", "ministack", "moto"
 
 This allows per-service override of the global stack selection.
 
@@ -886,7 +886,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. For all services but Cognito, the local AWS stack will be provided by LocalStack. Otherwise, it will be provided by Moto
+If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. The local AWS stack is provided by the stack provider configured with `provider`.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -928,7 +928,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The dev services stack provider to use for this service. If not specified, the global setting from quarkus.aws.devservices.provider is used. Supported values: "localstack", "ministack"
+The dev services stack provider to use for this service. If not specified, the global setting from quarkus.aws.devservices.provider is used. Supported values: "floci", "localstack", "ministack", "moto"
 
 This allows per-service override of the global stack selection.
 
@@ -951,7 +951,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. For all services but Cognito, the local AWS stack will be provided by LocalStack. Otherwise, it will be provided by Moto
+If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. The local AWS stack is provided by the stack provider configured with `provider`.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -993,7 +993,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The dev services stack provider to use for this service. If not specified, the global setting from quarkus.aws.devservices.provider is used. Supported values: "localstack", "ministack"
+The dev services stack provider to use for this service. If not specified, the global setting from quarkus.aws.devservices.provider is used. Supported values: "floci", "localstack", "ministack", "moto"
 
 This allows per-service override of the global stack selection.
 
@@ -1016,7 +1016,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. For all services but Cognito, the local AWS stack will be provided by LocalStack. Otherwise, it will be provided by Moto
+If a local AWS stack should be used. (default to true) If this is true and endpoint-override is not configured then a local AWS stack will be started and will be used instead of the given configuration. The local AWS stack is provided by the stack provider configured with `provider`.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -1058,7 +1058,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-The dev services stack provider to use for this service. If not specified, the global setting from quarkus.aws.devservices.provider is used. Supported values: "localstack", "ministack"
+The dev services stack provider to use for this service. If not specified, the global setting from quarkus.aws.devservices.provider is used. Supported values: "floci", "localstack", "ministack", "moto"
 
 This allows per-service override of the global stack selection.
 

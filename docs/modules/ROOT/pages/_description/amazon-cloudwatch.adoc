@@ -1,0 +1,6 @@
+:aws-stack: floci
+:solution-summary: The application built here allows listing the available metrics and push data for a specific metric for the provided credentials.
+
+AWS CloudWatch enables you to publish, monitor, and manage various metrics, as well as configure alarm actions based on data from metrics.
+
+You can find more information about CloudWatch at https://docs.aws.amazon.com/cloudwatch/[the AWS CloudWatch website].

@@ -1,0 +1,3 @@
+:service-name: appconfigdata
+:service-name-uppercase: AppConfigData
+:service-class-name: AppConfigData

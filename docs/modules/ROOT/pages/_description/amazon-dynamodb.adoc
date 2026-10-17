@@ -1,0 +1,11 @@
+:aws-stack: floci
+:quickstart: amazon-dynamodb-quickstart
+:solution-summary: The application built here allows to manage elements (fruits) stored in Amazon DynamoDB.
+:main-class: FruitResource
+:main-path: /fruits
+:extra-config-reference: dynamodb-enhanced
+
+DynamoDB is a scalable AWS managed *NoSQL* database.
+It supports both key-value and document data models, that enables to have a flexible schema for your data.
+This extension provides functionality that allows the client to communicate with the service when running in Quarkus.
+You can find more information about DynamoDB at https://aws.amazon.com/dynamodb/[the Amazon DynamoDB website].

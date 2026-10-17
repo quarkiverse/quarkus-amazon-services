@@ -1,0 +1,3 @@
+:service-name: rekognition
+:service-name-uppercase: Rekognition
+:service-class-name: Rekognition

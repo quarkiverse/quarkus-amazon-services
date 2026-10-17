@@ -1,0 +1,7 @@
+:aws-docs-url: https://docs.aws.amazon.com/appconfig/latest/userguide/what-is-appconfig.html
+
+Amazon AppConfig is a service for managing application configurations.
+
+You can find more information about AppConfig at https://aws.amazon.com/systems-manager/features/#AppConfig[the Amazon AppConfig website].
+
+You can use this extension to integrate AppConfig capabilities in your Quarkus applications using the AWS SDK for Java 2.x.

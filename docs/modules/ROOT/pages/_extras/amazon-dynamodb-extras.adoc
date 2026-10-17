@@ -1,0 +1,275 @@
+=== DynamoDB enhanced client
+
+The DynamoDB enhanced client is part of the AWS SDK for Java version 2 and makes the mapping between DynamoDB Tables and Java beans very easy.
+The Enhanced Client requires a TableSchema which can be generated from a bean class annotated with `DynamoDbBean` or `DynamoDbImmutable` or generated from code.
+By default, TableSchemas generated from bean classes are registered and cached at startup. You don't need to explicitely instantiate them at class-load time.
+It has both a sync and an async variants.
+
+To use the enhanced client, add the `quarkus-amazon-dynamodb-enhanced` extension to your `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>io.quarkiverse.amazonservices</groupId>
+    <artifactId>quarkus-amazon-dynamodb-enhanced</artifactId>
+</dependency>
+----
+
+The `Fruit` bean would look like this:
+
+[source,java]
+----
+package org.acme.dynamodb;
+
+import java.util.Objects;
+
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortKey;
+
+@DynamoDbBean
+public class Fruit {
+
+    private String partitionKey = AbstractService.PARTITION_VALUE;
+    private String name;
+    private String description;
+
+    public Fruit() {
+    }
+
+    @DynamoDbPartitionKey
+    @DynamoDbAttribute(AbstractService.PARTITION_KEY)
+    public String getPartitionKey() {
+        return partitionKey;
+    }
+
+    public void setPartitionKey(String partitionKey) {
+        this.partitionKey = partitionKey;
+    }
+
+    @DynamoDbSortKey
+    @DynamoDbAttribute(AbstractService.FRUIT_NAME_COL)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @DynamoDbAttribute(AbstractService.FRUIT_DESC_COL)
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Fruit)) {
+            return false;
+        }
+
+        Fruit other = (Fruit) obj;
+
+        return Objects.equals(other.name, this.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.name);
+    }
+}
+----
+
+Note that you don't need to add `@RegisterForReflection` anymore.
+The `partitionKey` property maps the partition key shared by all the fruits, while the name is the sort key.
+
+The `FruitSyncService` would need to use the `DynamoDbEnhancedClient` as well as create a `TableSchema`:
+
+[source,java]
+----
+package org.acme.dynamodb;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
+import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
+
+@ApplicationScoped
+public class FruitSyncService extends AbstractService {
+
+    private DynamoDbTable<Fruit> fruitTable;
+
+    @Inject
+    FruitSyncService(DynamoDbEnhancedClient dynamoEnhancedClient) {
+        fruitTable = dynamoEnhancedClient.table(FRUIT_TABLE_NAME,
+            TableSchema.fromClass(Fruit.class));
+    }
+
+    public List<Fruit> findAll() {
+        return fruitTable.query(QueryConditional.keyEqualTo(k -> k.partitionValue(PARTITION_VALUE)))
+                .items().stream()
+                .collect(Collectors.toList());
+    }
+
+    public List<Fruit> add(Fruit fruit) {
+        fruitTable.putItem(fruit);
+        return findAll();
+    }
+
+    public Fruit get(String name) {
+        Key key = Key.builder().partitionValue(PARTITION_VALUE).sortValue(name).build();
+        return fruitTable.getItem(key);
+    }
+}
+----
+
+The same goes for the asynchronous version with `DynamoDbEnhancedAsyncClient`:
+
+[source,java]
+----
+package org.acme.dynamodb;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import mutiny.zero.flow.adapters.AdaptersToFlow;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbAsyncTable;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
+import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
+
+@ApplicationScoped
+public class FruitAsyncService extends AbstractService {
+
+    private DynamoDbAsyncTable<Fruit> fruitTable;
+
+    @Inject
+    FruitAsyncService(DynamoDbEnhancedAsyncClient dynamoEnhancedAsyncClient) {
+        fruitTable = dynamoEnhancedAsyncClient.table(FRUIT_TABLE_NAME,
+            TableSchema.fromClass(Fruit.class));
+    }
+
+    public Uni<List<Fruit>> findAll() {
+        return Multi.createFrom()
+                .publisher(AdaptersToFlow.publisher(fruitTable.query(QueryConditional.keyEqualTo(k -> k.partitionValue(PARTITION_VALUE))).items()))
+                .collect().asList();
+    }
+
+    public Uni<Void> add(Fruit fruit) {
+        return Uni.createFrom().completionStage(() -> fruitTable.putItem(fruit));
+    }
+
+    public Uni<Fruit> get(String name) {
+        Key key = Key.builder().partitionValue(PARTITION_VALUE).sortValue(name).build();
+        return Uni.createFrom().completionStage(() -> fruitTable.getItem(key));
+    }
+}
+----
+
+Resource classes remain unchanged.
+
+Alternatively, if you only need to use the DynamoDbTable instance, you can inject it directly with a `@NamedDynamoDbTable` annotation.
+
+The synchronous version would be :
+
+[source,java]
+----
+package org.acme.dynamodb;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import io.quarkiverse.amazon.dynamodb.enhanced.runtime.NamedDynamoDbTable;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
+import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
+
+@ApplicationScoped
+public class FruitSyncService extends AbstractService {
+
+    @Inject
+    @NamedDynamoDbTable(FRUIT_TABLE_NAME)
+    DynamoDbTable<Fruit> fruitTable;
+
+    public List<Fruit> findAll() {
+        return fruitTable.query(QueryConditional.keyEqualTo(k -> k.partitionValue(PARTITION_VALUE)))
+                .items().stream()
+                .collect(Collectors.toList());
+    }
+
+    public List<Fruit> add(Fruit fruit) {
+        fruitTable.putItem(fruit);
+        return findAll();
+    }
+
+    public Fruit get(String name) {
+        Key key = Key.builder().partitionValue(PARTITION_VALUE).sortValue(name).build();
+        return fruitTable.getItem(key);
+    }
+}
+----
+
+And the asynchronous version :
+
+[source,java]
+----
+package org.acme.dynamodb;
+
+import java.util.List;
+
+import io.quarkiverse.amazon.dynamodb.enhanced.runtime.NamedDynamoDbTable;
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import mutiny.zero.flow.adapters.AdaptersToFlow;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbAsyncTable;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
+import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
+
+@ApplicationScoped
+public class FruitAsyncService extends AbstractService {
+
+    @Inject
+    @NamedDynamoDbTable(FRUIT_TABLE_NAME)
+    private DynamoDbAsyncTable<Fruit> fruitTable;
+
+    public Uni<List<Fruit>> findAll() {
+        return Multi.createFrom()
+                .publisher(AdaptersToFlow.publisher(fruitTable.query(QueryConditional.keyEqualTo(k -> k.partitionValue(PARTITION_VALUE))).items()))
+                .collect().asList();
+    }
+
+    public Uni<Void> add(Fruit fruit) {
+        return Uni.createFrom().completionStage(() -> fruitTable.putItem(fruit));
+    }
+
+    public Uni<Fruit> get(String name) {
+        Key key = Key.builder().partitionValue(PARTITION_VALUE).sortValue(name).build();
+        return Uni.createFrom().completionStage(() -> fruitTable.getItem(key));
+    }
+}
+----
+
+You can find more information about the DynamoDB enhanced client in the AWS documentation:
+
+* https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/examples-dynamodb-enhanced.html
+* https://aws.amazon.com/de/blogs/developer/introducing-enhanced-dynamodb-client-in-the-aws-sdk-for-java-v2/

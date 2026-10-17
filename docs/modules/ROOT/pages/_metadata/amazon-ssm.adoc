@@ -1,0 +1,4 @@
+:service-name: ssm
+:service-name-uppercase: SSM
+:service-class-name: Ssm
+:has-devservices:

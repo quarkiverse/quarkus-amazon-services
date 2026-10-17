@@ -1,0 +1,6 @@
+:service-name: cognito-user-pools
+:service-name-uppercase: Cognito User Pools
+:service-class-name: CognitoIdentityProvider
+:sdk-package: cognitoidentityprovider
+:java-package: cognitouserpools
+:has-devservices:

@@ -1,0 +1,4 @@
+:service-name: rds
+:service-name-uppercase: RDS
+:service-class-name: Rds
+:has-devservices:

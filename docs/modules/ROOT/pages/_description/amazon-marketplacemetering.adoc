@@ -1,0 +1,1 @@
+Amazon Marketplace Metering Service is an API for sellers to submit data for custom usage dimensions. For more information about the necessary permissions to use this API, see https://docs.aws.amazon.com/marketplace/latest/userguide/iam-user-policy-for-aws-marketplace-actions.html[AWS Marketplace metering and entitlement API permissions].

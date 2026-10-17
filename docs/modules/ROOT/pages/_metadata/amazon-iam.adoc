@@ -1,0 +1,4 @@
+:service-name: iam
+:service-name-uppercase: IAM
+:service-class-name: Iam
+:has-devservices:

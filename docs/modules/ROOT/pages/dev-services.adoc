@@ -115,6 +115,9 @@ Dev Services for Amazon Services can support specific properties sent to the con
 
 [source,properties]
 ----
+# Global Floci configuration
+quarkus.aws.devservices.floci.container-properties.FLOCI_SERVICES_S3_ENFORCE_AUTH=true
+
 # Global LocalStack configuration
 quarkus.aws.devservices.localstack.container-properties.START_WEB=0
 
@@ -123,6 +126,9 @@ quarkus.aws.devservices.ministack.container-properties.SOME_PROPERTY=value
 
 # Global Moto configuration
 quarkus.aws.devservices.moto.container-properties.SOME_MOTO_PROPERTY=value
+
+# Per-service Floci configuration (overrides global)
+quarkus.s3.devservices.floci.container-properties.FLOCI_SERVICES_S3_ENFORCE_AUTH=true
 
 # Per-service LocalStack configuration (overrides global)
 quarkus.dynamodb.devservices.localstack.container-properties.DYNAMODB_HEAP_SIZE=1G
@@ -134,7 +140,7 @@ quarkus.dynamodb.devservices.ministack.container-properties.SOME_PROPERTY=value
 quarkus.dynamodb.devservices.moto.container-properties.SOME_MOTO_PROPERTY=value
 ----
 
-Refer to the LocalStack documentation for LocalStack configuration: https://docs.localstack.cloud/aws/capabilities/config/configuration/. For MiniStack, refer to its documentation. For Moto, refer to the Moto documentation. Note that not all environment variables are supported and some may affect Dev Services for Amazon Services.
+Refer to the Floci documentation for Floci configuration: https://github.com/floci-io/floci. Refer to the LocalStack documentation for LocalStack configuration: https://docs.localstack.cloud/aws/capabilities/config/configuration/. For MiniStack, refer to its documentation. For Moto, refer to the Moto documentation. Note that not all environment variables are supported and some may affect Dev Services for Amazon Services.
 
 == Additional services
 
@@ -142,6 +148,10 @@ To start additional services for which a Quarkus extension does not exist or is 
 
 [source,properties]
 ----
+# Global Floci configuration
+quarkus.aws.devservices.floci.additional-services."kinesis".enabled=true
+quarkus.aws.devservices.floci.additional-services."redshift".enabled=true
+
 # Global LocalStack configuration
 quarkus.aws.devservices.localstack.additional-services."kinesis".enabled=true
 quarkus.aws.devservices.localstack.additional-services."redshift".enabled=true
@@ -159,6 +169,10 @@ You can configure init scripts to be executed during stack startup:
 
 [source,properties]
 ----
+# Global Floci configuration
+quarkus.aws.devservices.floci.init-scripts-folder=src/test/resources/floci-init
+quarkus.aws.devservices.floci.init-scripts-classpath=init-scripts
+
 # Global LocalStack configuration
 quarkus.aws.devservices.localstack.init-scripts-folder=src/test/resources/localstack-init
 quarkus.aws.devservices.localstack.init-scripts-classpath=init-scripts
@@ -171,6 +185,9 @@ quarkus.aws.devservices.ministack.init-scripts-classpath=init-scripts
 quarkus.aws.devservices.moto.init-scripts-folder=src/test/resources/moto-init
 quarkus.aws.devservices.moto.init-scripts-classpath=init-scripts
 
+# Per-service Floci configuration (overrides global)
+quarkus.dynamodb.devservices.floci.init-scripts-folder=src/test/resources/dynamodb-init
+
 # Per-service LocalStack configuration (overrides global)
 quarkus.dynamodb.devservices.localstack.init-scripts-folder=src/test/resources/dynamodb-init
 
@@ -182,6 +199,34 @@ quarkus.dynamodb.devservices.moto.init-scripts-folder=src/test/resources/dynamod
 ----
 
 The `init-scripts-folder` property points to a folder containing init scripts, while `init-scripts-classpath` points to a classpath resource. The folder-based configuration takes precedence.
+
+To wait for the init scripts to complete before starting the application, make the last script print a specific message and configure it with the `init-completion-msg` property. Dev Services then waits for this message in the container logs:
+
+[source,properties]
+----
+quarkus.aws.devservices.floci.init-completion-msg=Init completed
+----
+
+=== Floci init scripts
+
+Floci runs the init scripts from the `/etc/floci/init/start.d` folder of the container, where Dev Services mounts the configured scripts.
+The default `floci/floci` image does not ship the AWS CLI. If your scripts use it, switch to the `latest-compat` image, which includes the AWS CLI and boto3:
+
+[source,properties]
+----
+quarkus.aws.devservices.floci.image-name=floci/floci:latest-compat
+quarkus.aws.devservices.floci.init-scripts-classpath=floci-init
+quarkus.aws.devservices.floci.init-completion-msg=#### Tests init completed
+----
+
+The AWS CLI is preconfigured to target the Floci endpoint, so the scripts can call it directly:
+
+[source,bash]
+----
+#!/bin/bash
+aws sqs create-queue --queue-name quarkus
+echo "#### Tests init completed"
+----
 
 == Additional setup
 

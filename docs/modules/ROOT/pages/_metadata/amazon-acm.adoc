@@ -1,0 +1,4 @@
+:service-name: acm
+:service-name-uppercase: ACM
+:service-class-name: Acm
+:has-devservices:

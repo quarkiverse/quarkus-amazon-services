@@ -4,11 +4,13 @@ name: "Amazon EventBridge Scheduler"
 metadata:
   keywords:
     - "scheduler"
+    - "eventbridge scheduler"
+    - "eventbridge"
     - "aws"
     - "amazon"
   categories:
-    - "data"
+    - "cloud"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-scheduler.html
   status: "stable"
   config:
-    - "quarkus.eventbridge-scheduler."
+  - "quarkus.eventbridge-scheduler."

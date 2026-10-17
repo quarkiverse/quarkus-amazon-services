@@ -1,0 +1,7 @@
+:aws-docs-url: https://docs.aws.amazon.com/appconfig/latest/userguide/what-is-appconfigdata.html
+
+Amazon AppConfigData is a service for managing application configurations.
+
+You can find more information about AppConfigData at https://aws.amazon.com/systems-manager/features/#AppConfigData[the Amazon AppConfigData website].
+
+You can use this extension to integrate AppConfigData capabilities in your Quarkus applications using the AWS SDK for Java 2.x.

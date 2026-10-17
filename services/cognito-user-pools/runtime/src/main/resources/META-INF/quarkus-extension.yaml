@@ -9,9 +9,9 @@ metadata:
     - "cognito-idp"
     - "aws"
     - "amazon"
-  guide: "https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-cognitouserpools.html"
   categories:
-    - "data"
+    - "security"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-cognitouserpools.html
   status: "stable"
   config:
   - "quarkus.cognito-user-pools."

@@ -7,8 +7,8 @@ metadata:
     - "aws"
     - "amazon"
   categories:
-    - "data"
+    - "security"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-secretsmanager.html
-  status: "preview"
+  status: "stable"
   config:
   - "quarkus.secretsmanager."

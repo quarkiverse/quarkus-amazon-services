@@ -1,0 +1,4 @@
+:service-name: kinesis
+:service-name-uppercase: Kinesis
+:service-class-name: Kinesis
+:has-devservices:

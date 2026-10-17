@@ -1,0 +1,3 @@
+:service-name: iot
+:service-name-uppercase: IoT
+:service-class-name: Iot

@@ -1,0 +1,3 @@
+Amazon API Gateway Management Api allows you to create, maintain, and secure APIs at any scale.
+
+You can find more information about API Gateway Management Api at https://aws.amazon.com/api-gateway/[the Amazon API Gateway website].

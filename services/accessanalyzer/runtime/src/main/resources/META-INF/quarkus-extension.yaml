@@ -3,11 +3,13 @@ artifact: ${project.groupId}:${project.artifactId}:${project.version}
 name: "Amazon Access Analyzer"
 metadata:
   keywords:
+    - "accessanalyzer"
     - "iam"
     - "aws"
     - "amazon"
   categories:
-    - "cloud"
+    - "security"
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-accessanalyzer.html
   status: "stable"
   config:
-  - "quarkus.account."
+  - "quarkus.accessanalyzer."

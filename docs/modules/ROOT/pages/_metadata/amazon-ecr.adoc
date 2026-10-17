@@ -1,0 +1,4 @@
+:service-name: ecr
+:service-name-uppercase: ECR
+:service-class-name: Ecr
+:has-devservices:

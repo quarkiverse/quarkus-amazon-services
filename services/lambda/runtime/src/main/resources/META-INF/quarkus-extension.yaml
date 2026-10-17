@@ -4,10 +4,11 @@ name: "Amazon Lambda"
 metadata:
   keywords:
     - "lambda"
+    - "lambda client"
     - "aws"
     - "amazon"
   categories:
-    - "data"
+    - "cloud"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-lambda.html
   status: "stable"
   config:

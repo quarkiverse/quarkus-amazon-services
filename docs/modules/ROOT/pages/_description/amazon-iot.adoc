@@ -1,0 +1,3 @@
+AWS offers Internet of Things (IoT) services and solutions to connect and manage billions of devices. Collect, store, and analyze IoT data for industrial, consumer, commercial, and automotive workloads.
+
+You can find more information about IoT at https://aws.amazon.com/iot/[the Amazon IoT website].

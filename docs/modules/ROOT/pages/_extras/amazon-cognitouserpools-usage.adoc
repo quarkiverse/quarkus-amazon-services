@@ -1,0 +1,61 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+Edit a `org.acme.cognitouserpools.CognitoExampleResource` that will provide an API return count of Cognito User Pools using the synchronous client.
+
+[source,java]
+----
+package org.acme.cognitouserpools;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient;
+import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUserPoolsRequest;
+import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUserPoolsResponse;
+
+@Path("/cognito-example")
+public class CognitoExampleResource {
+    @Inject
+    CognitoIdentityProviderClient cognitoClient;
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        ListUserPoolsRequest request = ListUserPoolsRequest.builder().build();
+        ListUserPoolsResponse response = cognitoClient.listUserPools(request);
+        return String.format("You have %d user pools", response.userPools().size());
+    }
+}
+----
+
+And update test class:
+
+[source,java]
+----
+package org.acme.cognitouserpools;
+
+import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+
+@QuarkusTest
+public class CognitoExampleResourceTest {
+
+    @Test
+    public void testHelloEndpoint() {
+        given()
+          .when().get("/cognito-example")
+          .then()
+             .statusCode(200)
+             .body(is("You have 1 user pools"));
+    }
+
+}
+----

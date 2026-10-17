@@ -1,0 +1,3 @@
+:service-name: marketplacemetering
+:service-name-uppercase: Marketplace Metering
+:service-class-name: MarketplaceMetering

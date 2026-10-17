@@ -1,0 +1,20 @@
+=== Create a KMS master key
+
+Create a KMS master key queue using AWS CLI and store in `MASTER_KEY_ARN` environment variable.
+
+[source,bash,subs="verbatim,attributes"]
+----
+MASTER_KEY_ARN=`aws kms create-key --profile floci --endpoint-url=http://localhost:4566 | cut -f3`
+----
+Generate a key data as 256-bit symmetric key (AES 256)
+[source,bash,subs="verbatim,attributes"]
+----
+aws kms generate-data-key --key-id $MASTER_KEY_ARN --key-spec AES_256 --profile floci --endpoint-url=http://localhost:4566
+----
+
+Or, if you want to use your AWS account create a key using your default profile
+[source,bash,subs="verbatim,attributes"]
+----
+MASTER_KEY_ARN=`aws kms create-key | cut -f3`
+aws kms generate-data-key --key-id $MASTER_KEY_ARN --key-spec AES_256
+----

@@ -1,0 +1,4 @@
+:service-name: eventbridge
+:service-name-uppercase: EventBridge
+:service-class-name: EventBridge
+:has-devservices:

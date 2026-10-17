@@ -1,0 +1,56 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+In this example, we will create an application that allows to encrypt and decrypt text message provided in the request.
+The example application will demonstrate the two programming models supported by the extension.
+
+Let's create a `org.acme.kms.QuarkusKmsSyncResource` that will provide an API to encrypt and decrypt message using the synchronous client.
+
+[source,java]
+----
+package org.acme.kms;
+
+import java.util.Base64;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import software.amazon.awssdk.core.SdkBytes;
+import software.amazon.awssdk.services.kms.KmsClient;
+import software.amazon.awssdk.services.kms.model.DecryptResponse;
+
+@Path("/sync")
+@Produces(MediaType.TEXT_PLAIN)
+@Consumes(MediaType.TEXT_PLAIN)
+public class QuarkusKmsSyncResource {
+
+    @Inject
+    KmsClient kms;
+
+    @ConfigProperty(name = "key.arn")
+    String keyArn;
+
+    @POST
+    @Path("/encrypt")
+    public String encrypt(String data) {
+        SdkBytes encryptedBytes = kms.encrypt(req -> req.keyId(keyArn).plaintext(SdkBytes.fromUtf8String(data))).ciphertextBlob();
+
+        return Base64.getEncoder().encodeToString(encryptedBytes.asByteArray());
+    }
+
+    @POST
+    @Path("/decrypt")
+    public String decrypt(String data) {
+        SdkBytes encryptedData = SdkBytes.fromByteArray(Base64.getDecoder().decode(data.getBytes()));
+        DecryptResponse decrypted = kms.decrypt(req -> req.keyId(keyArn).ciphertextBlob(encryptedData));
+
+        return decrypted.plaintext().asUtf8String();
+    }
+}
+----
+An encrypted message is in the form of a bytes array. To return it to the user we need to encode it as Base64 string in the `encrypt` endpoint.
+On the `decrypt` endpoint we need to decode from the Base64 string back to the bytes array before sending it out to the KMS client.

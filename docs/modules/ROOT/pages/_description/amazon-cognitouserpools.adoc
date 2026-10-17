@@ -1,0 +1,11 @@
+:aws-stack: moto
+:solution-summary: The application built here shows the count of Cognito User Pools in the current region.
+:main-class: CognitoExampleResource
+:main-path: /cognito-example
+
+Service client for accessing Amazon Cognito user pools (Identity Provider).
+
+Using the Amazon Cognito user pools API, you can create a user pool to manage directories and users.
+You can authenticate a user to obtain tokens related to user identity and access policies.
+
+For more information, see the https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html[Amazon Cognito user pools] (https://sdk.amazonaws.com/java/api/latest/software/amazon/awssdk/services/cognitoidentityprovider/package-frame.html[AWS Java SDK 2.x docs]).

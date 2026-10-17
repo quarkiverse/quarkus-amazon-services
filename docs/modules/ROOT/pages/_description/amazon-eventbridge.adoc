@@ -1,0 +1,5 @@
+:aws-stack: floci
+
+Amazon EventBridge is a serverless event bus service that makes it easy to connect your applications with data from a variety of sources.
+
+You can find more information about EventBridge at https://docs.aws.amazon.com/eventbridge/latest/APIReference[Amazon EventBridge API Reference].

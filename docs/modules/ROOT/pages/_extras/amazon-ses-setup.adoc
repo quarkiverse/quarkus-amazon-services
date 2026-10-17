@@ -1,0 +1,30 @@
+== Using SES on your AWS account
+
+Amazon applies certain restrictions to new Amazon SES accounts, mainly to prevent fraud and abuse. All new accounts are in the Amazon SES *sandbox*.
+All the features of the Amazon SES are still available while in sandbox, but a following restrictions applies:
+- You can send mail to verified email addresses and domains or to the https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-simulator.html[Amazon SES mailbox simulator]
+- You can only send mail from verified email addresses and domains
+- You can send a maximum of 1 message per second.
+
+Going production, you'd need to get your account of the sandbox following the https://docs.aws.amazon.com/ses/latest/DeveloperGuide/request-production-access.html[Amazon procedure].
+
+=== Set up AWS SES
+
+We assume you are going to use AWS SES sandbox for the sake of this guide. But before sending any email, you must verify sender and recipient email addresses using AWS CLI.
+You can use your personal email or any temporary email service available if you wish.
+
+[source,bash,subs="verbatim,attributes"]
+----
+aws ses verify-email-identity --email-address <sender@email.address>
+aws ses verify-email-identity --email-address <recipient@email.address>
+----
+Now, you need to open a mailboxes of those email addresses in order to follow confirmation procedure. Once email is approved you can use it in your application.
+
+If you are using Floci, you still need to verify the email addresses, otherwise Floci rejects the send email request.
+However, no email is actually sent as Floci only mocks the service APIs.
+
+[source,bash,subs="verbatim,attributes"]
+----
+aws ses verify-email-identity --email-address <sender@email.address> --profile floci --endpoint-url=http://localhost:4566
+aws ses verify-email-identity --email-address <recipient@email.address> --profile floci --endpoint-url=http://localhost:4566
+----

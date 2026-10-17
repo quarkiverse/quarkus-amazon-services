@@ -1,0 +1,3 @@
+Amazon Inspector automatically discovers workloads, such as Amazon EC2 instances, containers, and Lambda functions, and scans them for software vulnerabilities and unintended network exposure.
+
+You can find more information about Inspector at https://aws.amazon.com/inspector/[the Amazon Inspector website].

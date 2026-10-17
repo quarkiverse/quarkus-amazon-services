@@ -1,0 +1,3 @@
+:service-name: elasticloadbalancingv2
+:service-name-uppercase: Elastic Load Balancing v2
+:service-class-name: ElasticLoadBalancingV2

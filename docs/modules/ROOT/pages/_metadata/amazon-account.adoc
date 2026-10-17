@@ -1,0 +1,3 @@
+:service-name: account
+:service-name-uppercase: Account
+:service-class-name: Account

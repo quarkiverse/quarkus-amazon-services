@@ -11,7 +11,7 @@ metadata:
     - "data"
     - "messaging"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-sqs.html
-  status: "preview"
+  status: "stable"
   config:
   - "quarkus.sqs."
   - "mp.messaging."

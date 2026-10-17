@@ -4,10 +4,11 @@ name: "Amazon SSM"
 metadata:
   keywords:
     - "ssm"
+    - "parameter store"
     - "aws"
     - "amazon"
   categories:
-    - "data"
+    - "cloud"
     - "configuration"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-ssm.html
   status: "stable"

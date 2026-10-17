@@ -4,11 +4,12 @@ name: "Amazon Bedrock Runtime"
 metadata:
   keywords:
     - "bedrock"
+    - "bedrockruntime"
     - "aws"
     - "amazon"
   categories:
     - "ai"
-  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-bedrock.html
+  guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-bedrockruntime.html
   status: "stable"
   config:
   - "quarkus.bedrockruntime."

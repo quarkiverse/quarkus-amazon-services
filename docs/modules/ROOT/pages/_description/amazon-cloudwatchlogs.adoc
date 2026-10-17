@@ -1,0 +1,6 @@
+:aws-stack: floci
+:solution-summary: The application built here allows creating a log group and log stream and push logs events to it.
+
+You can use Amazon CloudWatch Logs to monitor, store, and access your log files from Amazon Elastic Compute Cloud (Amazon EC2) instances, AWS CloudTrail, Route 53, and other sources.
+
+You can find more information about CloudWatch at https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html[the AWS CloudWatch Logs website].

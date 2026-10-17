@@ -1,0 +1,6 @@
+:aws-stack: localstack
+:localstack-service: iam
+
+Amazon Identity and Access Management (IAM) enables users to manage access to AWS services and resources securely.
+
+You can find more information about IAM at https://aws.amazon.com/iam/[the Amazon IAM website].

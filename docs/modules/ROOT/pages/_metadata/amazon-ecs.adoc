@@ -1,0 +1,4 @@
+:service-name: ecs
+:service-name-uppercase: ECS
+:service-class-name: Ecs
+:has-devservices:

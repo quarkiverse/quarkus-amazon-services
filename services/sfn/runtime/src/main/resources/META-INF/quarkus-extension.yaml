@@ -4,10 +4,11 @@ name: "Amazon SFN"
 metadata:
   keywords:
     - "sfn"
+    - "step functions"
     - "aws"
     - "amazon"
   categories:
-    - "data"
+    - "cloud"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-sfn.html
   status: "stable"
   config:

@@ -7,7 +7,7 @@ metadata:
     - "aws"
     - "amazon"
   categories:
-    - "data"
+    - "security"
   guide: https://docs.quarkiverse.io/quarkus-amazon-services/dev/amazon-sts.html
   status: "stable"
   config:

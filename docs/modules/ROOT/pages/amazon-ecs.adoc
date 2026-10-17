@@ -1,16 +1,3 @@
-:service-name: ecs
-:service-name-uppercase: ECS
+include::./_metadata/amazon-ecs.adoc[]
 
-= Amazon ECS Client
-
-include::./includes/attributes.adoc[]
-
-Amazon Elastic Container Service (Amazon ECS) is a fully managed container orchestration service that helps you deploy, manage, and scale containerized applications.
-
-You can find more information about ECS at https://aws.amazon.com/ecs/[the Amazon ECS website].
-
-include::./amazon-configure-clients.adoc[]
-
-== Configuration Reference
-
-include::./includes/quarkus-amazon-ecs.adoc[]
+include::./_fragments/amazon-guide-generic.adoc[]
