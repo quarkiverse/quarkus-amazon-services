@@ -95,17 +95,24 @@ public abstract class AbstractService {
 
     public static final String FRUIT_NAME_COL = "fruitName";
     public static final String FRUIT_DESC_COL = "fruitDescription";
-    public static final String FRUIT_TABLE_NAME = "QuarkusFruits";
+
+    public String getTableName() {
+        return "QuarkusFruits";
+    }
 
     protected QueryRequest queryRequest() {
         Map<String, AttributeValue> expressionValues = new HashMap<>();
         expressionValues.put(":pk", AttributeValue.builder().s(PARTITION_VALUE).build());
+        Map<String, String> expressionNames = new HashMap<>();
+        expressionNames.put("#name", FRUIT_NAME_COL);
+        expressionNames.put("#description", FRUIT_DESC_COL);
 
         return QueryRequest.builder()
-                .tableName(FRUIT_TABLE_NAME)
+                .tableName(getTableName())
                 .keyConditionExpression(PARTITION_KEY + " = :pk")
+                .projectionExpression("#name, #description")
                 .expressionAttributeValues(expressionValues)
-                .attributesToGet(FRUIT_NAME_COL, FRUIT_DESC_COL)
+                .expressionAttributeNames(expressionNames)
                 .scanIndexForward(true) // ascending (alphabetical) order guaranteed by DynamoDB
                 .build();
     }
@@ -117,7 +124,7 @@ public abstract class AbstractService {
         item.put(FRUIT_DESC_COL, AttributeValue.builder().s(fruit.getDescription()).build());
 
         return PutItemRequest.builder()
-                .tableName(FRUIT_TABLE_NAME)
+                .tableName(getTableName())
                 .item(item)
                 .build();
     }
@@ -128,7 +135,7 @@ public abstract class AbstractService {
         key.put(FRUIT_NAME_COL, AttributeValue.builder().s(name).build());
 
         return GetItemRequest.builder()
-                .tableName(FRUIT_TABLE_NAME)
+                .tableName(getTableName())
                 .key(key)
                 .attributesToGet(FRUIT_NAME_COL, FRUIT_DESC_COL)
                 .build();
@@ -162,8 +169,9 @@ public class FruitSyncService extends AbstractService {
                 .collect(Collectors.toList());
     }
 
-    public void add(Fruit fruit) {
+    public List<Fruit> add(Fruit fruit) {
         dynamoDB.putItem(putRequest(fruit));
+        return findAll();
     }
 
     public Fruit get(String name) {

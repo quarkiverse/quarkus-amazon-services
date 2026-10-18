@@ -1,0 +1,23 @@
+* Store a plain and a secure parameter with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XPUT -H"Content-type: text/plain" "http://localhost:8080/sync/secure?secure=true" -d"stored as cipher text"
+curl -XPUT -H"Content-type: text/plain" "http://localhost:8080/sync/plain" -d"stored as plain text"
+----
+
+* List the parameters:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync
+----
+
+You should see output like this:
+
+[source,json]
+----
+{"plain":"stored as plain text","secure":"stored as cipher text"}
+----
+
+* Replace `sync` with `async` to use the asynchronous client.

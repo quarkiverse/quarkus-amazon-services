@@ -5,7 +5,7 @@
 In this example, we will create an application that allows us to store and retrieve parameters to and from SSM parameter store using a RESTful API.
 The example application will demonstrate the two programming models supported by the extension.
 
-Let's start with an abstract `org.acme.ssm.QuarkusSsmResource` class to provide the common functionality we will need for both the synchronous and asynchrounous exposures.
+Let's start with an abstract `org.acme.ssm.QuarkusSsmResource` class to provide the common functionality we will need for both the synchronous and asynchronous exposures.
 
 [source,java]
 ----
@@ -116,7 +116,7 @@ public class QuarkusSsmSyncResource extends QuarkusSsmResource {
     @Path("/{name}")
     @Consumes(MediaType.TEXT_PLAIN)
     public void setParameter(String name,
-            @RestQuery("secure") @DefaultValue("false") boolean secure,
+            @RestQuery @DefaultValue("false") boolean secure,
             String value) {
 
         ssm.putParameter(generatePutParameterRequest(name, value, secure));

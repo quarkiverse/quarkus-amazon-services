@@ -112,7 +112,7 @@ public class FruitSyncService extends AbstractService {
 
     @Inject
     FruitSyncService(DynamoDbEnhancedClient dynamoEnhancedClient) {
-        fruitTable = dynamoEnhancedClient.table(FRUIT_TABLE_NAME,
+        fruitTable = dynamoEnhancedClient.table(getTableName(),
             TableSchema.fromClass(Fruit.class));
     }
 
@@ -161,7 +161,7 @@ public class FruitAsyncService extends AbstractService {
 
     @Inject
     FruitAsyncService(DynamoDbEnhancedAsyncClient dynamoEnhancedAsyncClient) {
-        fruitTable = dynamoEnhancedAsyncClient.table(FRUIT_TABLE_NAME,
+        fruitTable = dynamoEnhancedAsyncClient.table(getTableName(),
             TableSchema.fromClass(Fruit.class));
     }
 
@@ -171,8 +171,9 @@ public class FruitAsyncService extends AbstractService {
                 .collect().asList();
     }
 
-    public Uni<Void> add(Fruit fruit) {
-        return Uni.createFrom().completionStage(() -> fruitTable.putItem(fruit));
+    public Uni<List<Fruit>> add(Fruit fruit) {
+        return Uni.createFrom().completionStage(() -> fruitTable.putItem(fruit))
+                .onItem().ignore().andSwitchTo(this::findAll);
     }
 
     public Uni<Fruit> get(String name) {
@@ -206,7 +207,7 @@ import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 public class FruitSyncService extends AbstractService {
 
     @Inject
-    @NamedDynamoDbTable(FRUIT_TABLE_NAME)
+    @NamedDynamoDbTable("QuarkusFruits")
     DynamoDbTable<Fruit> fruitTable;
 
     public List<Fruit> findAll() {
@@ -249,7 +250,7 @@ import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 public class FruitAsyncService extends AbstractService {
 
     @Inject
-    @NamedDynamoDbTable(FRUIT_TABLE_NAME)
+    @NamedDynamoDbTable("QuarkusFruits")
     private DynamoDbAsyncTable<Fruit> fruitTable;
 
     public Uni<List<Fruit>> findAll() {
@@ -258,8 +259,9 @@ public class FruitAsyncService extends AbstractService {
                 .collect().asList();
     }
 
-    public Uni<Void> add(Fruit fruit) {
-        return Uni.createFrom().completionStage(() -> fruitTable.putItem(fruit));
+    public Uni<List<Fruit>> add(Fruit fruit) {
+        return Uni.createFrom().completionStage(() -> fruitTable.putItem(fruit))
+                .onItem().ignore().andSwitchTo(this::findAll);
     }
 
     public Uni<Fruit> get(String name) {

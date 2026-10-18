@@ -5,7 +5,7 @@
 In this example, we will create an application to manage a list of files. The example application will demonstrate the two programming models supported by the extension.
 
 Because the primary goal of our application is to upload a file into the S3 bucket, we need to setup the model we will be using to define the `multipart/form-data` payload,
-in the form of a `@MultipartForm` POJO.
+in the form of a POJO annotated with `@RestForm`.
 
 NOTE: The default setting for `quarkus.http.limits.max-body-size` is 10240K. This may limit your ability to upload multipart files larger than the default. If you want to upload larger files, you will need to set this limit explicitly.
 
@@ -38,9 +38,9 @@ public class FormData {
 
 The class defines three fields:
 
-* `data` that fill capture stream of uploaded bytes from the client
-* `fileName` that captures a filename as provided by the submited form
-* `mimeType` content type of the uploaded file
+* `data` that captures the stream of uploaded bytes from the client
+* `filename` that captures the filename provided by the submitted form
+* `mimetype` the content type of the uploaded file
 
 In the second step let's create a bean that will represent a file in a Amazon S3 bucket as follows:
 
@@ -187,7 +187,7 @@ public class S3SyncClientResource extends CommonResource {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response downloadFile(String objectKey) {
         ResponseBytes<GetObjectResponse> objectBytes = s3.getObjectAsBytes(buildGetRequest(objectKey));
-        Response.ResponseBuilder response = Response.ok(objectBytes.asByteArray());
+        ResponseBuilder response = Response.ok(objectBytes.asByteArray());
         response.header("Content-Disposition", "attachment;filename=" + objectKey);
         response.header("Content-Type", objectBytes.response().contentType());
         return response.build();

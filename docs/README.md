@@ -47,8 +47,8 @@ The skeleton always produces the sections below, in this order. Some only appear
 | Intro (your text from `_description`) | always | — |
 | NOTE on the AWS SDK programming models | always | — |
 | Prerequisites | always | — |
-| Provision … locally via Dev Services | always | `devservices` (appended) |
-| Provision … locally manually (`docker run`, `aws configure`) | `aws-stack` | — |
+| Provision … locally via Dev Services | always | — |
+| Provision … locally manually (`docker run`, local CLI) | `aws-stack` | — |
 | *(service-specific setup)* | — | `setup` |
 | Solution | `solution-summary` (link to the quickstart only if `quickstart`) | — |
 | Creating the Maven project | always | — |
@@ -185,7 +185,9 @@ Heading levels depend on where the file lands:
 - Use the attributes rather than hard-coded values: `{service-name}`, `{service-name-uppercase}`, `{extension-name}`, `{java-package}`, `{main-class}`.
 - Add `subs="attributes+"` to source blocks that contain attributes: `[source,java,subs="attributes+"]`.
 - Do not repeat what the skeleton already renders: Dev Services, `docker run`, `aws configure`, HTTP client dependencies, local endpoint configuration, AWS credentials, configuration reference.
-- In `_extras/`, CLI commands against the local stack use the profile created by the manual provisioning section, named after the stack, and its endpoint: `--profile floci --endpoint-url=http://localhost:4566` (port `5000` for Moto).
+- In `_extras/`, CLI commands against a local Floci stack run inside the container: `docker exec floci aws <command>`. The CLI is preconfigured with the endpoint, the region and the credentials, so do not add `--profile` or `--endpoint-url`.
+- For the other stacks (`localstack`, `moto`), CLI commands use the profile created by the manual provisioning section, named after the stack, and its endpoint: `--profile localstack --endpoint-url=http://localhost:4566` (port `5000` for Moto).
+- When a command captures a value, add `--query <name> --output text` (the default JSON output cannot be parsed with `cut`), and `export` the variable if a later command or the application needs it.
 - Never edit `_metadata/`. A value that the code generator cannot take from the service model goes to `_description/`.
 
 ## Checking the result

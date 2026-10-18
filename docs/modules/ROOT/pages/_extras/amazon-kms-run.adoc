@@ -1,0 +1,15 @@
+* Encrypt a message with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XPOST -H"Content-type: text/plain" http://localhost:8080/sync/encrypt -d'Quarkus is awesome'
+----
+
+* Decrypt the message returned by the previous command:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XPOST -H"Content-type: text/plain" http://localhost:8080/sync/decrypt -d'<encrypted-message>'
+----
+
+* Do the same with the asynchronous client, using `/async/encrypt` and `/async/decrypt`.

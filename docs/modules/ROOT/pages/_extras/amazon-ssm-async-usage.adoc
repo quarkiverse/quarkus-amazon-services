@@ -17,8 +17,9 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-import io.smallrye.mutiny.Uni;
 import org.jboss.resteasy.reactive.RestQuery;
+
+import io.smallrye.mutiny.Uni;
 import software.amazon.awssdk.services.ssm.SsmAsyncClient;
 
 @Path("/async")
@@ -38,7 +39,7 @@ public class QuarkusSsmAsyncResource extends QuarkusSsmResource {
     @Path("/{name}")
     @Consumes(MediaType.TEXT_PLAIN)
     public Uni<Void> setParameter(String name,
-            @RestQuery("secure") @DefaultValue("false") boolean secure,
+            @RestQuery @DefaultValue("false") boolean secure,
             String value) {
 
         return Uni.createFrom().completionStage(ssm.putParameter(generatePutParameterRequest(name, value, secure)))

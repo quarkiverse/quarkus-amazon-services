@@ -1,10 +1,8 @@
-:aws-stack: localstack
-:localstack-service: ssm
-:run-args: -Dparameters.path=/quarkus/is/awesome/
+:aws-stack: floci
 :quickstart: amazon-ssm-quickstart
 :solution-summary: The application built here allows to store and retrieve parameters using the SSM parameter store.
 
 AWS Systems Manager (formerly Amazon Simple Systems Manager, or SSM) is a service that you can use to view and control your infrastructure on AWS.
-One of the most useful features of SSM for microservices is the https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html[Parameter Store], which provides secure, hierarchical storage for configuration data management and secrets management..
+One of the most useful features of SSM for microservices is the https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html[Parameter Store], which provides secure, hierarchical storage for configuration data management and secrets management.
 
 You can find more information about SSM at https://docs.aws.amazon.com/systems-manager/[the AWS Systems Manager website].

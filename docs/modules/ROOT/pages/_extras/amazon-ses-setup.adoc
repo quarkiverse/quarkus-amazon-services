@@ -1,16 +1,17 @@
 == Using SES on your AWS account
 
 Amazon applies certain restrictions to new Amazon SES accounts, mainly to prevent fraud and abuse. All new accounts are in the Amazon SES *sandbox*.
-All the features of the Amazon SES are still available while in sandbox, but a following restrictions applies:
+All the features of the Amazon SES are still available while in sandbox, but the following restrictions apply:
 - You can send mail to verified email addresses and domains or to the https://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-simulator.html[Amazon SES mailbox simulator]
 - You can only send mail from verified email addresses and domains
 - You can send a maximum of 1 message per second.
 
-Going production, you'd need to get your account of the sandbox following the https://docs.aws.amazon.com/ses/latest/DeveloperGuide/request-production-access.html[Amazon procedure].
+Going production, you'd need to get your account out of the sandbox following the https://docs.aws.amazon.com/ses/latest/DeveloperGuide/request-production-access.html[Amazon procedure].
 
 === Set up AWS SES
 
-We assume you are going to use AWS SES sandbox for the sake of this guide. But before sending any email, you must verify sender and recipient email addresses using AWS CLI.
+We assume you are going to use the AWS SES sandbox for the sake of this guide.
+Before sending any email, you must verify the sender address, and, while in the sandbox, the recipient address, using the AWS CLI.
 You can use your personal email or any temporary email service available if you wish.
 
 [source,bash,subs="verbatim,attributes"]
@@ -18,13 +19,16 @@ You can use your personal email or any temporary email service available if you 
 aws ses verify-email-identity --email-address <sender@email.address>
 aws ses verify-email-identity --email-address <recipient@email.address>
 ----
-Now, you need to open a mailboxes of those email addresses in order to follow confirmation procedure. Once email is approved you can use it in your application.
 
-If you are using Floci, you still need to verify the email addresses, otherwise Floci rejects the send email request.
-However, no email is actually sent as Floci only mocks the service APIs.
+Then open the mailboxes of those email addresses to follow the confirmation procedure. Once an email is approved, you can use it in your application.
+
+=== Verify the sender address on Floci
+
+Floci rejects a send request when the sender address is not verified, but it does not require the recipient to be verified, and it does not send any email.
+
+Verify the sender address with the AWS CLI of the Floci container:
 
 [source,bash,subs="verbatim,attributes"]
 ----
-aws ses verify-email-identity --email-address <sender@email.address> --profile floci --endpoint-url=http://localhost:4566
-aws ses verify-email-identity --email-address <recipient@email.address> --profile floci --endpoint-url=http://localhost:4566
+docker exec floci aws ses verify-email-identity --email-address <sender@email.address>
 ----

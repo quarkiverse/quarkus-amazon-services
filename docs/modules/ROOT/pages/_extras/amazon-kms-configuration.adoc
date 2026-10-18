@@ -1,0 +1,13 @@
+Set the alias, or the ARN, of the KMS key used by the application:
+
+[source,properties]
+----
+key.arn=alias/quarkus
+----
+
+When using Dev Services, you can also let it create the key and the alias on startup:
+
+[source,properties]
+----
+quarkus.kms.devservices.key-aliases=${key.arn}
+----

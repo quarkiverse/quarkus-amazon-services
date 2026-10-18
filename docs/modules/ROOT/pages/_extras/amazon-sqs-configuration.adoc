@@ -1,13 +1,19 @@
-In both cases, set the name of the SQS queue used by the application:
+Set the queue used by the application.
+The queue URL is built from the SQS endpoint, so Dev Services and a local instance only need the queue name:
 
 [source,properties]
 ----
-queue.url=Quarkus
+queue.name=Quarkus
+queue.url=${quarkus.sqs.endpoint-override}/000000000000/${queue.name}
 ----
 
-When using Dev Services, you can optionally configure the queues that are created on startup with the `quarkus.sqs.devservices.queues` config property.
+`000000000000` is the account id used by the local stack.
+
+When using Dev Services, you can also let it create the queue on startup:
 
 [source,properties]
 ----
-quarkus.sqs.devservices.queues=${queue.url}
+quarkus.sqs.devservices.queues=${queue.name}
 ----
+
+On AWS, there is no `endpoint-override` and the account id is yours, so pass the queue URL returned by `create-queue` explicitly, with `-Dqueue.url=<queue-url>`.

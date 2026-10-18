@@ -1,0 +1,29 @@
+Set the name of the topic used by the application, and the ARN the clients publish to:
+
+[source,properties]
+----
+topic.name=QuarksCollider
+topic.arn=arn:aws:sns:us-east-1:000000000000:${topic.name}
+----
+
+When using Dev Services, you can also let it create the topic on startup:
+
+[source,properties]
+----
+quarkus.sns.devservices.topics=${topic.name}
+----
+
+SNS sends the notifications to the HTTP endpoint served by the application, so the topic must be able to reach it:
+
+[source,properties]
+----
+quarks.shield.base.url=http://host.docker.internal:${quarkus.http.port}
+quarkus.http.host=0.0.0.0
+----
+
+[WARNING]
+====
+On Linux, the Floci container cannot resolve `host.docker.internal` unless it is started with `--add-host=host.docker.internal:host-gateway`.
+Dev Services starts the container for you and cannot add this mapping, so on Linux the subscription callback does not reach the application when you use Dev Services.
+To use the shield endpoints on Linux, run Floci manually with the extra host mapping (see the provisioning section above) and point the client at it with `quarkus.sns.endpoint-override` and the static credentials.
+====

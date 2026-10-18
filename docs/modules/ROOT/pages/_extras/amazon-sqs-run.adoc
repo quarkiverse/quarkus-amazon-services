@@ -1,0 +1,16 @@
+* Send messages to the queue with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XPOST -H "Content-type: application/json" http://localhost:8080/sync/cannon/shoot -d '{"flavor": "Charm", "spin": "1/2"}'
+curl -XPOST -H "Content-type: application/json" http://localhost:8080/sync/cannon/shoot -d '{"flavor": "Strange", "spin": "1/2"}'
+----
+
+* Receive them from the queue:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync/shield
+----
+
+* Replace `sync` with `async` to use the asynchronous client.
