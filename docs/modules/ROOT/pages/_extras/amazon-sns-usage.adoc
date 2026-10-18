@@ -64,8 +64,8 @@ TIP: The `@RegisterForReflection` annotation instructs Quarkus to keep the class
 ----
 package org.acme.sns;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
+import tools.jackson.databind.ObjectWriter;
+import tools.jackson.databind.json.JsonMapper;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -91,7 +91,7 @@ public class QuarksCannonSyncResource {
     @ConfigProperty(name = "topic.arn")
     String topicArn;
 
-    static ObjectWriter QUARK_WRITER = new ObjectMapper().writerFor(Quark.class);
+    static ObjectWriter QUARK_WRITER = JsonMapper.builder().build().writerFor(Quark.class);
 
     @POST
     @Path("/shoot")
@@ -99,7 +99,7 @@ public class QuarksCannonSyncResource {
     public Response publish(Quark quark) throws Exception {
         String message = QUARK_WRITER.writeValueAsString(quark);
         PublishResponse response = sns.publish(p -> p.topicArn(topicArn).message(message));
-        LOGGER.infov("Fired Quark[{0}, {1}}]", quark.getFlavor(), quark.getSpin());
+        LOGGER.infov("Fired Quark[{0}, {1}]", quark.getFlavor(), quark.getSpin());
         return Response.ok().entity(response.messageId()).build();
     }
 }
@@ -119,6 +119,9 @@ package org.acme.sns.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Based on https://docs.aws.amazon.com/sns/latest/dg/sns-message-and-json-formats.html#http-notification-json
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SnsNotification {
 
@@ -234,7 +237,7 @@ public class SnsNotification {
 }
 ----
 
-Then, create `org.acme.sns.SnsSubscriptionConfirmation`
+Then, create `org.acme.sns.model.SnsSubscriptionConfirmation`
 
 [source,java]
 ----
@@ -242,6 +245,9 @@ package org.acme.sns.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Based on https://docs.aws.amazon.com/sns/latest/dg/sns-message-and-json-formats.html#http-subscription-confirmation-json
+ */
 public class SnsSubscriptionConfirmation {
 
     @JsonProperty("Message")
@@ -356,7 +362,7 @@ public class SnsSubscriptionConfirmation {
 }
 ----
 
-Now, create `org.acme.QuarksShieldSyncResource` REST resources that:
+Now, create `org.acme.sns.QuarksShieldSyncResource` REST resources that:
 - Allows to subscribe itself to our SNS topic
 - Unsubscribe from the SNS topic
 - Receive notifications from the subscribed SNS topic
@@ -368,9 +374,9 @@ quickstart we will show how to subscribe an HTTP endpoint served by our applicat
 ----
 package org.acme.sns;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectReader;
+import tools.jackson.databind.json.JsonMapper;
 import java.util.HashMap;
 import java.util.Map;
 import jakarta.inject.Inject;
@@ -411,14 +417,14 @@ public class QuarksShieldSyncResource {
     static Map<Class<?>, ObjectReader> READERS = new HashMap<>();
 
     static {
-        READERS.put(SnsNotification.class, new ObjectMapper().readerFor(SnsNotification.class));
-        READERS.put(SnsSubscriptionConfirmation.class, new ObjectMapper().readerFor(SnsSubscriptionConfirmation.class));
-        READERS.put(Quark.class, new ObjectMapper().readerFor(Quark.class));
+        READERS.put(SnsNotification.class, JsonMapper.builder().build().readerFor(SnsNotification.class));
+        READERS.put(SnsSubscriptionConfirmation.class, JsonMapper.builder().build().readerFor(SnsSubscriptionConfirmation.class));
+        READERS.put(Quark.class, JsonMapper.builder().build().readerFor(Quark.class));
     }
 
     @POST
     @Consumes({MediaType.TEXT_PLAIN})
-    public Response notificationEndpoint(@HeaderParam("x-amz-sns-message-type") String messageType, String message) throws JsonProcessingException {
+    public Response notificationEndpoint(@HeaderParam("x-amz-sns-message-type") String messageType, String message) throws JacksonException {
         if (messageType == null) {
             return Response.status(400).build();
         }
@@ -471,7 +477,7 @@ public class QuarksShieldSyncResource {
         T object = null;
         try {
             object = READERS.get(clazz).readValue(message);
-        } catch (JsonProcessingException e) {
+        } catch (JacksonException e) {
             LOGGER.errorv("Unable to deserialize message <{0}> to Class <{1}>", message, clazz.getSimpleName());
             throw new RuntimeException(e);
         }

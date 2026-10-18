@@ -1,0 +1,6 @@
+Set the path under which the application stores and reads its parameters:
+
+[source,properties]
+----
+parameters.path=/quarkus/is/awesome/
+----

@@ -2,7 +2,65 @@
 
 == Creating JSON REST service
 
-Lets create a `org.acme.ses.QuarkusSesSyncResource` that will provide an API to send emails using the synchronous client.
+In this example, we will create an application that sends emails using SES. The example application will demonstrate the two programming models supported by the extension.
+
+First, let's create the `Email` bean that represents the email to send:
+
+[source,java]
+----
+package org.acme.ses.model;
+
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
+@RegisterForReflection
+public class Email {
+
+    private String from;
+    private String to;
+    private String subject;
+    private String body;
+
+    public String getFrom() {
+        return from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public Email setFrom(String from) {
+        this.from = from;
+        return this;
+    }
+
+    public Email setTo(String to) {
+        this.to = to;
+        return this;
+    }
+
+    public Email setSubject(String subject) {
+        this.subject = subject;
+        return this;
+    }
+
+    public Email setBody(String body) {
+        this.body = body;
+        return this;
+    }
+}
+----
+
+TIP: The `@RegisterForReflection` annotation instructs Quarkus to keep the class and its members during the native compilation. More details about the `@RegisterForReflection` annotation can be found on the https://quarkus.io/guides/writing-native-applications-tips#registerForReflection[native application tips] page.
+
+Then, create a `org.acme.ses.QuarkusSesSyncResource` that will provide an API to send emails using the synchronous client.
 
 [source,java]
 ----
@@ -27,7 +85,7 @@ public class QuarkusSesSyncResource {
 
     @POST
     @Path("/email")
-    public String encrypt(Email data) {
+    public String send(Email data) {
         return ses.sendEmail(req -> req
             .source(data.getFrom())
             .destination(d -> d.toAddresses(data.getTo()))

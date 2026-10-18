@@ -64,8 +64,8 @@ TIP: The `@RegisterForReflection` annotation instructs Quarkus to keep the class
 ----
 package org.acme.sqs;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
+import tools.jackson.databind.ObjectWriter;
+import tools.jackson.databind.json.JsonMapper;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -91,7 +91,7 @@ public class QuarksCannonSyncResource {
     @ConfigProperty(name = "queue.url")
     String queueUrl;
 
-    static ObjectWriter QUARK_WRITER = new ObjectMapper().writerFor(Quark.class);
+    static ObjectWriter QUARK_WRITER = JsonMapper.builder().build().writerFor(Quark.class);
 
     @POST
     @Path("/shoot")
@@ -99,7 +99,7 @@ public class QuarksCannonSyncResource {
     public Response sendMessage(Quark quark) throws Exception {
         String message = QUARK_WRITER.writeValueAsString(quark);
         SendMessageResponse response = sqs.sendMessage(m -> m.queueUrl(queueUrl).messageBody(message));
-        LOGGER.infov("Fired Quark[{0}, {1}}]", quark.getFlavor(), quark.getSpin());
+        LOGGER.infov("Fired Quark[{0}, {1}]", quark.getFlavor(), quark.getSpin());
         return Response.ok().entity(response.messageId()).build();
     }
 }
@@ -107,25 +107,26 @@ public class QuarksCannonSyncResource {
 
 Because of the fact messages sent to the queue must be a `String`, we're using Jackson's `ObjectWriter` in order to serialize our `Quark` objects into a `String`.
 
-Now, create the `org.acme.QuarksShieldSyncResource` REST resources that provides an endpoint to read the messages from the `ColliderQueue` queue.
+Now, create the `org.acme.sqs.QuarksShieldSyncResource` REST resources that provides an endpoint to read the messages from the `queue.url` queue.
 
 [source,java]
 ----
 package org.acme.sqs;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
+
 import org.acme.sqs.model.Quark;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
+
+import tools.jackson.databind.ObjectReader;
+import tools.jackson.databind.json.JsonMapper;
+
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.Message;
 
@@ -140,7 +141,7 @@ public class QuarksShieldSyncResource {
     @ConfigProperty(name = "queue.url")
     String queueUrl;
 
-    static ObjectReader QUARK_READER = new ObjectMapper().readerFor(Quark.class);
+    static ObjectReader QUARK_READER = JsonMapper.builder().build().readerFor(Quark.class);
 
     @GET
     public List<Quark> receive() {

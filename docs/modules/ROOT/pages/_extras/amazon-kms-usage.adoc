@@ -12,13 +12,16 @@ Let's create a `org.acme.kms.QuarkusKmsSyncResource` that will provide an API to
 package org.acme.kms;
 
 import java.util.Base64;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.services.kms.KmsClient;
 import software.amazon.awssdk.services.kms.model.DecryptResponse;

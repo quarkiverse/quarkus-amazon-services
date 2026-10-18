@@ -1,14 +1,17 @@
 === Create a SQS queue
 
-Create a SQS queue using AWS CLI and store in `QUEUE_URL` environment variable.
+Create the queue used by the application with the AWS CLI of the Floci container:
 
 [source,bash,subs="verbatim,attributes"]
 ----
-QUEUE_URL=`aws sqs create-queue --queue-name=ColliderQueue --profile floci --endpoint-url=http://localhost:4566`
+docker exec floci aws sqs create-queue --queue-name=Quarkus
 ----
 
-Or, if you want to use your SQS queue on your AWS account create a queue using your default profile
+=== Set up SQS on your AWS account
+
+If you want to use your SQS queue on your AWS account, create it with your own AWS CLI and store its URL, which you will pass to the application:
+
 [source,bash,subs="verbatim,attributes"]
 ----
-QUEUE_URL=`aws sqs create-queue --queue-name=ColliderQueue`
+export QUEUE_URL=$(aws sqs create-queue --queue-name=Quarkus --query QueueUrl --output text)
 ----

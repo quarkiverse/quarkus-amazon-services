@@ -1,20 +1,21 @@
 === Create a KMS master key
 
-Create a KMS master key queue using AWS CLI and store in `MASTER_KEY_ARN` environment variable.
+Create a KMS master key with an alias, using the AWS CLI of the Floci container:
 
 [source,bash,subs="verbatim,attributes"]
 ----
-MASTER_KEY_ARN=`aws kms create-key --profile floci --endpoint-url=http://localhost:4566 | cut -f3`
-----
-Generate a key data as 256-bit symmetric key (AES 256)
-[source,bash,subs="verbatim,attributes"]
-----
-aws kms generate-data-key --key-id $MASTER_KEY_ARN --key-spec AES_256 --profile floci --endpoint-url=http://localhost:4566
+key_id=$(docker exec floci aws kms create-key --query KeyMetadata.KeyId --output text)
+docker exec floci aws kms create-alias --alias-name alias/quarkus --target-key-id $key_id
 ----
 
-Or, if you want to use your AWS account create a key using your default profile
+The application refers to the key by its alias, `alias/quarkus`.
+
+=== Set up KMS on your AWS account
+
+If you want to use your AWS account, create the same key with your own AWS CLI:
+
 [source,bash,subs="verbatim,attributes"]
 ----
-MASTER_KEY_ARN=`aws kms create-key | cut -f3`
-aws kms generate-data-key --key-id $MASTER_KEY_ARN --key-spec AES_256
+key_id=$(aws kms create-key --query KeyMetadata.KeyId --output text)
+aws kms create-alias --alias-name alias/quarkus --target-key-id $key_id
 ----

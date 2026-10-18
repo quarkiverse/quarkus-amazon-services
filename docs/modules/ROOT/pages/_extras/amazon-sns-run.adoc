@@ -1,0 +1,16 @@
+* Subscribe the application to the topic with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XPOST -H'Content-type: application/json' http://localhost:8080/sync/shield/subscribe
+----
+
+* Shoot a quark and observe the collision in the application logs:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XPOST -H'Content-type: application/json' http://localhost:8080/sync/cannon/shoot -d'{"flavor": "Charm", "spin": "1/2"}'
+----
+
+* Do the same with the asynchronous client, using `/async/shield/subscribe` and `/async/cannon/shoot`.
+* Unsubscribe with `/sync/shield/unsubscribe` or `/async/shield/unsubscribe` to stop receiving notifications.

@@ -6,25 +6,23 @@ Create a `org.acme.sqs.QuarksCannonAsyncResource` REST resource that will be sim
 ----
 package org.acme.sqs;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
 import org.acme.sqs.model.Quark;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
+
+import tools.jackson.databind.ObjectWriter;
+import tools.jackson.databind.json.JsonMapper;
+
+import io.smallrye.mutiny.Uni;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 import software.amazon.awssdk.services.sqs.model.SendMessageResponse;
 
 @Path("/async/cannon")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class QuarksCannonAsyncResource {
 
     private static final Logger LOGGER = Logger.getLogger(QuarksCannonAsyncResource.class);
@@ -35,16 +33,15 @@ public class QuarksCannonAsyncResource {
     @ConfigProperty(name = "queue.url")
     String queueUrl;
 
-    static ObjectWriter QUARK_WRITER = new ObjectMapper().writerFor(Quark.class);
+    static ObjectWriter QUARK_WRITER = JsonMapper.builder().build().writerFor(Quark.class);
 
     @POST
     @Path("/shoot")
-    @Consumes(MediaType.APPLICATION_JSON)
     public Uni<Response> sendMessage(Quark quark) throws Exception {
         String message = QUARK_WRITER.writeValueAsString(quark);
         return Uni.createFrom()
             .completionStage(sqs.sendMessage(m -> m.queueUrl(queueUrl).messageBody(message)))
-            .onItem().invoke(item -> LOGGER.infov("Fired Quark[{0}, {1}}]", quark.getFlavor(), quark.getSpin()))
+            .onItem().invoke(item -> LOGGER.infov("Fired Quark[{0}, {1}]", quark.getFlavor(), quark.getSpin()))
             .onItem().transform(SendMessageResponse::messageId)
             .onItem().transform(id -> Response.ok().entity(id).build());
     }
@@ -57,20 +54,21 @@ And the corresponding async receiver of the queue messages `org.acme.sqs.QuarksS
 ----
 package org.acme.sqs;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-import io.smallrye.mutiny.Uni;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
+
 import org.acme.sqs.model.Quark;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
+
+import tools.jackson.databind.ObjectReader;
+import tools.jackson.databind.json.JsonMapper;
+
+import io.smallrye.mutiny.Uni;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 import software.amazon.awssdk.services.sqs.model.Message;
 import software.amazon.awssdk.services.sqs.model.ReceiveMessageResponse;
@@ -86,7 +84,7 @@ public class QuarksShieldAsyncResource {
     @ConfigProperty(name = "queue.url")
     String queueUrl;
 
-    static ObjectReader QUARK_READER = new ObjectMapper().readerFor(Quark.class);
+    static ObjectReader QUARK_READER = JsonMapper.builder().build().readerFor(Quark.class);
 
     @GET
     public Uni<List<Quark>> receive() {

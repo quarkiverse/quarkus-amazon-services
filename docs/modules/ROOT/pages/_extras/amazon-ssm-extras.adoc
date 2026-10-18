@@ -88,16 +88,11 @@ If JSON parsing fails or the value is empty JSON (`{}` or `[]`), the raw string 
 
 === Credentials, region, and endpoint
 
-The config source uses the same SSM client configuration as the rest of the extension:
+The config source uses the same SSM client configuration as the rest of the extension (endpoint, region and credentials).
+You only need to enable it and select the parameters to load:
 
 [source,properties]
 ----
-quarkus.ssm.endpoint-override=http://localhost:4566
-quarkus.ssm.aws.region=us-east-1
-quarkus.ssm.aws.credentials.type=static
-quarkus.ssm.aws.credentials.static-provider.access-key-id=test-key
-quarkus.ssm.aws.credentials.static-provider.secret-access-key=test-secret
-
 quarkus.ssm.config.enabled=true
 quarkus.ssm.config.path=/myapp/prod/
 ----
