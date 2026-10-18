@@ -19,9 +19,3 @@ For the asynchronous client, refer to <<Going asynchronous>> for more informatio
 Now let's add a simple web page to interact with our `S3SyncClientResource`.
 Quarkus automatically serves static resources located under the `META-INF/resources` directory.
 In the `src/main/resources/META-INF/resources` directory, add a `s3.html` file with the content from this {quickstarts-blob-url}/amazon-s3-quickstart/src/main/resources/META-INF/resources/s3.html[s3.html] file in it.
-
-You can now interact with your REST service:
-
-* start Quarkus with `./mvnw compile quarkus:dev`
-* open a browser to `http://localhost:8080/s3.html`
-* upload new file to the current S3 bucket via the form and see the list of files in the bucket
