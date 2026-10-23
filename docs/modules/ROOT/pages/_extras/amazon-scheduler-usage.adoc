@@ -1,0 +1,68 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+In this example, we will create an application that creates schedules sending a message to an SQS queue every 5 minutes, and reads them back using a RESTful API.
+The example application will demonstrate the two programming models supported by the extension.
+
+Configure the ARN of the target queue, and the ARN of the IAM role that EventBridge Scheduler assumes to send messages to it, in `application.properties`:
+
+[source,properties]
+----
+schedule.target-arn=arn:aws:sqs:us-east-1:000000000000:quarkus-schedules
+schedule.role-arn=arn:aws:iam::000000000000:role/quarkus-scheduler
+----
+
+Let's start with the synchronous implementation in the `org.acme.scheduler.QuarkusSchedulerSyncResource` class.
+
+[source,java]
+----
+package org.acme.scheduler;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import software.amazon.awssdk.services.scheduler.SchedulerClient;
+import software.amazon.awssdk.services.scheduler.model.FlexibleTimeWindowMode;
+
+@Path("/sync")
+@Produces(MediaType.TEXT_PLAIN)
+public class QuarkusSchedulerSyncResource {
+
+    @Inject <1>
+    SchedulerClient scheduler;
+
+    @ConfigProperty(name = "schedule.target-arn")
+    String targetArn;
+
+    @ConfigProperty(name = "schedule.role-arn")
+    String roleArn;
+
+    @POST
+    public String createSchedule(@QueryParam("name") String name) {
+        return scheduler.createSchedule(r -> r.name(name) <2>
+                .scheduleExpression("rate(5 minutes)")
+                .flexibleTimeWindow(w -> w.mode(FlexibleTimeWindowMode.OFF))
+                .target(t -> t.arn(targetArn).roleArn(roleArn).input("Hello from " + name)))
+                .scheduleArn();
+    }
+
+    @GET
+    @Path("/{name}")
+    public String getSchedule(@PathParam("name") String name) {
+        return scheduler.getSchedule(r -> r.name(name)).scheduleExpression(); <3>
+    }
+}
+----
+
+<1> Inject the client provided by the amazon-scheduler extension
+<2> Create a schedule, in the default schedule group, that sends a message to the queue every 5 minutes, and return its ARN
+<3> Get the schedule and return its schedule expression

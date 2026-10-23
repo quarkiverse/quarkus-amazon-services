@@ -1,0 +1,19 @@
+* Create a rule with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -X POST "http://localhost:8080/sync?name=quarkus-rule"
+----
+
+The endpoint returns the ARN of the rule.
+
+* Describe the rule:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync/quarkus-rule
+----
+
+The endpoint returns `rate(5 minutes)`.
+
+* Replace `sync` with `async` to use the asynchronous client.

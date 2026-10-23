@@ -1,0 +1,55 @@
+:custom-async-usage:
+
+Create a `org.acme.scheduler.QuarkusSchedulerAsyncResource` REST resource that will be similar to our `QuarkusSchedulerSyncResource` but using an asynchronous programming model.
+
+[source,java]
+----
+package org.acme.scheduler;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import io.smallrye.mutiny.Uni;
+import software.amazon.awssdk.services.scheduler.SchedulerAsyncClient;
+import software.amazon.awssdk.services.scheduler.model.FlexibleTimeWindowMode;
+
+@Path("/async")
+@Produces(MediaType.TEXT_PLAIN)
+public class QuarkusSchedulerAsyncResource {
+
+    @Inject
+    SchedulerAsyncClient scheduler;
+
+    @ConfigProperty(name = "schedule.target-arn")
+    String targetArn;
+
+    @ConfigProperty(name = "schedule.role-arn")
+    String roleArn;
+
+    @POST
+    public Uni<String> createSchedule(@QueryParam("name") String name) {
+        return Uni.createFrom().completionStage(scheduler.createSchedule(r -> r.name(name)
+                .scheduleExpression("rate(5 minutes)")
+                .flexibleTimeWindow(w -> w.mode(FlexibleTimeWindowMode.OFF))
+                .target(t -> t.arn(targetArn).roleArn(roleArn).input("Hello from " + name))))
+                .map(response -> response.scheduleArn());
+    }
+
+    @GET
+    @Path("/{name}")
+    public Uni<String> getSchedule(@PathParam("name") String name) {
+        return Uni.createFrom().completionStage(scheduler.getSchedule(r -> r.name(name)))
+                .map(response -> response.scheduleExpression());
+    }
+}
+----
+
+Note that the `SchedulerAsyncClient` behaves just like the `SchedulerClient`, but returns `CompletionStage` objects which we use to create `Uni` instances, and then transform the emitted item.

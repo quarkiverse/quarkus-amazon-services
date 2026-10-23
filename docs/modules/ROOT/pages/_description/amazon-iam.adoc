@@ -1,4 +1,5 @@
 :has-integration-test:
+:solution-summary: The application built here creates IAM users and lists them.
 
 Amazon Identity and Access Management (IAM) enables users to manage access to AWS services and resources securely.
 

@@ -1,0 +1,19 @@
+* Create a state machine with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -X POST "http://localhost:8080/sync?name=quarkus-hello"
+----
+
+The endpoint returns the ARN of the state machine.
+
+* List the state machines:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync
+----
+
+* Replace `sync` with `async` to use the asynchronous client.
+
+To use your AWS account, create the role of the state machines as described in https://docs.aws.amazon.com/step-functions/latest/dg/procedure-create-iam-role.html[Creating an IAM role for your state machine], and set its ARN in `state-machine.role-arn`.

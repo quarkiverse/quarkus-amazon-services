@@ -1,0 +1,40 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+In this example, we will create an application that assumes an IAM role to get temporary credentials using a RESTful API.
+The example application will demonstrate the two programming models supported by the extension.
+
+Let's start with the synchronous implementation in the `org.acme.sts.QuarkusStsSyncResource` class.
+
+[source,java]
+----
+package org.acme.sts;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import software.amazon.awssdk.services.sts.StsClient;
+
+@Path("/sync")
+@Produces(MediaType.TEXT_PLAIN)
+public class QuarkusStsSyncResource {
+
+    @Inject <1>
+    StsClient sts;
+
+    @GET
+    public String assumeRole(@QueryParam("roleArn") String roleArn) {
+        return sts.assumeRole(r -> r.roleArn(roleArn).roleSessionName("quarkus")) <2>
+                .assumedRoleUser()
+                .arn();
+    }
+}
+----
+
+<1> Inject the client provided by the amazon-sts extension
+<2> Assume the role and return the ARN of the assumed role session. The response also contains the temporary credentials of the session, that you can use to create other AWS SDK clients.

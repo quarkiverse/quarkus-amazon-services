@@ -1,0 +1,51 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+In this example, we will create an application that lists the Lambda functions and gets their configuration using a RESTful API.
+The example application will demonstrate the two programming models supported by the extension.
+
+Let's start with the synchronous implementation in the `org.acme.lambda.QuarkusLambdaSyncResource` class.
+
+[source,java]
+----
+package org.acme.lambda;
+
+import java.util.List;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+import software.amazon.awssdk.services.lambda.LambdaClient;
+import software.amazon.awssdk.services.lambda.model.FunctionConfiguration;
+
+@Path("/sync")
+public class QuarkusLambdaSyncResource {
+
+    @Inject <1>
+    LambdaClient lambda;
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> listFunctions() {
+        return lambda.listFunctionsPaginator().functions().stream() <2>
+                .map(FunctionConfiguration::functionName)
+                .toList();
+    }
+
+    @GET
+    @Path("/{name}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getFunction(@PathParam("name") String name) {
+        return lambda.getFunction(r -> r.functionName(name)).configuration().runtimeAsString(); <3>
+    }
+}
+----
+
+<1> Inject the client provided by the amazon-lambda extension
+<2> List the names of the functions, fetching all the pages of results
+<3> Get the configuration of the function and return its runtime

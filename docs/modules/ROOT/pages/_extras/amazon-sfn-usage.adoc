@@ -1,0 +1,74 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+In this example, we will create an application that creates Step Functions state machines and lists them using a RESTful API.
+The example application will demonstrate the two programming models supported by the extension.
+
+Configure the ARN of the IAM role that the state machines use in `application.properties`:
+
+[source,properties]
+----
+state-machine.role-arn=arn:aws:iam::000000000000:role/quarkus-state-machine
+----
+
+Let's start with the synchronous implementation in the `org.acme.sfn.QuarkusSfnSyncResource` class.
+
+[source,java]
+----
+package org.acme.sfn;
+
+import java.util.List;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import software.amazon.awssdk.services.sfn.SfnClient;
+import software.amazon.awssdk.services.sfn.model.StateMachineListItem;
+
+@Path("/sync")
+public class QuarkusSfnSyncResource {
+
+    static final String HELLO_WORLD = """
+            {
+              "StartAt": "HelloWorld",
+              "States": {
+                "HelloWorld": { "Type": "Pass", "Result": "Hello World!", "End": true }
+              }
+            }
+            """; <1>
+
+    @Inject <2>
+    SfnClient sfn;
+
+    @ConfigProperty(name = "state-machine.role-arn")
+    String roleArn;
+
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public String createStateMachine(@QueryParam("name") String name) {
+        return sfn.createStateMachine(r -> r.name(name).roleArn(roleArn).definition(HELLO_WORLD)) <3>
+                .stateMachineArn();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> listStateMachines() {
+        return sfn.listStateMachinesPaginator().stateMachines().stream() <4>
+                .map(StateMachineListItem::name)
+                .toList();
+    }
+}
+----
+
+<1> A state machine, written in the https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html[Amazon States Language], with a single `Pass` state
+<2> Inject the client provided by the amazon-sfn extension
+<3> Create a state machine and return its ARN
+<4> List the names of the state machines, fetching all the pages of results

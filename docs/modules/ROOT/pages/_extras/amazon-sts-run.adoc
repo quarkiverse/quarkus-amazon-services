@@ -1,0 +1,10 @@
+* Assume the role with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl "http://localhost:8080/sync?roleArn=arn:aws:iam::000000000000:role/quarkus-role"
+----
+
+The endpoint returns `arn:aws:sts::000000000000:assumed-role/quarkus-role/quarkus`.
+
+* Replace `sync` with `async` to use the asynchronous client.

@@ -1,0 +1,50 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+In this example, we will create an application that creates Kinesis data streams and gets their status using a RESTful API.
+The example application will demonstrate the two programming models supported by the extension.
+
+Let's start with the synchronous implementation in the `org.acme.kinesis.QuarkusKinesisSyncResource` class.
+
+[source,java]
+----
+package org.acme.kinesis;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import software.amazon.awssdk.services.kinesis.KinesisClient;
+
+@Path("/sync")
+@Produces(MediaType.TEXT_PLAIN)
+public class QuarkusKinesisSyncResource {
+
+    @Inject <1>
+    KinesisClient kinesis;
+
+    @POST
+    public String createStream(@QueryParam("name") String name) {
+        kinesis.createStream(r -> r.streamName(name).shardCount(1)); <2>
+        return "OK";
+    }
+
+    @GET
+    @Path("/{name}")
+    public String describeStream(@PathParam("name") String name) {
+        return kinesis.describeStreamSummary(r -> r.streamName(name)) <3>
+                .streamDescriptionSummary()
+                .streamStatusAsString();
+    }
+}
+----
+
+<1> Inject the client provided by the amazon-kinesis extension
+<2> Create a stream with a single shard
+<3> Return the status of the stream: `CREATING` while AWS provisions it, then `ACTIVE`

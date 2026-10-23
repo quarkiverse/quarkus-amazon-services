@@ -1,0 +1,47 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+In this example, we will create an application that creates scheduled EventBridge rules and describes them using a RESTful API.
+The example application will demonstrate the two programming models supported by the extension.
+
+Let's start with the synchronous implementation in the `org.acme.eventbridge.QuarkusEventBridgeSyncResource` class.
+
+[source,java]
+----
+package org.acme.eventbridge;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import software.amazon.awssdk.services.eventbridge.EventBridgeClient;
+
+@Path("/sync")
+@Produces(MediaType.TEXT_PLAIN)
+public class QuarkusEventBridgeSyncResource {
+
+    @Inject <1>
+    EventBridgeClient eventBridge;
+
+    @POST
+    public String putRule(@QueryParam("name") String name) {
+        return eventBridge.putRule(r -> r.name(name).scheduleExpression("rate(5 minutes)")).ruleArn(); <2>
+    }
+
+    @GET
+    @Path("/{name}")
+    public String describeRule(@PathParam("name") String name) {
+        return eventBridge.describeRule(r -> r.name(name)).scheduleExpression(); <3>
+    }
+}
+----
+
+<1> Inject the client provided by the amazon-eventbridge extension
+<2> Create a rule, on the default event bus, that triggers every 5 minutes, and return its ARN
+<3> Describe the rule and return its schedule expression

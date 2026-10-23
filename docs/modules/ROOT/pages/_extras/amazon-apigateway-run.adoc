@@ -1,0 +1,19 @@
+* Create a REST API with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -X POST "http://localhost:8080/sync?name=quarkus-api"
+----
+
+The endpoint returns the ID of the REST API.
+
+* Get the REST API, replacing `<id>` with the returned ID:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync/<id>
+----
+
+The endpoint returns `quarkus-api`.
+
+* Replace `sync` with `async` to use the asynchronous client.
