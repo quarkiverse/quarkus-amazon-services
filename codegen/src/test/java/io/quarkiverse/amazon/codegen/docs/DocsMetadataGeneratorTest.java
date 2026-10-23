@@ -65,6 +65,20 @@ public class DocsMetadataGeneratorTest {
     }
 
     @Test
+    public void deprecatedStatus() {
+        QuarkusCustomizationConfig config = QuarkusCustomizationConfig.create();
+        config.setStatus("deprecated");
+        QuarkusServiceModel model = new QuarkusServiceModelBuilder(restJsonC2jModels())
+                .quarkusCustomizationConfig(config)
+                .build();
+
+        String content = new DocsMetadataGenerator(model, "ecr").content();
+
+        assertThat(content).endsWith(":service-class-name: Ecr\n"
+                + ":extension-status: deprecated\n");
+    }
+
+    @Test
     public void defaultPageName() {
         Path file = new DocsMetadataGenerator(restJsonQuarkusModel(), "ecr").write(tempDir);
 

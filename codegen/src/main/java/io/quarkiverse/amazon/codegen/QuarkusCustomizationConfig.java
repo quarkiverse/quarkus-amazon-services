@@ -63,6 +63,12 @@ public class QuarkusCustomizationConfig {
      */
     private List<String> categories;
 
+    /**
+     * The status of the extension descriptor (e.g. {@code preview}, {@code deprecated}).
+     * Defaults to {@code stable}.
+     */
+    private String status;
+
     public static QuarkusCustomizationConfig create() {
         return new QuarkusCustomizationConfig();
     }
@@ -137,5 +143,13 @@ public class QuarkusCustomizationConfig {
 
     public void setCategories(List<String> categories) {
         this.categories = categories;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

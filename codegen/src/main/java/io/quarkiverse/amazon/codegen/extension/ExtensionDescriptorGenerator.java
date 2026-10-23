@@ -52,7 +52,7 @@ public class ExtensionDescriptorGenerator {
         lines.add("  categories:");
         model.categories().forEach(c -> lines.add("    - " + quote(c)));
         lines.add("  guide: " + GUIDE_BASE_URL + model.docsPageName() + ".html");
-        lines.add("  status: \"stable\"");
+        lines.add("  status: " + quote(model.status()));
         lines.add("  config:");
         lines.add("  - " + quote(model.configPrefix() + "."));
         return String.join("\n", lines) + "\n";

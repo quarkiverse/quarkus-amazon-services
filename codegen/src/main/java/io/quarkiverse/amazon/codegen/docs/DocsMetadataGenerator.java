@@ -52,6 +52,9 @@ public class DocsMetadataGenerator {
         if (!Objects.equals(model.packageName(), extension)) {
             lines.add(attribute("java-package", model.packageName()));
         }
+        if (!Objects.equals(model.status(), "stable")) {
+            lines.add(attribute("extension-status", model.status()));
+        }
         return String.join("\n", lines) + "\n";
     }
 
