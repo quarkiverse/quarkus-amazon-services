@@ -21,9 +21,8 @@ quarks.shield.base.url=http://host.docker.internal:${quarkus.http.port}
 quarkus.http.host=0.0.0.0
 ----
 
-[WARNING]
+[NOTE]
 ====
-On Linux, the Floci container cannot resolve `host.docker.internal` unless it is started with `--add-host=host.docker.internal:host-gateway`.
-Dev Services starts the container for you and cannot add this mapping, so on Linux the subscription callback does not reach the application when you use Dev Services.
-To use the shield endpoints on Linux, run Floci manually with the extra host mapping (see the provisioning section above) and point the client at it with `quarkus.sns.endpoint-override` and the static credentials.
+Dev Services for Floci maps `host.docker.internal` to the host gateway, so the subscription callback reaches the application on Linux as well.
+If you run Floci manually on Linux, start it with `--add-host=host.docker.internal:host-gateway` (see the provisioning section above).
 ====
