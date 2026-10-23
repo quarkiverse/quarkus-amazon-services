@@ -1,6 +1,6 @@
 :has-integration-test:
 :solution-summary: The application built here creates Kinesis data streams and gets their status.
+:aws-docs-url: https://docs.aws.amazon.com/streams/latest/dev/introduction.html
 
-Kinesis Data Streams is a managed service provided by Amazon Web Services (AWS) that scales elastically for real-time processing of streaming big data.
-
-You can find more information about Kinesis at https://docs.aws.amazon.com/kinesis/latest/APIReference[AWS Kinesis Data Streams Service API Reference].
+Amazon Kinesis Data Streams is a serverless streaming data service for capturing, processing and storing data streams in real time at any scale.
+This client lets you create and manage streams and shards, write records to them and read records from them.

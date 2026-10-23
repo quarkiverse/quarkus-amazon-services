@@ -1,3 +1,4 @@
-The AWS Account Management API lets you programmatically manage the details of your AWS accounts, such as the alternate contacts, the primary contact information and the enabled Regions.
+:aws-docs-url: https://docs.aws.amazon.com/accounts/latest/APIReference/Welcome.html
 
-You can find more information about AWS Account Management at https://docs.aws.amazon.com/accounts/latest/reference/accounts-welcome.html[the AWS Account Management documentation].
+AWS Account Management lets you programmatically manage the settings of your AWS accounts.
+This client lets you view and update the account name, the primary and alternate (billing, operations, security) contacts and the primary email address, and enable or disable opt-in Regions, for your own account or for the member accounts of an AWS Organizations organization.

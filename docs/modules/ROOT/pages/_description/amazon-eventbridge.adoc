@@ -1,6 +1,6 @@
 :has-integration-test:
 :solution-summary: The application built here creates scheduled EventBridge rules and describes them.
+:aws-docs-url: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-what-is.html
 
-Amazon EventBridge is a serverless event bus service that makes it easy to connect your applications with data from a variety of sources.
-
-You can find more information about EventBridge at https://docs.aws.amazon.com/eventbridge/latest/APIReference[Amazon EventBridge API Reference].
+Amazon EventBridge is a serverless event bus service that connects your applications with data from a variety of sources.
+This client lets you manage event buses and rules, put custom events, and configure targets, archives and replays, connections and API destinations.

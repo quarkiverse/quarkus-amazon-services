@@ -1,6 +1,6 @@
 :has-integration-test:
 :solution-summary: The application built here pushes data points to a CloudWatch metric and lists the metrics of a namespace.
+:aws-docs-url: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html
 
-AWS CloudWatch enables you to publish, monitor, and manage various metrics, as well as configure alarm actions based on data from metrics.
-
-You can find more information about CloudWatch at https://docs.aws.amazon.com/cloudwatch/[the AWS CloudWatch website].
+Amazon CloudWatch monitors your AWS resources and the applications you run on AWS in real time.
+This client lets you publish and retrieve metrics, and create and manage alarms and dashboards based on them.

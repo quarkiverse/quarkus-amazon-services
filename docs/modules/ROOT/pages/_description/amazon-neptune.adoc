@@ -1,3 +1,5 @@
-Amazon Neptune is a fast, reliable, fully managed graph database service that makes it easy to build and run applications that work with highly connected datasets.
+:aws-docs-url: https://docs.aws.amazon.com/neptune/latest/userguide/intro.html
 
-You can find more information about Neptune at https://docs.aws.amazon.com/neptune/[the Amazon Neptune website].
+Amazon Neptune is a fully managed graph database service for building applications that work with highly connected datasets.
+This client uses the Neptune management API to create and manage DB clusters, instances, parameter groups, snapshots and global databases.
+To load data or run Gremlin or openCypher queries, use the https://docs.aws.amazon.com/neptune/latest/data-api/Welcome.html[Neptune data API] instead.

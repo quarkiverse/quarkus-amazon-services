@@ -1,6 +1,6 @@
 :has-integration-test:
 :solution-summary: The application built here creates ECS clusters and lists them.
+:aws-docs-url: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html
 
-Amazon Elastic Container Service (Amazon ECS) is a fully managed container orchestration service that helps you deploy, manage, and scale containerized applications.
-
-You can find more information about ECS at https://aws.amazon.com/ecs/[the Amazon ECS website].
+Amazon Elastic Container Service (Amazon ECS) is a fully managed container orchestration service for deploying, managing and scaling containerized applications.
+This client lets you manage clusters, task definitions, services and tasks, on AWS Fargate or Amazon EC2.

@@ -1,8 +1,6 @@
 :has-integration-test:
 :solution-summary: The application built here lists the Lambda functions and gets their configuration.
+:aws-docs-url: https://docs.aws.amazon.com/lambda/latest/dg/welcome.html
 
-Service client for accessing Amazon Lambda.
-
-Using the Amazon Lambda API, you can manage your AWS Lambdas.
-
-You can find more information about Lambda at https://docs.aws.amazon.com/lambda/[the AWS Lambda website].
+AWS Lambda is a serverless compute service that runs your code without provisioning or managing servers.
+This client lets you create, configure, version and invoke functions, and manage their event source mappings.

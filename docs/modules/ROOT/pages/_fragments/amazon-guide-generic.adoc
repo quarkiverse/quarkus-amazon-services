@@ -15,6 +15,10 @@ endif::[]
 
 include::../_description/{docname}.adoc[]
 
+ifdef::aws-docs-url[]
+For more information, see {aws-docs-url}[the {service-name-uppercase} documentation].
+endif::[]
+
 ifndef::java-package[:java-package: {extension-name}]
 ifndef::main-class[:main-class: Quarkus{service-class-name}SyncResource]
 ifndef::main-path[:main-path: /sync]

@@ -1,3 +1,4 @@
-Amazon IAM Identity Center OpenID Connect (SSO OIDC) is a web service that enables a client (such as CLI or a native application) to register with IAM Identity Center. The service also enables the client to fetch the user’s access token upon successful authentication and authorization with IAM Identity Center.
+:aws-docs-url: https://docs.aws.amazon.com/singlesignon/latest/OIDCAPIReference/Welcome.html
 
-You can find more information about IAM Identity Center at https://aws.amazon.com/fr/iam/identity-center/[the Amazon IAM website].
+AWS IAM Identity Center OpenID Connect (OIDC) is a web service that lets a client, such as the AWS CLI or a native application, register with IAM Identity Center and get the access token of a user after the user signs in.
+The token is then used with the IAM Identity Center portal API, available in the AWS IAM Identity Center extension, to get AWS credentials.

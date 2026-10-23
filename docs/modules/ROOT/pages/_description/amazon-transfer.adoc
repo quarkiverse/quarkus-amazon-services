@@ -1,5 +1,4 @@
-Amazon Transfer Family is a fully managed service that enables file transfers directly into and out of Amazon S3 using SFTP, FTPS, and FTP protocols.
+:aws-docs-url: https://docs.aws.amazon.com/transfer/latest/userguide/what-is-aws-transfer-family.html
 
-You can find more information about the Transfer Family at https://aws.amazon.com/aws-transfer-family/[the Amazon Transfer Family website].
-
-You can use this extension to integrate Transfer Family capabilities in your Quarkus applications using the AWS SDK for Java 2.x.
+AWS Transfer Family is a fully managed service for transferring files into and out of Amazon S3 and Amazon EFS over SFTP, FTPS, FTP and AS2, and through browser-based web apps.
+This client lets you manage servers, users, connectors, AS2 profiles and agreements, web apps and managed workflows.

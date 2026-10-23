@@ -1,3 +1,5 @@
-AWS Payment Cryptography simplifies cryptography operations in your cloud-hosted payment applications. You can use AWS Payment Cryptography to create and manage keys.
+:aws-docs-url: https://docs.aws.amazon.com/payment-cryptography/latest/userguide/what-is.html
 
-You can find more information about Payment Cryptography at https://aws.amazon.com/payment-cryptography/[the AWS Payment Cryptography website].
+AWS Payment Cryptography is a managed service for the cryptographic operations used in payment processing.
+This client uses the control plane API to create, import, export, manage and delete keys and their aliases.
+To use these keys in cryptographic operations, use the AWS Payment Cryptography Data Plane extension.

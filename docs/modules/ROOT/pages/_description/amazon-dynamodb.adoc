@@ -4,8 +4,8 @@
 :main-class: FruitResource
 :main-path: /fruits
 :extra-config-reference: dynamodb-enhanced
+:aws-docs-url: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html
 
-DynamoDB is a scalable AWS managed *NoSQL* database.
-It supports both key-value and document data models, that enables to have a flexible schema for your data.
-This extension provides functionality that allows the client to communicate with the service when running in Quarkus.
-You can find more information about DynamoDB at https://aws.amazon.com/dynamodb/[the Amazon DynamoDB website].
+Amazon DynamoDB is a serverless, fully managed *NoSQL* database.
+It supports both key-value and document data models, which lets you have a flexible schema for your data.
+This client lets you manage tables and indexes, and read, write, query and scan items, including with transactions.

@@ -1,3 +1,5 @@
-Amazon Inspector automatically discovers workloads, such as Amazon EC2 instances, containers, and Lambda functions, and scans them for software vulnerabilities and unintended network exposure.
+:aws-docs-url: https://docs.aws.amazon.com/inspector/latest/user/what-is-inspector.html
 
-You can find more information about Inspector at https://aws.amazon.com/inspector/[the Amazon Inspector website].
+Amazon Inspector is a vulnerability management service that automatically discovers Amazon EC2 instances, container images in Amazon ECR and AWS Lambda functions, and continually scans them for software vulnerabilities and unintended network exposure.
+This client uses the Amazon Inspector API (inspector2) to activate scanning for accounts, manage findings, filters and reports, and check the scan coverage.
+It replaces the deprecated Amazon Inspector Classic extension.

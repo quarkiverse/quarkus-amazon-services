@@ -1,3 +1,7 @@
-Amazon Elastic Load Balancing automatically distributes incoming application traffic across multiple targets and virtual appliances in one or more Availability Zones (AZs).
+:aws-docs-url: https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/introduction.html
 
-You can find more information about Elastic Load Balancing at https://docs.aws.amazon.com/elasticloadbalancing/[the Amazon Elastic Load Balancing website].
+Elastic Load Balancing automatically distributes incoming traffic across multiple targets in one or more Availability Zones.
+This client uses the Elastic Load Balancing API version 2012-06-01, which only manages Classic Load Balancers.
+To manage Application, Network and Gateway Load Balancers, use the Elastic Load Balancing v2 extension.
+
+NOTE: Classic Load Balancers are the previous generation of load balancers, and AWS recommends to https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/migrate-classic-load-balancer.html[migrate to a current generation load balancer].

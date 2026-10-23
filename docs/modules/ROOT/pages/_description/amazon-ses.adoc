@@ -1,6 +1,8 @@
 :has-integration-test:
 :quickstart: amazon-ses-quickstart
 :solution-summary: The application built here allows sending text emails to the recipients that are verified on AWS SES.
+:aws-docs-url: https://docs.aws.amazon.com/ses/latest/dg/Welcome.html
 
-Amazon Simple Email Service (SES) is a flexible and highly-scalable email sending and receiving service.
-Using SES, you can send emails with any type of correspondence. You can find more information about SES at https://aws.amazon.com/ses/[the Amazon SES website].
+Amazon Simple Email Service (Amazon SES) is a cloud email service for sending and receiving email.
+This client uses the original SES API (v1), which you still need to manage email receiving, with receipt rules and filters.
+For sending, AWS recommends the SES API v2, available in the Amazon SES API v2 extension, as new sending features are only added there.

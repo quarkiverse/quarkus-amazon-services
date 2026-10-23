@@ -1,6 +1,6 @@
 :has-integration-test:
 :solution-summary: The application built here creates schedules that send a message to an SQS queue, and reads them back.
+:aws-docs-url: https://docs.aws.amazon.com/scheduler/latest/UserGuide/what-is-scheduler.html
 
-Amazon EventBridge Scheduler is a serverless scheduler that enables you to schedule tasks and events at scale.
-
-You can find more information about EventBridge Scheduler at https://aws.amazon.com/eventbridge/scheduler/[the Amazon EventBridge Scheduler website].
+Amazon EventBridge Scheduler is a serverless scheduler that lets you create, run and manage scheduled tasks at scale, invoking more than 270 AWS services.
+This client lets you manage schedules and schedule groups using cron, rate or one-time expressions, with flexible time windows and retry policies.
