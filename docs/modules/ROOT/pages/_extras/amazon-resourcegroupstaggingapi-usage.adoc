@@ -1,0 +1,91 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+In this example, we will create an application that tags AWS resources, finds them by tag and removes their tags.
+The Resource Groups Tagging API works on resources managed by other AWS services, identified by their ARN, such as the SQS queue created earlier.
+The example application will demonstrate the two programming models supported by the extension.
+
+Let's create a `org.acme.resourcegroupstaggingapi.QuarkusResourceGroupsTaggingApiSyncResource` that will provide an API to manage the tags using the synchronous client.
+
+[source,java]
+----
+package org.acme.resourcegroupstaggingapi;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+import org.jboss.resteasy.reactive.RestQuery;
+
+import software.amazon.awssdk.services.resourcegroupstaggingapi.ResourceGroupsTaggingApiClient;
+import software.amazon.awssdk.services.resourcegroupstaggingapi.model.FailureInfo;
+import software.amazon.awssdk.services.resourcegroupstaggingapi.model.ResourceTagMapping;
+import software.amazon.awssdk.services.resourcegroupstaggingapi.model.TagFilter;
+
+@Path("/sync")
+@Produces(MediaType.APPLICATION_JSON)
+public class QuarkusResourceGroupsTaggingApiSyncResource {
+
+    @Inject
+    ResourceGroupsTaggingApiClient client;
+
+    @POST
+    @Path("/tag")
+    public Map<String, String> tag(@RestQuery String arn, @RestQuery String key, @RestQuery String value) {
+        return errors(client.tagResources(req -> req.resourceARNList(arn).tags(Map.of(key, value)))
+                .failedResourcesMap());
+    }
+
+    @POST
+    @Path("/untag")
+    public Map<String, String> untag(@RestQuery String arn, @RestQuery String key) {
+        return errors(client.untagResources(req -> req.resourceARNList(arn).tagKeys(key))
+                .failedResourcesMap());
+    }
+
+    @GET
+    @Path("/resources")
+    public List<String> resources(@RestQuery String key, @RestQuery String value) {
+        return client.getResources(req -> req.tagFilters(tagFilter(key, value)))
+                .resourceTagMappingList().stream()
+                .map(ResourceTagMapping::resourceARN)
+                .toList();
+    }
+
+    @GET
+    @Path("/tag-keys")
+    public List<String> tagKeys() {
+        return client.getTagKeys().tagKeys();
+    }
+
+    @GET
+    @Path("/tag-values")
+    public List<String> tagValues(@RestQuery String key) {
+        return client.getTagValues(req -> req.key(key)).tagValues();
+    }
+
+    static TagFilter tagFilter(String key, String value) {
+        return value == null
+                ? TagFilter.builder().key(key).build()
+                : TagFilter.builder().key(key).values(value).build();
+    }
+
+    static Map<String, String> errors(Map<String, FailureInfo> failedResources) {
+        return failedResources.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().errorMessage()));
+    }
+}
+----
+The `tag` and `untag` endpoints return the resources that could not be updated, with their error message: an empty JSON object means that the operation succeeded.
+The `resources` endpoint returns the ARNs of the resources having the given tag key, and the given value when it is provided.
+
+NOTE: For brevity, the `resources`, `tag-keys` and `tag-values` endpoints only return the first page of results.
+Use the `getResourcesPaginator`, `getTagKeysPaginator` and `getTagValuesPaginator` methods of the client to iterate over all the pages.
