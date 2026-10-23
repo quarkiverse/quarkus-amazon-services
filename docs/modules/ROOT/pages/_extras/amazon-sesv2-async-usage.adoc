@@ -1,0 +1,43 @@
+:custom-async-usage:
+
+Create a `org.acme.sesv2.QuarkusSesV2AsyncResource` REST resource that will be similar to our `QuarkusSesV2SyncResource` but using an asynchronous programming model.
+
+[source,java]
+----
+package org.acme.sesv2;
+
+import io.smallrye.mutiny.Uni;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import org.acme.sesv2.model.Email;
+import software.amazon.awssdk.services.sesv2.SesV2AsyncClient;
+import software.amazon.awssdk.services.sesv2.model.SendEmailResponse;
+
+@Path("/async")
+@Produces(MediaType.TEXT_PLAIN)
+@Consumes(MediaType.APPLICATION_JSON)
+public class QuarkusSesV2AsyncResource {
+
+    @Inject
+    SesV2AsyncClient ses;
+
+    @POST
+    @Path("/email")
+    public Uni<String> send(Email data) {
+        return Uni.createFrom()
+            .completionStage(
+                ses.sendEmail(req -> req
+                    .fromEmailAddress(data.getFrom())
+                    .destination(d -> d.toAddresses(data.getTo()))
+                    .content(c -> c.simple(msg -> msg
+                        .subject(sub -> sub.data(data.getSubject()))
+                        .body(b -> b.text(txt -> txt.data(data.getBody())))))))
+            .onItem().transform(SendEmailResponse::messageId);
+    }
+}
+----
+We create `Uni` instances from the `CompletionStage` objects returned by the asynchronous SES V2 client, and then transform the emitted item.

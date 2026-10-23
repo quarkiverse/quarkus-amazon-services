@@ -1,0 +1,25 @@
+* Send an email with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XPOST -H"Content-type: application/json" http://localhost:8080/sync/email \
+    -d'{"from": "from-quarkus@example.com", "to": "to-quarkus@example.com", "subject": "Hello from Quarkus", "body": "Quarkus is awesome"}'
+----
+
+* Send an email with the asynchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XPOST -H"Content-type: application/json" http://localhost:8080/async/email \
+    -d'{"from": "from-quarkus@example.com", "to": "to-quarkus@example.com", "subject": "Hello from Quarkus", "body": "Quarkus is awesome"}'
+----
+
+The response is the message id returned by SES.
+Remember that the sender address must be verified, even on Floci, and that a local instance does not actually send any email.
+
+Floci keeps a copy of every email it accepts. To read them, call its `/_aws/ses` endpoint, on the port of the Floci container shown by the Dev Services card of the Dev UI, or on port `4566` if you started Floci manually:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:4566/_aws/ses
+----
