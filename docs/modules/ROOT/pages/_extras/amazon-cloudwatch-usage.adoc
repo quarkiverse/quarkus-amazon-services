@@ -2,95 +2,60 @@
 
 == Creating JSON REST service
 
-In this example, we will create an application that allows us listing the available metrics and push data for a specific metric with CloudWatch SDK using a RESTful API.
+In this example, we will create an application that pushes data points to a metric and lists the metrics of a namespace using a RESTful API.
 The example application will demonstrate the two programming models supported by the extension.
 
-Let's start with an abstract `org.acme.cloudwatch.QuarkusCloudWatchResource` class to provide the common functionality we will need for both the synchronous and asynchronous exposures.
+Let's start with the synchronous implementation in the `org.acme.cloudwatch.QuarkusCloudWatchSyncResource` class.
 
 [source,java]
 ----
 package org.acme.cloudwatch;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import software.amazon.awssdk.services.cloudwatch.model.ListMetricsRequest;
-import software.amazon.awssdk.services.cloudwatch.model.MetricDatum;
-import software.amazon.awssdk.services.cloudwatch.model.PutMetricDataRequest;
 
 import java.time.Instant;
+import java.util.stream.Collectors;
 
-public abstract QuarkusCloudWatchResource {
-
-    protected ListMetricsRequest generateListMetricsRequest(String namespace) {
-        return ListMetricsRequest.builder().namespace(namespace).build(); <1>
-    }
-
-
-    protected PutMetricDataRequest generatePutMetricRequest(String namespace, String metricName) {
-        return PutMetricDataRequest.builder()
-                .namespace(namespace)
-                .metricData(MetricDatum.builder()
-                        .metricName(metricName)
-                        .timestamp(Instant.now())
-                        .counts(1.0)
-                        .unit("Invocation")
-                        .build())
-                .build(); <2>
-    }
-
-
-}
-
-----
-
-<1> Generate a request to list all metrics with a specific namespace
-<2> Generate a request to put data for a specific metric within a namespace
-
-Now, we can extend the class and create the synchronous implementation in the `org.acme.cloudwatch.QuarkusCloudWatchSyncResource` class.
-
-[source,java]
-----
-package org.acme.cloudwatch;
-
-
-import io.quarkus.logging.Log;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+
 import software.amazon.awssdk.services.cloudwatch.CloudWatchClient;
 import software.amazon.awssdk.services.cloudwatch.model.Metric;
-
-import java.util.List;
+import software.amazon.awssdk.services.cloudwatch.model.StandardUnit;
 
 @Path("/sync")
-public class QuarkusCloudWatchSyncResource  extends QuarkusCloudWatchResource {
+@Produces(MediaType.TEXT_PLAIN)
+public class QuarkusCloudWatchSyncResource {
+
     @Inject <1>
     CloudWatchClient client;
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String listMetricsNames(@QueryParam("namespace") String namespace) {
-
-        Log.info("List Metrics for " + namespace);
-
-        List<String> listOfMetrics = client.listMetricsPaginator(generateListMetricsRequest(namespace))
-                .stream()
-                .flatMap(value -> value.metrics().stream())
-                .map(Metric::metricName).toList();
-
-        return String.join(", ", listOfMetrics);
+    @PUT
+    public String putMetricData(@FormParam("namespace") String namespace, @FormParam("name") String name) {
+        client.putMetricData(r -> r.namespace(namespace) <2>
+                .metricData(d -> d.metricName(name)
+                        .timestamp(Instant.now())
+                        .value(1.0)
+                        .unit(StandardUnit.COUNT)));
+        return "OK";
     }
 
-    @PUT
-    @Produces(MediaType.TEXT_PLAIN)
-    public String createMetric(@FormParam("namespace") String namespace,
-                               @FormParam("name") String name) {
-        Log.info("Put Metrics for " + namespace + "." + name);
-        client.putMetricData(generatePutMetricRequest(namespace, name));
-        return "OK";
+    @GET
+    public String listMetrics(@QueryParam("namespace") String namespace) {
+        return client.listMetricsPaginator(r -> r.namespace(namespace)) <3>
+                .metrics()
+                .stream()
+                .map(Metric::metricName)
+                .distinct()
+                .collect(Collectors.joining(", "));
     }
 }
 ----
 
 <1> Inject the client provided by the amazon-cloudwatch extension
-
-Using the Amazon CloudWatch SDK, we can get & push metric data to CloudWatch.
+<2> Push a data point with a value of `1` to the metric
+<3> List the metrics of the namespace, fetching all the pages of results

@@ -1,5 +1,5 @@
 :has-integration-test:
-:solution-summary: The application built here allows listing the available metrics and push data for a specific metric for the provided credentials.
+:solution-summary: The application built here pushes data points to a CloudWatch metric and lists the metrics of a namespace.
 
 AWS CloudWatch enables you to publish, monitor, and manage various metrics, as well as configure alarm actions based on data from metrics.
 

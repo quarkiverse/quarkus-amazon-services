@@ -6,13 +6,14 @@ Create a `org.acme.acm.QuarkusAcmAsyncResource` REST resource that will be simil
 ----
 package org.acme.acm;
 
-import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+
+import io.smallrye.mutiny.Uni;
 import software.amazon.awssdk.services.acm.AcmAsyncClient;
 import software.amazon.awssdk.services.acm.model.RequestCertificateResponse;
 
@@ -24,12 +25,14 @@ public class QuarkusAcmAsyncResource {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public Uni<String> importCertificate(@QueryParam("domainName") String domainName) {
+    public Uni<String> requestCertificate(@QueryParam("domainName") String domainName) {
         return Uni.createFrom().completionStage(acm
                 .requestCertificate(r -> r.domainName(domainName))
-                .thenApply(RequestCertificateResponse::certificateArn));
+                .thenApply(RequestCertificateResponse::certificateArn)
+                .thenCompose(arn -> acm.describeCertificate(r -> r.certificateArn(arn)))
+                .thenApply(response -> response.certificate().domainName()));
     }
 }
 ----
 
-Note that the `AcmAsyncClient` behaves just like the `AcmClient`, but returns `CompletionStage` objects which we use to create `Uni` instances, and then transform the emitted item.
+Note that the `AcmAsyncClient` behaves just like the `AcmClient`, but returns `CompletionStage` objects which we use to create `Uni` instances.

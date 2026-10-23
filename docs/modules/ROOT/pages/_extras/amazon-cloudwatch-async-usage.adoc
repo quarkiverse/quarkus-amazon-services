@@ -6,58 +6,50 @@ Create a `org.acme.cloudwatch.QuarkusCloudWatchAsyncResource` REST resource that
 ----
 package org.acme.cloudwatch;
 
-import io.quarkus.logging.Log;
-import io.smallrye.mutiny.Multi;
-import io.smallrye.mutiny.Uni;
+import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+
+import io.smallrye.mutiny.Uni;
 import software.amazon.awssdk.services.cloudwatch.CloudWatchAsyncClient;
-import software.amazon.awssdk.services.cloudwatch.model.Metric;
-import software.amazon.awssdk.services.cloudwatch.paginators.ListMetricsPublisher;
+import software.amazon.awssdk.services.cloudwatch.model.StandardUnit;
 
 @Path("/async")
-public class QuarkusCloudWatchAsyncResource extends QuarkusCloudWatchResource {
+@Produces(MediaType.TEXT_PLAIN)
+public class QuarkusCloudWatchAsyncResource {
 
     @Inject
     CloudWatchAsyncClient client;
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public Uni<String> listMetricsNames(@QueryParam("namespace") String namespace) {
-
-        return Multi.createFrom().<Metric>emitter((emitter) -> {
-
-                    Log.info("List Metrics for " + namespace);
-
-                    ListMetricsPublisher paginator = client
-                            .listMetricsPaginator(generateListMetricsRequest(namespace));
-
-                    paginator.doAfterOnComplete(emitter::complete)
-                            .doAfterOnError(emitter::fail)
-                            .subscribe(response -> response.metrics().forEach(emitter::emit));
-
-
-                }).map(Metric::metricName)
-                .collect().asList()
-                .map(value -> String.join(", ", value));
-
-
+    @PUT
+    public Uni<String> putMetricData(@FormParam("namespace") String namespace, @FormParam("name") String name) {
+        return Uni.createFrom().completionStage(client.putMetricData(r -> r.namespace(namespace)
+                .metricData(d -> d.metricName(name)
+                        .timestamp(Instant.now())
+                        .value(1.0)
+                        .unit(StandardUnit.COUNT))))
+                .map(response -> "OK");
     }
 
-    @PUT
-    @Produces(MediaType.TEXT_PLAIN)
-    public Uni<String> createMetric(@FormParam("namespace") String namespace,
-                                    @FormParam("name") String name) {
-
-        Log.info("Put Metrics for " + namespace + "." + name);
-        return Uni.createFrom().completionStage(
-                client.putMetricData(generatePutMetricRequest(namespace, name))
-        ).map(value -> "OK");
-
-
+    @GET
+    public Uni<String> listMetrics(@QueryParam("namespace") String namespace) {
+        Set<String> names = new LinkedHashSet<>();
+        return Uni.createFrom().completionStage(client.listMetricsPaginator(r -> r.namespace(namespace))
+                .metrics()
+                .subscribe(metric -> names.add(metric.metricName())))
+                .map(ignored -> String.join(", ", names));
     }
 }
 ----
 
-Note that the `CloudWatchAsyncClient` behaves just like the `CloudWatchClient`, but returns `CompletionStage` objects which we use to create `Uni`/`Multi` instances, and then transform the emitted item.
+Note that the `CloudWatchAsyncClient` behaves just like the `CloudWatchClient`, but returns `CompletionStage` objects which we use to create `Uni` instances.
+The asynchronous paginator emits the metrics of all the pages to the consumer passed to `subscribe`, and completes the returned `CompletableFuture` after the last page.
