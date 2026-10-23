@@ -1,0 +1,78 @@
+:custom-async-usage:
+
+Create a `org.acme.resourcegroupstaggingapi.QuarkusResourceGroupsTaggingApiAsyncResource` REST resource that will be similar to our `QuarkusResourceGroupsTaggingApiSyncResource` but using an asynchronous programming model.
+It reuses the `tagFilter` and `errors` helper methods of the synchronous resource.
+
+[source,java]
+----
+package org.acme.resourcegroupstaggingapi;
+
+import static org.acme.resourcegroupstaggingapi.QuarkusResourceGroupsTaggingApiSyncResource.errors;
+import static org.acme.resourcegroupstaggingapi.QuarkusResourceGroupsTaggingApiSyncResource.tagFilter;
+
+import java.util.List;
+import java.util.Map;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+import org.jboss.resteasy.reactive.RestQuery;
+
+import io.smallrye.mutiny.Uni;
+import software.amazon.awssdk.services.resourcegroupstaggingapi.ResourceGroupsTaggingApiAsyncClient;
+import software.amazon.awssdk.services.resourcegroupstaggingapi.model.GetTagKeysResponse;
+import software.amazon.awssdk.services.resourcegroupstaggingapi.model.GetTagValuesResponse;
+import software.amazon.awssdk.services.resourcegroupstaggingapi.model.ResourceTagMapping;
+
+@Path("/async")
+@Produces(MediaType.APPLICATION_JSON)
+public class QuarkusResourceGroupsTaggingApiAsyncResource {
+
+    @Inject
+    ResourceGroupsTaggingApiAsyncClient client;
+
+    @POST
+    @Path("/tag")
+    public Uni<Map<String, String>> tag(@RestQuery String arn, @RestQuery String key, @RestQuery String value) {
+        return Uni.createFrom()
+                .completionStage(client.tagResources(req -> req.resourceARNList(arn).tags(Map.of(key, value))))
+                .onItem().transform(response -> errors(response.failedResourcesMap()));
+    }
+
+    @POST
+    @Path("/untag")
+    public Uni<Map<String, String>> untag(@RestQuery String arn, @RestQuery String key) {
+        return Uni.createFrom()
+                .completionStage(client.untagResources(req -> req.resourceARNList(arn).tagKeys(key)))
+                .onItem().transform(response -> errors(response.failedResourcesMap()));
+    }
+
+    @GET
+    @Path("/resources")
+    public Uni<List<String>> resources(@RestQuery String key, @RestQuery String value) {
+        return Uni.createFrom().completionStage(client.getResources(req -> req.tagFilters(tagFilter(key, value))))
+                .onItem().transform(response -> response.resourceTagMappingList().stream()
+                        .map(ResourceTagMapping::resourceARN)
+                        .toList());
+    }
+
+    @GET
+    @Path("/tag-keys")
+    public Uni<List<String>> tagKeys() {
+        return Uni.createFrom().completionStage(client.getTagKeys())
+                .onItem().transform(GetTagKeysResponse::tagKeys);
+    }
+
+    @GET
+    @Path("/tag-values")
+    public Uni<List<String>> tagValues(@RestQuery String key) {
+        return Uni.createFrom().completionStage(client.getTagValues(req -> req.key(key)))
+                .onItem().transform(GetTagValuesResponse::tagValues);
+    }
+}
+----
+We create `Uni` instances from the `CompletionStage` objects returned by the asynchronous Resource Groups Tagging API client, and then transform the emitted item.

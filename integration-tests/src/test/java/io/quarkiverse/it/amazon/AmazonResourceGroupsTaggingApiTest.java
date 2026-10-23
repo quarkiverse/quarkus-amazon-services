@@ -1,6 +1,8 @@
 package io.quarkiverse.it.amazon;
 
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.startsWith;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,13 +13,16 @@ import io.restassured.RestAssured;
 public class AmazonResourceGroupsTaggingApiTest {
 
     @Test
-    public void testApiGatewayAsync() {
+    public void testResourceGroupsTaggingApiAsync() {
         RestAssured.when().get("/test/resourcegroupstaggingapi/async").then()
-                .body(is("The resource belongs to another account."));
+                .statusCode(200)
+                .body(allOf(startsWith("arn:aws:sqs:"), endsWith(":quarkus-rgta-async-queue")));
     }
 
     @Test
-    public void testApiGatewaySync() {
-        RestAssured.when().get("/test/resourcegroupstaggingapi/sync").then().body(is("AccessDeniedException"));
+    public void testResourceGroupsTaggingApiSync() {
+        RestAssured.when().get("/test/resourcegroupstaggingapi/sync").then()
+                .statusCode(200)
+                .body(allOf(startsWith("arn:aws:sqs:"), endsWith(":quarkus-rgta-sync-queue")));
     }
 }

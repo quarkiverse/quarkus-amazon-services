@@ -1,0 +1,38 @@
+* Tag the resource created earlier with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XPOST "http://localhost:8080/sync/tag?arn=$RESOURCE_ARN&key=team&value=quarkus"
+----
+
+It returns `{}`: no resource failed to be tagged.
+
+* Find the resources having the `team` tag with the `quarkus` value:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl "http://localhost:8080/sync/resources?key=team&value=quarkus"
+----
+
+It returns the ARN of the queue, for example `["arn:aws:sqs:us-east-1:000000000000:quarkus-tagging"]`.
+
+* List the tag keys and the values of the `team` tag:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync/tag-keys
+curl "http://localhost:8080/sync/tag-values?key=team"
+----
+
+They return `["team"]` and `["quarkus"]`, along with the tags of the other resources of your account, if any.
+
+* Remove the `team` tag from the resource:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XPOST "http://localhost:8080/sync/untag?arn=$RESOURCE_ARN&key=team"
+----
+
+It returns `{}`, and the `resources` endpoint no longer returns the queue.
+
+* Do the same with the asynchronous client, using the `/async` path instead of `/sync`.
