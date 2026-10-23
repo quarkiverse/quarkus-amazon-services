@@ -8,10 +8,10 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 
 @QuarkusTest
-public class AmazonLocalStackTest {
+public class AmazonRedshiftTest {
 
     @Test
-    public void testSesAsync() {
+    public void testRedshift() {
         RestAssured.when().get("/test/redshift/test").then().body(any(String.class));
     }
 }

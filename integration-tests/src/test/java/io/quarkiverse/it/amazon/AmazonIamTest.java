@@ -23,6 +23,6 @@ public class AmazonIamTest {
 
     @Test
     public void testAccountSync() {
-        RestAssured.when().get("/test/iam/account").then().body(equalTo("000000000000:112233445566"));
+        RestAssured.when().get("/test/iam/account").then().body(equalTo("named=true, default=false"));
     }
 }

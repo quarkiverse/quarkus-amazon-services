@@ -1,4 +1,4 @@
-package io.quarkiverse.it.amazon.localstack;
+package io.quarkiverse.it.amazon.redshift;
 
 import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 
@@ -21,7 +21,7 @@ public class RedshiftResource {
     @Path("test")
     @Produces(TEXT_PLAIN)
     public String testSync() {
-        LOG.info("Testing additional service for localstack");
+        LOG.info("Testing additional service for floci");
 
         return endPointOverride;
     }

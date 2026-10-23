@@ -12,11 +12,12 @@ public class AmazonResourceGroupsTaggingApiTest {
 
     @Test
     public void testApiGatewayAsync() {
-        RestAssured.when().get("/test/resourcegroupstaggingapi/async").then().body(is("Service not yet supported"));
+        RestAssured.when().get("/test/resourcegroupstaggingapi/async").then()
+                .body(is("The resource belongs to another account."));
     }
 
     @Test
     public void testApiGatewaySync() {
-        RestAssured.when().get("/test/resourcegroupstaggingapi/sync").then().body(is("InternalServiceException"));
+        RestAssured.when().get("/test/resourcegroupstaggingapi/sync").then().body(is("AccessDeniedException"));
     }
 }

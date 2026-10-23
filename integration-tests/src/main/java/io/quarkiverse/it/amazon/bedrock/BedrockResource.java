@@ -25,8 +25,7 @@ public class BedrockResource {
             final String result = list.stream().map(FoundationModelSummary::modelId).collect(Collectors.joining(","));
             return Response.ok(result).build();
         } catch (BedrockException e) {
-            if (e.getMessage().contains("501")) {
-                // pro feature
+            if (isNotImplemented(e)) {
                 return Response.status(501).build();
             }
         }
@@ -41,11 +40,20 @@ public class BedrockResource {
                         .map(FoundationModelSummary::modelId)
                         .collect(Collectors.joining(","))).build())
                 .exceptionally(e -> {
-                    if (e.getMessage().contains("501")) {
-                        // pro feature
+                    if (isNotImplemented(e)) {
                         return Response.status(501).build();
                     }
                     return Response.status(500).build();
                 });
+    }
+
+    private static boolean isNotImplemented(Throwable e) {
+        for (Throwable cause = e; cause != null; cause = cause.getCause()) {
+            if (cause instanceof BedrockException bedrockException
+                    && (bedrockException.statusCode() == 501 || bedrockException.statusCode() == 404)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

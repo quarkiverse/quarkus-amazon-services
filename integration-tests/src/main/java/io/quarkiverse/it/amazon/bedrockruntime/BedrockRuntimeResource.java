@@ -25,8 +25,7 @@ public class BedrockRuntimeResource {
             final String result = list.stream().map(AsyncInvokeSummary::modelArn).collect(Collectors.joining(","));
             return Response.ok(result).build();
         } catch (BedrockRuntimeException e) {
-            if (e.getMessage().contains("501")) {
-                // pro feature
+            if (isNotImplemented(e)) {
                 return Response.status(501).build();
             }
         }
@@ -41,11 +40,20 @@ public class BedrockRuntimeResource {
                         .map(AsyncInvokeSummary::modelArn)
                         .collect(Collectors.joining(","))).build())
                 .exceptionally(e -> {
-                    if (e.getMessage().contains("501")) {
-                        // pro feature
+                    if (isNotImplemented(e)) {
                         return Response.status(501).build();
                     }
                     return Response.status(500).build();
                 });
+    }
+
+    private static boolean isNotImplemented(Throwable e) {
+        for (Throwable cause = e; cause != null; cause = cause.getCause()) {
+            if (cause instanceof BedrockRuntimeException bedrockRuntimeException
+                    && (bedrockRuntimeException.statusCode() == 501 || bedrockRuntimeException.statusCode() == 404)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

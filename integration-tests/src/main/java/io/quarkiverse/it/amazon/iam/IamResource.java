@@ -17,7 +17,6 @@ import software.amazon.awssdk.services.iam.IamAsyncClient;
 import software.amazon.awssdk.services.iam.IamClient;
 import software.amazon.awssdk.services.iam.model.CreateUserRequest;
 import software.amazon.awssdk.services.iam.model.CreateUserResponse;
-import software.amazon.awssdk.services.iam.model.GetUserResponse;
 
 @Path("/iam")
 public class IamResource {
@@ -59,12 +58,15 @@ public class IamResource {
     @GET
     @Path("account")
     @Produces(TEXT_PLAIN)
-    public String testCustomSync() throws InterruptedException, ExecutionException {
+    public String testCustomSync() {
         LOG.info("Testing Named Sync IAM client");
 
-        GetUserResponse user = iamClient.getUser();
-        GetUserResponse userNamed = iamClientNamedCustom.getUser();
+        iamClientNamedCustom.createUser(r -> r.userName("quarkus-custom-account"));
+        boolean namedSeesIt = iamClientNamedCustom.listUsers().users().stream()
+                .anyMatch(u -> "quarkus-custom-account".equals(u.userName()));
+        boolean defaultSeesIt = iamClient.listUsers().users().stream()
+                .anyMatch(u -> "quarkus-custom-account".equals(u.userName()));
 
-        return user.user().userId() + ":" + userNamed.user().userId();
+        return "named=" + namedSeesIt + ", default=" + defaultSeesIt;
     }
 }
