@@ -13,7 +13,7 @@ quarkus.s3.devservices.buckets=${bucket.name}
 ----
 
 Floci works with the default addressing style of the S3 client, so a manual local instance needs no extra property.
-If you use LocalStack instead, also enable path-style access, because S3 is then not reached through the AWS domain names:
+If your local stack does not support the virtual-hosted-style addressing of the S3 client, enable path-style access:
 
 [source,properties]
 ----

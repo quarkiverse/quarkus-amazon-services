@@ -1,4 +1,4 @@
-:aws-stack: floci
+:has-integration-test:
 
 Amazon EventBridge Scheduler is a serverless scheduler that enables you to schedule tasks and events at scale.
 

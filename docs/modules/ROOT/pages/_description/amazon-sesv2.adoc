@@ -1,4 +1,2 @@
-:aws-stack: floci
-
 Amazon Simple Email Service (SES) is a flexible and highly-scalable email sending and receiving service.
 Using SES, you can send emails with any type of correspondence. You can find more information about SES at https://aws.amazon.com/ses/[the Amazon SES website].

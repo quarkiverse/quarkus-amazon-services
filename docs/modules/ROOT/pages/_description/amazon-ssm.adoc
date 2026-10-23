@@ -1,4 +1,4 @@
-:aws-stack: floci
+:has-integration-test:
 :quickstart: amazon-ssm-quickstart
 :solution-summary: The application built here allows to store and retrieve parameters using the SSM parameter store.
 

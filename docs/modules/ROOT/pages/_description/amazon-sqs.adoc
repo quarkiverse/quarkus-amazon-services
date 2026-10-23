@@ -1,4 +1,4 @@
-:aws-stack: floci
+:has-integration-test:
 :quickstart: amazon-sqs-quickstart
 :solution-summary: The application built here allows shooting an elementary particles (quarks) into a `quarkus` queue of the AWS SQS. Additionally, we create a resource that allows receiving those quarks from the `quarkus` queue in the order they were sent.
 :main-class: QuarksCannonSyncResource

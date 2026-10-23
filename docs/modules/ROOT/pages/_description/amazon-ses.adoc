@@ -1,4 +1,4 @@
-:aws-stack: floci
+:has-integration-test:
 :quickstart: amazon-ses-quickstart
 :solution-summary: The application built here allows sending text emails to the recipients that are verified on AWS SES.
 

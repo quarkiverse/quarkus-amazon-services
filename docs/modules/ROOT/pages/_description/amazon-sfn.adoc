@@ -1,5 +1,4 @@
-:aws-stack: localstack
-:localstack-service: stepfunctions
+:has-integration-test:
 
 Amazon AWS Step Functions (SFN) is a cloud service that enables you to coordinate and automate the execution of multiple AWS services in a serverless workflow.
 It allows you to design, visualize, and execute workflows using a state machine architecture.

@@ -9,7 +9,7 @@ Dev Services for Amazon Services supports multiple stack providers:
 * **Floci**: A lightweight AWS service mock library built with Quarkus. It is the default stack provider. Not all services are supported yet, but it is actively developed and new services are added regularly.
 * **MiniStack**: An alternative stack provider that runs real services in a containerized environment.
 * **Moto**: A lightweight AWS service mock library, using the motoserver container (historically used for Cognito User Pools)
-* **LocalStack**: The industry standard for local AWS stack emulation. This stack is supported till version 4.13 (latest free community version).
+* **LocalStack**: An alternative stack provider, supported up to version 4.13 (latest free community version).
 
 [WARNING]
 ====
@@ -58,16 +58,16 @@ quarkus.aws.devservices.moto.shared=false
 quarkus.aws.devservices.localstack.shared=false
 ----
 
-In test mode, sharing is always disabled. Containers are identified by the `quarkus-dev-service-{stack}` label, where `{stack}` is the provider name (`localstack`, `ministack`, `moto`, or `floci`). Each stack provider uses its own name by default. To use multiple shared containers for the same provider, set its `service-name` property (for example, `quarkus.aws.devservices.localstack.service-name`).
+In test mode, sharing is always disabled. Containers are identified by the `quarkus-dev-service-{stack}` label, where `{stack}` is the provider name (`floci`, `ministack`, `moto`, or `localstack`). Each stack provider uses its own name by default. To use multiple shared containers for the same provider, set its `service-name` property (for example, `quarkus.aws.devservices.floci.service-name`).
 
 == Configuring the image
 
 Dev Services for Amazon Services uses different default images depending on the stack provider:
 
-* **LocalStack**: `localstack/localstack:4.13`
+* **Floci**: `floci/floci:latest` (latest version)
 * **MiniStack**: `ministackorg/ministack:latest` (not a fixed version as MiniStack is still in early development)
 * **Moto**: `motoserver/moto:latest` (latest version)
-* **Floci**: `floci/floci:latest` (latest version)
+* **LocalStack**: `localstack/localstack:4.13`
 
 You can configure the image and version using the stack-specific properties:
 
@@ -122,29 +122,29 @@ Dev Services for Amazon Services can support specific properties sent to the con
 # Global Floci configuration
 quarkus.aws.devservices.floci.container-properties.FLOCI_SERVICES_S3_ENFORCE_AUTH=true
 
-# Global LocalStack configuration
-quarkus.aws.devservices.localstack.container-properties.START_WEB=0
-
 # Global MiniStack configuration
 quarkus.aws.devservices.ministack.container-properties.SOME_PROPERTY=value
 
 # Global Moto configuration
 quarkus.aws.devservices.moto.container-properties.SOME_MOTO_PROPERTY=value
 
+# Global LocalStack configuration
+quarkus.aws.devservices.localstack.container-properties.START_WEB=0
+
 # Per-service Floci configuration (overrides global)
 quarkus.s3.devservices.floci.container-properties.FLOCI_SERVICES_S3_ENFORCE_AUTH=true
-
-# Per-service LocalStack configuration (overrides global)
-quarkus.dynamodb.devservices.localstack.container-properties.DYNAMODB_HEAP_SIZE=1G
 
 # Per-service MiniStack configuration (overrides global)
 quarkus.dynamodb.devservices.ministack.container-properties.SOME_PROPERTY=value
 
 # Per-service Moto configuration (overrides global)
 quarkus.dynamodb.devservices.moto.container-properties.SOME_MOTO_PROPERTY=value
+
+# Per-service LocalStack configuration (overrides global)
+quarkus.dynamodb.devservices.localstack.container-properties.DYNAMODB_HEAP_SIZE=1G
 ----
 
-Refer to the Floci documentation for Floci configuration: https://github.com/floci-io/floci. Refer to the LocalStack documentation for LocalStack configuration: https://docs.localstack.cloud/aws/capabilities/config/configuration/. For MiniStack, refer to its documentation. For Moto, refer to the Moto documentation. Note that not all environment variables are supported and some may affect Dev Services for Amazon Services.
+Refer to the Floci documentation for Floci configuration: https://github.com/floci-io/floci. For MiniStack, refer to its documentation. For Moto, refer to the Moto documentation. Refer to the LocalStack documentation for LocalStack configuration: https://docs.localstack.cloud/aws/capabilities/config/configuration/. Note that not all environment variables are supported and some may affect Dev Services for Amazon Services.
 
 == Additional services
 
@@ -156,13 +156,13 @@ To start additional services for which a Quarkus extension does not exist or is 
 quarkus.aws.devservices.floci.additional-services."kinesis".enabled=true
 quarkus.aws.devservices.floci.additional-services."redshift".enabled=true
 
-# Global LocalStack configuration
-quarkus.aws.devservices.localstack.additional-services."kinesis".enabled=true
-quarkus.aws.devservices.localstack.additional-services."redshift".enabled=true
-
 # Global MiniStack configuration
 quarkus.aws.devservices.ministack.additional-services."kinesis".enabled=true
 quarkus.aws.devservices.ministack.additional-services."redshift".enabled=true
+
+# Global LocalStack configuration
+quarkus.aws.devservices.localstack.additional-services."kinesis".enabled=true
+quarkus.aws.devservices.localstack.additional-services."redshift".enabled=true
 ----
 
 The key is the name of the service to enable and must be a valid service name for the chosen stack provider.
@@ -177,10 +177,6 @@ You can configure init scripts to be executed during stack startup:
 quarkus.aws.devservices.floci.init-scripts-folder=src/test/resources/floci-init
 quarkus.aws.devservices.floci.init-scripts-classpath=init-scripts
 
-# Global LocalStack configuration
-quarkus.aws.devservices.localstack.init-scripts-folder=src/test/resources/localstack-init
-quarkus.aws.devservices.localstack.init-scripts-classpath=init-scripts
-
 # Global MiniStack configuration
 quarkus.aws.devservices.ministack.init-scripts-folder=src/test/resources/ministack-init
 quarkus.aws.devservices.ministack.init-scripts-classpath=init-scripts
@@ -189,17 +185,21 @@ quarkus.aws.devservices.ministack.init-scripts-classpath=init-scripts
 quarkus.aws.devservices.moto.init-scripts-folder=src/test/resources/moto-init
 quarkus.aws.devservices.moto.init-scripts-classpath=init-scripts
 
+# Global LocalStack configuration
+quarkus.aws.devservices.localstack.init-scripts-folder=src/test/resources/localstack-init
+quarkus.aws.devservices.localstack.init-scripts-classpath=init-scripts
+
 # Per-service Floci configuration (overrides global)
 quarkus.dynamodb.devservices.floci.init-scripts-folder=src/test/resources/dynamodb-init
-
-# Per-service LocalStack configuration (overrides global)
-quarkus.dynamodb.devservices.localstack.init-scripts-folder=src/test/resources/dynamodb-init
 
 # Per-service MiniStack configuration (overrides global)
 quarkus.dynamodb.devservices.ministack.init-scripts-folder=src/test/resources/dynamodb-init
 
 # Per-service Moto configuration (overrides global)
 quarkus.dynamodb.devservices.moto.init-scripts-folder=src/test/resources/dynamodb-init
+
+# Per-service LocalStack configuration (overrides global)
+quarkus.dynamodb.devservices.localstack.init-scripts-folder=src/test/resources/dynamodb-init
 ----
 
 The `init-scripts-folder` property points to a folder containing init scripts, while `init-scripts-classpath` points to a classpath resource. The folder-based configuration takes precedence.

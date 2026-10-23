@@ -1,5 +1,4 @@
-:aws-stack: localstack
-:localstack-service: lambda
+:has-integration-test:
 
 Service client for accessing Amazon Lambda.
 
