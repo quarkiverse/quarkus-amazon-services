@@ -1,0 +1,17 @@
+* Create a cluster with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -X POST "http://localhost:8080/sync?name=quarkus-cluster"
+----
+
+The endpoint returns the ARN of the cluster.
+
+* List the clusters:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync
+----
+
+* Replace `sync` with `async` to use the asynchronous client.

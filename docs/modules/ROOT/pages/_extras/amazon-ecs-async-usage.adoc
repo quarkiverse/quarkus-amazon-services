@@ -1,0 +1,44 @@
+:custom-async-usage:
+
+Create a `org.acme.ecs.QuarkusEcsAsyncResource` REST resource that will be similar to our `QuarkusEcsSyncResource` but using an asynchronous programming model.
+
+[source,java]
+----
+package org.acme.ecs;
+
+import java.util.List;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import io.smallrye.mutiny.Uni;
+import software.amazon.awssdk.services.ecs.EcsAsyncClient;
+
+@Path("/async")
+public class QuarkusEcsAsyncResource {
+
+    @Inject
+    EcsAsyncClient ecs;
+
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public Uni<String> createCluster(@QueryParam("name") String name) {
+        return Uni.createFrom().completionStage(ecs.createCluster(r -> r.clusterName(name)))
+                .map(response -> response.cluster().clusterArn());
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<List<String>> listClusters() {
+        return Uni.createFrom().completionStage(ecs.listClusters())
+                .map(response -> response.clusterArns());
+    }
+}
+----
+
+Note that the `EcsAsyncClient` behaves just like the `EcsClient`, but returns `CompletionStage` objects which we use to create `Uni` instances, and then transform the emitted item.

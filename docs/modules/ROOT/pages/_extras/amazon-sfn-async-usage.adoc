@@ -1,0 +1,53 @@
+:custom-async-usage:
+
+Create a `org.acme.sfn.QuarkusSfnAsyncResource` REST resource that will be similar to our `QuarkusSfnSyncResource` but using an asynchronous programming model.
+
+[source,java]
+----
+package org.acme.sfn;
+
+import java.util.List;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import io.smallrye.mutiny.Uni;
+import software.amazon.awssdk.services.sfn.SfnAsyncClient;
+import software.amazon.awssdk.services.sfn.model.StateMachineListItem;
+
+@Path("/async")
+public class QuarkusSfnAsyncResource {
+
+    @Inject
+    SfnAsyncClient sfn;
+
+    @ConfigProperty(name = "state-machine.role-arn")
+    String roleArn;
+
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public Uni<String> createStateMachine(@QueryParam("name") String name) {
+        return Uni.createFrom().completionStage(sfn.createStateMachine(r -> r.name(name)
+                .roleArn(roleArn)
+                .definition(QuarkusSfnSyncResource.HELLO_WORLD)))
+                .map(response -> response.stateMachineArn());
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<List<String>> listStateMachines() {
+        return Uni.createFrom().completionStage(sfn.listStateMachines())
+                .map(response -> response.stateMachines().stream().map(StateMachineListItem::name).toList());
+    }
+}
+----
+
+Note that the `SfnAsyncClient` behaves just like the `SfnClient`, but returns `CompletionStage` objects which we use to create `Uni` instances, and then transform the emitted item.
+This asynchronous version only returns the first page of state machines.

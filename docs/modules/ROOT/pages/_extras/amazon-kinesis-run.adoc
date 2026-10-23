@@ -1,0 +1,17 @@
+* Create a stream with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -X POST "http://localhost:8080/sync?name=quarkus-stream"
+----
+
+* Get the status of the stream:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync/quarkus-stream
+----
+
+The endpoint returns `ACTIVE` once the stream is ready.
+
+* Replace `sync` with `async` to use the asynchronous client.

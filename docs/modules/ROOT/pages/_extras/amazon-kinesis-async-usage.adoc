@@ -1,0 +1,43 @@
+:custom-async-usage:
+
+Create a `org.acme.kinesis.QuarkusKinesisAsyncResource` REST resource that will be similar to our `QuarkusKinesisSyncResource` but using an asynchronous programming model.
+
+[source,java]
+----
+package org.acme.kinesis;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import io.smallrye.mutiny.Uni;
+import software.amazon.awssdk.services.kinesis.KinesisAsyncClient;
+
+@Path("/async")
+@Produces(MediaType.TEXT_PLAIN)
+public class QuarkusKinesisAsyncResource {
+
+    @Inject
+    KinesisAsyncClient kinesis;
+
+    @POST
+    public Uni<String> createStream(@QueryParam("name") String name) {
+        return Uni.createFrom().completionStage(kinesis.createStream(r -> r.streamName(name).shardCount(1)))
+                .map(response -> "OK");
+    }
+
+    @GET
+    @Path("/{name}")
+    public Uni<String> describeStream(@PathParam("name") String name) {
+        return Uni.createFrom().completionStage(kinesis.describeStreamSummary(r -> r.streamName(name)))
+                .map(response -> response.streamDescriptionSummary().streamStatusAsString());
+    }
+}
+----
+
+Note that the `KinesisAsyncClient` behaves just like the `KinesisClient`, but returns `CompletionStage` objects which we use to create `Uni` instances, and then transform the emitted item.

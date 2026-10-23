@@ -1,0 +1,48 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+In this example, we will create an application that creates ECS clusters and lists them using a RESTful API.
+The example application will demonstrate the two programming models supported by the extension.
+
+Let's start with the synchronous implementation in the `org.acme.ecs.QuarkusEcsSyncResource` class.
+
+[source,java]
+----
+package org.acme.ecs;
+
+import java.util.List;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import software.amazon.awssdk.services.ecs.EcsClient;
+
+@Path("/sync")
+public class QuarkusEcsSyncResource {
+
+    @Inject <1>
+    EcsClient ecs;
+
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public String createCluster(@QueryParam("name") String name) {
+        return ecs.createCluster(r -> r.clusterName(name)).cluster().clusterArn(); <2>
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> listClusters() {
+        return ecs.listClusters().clusterArns(); <3>
+    }
+}
+----
+
+<1> Inject the client provided by the amazon-ecs extension
+<2> Create a cluster and return its ARN
+<3> List the ARNs of the clusters

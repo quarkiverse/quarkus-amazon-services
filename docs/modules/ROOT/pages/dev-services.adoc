@@ -204,6 +204,9 @@ quarkus.dynamodb.devservices.localstack.init-scripts-folder=src/test/resources/d
 
 The `init-scripts-folder` property points to a folder containing init scripts, while `init-scripts-classpath` points to a classpath resource. The folder-based configuration takes precedence.
 
+`init-scripts-classpath` is resolved against the classpath of the application when Dev Services starts. In dev mode, this classpath does not include `src/test/resources`: with scripts stored there, as the integration tests of this project do, the tests work but dev mode fails to start with `Resource with path ... could not be found`.
+To use the same scripts in dev mode, store them in `src/main/resources`, or point `init-scripts-folder` to their folder, for example `src/test/resources/floci-init`.
+
 To wait for the init scripts to complete before starting the application, make the last script print a specific message and configure it with the `init-completion-msg` property. Dev Services then waits for this message in the container logs:
 
 [source,properties]

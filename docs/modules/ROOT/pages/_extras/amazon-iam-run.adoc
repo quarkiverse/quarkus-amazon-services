@@ -1,0 +1,17 @@
+* Create a user with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -X POST "http://localhost:8080/sync?userName=quarkus"
+----
+
+The endpoint returns the ARN of the user.
+
+* List the users:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync
+----
+
+* Replace `sync` with `async` to use the asynchronous client.

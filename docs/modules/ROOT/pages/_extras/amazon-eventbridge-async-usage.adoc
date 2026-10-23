@@ -1,0 +1,43 @@
+:custom-async-usage:
+
+Create a `org.acme.eventbridge.QuarkusEventBridgeAsyncResource` REST resource that will be similar to our `QuarkusEventBridgeSyncResource` but using an asynchronous programming model.
+
+[source,java]
+----
+package org.acme.eventbridge;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import io.smallrye.mutiny.Uni;
+import software.amazon.awssdk.services.eventbridge.EventBridgeAsyncClient;
+
+@Path("/async")
+@Produces(MediaType.TEXT_PLAIN)
+public class QuarkusEventBridgeAsyncResource {
+
+    @Inject
+    EventBridgeAsyncClient eventBridge;
+
+    @POST
+    public Uni<String> putRule(@QueryParam("name") String name) {
+        return Uni.createFrom().completionStage(eventBridge.putRule(r -> r.name(name).scheduleExpression("rate(5 minutes)")))
+                .map(response -> response.ruleArn());
+    }
+
+    @GET
+    @Path("/{name}")
+    public Uni<String> describeRule(@PathParam("name") String name) {
+        return Uni.createFrom().completionStage(eventBridge.describeRule(r -> r.name(name)))
+                .map(response -> response.scheduleExpression());
+    }
+}
+----
+
+Note that the `EventBridgeAsyncClient` behaves just like the `EventBridgeClient`, but returns `CompletionStage` objects which we use to create `Uni` instances, and then transform the emitted item.

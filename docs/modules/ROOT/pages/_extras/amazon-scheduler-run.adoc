@@ -1,0 +1,19 @@
+* Create a schedule with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -X POST "http://localhost:8080/sync?name=quarkus-schedule"
+----
+
+The endpoint returns the ARN of the schedule.
+
+* Get the schedule:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync/quarkus-schedule
+----
+
+The endpoint returns `rate(5 minutes)`.
+
+* Replace `sync` with `async` to use the asynchronous client.

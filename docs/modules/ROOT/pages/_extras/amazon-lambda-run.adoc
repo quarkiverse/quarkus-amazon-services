@@ -1,0 +1,19 @@
+* List the functions with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync
+----
+
+The endpoint returns `["quarkus-hello"]`.
+
+* Get the runtime of the function:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync/quarkus-hello
+----
+
+The endpoint returns `nodejs22.x`.
+
+* Replace `sync` with `async` to use the asynchronous client.

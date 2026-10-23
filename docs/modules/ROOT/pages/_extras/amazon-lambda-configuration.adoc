@@ -1,0 +1,35 @@
+== Create the function with Dev Services
+
+Dev Services starts Floci with the `floci/floci:latest` image by default, which does not ship the AWS CLI.
+To create the `quarkus-hello` function automatically at startup, use the `latest-compat` image and provide init scripts:
+
+[source,properties]
+----
+quarkus.aws.devservices.floci.image-name=floci/floci:latest-compat
+quarkus.aws.devservices.floci.init-scripts-classpath=floci-init
+quarkus.aws.devservices.floci.init-completion-msg=#### Init completed
+----
+
+Create `src/main/resources/floci-init/01_create_function.sh`:
+
+[source,bash]
+----
+#!/bin/bash
+workdir=$(mktemp -d)
+echo 'exports.handler = async (event) => ({ greeting: "Hello " + event.name });' > "$workdir/index.js"
+cd "$workdir" && python3 -m zipfile -c function.zip index.js
+aws lambda create-function --function-name quarkus-hello --runtime nodejs22.x \
+    --zip-file "fileb://$workdir/function.zip" --handler index.handler \
+    --role arn:aws:iam::000000000000:role/lambda-role
+----
+
+Then create `src/main/resources/floci-init/99_completed.sh`, which prints the message Dev Services waits for:
+
+[source,bash]
+----
+#!/bin/bash
+echo "#### Init completed"
+----
+
+Dev Services looks up the scripts in the classpath of the application, so keep them in `src/main/resources`: in dev mode, `src/test/resources` is not part of the classpath.
+See xref:dev-services.adoc[Dev Services for Amazon Services] for the init script details.

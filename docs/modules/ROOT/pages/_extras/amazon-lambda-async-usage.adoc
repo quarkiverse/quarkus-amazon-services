@@ -1,0 +1,46 @@
+:custom-async-usage:
+
+Create a `org.acme.lambda.QuarkusLambdaAsyncResource` REST resource that will be similar to our `QuarkusLambdaSyncResource` but using an asynchronous programming model.
+
+[source,java]
+----
+package org.acme.lambda;
+
+import java.util.List;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+import io.smallrye.mutiny.Uni;
+import software.amazon.awssdk.services.lambda.LambdaAsyncClient;
+import software.amazon.awssdk.services.lambda.model.FunctionConfiguration;
+
+@Path("/async")
+public class QuarkusLambdaAsyncResource {
+
+    @Inject
+    LambdaAsyncClient lambda;
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<List<String>> listFunctions() {
+        return Uni.createFrom().completionStage(lambda.listFunctions())
+                .map(response -> response.functions().stream().map(FunctionConfiguration::functionName).toList());
+    }
+
+    @GET
+    @Path("/{name}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Uni<String> getFunction(@PathParam("name") String name) {
+        return Uni.createFrom().completionStage(lambda.getFunction(r -> r.functionName(name)))
+                .map(response -> response.configuration().runtimeAsString());
+    }
+}
+----
+
+Note that the `LambdaAsyncClient` behaves just like the `LambdaClient`, but returns `CompletionStage` objects which we use to create `Uni` instances, and then transform the emitted item.
+This asynchronous version only returns the first page of functions.

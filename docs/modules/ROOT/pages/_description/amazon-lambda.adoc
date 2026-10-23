@@ -1,4 +1,5 @@
 :has-integration-test:
+:solution-summary: The application built here lists the Lambda functions and gets their configuration.
 
 Service client for accessing Amazon Lambda.
 

@@ -1,0 +1,46 @@
+:custom-async-usage:
+
+Create a `org.acme.iam.QuarkusIamAsyncResource` REST resource that will be similar to our `QuarkusIamSyncResource` but using an asynchronous programming model.
+
+[source,java]
+----
+package org.acme.iam;
+
+import java.util.List;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import io.smallrye.mutiny.Uni;
+import software.amazon.awssdk.services.iam.IamAsyncClient;
+import software.amazon.awssdk.services.iam.model.User;
+
+@Path("/async")
+public class QuarkusIamAsyncResource {
+
+    @Inject
+    IamAsyncClient iam;
+
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public Uni<String> createUser(@QueryParam("userName") String userName) {
+        return Uni.createFrom().completionStage(iam.createUser(r -> r.userName(userName)))
+                .map(response -> response.user().arn());
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<List<String>> listUsers() {
+        return Uni.createFrom().completionStage(iam.listUsers())
+                .map(response -> response.users().stream().map(User::userName).toList());
+    }
+}
+----
+
+Note that the `IamAsyncClient` behaves just like the `IamClient`, but returns `CompletionStage` objects which we use to create `Uni` instances, and then transform the emitted item.
+This asynchronous version only returns the first page of users.
