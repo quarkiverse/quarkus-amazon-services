@@ -1,0 +1,36 @@
+== Using SES on your AWS account
+
+Amazon applies certain restrictions to new Amazon SES accounts, mainly to prevent fraud and abuse. All new accounts are in the Amazon SES *sandbox*.
+All the features of the Amazon SES are still available while in sandbox, but the following restrictions apply:
+- You can send mail to verified email addresses and domains or to the https://docs.aws.amazon.com/ses/latest/dg/send-an-email-from-console.html#send-email-simulator[Amazon SES mailbox simulator]
+- You can only send mail from verified email addresses and domains
+- You can send a maximum of 1 message per second.
+
+Going production, you'd need to get your account out of the sandbox following the https://docs.aws.amazon.com/ses/latest/dg/request-production-access.html[Amazon procedure].
+
+=== Set up AWS SES
+
+We assume you are going to use the AWS SES sandbox for the sake of this guide.
+Before sending any email, you must create an email identity for the sender address, and, while in the sandbox, for the recipient address, using the AWS CLI.
+You can use your personal email or any temporary email service available if you wish.
+
+[source,bash,subs="verbatim,attributes"]
+----
+aws sesv2 create-email-identity --email-identity <sender@email.address>
+aws sesv2 create-email-identity --email-identity <recipient@email.address>
+----
+
+Then open the mailboxes of those email addresses to follow the confirmation procedure. Once an email is approved, you can use it in your application.
+You can check the status of an identity with `aws sesv2 get-email-identity --email-identity <sender@email.address> --query VerifiedForSendingStatus`.
+
+=== Verify the sender address on Floci
+
+Floci rejects a send request when the sender address is not verified, but it does not require the recipient to be verified, and it does not send any email.
+Floci verifies an email identity as soon as it is created, without any confirmation procedure.
+
+Create the email identity of the sender address with the AWS CLI of the Floci container:
+
+[source,bash,subs="verbatim,attributes"]
+----
+docker exec floci aws sesv2 create-email-identity --email-identity <sender@email.address>
+----

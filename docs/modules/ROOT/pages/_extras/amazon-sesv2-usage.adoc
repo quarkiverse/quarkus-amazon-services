@@ -1,0 +1,100 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+In this example, we will create an application that sends emails using the SES API v2. The example application will demonstrate the two programming models supported by the extension.
+
+First, let's create the `Email` bean that represents the email to send:
+
+[source,java]
+----
+package org.acme.sesv2.model;
+
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
+@RegisterForReflection
+public class Email {
+
+    private String from;
+    private String to;
+    private String subject;
+    private String body;
+
+    public String getFrom() {
+        return from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public Email setFrom(String from) {
+        this.from = from;
+        return this;
+    }
+
+    public Email setTo(String to) {
+        this.to = to;
+        return this;
+    }
+
+    public Email setSubject(String subject) {
+        this.subject = subject;
+        return this;
+    }
+
+    public Email setBody(String body) {
+        this.body = body;
+        return this;
+    }
+}
+----
+
+TIP: The `@RegisterForReflection` annotation instructs Quarkus to keep the class and its members during the native compilation. More details about the `@RegisterForReflection` annotation can be found on the https://quarkus.io/guides/writing-native-applications-tips#registerForReflection[native application tips] page.
+
+Then, create a `org.acme.sesv2.QuarkusSesV2SyncResource` that will provide an API to send emails using the synchronous client.
+
+[source,java]
+----
+package org.acme.sesv2;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import org.acme.sesv2.model.Email;
+import software.amazon.awssdk.services.sesv2.SesV2Client;
+
+@Path("/sync")
+@Produces(MediaType.TEXT_PLAIN)
+@Consumes(MediaType.APPLICATION_JSON)
+public class QuarkusSesV2SyncResource {
+
+    @Inject
+    SesV2Client ses;
+
+    @POST
+    @Path("/email")
+    public String send(Email data) {
+        return ses.sendEmail(req -> req
+            .fromEmailAddress(data.getFrom())
+            .destination(d -> d.toAddresses(data.getTo()))
+            .content(c -> c.simple(msg -> msg
+                .subject(sub -> sub.data(data.getSubject()))
+                .body(b -> b.text(txt -> txt.data(data.getBody())))))).messageId();
+    }
+}
+----
+
+The SES API v2 replaces the `source` and `message` of the original API with `fromEmailAddress` and `content`.
+A `simple` content lets SES build the message from a subject and a body, while a `raw` content sends a complete MIME message, and a `template` content renders a stored email template.

@@ -1,3 +1,5 @@
+:has-integration-test:
+:solution-summary: The application built here allows sending text emails with the SES API v2 from the sender addresses that are verified on Amazon SES.
 :aws-docs-url: https://docs.aws.amazon.com/ses/latest/APIReference-V2/Welcome.html
 
 Amazon Simple Email Service (Amazon SES) is a cloud email service for sending and receiving email.
