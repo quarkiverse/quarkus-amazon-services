@@ -95,11 +95,11 @@ public class FlociDevServicesProcessor extends AbstractDevServicesAwsStackProces
         FlociContainer floci = new FlociContainer(DockerImageName.parse(config.imageName()));
 
         config.initScriptsFolder().ifPresentOrElse(initScriptsFolder -> {
-            floci.withFileSystemBind(initScriptsFolder, "/etc/floci/init/start.d", BindMode.READ_ONLY);
+            floci.withFileSystemBind(initScriptsFolder, "/etc/floci/init/ready.d", BindMode.READ_ONLY);
         }, () -> config.initScriptsClasspath().ifPresent(resourcePath -> {
             // scripts must be executable but withClasspathResourceMapping will extract file with read only for regular file
             final MountableFile mountableFile = MountableFile.forClasspathResource(resourcePath, 0555);
-            floci.withCopyFileToContainer(mountableFile, "/etc/floci/init/start.d");
+            floci.withCopyFileToContainer(mountableFile, "/etc/floci/init/ready.d");
         }));
 
         config.initCompletionMsg().ifPresent(initCompletionMsg -> {
