@@ -1,3 +1,5 @@
-Amazon Inspector automatically discovers workloads, such as Amazon EC2 instances, containers, and Lambda functions, and scans them for software vulnerabilities and unintended network exposure.
+Amazon Inspector Classic is the previous generation of Amazon Inspector: an agent-based security assessment service that assessed Amazon EC2 instances for exposure, vulnerabilities and deviations from best practices.
+This client manages Inspector Classic assessment targets, templates, runs and findings.
 
-You can find more information about Inspector at https://aws.amazon.com/inspector/[the Amazon Inspector website].
+AWS ended the support of Amazon Inspector Classic on May 20, 2026, as announced in https://docs.aws.amazon.com/managedservices/latest/userguide/inspector.html[the AWS documentation].
+Use the xref:amazon-inspector2.adoc[Amazon Inspector] extension instead.

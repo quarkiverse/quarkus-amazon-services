@@ -1,5 +1,6 @@
 :has-integration-test:
+:solution-summary: The application built here tags AWS resources, finds them by tag and removes their tags.
+:aws-docs-url: https://docs.aws.amazon.com/resourcegroupstagging/latest/APIReference/
 
-The Amazon Resource Groups Tagging API is a web service that enables you to manage and organize your AWS resources using tags.
-
-You can find more information about Resource Groups Tagging API at https://docs.aws.amazon.com/cli/latest/reference/resourcegroupstaggingapi/index.html[the Amazon Resource Groups Tagging API website].
+The AWS Resource Groups Tagging API lets you manage the tags of resources across many AWS services from a single place.
+This client lets you tag and untag resources in bulk, find resources by tag, list the tag keys and values in use, and report on tag policy compliance.

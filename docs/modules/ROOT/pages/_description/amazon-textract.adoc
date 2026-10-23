@@ -1,5 +1,4 @@
-Amazon Textract is a fully managed service that makes it easy for developers to extract printed text, handwriting, layout elements, and data from any document.
+:aws-docs-url: https://docs.aws.amazon.com/textract/latest/dg/what-is.html
 
-You can find more information about Textract at https://aws.amazon.com/textract/[the Amazon Textract website].
-
-You can use this extension to integrate Textract capabilities in your Quarkus applications using the AWS SDK for Java 2.x.
+Amazon Textract is a machine learning service that extracts printed text, handwriting, layout elements and data, such as forms and tables, from scanned documents.
+This client lets you analyze documents synchronously or asynchronously, including the specialized analysis of invoices, receipts and identity documents.

@@ -1,1 +1,5 @@
-AWS Cost Explorer is a built-in AWS tool that lets you visualize, understand, and manage your cloud spending and usage over time. It features an intuitive dashboard for analyzing historical spend up to 13 months, forecasting future costs, and identifying optimization opportunities. For more information about the necessary permissions to use this API, see https://docs.aws.amazon.com/account-billing/[AWS Billing and Cost Management Documentation].
+:aws-docs-url: https://docs.aws.amazon.com/cost-management/latest/userguide/ce-api.html
+
+AWS Cost Explorer lets you view and analyze your AWS costs and usage, with up to 13 months of historical data and forecasts for the next 18 months.
+This client uses the Cost Explorer API to query cost and usage data, get cost forecasts, and get Reserved Instances and Savings Plans recommendations and utilization.
+Each paginated API request is charged.

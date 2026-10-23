@@ -1,8 +1,6 @@
 :has-integration-test:
 :solution-summary: The application built here creates Step Functions state machines and lists them.
+:aws-docs-url: https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html
 
-Amazon AWS Step Functions (SFN) is a cloud service that enables you to coordinate and automate the execution of multiple AWS services in a serverless workflow.
-It allows you to design, visualize, and execute workflows using a state machine architecture.
-With SFN, you can seamlessly integrate various AWS services, including Lambda functions, Amazon S3, Amazon DynamoDB, and others, into a cohesive and scalable workflow.
-
-You can find more information about SFN at https://aws.amazon.com/step-functions/[the Amazon SFN website].
+AWS Step Functions is a serverless orchestration service that lets you coordinate AWS services, such as AWS Lambda, Amazon DynamoDB and Amazon SQS, into workflows defined as state machines.
+This client lets you create and manage state machines, and start, stop and inspect their executions.

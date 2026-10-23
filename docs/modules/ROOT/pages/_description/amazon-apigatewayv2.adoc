@@ -1,3 +1,5 @@
-Amazon API Gateway v2 enables you to create, deploy, and manage WebSocket and HTTP APIs.
+:aws-docs-url: https://docs.aws.amazon.com/apigatewayv2/latest/api-reference/api-reference.html
 
-You can find more information about API Gateway v2 at https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api.html[the Amazon API Gateway v2 documentation].
+Amazon API Gateway is a fully managed service for creating, publishing and securing APIs at any scale.
+This client uses the API Gateway V2 API to create, deploy and manage HTTP APIs and WebSocket APIs, with their routes, integrations, stages, authorizers and domain names.
+To manage REST APIs, use the Amazon API Gateway extension.

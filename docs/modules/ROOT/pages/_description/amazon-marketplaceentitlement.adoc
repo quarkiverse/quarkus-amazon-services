@@ -1,1 +1,4 @@
-Amazon Marketplace Entitlement Service is an API for sellers to submit data for custom usage dimensions. For more information about the necessary permissions to use this API, see https://docs.aws.amazon.com/marketplace/latest/userguide/iam-user-policy-for-aws-marketplace-actions.html[AWS Marketplace metering and entitlement API permissions].
+:aws-docs-url: https://docs.aws.amazon.com/marketplace/latest/APIReference/API_Operations_AWS_Marketplace_Entitlement_Service.html
+
+AWS Marketplace Entitlement Service is an API that AWS Marketplace sellers use to check what their customers are entitled to, for example for SaaS contract or container products.
+This client retrieves the entitlement values of a product, which you can filter by customer identifier, customer AWS account ID, license ARN or dimension.

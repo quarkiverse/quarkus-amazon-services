@@ -1,2 +1,5 @@
-Amazon Simple Email Service (SES) is a flexible and highly-scalable email sending and receiving service.
-Using SES, you can send emails with any type of correspondence. You can find more information about SES at https://aws.amazon.com/ses/[the Amazon SES website].
+:aws-docs-url: https://docs.aws.amazon.com/ses/latest/APIReference-V2/Welcome.html
+
+Amazon Simple Email Service (Amazon SES) is a cloud email service for sending and receiving email.
+This client uses the SES API v2, the API that AWS recommends: it offers a consolidated interface, with configuration sets, contact lists, dedicated IPs and the Virtual Deliverability Manager, and gets all the new sending features.
+To manage email receiving, with receipt rules and filters, use the Amazon SES extension.

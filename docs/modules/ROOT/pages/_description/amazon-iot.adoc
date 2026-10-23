@@ -1,3 +1,5 @@
-AWS offers Internet of Things (IoT) services and solutions to connect and manage billions of devices. Collect, store, and analyze IoT data for industrial, consumer, commercial, and automotive workloads.
+:aws-docs-url: https://docs.aws.amazon.com/iot/latest/developerguide/what-is-aws-iot.html
 
-You can find more information about IoT at https://aws.amazon.com/iot/[the Amazon IoT website].
+AWS IoT Core lets you securely connect IoT devices to the AWS Cloud and to other devices.
+This client uses the AWS IoT control plane API to manage things, thing types and groups, certificates and policies, rules and jobs.
+Publishing messages and accessing device shadows use the separate AWS IoT data plane API.

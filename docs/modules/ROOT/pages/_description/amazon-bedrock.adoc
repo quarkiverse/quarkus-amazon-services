@@ -1,5 +1,7 @@
-Amazon Bedrock is a fully managed service that offers a choice of high-performing foundation models (FMs) from leading AI companies like AI21 Labs, Anthropic, Cohere, DeepSeek, Luma, Meta, Mistral AI, Stability AI, and Amazon through a single API, along with a broad set of capabilities you need to build generative AI applications with security, privacy, and responsible AI.
+:has-integration-test:
+:solution-summary: The application built here manages Amazon Bedrock guardrails.
+:aws-docs-url: https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html
 
-You can find more information about Bedrock at https://aws.amazon.com/bedrock/[the Amazon Bedrock website].
-
-The Bedrock Client allows you to create, manage, fine-tune and evaluate Amazon Bedrock models.
+Amazon Bedrock is a fully managed service that provides access to high-performing foundation models from leading AI companies, to build and scale generative AI applications.
+This client uses the Amazon Bedrock control plane API to manage models and related resources, such as model customization jobs, provisioned throughput, model evaluation jobs and guardrails.
+To run inference, use the Amazon Bedrock Runtime extension.

@@ -1,3 +1,5 @@
-Amazon Identity and Access Management Center, successor to AWS Single Sign-On (SSO) is a web service that makes it easy for you to assign user access to IAM Identity Center resources such as the AWS access portal. The SDKs provide a convenient way to create programmatic access to IAM Identity Center and other AWS services. 
+:aws-docs-url: https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html
 
-You can find more information about IAM Identity Center at https://aws.amazon.com/fr/iam/identity-center/[the Amazon IAM website].
+AWS IAM Identity Center, the successor to AWS Single Sign-On, is the recommended service for managing the access of your workforce to multiple AWS accounts and applications.
+This client uses the IAM Identity Center portal API: with the access token of a user, it lists the AWS accounts and roles assigned to the user, gets short-term credentials for a role and signs the user out.
+To get the access token of a user, use the AWS IAM Identity Center OIDC extension.

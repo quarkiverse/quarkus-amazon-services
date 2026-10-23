@@ -1,6 +1,6 @@
 :has-integration-test:
 :solution-summary: The application built here creates IAM users and lists them.
+:aws-docs-url: https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html
 
-Amazon Identity and Access Management (IAM) enables users to manage access to AWS services and resources securely.
-
-You can find more information about IAM at https://aws.amazon.com/iam/[the Amazon IAM website].
+AWS Identity and Access Management (IAM) helps you securely control who is authenticated and authorized to use AWS resources.
+This client lets you manage IAM users, groups, roles, policies, access keys and identity providers.

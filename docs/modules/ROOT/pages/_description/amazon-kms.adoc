@@ -1,8 +1,7 @@
 :has-integration-test:
 :quickstart: amazon-kms-quickstart
 :solution-summary: The application built here allows to encrypt and decrypt text messages using a master key created on AWS KMS.
+:aws-docs-url: https://docs.aws.amazon.com/kms/latest/developerguide/overview.html
 
 AWS Key Management Service (KMS) is a service that allows you to create and control the keys used to encrypt or digitally sign your data.
 Using KMS, you can create and manage cryptographic keys and control their use across a wide range of AWS services and in your application.
-
-You can find more information about KMS at https://aws.amazon.com/kms/[the AWS KMS website].

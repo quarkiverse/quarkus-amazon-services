@@ -1,3 +1,4 @@
-Amazon API Gateway Management Api allows you to create, maintain, and secure APIs at any scale.
+:aws-docs-url: https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-how-to-call-websocket-api-connections.html
 
-You can find more information about API Gateway Management Api at https://aws.amazon.com/api-gateway/[the Amazon API Gateway website].
+The Amazon API Gateway Management API lets backend services interact with the clients connected to an API Gateway WebSocket API.
+This client lets you send a message to a connected client, get information about a connection and disconnect a client, using the connection ID and the endpoint of the deployed API.

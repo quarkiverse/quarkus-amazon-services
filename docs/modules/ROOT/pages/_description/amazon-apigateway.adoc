@@ -1,6 +1,7 @@
 :has-integration-test:
 :solution-summary: The application built here creates REST APIs in API Gateway and reads them back.
+:aws-docs-url: https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html
 
-Amazon API Gateway is a fully managed service that makes it easy for developers to create, publish, maintain, monitor, and secure APIs at any scale.
-
-You can find more information about API Gateway at https://aws.amazon.com/api-gateway/[the Amazon API Gateway website].
+Amazon API Gateway is a fully managed service for creating, publishing, maintaining, monitoring and securing APIs at any scale.
+This client uses the API Gateway V1 API to create and manage REST APIs and their resources, such as stages, deployments, authorizers, API keys and usage plans.
+To manage HTTP and WebSocket APIs, use the Amazon API Gateway V2 extension.

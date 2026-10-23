@@ -1,3 +1,4 @@
-AWS Identity and Access Management Access Analyzer helps you identify the resources in your organization and accounts that are shared with an external entity, validate IAM policies against policy grammar and best practices, and generate IAM policies based on access activity.
+:aws-docs-url: https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html
 
-You can find more information about IAM Access Analyzer at https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html[the IAM Access Analyzer documentation].
+AWS Identity and Access Management Access Analyzer helps you identify the resources in your organization and accounts that are shared with an external entity, validate IAM policies against policy grammar and best practices, and generate IAM policies based on access activity.
+This client lets you manage analyzers, archive rules and findings, validate policies and start policy generations.

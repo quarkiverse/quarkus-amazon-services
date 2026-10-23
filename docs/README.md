@@ -45,21 +45,21 @@ The skeleton always produces the sections below, in this order. Some only appear
 |---|---|---|
 | Title `{service-name-uppercase} Client` | always | — |
 | Intro (your text from `_description`) | always | — |
+| « For more information, see the … documentation » | `aws-docs-url` | — |
 | NOTE on the AWS SDK programming models | always | — |
-| Prerequisites | always | — |
-| Provision … locally via Dev Services | always | — |
-| Provision … locally manually (`docker run`, local CLI) | `aws-stack` | — |
+| Prerequisites (« No AWS account is required », or a NOTE that the local stacks may not emulate the service) | always, depending on `has-integration-test` | — |
+| Provision … locally via Dev Services (with the `devservices.provider` property when `aws-stack` is not `floci`) | always | — |
+| Provision … locally manually (`docker run`, local CLI) | always | — |
 | *(service-specific setup)* | — | `setup` |
-| Solution | `solution-summary` (link to the quickstart only if `quickstart`) | — |
+| Solution (with `quickstart`) or What you will build (without) | `solution-summary` | — |
 | Creating the Maven project | always | — |
 | Using the … client (injection of the sync client) | always, unless replaced | `usage` (replaces) |
 | Configuring … clients (HTTP clients, local endpoint, AWS credentials, Dev Services warning) | always | `configuration` (appended) |
-| Run the application in Dev Mode | always | `run` (appended) |
+| Run the application in Dev Mode (what Dev Services provides; without `usage`, a hint to add endpoints) | always | `run` (appended) |
 | Next steps → Packaging | always | — |
 | Next steps → Going asynchronous (injection of the async client) | always, unless replaced | `async-usage` (replaces) |
 | *(additional sections)* | — | `extras` |
 | Configuration Reference | always (plus `extra-config-reference`) | — |
-| Related Guides | `aws-docs-url` | — |
 
 ## Adding a new extension
 
@@ -75,6 +75,7 @@ The skeleton always produces the sections below, in this order. Some only appear
        "categories": ["messaging"]
    }
    ```
+   Its `status` is `stable`; set `"status": "deprecated"` in `quarkus-customization.config` for a service that AWS no longer supports. The documentation page then shows a deprecation WARNING (see `extension-status`); explain in the description why, and what to use instead.
 7. **Configuration reference**: build the project (`./mvnw install -DskipTests`). This generates `pages/includes/quarkus-amazon-<extension-name>.adoc`, which is committed with the page.
 8. **Check** the rendering (see [Checking the result](#checking-the-result)).
 
@@ -108,12 +109,15 @@ It is generated. The display name comes from `services/apigatewayv2/src/main/res
 `pages/_description/amazon-apigatewayv2.adoc`:
 
 ```asciidoc
-Amazon API Gateway v2 enables you to create, deploy, and manage WebSocket and HTTP APIs.
+:aws-docs-url: https://docs.aws.amazon.com/apigatewayv2/latest/api-reference/api-reference.html
 
-You can find more information about API Gateway v2 at https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api.html[the Amazon API Gateway v2 documentation].
+Amazon API Gateway is a fully managed service for creating, publishing and securing APIs at any scale.
+This client uses the API Gateway V2 API to create, deploy and manage HTTP APIs and WebSocket APIs, with their routes, integrations, stages, authorizers and domain names.
+To manage REST APIs, use the Amazon API Gateway extension.
 ```
 
 This is enough for a complete page: prerequisites, Maven project, injection of `ApiGatewayV2Client` and `ApiGatewayV2AsyncClient`, client configuration and configuration reference.
+As the integration tests do not cover API Gateway V2, the page warns that the local stacks may not emulate it.
 
 ## `_metadata` attributes
 
@@ -141,21 +145,29 @@ Real examples: [`_metadata/amazon-scheduler.adoc`](modules/ROOT/pages/_metadata/
 
 ## `_description` attributes
 
-The `_description/` file starts with the editorial attributes, if any, followed by the intro: a short description of the service and a link to its AWS page.
+The `_description/` file starts with the editorial attributes, if any, followed by the intro:
+
+1. what the service is;
+2. what this client does: control plane or data plane, API version, and which sibling extension to use for the rest (`To retrieve configuration data at runtime, use the AWS AppConfig Data extension.`).
+
+Use the official service names (« AWS Lambda », « Amazon CloudWatch »).
+Do not write the link to the AWS documentation: set `aws-docs-url`, and the page renders « For more information, see the {service-name-uppercase} documentation » after the intro.
 
 | Attribute | Effect | Default | When to set it | Example |
 |---|---|---|---|---|
-| `aws-stack` | Local stack used in the manual provisioning and local configuration examples: `floci`, `localstack` or `moto`. Setting it shows the manual provisioning section. | unset (local configuration examples use LocalStack, without manual provisioning) | only if the integration tests exercise the service with that stack (`quarkus.<service-name>.devservices.provider` in `integration-tests/src/main/resources/application.properties`, default `floci`) | `floci` |
-| `localstack-service` | Value of `SERVICES=` in the LocalStack `docker run` command | — | required when `aws-stack` is `localstack` | `stepfunctions` |
-| `aws-docs-url` | Shows « Related Guides » with a link to the AWS documentation | unset | when you have a relevant AWS documentation page | `https://docs.aws.amazon.com/textract/latest/dg/what-is.html` |
-| `solution-summary` | Shows the « Solution » section; the value is its first paragraph (inline formatting allowed) | unset | for a step-by-step guide | `The application built here allows to manage files stored in Amazon S3.` |
+| `aws-docs-url` | Link to the AWS documentation of the service, rendered after the intro | unset | always, with the user guide or the API reference of the service on docs.aws.amazon.com (not a product page) | `https://docs.aws.amazon.com/lambda/latest/dg/welcome.html` |
+| `has-integration-test` | Says that no AWS account is required. Without it, the prerequisites warn that the local stacks may not emulate the service. | unset | only if the integration tests exercise the service against a local stack with real assertions | — |
+| `aws-stack` | Local stack used by Dev Services, the manual provisioning and the local configuration examples: `floci` or `moto`. When it is not `floci`, the page shows the `quarkus.<service-name>.devservices.provider` property to set. | `floci` | only if the integration tests exercise the service with another stack (`quarkus.<service-name>.devservices.provider` in `integration-tests/src/main/resources/application.properties`) | `moto` |
+| `solution-summary` | Shows the « Solution » section with a `quickstart`, « What you will build » without; the value is its first paragraph (inline formatting allowed) | unset | for a step-by-step guide | `The application built here allows to manage files stored in Amazon S3.` |
 | `quickstart` | Adds the link to the completed example | unset | only if the folder exists in [quarkus-quickstarts](https://github.com/quarkusio/quarkus-quickstarts) | `amazon-s3-quickstart` |
 | `main-class` | Class created by `mvn create`, also used by the generic usage | `Quarkus{service-class-name}SyncResource` | when your step-by-step code uses another class | `FruitResource` |
 | `main-path` | `-Dpath` of `mvn create`, also used by the generic usage | `/sync` | together with `main-class` | `/fruits` |
 | `run-args` | System properties added to `java -jar` in « Packaging » | unset | when the example application needs them | `-Dkey.arn=$MASTER_KEY_ARN` |
 | `extra-config-reference` | Adds the configuration reference of a related extension | unset | when a companion extension is documented on the same page | `dynamodb-enhanced` |
 
-Real examples: [`_description/amazon-dynamodb.adoc`](modules/ROOT/pages/_description/amazon-dynamodb.adoc) (step-by-step guide), [`_description/amazon-textract.adoc`](modules/ROOT/pages/_description/amazon-textract.adoc) (reference page with related guide).
+Real examples: [`_description/amazon-dynamodb.adoc`](modules/ROOT/pages/_description/amazon-dynamodb.adoc) (step-by-step guide with a quickstart), [`_description/amazon-iam.adoc`](modules/ROOT/pages/_description/amazon-iam.adoc) (step-by-step guide without a quickstart), [`_description/amazon-textract.adoc`](modules/ROOT/pages/_description/amazon-textract.adoc) (service not covered by the integration tests).
+
+When a service has integration tests, give its guide a `usage`, `async-usage` and `run` example derived from them, and verify it against Dev Services.
 
 ## Injection points
 
@@ -187,7 +199,8 @@ Heading levels depend on where the file lands:
 - Add `subs="attributes+"` to source blocks that contain attributes: `[source,java,subs="attributes+"]`.
 - Do not repeat what the skeleton already renders: Dev Services, `docker run`, `aws configure`, HTTP client dependencies, local endpoint configuration, AWS credentials, configuration reference.
 - In `_extras/`, CLI commands against a local Floci stack run inside the container: `docker exec floci aws <command>`. The CLI is preconfigured with the endpoint, the region and the credentials, so do not add `--profile` or `--endpoint-url`.
-- For the other stacks (`localstack`, `moto`), CLI commands use the profile created by the manual provisioning section, named after the stack, and its endpoint: `--profile localstack --endpoint-url=http://localhost:4566` (port `5000` for Moto).
+- With Moto, CLI commands use the profile created by the manual provisioning section and its endpoint: `--profile moto --endpoint-url=http://localhost:5000`.
+- Do not mention LocalStack in the service guides: it remains a supported provider, documented in the Dev Services guide only.
 - When a command captures a value, add `--query <name> --output text` (the default JSON output cannot be parsed with `cut`), and `export` the variable if a later command or the application needs it.
 - Never edit `_metadata/`. A value that the code generator cannot take from the service model goes to `_description/`.
 

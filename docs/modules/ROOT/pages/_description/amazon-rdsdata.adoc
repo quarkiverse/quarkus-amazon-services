@@ -1,3 +1,4 @@
-The Amazon RDS Data API is a web service that enables you to run SQL statements on an Amazon RDS database without having to manage a connection to the database.
+:aws-docs-url: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html
 
-You can find more information about RDS at https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html[the Amazon RDS Data website].
+The Amazon RDS Data API provides a secure HTTP endpoint for running SQL statements against Amazon Aurora DB clusters, without managing database connections or drivers.
+This client lets you run statements and batches and manage transactions, using database credentials stored in AWS Secrets Manager.

@@ -1,6 +1,6 @@
 :has-integration-test:
 :solution-summary: The application built here assumes an IAM role to get temporary credentials.
+:aws-docs-url: https://docs.aws.amazon.com/STS/latest/APIReference/
 
-AWS Security Token Service (AWS STS) is a web service that enables you to request temporary, limited-privilege credentials for users.
-
-You can find more information about STS at https://docs.aws.amazon.com/STS/latest/APIReference[AWS Security Token Service API Reference].
+AWS Security Token Service (AWS STS) is a web service that issues temporary, limited-privilege credentials.
+This client lets you assume IAM roles, including with SAML or web identity federation, get session and federation tokens, and get the identity of the caller.
