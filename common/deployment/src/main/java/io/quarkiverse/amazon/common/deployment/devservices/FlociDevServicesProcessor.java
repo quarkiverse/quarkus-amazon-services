@@ -108,6 +108,9 @@ public class FlociDevServicesProcessor extends AbstractDevServicesAwsStackProces
 
         ConfigureUtil.configureNetwork(floci, composeProjectBuildItem.getDefaultNetworkId(), useSharedNetwork, "floci");
 
+        // let the container reach the host, e.g. for SNS HTTP subscriptions (Linux does not resolve it by default)
+        floci.withExtraHost("host.docker.internal", "host-gateway");
+
         floci.withEnv(config.containerProperties());
         requestedServices.stream().map(r -> r.getConfig().containerProperties()).forEach(floci::withEnv);
 
