@@ -10,7 +10,7 @@ import io.restassured.RestAssured;
 @QuarkusTest
 public class AmazonLambdaTest {
 
-    public static final String LAMBDA_NAME = "localstack-lambda-hello";
+    public static final String LAMBDA_NAME = "lambda-hello";
 
     @Test
     public void testAsync() {

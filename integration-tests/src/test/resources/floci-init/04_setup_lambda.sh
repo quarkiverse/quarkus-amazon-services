@@ -1,8 +1,7 @@
-#!/bin/bash
-echo $LOCALSTACK_HOST
+#!/usr/bin/env bash
 echo "#### Create lambda function ####"
-# https://docs.localstack.cloud/user-guide/aws/lambda/#create-a-lambda-function
-cat > index.js <<'EOF'
+workdir=$(mktemp -d)
+cat > "$workdir/index.js" <<'JS'
 exports.handler = async (event) => {
     let body = JSON.parse(event.body)
     const product = body.num1 * body.num2;
@@ -12,12 +11,13 @@ exports.handler = async (event) => {
     };
     return response;
 };
-EOF
+JS
 
-zip function.zip index.js
-awslocal lambda create-function \
-    --function-name localstack-lambda-hello \
+# zip is not available in the floci image
+python3 -m zipfile -c "$workdir/function.zip" "$workdir/index.js"
+aws lambda create-function \
+    --function-name lambda-hello \
     --runtime nodejs18.x \
-    --zip-file fileb://function.zip \
+    --zip-file "fileb://$workdir/function.zip" \
     --handler index.handler \
     --role arn:aws:iam::000000000000:role/lambda-role

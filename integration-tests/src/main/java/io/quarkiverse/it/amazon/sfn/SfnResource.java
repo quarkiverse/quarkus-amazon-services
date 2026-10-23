@@ -55,6 +55,7 @@ public class SfnResource {
     private Consumer<CreateStateMachineRequest.Builder> stateMachineRequest(String name) {
         return builder -> builder
                 .name(name)
+                .roleArn("arn:aws:iam::000000000000:role/test-role")
                 .definition(stateMachineDefinition())
                 .build();
     }
