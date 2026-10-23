@@ -108,7 +108,7 @@
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-ses</artifactId>
         </dependency>
-                <dependency>
+        <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-sesv2</artifactId>
         </dependency>
