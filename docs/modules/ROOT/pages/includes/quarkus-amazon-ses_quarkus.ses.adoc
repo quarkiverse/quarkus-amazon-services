@@ -158,6 +158,27 @@ endif::add-copy-button-to-env-var[]
 a|`floci`, `localstack`, `ministack`, `moto`
 |
 
+a|icon:lock[title=Fixed at build time] [[quarkus-amazon-ses_quarkus-ses-devservices-verified-emails]] [.property-path]##link:#quarkus-amazon-ses_quarkus-ses-devservices-verified-emails[`+++quarkus.ses.devservices.verified-emails+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ses.devservices.verified-emails+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+The email addresses to verify on startup, so that they can be used as sender addresses.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SES_DEVSERVICES_VERIFIED_EMAILS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SES_DEVSERVICES_VERIFIED_EMAILS+++`
+endif::add-copy-button-to-env-var[]
+--
+|list of string
+|
+
 h|[[quarkus-amazon-ses_section_quarkus-ses]] [.section-name.section-level0]##link:#quarkus-amazon-ses_section_quarkus-ses[AWS SDK client configurations]##
 h|Type
 h|Default
