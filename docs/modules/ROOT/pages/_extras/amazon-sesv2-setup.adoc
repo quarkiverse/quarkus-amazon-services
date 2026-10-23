@@ -28,6 +28,9 @@ You can check the status of an identity with `aws sesv2 get-email-identity --ema
 Floci rejects a send request when the sender address is not verified, but it does not require the recipient to be verified, and it does not send any email.
 Floci verifies an email identity as soon as it is created, without any confirmation procedure.
 
+With Dev Services, you do not need the AWS CLI: list the sender addresses in the `quarkus.sesv2.devservices.verified-emails` property, as described below.
+With a Floci container that you started manually, verify them with the AWS CLI.
+
 Create the email identity of the sender address with the AWS CLI of the Floci container:
 
 [source,bash,subs="verbatim,attributes"]

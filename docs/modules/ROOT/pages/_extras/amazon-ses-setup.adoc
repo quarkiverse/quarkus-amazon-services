@@ -26,6 +26,9 @@ Then open the mailboxes of those email addresses to follow the confirmation proc
 
 Floci rejects a send request when the sender address is not verified, but it does not require the recipient to be verified, and it does not send any email.
 
+With Dev Services, you do not need the AWS CLI: list the sender addresses in the `quarkus.ses.devservices.verified-emails` property, as described below.
+With a Floci container that you started manually, verify them with the AWS CLI.
+
 Verify the sender address with the AWS CLI of the Floci container:
 
 [source,bash,subs="verbatim,attributes"]

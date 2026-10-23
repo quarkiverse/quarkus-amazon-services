@@ -1,29 +1,15 @@
 == Verify the sender address with Dev Services
 
-Floci rejects a send request when the sender address is not verified, and the default `floci/floci:latest` image does not ship the AWS CLI.
-To verify the sender address automatically at startup, use the `latest-compat` image and provide init scripts:
+Floci rejects a send request when the sender address is not verified.
+To verify sender addresses automatically, list them in `application.properties`:
 
 [source,properties]
 ----
-quarkus.aws.devservices.floci.image-name=floci/floci:latest-compat
-quarkus.aws.devservices.floci.init-scripts-classpath=floci-init
-quarkus.aws.devservices.floci.init-completion-msg=#### Init completed
+quarkus.ses.devservices.verified-emails=from-quarkus@example.com
 ----
 
-Create `src/main/resources/floci-init/01_verify_sender.sh`:
-
-[source,bash]
-----
-#!/bin/bash
-aws ses verify-email-identity --email-address from-quarkus@example.com
-----
-
-Then create `src/main/resources/floci-init/99_completed.sh`, which prints the message Dev Services waits for:
-
-[source,bash]
-----
-#!/bin/bash
-echo "#### Init completed"
-----
-
+Dev Services verifies these addresses when it starts the Floci container.
 Only the sender address must be verified on Floci. The recipient does not have to be, and no email is actually sent.
+
+NOTE: In dev mode, Dev Services reuses the Floci container already started by another Quarkus application, and does not verify the addresses of this property on it.
+To get a container of your own, which Dev Services initializes, set `quarkus.aws.devservices.floci.shared=false`.
