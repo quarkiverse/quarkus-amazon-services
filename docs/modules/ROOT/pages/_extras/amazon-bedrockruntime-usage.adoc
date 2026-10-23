@@ -1,0 +1,103 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+In this example, we will create an application that sends a prompt to a foundation model and returns its answer.
+The example application will demonstrate the two programming models supported by the extension.
+
+It calls the model with the two Bedrock Runtime APIs:
+
+* `Converse`, which offers the same request and response shapes for every model
+* `InvokeModel`, which sends a request body specific to the model provider, here Anthropic Claude
+
+NOTE: Floci does not run any model: it returns a canned answer with the shape of the real API, which is enough to develop and test the application locally.
+On AWS, you need access to the `anthropic.claude-3-haiku-20240307-v1:0` model in your region, or you can change the model id to a model you have access to.
+
+Let's create a `org.acme.bedrockruntime.QuarkusBedrockRuntimeSyncResource` that will provide an API to prompt the model using the synchronous client.
+
+[source,java]
+----
+package org.acme.bedrockruntime;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
+import software.amazon.awssdk.core.SdkBytes;
+import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
+import software.amazon.awssdk.services.bedrockruntime.model.ContentBlock;
+import software.amazon.awssdk.services.bedrockruntime.model.ConversationRole;
+import software.amazon.awssdk.services.bedrockruntime.model.ConverseRequest;
+import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelRequest;
+import software.amazon.awssdk.services.bedrockruntime.model.Message;
+
+@Path("/sync")
+@Produces(MediaType.TEXT_PLAIN)
+@Consumes(MediaType.TEXT_PLAIN)
+public class QuarkusBedrockRuntimeSyncResource {
+
+    static final String MODEL_ID = "anthropic.claude-3-haiku-20240307-v1:0";
+
+    @Inject
+    BedrockRuntimeClient bedrockRuntime;
+
+    @POST
+    @Path("/converse")
+    public String converse(String prompt) {
+        return bedrockRuntime.converse(converseRequest(prompt))
+                .output().message().content().get(0).text();
+    }
+
+    @POST
+    @Path("/invoke")
+    public String invoke(String prompt) {
+        return answer(bedrockRuntime.invokeModel(invokeModelRequest(prompt)).body().asUtf8String());
+    }
+
+    static ConverseRequest converseRequest(String prompt) {
+        return ConverseRequest.builder() <1>
+                .modelId(MODEL_ID)
+                .messages(userMessage(prompt))
+                .inferenceConfig(config -> config.maxTokens(512))
+                .build();
+    }
+
+    static Message userMessage(String prompt) {
+        return Message.builder()
+                .role(ConversationRole.USER)
+                .content(ContentBlock.fromText(prompt))
+                .build();
+    }
+
+    static InvokeModelRequest invokeModelRequest(String prompt) {
+        String body = new JsonObject() <2>
+                .put("anthropic_version", "bedrock-2023-05-31")
+                .put("max_tokens", 512)
+                .put("messages", new JsonArray().add(new JsonObject()
+                        .put("role", "user")
+                        .put("content", prompt)))
+                .encode();
+
+        return InvokeModelRequest.builder()
+                .modelId(MODEL_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(SdkBytes.fromUtf8String(body))
+                .build();
+    }
+
+    static String answer(String response) {
+        return new JsonObject(response).getJsonArray("content").getJsonObject(0).getString("text"); <3>
+    }
+}
+----
+<1> A `Converse` request holds the model id, the conversation and optional inference parameters.
+<2> An `InvokeModel` request body follows the format of the model provider, here the Anthropic Messages API.
+<3> The `InvokeModel` response body also follows the format of the model provider: the answer is in the first `content` block.
+
+NOTE: The AWS CRT-based sync HTTP client does not support HTTP/2. If `Converse` or `InvokeModel` fails with `HTTP/2 is not supported for sync HTTP clients`, keep the default URL connection client or the Apache client for the synchronous Bedrock Runtime client, or use the asynchronous client.

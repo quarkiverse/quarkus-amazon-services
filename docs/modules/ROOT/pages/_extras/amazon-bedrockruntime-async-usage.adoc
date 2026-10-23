@@ -1,0 +1,69 @@
+:custom-async-usage:
+
+Create a `org.acme.bedrockruntime.QuarkusBedrockRuntimeAsyncResource` REST resource that will be similar to our `QuarkusBedrockRuntimeSyncResource` but using an asynchronous programming model.
+The asynchronous client also supports `ConverseStream`, which streams the answer as it is generated.
+
+[source,java]
+----
+package org.acme.bedrockruntime;
+
+import static org.acme.bedrockruntime.QuarkusBedrockRuntimeSyncResource.MODEL_ID;
+import static org.acme.bedrockruntime.QuarkusBedrockRuntimeSyncResource.answer;
+import static org.acme.bedrockruntime.QuarkusBedrockRuntimeSyncResource.converseRequest;
+import static org.acme.bedrockruntime.QuarkusBedrockRuntimeSyncResource.invokeModelRequest;
+import static org.acme.bedrockruntime.QuarkusBedrockRuntimeSyncResource.userMessage;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+import io.smallrye.mutiny.Uni;
+import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeAsyncClient;
+import software.amazon.awssdk.services.bedrockruntime.model.ConverseStreamResponseHandler;
+
+@Path("/async")
+@Produces(MediaType.TEXT_PLAIN)
+@Consumes(MediaType.TEXT_PLAIN)
+public class QuarkusBedrockRuntimeAsyncResource {
+
+    @Inject
+    BedrockRuntimeAsyncClient bedrockRuntime;
+
+    @POST
+    @Path("/converse")
+    public Uni<String> converse(String prompt) {
+        return Uni.createFrom().completionStage(bedrockRuntime.converse(converseRequest(prompt)))
+                .onItem().transform(resp -> resp.output().message().content().get(0).text());
+    }
+
+    @POST
+    @Path("/invoke")
+    public Uni<String> invoke(String prompt) {
+        return Uni.createFrom().completionStage(bedrockRuntime.invokeModel(invokeModelRequest(prompt)))
+                .onItem().transform(resp -> answer(resp.body().asUtf8String()));
+    }
+
+    @POST
+    @Path("/converse-stream")
+    public Uni<String> converseStream(String prompt) {
+        StringBuilder answer = new StringBuilder();
+        ConverseStreamResponseHandler handler = ConverseStreamResponseHandler.builder()
+                .subscriber(ConverseStreamResponseHandler.Visitor.builder() <1>
+                        .onContentBlockDelta(event -> answer.append(event.delta().text()))
+                        .build())
+                .build();
+
+        return Uni.createFrom().completionStage(bedrockRuntime.converseStream(req -> req
+                .modelId(MODEL_ID)
+                .messages(userMessage(prompt))
+                .inferenceConfig(config -> config.maxTokens(512)), handler))
+                .onItem().transform(ignored -> answer.toString());
+    }
+}
+----
+<1> `ConverseStream` emits events while the model generates its answer. The visitor appends each text delta to the answer, which is returned once the stream completes.
+
+We create `Uni` instances from the `CompletionStage` objects returned by the asynchronous Bedrock Runtime client, and then transform the emitted item.

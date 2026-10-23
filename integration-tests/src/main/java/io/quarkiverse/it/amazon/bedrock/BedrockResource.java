@@ -1,59 +1,30 @@
 package io.quarkiverse.it.amazon.bedrock;
 
-import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.core.Response;
-
-import software.amazon.awssdk.services.bedrock.model.BedrockException;
-import software.amazon.awssdk.services.bedrock.model.FoundationModelSummary;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
 
 @Path("/bedrock")
+@Produces(MediaType.APPLICATION_JSON)
 public class BedrockResource {
     @Inject
-    BedrockManager bedrockRuntimeManager;
+    BedrockManager bedrockManager;
 
-    @Path("sync/foundation-models/")
+    @Path("sync/guardrails/")
     @GET
-    public Response listAsyncInvoked() {
-        try {
-            final List<FoundationModelSummary> list = bedrockRuntimeManager.listFoundationModels();
-            final String result = list.stream().map(FoundationModelSummary::modelId).collect(Collectors.joining(","));
-            return Response.ok(result).build();
-        } catch (BedrockException e) {
-            if (isNotImplemented(e)) {
-                return Response.status(501).build();
-            }
-        }
-        return Response.status(500).build();
+    public Map<String, Object> guardrailLifecycle(@QueryParam("name") String name) {
+        return bedrockManager.guardrailLifecycle(name);
     }
 
-    @Path("async/foundation-models/")
+    @Path("async/guardrails/")
     @GET
-    public CompletableFuture<Response> listAsyncInvokedAsync() {
-        return bedrockRuntimeManager.listFoundationModelsAsync()
-                .thenApply(list -> Response.ok(list.stream()
-                        .map(FoundationModelSummary::modelId)
-                        .collect(Collectors.joining(","))).build())
-                .exceptionally(e -> {
-                    if (isNotImplemented(e)) {
-                        return Response.status(501).build();
-                    }
-                    return Response.status(500).build();
-                });
-    }
-
-    private static boolean isNotImplemented(Throwable e) {
-        for (Throwable cause = e; cause != null; cause = cause.getCause()) {
-            if (cause instanceof BedrockException bedrockException
-                    && (bedrockException.statusCode() == 501 || bedrockException.statusCode() == 404)) {
-                return true;
-            }
-        }
-        return false;
+    public CompletableFuture<Map<String, Object>> guardrailLifecycleAsync(@QueryParam("name") String name) {
+        return bedrockManager.guardrailLifecycleAsync(name);
     }
 }

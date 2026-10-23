@@ -1,59 +1,51 @@
 package io.quarkiverse.it.amazon.bedrockruntime;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.core.Response;
-
-import software.amazon.awssdk.services.bedrockruntime.model.AsyncInvokeSummary;
-import software.amazon.awssdk.services.bedrockruntime.model.BedrockRuntimeException;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
 
 @Path("/bedrockruntime")
 public class BedrockRuntimeResource {
     @Inject
     BedrockRuntimeManager bedrockRuntimeManager;
 
-    @Path("sync/list-invokes/")
+    @Path("sync/converse/")
     @GET
-    public Response listAsyncInvoked() {
-        try {
-            final List<AsyncInvokeSummary> list = bedrockRuntimeManager.listAsyncInvokes();
-            final String result = list.stream().map(AsyncInvokeSummary::modelArn).collect(Collectors.joining(","));
-            return Response.ok(result).build();
-        } catch (BedrockRuntimeException e) {
-            if (isNotImplemented(e)) {
-                return Response.status(501).build();
-            }
-        }
-        return Response.status(500).build();
+    @Produces(MediaType.TEXT_PLAIN)
+    public String converse(@QueryParam("prompt") String prompt) {
+        return bedrockRuntimeManager.converse(prompt);
     }
 
-    @Path("async/list-invokes/")
+    @Path("async/converse/")
     @GET
-    public CompletableFuture<Response> listAsyncInvokedAsync() {
-        return bedrockRuntimeManager.listAsyncInvokesAsync()
-                .thenApply(list -> Response.ok(list.stream()
-                        .map(AsyncInvokeSummary::modelArn)
-                        .collect(Collectors.joining(","))).build())
-                .exceptionally(e -> {
-                    if (isNotImplemented(e)) {
-                        return Response.status(501).build();
-                    }
-                    return Response.status(500).build();
-                });
+    @Produces(MediaType.TEXT_PLAIN)
+    public CompletableFuture<String> converseAsync(@QueryParam("prompt") String prompt) {
+        return bedrockRuntimeManager.converseAsync(prompt);
     }
 
-    private static boolean isNotImplemented(Throwable e) {
-        for (Throwable cause = e; cause != null; cause = cause.getCause()) {
-            if (cause instanceof BedrockRuntimeException bedrockRuntimeException
-                    && (bedrockRuntimeException.statusCode() == 501 || bedrockRuntimeException.statusCode() == 404)) {
-                return true;
-            }
-        }
-        return false;
+    @Path("sync/invoke/")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String invokeModel(@QueryParam("prompt") String prompt) {
+        return bedrockRuntimeManager.invokeModel(prompt);
+    }
+
+    @Path("async/invoke/")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public CompletableFuture<String> invokeModelAsync(@QueryParam("prompt") String prompt) {
+        return bedrockRuntimeManager.invokeModelAsync(prompt);
+    }
+
+    @Path("async/converse-stream/")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public CompletableFuture<String> converseStreamAsync(@QueryParam("prompt") String prompt) {
+        return bedrockRuntimeManager.converseStreamAsync(prompt);
     }
 }
