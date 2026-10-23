@@ -1,0 +1,77 @@
+:custom-async-usage:
+
+Create a `org.acme.bedrock.QuarkusBedrockAsyncResource` REST resource that will be similar to our `QuarkusBedrockSyncResource` but using an asynchronous programming model.
+
+[source,java]
+----
+package org.acme.bedrock;
+
+import static org.acme.bedrock.QuarkusBedrockSyncResource.createGuardrailRequest;
+
+import java.util.List;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+import org.acme.bedrock.QuarkusBedrockSyncResource.Guardrail;
+
+import io.smallrye.mutiny.Uni;
+import software.amazon.awssdk.services.bedrock.BedrockAsyncClient;
+import software.amazon.awssdk.services.bedrock.model.CreateGuardrailResponse;
+import software.amazon.awssdk.services.bedrock.model.CreateGuardrailVersionResponse;
+
+@Path("/async")
+@Produces(MediaType.APPLICATION_JSON)
+public class QuarkusBedrockAsyncResource {
+
+    @Inject
+    BedrockAsyncClient bedrock;
+
+    @POST
+    @Path("/guardrails")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Uni<String> create(String name) {
+        return Uni.createFrom().completionStage(bedrock.createGuardrail(createGuardrailRequest(name)))
+                .onItem().transform(CreateGuardrailResponse::guardrailId);
+    }
+
+    @POST
+    @Path("/guardrails/{id}/versions")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Uni<String> publish(@PathParam("id") String id) {
+        return Uni.createFrom().completionStage(bedrock.createGuardrailVersion(req -> req.guardrailIdentifier(id)))
+                .onItem().transform(CreateGuardrailVersionResponse::version);
+    }
+
+    @GET
+    @Path("/guardrails")
+    public Uni<List<Guardrail>> list() {
+        return Uni.createFrom().completionStage(bedrock.listGuardrails(req -> {
+        }))
+                .onItem().transform(resp -> resp.guardrails().stream().map(Guardrail::from).toList());
+    }
+
+    @GET
+    @Path("/guardrails/{id}/versions")
+    public Uni<List<Guardrail>> versions(@PathParam("id") String id) {
+        return Uni.createFrom().completionStage(bedrock.listGuardrails(req -> req.guardrailIdentifier(id)))
+                .onItem().transform(resp -> resp.guardrails().stream().map(Guardrail::from).toList());
+    }
+
+    @DELETE
+    @Path("/guardrails/{id}")
+    public Uni<Void> delete(@PathParam("id") String id) {
+        return Uni.createFrom().completionStage(bedrock.deleteGuardrail(req -> req.guardrailIdentifier(id)))
+                .replaceWithVoid();
+    }
+}
+----
+We create `Uni` instances from the `CompletionStage` objects returned by the asynchronous Bedrock client, and then transform the emitted item.

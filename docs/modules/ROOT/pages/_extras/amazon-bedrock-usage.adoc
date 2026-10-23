@@ -1,0 +1,98 @@
+:custom-usage:
+
+== Creating JSON REST service
+
+In this example, we will create an application that manages Amazon Bedrock guardrails: it creates a guardrail, publishes a version of it, lists the guardrails and deletes them.
+The example application will demonstrate the two programming models supported by the extension.
+
+NOTE: Floci emulates the guardrail operations of the Bedrock control plane. It does not emulate the foundation model catalog (`ListFoundationModels`, `GetFoundationModel`) nor the model customization operations.
+
+Let's create a `org.acme.bedrock.QuarkusBedrockSyncResource` that will provide an API to manage guardrails using the synchronous client.
+
+[source,java]
+----
+package org.acme.bedrock;
+
+import java.util.List;
+
+import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+
+import software.amazon.awssdk.services.bedrock.BedrockClient;
+import software.amazon.awssdk.services.bedrock.model.CreateGuardrailRequest;
+import software.amazon.awssdk.services.bedrock.model.GuardrailContentFilterType;
+import software.amazon.awssdk.services.bedrock.model.GuardrailFilterStrength;
+import software.amazon.awssdk.services.bedrock.model.GuardrailSummary;
+
+@Path("/sync")
+@Produces(MediaType.APPLICATION_JSON)
+public class QuarkusBedrockSyncResource {
+
+    @Inject
+    BedrockClient bedrock;
+
+    @POST
+    @Path("/guardrails")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String create(String name) {
+        return bedrock.createGuardrail(createGuardrailRequest(name)).guardrailId();
+    }
+
+    @POST
+    @Path("/guardrails/{id}/versions")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String publish(@PathParam("id") String id) {
+        return bedrock.createGuardrailVersion(req -> req.guardrailIdentifier(id)).version();
+    }
+
+    @GET
+    @Path("/guardrails")
+    public List<Guardrail> list() {
+        return bedrock.listGuardrails(req -> {
+        }).guardrails().stream().map(Guardrail::from).toList();
+    }
+
+    @GET
+    @Path("/guardrails/{id}/versions")
+    public List<Guardrail> versions(@PathParam("id") String id) {
+        return bedrock.listGuardrails(req -> req.guardrailIdentifier(id)).guardrails().stream()
+                .map(Guardrail::from)
+                .toList();
+    }
+
+    @DELETE
+    @Path("/guardrails/{id}")
+    public void delete(@PathParam("id") String id) {
+        bedrock.deleteGuardrail(req -> req.guardrailIdentifier(id));
+    }
+
+    static CreateGuardrailRequest createGuardrailRequest(String name) {
+        return CreateGuardrailRequest.builder() <1>
+                .name(name)
+                .blockedInputMessaging("Sorry, this input is not allowed.")
+                .blockedOutputsMessaging("Sorry, this answer is not allowed.")
+                .contentPolicyConfig(policy -> policy.filtersConfig(filter -> filter
+                        .type(GuardrailContentFilterType.HATE)
+                        .inputStrength(GuardrailFilterStrength.HIGH)
+                        .outputStrength(GuardrailFilterStrength.HIGH)))
+                .build();
+    }
+
+    public record Guardrail(String id, String name, String version, String status) {
+        static Guardrail from(GuardrailSummary summary) {
+            return new Guardrail(summary.id(), summary.name(), summary.version(), summary.statusAsString());
+        }
+    }
+}
+----
+<1> A guardrail needs a name, the messages returned when an input or an answer is blocked, and at least one policy. Here, a content filter blocks hateful inputs and answers.
+
+A new guardrail only has a `DRAFT` version, its working copy. Creating a version takes an immutable snapshot of the draft, numbered `1`, `2` and so on.

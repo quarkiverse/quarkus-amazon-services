@@ -1,0 +1,50 @@
+* Create a guardrail with the synchronous client, it returns the guardrail id:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XPOST -H"Content-type: text/plain" http://localhost:8080/sync/guardrails -d'quarkus-guardrail'
+----
+
+* Publish a version of the guardrail, it returns the version number, `1`:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XPOST http://localhost:8080/sync/guardrails/<guardrail-id>/versions
+----
+
+* List the guardrails:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync/guardrails
+----
+
+You should see output like this, with one `DRAFT` entry per guardrail:
+
+[source,json]
+----
+[{"id":"d99f8e50bd26","name":"quarkus-guardrail","status":"READY","version":"DRAFT"}]
+----
+
+* List the versions of the guardrail:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/sync/guardrails/<guardrail-id>/versions
+----
+
+You should see output like this:
+
+[source,json]
+----
+[{"id":"d99f8e50bd26","name":"quarkus-guardrail","status":"READY","version":"1"},{"id":"d99f8e50bd26","name":"quarkus-guardrail","status":"READY","version":"DRAFT"}]
+----
+
+* Delete the guardrail and all its versions:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XDELETE http://localhost:8080/sync/guardrails/<guardrail-id>
+----
+
+* Replace `sync` with `async` to use the asynchronous client.
