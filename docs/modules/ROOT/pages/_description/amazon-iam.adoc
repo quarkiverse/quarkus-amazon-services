@@ -1,5 +1,4 @@
-:aws-stack: localstack
-:localstack-service: iam
+:has-integration-test:
 
 Amazon Identity and Access Management (IAM) enables users to manage access to AWS services and resources securely.
 

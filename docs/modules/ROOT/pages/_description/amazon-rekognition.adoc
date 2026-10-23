@@ -1,5 +1,3 @@
-:aws-docs-url: https://docs.aws.amazon.com/rekognition/latest/dg/what-is.html
-
 Amazon Rekognition is a fully managed service that makes it easy for developers to analyze images and videos to identify objects, people, text, scenes, activities, and inappropriate content, as well as perform facial analysis and facial search.
 
 You can find more information about Rekognition at https://aws.amazon.com/rekognition/[the Amazon Rekognition website].

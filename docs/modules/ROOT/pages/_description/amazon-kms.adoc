@@ -1,4 +1,4 @@
-:aws-stack: floci
+:has-integration-test:
 :quickstart: amazon-kms-quickstart
 :solution-summary: The application built here allows to encrypt and decrypt text messages using a master key created on AWS KMS.
 

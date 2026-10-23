@@ -1,4 +1,4 @@
-:aws-stack: floci
+:has-integration-test:
 
 AWS Security Token Service (AWS STS) is a web service that enables you to request temporary, limited-privilege credentials for users.
 

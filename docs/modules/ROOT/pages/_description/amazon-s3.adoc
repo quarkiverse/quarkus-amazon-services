@@ -1,4 +1,4 @@
-:aws-stack: floci
+:has-integration-test:
 :quickstart: amazon-s3-quickstart
 :solution-summary: The application built here allows to manage files stored in Amazon S3.
 :main-class: S3SyncClientResource

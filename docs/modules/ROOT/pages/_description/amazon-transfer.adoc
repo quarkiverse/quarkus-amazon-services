@@ -1,5 +1,3 @@
-:aws-docs-url: https://docs.aws.amazon.com/transfer/latest/userguide/what-is.html
-
 Amazon Transfer Family is a fully managed service that enables file transfers directly into and out of Amazon S3 using SFTP, FTPS, and FTP protocols.
 
 You can find more information about the Transfer Family at https://aws.amazon.com/aws-transfer-family/[the Amazon Transfer Family website].

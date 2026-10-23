@@ -1,4 +1,4 @@
-:aws-stack: floci
+:has-integration-test:
 :quickstart: amazon-dynamodb-quickstart
 :solution-summary: The application built here allows to manage elements (fruits) stored in Amazon DynamoDB.
 :main-class: FruitResource

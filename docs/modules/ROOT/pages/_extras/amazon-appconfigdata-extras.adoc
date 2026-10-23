@@ -46,7 +46,7 @@ Boolean and numeric JSON values are exposed as strings (`true`, `false`, and the
 === Credentials, region, and endpoint
 
 The config source uses the same AppConfig Data client configuration as the rest of the extension (credentials provider chain, region, and optional endpoint override).
-This is useful for LocalStack or custom endpoints:
+This is useful for a local stack such as Floci, or for custom endpoints:
 
 [source,properties]
 ----
