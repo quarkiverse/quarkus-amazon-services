@@ -131,6 +131,7 @@ Every value is taken as is, without transformation, from the AWS service model, 
 | `extension-name` | Artifact `quarkus-amazon-<extension-name>`; names the configuration reference. Written only if it differs from `service-name`. | name of the service folder `services/<extension-name>/` | — | `scheduler` |
 | `sdk-package` | SDK package `software.amazon.awssdk.services.<sdk-package>`. Written only if it differs from `extension-name`. | the SDK client package name | — | `cognitoidentityprovider` |
 | `java-package` | Package of the example classes `org.acme.<java-package>`. Written only if it differs from `extension-name`. | the extension package name | `packageName` | `cognitouserpools` |
+| `extension-status` | Status of the extension, also written to its extension descriptor. `deprecated` shows a WARNING under the title. Written only if it differs from `stable`. | `stable` | `status` | `deprecated` |
 
 The file name is `amazon-<packageName>.adoc`, which can be overridden with `docsPageName`. It must match the page name `amazon-<page>.adoc`.
 

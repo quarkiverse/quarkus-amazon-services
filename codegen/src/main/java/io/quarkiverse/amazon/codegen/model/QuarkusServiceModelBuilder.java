@@ -55,6 +55,7 @@ public class QuarkusServiceModelBuilder {
                 config.getDocsPageName() != null ? config.getDocsPageName() : "amazon-" + packageName,
                 config.getKeywords() != null ? config.getKeywords() : List.of(),
                 config.getCategories() != null ? config.getCategories() : List.of("cloud"),
+                config.getStatus() != null ? config.getStatus() : "stable",
                 sourcesDirectory);
     }
 }

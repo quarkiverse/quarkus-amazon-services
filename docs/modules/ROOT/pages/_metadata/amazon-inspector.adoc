@@ -2,3 +2,4 @@
 :service-name: inspector
 :service-name-uppercase: Amazon Inspector Classic
 :service-class-name: Inspector
+:extension-status: deprecated

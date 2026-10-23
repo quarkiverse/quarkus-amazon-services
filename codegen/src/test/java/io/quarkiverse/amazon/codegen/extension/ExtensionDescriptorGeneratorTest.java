@@ -72,6 +72,20 @@ public class ExtensionDescriptorGeneratorTest {
     }
 
     @Test
+    public void customStatus() {
+        QuarkusCustomizationConfig config = QuarkusCustomizationConfig.create();
+        config.setStatus("deprecated");
+        QuarkusServiceModel model = new QuarkusServiceModelBuilder(restJsonC2jModels())
+                .quarkusCustomizationConfig(config)
+                .build();
+
+        String content = new ExtensionDescriptorGenerator(model, "ecr").content();
+
+        assertThat(content).contains("  status: \"deprecated\"\n")
+                .doesNotContain("stable");
+    }
+
+    @Test
     public void writtenInMetaInf() throws IOException {
         ExtensionDescriptorGenerator generator = new ExtensionDescriptorGenerator(restJsonQuarkusModel(), "ecr");
 

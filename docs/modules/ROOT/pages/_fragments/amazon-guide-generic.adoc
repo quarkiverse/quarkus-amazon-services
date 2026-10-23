@@ -1,9 +1,17 @@
 ifndef::extension-name[:extension-name: {service-name}]
 ifndef::sdk-package[:sdk-package: {extension-name}]
+ifndef::extension-status[:extension-status: stable]
 
 = {service-name-uppercase} Client
 
 include::../includes/attributes.adoc[]
+
+ifeval::["{extension-status}" == "deprecated"]
+[WARNING]
+====
+The {service-name-uppercase} extension is deprecated and will be removed in a future release.
+====
+endif::[]
 
 include::../_description/{docname}.adoc[]
 

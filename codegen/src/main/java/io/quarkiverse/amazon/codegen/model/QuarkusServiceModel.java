@@ -24,11 +24,12 @@ public class QuarkusServiceModel {
     private final String docsPageName;
     private final List<String> keywords;
     private final List<String> categories;
+    private final String status;
     private final String sourcesDirectory;
 
     QuarkusServiceModel(IntermediateModel intermediateModel, String packageName, String classPrefix, String configName,
             String featureName, String displayName, String docsPageName, List<String> keywords, List<String> categories,
-            String sourcesDirectory) {
+            String status, String sourcesDirectory) {
         this.intermediateModel = intermediateModel;
         this.packageName = packageName;
         this.classPrefix = classPrefix;
@@ -38,6 +39,7 @@ public class QuarkusServiceModel {
         this.docsPageName = docsPageName;
         this.keywords = keywords;
         this.categories = categories;
+        this.status = status;
         this.sourcesDirectory = sourcesDirectory;
     }
 
@@ -107,6 +109,13 @@ public class QuarkusServiceModel {
      */
     public List<String> categories() {
         return categories;
+    }
+
+    /**
+     * @return the status of the extension descriptor
+     */
+    public String status() {
+        return status;
     }
 
     public ClassName runtimeClass(String suffix) {
