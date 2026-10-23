@@ -1,0 +1,10 @@
+* Request a certificate with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl "http://localhost:8080/sync?domainName=quarkus.local"
+----
+
+The endpoint returns the domain name of the certificate, `quarkus.local`.
+
+* Replace `sync` with `async` to use the asynchronous client.

@@ -1,0 +1,24 @@
+* Create the `quarkus` log group and its `app` log stream with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -X POST -d groupName=quarkus -d streamName=app http://localhost:8080/sync
+----
+
+* Push a log event to the stream:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -X PUT -d groupName=quarkus -d streamName=app -d "message=Quarkus is awesome" http://localhost:8080/sync
+----
+
+* Read the log events of the stream:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl "http://localhost:8080/sync?groupName=quarkus&streamName=app"
+----
+
+The endpoint returns `Quarkus is awesome`.
+
+* Replace `sync` with `async` to use the asynchronous client. Use another stream name, as the stream `app` already exists.

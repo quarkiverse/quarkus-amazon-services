@@ -1,0 +1,17 @@
+* Push a data point to the `Invocations` metric of the `quarkus` namespace with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -X PUT -d namespace=quarkus -d name=Invocations http://localhost:8080/sync
+----
+
+* List the metrics of the namespace:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl "http://localhost:8080/sync?namespace=quarkus"
+----
+
+The endpoint returns `Invocations`.
+
+* Replace `sync` with `async` to use the asynchronous client.

@@ -1,6 +1,6 @@
 :has-integration-test:
 :aws-stack: moto
-:solution-summary: The application built here shows the count of Cognito User Pools in the current region.
+:solution-summary: The application built here creates Cognito user pools and counts the user pools of the current region.
 :main-class: CognitoExampleResource
 :main-path: /cognito-example
 

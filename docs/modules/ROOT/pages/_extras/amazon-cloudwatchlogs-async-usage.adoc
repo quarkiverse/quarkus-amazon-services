@@ -1,127 +1,66 @@
 :custom-async-usage:
 
-Create a `org.acme.cloudwatchlogs.QuarkusCloudWatchAsyncResource` REST resource that will be similar to our `QuarkusCloudWatchSyncResource` but using an asynchronous programming model.
+Create a `org.acme.cloudwatchlogs.QuarkusCloudWatchLogsAsyncResource` REST resource that will be similar to our `QuarkusCloudWatchLogsSyncResource` but using an asynchronous programming model.
 
 [source,java]
 ----
 package org.acme.cloudwatchlogs;
 
-import io.quarkus.logging.Log;
-import io.smallrye.mutiny.Multi;
-import io.smallrye.mutiny.Uni;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
-import software.amazon.awssdk.services.cloudwatchlogs.CloudWatchLogsAsyncClient;
-import software.amazon.awssdk.services.cloudwatchlogs.model.*;
-import software.amazon.awssdk.services.cloudwatchlogs.paginators.GetLogEventsPublisher;
+import java.time.Instant;
+import java.util.stream.Collectors;
 
-import java.time.Duration;
-import java.util.function.Supplier;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import io.smallrye.mutiny.Uni;
+import software.amazon.awssdk.services.cloudwatchlogs.CloudWatchLogsAsyncClient;
+import software.amazon.awssdk.services.cloudwatchlogs.model.OutputLogEvent;
+import software.amazon.awssdk.services.cloudwatchlogs.model.ResourceAlreadyExistsException;
 
 @Path("/async")
-public class QuarkusCloudWatchLogsAsyncLogsResource extends QuarkusCloudWatchLogsResource {
+@Produces(MediaType.TEXT_PLAIN)
+public class QuarkusCloudWatchLogsAsyncResource {
 
     @Inject
     CloudWatchLogsAsyncClient client;
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public Uni<String> listLogEventsOfStream(@QueryParam("groupName") String groupName,
-                                             @QueryParam("streamName") String streamName) {
-
-        return Multi.createFrom().<OutputLogEvent>emitter((emitter) -> {
-                    Log.info("List Logs for " + groupName + " - " + streamName);
-                    GetLogEventsPublisher paginator = client
-                            .getLogEventsPaginator(
-                                    generateGetLogEvents(groupName, streamName)
-                            );
-                    paginator.doAfterOnComplete(emitter::complete)
-                            .doAfterOnError(emitter::fail)
-                            .subscribe(response -> response.events()
-                                    .forEach(emitter::emit));
-                }).map(OutputLogEvent::message)
-                .collect().asList()
-                .map(value -> String.join(", ", value));
-    }
-
-    private static class LogGroupNotFoundYet extends Throwable {
-    }
-
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
     public Uni<String> createLogStream(@FormParam("groupName") String groupName,
-                                       @FormParam("streamName") String streamName) {
-        Log.info("Create Log Stream for " + groupName + " - " + streamName);
-
-
-        final Supplier<Uni<CreateLogGroupResponse>> createLogGroupRequest = () ->
-                Uni.createFrom().completionStage(
-                        client.createLogGroup(generateCreateLogGroupRequest(groupName))
-                );
-
-
-        final Supplier<Uni<CreateLogStreamResponse>> createLogStreamRequest = () -> Uni.createFrom().completionStage(
-                client.createLogStream(generateCreateLogStreamRequest(groupName, streamName))
-        );
-
-        final Uni<Void> ignore = Uni.createFrom().voidItem();
-
-
-        final Supplier<Uni<DescribeLogGroupsResponse>> describeLogGroupsRequest = () -> Uni.createFrom().completionStage(
-                client.describeLogGroups(generateDescribeLogGroupRequest(groupName))
-        );
-
-        final Supplier<Uni<DescribeLogGroupsResponse>> awaitForGroupToBeAvailable = () -> describeLogGroupsRequest.get()
-                .flatMap(response -> {
-                            boolean logGroupCreated = response.logGroups().stream()
-                                    .anyMatch(logGroup -> logGroup.logGroupName().equals(groupName));
-
-                            if (logGroupCreated) {
-                                return Uni.createFrom().item(response);
-                            } else {
-                                return Uni.createFrom().failure(new LogGroupNotFoundYet());
-                            }
-                        }
-                ).onFailure(LogGroupNotFoundYet.class).retry()
-                .withBackOff(Duration.ofMillis(100))
-                .indefinitely();
-
-
-        Uni<Void> createLogGroupIfNotExists = describeLogGroupsRequest.get().flatMap(
-                describeLogGroupsResponse -> {
-                    if (describeLogGroupsResponse.logGroups().isEmpty()) {
-                        return createLogGroupRequest.get().flatMap(createLogGroupResponse -> ignore);
-                    } else {
-                        return ignore;
-                    }
-                }
-        );
-
-        return createLogGroupIfNotExists
-                        .onFailure(ResourceAlreadyExistsException.class)
-                        .recoverWithUni(ignore)
-                        .flatMap(ignored -> awaitForGroupToBeAvailable.get())
-                        .flatMap(ignored -> createLogStreamRequest.get())
-                        .map(response -> "OK");
-
-
+            @FormParam("streamName") String streamName) {
+        return Uni.createFrom().completionStage(() -> client.createLogGroup(r -> r.logGroupName(groupName)))
+                .replaceWithVoid()
+                .onFailure(ResourceAlreadyExistsException.class).recoverWithNull()
+                .chain(() -> Uni.createFrom().completionStage(
+                        () -> client.createLogStream(r -> r.logGroupName(groupName).logStreamName(streamName))))
+                .map(response -> "OK");
     }
 
     @PUT
-    @Produces(MediaType.TEXT_PLAIN)
-    public Uni<String> putLogEventsForStream(@FormParam("groupName") String groupName,
-                                             @FormParam("streamName") String streamName, @FormParam("message") String message) {
-        Log.info("Put Log Event for " + groupName + " - " + streamName);
-
-        return Uni.createFrom().completionStage(
-                client.putLogEvents(generatePutLogEventRequest(groupName, streamName, message))
-        ).map(response -> "OK");
-
+    public Uni<String> putLogEvent(@FormParam("groupName") String groupName, @FormParam("streamName") String streamName,
+            @FormParam("message") String message) {
+        return Uni.createFrom().completionStage(client.putLogEvents(r -> r.logGroupName(groupName).logStreamName(streamName)
+                .logEvents(e -> e.message(message).timestamp(Instant.now().toEpochMilli()))))
+                .map(response -> "OK");
     }
 
-
+    @GET
+    public Uni<String> getLogEvents(@QueryParam("groupName") String groupName,
+            @QueryParam("streamName") String streamName) {
+        return Uni.createFrom().completionStage(
+                client.getLogEvents(r -> r.logGroupName(groupName).logStreamName(streamName).startFromHead(true)))
+                .map(response -> response.events().stream()
+                        .map(OutputLogEvent::message)
+                        .collect(Collectors.joining("\n")));
+    }
 }
 ----
 
-Note that the `CloudWatchAsyncClient` behaves just like the `CloudWatchClient`, but returns `CompletionStage` objects which we use to create `Uni`/`Multi` instances, and then transform the emitted item.
+Note that the `CloudWatchLogsAsyncClient` behaves just like the `CloudWatchLogsClient`, but returns `CompletionStage` objects which we use to create `Uni` instances.
+The asynchronous client reports errors, such as `ResourceAlreadyExistsException`, as failures of the `Uni`, which we recover from to ignore an existing log group.

@@ -1,0 +1,17 @@
+* Create a user pool with the synchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -X POST "http://localhost:8080/cognito-example?name=quarkus-users"
+----
+
+The endpoint returns the ID of the new user pool.
+
+* Count the user pools:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/cognito-example
+----
+
+* Replace `cognito-example` with `cognito-async-example` to use the asynchronous client.

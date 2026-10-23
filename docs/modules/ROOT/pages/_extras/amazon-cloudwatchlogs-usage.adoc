@@ -2,142 +2,71 @@
 
 == Creating JSON REST service
 
-In this example, we will create an application that allows us to create a log group and log stream and push logs events to it using CloudWatch Logs using a RESTful API.
+In this example, we will create an application that creates a log group and a log stream, pushes log events to the stream and reads them back using a RESTful API.
 The example application will demonstrate the two programming models supported by the extension.
 
-Let's start with an abstract `org.acme.cloudwatchlogs.QuarkusCloudWatchLogsResource` class to provide the common functionality we will need for both the synchronous and asynchronous exposures.
+Let's start with the synchronous implementation in the `org.acme.cloudwatchlogs.QuarkusCloudWatchLogsSyncResource` class.
 
 [source,java]
 ----
 package org.acme.cloudwatchlogs;
-import software.amazon.awssdk.services.cloudwatchlogs.model.*;
 
 import java.time.Instant;
-
-public abstract class QuarkusCloudWatchLogsResource {
-
-    protected CreateLogStreamRequest generateCreateLogStreamRequest(String groupName, String streamName) {
-        return CreateLogStreamRequest.builder()
-                    .logGroupName(groupName)
-                    .logStreamName(streamName).build(); <1>
-    }
-
-    protected DescribeLogGroupsRequest generateDescribeLogGroupRequest(String groupName) {
-        return DescribeLogGroupsRequest.builder()
-                    .logGroupNamePattern(groupName).build(); <2>
-    }
-
-    protected CreateLogGroupRequest generateCreateLogGroupRequest(String groupName) {
-        return CreateLogGroupRequest.builder().logGroupName(groupName).build(); <3>
-    }
-
-    protected PutLogEventsRequest generatePutLogEventRequest(String groupName, String streamName, String logMessage) {
-        return PutLogEventsRequest.builder().logGroupName(groupName).logStreamName(streamName)
-                .logEvents(InputLogEvent.builder().message(logMessage)
-                        .timestamp(Instant.now().toEpochMilli()).build()).build(); <4>
-    }
-
-    protected GetLogEventsRequest generateGetLogEvents(String groupName, String streamName) {
-        return GetLogEventsRequest.builder()
-                .logGroupName(groupName).logStreamName(streamName)
-                .build();  <5>
-    }
-
-
-}
-
-----
-
-<1> Generate a request to create a log stream for a specific group
-<2> Generate a request to list created log groups
-<3> Generate a request to create a log group
-<4> Generate a request put log events at a specific log stream and group
-<5> Generate a request to list all log events for a specific log stream and group
-
-Now, we can extend the class and create the synchronous implementation in the `org.acme.cloudwatchlogs.QuarkusCloudWatchLogsSyncResource` class.
-
-[source,java]
-----
-package org.acme.cloudwatchlogs;
-
-import io.quarkus.logging.Log;
-import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
-import software.amazon.awssdk.services.cloudwatchlogs.CloudWatchLogsClient;
-import software.amazon.awssdk.services.cloudwatchlogs.model.*;
-
-import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.inject.Inject;
+import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+
+import software.amazon.awssdk.services.cloudwatchlogs.CloudWatchLogsClient;
+import software.amazon.awssdk.services.cloudwatchlogs.model.OutputLogEvent;
+import software.amazon.awssdk.services.cloudwatchlogs.model.ResourceAlreadyExistsException;
+
 @Path("/sync")
-public class QuarkusCloudWatchLogsSyncLogsResource extends QuarkusCloudWatchLogsResource {
+@Produces(MediaType.TEXT_PLAIN)
+public class QuarkusCloudWatchLogsSyncResource {
+
     @Inject <1>
     CloudWatchLogsClient client;
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String listLogEventsOfStream(@QueryParam("groupName") String groupName,
-                                        @QueryParam("streamName") String streamName) {
-
-        Log.info("List Logs for " + groupName + " - " + streamName);
-
-
-        List<String> messages = client.getLogEventsPaginator(
-                        generateGetLogEvents(groupName, streamName)
-                ).stream()
-                .flatMap(getLogEventsResponse -> getLogEventsResponse.events().stream())
-                .map(OutputLogEvent::message)
-                .collect(Collectors.toList());
-
-
-        return String.join("\n", messages);
-    }
-
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
-    public String createLogStream(@FormParam("groupName") String groupName,
-                                  @FormParam("streamName") String streamName) {
-        Log.info("Create Log Stream for " + groupName + " - " + streamName);
-
-
+    public String createLogStream(@FormParam("groupName") String groupName, @FormParam("streamName") String streamName) {
         try {
-            client.createLogGroup(generateCreateLogGroupRequest(groupName));
+            client.createLogGroup(r -> r.logGroupName(groupName)); <2>
         } catch (ResourceAlreadyExistsException e) {
-            Log.info("Log Group Already Exists " + groupName);
+            // The log group already exists
         }
-
-
-        //There is a slight delay between the creation and it being available
-        boolean logGroupCreated = false;
-
-        while (!logGroupCreated) {
-
-            logGroupCreated =  client.describeLogGroups(generateDescribeLogGroupRequest(groupName))
-                    .logGroups()
-                    .stream()
-                    .anyMatch(logGroup -> logGroup.logGroupName().equals(groupName));
-
-        }
-
-        client.createLogStream(generateCreateLogStreamRequest(groupName, streamName));
+        client.createLogStream(r -> r.logGroupName(groupName).logStreamName(streamName)); <3>
         return "OK";
     }
-
 
     @PUT
-    @Produces(MediaType.TEXT_PLAIN)
-    public String putLogEventsForStream(@FormParam("groupName") String groupName,
-                                        @FormParam("streamName") String streamName,
-                                        @FormParam("message") String message) {
-        Log.info("Put Log Event for " + groupName + " - " + streamName);
-        client.putLogEvents(generatePutLogEventRequest(groupName, streamName, message));
+    public String putLogEvent(@FormParam("groupName") String groupName, @FormParam("streamName") String streamName,
+            @FormParam("message") String message) {
+        client.putLogEvents(r -> r.logGroupName(groupName).logStreamName(streamName) <4>
+                .logEvents(e -> e.message(message).timestamp(Instant.now().toEpochMilli())));
         return "OK";
     }
-}
 
+    @GET
+    public String getLogEvents(@QueryParam("groupName") String groupName, @QueryParam("streamName") String streamName) {
+        return client.getLogEvents(r -> r.logGroupName(groupName).logStreamName(streamName).startFromHead(true)) <5>
+                .events()
+                .stream()
+                .map(OutputLogEvent::message)
+                .collect(Collectors.joining("\n"));
+    }
+}
 ----
 
-<1> Inject the client provided by the amazon-cloudwatchlogs-logs extension
-
-Using the Amazon CloudWatch Logs SDK, we can get & push log data to CloudWatch Logs Stream.
+<1> Inject the client provided by the amazon-cloudwatchlogs extension
+<2> Create the log group, unless it already exists
+<3> Create the log stream in the log group
+<4> Push a log event to the log stream
+<5> Read the log events of the stream, oldest first

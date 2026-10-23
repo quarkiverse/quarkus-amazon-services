@@ -1,7 +1,6 @@
 :custom-async-usage:
 
-Create a `org.acme.cognitouserpools.CognitoAsyncExampleResource` REST resource that will be similar to our
-`CognitoExampleResource` but using an asynchronous programming model.
+Create a `org.acme.cognitouserpools.CognitoAsyncExampleResource` REST resource that will be similar to our `CognitoExampleResource` but using an asynchronous programming model.
 
 [source,java]
 ----
@@ -9,31 +8,34 @@ package org.acme.cognitouserpools;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
 import io.smallrye.mutiny.Uni;
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderAsyncClient;
-import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUserPoolsRequest;
 
 @Path("/cognito-async-example")
+@Produces(MediaType.TEXT_PLAIN)
 public class CognitoAsyncExampleResource {
+
     @Inject
     CognitoIdentityProviderAsyncClient cognitoAsyncClient;
 
+    @POST
+    public Uni<String> createUserPool(@QueryParam("name") String name) {
+        return Uni.createFrom().completionStage(cognitoAsyncClient.createUserPool(r -> r.poolName(name)))
+                .map(response -> response.userPool().id());
+    }
+
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public Uni<String> hello() {
-        ListUserPoolsRequest request = ListUserPoolsRequest.builder().build();
-        return Uni
-            .createFrom()
-            .completionStage(cognitoAsyncClient.listUserPools(request))
-            .map(response -> {
-                return String.format("You have %d user pools", response.userPools().size());
-            });
+    public Uni<String> countUserPools() {
+        return Uni.createFrom().completionStage(cognitoAsyncClient.listUserPools(r -> r.maxResults(60)))
+                .map(response -> String.format("You have %d user pools", response.userPools().size()));
     }
 }
 ----
-We create `Uni` instances from the `CompletionStage` objects returned by the asynchronous Cognito
-Identity Provider client, and then transform the emitted item.
+
+We create `Uni` instances from the `CompletionStage` objects returned by the asynchronous Cognito Identity Provider client, and then transform the emitted item.

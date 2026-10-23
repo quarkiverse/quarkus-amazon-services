@@ -2,7 +2,9 @@
 
 == Creating JSON REST service
 
-Edit a `org.acme.cognitouserpools.CognitoExampleResource` that will provide an API return count of Cognito User Pools using the synchronous client.
+In this example, we will create an application that creates Cognito user pools and counts the user pools of the current region using a RESTful API.
+
+Edit the `org.acme.cognitouserpools.CognitoExampleResource` class to use the synchronous client:
 
 [source,java]
 ----
@@ -10,52 +12,69 @@ package org.acme.cognitouserpools;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
 import software.amazon.awssdk.services.cognitoidentityprovider.CognitoIdentityProviderClient;
-import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUserPoolsRequest;
-import software.amazon.awssdk.services.cognitoidentityprovider.model.ListUserPoolsResponse;
 
 @Path("/cognito-example")
+@Produces(MediaType.TEXT_PLAIN)
 public class CognitoExampleResource {
-    @Inject
+
+    @Inject <1>
     CognitoIdentityProviderClient cognitoClient;
 
+    @POST
+    public String createUserPool(@QueryParam("name") String name) {
+        return cognitoClient.createUserPool(r -> r.poolName(name)).userPool().id(); <2>
+    }
+
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        ListUserPoolsRequest request = ListUserPoolsRequest.builder().build();
-        ListUserPoolsResponse response = cognitoClient.listUserPools(request);
-        return String.format("You have %d user pools", response.userPools().size());
+    public String countUserPools() {
+        int count = cognitoClient.listUserPools(r -> r.maxResults(60)).userPools().size(); <3>
+        return String.format("You have %d user pools", count);
     }
 }
 ----
 
-And update test class:
+<1> Inject the client provided by the amazon-cognito-user-pools extension
+<2> Create a user pool and return its ID
+<3> List the user pools, up to 60, the maximum number of results per page
+
+Update the test class to create a user pool and count it:
 
 [source,java]
 ----
 package org.acme.cognitouserpools;
 
-import io.quarkus.test.junit.QuarkusTest;
-import org.junit.jupiter.api.Test;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
+
+import org.junit.jupiter.api.Test;
+
+import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
 public class CognitoExampleResourceTest {
 
     @Test
-    public void testHelloEndpoint() {
+    public void testUserPools() {
         given()
-          .when().get("/cognito-example")
-          .then()
-             .statusCode(200)
-             .body(is("You have 1 user pools"));
-    }
+                .queryParam("name", "quarkus-users")
+                .when().post("/cognito-example")
+                .then()
+                .statusCode(200);
 
+        given()
+                .when().get("/cognito-example")
+                .then()
+                .statusCode(200)
+                .body(is("You have 1 user pools"));
+    }
 }
 ----
+
+The test runs against a new Moto container started by Dev Services, so it only sees the user pool it creates.
