@@ -74,7 +74,7 @@ public final class JsonConfigFlattener {
                 Map<String, String> flat = new LinkedHashMap<>();
                 flattenJson("", reader.readValue(), flat);
                 if (flat.isEmpty()) {
-                    // Empty JSON object/array; return raw value
+                    // Empty JSON object/array (or only nulls); return raw value
                     return Map.of(prefix, value);
                 }
                 // Build output with prefix
@@ -108,13 +108,13 @@ public final class JsonConfigFlattener {
      * <p>
      * Objects are flattened with dot-separated keys (e.g., "parent.child").
      * Arrays use index notation (e.g., "items[0]", "items[1]").
-     * Primitives are converted to strings.
+     * Primitives are converted to strings. {@code null} values are omitted.
      *
      * @param keyPrefix the current prefix in the flattening process
      * @param value the JSON value to flatten
      * @param out the output map to accumulate results
      */
-    private static void flattenJson(String keyPrefix, JsonValue value, Map<String, String> out) {
+    public static void flattenJson(String keyPrefix, JsonValue value, Map<String, String> out) {
         switch (value.getValueType()) {
             case OBJECT:
                 JsonObject obj = value.asJsonObject();
@@ -142,7 +142,7 @@ public final class JsonConfigFlattener {
                 out.put(keyPrefix, "false");
                 break;
             case NULL:
-                out.put(keyPrefix, "null");
+                // Omitted so that Optional properties resolve to empty instead of failing to convert "null"
                 break;
         }
     }
