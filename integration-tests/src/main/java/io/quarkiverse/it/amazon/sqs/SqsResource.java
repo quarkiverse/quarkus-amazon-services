@@ -2,6 +2,7 @@ package io.quarkiverse.it.amazon.sqs;
 
 import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 
+import java.util.Map;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,9 @@ import jakarta.ws.rs.Produces;
 
 import org.jboss.resteasy.reactive.RestQuery;
 
+import software.amazon.awssdk.services.sqs.SqsClient;
+import software.amazon.awssdk.services.sqs.model.QueueAttributeName;
+
 @Path("/sqs")
 public class SqsResource {
 
@@ -25,6 +29,22 @@ public class SqsResource {
 
     @Inject
     SqsConsumerManager consumer;
+
+    @Inject
+    SqsClient sqsClient;
+
+    /**
+     * Dev Services creates the configured queues again, with the same attributes, when it reuses a shared container.
+     */
+    @Path("devservices-queue-replay")
+    @GET
+    @Produces(TEXT_PLAIN)
+    public String testDevServicesQueueReplay() {
+        sqsClient.createQueue(q -> q.queueName("quarkus-messaging-test-queue"));
+        sqsClient.createQueue(q -> q.queueName("quarkus-test-queue.fifo")
+                .attributes(Map.of(QueueAttributeName.FIFO_QUEUE, "true")));
+        return "OK";
+    }
 
     @Path("queue/{queueName}")
     @POST

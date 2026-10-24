@@ -37,6 +37,22 @@ public class SesV2Resource {
     @Inject
     SesV2AsyncClient sesAsyncClient;
 
+    /**
+     * Dev Services creates the configured identities again when it reuses a shared container, and ignores
+     * {@link AlreadyExistsException}.
+     */
+    @GET
+    @Path("devservices-identity-replay")
+    @Produces(TEXT_PLAIN)
+    public String testDevServicesIdentityReplay() {
+        try {
+            sesClient.createEmailIdentity(i -> i.emailIdentity("devservices-sender@example.com"));
+        } catch (AlreadyExistsException e) {
+            // what Dev Services ignores
+        }
+        return "OK";
+    }
+
     @GET
     @Path("sync")
     @Produces(TEXT_PLAIN)

@@ -2,6 +2,7 @@ package io.quarkiverse.it.amazon.sns;
 
 import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 
+import java.util.Map;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ import org.jboss.resteasy.reactive.RestQuery;
 
 import io.quarkiverse.it.amazon.sqs.SqsConsumerManager;
 import io.quarkiverse.it.amazon.sqs.SqsQueueManager;
+import software.amazon.awssdk.services.sns.SnsClient;
 
 @Path("/sns")
 public class SnsResource {
@@ -27,6 +29,20 @@ public class SnsResource {
 
     @Inject
     SqsConsumerManager queueConsumer;
+
+    @Inject
+    SnsClient snsClient;
+
+    /**
+     * Dev Services creates the configured topics again, with the same attributes, when it reuses a shared container.
+     */
+    @Path("devservices-topic-replay")
+    @GET
+    @Produces(TEXT_PLAIN)
+    public String testDevServicesTopicReplay() {
+        snsClient.createTopic(t -> t.name("quarkus-test-topic.fifo").attributes(Map.of("FifoTopic", "true")));
+        return "OK";
+    }
 
     @Path("topics/{topicName}")
     @POST

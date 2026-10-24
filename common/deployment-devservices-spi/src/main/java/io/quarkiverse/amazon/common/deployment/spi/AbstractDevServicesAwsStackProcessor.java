@@ -70,6 +70,8 @@ public abstract class AbstractDevServicesAwsStackProcessor {
 
                     @Override
                     public void reuseAwsStackContainer(AwsStackContainer awsStack) {
+                        // resources requested by this application may not exist yet in the shared container
+                        prepareAwsStackContainer(awsStack);
                     }
 
                     @Override

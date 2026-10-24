@@ -20,6 +20,7 @@ import software.amazon.awssdk.services.kms.model.DataKeySpec;
 import software.amazon.awssdk.services.kms.model.DecryptResponse;
 import software.amazon.awssdk.services.kms.model.EncryptResponse;
 import software.amazon.awssdk.services.kms.model.GenerateDataKeyResponse;
+import software.amazon.awssdk.services.kms.model.NotFoundException;
 
 @Path("/kms")
 public class KmsResource {
@@ -32,6 +33,23 @@ public class KmsResource {
 
     @Inject
     KmsAsyncClient kmsAsyncClient;
+
+    /**
+     * Dev Services skips the configured key aliases that {@code describeKey} finds, and creates those it reports as
+     * {@link NotFoundException}, when it reuses a shared container.
+     */
+    @GET
+    @Path("devservices-alias")
+    @Produces(TEXT_PLAIN)
+    public String testDevServicesAlias() {
+        kmsClient.describeKey(r -> r.keyId("alias/quarkus-test-key"));
+        try {
+            kmsClient.describeKey(r -> r.keyId("alias/missing-key"));
+            return "missing alias found";
+        } catch (NotFoundException e) {
+            return "OK";
+        }
+    }
 
     @GET
     @Path("sync")

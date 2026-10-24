@@ -15,6 +15,7 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.BucketAlreadyOwnedByYouException;
 
 public class S3DevServicesAwsStackProcessor extends AbstractDevServicesAwsStackProcessor {
 
@@ -49,7 +50,11 @@ public class S3DevServicesAwsStackProcessor extends AbstractDevServicesAwsStackP
                 .httpClientBuilder(UrlConnectionHttpClient.builder())
                 .build()) {
             for (var bucketName : configuration.buckets()) {
-                client.createBucket(b -> b.bucket(bucketName));
+                try {
+                    client.createBucket(b -> b.bucket(bucketName));
+                } catch (BucketAlreadyOwnedByYouException e) {
+                    // the bucket already exists in a shared container
+                }
             }
         }
     }

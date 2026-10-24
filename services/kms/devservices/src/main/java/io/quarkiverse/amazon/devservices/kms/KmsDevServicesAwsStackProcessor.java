@@ -13,6 +13,7 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.kms.KmsClient;
+import software.amazon.awssdk.services.kms.model.NotFoundException;
 
 public class KmsDevServicesAwsStackProcessor extends AbstractDevServicesAwsStackProcessor {
 
@@ -39,6 +40,13 @@ public class KmsDevServicesAwsStackProcessor extends AbstractDevServicesAwsStack
                     .httpClientBuilder(UrlConnectionHttpClient.builder())
                     .build()) {
                 for (var keyName : keys) {
+                    try {
+                        client.describeKey(k -> k.keyId(keyName));
+                        // the alias already exists in a shared container
+                        continue;
+                    } catch (NotFoundException e) {
+                        // create the key and its alias
+                    }
                     String masterKeyId = client.createKey().keyMetadata().keyId();
                     client.createAlias(t -> t.aliasName(keyName).targetKeyId(masterKeyId));
                 }
