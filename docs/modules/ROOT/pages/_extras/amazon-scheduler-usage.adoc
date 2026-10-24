@@ -1,9 +1,6 @@
 :custom-usage:
 
-== Creating JSON REST service
-
-In this example, we will create an application that creates schedules sending a message to an SQS queue every 5 minutes, and reads them back using a RESTful API.
-The example application will demonstrate the two programming models supported by the extension.
+=== Creating the REST resource
 
 Configure the ARN of the target queue, and the ARN of the IAM role that EventBridge Scheduler assumes to send messages to it, in `application.properties`:
 

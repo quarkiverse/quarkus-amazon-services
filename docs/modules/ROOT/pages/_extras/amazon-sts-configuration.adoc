@@ -1,5 +1,8 @@
-== Create the role with Dev Services
+==== Create the role to assume
 
+The application of this guide assumes an IAM role named `quarkus-role`, that the account can assume.
+
+.With Dev Services
 Dev Services starts Floci with the `floci/floci:latest` image by default, which does not ship the AWS CLI.
 To create the `quarkus-role` role automatically at startup, use the `latest-compat` image and provide init scripts:
 
@@ -29,3 +32,23 @@ echo "#### Init completed"
 
 Dev Services looks up the scripts in the classpath of the application, so keep them in `src/main/resources`: in dev mode, `src/test/resources` is not part of the classpath.
 See xref:dev-services.adoc[Dev Services for Amazon Services] for the init script details.
+
+.On a manually started Floci
+Create the role using the AWS CLI of the Floci container:
+
+[source,bash,subs="verbatim,attributes"]
+----
+docker exec floci aws iam create-role --role-name quarkus-role \
+    --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::000000000000:root"},"Action":"sts:AssumeRole"}]}'
+----
+
+.On your AWS account
+Create the same role with your own AWS CLI, replacing `<account-id>` with the ID of your account:
+
+[source,bash,subs="verbatim,attributes"]
+----
+aws iam create-role --role-name quarkus-role \
+    --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"arn:aws:iam::<account-id>:root"},"Action":"sts:AssumeRole"}]}'
+----
+
+Your credentials also need the permission to call `sts:AssumeRole` on this role.

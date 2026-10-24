@@ -1,5 +1,8 @@
-== Create the function with Dev Services
+==== Create the Lambda function
 
+The application of this guide reads existing functions, so create a Node.js function named `quarkus-hello`.
+
+.With Dev Services
 Dev Services starts Floci with the `floci/floci:latest` image by default, which does not ship the AWS CLI.
 To create the `quarkus-hello` function automatically at startup, use the `latest-compat` image and provide init scripts:
 
@@ -33,3 +36,28 @@ echo "#### Init completed"
 
 Dev Services looks up the scripts in the classpath of the application, so keep them in `src/main/resources`: in dev mode, `src/test/resources` is not part of the classpath.
 See xref:dev-services.adoc[Dev Services for Amazon Services] for the init script details.
+
+.On a manually started Floci
+Create the function using the AWS CLI of the Floci container:
+
+[source,bash,subs="verbatim,attributes"]
+----
+docker exec floci sh -c 'mkdir -p /tmp/quarkus-hello && cd /tmp/quarkus-hello \
+  && echo "exports.handler = async (event) => ({ greeting: \"Hello \" + event.name });" > index.js \
+  && python3 -m zipfile -c function.zip index.js \
+  && aws lambda create-function --function-name quarkus-hello --runtime nodejs22.x \
+       --zip-file fileb://function.zip --handler index.handler \
+       --role arn:aws:iam::000000000000:role/lambda-role'
+----
+
+.On your AWS account
+Create the same function with your own AWS CLI.
+The function needs an https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html[execution role]; replace `<role-arn>` with its ARN:
+
+[source,bash,subs="verbatim,attributes"]
+----
+echo 'exports.handler = async (event) => ({ greeting: "Hello " + event.name });' > index.js
+python3 -m zipfile -c function.zip index.js
+aws lambda create-function --function-name quarkus-hello --runtime nodejs22.x \
+    --zip-file fileb://function.zip --handler index.handler --role <role-arn>
+----

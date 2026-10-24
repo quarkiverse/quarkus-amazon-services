@@ -1,15 +1,10 @@
+==== Create the S3 bucket
+
 Set the name of the S3 bucket used by the application:
 
 [source,properties]
 ----
 bucket.name=quarkus.s3.quickstart
-----
-
-When using Dev Services, you can also let it create the bucket on startup:
-
-[source,properties]
-----
-quarkus.s3.devservices.buckets=${bucket.name}
 ----
 
 Floci works with the default addressing style of the S3 client, so a manual local instance needs no extra property.
@@ -20,9 +15,31 @@ If your local stack does not support the virtual-hosted-style addressing of the 
 quarkus.s3.path-style-access=true
 ----
 
-For the asynchronous client, refer to <<Going asynchronous>> for more information.
+.With Dev Services
+Let Dev Services create the bucket on startup:
 
-== Creating a frontend
+[source,properties]
+----
+quarkus.s3.devservices.buckets=${bucket.name}
+----
+
+.On a manually started Floci
+Create the bucket using the AWS CLI of the Floci container:
+
+[source,bash,subs="verbatim,attributes"]
+----
+docker exec floci aws s3 mb s3://quarkus.s3.quickstart
+----
+
+.On your AWS account
+Create the bucket with your own AWS CLI:
+
+[source,bash,subs="verbatim,attributes"]
+----
+aws s3 mb s3://quarkus.s3.quickstart
+----
+
+=== Creating a frontend
 
 Now let's add a simple web page to interact with our `S3SyncClientResource`.
 Quarkus automatically serves static resources located under the `META-INF/resources` directory.

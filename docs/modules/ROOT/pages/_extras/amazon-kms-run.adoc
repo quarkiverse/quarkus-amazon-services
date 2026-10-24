@@ -1,3 +1,4 @@
+ifndef::run-async[]
 * Encrypt a message with the synchronous client:
 
 [source,bash,subs="verbatim,attributes"]
@@ -11,5 +12,7 @@ curl -XPOST -H"Content-type: text/plain" http://localhost:8080/sync/encrypt -d'Q
 ----
 curl -XPOST -H"Content-type: text/plain" http://localhost:8080/sync/decrypt -d'<encrypted-message>'
 ----
-
+endif::[]
+ifdef::run-async[]
 * Do the same with the asynchronous client, using `/async/encrypt` and `/async/decrypt`.
+endif::[]

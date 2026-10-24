@@ -1,5 +1,8 @@
-== Create the table with Dev Services
+==== Create the QuarkusFruits table
 
+All the fruits are stored under the same `partitionKey` value and sorted by their name with the `fruitName` sort key, so they can be listed in alphabetical order with a query.
+
+.With Dev Services
 Dev Services starts Floci with the `floci/floci:latest` image by default, which does not ship the AWS CLI.
 To create the `QuarkusFruits` table automatically at startup, use the `latest-compat` image and provide init scripts:
 
@@ -36,3 +39,38 @@ echo "#### Init completed"
 
 The AWS CLI is preconfigured inside the container, so the scripts need no endpoint, profile or credentials.
 See xref:dev-services.adoc[Dev Services for Amazon Services] for the init script details.
+
+.On a manually started Floci
+Create the table using the AWS CLI of the Floci container:
+
+[source,bash,subs="verbatim,attributes"]
+----
+docker exec floci aws dynamodb create-table --table-name QuarkusFruits \
+    --attribute-definitions AttributeName=partitionKey,AttributeType=S \
+                            AttributeName=fruitName,AttributeType=S \
+    --key-schema AttributeName=partitionKey,KeyType=HASH \
+                 AttributeName=fruitName,KeyType=RANGE \
+    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
+----
+
+Check that the table exists:
+
+[source,bash,subs="verbatim,attributes"]
+----
+docker exec floci aws dynamodb list-tables
+----
+
+.On your AWS account
+Before you can use the AWS SDKs with DynamoDB, you must get an AWS access key ID and secret access key.
+For more information, see https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/SettingUp.DynamoWebService.html[Setting Up DynamoDB (Web Service)].
+Then create the same table with your own AWS CLI:
+
+[source,bash,subs="verbatim,attributes"]
+----
+aws dynamodb create-table --table-name QuarkusFruits \
+    --attribute-definitions AttributeName=partitionKey,AttributeType=S \
+                            AttributeName=fruitName,AttributeType=S \
+    --key-schema AttributeName=partitionKey,KeyType=HASH \
+                 AttributeName=fruitName,KeyType=RANGE \
+    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
+----

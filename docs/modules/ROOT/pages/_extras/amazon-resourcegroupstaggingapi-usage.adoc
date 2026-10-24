@@ -1,10 +1,8 @@
 :custom-usage:
 
-== Creating JSON REST service
+=== Creating the REST resource
 
-In this example, we will create an application that tags AWS resources, finds them by tag and removes their tags.
-The Resource Groups Tagging API works on resources managed by other AWS services, identified by their ARN, such as the SQS queue created earlier.
-The example application will demonstrate the two programming models supported by the extension.
+The Resource Groups Tagging API works on resources managed by other AWS services, identified by their ARN, such as the SQS queue that this guide creates.
 
 Let's create a `org.acme.resourcegroupstaggingapi.QuarkusResourceGroupsTaggingApiSyncResource` that will provide an API to manage the tags using the synchronous client.
 

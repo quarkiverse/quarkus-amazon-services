@@ -1,9 +1,6 @@
 :custom-usage:
 
-== Creating JSON REST service
-
-In this example, we will create an application that creates Step Functions state machines and lists them using a RESTful API.
-The example application will demonstrate the two programming models supported by the extension.
+=== Creating the REST resource
 
 Configure the ARN of the IAM role that the state machines use in `application.properties`:
 

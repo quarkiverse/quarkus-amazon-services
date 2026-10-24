@@ -1,3 +1,7 @@
+ifndef::run-async[]
 * Open a browser to `http://localhost:8080/fruits.html` to use the synchronous client
-* Open a browser to `http://localhost:8080/async-fruits.html` to use the asynchronous client
 * Add fruits to the list via the form and see them listed in alphabetical order
+endif::[]
+ifdef::run-async[]
+* Open a browser to `http://localhost:8080/async-fruits.html` to use the asynchronous client
+endif::[]

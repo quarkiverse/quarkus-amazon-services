@@ -1,9 +1,6 @@
 :custom-usage:
 
-== Creating JSON REST service
-
-In this example, we will create an application that manages Amazon Bedrock guardrails: it creates a guardrail, publishes a version of it, lists the guardrails and deletes them.
-The example application will demonstrate the two programming models supported by the extension.
+=== Creating the REST resource
 
 NOTE: Floci emulates the guardrail operations of the Bedrock control plane. It does not emulate the foundation model catalog (`ListFoundationModels`, `GetFoundationModel`) nor the model customization operations.
 
