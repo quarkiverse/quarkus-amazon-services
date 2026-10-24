@@ -132,9 +132,10 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
 
     /**
      * Fetches the latest configuration using the current {@link #token}, advances the token from the response, and
-     * replaces {@link #entriesRef} when new non-empty content is present.
+     * replaces {@link #entriesRef} when new non-empty content is present. Never throws, so a failed scheduled run
+     * does not cancel subsequent polls.
      */
-    private void fetchConfig() {
+    void fetchConfig() {
         if (token == null) {
             LOG.warn("Config session token is null - skipping");
             return;
@@ -142,33 +143,33 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
 
         LOG.debugf("Fetching configuration for token: %s", token);
 
-        GetLatestConfigurationResponse res = client.getLatestConfiguration(
-                GetLatestConfigurationRequest.builder().configurationToken(token).build());
-
-        // Always advance the poll token when AWS returns one, even if configuration is null (unchanged document).
-        String nextPoll = res.nextPollConfigurationToken();
-        if (nextPoll != null) {
-            token = nextPoll;
-        }
-
-        SdkBytes configuration = res.configuration();
-        if (configuration == null) {
-            LOG.debug("AppConfig Data returned no configuration payload (unchanged).");
-            return;
-        }
-
-        String configString = configuration.asUtf8String();
-        if (configString.isEmpty()) {
-            LOG.debug("No changes on the configuration received");
-            return;
-        }
-
         try {
+            GetLatestConfigurationResponse res = client.getLatestConfiguration(
+                    GetLatestConfigurationRequest.builder().configurationToken(token).build());
+
+            // Always advance the poll token when AWS returns one, even if configuration is null (unchanged document).
+            String nextPoll = res.nextPollConfigurationToken();
+            if (nextPoll != null) {
+                token = nextPoll;
+            }
+
+            SdkBytes configuration = res.configuration();
+            if (configuration == null) {
+                LOG.debug("AppConfig Data returned no configuration payload (unchanged).");
+                return;
+            }
+
+            String configString = configuration.asUtf8String();
+            if (configString.isEmpty()) {
+                LOG.debug("No changes on the configuration received");
+                return;
+            }
+
             Map<String, String> parsed = parseConfiguration(configString);
             entriesRef.set(Collections.unmodifiableMap(new LinkedHashMap<>(parsed)));
             LOG.debugf("ConfigSource now exposes %d entries from AWS AppConfig Data.", parsed.size());
         } catch (Exception ex) {
-            LOG.errorf(ex, "Unexpected failure reading the configuration");
+            LOG.errorf(ex, "Unable to fetch the latest configuration");
         }
     }
 
