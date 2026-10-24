@@ -1,8 +1,11 @@
 package io.quarkiverse.amazon.common.runtime;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.function.Supplier;
 
 import org.jboss.logging.Logger;
@@ -10,6 +13,7 @@ import org.jboss.logging.Logger;
 import io.netty.channel.EventLoopGroup;
 import io.netty.handler.ssl.SslProvider;
 import io.quarkus.runtime.RuntimeValue;
+import io.quarkus.runtime.ShutdownContext;
 import io.quarkus.runtime.annotations.Recorder;
 import software.amazon.awssdk.http.TlsTrustManagersProvider;
 import software.amazon.awssdk.http.async.SdkAsyncHttpClient;
@@ -22,6 +26,12 @@ import software.amazon.awssdk.utils.ThreadFactoryBuilder;
 public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTransportRecorder {
 
     private static final Logger log = Logger.getLogger(AmazonClientNettyTransportRecorder.class);
+
+    // one recorder instance per application start, so dev-mode restarts never see groups closed at the previous shutdown
+    private final Map<EventLoopKey, SdkEventLoopGroup> sharedEventLoopGroups = new HashMap<>();
+
+    private record EventLoopKey(OptionalInt numberOfThreads, Optional<String> threadNamePrefix) {
+    }
 
     @SuppressWarnings("rawtypes")
     @Override
@@ -76,7 +86,7 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
     public RuntimeValue<SdkAsyncHttpClient.Builder> configureNettyAsync(RuntimeValue<SdkAsyncHttpClient.Builder> builderRuntime,
             String configName,
             Supplier<EventLoopGroup> eventLoopSupplier, RuntimeValue<AsyncHttpClientConfig> asyncConfigRuntime,
-            boolean isNetty42) {
+            boolean isNetty42, ShutdownContext shutdownContext) {
         AsyncHttpClientConfig asyncConfig = asyncConfigRuntime.getValue();
         NettyNioAsyncHttpClient.Builder builder = (NettyNioAsyncHttpClient.Builder) builderRuntime.getValue();
         Optional<Boolean> override = asyncConfig.eventLoop().override();
@@ -86,13 +96,27 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
                         "The AWS SDK Client cannot reuse the Quarkus Netty Event Loops when using Quarkus 4/Netty 4.2 - Ignoring `quarkus.%s.async-client.event-loop.override`",
                         configName);
             }
-            SdkEventLoopGroup.Builder eventLoopBuilder = SdkEventLoopGroup.builder();
-            asyncConfig.eventLoop().numberOfThreads().ifPresent(eventLoopBuilder::numberOfThreads);
-            if (asyncConfig.eventLoop().threadNamePrefix().isPresent()) {
-                eventLoopBuilder.threadFactory(
-                        new ThreadFactoryBuilder().threadNamePrefix(asyncConfig.eventLoop().threadNamePrefix().get()).build());
+            OptionalInt numberOfThreads = asyncConfig.eventLoop().numberOfThreads();
+            if (numberOfThreads.isPresent() && numberOfThreads.getAsInt() <= 0) {
+                throw new RuntimeConfigurationError(
+                        String.format("quarkus.%s.async-client.event-loop.number-of-threads may not be negative or zero.",
+                                configName));
             }
-            builder.eventLoopGroupBuilder(eventLoopBuilder);
+            Optional<String> threadNamePrefix = asyncConfig.eventLoop().threadNamePrefix();
+            // Clients with the same event loop settings share one group instead of each spawning its own pool.
+            // The SDK does not close a group passed via eventLoopGroup(), so we close it at shutdown.
+            SdkEventLoopGroup eventLoopGroup = sharedEventLoopGroups.computeIfAbsent(
+                    new EventLoopKey(numberOfThreads, threadNamePrefix), key -> {
+                        SdkEventLoopGroup.Builder eventLoopBuilder = SdkEventLoopGroup.builder();
+                        numberOfThreads.ifPresent(eventLoopBuilder::numberOfThreads);
+                        threadNamePrefix.ifPresent(prefix -> eventLoopBuilder.threadFactory(
+                                new ThreadFactoryBuilder().threadNamePrefix(prefix).build()));
+                        SdkEventLoopGroup group = eventLoopBuilder.build();
+                        // last task: runs after the clients have been closed
+                        shutdownContext.addLastShutdownTask(() -> group.eventLoopGroup().shutdownGracefully());
+                        return group;
+                    });
+            builder.eventLoopGroup(eventLoopGroup);
         } else {
             var eventLoopGroup = SdkEventLoopGroup.create(eventLoopSupplier.get());
             builder.eventLoopGroup(eventLoopGroup);
@@ -121,13 +145,6 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
             throw new RuntimeConfigurationError(
                     String.format("quarkus.%s.async-client.max-pending-connection-acquires may not be negative or zero.",
                             extension));
-        }
-        if (config.eventLoop().override().orElse(false)) {
-            if (config.eventLoop().numberOfThreads().isPresent() && config.eventLoop().numberOfThreads().getAsInt() <= 0) {
-                throw new RuntimeConfigurationError(
-                        String.format("quarkus.%s.async-client.event-loop.number-of-threads may not be negative or zero.",
-                                extension));
-            }
         }
         if (config.proxy().enabled()) {
             config.proxy().endpoint().ifPresent(uri -> validateProxyEndpoint(extension, uri, "async"));
