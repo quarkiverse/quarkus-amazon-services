@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -256,11 +255,6 @@ public class AmazonClientExtensionsProcessor {
             LaunchModeBuildItem launchModeBuildItem,
             ExecutorBuildItem executorBuildItem) {
 
-        Function<RuntimeValue<SdkPresigner.Builder>, RuntimeValue<SdkPresigner.Builder>> presignerBuilderSupplier = null;
-        if (extension.getPresignerBuilderClass() != null) {
-            presignerBuilderSupplier = (presignerBuilder) -> presignerBuilder;
-        }
-
         createClientBuilders(
                 extension.getConfigName(),
                 builderInstances,
@@ -281,7 +275,6 @@ public class AmazonClientExtensionsProcessor {
                         executorBuildItem.getExecutorProxy(), extension.getAsyncConfig()),
                 extension.getPresignerClientName(),
                 extension.getPresignerBuilderClass(),
-                presignerBuilderSupplier,
                 clientBuilders,
                 syntheticBeans,
                 clientSync,
@@ -309,7 +302,6 @@ public class AmazonClientExtensionsProcessor {
             BiFunction<RuntimeValue<AwsAsyncClientBuilder<?, ?>>, RuntimeValue<SdkAsyncHttpClient.Builder>, RuntimeValue<AwsClientBuilder>> asyncClientBuilderFunction,
             DotName presignerClientName,
             Class<?> presignerBuilderClass,
-            Function<RuntimeValue<SdkPresigner.Builder>, RuntimeValue<SdkPresigner.Builder>> presignerBuilderSupplier,
             BuildProducer<AmazonClientBuilderBuildItem> clientBuilders,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
             BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
@@ -332,7 +324,7 @@ public class AmazonClientExtensionsProcessor {
                 .anyMatch(c -> configName.equals(c.getConfigName()));
 
         if (!syncSdkHttpClientBuilder.isPresent() && !asyncSdkAsyncHttpClientBuilder.isPresent()
-                && presignerBuilderSupplier == null) {
+                && presignerBuilderClass == null) {
             return;
         }
 
@@ -426,15 +418,15 @@ public class AmazonClientExtensionsProcessor {
                 clientAsync.produce(new AmazonClientAsyncResultBuildItem(configName, clientName));
             }
         }
-        if (presignerBuilderSupplier != null && !presignerClientNames.isEmpty()) {
+        if (presignerBuilderClass != null && !presignerClientNames.isEmpty()) {
             for (String clientName : presignerClientNames) {
                 AmazonClientExtensionBuilderInstanceBuildItem builderInstance = builderInstances.stream()
                         .filter(o -> o.getClientBuilderClass().equals(presignerBuilderClass) &&
                                 o.getClientName().equals(clientName))
                         .findFirst().orElseThrow();
 
-                RuntimeValue<SdkPresigner.Builder> presignerBuilder = presignerBuilderSupplier
-                        .apply((RuntimeValue<SdkPresigner.Builder>) builderInstance.getBuilder());
+                RuntimeValue<SdkPresigner.Builder> presignerBuilder = (RuntimeValue<SdkPresigner.Builder>) builderInstance
+                        .getBuilder();
 
                 presignerBuilder = recorder.configurePresigner(presignerBuilder, amazonClientConfigRuntime,
                         configName, clientName);
