@@ -1,21 +1,17 @@
 package io.quarkiverse.amazon.s3.runtime;
 
-import java.net.URI;
 import java.util.concurrent.Executor;
 import java.util.function.Function;
 
+import io.quarkiverse.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkiverse.amazon.common.runtime.AwsConfig;
 import io.quarkiverse.amazon.common.runtime.ClientUtil;
-import io.quarkiverse.amazon.common.runtime.RuntimeConfigurationError;
 import io.quarkiverse.amazon.common.runtime.SdkConfig;
 import io.quarkus.arc.SyntheticCreationalContext;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
-import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
-import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3CrtAsyncClientBuilder;
-import software.amazon.awssdk.utils.StringUtils;
 
 @Recorder
 public class S3CrtRecorder {
@@ -50,23 +46,10 @@ public class S3CrtRecorder {
         SdkConfig sdkConfig = config.getValue().clients().get(ClientUtil.DEFAULT_CLIENT_NAME).sdk();
 
         awsConfig.region().ifPresent(builder::region);
-        AwsCredentialsProvider credential = awsConfig.credentials().map(c -> c.type().create(c, "quarkus." + awsServiceName))
-                .orElseGet(() -> DefaultCredentialsProvider.builder().asyncCredentialUpdateEnabled(false)
-                        .reuseLastProviderEnabled(false).build());
-
-        builder.credentialsProvider(credential);
-
-        if (sdkConfig.endpointOverride().isPresent()) {
-            URI endpointOverride = sdkConfig.endpointOverride().get();
-            if (StringUtils.isBlank(endpointOverride.getScheme())) {
-                throw new RuntimeConfigurationError(
-                        String.format("quarkus.%s.endpoint-override (%s) - scheme must be specified",
-                                awsServiceName,
-                                endpointOverride.toString()));
-            }
-        }
-
-        sdkConfig.endpointOverride().filter(URI::isAbsolute).ifPresent(builder::endpointOverride);
+        builder.credentialsProvider(
+                AmazonClientCommonRecorder.resolveCredentialsProvider(awsServiceName, awsServiceName, awsConfig, awsConfig));
+        AmazonClientCommonRecorder.resolveEndpointOverride(awsServiceName, awsServiceName, sdkConfig, sdkConfig)
+                .ifPresent(builder::endpointOverride);
     }
 
     public RuntimeValue<S3CrtAsyncClientBuilder> setExecutor(RuntimeValue<S3CrtAsyncClientBuilder> builder,

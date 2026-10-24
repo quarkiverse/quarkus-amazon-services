@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Function;
 
@@ -54,17 +55,24 @@ public class AmazonClientCommonRecorder {
     public static void initAwsClient(AwsClientBuilder builder, String extension, String namedExtension, AwsConfig namedConfig,
             AwsConfig defaultConfig) {
         namedConfig.region().or(() -> defaultConfig.region()).ifPresent(builder::region);
-
-        AwsCredentialsProvider credential = namedConfig.credentials().map(c -> c.type().create(c, "quarkus." + namedExtension))
-                .or(() -> defaultConfig.credentials().map(c -> c.type().create(c, "quarkus." + extension)))
-                .orElseGet(() -> DefaultCredentialsProvider.builder().asyncCredentialUpdateEnabled(false)
-                        .reuseLastProviderEnabled(false).build());
-
-        builder.credentialsProvider(credential);
+        builder.credentialsProvider(resolveCredentialsProvider(extension, namedExtension, namedConfig, defaultConfig));
     }
 
     public static void initSdkClientEndpoint(SdkClientBuilder builder, String extension, String namedExtension,
             SdkConfig namedConfig,
+            SdkConfig defaultConfig) {
+        resolveEndpointOverride(extension, namedExtension, namedConfig, defaultConfig).ifPresent(builder::endpointOverride);
+    }
+
+    public static AwsCredentialsProvider resolveCredentialsProvider(String extension, String namedExtension,
+            AwsConfig namedConfig, AwsConfig defaultConfig) {
+        return namedConfig.credentials().map(c -> c.type().create(c, "quarkus." + namedExtension))
+                .or(() -> defaultConfig.credentials().map(c -> c.type().create(c, "quarkus." + extension)))
+                .orElseGet(() -> DefaultCredentialsProvider.builder().asyncCredentialUpdateEnabled(false)
+                        .reuseLastProviderEnabled(false).build());
+    }
+
+    public static Optional<URI> resolveEndpointOverride(String extension, String namedExtension, SdkConfig namedConfig,
             SdkConfig defaultConfig) {
         if (namedConfig.endpointOverride().isPresent()) {
             AmazonClientCommonRecorder.validEndpointOverride(namedExtension, namedConfig.endpointOverride().get());
@@ -72,8 +80,8 @@ public class AmazonClientCommonRecorder {
             AmazonClientCommonRecorder.validEndpointOverride(extension, defaultConfig.endpointOverride().get());
         }
 
-        namedConfig.endpointOverride().filter(URI::isAbsolute)
-                .or(() -> defaultConfig.endpointOverride().filter(URI::isAbsolute)).ifPresent(builder::endpointOverride);
+        return namedConfig.endpointOverride().filter(URI::isAbsolute)
+                .or(() -> defaultConfig.endpointOverride().filter(URI::isAbsolute));
     }
 
     public static void initSdkClient(SdkClientBuilder builder, String extension, String namedExtension, SdkConfig namedConfig,
@@ -119,36 +127,13 @@ public class AmazonClientCommonRecorder {
         AmazonClientConfig defaultConfig = amazonClientConfigRuntime.getValue().clients().get(ClientUtil.DEFAULT_CLIENT_NAME);
 
         String namedExtension = ClientUtil.isDefaultClient(clientName) ? awsServiceName : awsServiceName + "." + clientName;
-        initAwsPresigner(builder, awsServiceName, namedExtension, namedConfig.aws(), defaultConfig.aws());
-        initSdkPresigner(builder, awsServiceName, namedExtension, namedConfig.sdk(), defaultConfig.sdk());
+        namedConfig.aws().region().or(() -> defaultConfig.aws().region()).ifPresent(builder::region);
+        builder.credentialsProvider(
+                resolveCredentialsProvider(awsServiceName, namedExtension, namedConfig.aws(), defaultConfig.aws()));
+        resolveEndpointOverride(awsServiceName, namedExtension, namedConfig.sdk(), defaultConfig.sdk())
+                .ifPresent(builder::endpointOverride);
 
         return new RuntimeValue<>(builder);
-    }
-
-    public static void initAwsPresigner(SdkPresigner.Builder builder, String extension, String namedExtension,
-            AwsConfig namedConfig,
-            AwsConfig defaultConfig) {
-        namedConfig.region().or(() -> defaultConfig.region()).ifPresent(builder::region);
-
-        AwsCredentialsProvider credential = namedConfig.credentials().map(c -> c.type().create(c, "quarkus." + namedExtension))
-                .or(() -> defaultConfig.credentials().map(c -> c.type().create(c, "quarkus." + extension)))
-                .orElseGet(() -> DefaultCredentialsProvider.builder().asyncCredentialUpdateEnabled(false)
-                        .reuseLastProviderEnabled(false).build());
-
-        builder.credentialsProvider(credential);
-    }
-
-    public static void initSdkPresigner(SdkPresigner.Builder builder, String extension, String namedExtension,
-            SdkConfig namedConfig,
-            SdkConfig defaultConfig) {
-        if (namedConfig.endpointOverride().isPresent()) {
-            AmazonClientCommonRecorder.validEndpointOverride(namedExtension, namedConfig.endpointOverride().get());
-        } else if (defaultConfig.endpointOverride().isPresent()) {
-            AmazonClientCommonRecorder.validEndpointOverride(extension, defaultConfig.endpointOverride().get());
-        }
-
-        namedConfig.endpointOverride().filter(URI::isAbsolute)
-                .or(() -> defaultConfig.endpointOverride().filter(URI::isAbsolute)).ifPresent(builder::endpointOverride);
     }
 
     private static ExecutionInterceptor createInterceptor(String interceptorClassName) {
