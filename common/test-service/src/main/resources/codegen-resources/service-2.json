@@ -1,0 +1,56 @@
+{
+  "version":"2.0",
+  "metadata":{
+    "apiVersion":"2026-01-01",
+    "endpointPrefix":"fake",
+    "jsonVersion":"1.1",
+    "protocol":"json",
+    "protocols":["json"],
+    "serviceAbbreviation":"Fake Service",
+    "serviceFullName":"Quarkus Amazon Fake Service",
+    "serviceId":"Fake",
+    "signatureVersion":"v4",
+    "signingName":"fake",
+    "targetPrefix":"Fake_20260101",
+    "uid":"fake-2026-01-01",
+    "auth":["aws.auth#sigv4"]
+  },
+  "operations":{
+    "ListThings":{
+      "name":"ListThings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListThingsRequest"},
+      "output":{"shape":"ListThingsResponse"},
+      "documentation":"<p>Lists the things.</p>"
+    }
+  },
+  "shapes":{
+    "ListThingsRequest":{
+      "type":"structure",
+      "members":{
+        "Prefix":{
+          "shape":"String",
+          "documentation":"<p>The prefix of the things to list.</p>"
+        }
+      }
+    },
+    "ListThingsResponse":{
+      "type":"structure",
+      "members":{
+        "Things":{
+          "shape":"StringList",
+          "documentation":"<p>The names of the things.</p>"
+        }
+      }
+    },
+    "String":{"type":"string"},
+    "StringList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    }
+  },
+  "documentation":"<p>A fake service used to test the behaviour shared by all the Quarkus Amazon Services extensions.</p>"
+}

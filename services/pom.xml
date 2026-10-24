@@ -77,25 +77,12 @@
                         <execution>
                             <goals>
                                 <goal>generate</goal>
-                                <goal>generate-tests</goal>
                             </goals>
                         </execution>
                     </executions>
                     <configuration>
                         <codeGenResources>${basedir}/../src/main/resources/codegen-resources/</codeGenResources>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>${maven.jar.plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>test-jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -162,17 +149,6 @@
                                             <directory>${project.build.directory}/generated-resources/sdk-resources</directory>
                                         </resource>
                                     </resources>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>add-codegen-test-sources</id>
-                                <goals>
-                                    <goal>add-test-source</goal>
-                                </goals>
-                                <configuration>
-                                    <sources>
-                                        <source>${project.build.directory}/generated-test-sources/sdk-tests</source>
-                                    </sources>
                                 </configuration>
                             </execution>
                         </executions>

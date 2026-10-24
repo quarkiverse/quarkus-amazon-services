@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.quarkiverse.amazonservices</groupId>
+        <artifactId>quarkus-amazon-common-parent</artifactId>
+        <version>999-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>quarkus-amazon-testservice-parent</artifactId>
+    <name>Quarkus - Amazon Services - Test Service</name>
+    <description>A fake service, generated like the real ones, to test the behaviour shared by all the extensions</description>
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
+    <modules>
+        <module>runtime</module>
+        <module>devservices</module>
+        <module>deployment</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>io.quarkiverse.amazonservices</groupId>
+                    <artifactId>quarkus-amazon-codegen-maven-plugin</artifactId>
+                    <version>${project.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>generate</goal>
+                                <goal>generate-tests</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <codeGenResources>${basedir}/../src/main/resources/codegen-resources/</codeGenResources>
+                        <!-- the test service is not documented -->
+                        <docsMetadataDirectory>${project.build.directory}/docs-metadata</docsMetadataDirectory>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <!-- Run the code generator on the runtime/devservices/deployment modules (outside of m2e) -->
+        <profile>
+            <id>codegen</id>
+            <activation>
+                <property>
+                    <name>!m2e.version</name>
+                </property>
+                <file>
+                    <exists>${basedir}/../src/main/resources/codegen-resources</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.quarkiverse.amazonservices</groupId>
+                        <artifactId>quarkus-amazon-codegen-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- m2e cannot resolve the in-reactor codegen plugin: only expose the sources it generated -->
+        <profile>
+            <id>m2e</id>
+            <activation>
+                <property>
+                    <name>m2e.version</name>
+                </property>
+                <file>
+                    <exists>${basedir}/../src/main/resources/codegen-resources</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>3.6.0</version>
+                        <executions>
+                            <execution>
+                                <id>add-codegen-sources</id>
+                                <goals>
+                                    <goal>add-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>${project.build.directory}/generated-sources/sdk</source>
+                                        <!-- the SDK client of the test service (runtime module only) -->
+                                        <source>${project.build.directory}/aws-sdk/generated-sources/sdk</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>add-codegen-resources</id>
+                                <goals>
+                                    <goal>add-resource</goal>
+                                </goals>
+                                <configuration>
+                                    <resources>
+                                        <resource>
+                                            <directory>${project.build.directory}/generated-resources/sdk-resources</directory>
+                                        </resource>
+                                        <resource>
+                                            <directory>${project.build.directory}/aws-sdk/generated-resources/sdk-resources</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>add-codegen-test-sources</id>
+                                <goals>
+                                    <goal>add-test-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>${project.build.directory}/generated-test-sources/sdk-tests</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

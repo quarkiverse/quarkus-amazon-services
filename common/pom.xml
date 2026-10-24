@@ -29,6 +29,7 @@
         <module>deployment-crt-client-internal</module>
         <module>deployment-opentelemetry-internal</module>
         <module>deployment</module>
+        <module>test-service</module>
     </modules>
 
 </project>
