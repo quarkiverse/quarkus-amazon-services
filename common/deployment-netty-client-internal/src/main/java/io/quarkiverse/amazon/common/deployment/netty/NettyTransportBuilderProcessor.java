@@ -18,6 +18,7 @@ import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.Consume;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
+import io.quarkus.deployment.builditem.ShutdownContextBuildItem;
 import io.quarkus.runtime.RuntimeValue;
 
 public class NettyTransportBuilderProcessor {
@@ -30,7 +31,8 @@ public class NettyTransportBuilderProcessor {
             List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientNettyTransportRecorder transportRecorder,
             BuildProducer<AmazonClientAsyncTransportBuildItem> asyncTransports,
-            EventLoopGroupBuildItem eventLoopSupplier) {
+            EventLoopGroupBuildItem eventLoopSupplier,
+            ShutdownContextBuildItem shutdown) {
 
         boolean netty42 = isNetty42();
         extensions.forEach(extension -> createNettyAsyncTransportBuilder(
@@ -41,7 +43,8 @@ public class NettyTransportBuilderProcessor {
                 extension.getAsyncConfig(),
                 asyncTransports,
                 eventLoopSupplier.getMainEventLoopGroup(),
-                netty42));
+                netty42,
+                shutdown));
     }
 
     /**
@@ -65,7 +68,8 @@ public class NettyTransportBuilderProcessor {
             RuntimeValue<AsyncHttpClientConfig> asyncConfig,
             BuildProducer<AmazonClientAsyncTransportBuildItem> clientAsyncTransports,
             Supplier<EventLoopGroup> eventLoopSupplier,
-            boolean isNetty42) {
+            boolean isNetty42,
+            ShutdownContextBuildItem shutdown) {
 
         Optional<RequireAmazonClientTransportBuilderBuildItem> matchingClientBuildItem = amazonClients.stream()
                 .filter(c -> c.getAwsClientName().equals(configName))
@@ -87,7 +91,8 @@ public class NettyTransportBuilderProcessor {
                                     configName,
                                     eventLoopSupplier,
                                     asyncConfig,
-                                    isNetty42)));
+                                    isNetty42,
+                                    shutdown)));
         });
     }
 
