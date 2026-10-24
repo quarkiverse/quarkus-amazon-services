@@ -8,10 +8,7 @@ import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.sesv2.runtime.SesV2BuildTimeConfig;
 import io.quarkiverse.amazon.sesv2.runtime.SesV2DevServicesBuildTimeConfig;
 import io.quarkus.deployment.annotations.BuildStep;
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
-import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
-import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sesv2.SesV2Client;
 import software.amazon.awssdk.services.sesv2.model.AlreadyExistsException;
 
@@ -32,11 +29,7 @@ public class SesV2DevServicesAwsStackProcessor extends AbstractDevServicesAwsSta
 
         configuration.verifiedEmails().ifPresent(emails -> {
 
-            try (SesV2Client client = SesV2Client.builder()
-                    .endpointOverride(awsStackContainer.getEndpoint())
-                    .region(Region.of(awsStackContainer.getRegion()))
-                    .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials
-                            .create(awsStackContainer.getAccessKey(), awsStackContainer.getSecretKey())))
+            try (SesV2Client client = awsStackContainer.configure(SesV2Client.builder())
                     .httpClientBuilder(UrlConnectionHttpClient.builder())
                     .build()) {
                 for (var email : emails) {

@@ -10,10 +10,7 @@ import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.s3.runtime.S3BuildTimeConfig;
 import io.quarkiverse.amazon.s3.runtime.S3DevServicesBuildTimeConfig;
 import io.quarkus.deployment.annotations.BuildStep;
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
-import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
-import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.BucketAlreadyOwnedByYouException;
 
@@ -41,12 +38,8 @@ public class S3DevServicesAwsStackProcessor extends AbstractDevServicesAwsStackP
             return;
         }
 
-        try (S3Client client = S3Client.builder()
-                .endpointOverride(localstack.getEndpoint())
-                .region(Region.of(localstack.getRegion()))
+        try (S3Client client = localstack.configure(S3Client.builder())
                 .forcePathStyle(true)
-                .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials
-                        .create(localstack.getAccessKey(), localstack.getSecretKey())))
                 .httpClientBuilder(UrlConnectionHttpClient.builder())
                 .build()) {
             for (var bucketName : configuration.buckets()) {

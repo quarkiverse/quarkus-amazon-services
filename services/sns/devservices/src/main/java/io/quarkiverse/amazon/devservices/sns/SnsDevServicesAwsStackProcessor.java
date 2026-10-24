@@ -11,10 +11,7 @@ import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.sns.runtime.SnsBuildTimeConfig;
 import io.quarkiverse.amazon.sns.runtime.SnsDevServicesBuildTimeConfig;
 import io.quarkus.deployment.annotations.BuildStep;
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
-import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
-import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sns.SnsClient;
 
 public class SnsDevServicesAwsStackProcessor extends AbstractDevServicesAwsStackProcessor {
@@ -34,11 +31,7 @@ public class SnsDevServicesAwsStackProcessor extends AbstractDevServicesAwsStack
 
         configuration.topics().ifPresent(topics -> {
 
-            try (SnsClient client = SnsClient.builder()
-                    .endpointOverride(awsStackContainer.getEndpoint())
-                    .region(Region.of(awsStackContainer.getRegion()))
-                    .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials
-                            .create(awsStackContainer.getAccessKey(), awsStackContainer.getSecretKey())))
+            try (SnsClient client = awsStackContainer.configure(SnsClient.builder())
                     .httpClientBuilder(UrlConnectionHttpClient.builder())
                     .build()) {
                 for (var topicName : topics) {
