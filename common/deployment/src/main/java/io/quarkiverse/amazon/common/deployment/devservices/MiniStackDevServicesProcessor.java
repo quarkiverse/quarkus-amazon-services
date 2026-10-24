@@ -106,6 +106,8 @@ public class MiniStackDevServicesProcessor extends AbstractDevServicesAwsStackPr
             miniStack.waitingFor(Wait.forLogMessage(".*" + initCompletionMsg + ".*\\n", 1));
         });
 
+        configureHostAccess(miniStack);
+
         ConfigureUtil.configureNetwork(miniStack, composeProjectBuildItem.getDefaultNetworkId(), useSharedNetwork, "ministack");
 
         miniStack.withEnv(config.containerProperties());

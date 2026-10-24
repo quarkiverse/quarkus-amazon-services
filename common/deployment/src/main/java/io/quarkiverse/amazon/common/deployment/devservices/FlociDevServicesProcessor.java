@@ -106,6 +106,8 @@ public class FlociDevServicesProcessor extends AbstractDevServicesAwsStackProces
             floci.waitingFor(Wait.forLogMessage(".*" + initCompletionMsg + ".*\\n", 1));
         });
 
+        configureHostAccess(floci);
+
         ConfigureUtil.configureNetwork(floci, composeProjectBuildItem.getDefaultNetworkId(), useSharedNetwork, "floci");
 
         floci.withEnv(config.containerProperties());
