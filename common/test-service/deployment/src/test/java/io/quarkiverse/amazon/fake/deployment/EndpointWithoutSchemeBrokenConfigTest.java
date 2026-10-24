@@ -1,5 +1,8 @@
 package io.quarkiverse.amazon.fake.deployment;
 
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.NETTY;
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.URL_CONNECTION;
+
 import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Assertions;
@@ -21,6 +24,8 @@ public class EndpointWithoutSchemeBrokenConfigTest {
 
     @RegisterExtension
     static final QuarkusExtensionTest config = new QuarkusExtensionTest()
+            .setForcedDependencies(SdkHttpClients.of(URL_CONNECTION, NETTY))
+            .withApplicationRoot((jar) -> jar.addClass(SdkHttpClients.class))
             .setExpectedException(RuntimeConfigurationError.class)
             .overrideConfigKey("quarkus.fake-service.aws.region", "us-east-1")
             .overrideConfigKey("quarkus.fake-service.endpoint-override", "127.0.0.1");

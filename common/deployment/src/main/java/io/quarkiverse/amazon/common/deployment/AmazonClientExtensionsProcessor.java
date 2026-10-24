@@ -35,6 +35,7 @@ import io.quarkus.deployment.Capabilities;
 import io.quarkus.deployment.Capability;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.Consume;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.ExecutorBuildItem;
@@ -206,6 +207,7 @@ public class AmazonClientExtensionsProcessor {
 
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
+    @Consume(AmazonHttpClientsCheckedBuildItem.class)
     void createClientBuilders(
             List<AmazonClientExtensionBuildItem> amazonExtensions,
             List<AmazonClientExtensionBuilderInstanceBuildItem> builderInstances,

@@ -8,12 +8,14 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.util.Version;
 import io.quarkiverse.amazon.common.deployment.AmazonClientAsyncTransportBuildItem;
 import io.quarkiverse.amazon.common.deployment.AmazonClientExtensionBuildItem;
+import io.quarkiverse.amazon.common.deployment.AmazonHttpClientsCheckedBuildItem;
 import io.quarkiverse.amazon.common.deployment.RequireAmazonClientTransportBuilderBuildItem;
 import io.quarkiverse.amazon.common.runtime.AmazonClientNettyTransportRecorder;
 import io.quarkiverse.amazon.common.runtime.AsyncHttpClientBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.AsyncHttpClientConfig;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.Consume;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.runtime.RuntimeValue;
@@ -22,6 +24,7 @@ public class NettyTransportBuilderProcessor {
 
     @BuildStep()
     @Record(ExecutionTime.RUNTIME_INIT)
+    @Consume(AmazonHttpClientsCheckedBuildItem.class)
     void setupNettyAsyncTransport(
             List<AmazonClientExtensionBuildItem> extensions,
             List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,

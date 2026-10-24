@@ -45,6 +45,9 @@ public abstract class AbstractTestBeanTestClass implements ClassSpec {
     protected final ClassName shrinkwrapJavaArchiveClassName = ClassName.get("org.jboss.shrinkwrap.api.spec", "JavaArchive");
     protected final ClassName shrinkwrapShrinkWrapClassName = ClassName.get("org.jboss.shrinkwrap.api", "ShrinkWrap");
     protected final ClassName shrinkwrapStringAssetClassName = ClassName.get("org.jboss.shrinkwrap.api.asset", "StringAsset");
+    protected final ClassName listClassName = ClassName.get("java.util", "List");
+    protected final ClassName quarkusDependencyClassName = ClassName.get("io.quarkus.maven.dependency", "Dependency");
+    protected final ClassName sdkVersionInfoClassName = ClassName.get("software.amazon.awssdk.core.util", "VersionInfo");
 
     public AbstractTestBeanTestClass(QuarkusServiceModel quarkusModel, String testClassName) {
         this.model = quarkusModel.intermediateModel();
@@ -166,6 +169,13 @@ public abstract class AbstractTestBeanTestClass implements ClassSpec {
                         .initializer(
                                 CodeBlock.builder()
                                         .add("new $T()", quarkusQuarkusExtensionTestClassName)
+                                        // the default HTTP clients, which the test classpath may not provide
+                                        .add(".setForcedDependencies($T.of($T.of($S, $S, $T.SDK_VERSION), $T.of($S, $S, $T.SDK_VERSION)))",
+                                                listClassName,
+                                                quarkusDependencyClassName, "software.amazon.awssdk", "url-connection-client",
+                                                sdkVersionInfoClassName,
+                                                quarkusDependencyClassName, "software.amazon.awssdk", "netty-nio-client",
+                                                sdkVersionInfoClassName)
                                         .add(".setArchiveProducer($L)", archiveProducerLambda)
                                         .build())
                         .build());

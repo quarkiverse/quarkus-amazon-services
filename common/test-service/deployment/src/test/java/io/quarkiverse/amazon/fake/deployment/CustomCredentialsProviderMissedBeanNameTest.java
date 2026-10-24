@@ -1,5 +1,6 @@
 package io.quarkiverse.amazon.fake.deployment;
 
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.URL_CONNECTION;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import jakarta.enterprise.inject.Instance;
@@ -19,6 +20,8 @@ public class CustomCredentialsProviderMissedBeanNameTest {
 
     @RegisterExtension
     static final QuarkusExtensionTest config = new QuarkusExtensionTest()
+            .setForcedDependencies(SdkHttpClients.of(URL_CONNECTION))
+            .withApplicationRoot((jar) -> jar.addClass(SdkHttpClients.class))
             .assertException(throwable -> assertEquals(
                     "quarkus.fake-service.aws.credentials.custom-provider.name cannot be empty if CUSTOM credentials provider used.",
                     throwable.getMessage()))

@@ -1,5 +1,7 @@
 package io.quarkiverse.amazon.fake.deployment.devservices;
 
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.NETTY;
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.URL_CONNECTION;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import jakarta.inject.Inject;
@@ -9,6 +11,7 @@ import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import io.quarkiverse.amazon.fake.deployment.SdkHttpClients;
 import io.quarkus.test.QuarkusExtensionTest;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -33,7 +36,9 @@ public class DevServicesClientConfigTest {
 
     @RegisterExtension
     static final QuarkusExtensionTest config = new QuarkusExtensionTest()
+            .setForcedDependencies(SdkHttpClients.of(URL_CONNECTION, NETTY))
             .withApplicationRoot((jar) -> jar
+                    .addClass(SdkHttpClients.class)
                     .addClass(StubAwsStackProcessor.class)
                     .addAsResource(new StringAsset(StubAwsStackProcessor.class.getName()),
                             "META-INF/quarkus-build-steps.list"))

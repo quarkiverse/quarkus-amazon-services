@@ -1,6 +1,7 @@
 package io.quarkiverse.amazon.fake.deployment;
 
 import static io.quarkiverse.amazon.fake.deployment.FakeClientInspector.httpClientName;
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.AWS_CRT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import jakarta.inject.Inject;
@@ -22,6 +23,8 @@ public class AwsCrtClientTest {
 
     @RegisterExtension
     static final QuarkusExtensionTest config = new QuarkusExtensionTest()
+            .setForcedDependencies(SdkHttpClients.of(AWS_CRT))
+            .withApplicationRoot((jar) -> jar.addClasses(SdkHttpClients.class, FakeClientInspector.class))
             .overrideConfigKey("quarkus.fake-service.devservices.enabled", "false")
             .overrideConfigKey("quarkus.fake-service.aws.region", "us-east-1")
             .overrideConfigKey("quarkus.fake-service.sync-client.type", "aws-crt")

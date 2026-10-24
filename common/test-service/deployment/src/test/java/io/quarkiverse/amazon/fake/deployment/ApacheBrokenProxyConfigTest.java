@@ -1,5 +1,8 @@
 package io.quarkiverse.amazon.fake.deployment;
 
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.APACHE;
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.NETTY;
+
 import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Assertions;
@@ -21,6 +24,8 @@ public class ApacheBrokenProxyConfigTest {
 
     @RegisterExtension
     static final QuarkusExtensionTest config = new QuarkusExtensionTest()
+            .setForcedDependencies(SdkHttpClients.of(APACHE, NETTY))
+            .withApplicationRoot((jar) -> jar.addClass(SdkHttpClients.class))
             .setExpectedException(RuntimeConfigurationError.class)
             .overrideConfigKey("quarkus.fake-service.devservices.enabled", "false")
             .overrideConfigKey("quarkus.fake-service.sync-client.type", "apache")
