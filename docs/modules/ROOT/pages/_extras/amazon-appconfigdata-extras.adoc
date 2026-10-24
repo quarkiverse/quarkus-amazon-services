@@ -62,6 +62,53 @@ quarkus.appconfigdata.config.environment=production
 quarkus.appconfigdata.config.configuration-profile=my-profile
 ----
 
+=== Load a configuration in the local stack
+
+AppConfig Data only serves configurations that are deployed: a hosted configuration version alone is returned as an empty document, and the config source exposes no entries.
+To try the config source with Dev Services, create the configuration and deploy it with an xref:dev-services.adoc#_init_scripts[init script], for example `src/test/resources/floci-init/01_setup_appconfigdata.sh`:
+
+[source,bash]
+----
+#!/usr/bin/env bash
+APPLICATION_ID=$(aws appconfig create-application --name my-application --query 'Id' --output text)
+ENVIRONMENT_ID=$(aws appconfig create-environment --application-id "${APPLICATION_ID}" \
+    --name production --query 'Id' --output text)
+CONFIGURATION_PROFILE_ID=$(aws appconfig create-configuration-profile --application-id "${APPLICATION_ID}" \
+    --name my-profile --location-uri hosted --type AWS.Freeform --query 'Id' --output text)
+
+VERSION_NUMBER=$(aws appconfig create-hosted-configuration-version --application-id "${APPLICATION_ID}" \
+    --configuration-profile-id "${CONFIGURATION_PROFILE_ID}" \
+    --content "$(echo '{"greeting": "hello"}' | base64)" --content-type application/json \
+    --query 'VersionNumber' --output text /dev/null)
+
+DEPLOYMENT_STRATEGY_ID=$(aws appconfig create-deployment-strategy --name all-at-once \
+    --deployment-duration-in-minutes 0 --growth-factor 100 --final-bake-time-in-minutes 0 \
+    --replicate-to NONE --query 'Id' --output text)
+
+aws appconfig start-deployment --application-id "${APPLICATION_ID}" --environment-id "${ENVIRONMENT_ID}" \
+    --configuration-profile-id "${CONFIGURATION_PROFILE_ID}" --configuration-version "${VERSION_NUMBER}" \
+    --deployment-strategy-id "${DEPLOYMENT_STRATEGY_ID}"
+
+echo "#### Init completed"
+----
+
+The script uses the AWS CLI, so select the Floci image that ships it.
+The config source loads the configuration when the application starts, so also make Dev Services wait for the script to complete:
+
+[source,properties]
+----
+quarkus.aws.devservices.floci.image-name=floci/floci:latest-compat
+quarkus.aws.devservices.floci.init-scripts-folder=src/test/resources/floci-init
+quarkus.aws.devservices.floci.init-completion-msg=#### Init completed
+
+quarkus.appconfigdata.config.enabled=true
+quarkus.appconfigdata.config.application=my-application
+quarkus.appconfigdata.config.environment=production
+quarkus.appconfigdata.config.configuration-profile=my-profile
+----
+
+The `greeting` property then resolves to `hello`.
+
 === Notes and limitations
 
 * The config source keeps an internal snapshot that is updated when polling succeeds; components that only read configuration at startup will not see later changes unless they observe configuration dynamically.

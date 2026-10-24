@@ -1,3 +1,4 @@
+:has-integration-test:
 :aws-docs-url: https://docs.aws.amazon.com/appconfig/latest/userguide/retrieving-feature-flags.html
 
 AWS AppConfig Data is the data plane API of AWS AppConfig.
