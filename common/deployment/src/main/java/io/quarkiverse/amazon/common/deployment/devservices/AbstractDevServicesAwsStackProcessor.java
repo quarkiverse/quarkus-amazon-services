@@ -24,7 +24,6 @@ import io.quarkus.deployment.builditem.Startable;
 import io.quarkus.deployment.dev.devservices.DevServicesConfig;
 import io.quarkus.devservices.common.ComposeLocator;
 import io.quarkus.devservices.common.ContainerLocator;
-import io.quarkus.runtime.configuration.ConfigUtils;
 
 /**
  * Abstract base processor for AWS stack dev services.
@@ -35,8 +34,6 @@ import io.quarkus.runtime.configuration.ConfigUtils;
  * 3. Publishing configuration for each requested service
  */
 public abstract class AbstractDevServicesAwsStackProcessor {
-
-    private static final String SERVICE_ENDPOINT_OVERRIDE = "quarkus.%s.endpoint-override";
 
     protected static final Logger log = Logger.getLogger(AbstractDevServicesAwsStackProcessor.class);
 
@@ -175,16 +172,6 @@ public abstract class AbstractDevServicesAwsStackProcessor {
             // explicitly disabled
             log.debug("Not starting dev services for Amazon Services, as it has been disabled in the config.");
             return true;
-        }
-
-        // Check if any service has endpoint-override configured
-        for (DevServicesAwsStackProviderBuildItem service : requestedServices) {
-            String endpointOverride = String.format(SERVICE_ENDPOINT_OVERRIDE, service.getServiceName());
-            if (ConfigUtils.isPropertyPresent(endpointOverride)) {
-                log.debugf("Not starting dev services for Amazon Services - %s, endpoint-override is configured.",
-                        service.getServiceName());
-                return true;
-            }
         }
 
         if (!dockerStatusBuildItem.isContainerRuntimeAvailable()) {
