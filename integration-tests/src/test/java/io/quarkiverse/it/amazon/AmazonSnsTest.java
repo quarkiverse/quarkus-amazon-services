@@ -1,6 +1,7 @@
 package io.quarkiverse.it.amazon;
 
 import static org.hamcrest.Matchers.any;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 import java.time.Duration;
@@ -55,6 +56,25 @@ public class AmazonSnsTest {
                         return response.getBody().asString().contains(message);
                     }
                 });
+    }
+
+    /**
+     * The stack container must reach the application through host.docker.internal, which Linux does not resolve
+     * unless Dev Services maps it.
+     */
+    @Test
+    public void testHttpSubscriptionReachesApplication() {
+        RestAssured.given()
+                .pathParam("topicName", TOPIC_NAME)
+                .queryParam("endpoint",
+                        "http://host.docker.internal:" + RestAssured.port + "/test/sns/http-notifications")
+                .when().post("/test/sns/topics/{topicName}/http-subscriptions")
+                .then().statusCode(200);
+
+        Awaitility.await().atMost(Duration.ofSeconds(10))
+                .pollInterval(Duration.ofSeconds(1))
+                .untilAsserted(() -> RestAssured.get("/test/sns/http-notifications")
+                        .then().body(containsString("SubscriptionConfirmation")));
     }
 
     /**

@@ -109,6 +109,8 @@ public class LocalStackDevServiceProcessor extends AbstractDevServicesAwsStackPr
             localStack.waitingFor(Wait.forLogMessage(".*" + initCompletionMsg + ".*\\n", 1));
         });
 
+        configureHostAccess(localStack);
+
         ConfigureUtil.configureNetwork(localStack, composeProjectBuildItem.getDefaultNetworkId(), useSharedNetwork,
                 "localstack");
 

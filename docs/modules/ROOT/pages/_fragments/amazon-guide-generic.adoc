@@ -82,6 +82,19 @@ Dev Services starts a {aws-stack-name} container in dev and test modes, and conf
 The container listens on a random port, so you never hard-code an endpoint.
 It is labelled `quarkus-dev-service-{aws-stack}` and shared between the Quarkus applications running in dev mode.
 Refer to xref:dev-services.adoc[Dev Services for Amazon Services] for the provider selection, the container configuration and the init scripts.
+ifdef::needs-host-access[]
+
+{service-name-uppercase} calls your application from the container, through `host.docker.internal`.
+Docker Desktop provides this name, and on Linux Dev Services maps it to your host.
+The container reaches your host through a network interface, not `localhost`, so the application must listen on all interfaces:
+
+[source,properties]
+----
+quarkus.http.host=0.0.0.0
+----
+
+Be aware that with `quarkus.http.host=0.0.0.0`, Quarkus listens to all interfaces, which might be a security hazard depending on your network configuration.
+endif::[]
 
 === Start {aws-stack-name} manually
 
@@ -100,7 +113,7 @@ docker run --rm --name floci --publish 4566:4566 {floci-host-opt}-d floci/floci:
 ----
 ifdef::needs-host-access[]
 {service-name-uppercase} calls your application from the container: the `--add-host` option lets the container reach your host as `host.docker.internal`.
-Docker Desktop already provides this name, but on Linux the option is required.
+Docker Desktop already provides this name, but on Linux the option is required (`extra_hosts` with Docker Compose).
 
 endif::[]
 This starts a Floci instance that is accessible on port `4566`. Floci exposes all the services it emulates on this single endpoint.

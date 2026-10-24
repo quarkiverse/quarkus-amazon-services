@@ -42,6 +42,11 @@ public class SnsManager {
                 .subscriptionArn();
     }
 
+    public String subscribeHttp(String topicName, String endpoint) {
+        return sync.subscribe(s -> s.topicArn(getTopicArn(topicName)).protocol("http").endpoint(endpoint))
+                .subscriptionArn();
+    }
+
     public String publishSync(String topicName, String message) {
         return sync.publish(p -> p.topicArn(getTopicArn(topicName)).message(message)).messageId();
     }

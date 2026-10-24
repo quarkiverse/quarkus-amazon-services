@@ -2,8 +2,10 @@ package io.quarkiverse.it.amazon.sns;
 
 import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import jakarta.inject.Inject;
@@ -32,6 +34,8 @@ public class SnsResource {
 
     @Inject
     SnsClient snsClient;
+
+    private final List<String> httpNotifications = new CopyOnWriteArrayList<>();
 
     /**
      * Dev Services creates the configured topics again, with the same attributes, when it reuses a shared container.
@@ -63,6 +67,29 @@ public class SnsResource {
     @Produces(TEXT_PLAIN)
     public String readPublishedMessages(String topicName) {
         return queueConsumer.receiveSync(topicName).stream().collect(Collectors.joining(" "));
+    }
+
+    @Path("topics/{topicName}/http-subscriptions")
+    @POST
+    @Produces(TEXT_PLAIN)
+    public String subscribeHttp(String topicName, @RestQuery String endpoint) {
+        return snsManager.subscribeHttp(topicName, endpoint);
+    }
+
+    /**
+     * Called back by the stack container, e.g. with the SubscriptionConfirmation of an HTTP subscription.
+     */
+    @Path("http-notifications")
+    @POST
+    public void receiveHttpNotification(String body) {
+        httpNotifications.add(body);
+    }
+
+    @Path("http-notifications")
+    @GET
+    @Produces(TEXT_PLAIN)
+    public String readHttpNotifications() {
+        return String.join(" ", httpNotifications);
     }
 
     @Path("sync/publish/{topicName}")

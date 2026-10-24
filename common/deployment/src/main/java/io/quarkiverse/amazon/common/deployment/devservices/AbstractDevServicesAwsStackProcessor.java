@@ -8,6 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.jboss.logging.Logger;
+import org.testcontainers.containers.GenericContainer;
 
 import io.quarkiverse.amazon.common.deployment.spi.AwsStackContainer;
 import io.quarkiverse.amazon.common.deployment.spi.DevServicesAwsStackExtensionProvider;
@@ -24,6 +25,7 @@ import io.quarkus.deployment.builditem.Startable;
 import io.quarkus.deployment.dev.devservices.DevServicesConfig;
 import io.quarkus.devservices.common.ComposeLocator;
 import io.quarkus.devservices.common.ContainerLocator;
+import io.smallrye.common.os.OS;
 
 /**
  * Abstract base processor for AWS stack dev services.
@@ -137,6 +139,17 @@ public abstract class AbstractDevServicesAwsStackProcessor {
             return endpoint;
         }
         return "http://" + endpoint;
+    }
+
+    /**
+     * Lets the stack call the application back through {@code host.docker.internal} (e.g. SNS HTTP subscriptions).
+     * Docker Desktop resolves this name, plain Docker on Linux does not.
+     * Linux only, so the mapping never overrides a desktop engine (e.g. Rancher Desktop) that resolves it its own way.
+     */
+    protected static void configureHostAccess(GenericContainer<?> container) {
+        if (OS.current() == OS.LINUX) {
+            container.withExtraHost("host.docker.internal", "host-gateway");
+        }
     }
 
     private void logStartedAndPrepareStackContainer(Startable s,
