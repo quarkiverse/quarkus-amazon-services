@@ -1,11 +1,12 @@
 package io.quarkiverse.amazon.secretsmanager.runtime;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.jboss.logging.Logger;
 
@@ -21,11 +22,10 @@ import software.amazon.awssdk.services.secretsmanager.model.SecretListEntry;
 /**
  * A MicroProfile ConfigSource backed by AWS Secrets Manager.
  * <p>
- * At startup, this source lists secrets and fetches their values. Optionally, a lookup map can be
- * provided to expose selected secrets under arbitrary configuration property names. If listing
- * secrets is not permitted (for example, missing {@code secretsmanager:ListSecrets}), listing
- * failures are ignored when a non-empty lookup map is configured and only those referenced secrets
- * are fetched via {@code GetSecretValue}.
+ * At startup, when a lookup map (property name to secret id) is configured, each referenced secret is
+ * fetched via {@code GetSecretValue} and exposed under its property name; the secret id may be a name
+ * or an ARN, and {@code secretsmanager:ListSecrets} is not needed. Without a lookup map, all secrets are
+ * listed and exposed under their secret name.
  */
 public class SecretsManagerConfigSource extends AbstractConfigSource {
 
@@ -46,56 +46,34 @@ public class SecretsManagerConfigSource extends AbstractConfigSource {
         LOG.info("Loading config values from AWS Secrets Manager...");
         Map<String, String> result = new LinkedHashMap<>();
 
-        Iterable<String> secretNames;
-        try {
-            secretNames = discoverSecretNames(client);
-        } catch (Exception e) {
-            if (this.lookup.isEmpty()) {
+        if (!this.lookup.isEmpty()) {
+            // Fetch each referenced secret once, even if several properties point to it.
+            Map<String, String> values = new HashMap<>();
+            for (Map.Entry<String, String> entry : this.lookup.entrySet()) {
+                mergeExpandedSecret(entry.getValue(), entry.getKey(), result,
+                        id -> values.computeIfAbsent(id, i -> getSecretValue(client, i)));
+            }
+        } else {
+            List<SecretListEntry> secrets;
+            try {
+                secrets = listAllSecrets(client);
+            } catch (Exception e) {
                 LOG.errorf(e, "Failed to list secrets from AWS Secrets Manager.");
                 return result;
             }
-            LOG.warnf(
-                    "Failed to list secrets from AWS Secrets Manager; loading only secrets referenced by the lookup map. %s",
-                    e.getMessage());
-            secretNames = new LinkedHashSet<>(this.lookup.values());
-        }
-
-        for (String secretName : secretNames) {
-            mergeExpandedSecret(client, secretName, flatteningPrefix(secretName), result);
+            for (SecretListEntry entry : secrets) {
+                mergeExpandedSecret(entry.name(), entry.name(), result, id -> getSecretValue(client, id));
+            }
         }
 
         LOG.infof("ConfigSource loaded %d config entries from AWS Secrets Manager.", result.size());
         return result;
     }
 
-    private List<String> discoverSecretNames(SecretsManagerClient client) {
-        List<String> names = new ArrayList<>();
-        for (SecretListEntry entry : listAllSecrets(client)) {
-            String secretName = entry.name();
-            if (!this.lookup.isEmpty() && !this.lookup.containsValue(secretName)) {
-                continue;
-            }
-            names.add(secretName);
-        }
-        return names;
-    }
-
-    private String flatteningPrefix(String secretName) {
-        if (this.lookup.isEmpty()) {
-            return secretName;
-        }
-        return this.lookup.entrySet().stream()
-                .filter(e -> e.getValue().equals(secretName))
-                .map(Map.Entry::getKey)
-                .findFirst()
-                .orElse(secretName);
-    }
-
-    private void mergeExpandedSecret(SecretsManagerClient client, String secretName, String prefix,
-            Map<String, String> result) {
+    private void mergeExpandedSecret(String secretName, String prefix, Map<String, String> result,
+            Function<String, String> fetcher) {
         try {
-            String value = getSecretValue(client, secretName);
-            result.putAll(JsonConfigFlattener.expandValue(prefix, value));
+            result.putAll(JsonConfigFlattener.expandValue(prefix, fetcher.apply(secretName)));
         } catch (Exception e) {
             // Handle access denied, deleted secrets, throttling, etc.
             // Keep going so one bad secret doesn't prevent application startup.
