@@ -65,7 +65,7 @@ If it does not emulate the operations you need, disable Dev Services with `quark
 ====
 endif::[]
 
-=== Provision {service-name-uppercase} locally via Dev Services
+=== Start {aws-stack-name} automatically with Dev Services
 
 The easiest way to start working with {service-name-uppercase} is to run a local instance using Dev Services.
 ifeval::["{aws-stack}" != "floci"]
@@ -83,15 +83,26 @@ The container listens on a random port, so you never hard-code an endpoint.
 It is labelled `quarkus-dev-service-{aws-stack}` and shared between the Quarkus applications running in dev mode.
 Refer to xref:dev-services.adoc[Dev Services for Amazon Services] for the provider selection, the container configuration and the init scripts.
 
-=== Provision {service-name-uppercase} locally manually
+=== Start {aws-stack-name} manually
 
-You can also set up a local version of {service-name-uppercase} manually, first start a {aws-stack-name} container:
+You can also start a {aws-stack-name} container yourself:
 
 ifeval::["{aws-stack}" == "floci"]
+ifndef::needs-host-access[]
+:floci-host-opt:
+endif::[]
+ifdef::needs-host-access[]
+:floci-host-opt: --add-host=host.docker.internal:host-gateway{sp}
+endif::[]
 [source,bash,subs="verbatim,attributes"]
 ----
-docker run --rm --name floci --publish 4566:4566 -d floci/floci:latest-compat
+docker run --rm --name floci --publish 4566:4566 {floci-host-opt}-d floci/floci:latest-compat
 ----
+ifdef::needs-host-access[]
+{service-name-uppercase} calls your application from the container: the `--add-host` option lets the container reach your host as `host.docker.internal`.
+Docker Desktop already provides this name, but on Linux the option is required.
+
+endif::[]
 This starts a Floci instance that is accessible on port `4566`. Floci exposes all the services it emulates on this single endpoint.
 
 The `latest-compat` image ships the AWS CLI, already configured to target the local endpoint.
@@ -126,14 +137,14 @@ Default output format [None]:
 ----
 endif::[]
 
-include::../_extras/{docname}-setup.adoc[opts=optional]
-
 ifdef::solution-summary[]
 ifdef::quickstart[]
 == Solution
 
 [subs="specialchars,attributes,quotes,replacements,macros,post_replacements"]
 {solution-summary}
+
+It uses the synchronous client first, then the asynchronous client in <<Going asynchronous>>.
 
 We recommend that you follow the instructions in the next sections and create the application step by step.
 However, you can go right to the completed example.
@@ -147,10 +158,21 @@ ifndef::quickstart[]
 
 [subs="specialchars,attributes,quotes,replacements,macros,post_replacements"]
 {solution-summary}
+
+It uses the synchronous client first, then the asynchronous client in <<Going asynchronous>>.
 endif::[]
 endif::[]
 
-== Creating the Maven project
+ifdef::solution-summary[]
+== Walkthrough
+endif::[]
+ifndef::solution-summary[]
+== Getting started
+
+In this section, you learn how to inject the {service-name-uppercase} clients of the AWS SDK as CDI beans, and how to configure them.
+endif::[]
+
+=== Creating the Maven project
 
 First, we need a new project. Create a new project with the following command:
 
@@ -190,7 +212,7 @@ The next section replaces that resource: delete these two files, or update them 
 include::../_extras/{docname}-usage.adoc[opts=optional]
 
 ifndef::custom-usage[]
-== Using the {service-name-uppercase} client
+=== Using the {service-name-uppercase} client
 
 The extension exposes the synchronous and asynchronous {service-name-uppercase} clients of the AWS SDK as CDI beans, so you only need to inject them.
 
@@ -201,7 +223,10 @@ Edit the `org.acme.{java-package}.{main-class}` REST resource created by the pre
 package org.acme.{java-package};
 
 import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 import software.amazon.awssdk.services.{sdk-package}.{service-class-name}Client;
 
@@ -211,14 +236,20 @@ public class {main-class} {
     @Inject
     {service-class-name}Client client;
 
-    // Call the client from your endpoints
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        // Call the {service-name-uppercase} API with the injected client, for example:
+        // client.xxx(...)
+        return "Hello {service-name-uppercase}";
+    }
 }
 ----
 
 To inject several clients with different configurations, refer to the xref:common-features.adoc[named clients] support.
 endif::[]
 
-== Configuring {service-name-uppercase} clients
+=== Configuring {service-name-uppercase} clients
 
 Both {service-name-uppercase} clients (sync and async) are configurable via the `application.properties` file that can be provided in the `src/main/resources` directory.
 Additionally, you need to add to the classpath a proper implementation of the sync client. By default, the extension uses the URL connection HTTP client, so
@@ -262,7 +293,13 @@ And add the following dependency to the application `pom.xml`:
 </dependency>
 ----
 
-If you provisioned a local {service-name-uppercase} instance manually (for example {aws-stack-name}), configure the client to use it as follows:
+==== Use Dev Services
+
+With Dev Services, there is nothing to configure: in dev and test modes, Dev Services starts {aws-stack-name} and configures the endpoint, the region and the credentials of the clients.
+
+==== Use a manually started {aws-stack-name}
+
+If you started {aws-stack-name} yourself, configure the client to use it as follows:
 
 [source,properties,subs="attributes+"]
 ----
@@ -277,7 +314,9 @@ quarkus.{service-name}.aws.credentials.static-provider.secret-access-key=test-se
 <2> {aws-stack-name} defaults to `us-east-1`
 <3> The `static` credentials provider lets you set the `access-key-id` and `secret-access-key` directly
 
-If you want to work with an AWS account, you need an AWS account with access to {service-name-uppercase} and the https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html[AWS Command Line Interface], then remove or comment out the `endpoint-override` and the static credentials properties above.
+==== Use your AWS account
+
+If you want to work with an AWS account, you need an AWS account with access to {service-name-uppercase} and the https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html[AWS Command Line Interface], then remove or comment out the `endpoint-override` and the static credentials properties of the previous section.
 By default, the {service-name-uppercase} client extension uses the `default` credentials provider chain that looks for credentials in this order:
 
 * Java System Properties - `aws.accessKeyId` and `aws.secretAccessKey`
@@ -301,9 +340,9 @@ quarkus.{service-name}.devservices.enabled=false
 Dev Services never starts in production mode.
 ====
 
-include::../_extras/{docname}-configuration.adoc[opts=optional,leveloffset=+1]
+include::../_extras/{docname}-configuration.adoc[opts=optional]
 
-== Run the application in Dev Mode
+=== Run the application in Dev Mode
 
 Run the application in dev mode with:
 
@@ -312,11 +351,19 @@ Run the application in dev mode with:
 ./mvnw clean quarkus:dev
 ----
 
-Unless you set `endpoint-override`, Dev Services starts a {aws-stack-name} container and configures the {service-name-uppercase} clients to use it.
+If you use Dev Services, it starts a {aws-stack-name} container and configures the {service-name-uppercase} clients to use it.
 The Dev Services card of the Dev UI, at http://localhost:8080/q/dev-ui, shows the container and the endpoint it exposes.
 
 ifndef::custom-usage[]
-The REST resource does not expose any endpoint yet: add methods that call the client, then call them with `curl http://localhost:8080{main-path}/...`.
+Call the endpoint of the resource:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080{main-path}
+----
+
+It returns `Hello {service-name-uppercase}`.
+Call the client in this method, or in new endpoints, and call them the same way.
 endif::[]
 
 include::../_extras/{docname}-run.adoc[opts=optional]
@@ -385,7 +432,10 @@ Create a `org.acme.{java-package}.Quarkus{service-class-name}AsyncResource` REST
 package org.acme.{java-package};
 
 import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 import software.amazon.awssdk.services.{sdk-package}.{service-class-name}AsyncClient;
 
@@ -395,7 +445,13 @@ public class Quarkus{service-class-name}AsyncResource {
     @Inject
     {service-class-name}AsyncClient client;
 
-    // Call the client from your endpoints
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        // Call the {service-name-uppercase} API with the injected client, for example:
+        // client.xxx(...)
+        return "Hello {service-name-uppercase}";
+    }
 }
 ----
 
@@ -426,6 +482,49 @@ And add the following dependency to the application `pom.xml`:
     <artifactId>aws-crt-client</artifactId>
 </dependency>
 ----
+
+Quarkus dev mode picks up the new resource, and restarts by itself when `pom.xml` changes: if the application is still running, wait a few seconds, then call it again.
+Otherwise, run it again with `./mvnw quarkus:dev`.
+
+ifndef::custom-async-usage[]
+Call the endpoint of the asynchronous resource:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl http://localhost:8080/async
+----
+
+It returns `Hello {service-name-uppercase}`.
+Call the asynchronous client in this method, or in new endpoints, and call them the same way.
+endif::[]
+
+:run-async:
+include::../_extras/{docname}-run.adoc[opts=optional]
+
+:!run-async:
+
+=== Going further
+
+ifdef::solution-summary[]
+You have built a Quarkus application that uses {service-name-uppercase}, developed locally against Dev Services and ready to run on your AWS account.
+endif::[]
+ifndef::solution-summary[]
+Your Quarkus application now has the {service-name-uppercase} clients injected and configured.
+Every operation of the {service-name-uppercase} API is one method call away.
+endif::[]
+You are all set to build great applications with {service-name-uppercase}, with the fast startup, the low memory footprint and the developer joy of Quarkus.
+
+To go further:
+
+* xref:common-features.adoc[Common features]: named clients, overriding the client configuration, custom AWS credentials providers.
+* xref:dev-services.adoc[Dev Services for Amazon Services]: stack providers, shared containers, init scripts.
+* xref:opentelemetry.adoc[OpenTelemetry for Amazon Services]: trace the calls of the AWS SDK.
+ifdef::quickstart[]
+* The completed example, in the `{quickstart}` {quickstarts-tree-url}/{quickstart}[directory] of the Quarkus quickstarts.
+endif::[]
+ifdef::aws-docs-url[]
+* {aws-docs-url}[The {service-name-uppercase} documentation].
+endif::[]
 
 include::../_extras/{docname}-extras.adoc[opts=optional]
 

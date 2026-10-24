@@ -1,9 +1,6 @@
 :custom-usage:
 
-== Creating JSON REST service
-
-In this example, we will create an application that sends a prompt to a foundation model and returns its answer.
-The example application will demonstrate the two programming models supported by the extension.
+=== Creating the REST resource
 
 It calls the model with the two Bedrock Runtime APIs:
 

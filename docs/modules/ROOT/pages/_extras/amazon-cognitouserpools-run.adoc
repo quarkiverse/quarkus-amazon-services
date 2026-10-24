@@ -1,3 +1,4 @@
+ifndef::run-async[]
 * Create a user pool with the synchronous client:
 
 [source,bash,subs="verbatim,attributes"]
@@ -13,5 +14,7 @@ The endpoint returns the ID of the new user pool.
 ----
 curl http://localhost:8080/cognito-example
 ----
-
+endif::[]
+ifdef::run-async[]
 * Replace `cognito-example` with `cognito-async-example` to use the asynchronous client.
+endif::[]

@@ -1,3 +1,5 @@
+==== Create the SQS queue
+
 Set the queue used by the application.
 The queue URL is built from the SQS endpoint, so Dev Services and a local instance only need the queue name:
 
@@ -9,11 +11,29 @@ queue.url=${quarkus.sqs.endpoint-override}/000000000000/${queue.name}
 
 `000000000000` is the account id used by the local stack.
 
-When using Dev Services, you can also let it create the queue on startup:
+.With Dev Services
+Let Dev Services create the queue on startup:
 
 [source,properties]
 ----
 quarkus.sqs.devservices.queues=${queue.name}
 ----
 
-On AWS, there is no `endpoint-override` and the account id is yours, so pass the queue URL returned by `create-queue` explicitly, with `-Dqueue.url=<queue-url>`.
+.On a manually started Floci
+Create the queue with the AWS CLI of the Floci container:
+
+[source,bash,subs="verbatim,attributes"]
+----
+docker exec floci aws sqs create-queue --queue-name=Quarkus
+----
+
+.On your AWS account
+Create the queue with your own AWS CLI and store its URL:
+
+[source,bash,subs="verbatim,attributes"]
+----
+export QUEUE_URL=$(aws sqs create-queue --queue-name=Quarkus --query QueueUrl --output text)
+----
+
+On AWS, there is no `endpoint-override` and the account id is yours, so the `queue.url` property above does not apply.
+Quarkus reads the `QUEUE_URL` environment variable as the `queue.url` property, so run the application from the same terminal, or pass the URL explicitly with `-Dqueue.url=$QUEUE_URL`.

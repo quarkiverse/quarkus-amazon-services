@@ -1,16 +1,11 @@
+==== Create the SNS topic
+
 Set the name of the topic used by the application, and the ARN the clients publish to:
 
 [source,properties]
 ----
 topic.name=QuarksCollider
 topic.arn=arn:aws:sns:us-east-1:000000000000:${topic.name}
-----
-
-When using Dev Services, you can also let it create the topic on startup:
-
-[source,properties]
-----
-quarkus.sns.devservices.topics=${topic.name}
 ----
 
 SNS sends the notifications to the HTTP endpoint served by the application, so the topic must be able to reach it:
@@ -21,9 +16,41 @@ quarks.shield.base.url=http://host.docker.internal:${quarkus.http.port}
 quarkus.http.host=0.0.0.0
 ----
 
+Be aware that with `quarkus.http.host=0.0.0.0`, Quarkus listens to all interfaces, which might be a security hazard depending on your network configuration.
+
 [WARNING]
 ====
 On Linux, the Floci container cannot resolve `host.docker.internal` unless it is started with `--add-host=host.docker.internal:host-gateway`.
 Dev Services starts the container for you and cannot add this mapping, so on Linux the subscription callback does not reach the application when you use Dev Services.
-To use the shield endpoints on Linux, run Floci manually with the extra host mapping (see the provisioning section above) and point the client at it with `quarkus.sns.endpoint-override` and the static credentials.
+To use the shield endpoints on Linux, run Floci manually as described in <<Start Floci manually>> and point the client at it with `quarkus.sns.endpoint-override` and the static credentials.
 ====
+
+.With Dev Services
+Let Dev Services create the topic on startup:
+
+[source,properties]
+----
+quarkus.sns.devservices.topics=${topic.name}
+----
+
+.On a manually started Floci
+Create the topic using the AWS CLI of the Floci container and store its ARN in the `TOPIC_ARN` environment variable:
+
+[source,bash,subs="verbatim,attributes"]
+----
+export TOPIC_ARN=$(docker exec floci aws sns create-topic --name=QuarksCollider --query TopicArn --output text)
+----
+
+.On your AWS account
+Create the topic using your default profile:
+
+[source,bash,subs="verbatim,attributes"]
+----
+export TOPIC_ARN=$(aws sns create-topic --name=QuarksCollider --query TopicArn --output text)
+----
+
+On AWS, SNS delivers the notifications over the internet, so it cannot reach `host.docker.internal` or `localhost`.
+Set `quarks.shield.base.url` to a public URL of your application, for example a tunnel to your machine or a deployed instance.
+Publishing works without it, but the shield does not receive the notifications.
+
+Quarkus reads the `TOPIC_ARN` environment variable as the `topic.arn` property, so run the application from the same terminal, or pass the ARN explicitly with `-Dtopic.arn=$TOPIC_ARN`.

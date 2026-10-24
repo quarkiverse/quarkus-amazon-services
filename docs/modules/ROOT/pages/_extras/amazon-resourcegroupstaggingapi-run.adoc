@@ -1,3 +1,4 @@
+ifndef::run-async[]
 * Tag the resource created earlier with the synchronous client:
 
 [source,bash,subs="verbatim,attributes"]
@@ -34,5 +35,7 @@ curl -XPOST "http://localhost:8080/sync/untag?arn=$RESOURCE_ARN&key=team"
 ----
 
 It returns `{}`, and the `resources` endpoint no longer returns the queue.
-
+endif::[]
+ifdef::run-async[]
 * Do the same with the asynchronous client, using the `/async` path instead of `/sync`.
+endif::[]

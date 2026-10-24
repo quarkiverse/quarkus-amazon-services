@@ -1,3 +1,4 @@
+ifndef::run-async[]
 * Push a data point to the `Invocations` metric of the `quarkus` namespace with the synchronous client:
 
 [source,bash,subs="verbatim,attributes"]
@@ -13,5 +14,7 @@ curl "http://localhost:8080/sync?namespace=quarkus"
 ----
 
 The endpoint returns `Invocations`.
-
-* Replace `sync` with `async` to use the asynchronous client.
+endif::[]
+ifdef::run-async[]
+* Call the same endpoints with the asynchronous client, replacing `sync` with `async` in the URLs.
+endif::[]

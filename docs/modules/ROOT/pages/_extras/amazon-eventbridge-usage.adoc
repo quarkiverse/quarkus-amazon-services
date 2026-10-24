@@ -1,9 +1,6 @@
 :custom-usage:
 
-== Creating JSON REST service
-
-In this example, we will create an application that creates scheduled EventBridge rules and describes them using a RESTful API.
-The example application will demonstrate the two programming models supported by the extension.
+=== Creating the REST resource
 
 Let's start with the synchronous implementation in the `org.acme.eventbridge.QuarkusEventBridgeSyncResource` class.
 

@@ -1,3 +1,4 @@
+ifndef::run-async[]
 * Assume the role with the synchronous client:
 
 [source,bash,subs="verbatim,attributes"]
@@ -6,5 +7,7 @@ curl "http://localhost:8080/sync?roleArn=arn:aws:iam::000000000000:role/quarkus-
 ----
 
 The endpoint returns `arn:aws:sts::000000000000:assumed-role/quarkus-role/quarkus`.
-
-* Replace `sync` with `async` to use the asynchronous client.
+endif::[]
+ifdef::run-async[]
+* Call the same endpoints with the asynchronous client, replacing `sync` with `async` in the URLs.
+endif::[]
