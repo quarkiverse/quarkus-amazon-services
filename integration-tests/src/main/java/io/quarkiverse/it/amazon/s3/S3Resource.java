@@ -27,6 +27,7 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.core.sync.ResponseTransformer;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.BucketAlreadyOwnedByYouException;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
@@ -56,6 +57,22 @@ public class S3Resource {
 
     @Inject
     S3Presigner s3Presigner;
+
+    /**
+     * Dev Services creates the configured buckets again when it reuses a shared container: the second
+     * creation must succeed or fail with {@link BucketAlreadyOwnedByYouException}, which it ignores.
+     */
+    @GET
+    @Path("devservices-bucket-recreate")
+    @Produces(TEXT_PLAIN)
+    public String testDevServicesBucketRecreate() {
+        try {
+            s3Client.createBucket(b -> b.bucket("quarkus.test.bucket"));
+        } catch (BucketAlreadyOwnedByYouException e) {
+            // what Dev Services ignores
+        }
+        return "OK";
+    }
 
     @GET
     @Path("async")

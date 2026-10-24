@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -55,5 +56,14 @@ public class AmazonSqsTest {
                 .when().get("/test/sqs/{endpoint}/{queueName}")
                 .then()
                 .body(is("Quarkus is awesome"));
+    }
+
+    /**
+     * Replays what the SQS Dev Services processor does when it reuses a shared container whose resources already
+     * exist: creating them again must not fail. The processor code is not called, only its behavior is reproduced.
+     */
+    @Test
+    public void testDevServicesQueueReplay() {
+        RestAssured.when().get("/test/sqs/devservices-queue-replay").then().body(is("OK"));
     }
 }

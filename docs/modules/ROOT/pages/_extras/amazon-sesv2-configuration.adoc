@@ -10,10 +10,7 @@ You do not need the AWS CLI: list the sender addresses in `application.propertie
 quarkus.sesv2.devservices.verified-emails=from-quarkus@example.com
 ----
 
-Dev Services verifies these addresses when it starts the Floci container.
-
-NOTE: In dev mode, Dev Services reuses the Floci container already started by another Quarkus application, and does not verify the addresses of this property on it.
-To get a container of your own, which Dev Services initializes, set `quarkus.aws.devservices.floci.shared=false`.
+Dev Services verifies these addresses when it starts the Floci container, and also when it reuses a Floci container already started by another Quarkus application in dev mode.
 
 .On a manually started Floci
 Create the email identity of the sender address with the AWS CLI of the Floci container:

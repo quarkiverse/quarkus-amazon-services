@@ -15,6 +15,16 @@ import io.restassured.RestAssured;
 public class AmazonS3Test {
     DevServicesContext context;
 
+    /**
+     * Replays what the S3 Dev Services processor does when it reuses a shared container whose buckets already
+     * exist: creating a configured bucket again must not fail. The processor code is not called, only its behavior
+     * is reproduced.
+     */
+    @Test
+    public void testDevServicesBucketRecreate() {
+        RestAssured.when().get("/test/s3/devservices-bucket-recreate").then().body(is("OK"));
+    }
+
     @Test
     public void testS3Async() {
         RestAssured.when().get("/test/s3/async").then().body(is("INTERCEPTED+sample S3 object"));

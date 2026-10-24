@@ -1,6 +1,7 @@
 package io.quarkiverse.it.amazon;
 
 import static org.hamcrest.Matchers.any;
+import static org.hamcrest.Matchers.is;
 
 import java.time.Duration;
 import java.util.concurrent.Callable;
@@ -8,6 +9,7 @@ import java.util.concurrent.Callable;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -53,5 +55,14 @@ public class AmazonSnsTest {
                         return response.getBody().asString().contains(message);
                     }
                 });
+    }
+
+    /**
+     * Replays what the SNS Dev Services processor does when it reuses a shared container whose resources already
+     * exist: creating them again must not fail. The processor code is not called, only its behavior is reproduced.
+     */
+    @Test
+    public void testDevServicesTopicReplay() {
+        RestAssured.when().get("/test/sns/devservices-topic-replay").then().body(is("OK"));
     }
 }

@@ -10,6 +10,16 @@ import io.restassured.RestAssured;
 @QuarkusTest
 public class AmazonKmsTest {
 
+    /**
+     * Replays what the KMS Dev Services processor does when it reuses a shared container: it looks each configured
+     * alias up with {@code describeKey}, skips the ones found and creates the ones reported as not found. The
+     * processor code is not called, only its behavior is reproduced.
+     */
+    @Test
+    public void testDevServicesAlias() {
+        RestAssured.when().get("/test/kms/devservices-alias").then().body(is("OK"));
+    }
+
     @Test
     public void testKmsAsync() {
         RestAssured.when().get("/test/kms/async").then().body(is("Quarkus is awesome"));

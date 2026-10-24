@@ -34,6 +34,17 @@ public class SesResource {
     @Inject
     SesAsyncClient sesAsyncClient;
 
+    /**
+     * Dev Services verifies the configured addresses again when it reuses a shared container.
+     */
+    @GET
+    @Path("devservices-identity-replay")
+    @Produces(TEXT_PLAIN)
+    public String testDevServicesIdentityReplay() {
+        sesClient.verifyEmailIdentity(i -> i.emailAddress("devservices-sender@example.com"));
+        return "OK";
+    }
+
     @GET
     @Path("sync")
     @Produces(TEXT_PLAIN)
