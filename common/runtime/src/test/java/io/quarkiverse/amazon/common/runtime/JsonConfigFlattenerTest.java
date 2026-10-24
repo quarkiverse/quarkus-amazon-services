@@ -101,11 +101,10 @@ public class JsonConfigFlattenerTest {
 
     @Test
     void testExpandValue_JsonObjectWithNull() {
-        String json = "{\"value\":null}";
+        String json = "{\"value\":null,\"other\":\"x\"}";
         Map<String, String> result = JsonConfigFlattener.expandValue("config", json);
 
-        assertEquals(1, result.size());
-        assertEquals("null", result.get("config.value"));
+        assertEquals(Map.of("config.other", "x"), result);
     }
 
     @Test

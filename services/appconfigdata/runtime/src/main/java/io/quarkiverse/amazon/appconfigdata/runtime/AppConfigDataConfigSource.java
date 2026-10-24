@@ -15,14 +15,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 import jakarta.json.Json;
-import jakarta.json.JsonArray;
-import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
-import jakarta.json.JsonString;
-import jakarta.json.JsonValue;
 
 import org.jboss.logging.Logger;
 
+import io.quarkiverse.amazon.common.runtime.JsonConfigFlattener;
 import io.smallrye.config.common.AbstractConfigSource;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.services.appconfigdata.AppConfigDataClient;
@@ -184,9 +181,8 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
         }
         if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
             try (JsonReader reader = Json.createReader(new StringReader(trimmed))) {
-                JsonValue root = reader.readValue();
                 Map<String, String> flat = new LinkedHashMap<>();
-                flattenJson("", root, flat);
+                JsonConfigFlattener.flattenJson("", reader.readValue(), flat);
                 return flat;
             } catch (Exception e) {
                 LOG.warnf(e, "Failed to parse configuration as JSON; treating as empty.");
@@ -206,43 +202,6 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
             map.put(name, p.getProperty(name));
         }
         return map;
-    }
-
-    /**
-     * Flattens JSON into string keys: object keys are joined with {@code '.'}; array indices use {@code [n]}.
-     * {@code NULL} values are omitted. Scalar values are stored as strings.
-     */
-    private static void flattenJson(String prefix, JsonValue value, Map<String, String> out) {
-        switch (value.getValueType()) {
-            case OBJECT:
-                JsonObject obj = value.asJsonObject();
-                for (String key : obj.keySet()) {
-                    String p = prefix.isEmpty() ? key : prefix + "." + key;
-                    flattenJson(p, obj.get(key), out);
-                }
-                break;
-            case ARRAY:
-                JsonArray arr = value.asJsonArray();
-                for (int i = 0; i < arr.size(); i++) {
-                    flattenJson(prefix + "[" + i + "]", arr.get(i), out);
-                }
-                break;
-            case STRING:
-                out.put(prefix, ((JsonString) value).getString());
-                break;
-            case NUMBER:
-                out.put(prefix, value.toString());
-                break;
-            case TRUE:
-                out.put(prefix, "true");
-                break;
-            case FALSE:
-                out.put(prefix, "false");
-                break;
-            case NULL:
-            default:
-                break;
-        }
     }
 
     private Map<String, String> rawEntries() {
