@@ -1,0 +1,28 @@
+package io.quarkiverse.amazon.appconfigdata.runtime;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
+
+import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.spi.ConfigSource;
+
+import io.quarkus.runtime.ShutdownEvent;
+import io.smallrye.config.SmallRyeConfig;
+
+/**
+ * Neither SmallRye Config nor Quarkus closes config sources, so the poller and client of an
+ * {@link AppConfigDataConfigSource} would outlive the application, and pile up on each dev mode restart. This closes
+ * them on shutdown.
+ * <p>
+ * Only the sources of the {@link SmallRyeConfig} registered for the current classloader are found.
+ */
+@ApplicationScoped
+public class AppConfigDataConfigSourceCloser {
+
+    void onStop(@Observes ShutdownEvent event) {
+        SmallRyeConfig config = ConfigProvider.getConfig().unwrap(SmallRyeConfig.class);
+        for (ConfigSource configSource : config.getConfigSources(AppConfigDataConfigSource.class)) {
+            ((AppConfigDataConfigSource) configSource).close();
+        }
+    }
+}

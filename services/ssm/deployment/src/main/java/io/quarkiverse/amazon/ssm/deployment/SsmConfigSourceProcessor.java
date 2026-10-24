@@ -1,6 +1,8 @@
 package io.quarkiverse.amazon.ssm.deployment;
 
 import io.quarkiverse.amazon.ssm.runtime.SsmConfigSourceBuilder;
+import io.quarkiverse.amazon.ssm.runtime.SsmConfigSourceCloser;
+import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
@@ -18,5 +20,10 @@ public class SsmConfigSourceProcessor {
     @BuildStep
     void ssmConfigSourceFactory(BuildProducer<RunTimeConfigBuilderBuildItem> runTimeConfigBuilder) {
         runTimeConfigBuilder.produce(new RunTimeConfigBuilderBuildItem(SsmConfigSourceBuilder.class.getName()));
+    }
+
+    @BuildStep
+    AdditionalBeanBuildItem ssmConfigSourceCloser() {
+        return AdditionalBeanBuildItem.unremovableOf(SsmConfigSourceCloser.class);
     }
 }

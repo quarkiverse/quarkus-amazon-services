@@ -14,6 +14,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.jboss.logging.Logger;
@@ -38,7 +39,8 @@ import software.amazon.awssdk.services.ssm.model.Parameter;
  * prefixed with the normalized parameter name. Other values are exposed as a single key (the normalized name) unless
  * the value looks like Java properties text (contains an equals sign), in which case each entry is prefixed.
  * <p>
- * The supplied {@link SsmClient} is owned by this source and closed in {@link #close()}.
+ * The supplied {@link SsmClient} is owned by this source. Without polling, it is closed right after the initial load;
+ * otherwise {@link #close()} closes it, which {@link SsmConfigSourceCloser} calls on shutdown.
  */
 public class SsmConfigSource extends AbstractConfigSource implements AutoCloseable {
 
@@ -51,6 +53,7 @@ public class SsmConfigSource extends AbstractConfigSource implements AutoCloseab
     private static final int GET_PARAMETERS_BATCH_SIZE = 10;
 
     private final AtomicReference<Map<String, String>> entriesRef = new AtomicReference<>(Map.of());
+    private final AtomicBoolean closed = new AtomicBoolean();
     private final SsmClient client;
     private final String path;
     private final List<String> names;
@@ -72,14 +75,24 @@ public class SsmConfigSource extends AbstractConfigSource implements AutoCloseab
 
         if (updateIntervalMinutes > 0) {
             LOG.debugf("SSM ConfigSource update interval set to %d minutes", updateIntervalMinutes);
-            ThreadFactory threadFactory = runnable -> new Thread(runnable, POLL_THREAD_NAME);
+            ThreadFactory threadFactory = runnable -> {
+                Thread thread = new Thread(runnable, POLL_THREAD_NAME);
+                thread.setDaemon(true);
+                return thread;
+            };
             executorService = new ScheduledThreadPoolExecutor(1, threadFactory);
             executorService.scheduleAtFixedRate(this::reload, updateIntervalMinutes, updateIntervalMinutes,
                     TimeUnit.MINUTES);
+        } else {
+            // nothing will use the client again
+            close();
         }
     }
 
     private void reload() {
+        if (closed.get()) {
+            return;
+        }
         try {
             Map<String, String> merged = new LinkedHashMap<>();
             if (!isBlank(path)) {
@@ -218,6 +231,9 @@ public class SsmConfigSource extends AbstractConfigSource implements AutoCloseab
 
     @Override
     public void close() {
+        if (!closed.compareAndSet(false, true)) {
+            return;
+        }
         if (executorService != null) {
             executorService.shutdown();
             try {
