@@ -8,10 +8,7 @@ import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.ses.runtime.SesBuildTimeConfig;
 import io.quarkiverse.amazon.ses.runtime.SesDevServicesBuildTimeConfig;
 import io.quarkus.deployment.annotations.BuildStep;
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
-import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
-import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.ses.SesClient;
 
 public class SesDevServicesAwsStackProcessor extends AbstractDevServicesAwsStackProcessor {
@@ -31,11 +28,7 @@ public class SesDevServicesAwsStackProcessor extends AbstractDevServicesAwsStack
 
         configuration.verifiedEmails().ifPresent(emails -> {
 
-            try (SesClient client = SesClient.builder()
-                    .endpointOverride(awsStackContainer.getEndpoint())
-                    .region(Region.of(awsStackContainer.getRegion()))
-                    .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials
-                            .create(awsStackContainer.getAccessKey(), awsStackContainer.getSecretKey())))
+            try (SesClient client = awsStackContainer.configure(SesClient.builder())
                     .httpClientBuilder(UrlConnectionHttpClient.builder())
                     .build()) {
                 for (var email : emails) {

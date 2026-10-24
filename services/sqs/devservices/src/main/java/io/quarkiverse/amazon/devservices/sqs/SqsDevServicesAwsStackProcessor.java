@@ -11,10 +11,7 @@ import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.sqs.runtime.SqsBuildTimeConfig;
 import io.quarkiverse.amazon.sqs.runtime.SqsDevServicesBuildTimeConfig;
 import io.quarkus.deployment.annotations.BuildStep;
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
-import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
-import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.QueueAttributeName;
 
@@ -35,11 +32,7 @@ public class SqsDevServicesAwsStackProcessor extends AbstractDevServicesAwsStack
 
         configuration.queues().ifPresent(queues -> {
 
-            try (SqsClient client = SqsClient.builder()
-                    .endpointOverride(awsStackContainer.getEndpoint())
-                    .region(Region.of(awsStackContainer.getRegion()))
-                    .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials
-                            .create(awsStackContainer.getAccessKey(), awsStackContainer.getSecretKey())))
+            try (SqsClient client = awsStackContainer.configure(SqsClient.builder())
                     .httpClientBuilder(UrlConnectionHttpClient.builder())
                     .build()) {
                 for (var queueName : queues) {
