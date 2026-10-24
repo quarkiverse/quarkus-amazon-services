@@ -1,6 +1,8 @@
 package io.quarkiverse.amazon.fake.deployment;
 
 import static io.quarkiverse.amazon.fake.deployment.FakeClientInspector.httpClientOption;
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.NETTY;
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.URL_CONNECTION;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 import jakarta.inject.Inject;
@@ -25,7 +27,9 @@ public class TlsFileStoreConfigTest {
 
     @RegisterExtension
     static final QuarkusExtensionTest config = new QuarkusExtensionTest()
+            .setForcedDependencies(SdkHttpClients.of(URL_CONNECTION, NETTY))
             .withApplicationRoot((jar) -> jar
+                    .addClasses(SdkHttpClients.class, FakeClientInspector.class)
                     .addAsResource("tls-filestore-config.properties", "application.properties"));
 
     @Test

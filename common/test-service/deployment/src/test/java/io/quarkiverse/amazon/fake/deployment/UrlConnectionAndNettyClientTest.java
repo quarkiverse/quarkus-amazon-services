@@ -1,6 +1,8 @@
 package io.quarkiverse.amazon.fake.deployment;
 
 import static io.quarkiverse.amazon.fake.deployment.FakeClientInspector.httpClientName;
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.NETTY;
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.URL_CONNECTION;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import jakarta.inject.Inject;
@@ -22,7 +24,9 @@ public class UrlConnectionAndNettyClientTest {
 
     @RegisterExtension
     static final QuarkusExtensionTest config = new QuarkusExtensionTest()
+            .setForcedDependencies(SdkHttpClients.of(URL_CONNECTION, NETTY))
             .withApplicationRoot((jar) -> jar
+                    .addClasses(SdkHttpClients.class, FakeClientInspector.class)
                     .addAsResource("url-netty-full-config.properties", "application.properties"));
 
     @Test

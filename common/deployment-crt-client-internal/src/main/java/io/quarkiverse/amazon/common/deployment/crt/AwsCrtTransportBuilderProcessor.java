@@ -6,6 +6,7 @@ import java.util.Optional;
 import io.quarkiverse.amazon.common.deployment.AmazonClientAsyncTransportBuildItem;
 import io.quarkiverse.amazon.common.deployment.AmazonClientExtensionBuildItem;
 import io.quarkiverse.amazon.common.deployment.AmazonClientSyncTransportBuildItem;
+import io.quarkiverse.amazon.common.deployment.AmazonHttpClientsCheckedBuildItem;
 import io.quarkiverse.amazon.common.deployment.RequireAmazonClientTransportBuilderBuildItem;
 import io.quarkiverse.amazon.common.runtime.AmazonClientAwsCrtTransportRecorder;
 import io.quarkiverse.amazon.common.runtime.AsyncHttpClientBuildTimeConfig;
@@ -14,6 +15,7 @@ import io.quarkiverse.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.Consume;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.runtime.RuntimeValue;
@@ -22,6 +24,7 @@ public class AwsCrtTransportBuilderProcessor {
 
     @BuildStep()
     @Record(ExecutionTime.RUNTIME_INIT)
+    @Consume(AmazonHttpClientsCheckedBuildItem.class)
     void setupAwsCrtSyncTransport(
             List<AmazonClientExtensionBuildItem> extensions,
             List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
@@ -39,6 +42,7 @@ public class AwsCrtTransportBuilderProcessor {
 
     @BuildStep()
     @Record(ExecutionTime.RUNTIME_INIT)
+    @Consume(AmazonHttpClientsCheckedBuildItem.class)
     void setupAwsCrtAsyncTransport(
             List<AmazonClientExtensionBuildItem> extensions,
             List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,

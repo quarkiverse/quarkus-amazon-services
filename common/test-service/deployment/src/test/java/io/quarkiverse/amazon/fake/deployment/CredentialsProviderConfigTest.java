@@ -1,6 +1,8 @@
 package io.quarkiverse.amazon.fake.deployment;
 
 import static io.quarkiverse.amazon.fake.deployment.FakeClientInspector.configuration;
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.NETTY;
+import static io.quarkiverse.amazon.fake.deployment.SdkHttpClients.URL_CONNECTION;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -56,6 +58,8 @@ public class CredentialsProviderConfigTest {
 
     @RegisterExtension
     static final QuarkusExtensionTest config = new QuarkusExtensionTest()
+            .setForcedDependencies(SdkHttpClients.of(URL_CONNECTION, NETTY))
+            .withApplicationRoot((jar) -> jar.addClasses(SdkHttpClients.class, FakeClientInspector.class))
             .overrideConfigKey("quarkus.devservices.enabled", "false")
             .overrideConfigKey("quarkus.fake-service.aws.region", "us-east-2")
             .overrideConfigKey("quarkus.fake-service.aws.credentials.type", "default")

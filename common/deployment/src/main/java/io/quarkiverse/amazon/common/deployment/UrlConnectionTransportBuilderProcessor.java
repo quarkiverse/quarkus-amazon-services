@@ -8,6 +8,7 @@ import io.quarkiverse.amazon.common.runtime.SyncHttpClientBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.SyncHttpClientConfig;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
+import io.quarkus.deployment.annotations.Consume;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.runtime.RuntimeValue;
@@ -16,6 +17,7 @@ public class UrlConnectionTransportBuilderProcessor {
 
     @BuildStep()
     @Record(ExecutionTime.RUNTIME_INIT)
+    @Consume(AmazonHttpClientsCheckedBuildItem.class)
     void setupUrlConnectionSyncTransport(
             List<AmazonClientExtensionBuildItem> extensions,
             List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,

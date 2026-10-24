@@ -30,7 +30,6 @@ import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ServiceProviderBuildItem;
-import io.quarkus.deployment.pkg.builditem.ArtifactResultBuildItem;
 import io.quarkus.runtime.configuration.ConfigurationException;
 import software.amazon.awssdk.http.SdkHttpService;
 import software.amazon.awssdk.http.async.SdkAsyncHttpService;
@@ -126,7 +125,7 @@ public class AmazonServicesClientsProcessor {
     }
 
     @BuildStep
-    @Produce(ArtifactResultBuildItem.class)
+    @Produce(AmazonHttpClientsCheckedBuildItem.class)
     void setup(
             List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             BuildProducer<ReflectiveClassBuildItem> reflectiveClasses,
