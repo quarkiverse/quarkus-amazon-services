@@ -3,6 +3,7 @@
 :solution-summary: The application built here allows to shoot elementary particles (quarks) into a `QuarksCollider` topic of the AWS SNS. Additionally, we create a resource that allows to subscribe to the `QuarksCollider` topic in order to receive published quarks.
 :main-class: QuarksCannonSyncResource
 :main-path: /sync/cannon
+:needs-host-access:
 :aws-docs-url: https://docs.aws.amazon.com/sns/latest/dg/welcome.html
 
 Amazon Simple Notification Service (SNS) is a highly available and fully managed pub/sub messaging service.

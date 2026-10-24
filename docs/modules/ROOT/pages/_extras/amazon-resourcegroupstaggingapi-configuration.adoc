@@ -1,5 +1,9 @@
-== Create the resource to tag with Dev Services
+==== Create the resource to tag
 
+The Resource Groups Tagging API manages the tags of resources created by other AWS services.
+Create a SQS queue named `quarkus-tagging`, and store its ARN in the `RESOURCE_ARN` environment variable, which you will pass to the application.
+
+.With Dev Services
 Dev Services starts Floci with the `floci/floci:latest` image by default, which does not ship the AWS CLI.
 To create the `quarkus-tagging` queue automatically at startup, use the `latest-compat` image and provide init scripts:
 
@@ -35,3 +39,23 @@ The ARN of the queue created by Dev Services is fixed, so you can set it directl
 ----
 export RESOURCE_ARN=arn:aws:sqs:us-east-1:000000000000:quarkus-tagging
 ----
+
+.On a manually started Floci
+Create the queue with the AWS CLI of the Floci container:
+
+[source,bash,subs="verbatim,attributes"]
+----
+queue_url=$(docker exec floci aws sqs create-queue --queue-name quarkus-tagging --query QueueUrl --output text)
+export RESOURCE_ARN=$(docker exec floci aws sqs get-queue-attributes --queue-url $queue_url --attribute-names QueueArn --query Attributes.QueueArn --output text)
+----
+
+.On your AWS account
+Create the same queue with your own AWS CLI:
+
+[source,bash,subs="verbatim,attributes"]
+----
+queue_url=$(aws sqs create-queue --queue-name quarkus-tagging --query QueueUrl --output text)
+export RESOURCE_ARN=$(aws sqs get-queue-attributes --queue-url $queue_url --attribute-names QueueArn --query Attributes.QueueArn --output text)
+----
+
+Any taggable resource works: you can use the ARN of an existing resource of your account instead.

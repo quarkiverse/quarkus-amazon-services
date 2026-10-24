@@ -1,8 +1,6 @@
 :custom-usage:
 
-== Creating JSON REST service
-
-In this example, we will create an application to manage a list of fruits. The example application will demonstrate the two programming models supported by the extension.
+=== Creating the REST resource
 
 First, let's create the `Fruit` bean as follows:
 
@@ -69,7 +67,6 @@ public class Fruit {
 ----
 
 TIP: The `@RegisterForReflection` annotation instructs Quarkus to keep the class and its members during the native compilation. More details about the `@RegisterForReflection` annotation can be found on the https://quarkus.io/guides/writing-native-applications-tips#registerForReflection[native application tips] page.
-
 
 Nothing fancy. One important thing to note is that having a default constructor is required by the JSON serialization layer. The static `from` method creates a bean based on the `Map`
 object provided by the DynamoDB client response.
@@ -223,4 +220,4 @@ public class FruitResource {
 }
 ----
 
-The implementation is pretty straightforward and you just need to define your endpoints using the JAX-RS annotations and use the `FruitSyncService` to list/add new fruits.
+The implementation is pretty straightforward and you just need to define your endpoints using the Jakarta REST annotations and use the `FruitSyncService` to list/add new fruits.

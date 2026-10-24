@@ -1,3 +1,4 @@
+ifndef::run-async[]
 * Create a guardrail with the synchronous client, it returns the guardrail id:
 
 [source,bash,subs="verbatim,attributes"]
@@ -46,5 +47,7 @@ You should see output like this:
 ----
 curl -XDELETE http://localhost:8080/sync/guardrails/<guardrail-id>
 ----
-
-* Replace `sync` with `async` to use the asynchronous client.
+endif::[]
+ifdef::run-async[]
+* Call the same endpoints with the asynchronous client, replacing `sync` with `async` in the URLs.
+endif::[]

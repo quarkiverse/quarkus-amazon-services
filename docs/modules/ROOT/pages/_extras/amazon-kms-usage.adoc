@@ -1,9 +1,6 @@
 :custom-usage:
 
-== Creating JSON REST service
-
-In this example, we will create an application that allows to encrypt and decrypt text message provided in the request.
-The example application will demonstrate the two programming models supported by the extension.
+=== Creating the REST resource
 
 Let's create a `org.acme.kms.QuarkusKmsSyncResource` that will provide an API to encrypt and decrypt message using the synchronous client.
 

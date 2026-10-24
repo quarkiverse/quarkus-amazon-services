@@ -1,8 +1,6 @@
 :custom-usage:
 
-== Setting up the model
-
-In this example, we will create an application to manage a list of files. The example application will demonstrate the two programming models supported by the extension.
+=== Setting up the model
 
 Because the primary goal of our application is to upload a file into the S3 bucket, we need to setup the model we will be using to define the `multipart/form-data` payload,
 in the form of a POJO annotated with `@RestForm`.
@@ -90,7 +88,7 @@ public class FileObject {
 Nothing fancy. One important thing to note is that having a default constructor is required by the JSON serialization layer. The static `from` method creates a bean based on the `S3Object`
 object provided by the S3 client response when listing all the objects in a bucket.
 
-== Create JAX-RS resource
+=== Creating the REST resource
 
 Now create a `org.acme.s3.CommonResource` that will consist of methods to prepare S3 request to get object from a S3 bucket, or to put file into a S3 bucket.
 Note a configuration property `bucket.name` is defined here as the request method required name of the S3 bucket.
@@ -153,7 +151,6 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.ListObjectsRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
-
 
 @Path("/s3")
 public class S3SyncClientResource extends CommonResource {

@@ -1,4 +1,4 @@
-=== DynamoDB enhanced client
+== DynamoDB enhanced client
 
 The DynamoDB enhanced client is part of the AWS SDK for Java version 2 and makes the mapping between DynamoDB Tables and Java beans very easy.
 The Enhanced Client requires a TableSchema which can be generated from a bean class annotated with `DynamoDbBean` or `DynamoDbImmutable` or generated from code.

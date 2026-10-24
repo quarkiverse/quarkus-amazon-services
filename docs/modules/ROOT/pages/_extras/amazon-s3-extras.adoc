@@ -1,21 +1,4 @@
-If you want to use the https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/crt-based-s3-client.html[AWS CRT-based S3 client], add the `io.quarkiverse.amazon.s3.runtime.S3Crt` qualifier as follows:
-[source,java]
-----
-@Inject
-@S3Crt
-S3AsyncClient s3;
-----
-
-And add the following dependency to the application `pom.xml`:
-[source,xml]
-----
-<dependency>
-    <groupId>software.amazon.awssdk</groupId>
-    <artifactId>aws-crt-client</artifactId>
-</dependency>
-----
-
-=== S3 Transfer Manager
+== S3 Transfer Manager
 
 Amazon S3 Transfer Manager is high-level file transfer utility based on the S3 client. The extension provides functionality that allows to use `S3TransferManager` when running in Quarkus.
 You can find more information about S3 Transfer Manager at https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/transfer-manager.html[the Amazon S3 website].

@@ -1,3 +1,4 @@
+ifndef::run-async[]
 * Send messages to the queue with the synchronous client:
 
 [source,bash,subs="verbatim,attributes"]
@@ -12,5 +13,7 @@ curl -XPOST -H "Content-type: application/json" http://localhost:8080/sync/canno
 ----
 curl http://localhost:8080/sync/shield
 ----
-
-* Replace `sync` with `async` to use the asynchronous client.
+endif::[]
+ifdef::run-async[]
+* Call the same endpoints with the asynchronous client, replacing `sync` with `async` in the URLs.
+endif::[]

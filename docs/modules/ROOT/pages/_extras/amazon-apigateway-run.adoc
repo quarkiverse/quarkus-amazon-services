@@ -1,3 +1,4 @@
+ifndef::run-async[]
 * Create a REST API with the synchronous client:
 
 [source,bash,subs="verbatim,attributes"]
@@ -15,5 +16,7 @@ curl http://localhost:8080/sync/<id>
 ----
 
 The endpoint returns `quarkus-api`.
-
-* Replace `sync` with `async` to use the asynchronous client.
+endif::[]
+ifdef::run-async[]
+* Call the same endpoints with the asynchronous client, replacing `sync` with `async` in the URLs.
+endif::[]

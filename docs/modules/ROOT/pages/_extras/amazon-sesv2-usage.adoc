@@ -1,8 +1,6 @@
 :custom-usage:
 
-== Creating JSON REST service
-
-In this example, we will create an application that sends emails using the SES API v2. The example application will demonstrate the two programming models supported by the extension.
+=== Creating the REST resource
 
 First, let's create the `Email` bean that represents the email to send:
 

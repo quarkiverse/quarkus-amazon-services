@@ -1,9 +1,6 @@
 :custom-usage:
 
-== Creating JSON REST service
-
-In this example, we will create an application that requests a certificate for a domain and returns the domain name of the issued certificate.
-The example application will demonstrate the two programming models supported by the extension.
+=== Creating the REST resource
 
 Let's start with the synchronous implementation in the `org.acme.acm.QuarkusAcmSyncResource` class.
 

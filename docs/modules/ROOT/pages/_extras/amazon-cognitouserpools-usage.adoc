@@ -1,8 +1,6 @@
 :custom-usage:
 
-== Creating JSON REST service
-
-In this example, we will create an application that creates Cognito user pools and counts the user pools of the current region using a RESTful API.
+=== Creating the REST resource
 
 Edit the `org.acme.cognitouserpools.CognitoExampleResource` class to use the synchronous client:
 

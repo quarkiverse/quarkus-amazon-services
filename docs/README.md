@@ -48,17 +48,17 @@ The skeleton always produces the sections below, in this order. Some only appear
 | « For more information, see the … documentation » | `aws-docs-url` | — |
 | NOTE on the AWS SDK programming models | always | — |
 | Prerequisites (« No AWS account is required », or a NOTE that the local stacks may not emulate the service) | always, depending on `has-integration-test` | — |
-| Provision … locally via Dev Services (with the `devservices.provider` property when `aws-stack` is not `floci`) | always | — |
-| Provision … locally manually (`docker run`, local CLI) | always | — |
-| *(service-specific setup)* | — | `setup` |
+| Prerequisites → Start … automatically with Dev Services (with the `devservices.provider` property when `aws-stack` is not `floci`) | always | — |
+| Prerequisites → Start … manually (`docker run`, local CLI) | always | — |
 | Solution (with `quickstart`) or What you will build (without) | `solution-summary` | — |
-| Creating the Maven project | always | — |
-| Using the … client (injection of the sync client) | always, unless replaced | `usage` (replaces) |
-| Configuring … clients (HTTP clients, local endpoint, AWS credentials, Dev Services warning) | always | `configuration` (appended) |
-| Run the application in Dev Mode (what Dev Services provides; without `usage`, a hint to add endpoints) | always | `run` (appended) |
+| Walkthrough (with `solution-summary`) or Getting started (without) → Creating the Maven project | always | — |
+| Walkthrough → Using the … client (injection of the sync client) | always, unless replaced | `usage` (replaces) |
+| Walkthrough → Configuring … clients (HTTP clients; « Use Dev Services »; « Use a manually started … » with the local endpoint; « Use your AWS account » with the credentials and the Dev Services warning) | always | `configuration` (appended) |
+| Walkthrough → Run the application in Dev Mode (what Dev Services provides; without `usage`, a hint to add endpoints) | always | `run` (appended) |
 | Next steps → Packaging | always | — |
-| Next steps → Going asynchronous (injection of the async client) | always, unless replaced | `async-usage` (replaces) |
-| *(additional sections)* | — | `extras` |
+| Next steps → Going asynchronous (injection of the async client, then running it) | always, unless replaced | `async-usage` (replaces), `run` (appended again, with `run-async` set) |
+| Next steps → Going further (recap, depending on `solution-summary`; links to the shared guides, the quickstart and `aws-docs-url`) | always | — |
+| *(additional top-level sections)* | — | `extras` |
 | Configuration Reference | always (plus `extra-config-reference`) | — |
 
 ## Adding a new extension
@@ -157,11 +157,12 @@ Do not write the link to the AWS documentation: set `aws-docs-url`, and the page
 |---|---|---|---|---|
 | `aws-docs-url` | Link to the AWS documentation of the service, rendered after the intro | unset | always, with the user guide or the API reference of the service on docs.aws.amazon.com (not a product page) | `https://docs.aws.amazon.com/lambda/latest/dg/welcome.html` |
 | `has-integration-test` | Says that no AWS account is required. Without it, the prerequisites warn that the local stacks may not emulate the service. | unset | only if the integration tests exercise the service against a local stack with real assertions | — |
-| `aws-stack` | Local stack used by Dev Services, the manual provisioning and the local configuration examples: `floci` or `moto`. When it is not `floci`, the page shows the `quarkus.<service-name>.devservices.provider` property to set. | `floci` | only if the integration tests exercise the service with another stack (`quarkus.<service-name>.devservices.provider` in `integration-tests/src/main/resources/application.properties`) | `moto` |
-| `solution-summary` | Shows the « Solution » section with a `quickstart`, « What you will build » without; the value is its first paragraph (inline formatting allowed) | unset | for a step-by-step guide | `The application built here allows to manage files stored in Amazon S3.` |
+| `aws-stack` | Local stack used by Dev Services, « Start … manually » and the local configuration examples: `floci` or `moto`. When it is not `floci`, the page shows the `quarkus.<service-name>.devservices.provider` property to set. | `floci` | only if the integration tests exercise the service with another stack (`quarkus.<service-name>.devservices.provider` in `integration-tests/src/main/resources/application.properties`) | `moto` |
+| `solution-summary` | Shows the « Solution » section with a `quickstart`, « What you will build » without, and names the steps section « Walkthrough » instead of « Getting started »; the value is its first paragraph (inline formatting allowed) | unset | for a step-by-step guide | `The application built here allows to manage files stored in Amazon S3.` |
 | `quickstart` | Adds the link to the completed example | unset | only if the folder exists in [quarkus-quickstarts](https://github.com/quarkusio/quarkus-quickstarts) | `amazon-s3-quickstart` |
 | `main-class` | Class created by `mvn create`, also used by the generic usage | `Quarkus{service-class-name}SyncResource` | when your step-by-step code uses another class | `FruitResource` |
 | `main-path` | `-Dpath` of `mvn create`, also used by the generic usage | `/sync` | together with `main-class` | `/fruits` |
+| `needs-host-access` | « Start Floci manually » adds `--add-host=host.docker.internal:host-gateway` to `docker run`, so that the service can call the application from the container | unset | when the service calls back the application (SNS HTTP subscriptions) | — |
 | `run-args` | System properties added to `java -jar` in « Packaging » | unset | when the example application needs them | `-Dkey.arn=$MASTER_KEY_ARN` |
 | `extra-config-reference` | Adds the configuration reference of a related extension | unset | when a companion extension is documented on the same page | `dynamodb-enhanced` |
 
@@ -177,21 +178,54 @@ An injection point is an optional file `pages/_extras/amazon-<page>-<point>.adoc
 
 | Point | Where it is included | Mode | First line of the file | Real example |
 |---|---|---|---|---|
-| `setup` | after the manual provisioning, before « Solution » | appended | — | [`amazon-dynamodb-setup.adoc`](modules/ROOT/pages/_extras/amazon-dynamodb-setup.adoc) (create the table) |
 | `usage` | after « Creating the Maven project » | **replaces** « Using the … client » | `:custom-usage:` | [`amazon-kms-usage.adoc`](modules/ROOT/pages/_extras/amazon-kms-usage.adoc) |
-| `configuration` | end of « Configuring … clients » | appended | — | [`amazon-s3-configuration.adoc`](modules/ROOT/pages/_extras/amazon-s3-configuration.adoc) (`bucket.name`) |
-| `run` | in « Run the app... » | appended | — | [`amazon-s3-run.adoc`](modules/ROOT/pages/_extras/amazon-s3-run.adoc) (browse frontend) |
+| `configuration` | end of « Configuring … clients » | appended | — | [`amazon-s3-configuration.adoc`](modules/ROOT/pages/_extras/amazon-s3-configuration.adoc) (`bucket.name`, create the bucket) |
+| `run` | in « Run the app... », then again at the end of « Going asynchronous » with `run-async` set | appended | — | [`amazon-s3-run.adoc`](modules/ROOT/pages/_extras/amazon-s3-run.adoc) (browse frontend) |
 | `async-usage` | in « Going asynchronous » | **replaces** the generic async resource | `:custom-async-usage:` | [`amazon-kms-async-usage.adoc`](modules/ROOT/pages/_extras/amazon-kms-async-usage.adoc) |
 | `extras` | after the async clients, before « Configuration Reference » | appended | — | [`amazon-appconfigdata-extras.adoc`](modules/ROOT/pages/_extras/amazon-appconfigdata-extras.adoc), [`amazon-rds-extras.adoc`](modules/ROOT/pages/_extras/amazon-rds-extras.adoc) |
 
+The `run` file is included twice: in « Run the application in Dev Mode » for the synchronous client, and at the end of « Going asynchronous » for the asynchronous one, with the `run-async` attribute set.
+Wrap each part in the matching condition:
+
+```asciidoc
+ifndef::run-async[]
+* Send messages to the queue with the synchronous client:
+...
+endif::[]
+ifdef::run-async[]
+* Call the same endpoints with the asynchronous client, replacing `sync` with `async` in the URLs.
+endif::[]
+```
+
 A replacing file must start with its attribute (`:custom-usage:` or `:custom-async-usage:`), otherwise the generic content is rendered as well.
 
-Heading levels depend on where the file lands:
+Files are included without `leveloffset`: write the headings at the level they have on the rendered page.
 
-- `setup`: `===` subsections to stay under « Prerequisites » (create a table, a queue, a key…), or `==` for a top-level section (SES: using SES on your AWS account).
-- `usage`, `configuration`: `==` sections.
+- `usage`: `===` sections, steps of « Walkthrough » (or « Getting started » without `solution-summary`).
+- `configuration`: `====` subsections of « Configuring … clients » (create the resource, verify an address…), then `===` for a following step (S3: creating a frontend). The file must start with a `====` heading: it is included after « Use your AWS account », so text before the first heading would land in that subsection.
 - `async-usage`, `run`: no heading; the text continues the section it is included in.
-- `extras`: `===` to stay under « Next steps » (DynamoDB enhanced client, S3 Transfer Manager), or `==` for a top-level section (RDS IAM authentication, config sources).
+- `extras`: `==` top-level sections (S3 Transfer Manager, DynamoDB enhanced client, RDS IAM authentication, config sources). The file must start with a `==` heading: it is included after « Going further », so text before the first heading would land in that subsection. Put text about the async client in `async-usage`.
+
+When the application needs a resource (a table, a queue, a key…), create it in the `configuration` file, in a single `==== Create the <resource>` subsection, starting with the application properties that name it.
+Give the three ways to create it, each introduced by a block title:
+
+```asciidoc
+==== Create the SQS queue
+
+.With Dev Services
+Let Dev Services create the queue on startup:
+...
+
+.On a manually started Floci
+Create the queue with the AWS CLI of the Floci container:
+...
+
+.On your AWS account
+Create the queue with your own AWS CLI:
+...
+```
+
+Real examples: [`amazon-sqs-configuration.adoc`](modules/ROOT/pages/_extras/amazon-sqs-configuration.adoc) (Dev Services property), [`amazon-dynamodb-configuration.adoc`](modules/ROOT/pages/_extras/amazon-dynamodb-configuration.adoc) (Dev Services init scripts).
 
 ## Writing rules
 
@@ -199,7 +233,7 @@ Heading levels depend on where the file lands:
 - Add `subs="attributes+"` to source blocks that contain attributes: `[source,java,subs="attributes+"]`.
 - Do not repeat what the skeleton already renders: Dev Services, `docker run`, `aws configure`, HTTP client dependencies, local endpoint configuration, AWS credentials, configuration reference.
 - In `_extras/`, CLI commands against a local Floci stack run inside the container: `docker exec floci aws <command>`. The CLI is preconfigured with the endpoint, the region and the credentials, so do not add `--profile` or `--endpoint-url`.
-- With Moto, CLI commands use the profile created by the manual provisioning section and its endpoint: `--profile moto --endpoint-url=http://localhost:5000`.
+- With Moto, CLI commands use the profile created in « Start … manually » and its endpoint: `--profile moto --endpoint-url=http://localhost:5000`.
 - Do not mention LocalStack in the service guides: it remains a supported provider, documented in the Dev Services guide only.
 - When a command captures a value, add `--query <name> --output text` (the default JSON output cannot be parsed with `cut`), and `export` the variable if a later command or the application needs it.
 - Never edit `_metadata/`. A value that the code generator cannot take from the service model goes to `_description/`.

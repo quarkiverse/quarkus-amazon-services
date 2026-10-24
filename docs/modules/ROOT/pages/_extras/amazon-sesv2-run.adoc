@@ -1,16 +1,9 @@
+ifndef::run-async[]
 * Send an email with the synchronous client:
 
 [source,bash,subs="verbatim,attributes"]
 ----
 curl -XPOST -H"Content-type: application/json" http://localhost:8080/sync/email \
-    -d'{"from": "from-quarkus@example.com", "to": "to-quarkus@example.com", "subject": "Hello from Quarkus", "body": "Quarkus is awesome"}'
-----
-
-* Send an email with the asynchronous client:
-
-[source,bash,subs="verbatim,attributes"]
-----
-curl -XPOST -H"Content-type: application/json" http://localhost:8080/async/email \
     -d'{"from": "from-quarkus@example.com", "to": "to-quarkus@example.com", "subject": "Hello from Quarkus", "body": "Quarkus is awesome"}'
 ----
 
@@ -23,3 +16,13 @@ Floci keeps a copy of every email it accepts. To read them, call its `/_aws/ses`
 ----
 curl http://localhost:4566/_aws/ses
 ----
+endif::[]
+ifdef::run-async[]
+* Send an email with the asynchronous client:
+
+[source,bash,subs="verbatim,attributes"]
+----
+curl -XPOST -H"Content-type: application/json" http://localhost:8080/async/email \
+    -d'{"from": "from-quarkus@example.com", "to": "to-quarkus@example.com", "subject": "Hello from Quarkus", "body": "Quarkus is awesome"}'
+----
+endif::[]

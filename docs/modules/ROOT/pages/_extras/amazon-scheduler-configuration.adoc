@@ -1,5 +1,8 @@
-== Create the target queue with Dev Services
+==== Create the target queue
 
+The schedules of this guide send a message to an SQS queue named `quarkus-schedules`.
+
+.With Dev Services
 Dev Services starts Floci with the `floci/floci:latest` image by default, which does not ship the AWS CLI.
 To create the `quarkus-schedules` queue automatically at startup, use the `latest-compat` image and provide init scripts:
 
@@ -28,3 +31,15 @@ echo "#### Init completed"
 
 Dev Services looks up the scripts in the classpath of the application, so keep them in `src/main/resources`: in dev mode, `src/test/resources` is not part of the classpath.
 See xref:dev-services.adoc[Dev Services for Amazon Services] for the init script details.
+
+.On a manually started Floci
+Create the queue using the AWS CLI of the Floci container:
+
+[source,bash,subs="verbatim,attributes"]
+----
+docker exec floci aws sqs create-queue --queue-name quarkus-schedules
+----
+
+.On your AWS account
+Create the queue with your own AWS CLI, and an IAM role that EventBridge Scheduler can assume to send messages to the queue, as described in https://docs.aws.amazon.com/scheduler/latest/UserGuide/setting-up.html#setting-up-execution-role[Set up the execution role].
+Then use the ARNs of the queue and of the role in the configuration of the application.

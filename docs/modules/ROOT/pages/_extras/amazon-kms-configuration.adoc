@@ -1,3 +1,5 @@
+==== Create the KMS key
+
 Set the alias, or the ARN, of the KMS key used by the application:
 
 [source,properties]
@@ -5,9 +7,30 @@ Set the alias, or the ARN, of the KMS key used by the application:
 key.arn=alias/quarkus
 ----
 
-When using Dev Services, you can also let it create the key and the alias on startup:
+The application refers to the key by its alias, `alias/quarkus`.
+
+.With Dev Services
+Let Dev Services create the key and the alias on startup:
 
 [source,properties]
 ----
 quarkus.kms.devservices.key-aliases=${key.arn}
+----
+
+.On a manually started Floci
+Create a KMS master key with an alias, using the AWS CLI of the Floci container:
+
+[source,bash,subs="verbatim,attributes"]
+----
+key_id=$(docker exec floci aws kms create-key --query KeyMetadata.KeyId --output text)
+docker exec floci aws kms create-alias --alias-name alias/quarkus --target-key-id $key_id
+----
+
+.On your AWS account
+Create the same key with your own AWS CLI:
+
+[source,bash,subs="verbatim,attributes"]
+----
+key_id=$(aws kms create-key --query KeyMetadata.KeyId --output text)
+aws kms create-alias --alias-name alias/quarkus --target-key-id $key_id
 ----

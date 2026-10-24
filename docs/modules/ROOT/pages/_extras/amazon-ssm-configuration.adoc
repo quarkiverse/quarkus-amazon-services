@@ -1,3 +1,5 @@
+==== Set the parameters path
+
 Set the path under which the application stores and reads its parameters:
 
 [source,properties]

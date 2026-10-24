@@ -1,9 +1,6 @@
 :custom-usage:
 
-== Creating JSON REST service
-
-In this example, we will create an application that allows us to store and retrieve parameters to and from SSM parameter store using a RESTful API.
-The example application will demonstrate the two programming models supported by the extension.
+=== Creating the REST resource
 
 Let's start with an abstract `org.acme.ssm.QuarkusSsmResource` class to provide the common functionality we will need for both the synchronous and asynchronous exposures.
 

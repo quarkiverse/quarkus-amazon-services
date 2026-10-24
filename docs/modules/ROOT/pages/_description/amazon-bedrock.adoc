@@ -1,5 +1,5 @@
 :has-integration-test:
-:solution-summary: The application built here manages Amazon Bedrock guardrails.
+:solution-summary: The application built here manages Amazon Bedrock guardrails: it creates a guardrail, publishes a version of it, lists the guardrails and deletes them.
 :aws-docs-url: https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html
 
 Amazon Bedrock is a fully managed service that provides access to high-performing foundation models from leading AI companies, to build and scale generative AI applications.

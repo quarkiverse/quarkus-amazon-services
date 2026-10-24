@@ -17,7 +17,7 @@ quarkus.rds.credentials-provider.mydatabase.hostname=myhost
 quarkus.rds.credentials-provider.mydatabase.port=5432
 ----
 
-<1> This will use the default Quarkus synchronous client configured in the previous section. If omitted, a default instance is created each time the credentials provider is used.
+<1> This will use the default Quarkus synchronous client configured in <<Configuring {service-name-uppercase} clients>>. If omitted, a default instance is created each time the credentials provider is used.
 <2> You can provide a named client if you want to. This is useful if you want to use a different client for different credentials providers. More information at xref:common-features.adoc#_named_clients[Named clients].
 
 Once defined, the `mydatabase` credentials provider can be used to authenticate with the RDS database. For instance with agroal:
