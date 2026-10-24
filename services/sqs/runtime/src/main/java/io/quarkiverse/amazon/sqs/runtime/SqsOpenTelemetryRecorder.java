@@ -13,6 +13,8 @@ import software.amazon.awssdk.core.client.config.ClientOverrideConfiguration;
 import software.amazon.awssdk.http.SdkHttpClient;
 import software.amazon.awssdk.http.SdkHttpClient.Builder;
 import software.amazon.awssdk.http.async.SdkAsyncHttpClient;
+import software.amazon.awssdk.identity.spi.AwsCredentialsIdentity;
+import software.amazon.awssdk.identity.spi.IdentityProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 import software.amazon.awssdk.services.sqs.SqsAsyncClientBuilder;
@@ -35,37 +37,44 @@ public class SqsOpenTelemetryRecorder {
 
         @Override
         public SqsClientBuilder httpClient(SdkHttpClient httpClient) {
-            return baseBuilder.httpClient(httpClient);
+            baseBuilder.httpClient(httpClient);
+            return this;
         }
 
         @Override
         public SqsClientBuilder httpClientBuilder(Builder httpClientBuilder) {
-            return baseBuilder.httpClientBuilder(httpClientBuilder);
+            baseBuilder.httpClientBuilder(httpClientBuilder);
+            return this;
         }
 
         @Override
         public SqsClientBuilder region(Region region) {
-            return baseBuilder.region(region);
+            baseBuilder.region(region);
+            return this;
         }
 
         @Override
         public SqsClientBuilder checksumValidationEnabled(Boolean checksumValidationEnabled) {
-            return baseBuilder.checksumValidationEnabled(checksumValidationEnabled);
+            baseBuilder.checksumValidationEnabled(checksumValidationEnabled);
+            return this;
         }
 
         @Override
         public SqsClientBuilder dualstackEnabled(Boolean dualstackEndpointEnabled) {
-            return baseBuilder.dualstackEnabled(dualstackEndpointEnabled);
+            baseBuilder.dualstackEnabled(dualstackEndpointEnabled);
+            return this;
         }
 
         @Override
         public SqsClientBuilder fipsEnabled(Boolean fipsEndpointEnabled) {
-            return baseBuilder.fipsEnabled(fipsEndpointEnabled);
+            baseBuilder.fipsEnabled(fipsEndpointEnabled);
+            return this;
         }
 
         @Override
         public SqsClientBuilder overrideConfiguration(ClientOverrideConfiguration overrideConfiguration) {
-            return baseBuilder.overrideConfiguration(overrideConfiguration);
+            baseBuilder.overrideConfiguration(overrideConfiguration);
+            return this;
         }
 
         @Override
@@ -75,7 +84,15 @@ public class SqsOpenTelemetryRecorder {
 
         @Override
         public SqsClientBuilder endpointOverride(URI endpointOverride) {
-            return baseBuilder.endpointOverride(endpointOverride);
+            baseBuilder.endpointOverride(endpointOverride);
+            return this;
+        }
+
+        @Override
+        public SqsClientBuilder credentialsProvider(
+                IdentityProvider<? extends AwsCredentialsIdentity> credentialsProvider) {
+            baseBuilder.credentialsProvider(credentialsProvider);
+            return this;
         }
 
         @Override
@@ -98,43 +115,51 @@ public class SqsOpenTelemetryRecorder {
 
         @Override
         public SqsAsyncClientBuilder asyncConfiguration(ClientAsyncConfiguration clientAsyncConfiguration) {
-            return baseBuilder.asyncConfiguration(clientAsyncConfiguration);
+            baseBuilder.asyncConfiguration(clientAsyncConfiguration);
+            return this;
         }
 
         @Override
         public SqsAsyncClientBuilder httpClient(SdkAsyncHttpClient httpClient) {
-            return baseBuilder.httpClient(httpClient);
+            baseBuilder.httpClient(httpClient);
+            return this;
         }
 
         @Override
         public SqsAsyncClientBuilder httpClientBuilder(
                 software.amazon.awssdk.http.async.SdkAsyncHttpClient.Builder httpClientBuilder) {
-            return baseBuilder.httpClientBuilder(httpClientBuilder);
+            baseBuilder.httpClientBuilder(httpClientBuilder);
+            return this;
         }
 
         @Override
         public SqsAsyncClientBuilder checksumValidationEnabled(Boolean checksumValidationEnabled) {
-            return baseBuilder.checksumValidationEnabled(checksumValidationEnabled);
+            baseBuilder.checksumValidationEnabled(checksumValidationEnabled);
+            return this;
         }
 
         @Override
         public SqsAsyncClientBuilder region(Region region) {
-            return baseBuilder.region(region);
+            baseBuilder.region(region);
+            return this;
         }
 
         @Override
         public SqsAsyncClientBuilder dualstackEnabled(Boolean dualstackEndpointEnabled) {
-            return baseBuilder.dualstackEnabled(dualstackEndpointEnabled);
+            baseBuilder.dualstackEnabled(dualstackEndpointEnabled);
+            return this;
         }
 
         @Override
         public SqsAsyncClientBuilder fipsEnabled(Boolean fipsEndpointEnabled) {
-            return baseBuilder.fipsEnabled(fipsEndpointEnabled);
+            baseBuilder.fipsEnabled(fipsEndpointEnabled);
+            return this;
         }
 
         @Override
         public SqsAsyncClientBuilder overrideConfiguration(ClientOverrideConfiguration overrideConfiguration) {
-            return baseBuilder.overrideConfiguration(overrideConfiguration);
+            baseBuilder.overrideConfiguration(overrideConfiguration);
+            return this;
         }
 
         @Override
@@ -144,7 +169,15 @@ public class SqsOpenTelemetryRecorder {
 
         @Override
         public SqsAsyncClientBuilder endpointOverride(URI endpointOverride) {
-            return baseBuilder.endpointOverride(endpointOverride);
+            baseBuilder.endpointOverride(endpointOverride);
+            return this;
+        }
+
+        @Override
+        public SqsAsyncClientBuilder credentialsProvider(
+                IdentityProvider<? extends AwsCredentialsIdentity> credentialsProvider) {
+            baseBuilder.credentialsProvider(credentialsProvider);
+            return this;
         }
 
         @Override

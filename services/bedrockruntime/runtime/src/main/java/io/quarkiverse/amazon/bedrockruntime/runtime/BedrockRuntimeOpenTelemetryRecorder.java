@@ -11,6 +11,8 @@ import software.amazon.awssdk.awscore.client.builder.AwsClientBuilder;
 import software.amazon.awssdk.core.client.config.ClientAsyncConfiguration;
 import software.amazon.awssdk.core.client.config.ClientOverrideConfiguration;
 import software.amazon.awssdk.http.async.SdkAsyncHttpClient;
+import software.amazon.awssdk.identity.spi.AwsCredentialsIdentity;
+import software.amazon.awssdk.identity.spi.IdentityProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeAsyncClient;
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeAsyncClientBuilder;
@@ -32,38 +34,45 @@ public class BedrockRuntimeOpenTelemetryRecorder {
 
         @Override
         public BedrockRuntimeAsyncClientBuilder asyncConfiguration(ClientAsyncConfiguration clientAsyncConfiguration) {
-            return baseBuilder.asyncConfiguration(clientAsyncConfiguration);
+            baseBuilder.asyncConfiguration(clientAsyncConfiguration);
+            return this;
         }
 
         @Override
         public BedrockRuntimeAsyncClientBuilder httpClient(SdkAsyncHttpClient httpClient) {
-            return baseBuilder.httpClient(httpClient);
+            baseBuilder.httpClient(httpClient);
+            return this;
         }
 
         @Override
         public BedrockRuntimeAsyncClientBuilder httpClientBuilder(
                 software.amazon.awssdk.http.async.SdkAsyncHttpClient.Builder httpClientBuilder) {
-            return baseBuilder.httpClientBuilder(httpClientBuilder);
+            baseBuilder.httpClientBuilder(httpClientBuilder);
+            return this;
         }
 
         @Override
         public BedrockRuntimeAsyncClientBuilder region(Region region) {
-            return baseBuilder.region(region);
+            baseBuilder.region(region);
+            return this;
         }
 
         @Override
         public BedrockRuntimeAsyncClientBuilder dualstackEnabled(Boolean dualstackEndpointEnabled) {
-            return baseBuilder.dualstackEnabled(dualstackEndpointEnabled);
+            baseBuilder.dualstackEnabled(dualstackEndpointEnabled);
+            return this;
         }
 
         @Override
         public BedrockRuntimeAsyncClientBuilder fipsEnabled(Boolean fipsEndpointEnabled) {
-            return baseBuilder.fipsEnabled(fipsEndpointEnabled);
+            baseBuilder.fipsEnabled(fipsEndpointEnabled);
+            return this;
         }
 
         @Override
         public BedrockRuntimeAsyncClientBuilder overrideConfiguration(ClientOverrideConfiguration overrideConfiguration) {
-            return baseBuilder.overrideConfiguration(overrideConfiguration);
+            baseBuilder.overrideConfiguration(overrideConfiguration);
+            return this;
         }
 
         @Override
@@ -73,7 +82,15 @@ public class BedrockRuntimeOpenTelemetryRecorder {
 
         @Override
         public BedrockRuntimeAsyncClientBuilder endpointOverride(URI endpointOverride) {
-            return baseBuilder.endpointOverride(endpointOverride);
+            baseBuilder.endpointOverride(endpointOverride);
+            return this;
+        }
+
+        @Override
+        public BedrockRuntimeAsyncClientBuilder credentialsProvider(
+                IdentityProvider<? extends AwsCredentialsIdentity> credentialsProvider) {
+            baseBuilder.credentialsProvider(credentialsProvider);
+            return this;
         }
 
         @Override
