@@ -2,6 +2,8 @@ package io.quarkiverse.amazon.ssm.runtime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 
 /**
@@ -61,5 +63,19 @@ public class SsmConfigSourceJsonTest {
         var result = SsmConfigSource.expandParameterValue("/app/empty", "{}");
 
         assertEquals("{}", result.get("app.empty"));
+    }
+
+    @Test
+    void testSsmPropertiesParameterExpandsToPrefixedKeys() {
+        var result = SsmConfigSource.expandParameterValue("/app/db", "url=x\nuser=y");
+
+        assertEquals(Map.of("app.db.url", "x", "app.db.user", "y"), result);
+    }
+
+    @Test
+    void testSsmPlainValueWithoutEqualsStaysSingleKey() {
+        var result = SsmConfigSource.expandParameterValue("/app/db", "plain value");
+
+        assertEquals(Map.of("app.db", "plain value"), result);
     }
 }

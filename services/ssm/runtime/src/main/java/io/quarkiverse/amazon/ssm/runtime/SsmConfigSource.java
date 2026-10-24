@@ -171,9 +171,8 @@ public class SsmConfigSource extends AbstractConfigSource implements AutoCloseab
         }
 
         // Use shared JsonConfigFlattener for JSON detection and flattening
-        Map<String, String> flattened = JsonConfigFlattener.expandValue(prefix, trimmed);
-        if (!flattened.isEmpty()) {
-            return flattened;
+        if (JsonConfigFlattener.isJsonValue(trimmed)) {
+            return JsonConfigFlattener.expandValue(prefix, trimmed);
         }
 
         // Handle properties format: if contains '=', parse as Java properties
