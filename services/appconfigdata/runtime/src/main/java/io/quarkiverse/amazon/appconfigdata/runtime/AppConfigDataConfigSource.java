@@ -12,6 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import jakarta.json.Json;
@@ -35,7 +36,8 @@ import software.amazon.awssdk.services.appconfigdata.model.StartConfigurationSes
  * <ul>
  * <li>Opens a configuration session for the given application, environment, and configuration profile.</li>
  * <li>Loads the hosted configuration document once during construction, then optionally on a fixed schedule.</li>
- * <li>Owns the supplied {@link AppConfigDataClient}; callers must {@link #close()} it when the source is discarded.</li>
+ * <li>Owns the supplied {@link AppConfigDataClient}. Without polling, it is closed right after the initial load;
+ * otherwise {@link #close()} closes it, which {@link AppConfigDataConfigSourceCloser} calls on shutdown.</li>
  * </ul>
  * <p>
  * <strong>Parsing</strong> — The document body is interpreted as either JSON (objects and arrays are flattened to
@@ -55,6 +57,8 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
 
     /** Current flattened configuration; replaced atomically after each successful parse. */
     private final AtomicReference<Map<String, String>> entriesRef = new AtomicReference<>(Map.of());
+
+    private final AtomicBoolean closed = new AtomicBoolean();
 
     /** AWS client */
     private final AppConfigDataClient client;
@@ -86,6 +90,7 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
         if (isBlank(applicationIdentifier) || isBlank(environmentIdentifier) || isBlank(configurationProfileIdentifier)) {
             LOG.error(
                     "AppConfig Data ConfigSource requires applicationIdentifier, environmentIdentifier, and configurationProfileIdentifier.");
+            close();
             return;
         }
 
@@ -95,10 +100,17 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
 
         if (updateIntervalMinutes > 0) {
             LOG.debugf("Config update frequency set for %d minutes", updateIntervalMinutes);
-            ThreadFactory threadFactory = runnable -> new Thread(runnable, POLL_THREAD_NAME);
+            ThreadFactory threadFactory = runnable -> {
+                Thread thread = new Thread(runnable, POLL_THREAD_NAME);
+                thread.setDaemon(true);
+                return thread;
+            };
             executorService = new ScheduledThreadPoolExecutor(1, threadFactory);
             executorService.scheduleAtFixedRate(this::fetchConfig, updateIntervalMinutes, updateIntervalMinutes,
                     TimeUnit.MINUTES);
+        } else {
+            // nothing will use the client again
+            close();
         }
     }
 
@@ -133,6 +145,9 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
      * does not cancel subsequent polls.
      */
     void fetchConfig() {
+        if (closed.get()) {
+            return;
+        }
         if (token == null) {
             LOG.warn("Config session token is null - skipping");
             return;
@@ -220,6 +235,9 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
 
     @Override
     public void close() {
+        if (!closed.compareAndSet(false, true)) {
+            return;
+        }
         if (executorService != null) {
             executorService.shutdown();
             try {

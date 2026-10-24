@@ -109,7 +109,8 @@ class AppConfigDataConfigSourceTest {
             return json("{\"a\":1}", "t1");
         });
 
-        try (var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, 0, 275)) {
+        // a poll interval keeps the client open; the poller does not fire during the test
+        try (var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, 60, 275)) {
             assertNull(source.getValue("a"));
 
             source.fetchConfig();
@@ -124,12 +125,35 @@ class AppConfigDataConfigSourceTest {
                 ? json("{\"a\":1}", "t1")
                 : GetLatestConfigurationResponse.builder().nextPollConfigurationToken("t2").build());
 
-        try (var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, 0, 275)) {
+        try (var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, 60, 275)) {
             source.fetchConfig();
 
             assertEquals("1", source.getValue("a"));
             assertEquals("t1", client.latestRequest.get().configurationToken());
         }
+    }
+
+    @Test
+    void withoutPollingClientIsClosedAfterInitialLoad() {
+        StubClient client = new StubClient(call -> json("{\"a\":1}", "t1"));
+
+        var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, 0, 275);
+
+        assertTrue(client.closed.get());
+        assertEquals("1", source.getValue("a"));
+    }
+
+    @Test
+    void closeStopsPolling() {
+        StubClient client = new StubClient(call -> json("{\"a\":" + call + "}", "t" + call));
+
+        var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, 60, 275);
+        source.close();
+        source.fetchConfig();
+
+        assertTrue(client.closed.get());
+        assertEquals(1, client.calls.get());
+        assertEquals("1", source.getValue("a"));
     }
 
     private static GetLatestConfigurationResponse json(String content, String nextToken) {
