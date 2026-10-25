@@ -253,6 +253,7 @@ As this provider use `WebIdentityTokenFileCredentialsProvider`, add the followin
 ----
 
 
+[[deprecated-apache-http-client]]
 == Deprecated Apache HTTP client
 
 The AWS SDK has deprecated the Apache HTTP client (`apache-client`) in favor of the Apache 5.x HTTP client (`apache5-client`), which is a drop-in replacement.
