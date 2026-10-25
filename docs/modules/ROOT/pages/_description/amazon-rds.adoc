@@ -3,3 +3,4 @@
 Amazon Relational Database Service (Amazon RDS) makes it easier to set up, operate and scale relational databases in the AWS Cloud.
 This client uses the management API to create, modify, back up and delete DB instances and clusters.
 It does not run SQL statements: use your JDBC driver, or the Amazon RDS Data API extension with Aurora.
+The extension also lets your datasource log in to the database with xref:amazon-rds.adoc#iam-database-authentication[IAM database authentication] instead of a password.
