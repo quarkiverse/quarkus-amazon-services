@@ -2,7 +2,7 @@ package io.quarkiverse.amazon.rds.deployment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.net.URI;
 
@@ -40,11 +40,15 @@ public class RdsCredentialProviderTest {
     }
 
     @Test
-    public void testDefault() {
+    public void testNamedClient() {
         CredentialsProvider credentialsProvider = CredentialsProviderFinder.find(null);
-
-        // The default provider should throw an exception because it is not configured
-        assertThrows(software.amazon.awssdk.core.exception.SdkClientException.class,
-                () -> credentialsProvider.getCredentials("test-provider-default"));
+        var credentials = credentialsProvider.getCredentials("test-provider-named");
+        assertEquals("iam-user", credentials.get("user"));
+        URI token = URI.create("https://" + credentials.get("password"));
+        assertEquals("iam-host", token.getHost());
+        assertEquals(5432, token.getPort());
+        assertTrue(token.getQuery().contains("DBUser=iam-user"));
+        assertTrue(token.getQuery().contains("X-Amz-Credential=iam-test-key/"));
+        assertTrue(token.getQuery().contains("/us-west-2/rds-db/aws4_request"));
     }
 }
