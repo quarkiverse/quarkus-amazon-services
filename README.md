@@ -52,10 +52,11 @@ This set of extensions allows you to interact with some of the AWS Services name
 * Textract
 * Transfer
 
-Each extension provides configuration properties to configure the clients and wires everything via CDI injection. It allows to use all 4 HTTP client implementations available in the AWS SDK for Java 2.x :
+Each extension provides configuration properties to configure the clients and wires everything via CDI injection. It allows to use all the HTTP client implementations available in the AWS SDK for Java 2.x :
 
 * URL Connection HTTP client (default for synchronous call)
-* Apache HTTP Client / Apache5 HTTP Client
+* Apache 5.x HTTP client
+* Apache HTTP client (deprecated by the AWS SDK in favor of the Apache 5.x HTTP client)
 * Netty HTTP client (default for asynchronous call)
 * AWS CRT-based HTTP client (for both synchronous and asynchronous client)
 

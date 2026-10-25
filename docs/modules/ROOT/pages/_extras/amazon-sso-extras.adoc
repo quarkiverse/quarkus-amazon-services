@@ -14,6 +14,15 @@ If you want to use URL connection HTTP client, add following dependency to the a
 </dependency>
 ----
 
+If you want to use the Apache 5.x HTTP client instead, add following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>apache5-client</artifactId>
+</dependency>
+----
+
 If you want to use the Apache HTTP client instead, add following dependency to the application `pom.xml`:
 [source,xml]
 ----
@@ -22,6 +31,8 @@ If you want to use the Apache HTTP client instead, add following dependency to t
     <artifactId>apache-client</artifactId>
 </dependency>
 ----
+
+WARNING: The AWS SDK has deprecated the Apache HTTP client in favor of the Apache 5.x HTTP client: prefer `apache5-client`.
 
 If you want to use the AWS CRT-based HTTP client instead, add the following dependency to the application `pom.xml`:
 [source,xml]

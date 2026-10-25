@@ -253,6 +253,22 @@ As this provider use `WebIdentityTokenFileCredentialsProvider`, add the followin
 ----
 
 
+== Deprecated Apache HTTP client
+
+The AWS SDK has deprecated the Apache HTTP client (`apache-client`) in favor of the Apache 5.x HTTP client (`apache5-client`), which is a drop-in replacement.
+To migrate a client, set `quarkus.<client>.sync-client.type=apache5` and replace the `software.amazon.awssdk:apache-client` dependency with `software.amazon.awssdk:apache5-client`.
+The `quarkus.<client>.sync-client.apache.*` properties apply to both clients.
+
+The build logs a warning when the Apache HTTP client is configured for a client, or when no sync client is configured and `apache-client` is on the classpath.
+To disable this warning, set:
+
+[source,properties]
+----
+quarkus.aws.sync-client.apache-deprecation-warning=false
+----
+
+include::./includes/quarkus-amazon-sync-client.adoc[]
+
 == Docker image build with AWS CRT
 
 Since AWS CRT version 0.31.0, native library must be embedded in the docker image. This is not done by default. To do this, you need to :
