@@ -1,10 +1,63 @@
-== {service-name-uppercase} with the AWS SDK
+== Use an IAM Identity Center profile for your AWS credentials
 
-The {service-name-uppercase} token provider requires a synchronous HTTP client implementation.
+Besides the client, the AWS IAM Identity Center and AWS IAM Identity Center OIDC extensions let your application use the AWS credentials of a profile configured with `aws configure sso`, after you sign in with `aws sso login`.
+This is the usual way to run an application in dev mode with the AWS access of a developer, without long-term access keys.
 
-If you only added an asynchronous implementation for your own code, you need to add to the classpath a proper implementation of the sync client. 
+The AWS SDK resolves these credentials only if its `sso` and `ssooidc` modules are on the class path, otherwise it fails with:
 
-If you want to use URL connection HTTP client, add following dependency to the application `pom.xml`:
+* `To use Sso related properties in the '<profile>' profile, the 'sso' service module must be on the class path.`
+* `To use SSO OIDC related properties in the '<profile>' profile, the 'ssooidc' service module must be on the class path.`
+
+Add both extensions: `aws configure sso` creates profiles that use an `sso-session` section, and their token is refreshed with the IAM Identity Center OIDC service.
+The extensions also make these credentials work in a native executable.
+
+[source,xml]
+----
+<dependency>
+    <groupId>io.quarkiverse.amazonservices</groupId>
+    <artifactId>quarkus-amazon-sso</artifactId>
+</dependency>
+<dependency>
+    <groupId>io.quarkiverse.amazonservices</groupId>
+    <artifactId>quarkus-amazon-ssooidc</artifactId>
+</dependency>
+----
+
+A profile created by `aws configure sso` looks like this, in `~/.aws/config`:
+
+[source,ini]
+----
+[profile dev]
+sso_session = my-sso
+sso_account_id = 111122223333
+sso_role_name = ReadOnlyAccess
+region = us-east-1
+
+[sso-session my-sso]
+sso_start_url = https://my-sso-portal.awsapps.com/start
+sso_region = us-east-1
+sso_registration_scopes = sso:account:access
+----
+
+Select the profile for the clients of your application, for example the S3 client:
+
+[source,properties]
+----
+quarkus.s3.aws.region=us-east-1 <1>
+quarkus.s3.aws.credentials.type=profile
+quarkus.s3.aws.credentials.profile-provider.profile-name=dev
+----
+<1> The profile name selects the credentials provider's profile only. The client resolves its region separately, so set it explicitly here even though the `dev` profile contains a region.
+
+With the `default` credentials provider, you can also select the profile with the `AWS_PROFILE=dev` environment variable.
+
+Sign in with `aws sso login --profile dev` before you start the application.
+The SDK refreshes the access token while the session is valid; when it expires, sign in again.
+
+To resolve credentials from an IAM Identity Center profile, the AWS SDK internally creates synchronous SSO and SSO OIDC clients to fetch credentials and refresh tokens.
+This requires a synchronous HTTP client library on the class path, even when your application only uses asynchronous AWS clients.
+Without one, credential resolution fails.
+For example, add the URL connection HTTP client to your application `pom.xml`:
 
 [source,xml]
 ----
@@ -14,33 +67,8 @@ If you want to use URL connection HTTP client, add following dependency to the a
 </dependency>
 ----
 
-If you want to use the Apache 5.x HTTP client instead, add following dependency to the application `pom.xml`:
-[source,xml]
-----
-<dependency>
-    <groupId>software.amazon.awssdk</groupId>
-    <artifactId>apache5-client</artifactId>
-</dependency>
-----
+See <<Configuring {service-name-uppercase} clients>> for the other synchronous HTTP client dependencies you can add; only the dependency is needed here.
 
-If you want to use the Apache HTTP client instead, add following dependency to the application `pom.xml`:
-[source,xml]
-----
-<dependency>
-    <groupId>software.amazon.awssdk</groupId>
-    <artifactId>apache-client</artifactId>
-</dependency>
-----
+When several synchronous HTTP client libraries are present, the SDK uses the Apache 5.x HTTP client first, then the Apache HTTP client, the URL connection HTTP client and the AWS CRT-based HTTP client.
 
-WARNING: The AWS SDK has deprecated the Apache HTTP client in favor of the Apache 5.x HTTP client: prefer `apache5-client`.
-
-If you want to use the AWS CRT-based HTTP client instead, add the following dependency to the application `pom.xml`:
-[source,xml]
-----
-<dependency>
-    <groupId>software.amazon.awssdk</groupId>
-    <artifactId>aws-crt-client</artifactId>
-</dependency>
-----
-
-Refer the https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/get-started-auth.html[AWS SDK developer guide] to set up for authentication.
+Refer to the https://docs.aws.amazon.com/sdkref/latest/guide/understanding-sso.html[AWS SDKs and Tools reference guide] for the IAM Identity Center configuration.

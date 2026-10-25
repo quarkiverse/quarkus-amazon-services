@@ -1,26 +1,11 @@
 == S3 Transfer Manager
 
-Amazon S3 Transfer Manager is high-level file transfer utility based on the S3 client. The extension provides functionality that allows to use `S3TransferManager` when running in Quarkus.
-You can find more information about S3 Transfer Manager at https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/transfer-manager.html[the Amazon S3 website].
+The https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/transfer-manager.html[S3 Transfer Manager] is a high-level utility of the AWS SDK on top of the asynchronous S3 client.
+Use it to transfer large objects or many files: it splits large uploads and downloads into parts sent in parallel, transfers whole directories, reports progress, and can pause and resume an upload.
 
-S3 Transfer Manager and the Quarkus extension supports only https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client (by default) or the AWS CRT-based HTTP client, or AWS CRT-based S3 client.
+The extension exposes `S3TransferManager` as a CDI bean.
+Add the following dependency to the application `pom.xml`:
 
-S3 Transfer Manager share the same configuration as S3 asynchronous client. See above to configure an `S3AsyncClient`.
-
-If you want to use S3 Transfer Manager, configure an `S3AsyncClient` with the desired HTTP client library and simply inject an instance of `S3TransferManager`:
-[source,java]
-----
-// Netty or AWS CRT-based HTTP client
-@Inject
-S3TransferManager transferManager;
-
-// or AWS CRT-based S3 client
-@Inject
-@S3Crt
-S3TransferManager transferManager;
-----
-
-And add the following dependency to the application `pom.xml`:
 [source,xml]
 ----
 <dependency>
@@ -28,3 +13,45 @@ And add the following dependency to the application `pom.xml`:
     <artifactId>quarkus-amazon-s3-transfer-manager</artifactId>
 </dependency>
 ----
+
+The Transfer Manager uses the default asynchronous S3 client, so configure it as described in <<Going asynchronous>>. Named clients are not supported.
+
+The parallel transfers require an asynchronous S3 client with multipart support.
+The recommended one is the https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/crt-based-s3-client.html[AWS CRT-based S3 client]: add the `aws-crt-client` dependency, as described in <<Going asynchronous>>, and inject the Transfer Manager with the `@S3Crt` qualifier:
+
+[source,java]
+----
+@Inject
+@S3Crt
+S3TransferManager transferManager;
+----
+
+Without the qualifier, the Transfer Manager uses the asynchronous client based on the Netty HTTP client or the AWS CRT-based HTTP client.
+That client has no multipart support by default, so the Transfer Manager logs a warning and transfers each object in a single request.
+To enable it, xref:common-features.adoc#_overriding_the_client_configuration[override the client configuration]:
+
+[source,java]
+----
+@ApplicationScoped
+public class S3AsyncClientProducer {
+
+    @Produces
+    @ApplicationScoped
+    S3AsyncClient s3AsyncClient(S3AsyncClientBuilder builder) {
+        return builder.multipartEnabled(true).build();
+    }
+}
+----
+
+Then upload a file:
+
+[source,java]
+----
+CompletedFileUpload upload = transferManager.uploadFile(b -> b
+        .putObjectRequest(r -> r.bucket(bucketName).key("report.pdf"))
+        .source(Paths.get("target/report.pdf")))
+        .completionFuture()
+        .join();
+----
+
+`downloadFile`, `uploadDirectory`, `downloadDirectory` and `copy` work the same way.
