@@ -26,12 +26,13 @@ public class RsdCredentialProviderProcessor {
 
     @BuildStep
     void setup(BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
-        for (var entry : buildTimeConfig.credentialsProvider().entrySet()) {
-            var config = entry.getValue();
-            if (config.useQuarkusClient()) {
-                requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(
-                        RDS_CLIENT, config.name().orElse(ClientUtil.DEFAULT_CLIENT_NAME)));
-            }
+        // credentials providers defined only with run time properties are unknown at build time and use the default client
+        requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(
+                RDS_CLIENT, ClientUtil.DEFAULT_CLIENT_NAME));
+
+        for (var config : buildTimeConfig.credentialsProvider().values()) {
+            config.name().ifPresent(name -> requireClientInjectionProducer.produce(
+                    new RequireAmazonClientInjectionBuildItem(RDS_CLIENT, name)));
         }
     }
 }

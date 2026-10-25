@@ -12,9 +12,9 @@ import io.smallrye.config.ConfigMapping;
 public interface RdsCredentialsProviderBuildTimeConfig {
 
     /**
-     * List of named credentials providers, such as: `quarkus.rds.credentials-provider.foo.use-quarkus-client=true`
+     * List of named credentials providers, such as: `quarkus.rds.credentials-provider.foo.name=iam`
      * <p>
-     * This defines a rds credentials provider that can use a quarkus configured rds client.
+     * This configures how a rds credentials provider gets the region and credentials used to sign its tokens.
      * <p>
      *
      * @asciidoclet
@@ -23,12 +23,7 @@ public interface RdsCredentialsProviderBuildTimeConfig {
 
     public interface CredentialsProviderBuildTimeConfig {
         /**
-         * Enables the named credentials provider to use a quarkus rds client, otherwise a default rds client will be created.
-         */
-        boolean useQuarkusClient();
-
-        /**
-         * The name of the quarkus rds client to use.
+         * The name of the quarkus rds client to use. If not set, the default client is used.
          */
         Optional<String> name();
     }

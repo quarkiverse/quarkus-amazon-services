@@ -16,36 +16,68 @@ On AWS, IAM database authentication requires:
 ** PostgreSQL: `CREATE ROLE app_user LOGIN; GRANT rds_iam TO app_user;`
 ** MySQL and MariaDB: `CREATE USER app_user IDENTIFIED WITH AWSAuthenticationPlugin AS 'RDS';`
 
-=== Configure the credentials provider
+=== Minimal setup with the default client
 
-Define a named credentials provider, `mydatabase` in this example:
+For a PostgreSQL datasource using IAM authentication, add these dependencies to your application `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>io.quarkiverse.amazonservices</groupId>
+    <artifactId>quarkus-amazon-rds</artifactId>
+</dependency>
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-jdbc-postgresql</artifactId>
+</dependency>
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>url-connection-client</artifactId>
+</dependency>
+----
+
+The URL connection HTTP client is the default, so its dependency is sufficient; no `quarkus.rds.sync-client.type` setting is needed.
+The extension supplies the synchronous RDS client internally, even when your application only uses JDBC.
+See <<Configuring {service-name-uppercase} clients>> for other HTTP client dependencies and their corresponding type settings.
+
+Supply AWS credentials through the default AWS SDK credentials provider chain, for example through a workload IAM role or an AWS profile.
+Supply the database's region through the default region provider chain, for example with `AWS_REGION=us-east-1` or the selected AWS profile's `region`.
+You can also set `quarkus.rds.aws.region` and `quarkus.rds.aws.credentials.*` explicitly as described in <<Configuring {service-name-uppercase} clients>>.
+
+With the database prepared as described above, the following `application.properties` configures the provider and datasource using the default client:
 
 [source,properties]
 ----
-quarkus.rds.credentials-provider.mydatabase.use-quarkus-client=true <1>
-# quarkus.rds.credentials-provider.mydatabase.name=myrdsclientforiam <2>
-
-quarkus.rds.credentials-provider.mydatabase.username=app_user <3>
+quarkus.rds.credentials-provider.mydatabase.username=app_user <1>
 quarkus.rds.credentials-provider.mydatabase.hostname=mydb.123456789012.us-east-1.rds.amazonaws.com
 quarkus.rds.credentials-provider.mydatabase.port=5432
-----
-<1> Sign the token with the synchronous {service-name-uppercase} client configured in <<Configuring {service-name-uppercase} clients>>, so it uses its region and credentials. This is recommended: without it, the provider creates a client from the default AWS SDK configuration (default region and credentials provider chains) each time it is called.
-<2> Use a xref:common-features.adoc#_named_clients[named client] instead of the default one.
-<3> The token is valid only for this database user, host and port, and for the region of the client: use the host and port of the JDBC URL.
 
-Then use it in your datasource:
+quarkus.datasource.db-kind=postgresql <2>
+quarkus.datasource.jdbc.url=jdbc:postgresql://mydb.123456789012.us-east-1.rds.amazonaws.com:5432/mydb
+quarkus.datasource.credentials-provider=mydatabase <3>
+quarkus.datasource.credentials-provider-name=rds-credentials-provider <4>
+----
+<1> The token is valid only for this database user, host and port, and for the region of the client: use the host and port of the JDBC URL.
+<2> The only property in this example fixed at build time. It can be omitted when PostgreSQL is the only available database kind.
+<3> The name of the provider defined above. The provider returns both the username and the token, so you do not need `quarkus.datasource.username` or `quarkus.datasource.password`.
+<4> The CDI name of the credentials provider bean. It is required when your application has another credentials provider, for example the Vault one.
+
+All other properties in this example, as well as the client's region and credentials, can be supplied at runtime through environment variables or other configuration sources.
+The credentials provider can therefore be configured when the application is deployed, without being configured locally at build time.
+
+MySQL and MariaDB send the token in clear text, so the connection must use SSL. PostgreSQL uses SSL when the server offers it, which RDS does.
+
+=== Use a named client
+
+If database authentication needs a different region or AWS credentials, select a xref:common-features.adoc#_named_clients[named client] at build time:
 
 [source,properties]
 ----
-quarkus.datasource.db-kind=postgresql
-quarkus.datasource.jdbc.url=jdbc:postgresql://mydb.123456789012.us-east-1.rds.amazonaws.com:5432/mydb
-quarkus.datasource.credentials-provider=mydatabase <1>
-quarkus.datasource.credentials-provider-name=rds-credentials-provider <2>
+quarkus.rds.credentials-provider.mydatabase.name=myrdsclientforiam
 ----
-<1> The name of the provider defined above. The provider returns both the username and the token, so you do not need `quarkus.datasource.username` or `quarkus.datasource.password`.
-<2> The CDI name of the credentials provider bean. It is required when your application has another credentials provider, for example the Vault one.
 
-MySQL and MariaDB send the token in clear text, so the connection must use SSL. PostgreSQL uses SSL when the server offers it, which RDS does.
+The named client's region and credentials can be configured at runtime, as can the provider's username, hostname and port.
+Without a client name configured at build time, the provider uses the default client.
 
 === Token lifetime
 

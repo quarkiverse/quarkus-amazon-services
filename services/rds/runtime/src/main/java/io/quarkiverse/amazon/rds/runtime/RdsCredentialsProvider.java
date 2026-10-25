@@ -3,6 +3,7 @@ package io.quarkiverse.amazon.rds.runtime;
 import java.util.Map;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Any;
 import jakarta.enterprise.inject.Default;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
@@ -14,6 +15,7 @@ import io.quarkiverse.amazon.rds.runtime.RdsCredentialsProviderBuildTimeConfig.C
 import io.quarkiverse.amazon.rds.runtime.RdsCredentialsProviderConfig.CredentialsProviderConfig;
 import io.quarkus.credentials.CredentialsProvider;
 import software.amazon.awssdk.services.rds.RdsClient;
+import software.amazon.awssdk.services.rds.RdsUtilities;
 
 @ApplicationScoped
 @Named("rds-credentials-provider")
@@ -26,6 +28,7 @@ public class RdsCredentialsProvider implements CredentialsProvider {
     RdsCredentialsProviderBuildTimeConfig rdsBuildTimeConfig;
 
     @Inject
+    @Any
     Instance<RdsClient> rdsClients;
 
     @Override
@@ -36,28 +39,28 @@ public class RdsCredentialsProvider implements CredentialsProvider {
             throw new IllegalArgumentException("unknown credentials provider with name " + credentialsProviderName);
         }
 
-        var rdsClient = getRdsClient(rdsBuildTimeConfig.credentialsProvider().get(credentialsProviderName));
-        var token = generateRdsAuthToken(credentialProviderConfig, rdsClient);
+        var token = generateRdsAuthToken(credentialProviderConfig,
+                rdsBuildTimeConfig.credentialsProvider().get(credentialsProviderName));
 
         return Map.ofEntries(
                 Map.entry(USER_PROPERTY_NAME, credentialProviderConfig.username()),
                 Map.entry(PASSWORD_PROPERTY_NAME, token));
     }
 
-    private String generateRdsAuthToken(CredentialsProviderConfig config, RdsClient rdsClient) {
+    private String generateRdsAuthToken(CredentialsProviderConfig config,
+            CredentialsProviderBuildTimeConfig buildTimeConfig) {
+        // a provider configured only with run time properties has no build time config, and uses the default client
+        return signRdsAuthToken(config,
+                getRdsClient(buildTimeConfig == null ? ClientUtil.DEFAULT_CLIENT_NAME
+                        : buildTimeConfig.name().orElse(ClientUtil.DEFAULT_CLIENT_NAME)).utilities());
+    }
 
-        return rdsClient.utilities().generateAuthenticationToken(builder -> builder
+    private String signRdsAuthToken(CredentialsProviderConfig config, RdsUtilities utilities) {
+
+        return utilities.generateAuthenticationToken(builder -> builder
                 .username(config.username())
                 .port(config.port())
                 .hostname(config.hostname()));
-    }
-
-    private RdsClient getRdsClient(CredentialsProviderBuildTimeConfig credentialsProviderBuildTimeConfig) {
-        if (credentialsProviderBuildTimeConfig != null && credentialsProviderBuildTimeConfig.useQuarkusClient()) {
-            return getRdsClient(credentialsProviderBuildTimeConfig.name().orElse(ClientUtil.DEFAULT_CLIENT_NAME));
-        } else {
-            return RdsClient.create();
-        }
     }
 
     private RdsClient getRdsClient(String clientName) {
