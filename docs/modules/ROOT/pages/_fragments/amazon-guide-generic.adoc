@@ -37,7 +37,7 @@ It's a major rewrite of the 1.x code base that offers two programming models (Bl
 
 The Quarkus extension supports two programming models:
 
-* Blocking access using URL Connection HTTP client (by default), the Apache HTTP Client or the AWS CRT-based HTTP client
+* Blocking access using URL Connection HTTP client (by default), the Apache 5.x HTTP client, the Apache HTTP client (deprecated) or the AWS CRT-based HTTP client
 * https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/basics-async.html[Asynchronous programming] based on JDK's `CompletableFuture` objects and the Netty HTTP client or the AWS CRT-based HTTP client
 
 In this guide, we see how you can get your REST services to use {service-name-uppercase} locally and on AWS.
@@ -276,6 +276,21 @@ you need to add a URL connection client dependency to the `pom.xml` file:
 </dependency>
 ----
 
+If you want to use the Apache 5.x HTTP client instead, configure it as follows:
+[source,properties,subs=attributes]
+----
+quarkus.{service-name}.sync-client.type=apache5
+----
+
+And add the following dependency to the application `pom.xml`:
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>apache5-client</artifactId>
+</dependency>
+----
+
 If you want to use the Apache HTTP client instead, configure it as follows:
 [source,properties,subs=attributes]
 ----
@@ -290,6 +305,12 @@ And add the following dependency to the application `pom.xml`:
     <artifactId>apache-client</artifactId>
 </dependency>
 ----
+
+[WARNING]
+====
+The AWS SDK has deprecated the Apache HTTP client in favor of the Apache 5.x HTTP client, which is a drop-in replacement: prefer `apache5`.
+The build logs a warning when the Apache HTTP client is used. Set `quarkus.aws.sync-client.apache-deprecation-warning=false` to disable it, see xref:common-features.adoc#deprecated-apache-http-client[Deprecated Apache HTTP client].
+====
 
 If you want to use the AWS CRT-based HTTP client instead, configure it as follows:
 [source,properties,subs=attributes]

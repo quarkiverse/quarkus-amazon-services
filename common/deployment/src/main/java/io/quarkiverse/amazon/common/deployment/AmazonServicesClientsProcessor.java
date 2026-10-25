@@ -9,6 +9,7 @@ import jakarta.enterprise.inject.spi.DeploymentException;
 
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.Type;
+import org.jboss.logging.Logger;
 
 import io.quarkiverse.amazon.common.AmazonClient;
 import io.quarkiverse.amazon.common.AmazonClientBuilder;
@@ -16,6 +17,7 @@ import io.quarkiverse.amazon.common.runtime.AsyncHttpClientBuildTimeConfig.Async
 import io.quarkiverse.amazon.common.runtime.AwsSdkTelemetryProducer;
 import io.quarkiverse.amazon.common.runtime.SdkBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.SyncHttpClientBuildTimeConfig.SyncClientType;
+import io.quarkiverse.amazon.common.runtime.SyncHttpClientGlobalBuildTimeConfig;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.UnremovableBeanBuildItem;
 import io.quarkus.bootstrap.classloading.QuarkusClassLoader;
@@ -35,6 +37,8 @@ import software.amazon.awssdk.http.SdkHttpService;
 import software.amazon.awssdk.http.async.SdkAsyncHttpService;
 
 public class AmazonServicesClientsProcessor {
+
+    private static final Logger LOG = Logger.getLogger(AmazonServicesClientsProcessor.class);
 
     @BuildStep
     AdditionalBeanBuildItem additionalBeans() {
@@ -128,6 +132,7 @@ public class AmazonServicesClientsProcessor {
     @Produce(AmazonHttpClientsCheckedBuildItem.class)
     void setup(
             List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
+            SyncHttpClientGlobalBuildTimeConfig syncGlobalConfig,
             BuildProducer<ReflectiveClassBuildItem> reflectiveClasses,
             BuildProducer<NativeImageProxyDefinitionBuildItem> proxyDefinition,
             BuildProducer<ServiceProviderBuildItem> serviceProvider) {
@@ -158,8 +163,13 @@ public class AmazonServicesClientsProcessor {
 
         // Check that the clients required by the configuration are available
         if (syncTransportNeeded) {
-            if (amazonClients.stream().filter(isSyncApache).findAny().isPresent()) {
+            List<String> apacheClientNames = amazonClients.stream().filter(isSyncApache)
+                    .map(RequireAmazonClientTransportBuilderBuildItem::getAwsClientName).toList();
+            if (!apacheClientNames.isEmpty()) {
                 if (isSyncApacheInClasspath) {
+                    warnApacheDeprecated(syncGlobalConfig, String.format(
+                            "The Apache HTTP client is configured for %s. Set quarkus.<client>.sync-client.type=apache5 and replace the software.amazon.awssdk:apache-client dependency with software.amazon.awssdk:apache5-client.",
+                            String.join(", ", apacheClientNames)));
                     registerSyncApacheClient(proxyDefinition, serviceProvider);
                 } else {
                     throw missingDependencyException("apache-client");
@@ -187,6 +197,8 @@ public class AmazonServicesClientsProcessor {
             // even if we don't register any clients via configuration, we still register the clients
             // but this time only based on the classpath.
             if (isSyncApacheInClasspath) {
+                warnApacheDeprecated(syncGlobalConfig,
+                        "The Apache HTTP client is registered because software.amazon.awssdk:apache-client is on the classpath. Replace it with software.amazon.awssdk:apache5-client.");
                 registerSyncApacheClient(proxyDefinition, serviceProvider);
             } else if (isSyncApache5InClasspath) {
                 registerSyncApache5Client(proxyDefinition, serviceProvider);
@@ -218,6 +230,14 @@ public class AmazonServicesClientsProcessor {
                 registerAsyncAwsCrtClient(serviceProvider);
             }
         }
+    }
+
+    private static void warnApacheDeprecated(SyncHttpClientGlobalBuildTimeConfig syncGlobalConfig, String detail) {
+        if (!syncGlobalConfig.apacheDeprecationWarning()) {
+            return;
+        }
+        LOG.warn("The AWS SDK has deprecated the Apache HTTP client in favor of the Apache 5.x HTTP client. " + detail
+                + " Set quarkus.aws.sync-client.apache-deprecation-warning=false to disable this warning.");
     }
 
     private static void registerSyncApacheClient(BuildProducer<NativeImageProxyDefinitionBuildItem> proxyDefinition,
