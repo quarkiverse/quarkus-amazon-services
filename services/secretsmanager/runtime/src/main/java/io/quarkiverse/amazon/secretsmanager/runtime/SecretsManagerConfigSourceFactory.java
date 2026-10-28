@@ -23,9 +23,10 @@ public class SecretsManagerConfigSourceFactory implements
         ConfigSourceFactory.ConfigurableConfigSourceFactory<SecretsManagerConfigConfig> {
 
     /**
-     * The ordinal is set to < 100 (which is the default) so that this config source is retrieved from last.
+     * The ordinal is set to 270 so that this config source is retrieved after .env and before application.properties files.
+     * This is also aligned to other quarkus extension config sources.
      */
-    private static final int ORDINAL = 50;
+    private static final int ORDINAL = 270;
 
     @Override
     public Iterable<ConfigSource> getConfigSources(
