@@ -26,7 +26,11 @@ public class SsmConfigSourceFactory implements ConfigSourceFactory.ConfigurableC
 
     private static final Logger LOG = Logger.getLogger(SsmConfigSourceFactory.class);
 
-    private static final int ORDINAL = 50;
+    /**
+     * The ordinal is set to 270 so that this config source is retrieved after .env and before application.properties files.
+     * This is also aligned to other quarkus extension config sources.
+     */
+    private static final int ORDINAL = 270;
 
     @Override
     public Iterable<ConfigSource> getConfigSources(ConfigSourceContext configSourceContext, SsmConfigConfig ssmConfig) {
