@@ -48,8 +48,8 @@ public interface SsmConfigConfig {
     boolean withDecryption();
 
     /**
-     * Interval in minutes between reloads after the initial fetch. Set to {@code 0} to fetch only once at startup.
+     * Interval in minutes between reloads after the initial fetch. Set greater than {@code 0} to enable polling.
      */
-    @WithDefault("5")
+    @WithDefault("0")
     int updateIntervalMinutes();
 }
