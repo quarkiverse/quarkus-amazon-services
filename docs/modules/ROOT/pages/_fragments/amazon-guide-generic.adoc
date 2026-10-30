@@ -1,8 +1,10 @@
 ifndef::extension-name[:extension-name: {service-name}]
 ifndef::sdk-package[:sdk-package: {extension-name}]
 ifndef::extension-status[:extension-status: stable]
+ifndef::guide-title[:guide-title: {service-name-uppercase} Client]
+ifndef::aws-config-prefix[:aws-config-prefix: quarkus.{service-name}.aws]
 
-= {service-name-uppercase} Client
+= {guide-title}
 
 include::../includes/attributes.adoc[]
 
@@ -13,7 +15,17 @@ The {service-name-uppercase} extension is deprecated and will be removed in a fu
 ====
 endif::[]
 
+ifndef::generic-extension[]
 include::../_description/{docname}.adoc[]
+endif::[]
+ifdef::generic-extension[]
+If an AWS service does not yet have a dedicated Quarkus extension, use `quarkus-amazon-sdk` with the corresponding AWS SDK for Java v2 dependency.
+The extension exposes the SDK clients as CDI beans and configures them through `application.properties`.
+
+NOTE: This extension is in preview.
+
+This guide uses {service-name-uppercase} as an example; replace its SDK dependency and client types with those of the service you need.
+endif::[]
 
 ifdef::aws-docs-url[]
 For more information, see {aws-docs-url}[the {service-name-uppercase} documentation].
@@ -32,7 +44,7 @@ ifeval::["{aws-stack}" == "moto"]
 :aws-stack-port: 5000
 endif::[]
 
-NOTE: The {service-name-uppercase} extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
+NOTE: The extension is based on https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html[AWS Java SDK 2.x].
 It's a major rewrite of the 1.x code base that offers two programming models (Blocking & Async).
 
 The Quarkus extension supports two programming models:
@@ -59,7 +71,13 @@ endif::[]
 ifndef::has-integration-test[]
 [NOTE]
 ====
+ifndef::generic-extension[]
 The integration tests of the {service-name-uppercase} extension do not run against a local stack, so this guide cannot guarantee that {aws-stack-name}, or any other xref:dev-services.adoc[supported stack], emulates {service-name-uppercase}, or all of its operations.
+endif::[]
+ifdef::generic-extension[]
+This guide makes no assumption that {aws-stack-name}, or any other xref:dev-services.adoc[supported stack], emulates the service needed by your client or all of its operations.
+The generic extension does not check emulator support either.
+endif::[]
 Check the documentation of the stack you use.
 If it does not emulate the operations you need, disable Dev Services with `quarkus.{service-name}.devservices.enabled=false` and use an AWS account with the https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html[AWS Command Line Interface].
 ====
@@ -200,10 +218,16 @@ mvn io.quarkus.platform:quarkus-maven-plugin:{quarkus-version}:create \
 cd amazon-{extension-name}-quickstart
 ----
 
+ifndef::generic-extension[]
 This command generates a Maven structure importing the Quarkus REST and {service-name-uppercase} Client extensions.
 After this, the `amazon-{extension-name}` extension has been added to your `pom.xml`, along with `quarkus-rest` and `quarkus-rest-jackson`.
 
 The {service-name-uppercase} extensions are a component of the Quarkus platform, and the generated `pom.xml` already imports their BOM through it, which is the recommended setup.
+endif::[]
+ifdef::generic-extension[]
+This command creates an application with Quarkus REST and the generic AWS SDK extension.
+The generated `pom.xml` imports the Quarkus platform BOM and adds `quarkus-amazon-sdk`, but no SDK service dependency yet.
+endif::[]
 
 Due to differing release schedules, the Quarkus platform may not include the latest Quarkus Amazon Services release.
 If you need features from a newer release, replace the generated `quarkus-amazon-services-bom` import with the Quarkus Amazon Services BOM:
@@ -218,6 +242,20 @@ If you need features from a newer release, replace the generated `quarkus-amazon
     <scope>import</scope>
 </dependency>
 ----
+
+ifdef::generic-extension[]
+Add the SDK dependency for the service used in this guide to the `dependencies` section of your `pom.xml`:
+
+[source,xml,subs="attributes+"]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>{sdk-artifact}</artifactId>
+</dependency>
+----
+
+Add other SDK service dependencies as needed; there is no additional Quarkus extension to add for each service.
+endif::[]
 
 The command also generates a `{main-class}Test` class and a `{main-class}IT` class that call the `hello` endpoint of the generated resource.
 The next section replaces that resource: delete these two files, or update them to match the endpoints you create.
@@ -259,12 +297,16 @@ public class {main-class} {
 }
 ----
 
-To inject several clients with different configurations, refer to the xref:common-features.adoc[named clients] support.
+To inject several clients with different configurations, refer to the xref:common-features.adoc#_named_clients[named clients] support.
 endif::[]
 
 === Configuring {service-name-uppercase} clients
 
 Both {service-name-uppercase} clients (sync and async) are configurable via the `application.properties` file that can be provided in the `src/main/resources` directory.
+ifdef::generic-extension[]
+The `quarkus.aws` settings apply to all services managed by the generic extension.
+HTTP transport, interceptor and telemetry settings are shared by all generic clients.
+endif::[]
 Additionally, you need to add to the classpath a proper implementation of the sync client. By default, the extension uses the URL connection HTTP client, so
 you need to add a URL connection client dependency to the `pom.xml` file:
 
@@ -339,10 +381,10 @@ If you started {aws-stack-name} yourself, configure the client to use it as foll
 ----
 quarkus.{service-name}.endpoint-override=http://localhost:{aws-stack-port} <1>
 
-quarkus.{service-name}.aws.region=us-east-1 <2>
-quarkus.{service-name}.aws.credentials.type=static <3>
-quarkus.{service-name}.aws.credentials.static-provider.access-key-id=test-key
-quarkus.{service-name}.aws.credentials.static-provider.secret-access-key=test-secret
+{aws-config-prefix}.region=us-east-1 <2>
+{aws-config-prefix}.credentials.type=static <3>
+{aws-config-prefix}.credentials.static-provider.access-key-id=test-key
+{aws-config-prefix}.credentials.static-provider.secret-access-key=test-secret
 ----
 <1> Override the {service-name-uppercase} client to use {aws-stack-name} instead of the actual AWS service. When it is set, Dev Services does not start a local stack for {service-name-uppercase}.
 <2> {aws-stack-name} defaults to `us-east-1`
@@ -351,7 +393,7 @@ quarkus.{service-name}.aws.credentials.static-provider.secret-access-key=test-se
 ==== Use your AWS account
 
 If you want to work with an AWS account, you need an AWS account with access to {service-name-uppercase} and the https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html[AWS Command Line Interface], then remove or comment out the `endpoint-override` and the static credentials properties of the previous section.
-By default, the {service-name-uppercase} client extension uses the `default` credentials provider chain that looks for credentials in this order:
+By default, the {service-name-uppercase} client uses the `default` credentials provider chain that looks for credentials in this order:
 
 * Java System Properties - `aws.accessKeyId` and `aws.secretAccessKey`
 * Environment Variables - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
@@ -443,10 +485,10 @@ To use a local {aws-stack-name} instance, pass the endpoint and the credentials 
 ----
 java \
     -Dquarkus.{service-name}.endpoint-override=http://localhost:{aws-stack-port} \
-    -Dquarkus.{service-name}.aws.region=us-east-1 \
-    -Dquarkus.{service-name}.aws.credentials.type=static \
-    -Dquarkus.{service-name}.aws.credentials.static-provider.access-key-id=test-key \
-    -Dquarkus.{service-name}.aws.credentials.static-provider.secret-access-key=test-secret \
+    -D{aws-config-prefix}.region=us-east-1 \
+    -D{aws-config-prefix}.credentials.type=static \
+    -D{aws-config-prefix}.credentials.static-provider.access-key-id=test-key \
+    -D{aws-config-prefix}.credentials.static-provider.secret-access-key=test-secret \
     -jar target/quarkus-app/quarkus-run.jar
 ----
 
@@ -561,6 +603,19 @@ ifdef::aws-docs-url[]
 endif::[]
 
 include::../_extras/{docname}-extras.adoc[opts=optional]
+
+ifdef::generic-extension[]
+== Using a dedicated extension
+
+If you add the dedicated extension for a service, *its configuration replaces the generic configuration for that service*, including all named clients.
+For example, after adding `quarkus-amazon-sesv2`, configure SESv2 clients under `quarkus.sesv2`, not `quarkus.aws`.
+The generic extension continues to manage other services without a dedicated extension.
+
+The generic extension supports standard synchronous and asynchronous SDK clients.
+For service-specific features such as presigners, enhanced clients or transfer managers, use the corresponding dedicated extension.
+
+The shared feature guides also cover dedicated extensions; use the `quarkus.aws` prefix for clients managed by the generic extension.
+endif::[]
 
 == Configuration Reference
 

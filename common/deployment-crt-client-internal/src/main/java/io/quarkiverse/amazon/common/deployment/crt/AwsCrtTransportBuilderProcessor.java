@@ -33,6 +33,7 @@ public class AwsCrtTransportBuilderProcessor {
 
         extensions.forEach(extension -> createAwsCrtSyncTransportBuilder(
                 extension.getConfigName(),
+                extension.getConfigPrefix(),
                 amazonClients,
                 transportRecorder,
                 extension.getBuildSyncConfig(),
@@ -51,6 +52,7 @@ public class AwsCrtTransportBuilderProcessor {
 
         extensions.forEach(extension -> createAwsCrtAsyncTransportBuilder(
                 extension.getConfigName(),
+                extension.getConfigPrefix(),
                 amazonClients,
                 transportRecorder,
                 extension.getBuildAsyncConfig(),
@@ -58,7 +60,7 @@ public class AwsCrtTransportBuilderProcessor {
                 asyncTransports));
     }
 
-    void createAwsCrtSyncTransportBuilder(String configName,
+    void createAwsCrtSyncTransportBuilder(String configName, String configPrefix,
             List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientAwsCrtTransportRecorder recorder,
             SyncHttpClientBuildTimeConfig buildSyncConfig,
@@ -81,12 +83,13 @@ public class AwsCrtTransportBuilderProcessor {
                     new AmazonClientSyncTransportBuildItem(
                             client.getAwsClientName(),
                             client.getSyncClassName().get(),
-                            recorder.configureSync(configName, syncConfig)));
+                            recorder.configureSync(configPrefix, syncConfig)));
         });
     }
 
     void createAwsCrtAsyncTransportBuilder(
             String configName,
+            String configPrefix,
             List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientAwsCrtTransportRecorder recorder,
             AsyncHttpClientBuildTimeConfig buildAsyncConfig,
@@ -109,7 +112,7 @@ public class AwsCrtTransportBuilderProcessor {
                     new AmazonClientAsyncTransportBuildItem(
                             client.getAwsClientName(),
                             client.getAsyncClassName().get(),
-                            recorder.configureAsync(configName, asyncConfig)));
+                            recorder.configureAsync(configPrefix, asyncConfig)));
         });
     }
 }

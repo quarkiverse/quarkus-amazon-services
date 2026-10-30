@@ -1,0 +1,12 @@
+:generic-extension:
+:guide-title: Generic AWS SDK integration
+:extension-name: sdk
+:service-name: aws
+:service-name-uppercase: AWS Backup
+:service-class-name: Backup
+:sdk-package: backup
+:sdk-artifact: backup
+:java-package: sdk
+:aws-config-prefix: quarkus.aws
+
+include::_fragments/amazon-guide-generic.adoc[]

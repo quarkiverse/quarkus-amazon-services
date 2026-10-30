@@ -30,6 +30,7 @@ public class Apache5TransportBuilderProcessor {
 
         extensions.forEach(extension -> createApache5SyncTransportBuilder(
                 extension.getConfigName(),
+                extension.getConfigPrefix(),
                 amazonClients,
                 transportRecorder,
                 extension.getBuildSyncConfig(),
@@ -37,7 +38,7 @@ public class Apache5TransportBuilderProcessor {
                 syncTransports));
     }
 
-    void createApache5SyncTransportBuilder(String configName,
+    void createApache5SyncTransportBuilder(String configName, String configPrefix,
             List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientApache5TransportRecorder recorder,
             SyncHttpClientBuildTimeConfig buildSyncConfig,
@@ -60,7 +61,7 @@ public class Apache5TransportBuilderProcessor {
                     new AmazonClientSyncTransportBuildItem(
                             client.getAwsClientName(),
                             client.getSyncClassName().get(),
-                            recorder.configureSync(configName, syncConfig)));
+                            recorder.configureSync(configPrefix, syncConfig)));
         });
     }
 }

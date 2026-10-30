@@ -39,13 +39,14 @@ public class AmazonClientCommonRecorder {
         AwsClientBuilder builder = clientBuilder.getValue();
 
         AmazonClientConfig namedConfig = amazonClientConfigRuntime.getValue().clients().get(clientName);
-        AmazonClientConfig defaultConfig = amazonClientConfigRuntime.getValue().clients().get(ClientUtil.DEFAULT_CLIENT_NAME);
+        AmazonClientConfig defaultConfig = amazonClientConfigRuntime.getValue().defaultsFor(clientName);
 
-        String namedExtension = ClientUtil.isDefaultClient(clientName) ? awsServiceName : awsServiceName + "." + clientName;
-        initAwsClient(builder, awsServiceName, namedExtension, namedConfig.aws(),
+        String extension = amazonClientConfigRuntime.getValue().configPrefix(awsServiceName, ClientUtil.DEFAULT_CLIENT_NAME);
+        String namedExtension = amazonClientConfigRuntime.getValue().configPrefix(awsServiceName, clientName);
+        initAwsClient(builder, extension, namedExtension, namedConfig.aws(),
                 defaultConfig.aws());
-        initSdkClientEndpoint(builder, awsServiceName, namedExtension, namedConfig.sdk(), defaultConfig.sdk());
-        initSdkClient(builder, awsServiceName, namedExtension, namedConfig.sdk(),
+        initSdkClientEndpoint(builder, extension, namedExtension, namedConfig.sdk(), defaultConfig.sdk());
+        initSdkClient(builder, extension, namedExtension, namedConfig.sdk(),
                 defaultConfig.sdk(), sdkBuildTimeConfig.sdk(),
                 scheduledExecutorService);
 
@@ -66,8 +67,9 @@ public class AmazonClientCommonRecorder {
 
     public static AwsCredentialsProvider resolveCredentialsProvider(String extension, String namedExtension,
             AwsConfig namedConfig, AwsConfig defaultConfig) {
-        return namedConfig.credentials().map(c -> c.type().create(c, "quarkus." + namedExtension))
-                .or(() -> defaultConfig.credentials().map(c -> c.type().create(c, "quarkus." + extension)))
+        return namedConfig.credentials().map(c -> c.type().create(c, namedConfig.configPrefix("quarkus." + namedExtension)))
+                .or(() -> defaultConfig.credentials()
+                        .map(c -> c.type().create(c, defaultConfig.configPrefix("quarkus." + extension))))
                 .orElseGet(() -> DefaultCredentialsProvider.builder().asyncCredentialUpdateEnabled(false)
                         .reuseLastProviderEnabled(false).build());
     }
@@ -75,9 +77,12 @@ public class AmazonClientCommonRecorder {
     public static Optional<URI> resolveEndpointOverride(String extension, String namedExtension, SdkConfig namedConfig,
             SdkConfig defaultConfig) {
         if (namedConfig.endpointOverride().isPresent()) {
-            AmazonClientCommonRecorder.validEndpointOverride(namedExtension, namedConfig.endpointOverride().get());
+            AmazonClientCommonRecorder.validEndpointOverride(
+                    namedConfig.endpointOverrideConfigPrefix("quarkus." + namedExtension),
+                    namedConfig.endpointOverride().get());
         } else if (defaultConfig.endpointOverride().isPresent()) {
-            AmazonClientCommonRecorder.validEndpointOverride(extension, defaultConfig.endpointOverride().get());
+            AmazonClientCommonRecorder.validEndpointOverride(defaultConfig.endpointOverrideConfigPrefix("quarkus." + extension),
+                    defaultConfig.endpointOverride().get());
         }
 
         return namedConfig.endpointOverride().filter(URI::isAbsolute)
@@ -111,7 +116,7 @@ public class AmazonClientCommonRecorder {
     private static void validEndpointOverride(String namedExtension, URI endpointOverride) {
         if (StringUtils.isBlank(endpointOverride.getScheme())) {
             throw new RuntimeConfigurationError(
-                    String.format("quarkus.%s.endpoint-override (%s) - scheme must be specified",
+                    String.format("%s.endpoint-override (%s) - scheme must be specified",
                             namedExtension,
                             endpointOverride.toString()));
         }
@@ -124,13 +129,14 @@ public class AmazonClientCommonRecorder {
         SdkPresigner.Builder builder = clientBuilder.getValue();
 
         AmazonClientConfig namedConfig = amazonClientConfigRuntime.getValue().clients().get(clientName);
-        AmazonClientConfig defaultConfig = amazonClientConfigRuntime.getValue().clients().get(ClientUtil.DEFAULT_CLIENT_NAME);
+        AmazonClientConfig defaultConfig = amazonClientConfigRuntime.getValue().defaultsFor(clientName);
 
-        String namedExtension = ClientUtil.isDefaultClient(clientName) ? awsServiceName : awsServiceName + "." + clientName;
+        String extension = amazonClientConfigRuntime.getValue().configPrefix(awsServiceName, ClientUtil.DEFAULT_CLIENT_NAME);
+        String namedExtension = amazonClientConfigRuntime.getValue().configPrefix(awsServiceName, clientName);
         namedConfig.aws().region().or(() -> defaultConfig.aws().region()).ifPresent(builder::region);
         builder.credentialsProvider(
-                resolveCredentialsProvider(awsServiceName, namedExtension, namedConfig.aws(), defaultConfig.aws()));
-        resolveEndpointOverride(awsServiceName, namedExtension, namedConfig.sdk(), defaultConfig.sdk())
+                resolveCredentialsProvider(extension, namedExtension, namedConfig.aws(), defaultConfig.aws()));
+        resolveEndpointOverride(extension, namedExtension, namedConfig.sdk(), defaultConfig.sdk())
                 .ifPresent(builder::endpointOverride);
 
         return new RuntimeValue<>(builder);

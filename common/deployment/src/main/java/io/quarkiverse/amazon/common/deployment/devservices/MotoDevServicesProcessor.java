@@ -16,8 +16,10 @@ import io.quarkiverse.amazon.common.runtime.AwsStackDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.MotoDevServicesBuildTimeConfig;
 import io.quarkus.deployment.IsDevServicesSupportedByLaunchMode;
+import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.BuildSteps;
+import io.quarkus.deployment.builditem.DevServicesAdditionalConfigBuildItem;
 import io.quarkus.deployment.builditem.DevServicesComposeProjectBuildItem;
 import io.quarkus.deployment.builditem.DevServicesResultBuildItem;
 import io.quarkus.deployment.builditem.DevServicesSharedNetworkBuildItem;
@@ -71,7 +73,8 @@ public class MotoDevServicesProcessor extends AbstractDevServicesAwsStackProcess
             DevServicesConfig devServicesConfig,
             GlobalDevServicesBuildTimeConfig globalConfig,
             MotoDevServicesBuildTimeConfig config,
-            List<DevServicesAwsStackProviderBuildItem> requestedServices) {
+            List<DevServicesAwsStackProviderBuildItem> requestedServices,
+            BuildProducer<DevServicesAdditionalConfigBuildItem> additionalConfig) {
 
         var requestedMotoServices = requestedServices
                 .stream()
@@ -81,7 +84,7 @@ public class MotoDevServicesProcessor extends AbstractDevServicesAwsStackProcess
 
         return startAwsStackDevService(dockerStatusBuildItem, compose, launchMode, sharedNetwork, devServicesConfig,
                 globalConfig, config,
-                requestedMotoServices);
+                requestedMotoServices, additionalConfig);
     }
 
     @Override

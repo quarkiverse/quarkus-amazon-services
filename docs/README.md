@@ -17,6 +17,11 @@ include::./_fragments/amazon-guide-generic.adoc[]
 
 ## Layout
 
+The cross-service guide `amazon-sdk.adoc` uses the same skeleton with `generic-extension` set.
+Its attributes select an example SDK service while keeping `service-name=aws` and `extension-name=sdk`.
+The skeleton shares project creation, client injection, transports, Dev Services and JVM/native packaging;
+named-client configuration is covered in `common-features.adoc`, and generic coexistence is an inline conditional section of the skeleton.
+
 ```
 docs/
 ├── templates/includes/attributes.adoc       global attributes (versions, quickstart URLs), filtered by Maven
@@ -165,6 +170,15 @@ Do not write the link to the AWS documentation: set `aws-docs-url`, and the page
 | `needs-host-access` | « Start Floci manually » adds `--add-host=host.docker.internal:host-gateway` to `docker run`, so that the service can call the application from the container | unset | when the service calls back the application (SNS HTTP subscriptions) | — |
 | `run-args` | System properties added to `java -jar` in « Packaging » | unset | when the example application needs them | `-Dkey.arn=$MASTER_KEY_ARN` |
 | `extra-config-reference` | Adds the configuration reference of a related extension | unset | when a companion extension is documented on the same page | `dynamodb-enhanced` |
+
+The generic guide defines these additional attributes before including the skeleton:
+
+| Attribute | Meaning | Default |
+|---|---|---|
+| `generic-extension` | Selects generic integration text and adds the raw SDK dependency step | unset (dedicated extension) |
+| `guide-title` | Page title | `{service-name-uppercase} Client` |
+| `aws-config-prefix` | Full region/credentials group prefix | `quarkus.{service-name}.aws`; generic guide uses `quarkus.aws` |
+| `sdk-artifact` | Raw SDK artifact used in the generic guide | explicitly set, e.g. `backup` |
 
 Real examples: [`_description/amazon-dynamodb.adoc`](modules/ROOT/pages/_description/amazon-dynamodb.adoc) (step-by-step guide with a quickstart), [`_description/amazon-iam.adoc`](modules/ROOT/pages/_description/amazon-iam.adoc) (step-by-step guide without a quickstart), [`_description/amazon-textract.adoc`](modules/ROOT/pages/_description/amazon-textract.adoc) (service not covered by the integration tests).
 

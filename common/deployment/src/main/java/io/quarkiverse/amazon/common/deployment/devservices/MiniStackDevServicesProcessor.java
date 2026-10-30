@@ -20,8 +20,10 @@ import io.quarkiverse.amazon.common.runtime.AwsStackDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.MiniStackDevServicesBuildTimeConfig;
 import io.quarkus.deployment.IsDevServicesSupportedByLaunchMode;
+import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.BuildSteps;
+import io.quarkus.deployment.builditem.DevServicesAdditionalConfigBuildItem;
 import io.quarkus.deployment.builditem.DevServicesComposeProjectBuildItem;
 import io.quarkus.deployment.builditem.DevServicesResultBuildItem;
 import io.quarkus.deployment.builditem.DevServicesSharedNetworkBuildItem;
@@ -75,7 +77,8 @@ public class MiniStackDevServicesProcessor extends AbstractDevServicesAwsStackPr
             DevServicesConfig devServicesConfig,
             GlobalDevServicesBuildTimeConfig globalConfig,
             MiniStackDevServicesBuildTimeConfig config,
-            List<DevServicesAwsStackProviderBuildItem> requestedServices) {
+            List<DevServicesAwsStackProviderBuildItem> requestedServices,
+            BuildProducer<DevServicesAdditionalConfigBuildItem> additionalConfig) {
 
         var requestedMiniStackServices = requestedServices
                 .stream()
@@ -85,7 +88,7 @@ public class MiniStackDevServicesProcessor extends AbstractDevServicesAwsStackPr
 
         return startAwsStackDevService(dockerStatusBuildItem, compose, launchMode, sharedNetwork, devServicesConfig,
                 globalConfig, config,
-                requestedMiniStackServices);
+                requestedMiniStackServices, additionalConfig);
     }
 
     @Override

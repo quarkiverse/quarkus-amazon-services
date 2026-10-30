@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.jboss.logging.Logger;
@@ -16,6 +15,8 @@ import io.quarkiverse.amazon.common.deployment.spi.DevServicesAwsStackProviderBu
 import io.quarkiverse.amazon.common.runtime.AwsStackDevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.DevServicesBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.GlobalDevServicesBuildTimeConfig;
+import io.quarkus.deployment.annotations.BuildProducer;
+import io.quarkus.deployment.builditem.DevServicesAdditionalConfigBuildItem;
 import io.quarkus.deployment.builditem.DevServicesComposeProjectBuildItem;
 import io.quarkus.deployment.builditem.DevServicesResultBuildItem;
 import io.quarkus.deployment.builditem.DevServicesSharedNetworkBuildItem;
@@ -79,7 +80,8 @@ public abstract class AbstractDevServicesAwsStackProcessor {
             DevServicesConfig devServicesConfig,
             GlobalDevServicesBuildTimeConfig globalConfig,
             AwsStackDevServicesBuildTimeConfig config,
-            List<DevServicesAwsStackProviderBuildItem> requestedServices) {
+            List<DevServicesAwsStackProviderBuildItem> requestedServices,
+            BuildProducer<DevServicesAdditionalConfigBuildItem> additionalConfig) {
 
         if (requestedServices.isEmpty()) {
             log.debug("No extension requested dev services for Amazon Services, skipping the startup of dev services.");
@@ -109,15 +111,23 @@ public abstract class AbstractDevServicesAwsStackProcessor {
                             .build();
                 })
                 .orElseGet(() -> {
+                    String endpointKey = "io.quarkiverse.amazon.devservices." + getFeatureName() + ".endpoint";
+                    additionalConfig.produce(clientConfig(endpointKey, requestedServices));
                     return DevServicesResultBuildItem.owned()
                             .feature(getFeatureName())
                             .serviceName(config.serviceName())
                             .serviceConfig(buildServiceConfig(globalConfig, config, requestedServices))
                             .startable(() -> createContainer(compose, config, useSharedNetwork, launchMode, requestedServices))
-                            .configProvider(buildConfigProvider(requestedServices))
+                            // Cache only the connection; client properties must be recalculated on every augmentation.
+                            .configProvider(s -> connectionConfig(endpointKey, s))
                             .postStartHook(s -> logStartedAndPrepareStackContainer(s, requestedServices))
                             .build();
                 });
+    }
+
+    /** Connection metadata cached with an owned service, independently of per-augmentation client defaults. */
+    protected Map<String, String> connectionConfig(String endpointKey, Startable stack) {
+        return Map.of(endpointKey, stack.getConnectionInfo());
     }
 
     /**
@@ -209,50 +219,24 @@ public abstract class AbstractDevServicesAwsStackProcessor {
         return config;
     }
 
-    private Function<Startable, Map<String, String>> buildConfigProvider(
+    DevServicesAdditionalConfigBuildItem clientConfig(String endpointKey,
             List<DevServicesAwsStackProviderBuildItem> requestedServices) {
-        return startable -> {
-            Map<String, String> config = new HashMap<>();
-            AwsStackContainer awsStackContainer = createAwsStackContainerFromEndpoint(startable.getConnectionInfo());
-
-            for (DevServicesAwsStackProviderBuildItem requestedService : requestedServices) {
-                DevServicesAwsStackExtensionProvider provider = requestedService.getDevProvider();
-                config.putAll(provider.getClientConfig().apply(awsStackContainer));
-            }
-
-            return config;
-        };
+        return new DevServicesAdditionalConfigBuildItem(config -> {
+            String endpoint = config.get(endpointKey);
+            return endpoint == null ? Map.of() : buildDiscoveredConfig(endpoint, requestedServices);
+        });
     }
 
-    private ServiceConfig buildServiceConfig(
-            GlobalDevServicesBuildTimeConfig globalConfig,
+    static ServiceConfig buildServiceConfig(GlobalDevServicesBuildTimeConfig globalConfig,
             AwsStackDevServicesBuildTimeConfig config,
             List<DevServicesAwsStackProviderBuildItem> requestedServices) {
-        return new ServiceConfig() {
-            @Override
-            public GlobalDevServicesBuildTimeConfig getGlobalConfig() {
-                return globalConfig;
-            }
-
-            @Override
-            public AwsStackDevServicesBuildTimeConfig getStackConfig() {
-                return config;
-            }
-
-            @Override
-            public Set<DevServicesBuildTimeConfig> getServiceConfigs() {
-                return requestedServices.stream()
-                        .map(DevServicesAwsStackProviderBuildItem::getConfig)
-                        .collect(Collectors.toSet());
-            }
-        };
+        return new ServiceConfig(globalConfig, config, requestedServices.stream()
+                .collect(Collectors.groupingBy(DevServicesAwsStackProviderBuildItem::getServiceName,
+                        Collectors.mapping(DevServicesAwsStackProviderBuildItem::getConfig, Collectors.toSet()))));
     }
 
-    public interface ServiceConfig {
-        GlobalDevServicesBuildTimeConfig getGlobalConfig();
-
-        AwsStackDevServicesBuildTimeConfig getStackConfig();
-
-        Set<DevServicesBuildTimeConfig> getServiceConfigs();
+    public record ServiceConfig(GlobalDevServicesBuildTimeConfig globalConfig,
+            AwsStackDevServicesBuildTimeConfig stackConfig,
+            Map<String, Set<DevServicesBuildTimeConfig>> serviceConfigs) {
     }
 }

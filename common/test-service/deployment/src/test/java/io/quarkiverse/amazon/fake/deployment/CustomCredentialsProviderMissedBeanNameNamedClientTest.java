@@ -25,7 +25,7 @@ public class CustomCredentialsProviderMissedBeanNameNamedClientTest {
             .setForcedDependencies(SdkHttpClients.of(URL_CONNECTION))
             .withApplicationRoot((jar) -> jar.addClass(SdkHttpClients.class))
             .assertException(throwable -> assertEquals(
-                    "quarkus.fake-service.custom.aws.credentials.custom-provider.name cannot be empty if CUSTOM credentials provider used.",
+                    "quarkus.fake-service.\"custom\".aws.credentials.custom-provider.name cannot be empty if CUSTOM credentials provider used.",
                     throwable.getMessage()))
             .overrideConfigKey("quarkus.devservices.enabled", "false")
             .overrideConfigKey("quarkus.fake-service.aws.region", "us-east-2")

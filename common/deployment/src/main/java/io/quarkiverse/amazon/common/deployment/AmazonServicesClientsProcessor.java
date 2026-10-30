@@ -53,6 +53,7 @@ public class AmazonServicesClientsProcessor {
 
     @BuildStep
     void setupInterceptors(List<AmazonClientInterceptorsPathBuildItem> interceptors,
+            List<AmazonClientExtensionBuildItem> extensions,
             BuildProducer<NativeImageResourceBuildItem> resource,
             CombinedIndexBuildItem combinedIndexBuildItem,
             List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
@@ -83,7 +84,7 @@ public class AmazonServicesClientsProcessor {
                         throw new ConfigurationException(
                                 String.format(
                                         "quarkus.%s.interceptors (%s) - must list only existing implementations of software.amazon.awssdk.core.interceptor.ExecutionInterceptor",
-                                        client.getAwsClientName(),
+                                        configurationPrefix(client.getAwsClientName(), extensions),
                                         clientSdkConfig.interceptors().toString()));
                     }
                 });
@@ -114,6 +115,7 @@ public class AmazonServicesClientsProcessor {
 
     @BuildStep
     void setupTelemetry(List<RequireAmazonTelemetryBuildItem> items,
+            List<AmazonClientExtensionBuildItem> extensions,
             Capabilities capabilities,
             BuildProducer<AdditionalBeanBuildItem> additionalBuildItem) {
         if (items.isEmpty())
@@ -121,11 +123,19 @@ public class AmazonServicesClientsProcessor {
 
         if (!capabilities.isPresent(Capability.OPENTELEMETRY_TRACER)) {
             throw new DeploymentException(
-                    "Telemetry enabled for " + String.join(", ", items.stream().map(item -> item.getConfigName()).toList())
+                    "Telemetry enabled for " + String.join(", ", items.stream()
+                            .map(item -> "quarkus." + configurationPrefix(item.getConfigName(), extensions)
+                                    + ".telemetry.enabled")
+                            .distinct().toList())
                             + " but 'io.quarkus:quarkus-opentelemetry' dependency is missing on the classpath");
         }
 
         additionalBuildItem.produce(AdditionalBeanBuildItem.unremovableOf(AwsSdkTelemetryProducer.class));
+    }
+
+    private static String configurationPrefix(String service, List<AmazonClientExtensionBuildItem> extensions) {
+        return extensions.stream().filter(extension -> extension.getConfigName().equals(service))
+                .map(AmazonClientExtensionBuildItem::getConfigPrefix).findFirst().orElse(service);
     }
 
     @BuildStep

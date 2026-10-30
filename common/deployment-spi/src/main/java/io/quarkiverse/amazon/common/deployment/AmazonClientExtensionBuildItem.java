@@ -68,6 +68,10 @@ public final class AmazonClientExtensionBuildItem extends MultiBuildItem {
         return configName;
     }
 
+    public String getConfigPrefix() {
+        return hasSdkBuildTimeConfig.configPrefix(configName);
+    }
+
     public String getAmazonServiceClientName() {
         return amazonServiceClientName;
     }

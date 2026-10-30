@@ -10,8 +10,14 @@ import io.quarkiverse.amazon.common.runtime.AmazonClientRecorder;
 import io.quarkiverse.amazon.common.runtime.HasSdkBuildTimeConfig;
 import io.quarkiverse.amazon.common.runtime.HasTransportBuildTimeConfig;
 import io.quarkus.deployment.annotations.BuildProducer;
+import io.quarkus.deployment.annotations.BuildStep;
 
 abstract public class AbstractAmazonServiceProcessor {
+
+    @BuildStep
+    public AmazonClientOwnershipBuildItem clientOwnership() {
+        return new AmazonClientOwnershipBuildItem(syncClientName(), asyncClientName());
+    }
 
     abstract protected String amazonServiceClientName();
 

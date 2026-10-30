@@ -2,12 +2,15 @@ package io.quarkiverse.amazon.fake.deployment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Set;
+
 import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import io.quarkus.maven.dependency.ArtifactKey;
 import io.quarkus.test.QuarkusExtensionTest;
 import software.amazon.awssdk.services.fake.FakeAsyncClient;
 
@@ -21,6 +24,7 @@ public class MissingNettyClientTest {
 
     @RegisterExtension
     static final QuarkusExtensionTest config = new QuarkusExtensionTest()
+            .setExcludedDependencies(Set.of(ArtifactKey.of("software.amazon.awssdk", "netty-nio-client")))
             .setForcedDependencies(SdkHttpClients.of())
             .withApplicationRoot((jar) -> jar.addClass(SdkHttpClients.class))
             .assertException(throwable -> assertEquals(
