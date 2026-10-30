@@ -15,6 +15,31 @@
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-common-deployment</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-junit-internal</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
             <artifactId>quarkus-core</artifactId>
         </dependency>
         <dependency>
@@ -92,6 +117,8 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
+                    <!-- Test build steps are registered explicitly, not as part of the runtime extension. -->
+                    <testCompilerArgument>-proc:none</testCompilerArgument>
                     <compilerArgs>
                         <!-- the test service is not documented -->
                         <arg>-AgenerateDoc=false</arg>
@@ -111,6 +138,7 @@
                 <version>${maven.jar.plugin.version}</version>
                 <executions>
                     <execution>
+                        <phase>process-test-classes</phase>
                         <goals>
                             <goal>test-jar</goal>
                         </goals>

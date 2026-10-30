@@ -31,8 +31,8 @@ public enum AwsCredentialsProviderType {
             if (!config.staticProvider().accessKeyId().isPresent()
                     || !config.staticProvider().secretAccessKey().isPresent()) {
                 throw new RuntimeConfigurationError(
-                        String.format("%1$s.aws.credentials.static-provider.access-key-id and "
-                                + "%1$s.aws.credentials.static-provider.secret-access-key cannot be empty if STATIC credentials provider used.",
+                        String.format("%1$s.credentials.static-provider.access-key-id and "
+                                + "%1$s.credentials.static-provider.secret-access-key cannot be empty if STATIC credentials provider used.",
                                 configKeyRoot));
             }
             var accessKeyId = config.staticProvider().accessKeyId().get();
@@ -86,7 +86,7 @@ public enum AwsCredentialsProviderType {
             if (!config.processProvider().command().isPresent()) {
                 throw new RuntimeConfigurationError(
                         String.format(
-                                "%s.aws.credentials.process-provider.command cannot be empty if PROCESS credentials provider used.",
+                                "%s.credentials.process-provider.command cannot be empty if PROCESS credentials provider used.",
                                 configKeyRoot));
             }
             ProcessCredentialsProvider.Builder builder = ProcessCredentialsProvider.builder()
@@ -104,12 +104,12 @@ public enum AwsCredentialsProviderType {
         public AwsCredentialsProvider create(AwsCredentialsProviderConfig config, String configKeyRoot) {
             String beanName = config.customProvider().name().orElseThrow(() -> new RuntimeConfigurationError(
                     String.format(
-                            "%s.aws.credentials.custom-provider.name cannot be empty if CUSTOM credentials provider used.",
+                            "%s.credentials.custom-provider.name cannot be empty if CUSTOM credentials provider used.",
                             configKeyRoot)));
             AwsCredentialsProvider credentialsProvider = (AwsCredentialsProvider) Arc.container().instance(beanName).get();
             if (credentialsProvider == null) {
                 throw new RuntimeConfigurationError(
-                        String.format("cannot find bean '%s' specified in %s.aws.credentials.custom-provider.name", beanName,
+                        String.format("cannot find bean '%s' specified in %s.credentials.custom-provider.name", beanName,
                                 configKeyRoot));
             }
             return credentialsProvider;
@@ -122,5 +122,6 @@ public enum AwsCredentialsProviderType {
         }
     };
 
+    /** Creates the provider; configKeyRoot is the full AWS group prefix, for example quarkus.s3.aws. */
     public abstract AwsCredentialsProvider create(AwsCredentialsProviderConfig config, String configKeyRoot);
 }

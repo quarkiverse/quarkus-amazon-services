@@ -14,6 +14,16 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-sdk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-sdk-deployment</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- AWS SDK dependencies, imported as a BOM -->
             <dependency>
                 <groupId>software.amazon.awssdk</groupId>

@@ -8,6 +8,11 @@ import software.amazon.awssdk.regions.Region;
 @ConfigGroup
 public interface AwsConfig {
 
+    /** Prefix of this AWS configuration group, used in credentials diagnostics. */
+    default String configPrefix(String clientPrefix) {
+        return clientPrefix + ".aws";
+    }
+
     // @formatter:off
     /**
      * An Amazon Web Services region that hosts the given service.

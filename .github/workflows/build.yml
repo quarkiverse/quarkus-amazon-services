@@ -31,6 +31,7 @@ jobs:
         include:
           - sync-client-type: "url"
             async-client-type: "netty"
+            full-tests: "true"
           - sync-client-type: "apache"
             async-client-type: "netty"
           - sync-client-type: "apache5"
@@ -47,4 +48,9 @@ jobs:
           java-version: 21
           cache: maven
       - name: Build with Maven
-        run: ./mvnw -B formatter:validate verify --file pom.xml -Dnative -Dsync-client-type=${{ matrix.sync-client-type }} -Dasync-client-type=${{ matrix.async-client-type }}
+        run: >-
+          ./mvnw -B formatter:validate verify --file pom.xml -Dnative
+          -Dsync-client-type=${{ matrix.sync-client-type }}
+          -Dasync-client-type=${{ matrix.async-client-type }}
+          -DskipNonMatrixTests=${{ matrix.full-tests != 'true' }}
+          -Dtest.aws.devservices.container=${{ matrix.full-tests || 'false' }}

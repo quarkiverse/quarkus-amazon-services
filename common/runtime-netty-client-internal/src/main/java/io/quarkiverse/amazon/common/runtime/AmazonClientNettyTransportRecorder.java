@@ -133,12 +133,12 @@ public class AmazonClientNettyTransportRecorder extends AbstractAmazonClientTran
 
         if (config.http2().maxStreams().isPresent() && config.http2().maxStreams().get() <= 0) {
             throw new RuntimeConfigurationError(
-                    String.format("quarkus.%s.async-client.http2().max-streams may not be negative.", extension));
+                    String.format("quarkus.%s.async-client.http2.max-streams may not be negative.", extension));
         }
 
         if (config.http2().initialWindowSize().isPresent() && config.http2().initialWindowSize().getAsInt() <= 0) {
             throw new RuntimeConfigurationError(
-                    String.format("quarkus.%s.async-client.http2().initial-window-size may not be negative.", extension));
+                    String.format("quarkus.%s.async-client.http2.initial-window-size may not be negative.", extension));
         }
 
         if (config.maxPendingConnectionAcquires() <= 0) {

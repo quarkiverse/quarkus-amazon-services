@@ -1,0 +1,9 @@
+name: "Amazon SDK"
+description: "Generic integration for AWS SDK v2 clients"
+metadata:
+  keywords:
+    - aws
+    - amazon
+  categories:
+    - cloud
+  status: "experimental"

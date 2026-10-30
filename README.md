@@ -52,6 +52,8 @@ This set of extensions allows you to interact with some of the AWS Services name
 * Textract
 * Transfer
 
+If a service does not yet have a dedicated extension, use the [generic AWS SDK integration](docs/modules/ROOT/pages/amazon-sdk.adoc).
+
 Each extension provides configuration properties to configure the clients and wires everything via CDI injection. It allows to use all the HTTP client implementations available in the AWS SDK for Java 2.x :
 
 * URL Connection HTTP client (default for synchronous call)

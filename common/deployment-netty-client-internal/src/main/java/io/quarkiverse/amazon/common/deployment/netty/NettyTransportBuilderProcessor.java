@@ -37,6 +37,7 @@ public class NettyTransportBuilderProcessor {
         boolean netty42 = isNetty42();
         extensions.forEach(extension -> createNettyAsyncTransportBuilder(
                 extension.getConfigName(),
+                extension.getConfigPrefix(),
                 amazonClients,
                 transportRecorder,
                 extension.getBuildAsyncConfig(),
@@ -62,7 +63,8 @@ public class NettyTransportBuilderProcessor {
         return version.artifactVersion().startsWith("4.2");
     }
 
-    void createNettyAsyncTransportBuilder(String configName, List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
+    void createNettyAsyncTransportBuilder(String configName, String configPrefix,
+            List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientNettyTransportRecorder recorder,
             AsyncHttpClientBuildTimeConfig buildAsyncConfig,
             RuntimeValue<AsyncHttpClientConfig> asyncConfig,
@@ -87,8 +89,8 @@ public class NettyTransportBuilderProcessor {
                     new AmazonClientAsyncTransportBuildItem(
                             client.getAwsClientName(),
                             client.getAsyncClassName().get(),
-                            recorder.configureNettyAsync(recorder.configureAsync(configName, asyncConfig),
-                                    configName,
+                            recorder.configureNettyAsync(recorder.configureAsync(configPrefix, asyncConfig),
+                                    configPrefix,
                                     eventLoopSupplier,
                                     asyncConfig,
                                     isNetty42,

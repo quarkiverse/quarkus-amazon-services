@@ -7,8 +7,8 @@ import io.quarkus.maven.dependency.Dependency;
 import software.amazon.awssdk.core.util.VersionInfo;
 
 /**
- * No HTTP client of the SDK is on the test classpath: each test adds the ones it needs to its application,
- * so that the extension only sees those.
+ * Selects HTTP dependencies for extension fixtures. Missing-dependency tests also exclude the transports
+ * declared at test scope for the real dev-mode reload fixture.
  */
 public final class SdkHttpClients {
 

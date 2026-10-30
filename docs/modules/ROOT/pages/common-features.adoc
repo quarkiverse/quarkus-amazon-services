@@ -18,14 +18,32 @@ public class DynamoDbEnhancedClientTest {
 
 ----
 
-Named clients inherit the configuration of the unamed client but you can override them.
+With a dedicated extension, named clients inherit the configuration of the unnamed client, and you can override it:
 
 [source,properties]
 ----
-quarkus.dynamodb.custom.aws.credentials.type=static
-quarkus.dynamodb.custom.aws.credentials.static-provider.access-key-id=xxx
-quarkus.dynamodb.custom.aws.credentials.static-provider.secret-access-key=yyy
+quarkus.dynamodb."custom".aws.credentials.type=static
+quarkus.dynamodb."custom".aws.credentials.static-provider.access-key-id=xxx
+quarkus.dynamodb."custom".aws.credentials.static-provider.secret-access-key=yyy
 ----
+
+For clients managed by the xref:amazon-sdk.adoc[generic AWS SDK extension], use `quarkus.aws."client-name"` instead:
+
+[source,properties]
+----
+quarkus.aws.region=eu-west-1
+quarkus.aws.api-call-timeout=10s
+quarkus.aws."custom".region=us-west-2
+quarkus.aws."custom".credentials.type=static
+quarkus.aws."custom".credentials.static-provider.access-key-id=xxx
+quarkus.aws."custom".credentials.static-provider.secret-access-key=yyy
+----
+
+Here, the `custom` client uses `us-west-2` and inherits the shared 10-second timeout from `quarkus.aws`.
+A generic client name applies across services: clients injected with the same name use the same configuration.
+Use different names when they need different settings.
+Named generic clients also support xref:dev-services.adoc#generic-aws-sdk[different Dev Services providers]
+through `quarkus.aws."client-name".devservices.provider`, inheriting the global provider when unset.
 
 == Synthetic bean injection
 
@@ -289,4 +307,3 @@ Since AWS CRT version 0.31.0, native library must be embedded in the docker imag
 # Shared objects to be dynamically loaded at runtime as needed,
 COPY --chown=1001:root target/*.properties target/*.so /work/
 ----
-

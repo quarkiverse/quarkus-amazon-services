@@ -18,6 +18,7 @@
     <module>codegen</module>
     <module>codegen-maven-plugin</module>
     <module>common</module>
+    <module>sdk</module>
     <module>crt</module>    
     <module>dynamodb-enhanced</module>
     <module>s3-transfer-manager</module>
@@ -40,6 +41,10 @@
     <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <skipTests>false</skipTests>
+    <!-- Only secondary CI matrix jobs skip suites whose transport is fixed by their fixtures. -->
+    <skipNonMatrixTests>${skipTests}</skipNonMatrixTests>
+    <test.aws.devservices.container>true</test.aws.devservices.container>
     <!-- https://github.com/quarkusio/quarkus/releases -->
     <quarkus.version>4.0.0.Beta1</quarkus.version>
 
@@ -60,6 +65,15 @@
   <build>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <configuration>
+            <skipTests>${skipNonMatrixTests}</skipTests>
+            <systemPropertyVariables>
+              <test.aws.devservices.container>${test.aws.devservices.container}</test.aws.devservices.container>
+            </systemPropertyVariables>
+          </configuration>
+        </plugin>
         <plugin>
           <groupId>io.quarkus</groupId>
           <artifactId>quarkus-maven-plugin</artifactId>

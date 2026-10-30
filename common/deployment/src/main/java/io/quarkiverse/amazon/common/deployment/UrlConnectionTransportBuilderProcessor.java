@@ -26,6 +26,7 @@ public class UrlConnectionTransportBuilderProcessor {
 
         extensions.forEach(extension -> createUrlConnectionSyncTransportBuilder(
                 extension.getConfigName(),
+                extension.getConfigPrefix(),
                 amazonClients,
                 transportRecorder,
                 extension.getBuildSyncConfig(),
@@ -33,7 +34,7 @@ public class UrlConnectionTransportBuilderProcessor {
                 syncTransports));
     }
 
-    void createUrlConnectionSyncTransportBuilder(String configName,
+    void createUrlConnectionSyncTransportBuilder(String configName, String configPrefix,
             List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
             AmazonClientUrlConnectionTransportRecorder recorder,
             SyncHttpClientBuildTimeConfig buildSyncConfig,
@@ -56,7 +57,7 @@ public class UrlConnectionTransportBuilderProcessor {
                     new AmazonClientSyncTransportBuildItem(
                             client.getAwsClientName(),
                             client.getSyncClassName().get(),
-                            recorder.configureSync(configName, syncConfig)));
+                            recorder.configureSync(configPrefix, syncConfig)));
         });
     }
 }

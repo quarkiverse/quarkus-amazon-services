@@ -29,6 +29,24 @@ quarkus.cognito-user-pools.devservices.provider=moto
 quarkus.s3.devservices.provider=floci
 ----
 
+[[generic-aws-sdk]]
+== Generic AWS SDK clients
+
+The xref:amazon-sdk.adoc[generic AWS SDK extension] uses the same stack providers and global `quarkus.aws.devservices` settings described in this guide.
+Generic clients inherit the global stack provider. A named client can select another provider with `quarkus.aws."client-name".devservices.provider`.
+Each selected stack starts automatically; clients selecting the same provider share its container settings under `quarkus.aws.devservices.<provider>`.
+
+[source,properties]
+----
+# Default clients use Floci.
+quarkus.aws.devservices.provider=floci
+# Clients injected with @AmazonClient("other") use MiniStack.
+quarkus.aws."other".devservices.provider=ministack
+----
+
+Use different client names when services require different stacks.
+The same name selects the same provider across services; there is no per-service override for generic clients.
+
 == Enabling / Disabling Dev Services for Amazon Services
 
 Dev Services for Amazon Services is automatically enabled for each extensions added to `pom.xml` except in the following situations:
@@ -41,6 +59,34 @@ Dev Services for Amazon Services is automatically enabled for each extensions ad
 Every extension provides a Dev Service, including for services that none of the supported stack providers emulates.
 As explained in the WARNING above, Dev Services starts the container without checking that the selected stack actually emulates the service.
 If none of the supported stacks does, disable Dev Services for the service with `quarkus.<service>.devservices.enabled=false` and use your AWS account or set the `endpoint-override`.
+
+== Configuration precedence and credentials
+
+This applies to both dedicated extensions and the generic AWS SDK extension.
+Dev Services supplies connection defaults, not mandatory overrides: explicit properties in `application.properties`,
+environment variables or JVM system properties take precedence over the values supplied by Dev Services.
+
+[WARNING]
+====
+Removing only `endpoint-override` while leaving production credentials or a profile provider configured can send those
+credentials to the local stack, fail to resolve credentials, or cause authentication/account errors with the selected provider.
+====
+
+If you want to keep these settings in `application.properties`, scope them to the production profile
+so that production credentials are not active in dev or test mode:
+
+[source,properties]
+----
+# Dedicated extension
+%prod.quarkus.sesv2.aws.region=eu-west-1
+%prod.quarkus.sesv2.aws.credentials.type=profile
+%prod.quarkus.sesv2.aws.credentials.profile-provider.profile-name=production
+
+# Generic extension (alternative to the dedicated configuration above)
+%prod.quarkus.aws.region=eu-west-1
+%prod.quarkus.aws.credentials.type=profile
+%prod.quarkus.aws.credentials.profile-provider.profile-name=production
+----
 
 == Shared services
 

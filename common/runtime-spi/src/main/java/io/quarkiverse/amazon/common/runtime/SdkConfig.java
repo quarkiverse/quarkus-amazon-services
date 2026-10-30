@@ -14,6 +14,11 @@ import io.smallrye.config.WithConverter;
  */
 @ConfigGroup
 public interface SdkConfig {
+    /** Source of the endpoint setting, used in configuration diagnostics. */
+    default String endpointOverrideConfigPrefix(String clientPrefix) {
+        return clientPrefix;
+    }
+
     /**
      * The endpoint URI with which the SDK should communicate.
      * <p>
