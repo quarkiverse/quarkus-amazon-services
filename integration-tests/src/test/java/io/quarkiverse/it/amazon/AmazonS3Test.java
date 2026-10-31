@@ -31,8 +31,19 @@ public class AmazonS3Test {
     }
 
     @Test
+    public void testS3AsyncVertxContext() {
+        RestAssured.when().get("/test/s3/async-context").then().body(is("sample S3 object"));
+    }
+
+    @Test
     public void testS3CrtAsync() {
         RestAssured.when().get("/test/s3/crt-async").then().body(anyOf(is("sample S3 object"),
+                is("No bean found for required type [interface software.amazon.awssdk.services.s3.S3AsyncClient] and qualifiers [[@io.quarkiverse.amazon.s3.runtime.S3Crt()]]")));
+    }
+
+    @Test
+    public void testS3CrtAsyncVertxContext() {
+        RestAssured.when().get("/test/s3/crt-async-context").then().body(anyOf(is("sample S3 object"),
                 is("No bean found for required type [interface software.amazon.awssdk.services.s3.S3AsyncClient] and qualifiers [[@io.quarkiverse.amazon.s3.runtime.S3Crt()]]")));
     }
 

@@ -1132,7 +1132,7 @@ endif::add-copy-button-to-config-props[]
 --
 Whether the default thread pool should be used to complete the futures returned from the HTTP client request.
 
-When disabled, futures will be completed on the Netty event loop thread.
+When disabled, HTTP attempt completion is not offloaded to the Quarkus worker pool. Vert.x context propagation, when applicable, independently dispatches the final result to a Vert.x event loop.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -1140,6 +1140,33 @@ Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_ASYNC_CLIENT_ADVAN
 endif::add-copy-button-to-env-var[]
 ifndef::add-copy-button-to-env-var[]
 Environment variable: `+++QUARKUS_AWS_ASYNC_CLIENT_ADVANCED_USE_FUTURE_COMPLETION_THREAD_POOL+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++true+++`
+
+a| [[quarkus-amazon-sdk_quarkus-aws-async-client-advanced-vertx-context-propagation]] [.property-path]##link:#quarkus-amazon-sdk_quarkus-aws-async-client-advanced-vertx-context-propagation[`+++quarkus.aws.async-client.advanced.vertx-context-propagation+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.aws.async-client.advanced.vertx-context-propagation+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Whether the final results of async calls made from a Vert.x event loop are delivered on the caller's context.
+
+When enabled, a call made from a Vert.x event loop is completed on the caller's context. Calls made from workers (including `@Blocking` endpoints), virtual threads or other threads keep the SDK's completion behavior, as configured by `use-future-completion-thread-pool`.
+
+When disabled, the SDK completion behavior is kept, including the `use-future-completion-thread-pool` setting.
+
+This only applies when the Quarkus Vert.x extension is present.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_AWS_ASYNC_CLIENT_ADVANCED_VERTX_CONTEXT_PROPAGATION+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_AWS_ASYNC_CLIENT_ADVANCED_VERTX_CONTEXT_PROPAGATION+++`
 endif::add-copy-button-to-env-var[]
 --
 |boolean
