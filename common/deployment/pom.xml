@@ -40,7 +40,12 @@
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
-            <artifactId>quarkus-amazon-crt-client-internal-deployment</artifactId> 
+            <artifactId>quarkus-amazon-crt-client-internal-deployment</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-vertx-deployment</artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -68,6 +73,11 @@
 
         
         <!-- Test dependencies -->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit-internal</artifactId>

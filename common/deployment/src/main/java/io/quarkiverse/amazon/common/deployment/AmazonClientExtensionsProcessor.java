@@ -221,7 +221,9 @@ public class AmazonClientExtensionsProcessor {
             BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
             BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
             LaunchModeBuildItem launchModeBuildItem,
-            ExecutorBuildItem executorBuildItem) {
+            ExecutorBuildItem executorBuildItem,
+            Capabilities capabilities) {
+        boolean vertxPresent = capabilities.isPresent(Capability.VERTX);
         amazonExtensions.forEach(extension -> createClientBuilders(
                 extension,
                 builderInstances,
@@ -236,7 +238,8 @@ public class AmazonClientExtensionsProcessor {
                 clientSync,
                 clientAsync,
                 launchModeBuildItem,
-                executorBuildItem));
+                executorBuildItem,
+                vertxPresent));
     }
 
     protected void createClientBuilders(
@@ -253,7 +256,8 @@ public class AmazonClientExtensionsProcessor {
             BuildProducer<AmazonClientSyncResultBuildItem> clientSync,
             BuildProducer<AmazonClientAsyncResultBuildItem> clientAsync,
             LaunchModeBuildItem launchModeBuildItem,
-            ExecutorBuildItem executorBuildItem) {
+            ExecutorBuildItem executorBuildItem,
+            boolean vertxPresent) {
 
         createClientBuilders(
                 extension.getConfigName(),
@@ -271,8 +275,14 @@ public class AmazonClientExtensionsProcessor {
                 (syncBuilder, syncTransport) -> builderRecorder.createSyncBuilder(syncBuilder, syncTransport),
                 extension.getAsyncClientName(),
                 extension.getAsyncClientBuilderClass(),
-                (asyncBuilder, asyncTransport) -> builderRecorder.createAsyncBuilder(asyncBuilder, asyncTransport,
-                        executorBuildItem.getExecutorProxy(), extension.getAsyncConfig()),
+                (asyncBuilder, asyncTransport) -> {
+                    RuntimeValue<AwsClientBuilder> builder = builderRecorder.createAsyncBuilder(asyncBuilder, asyncTransport,
+                            executorBuildItem.getExecutorProxy(), extension.getAsyncConfig());
+                    if (vertxPresent) {
+                        builderRecorder.propagateVertxContext(builder, extension.getAsyncConfig());
+                    }
+                    return builder;
+                },
                 extension.getPresignerClientName(),
                 extension.getPresignerBuilderClass(),
                 clientBuilders,

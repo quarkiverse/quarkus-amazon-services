@@ -17,62 +17,39 @@ public class AmazonClientBuilderRecorder {
 
     public RuntimeValue<AwsClientBuilder> createSyncBuilder(RuntimeValue<AwsSyncClientBuilder<?, ?>> builder,
             RuntimeValue<SdkHttpClient.Builder> transport) {
+        AwsSyncClientBuilder<?, ?> sdkBuilder = builder.getValue();
         if (transport != null) {
-            builder.getValue().httpClientBuilder(transport.getValue());
+            sdkBuilder.httpClientBuilder(transport.getValue());
         }
-        return new RuntimeValue<>((AwsClientBuilder) builder.getValue());
+        return new RuntimeValue<>((AwsClientBuilder) sdkBuilder);
     }
 
     public RuntimeValue<AwsClientBuilder> createAsyncBuilder(RuntimeValue<AwsAsyncClientBuilder<?, ?>> builder,
             RuntimeValue<SdkAsyncHttpClient.Builder> transport,
             Executor executor, RuntimeValue<AsyncHttpClientConfig> config) {
+        AwsAsyncClientBuilder<?, ?> sdkBuilder = builder.getValue();
         if (transport != null) {
-            builder.getValue().httpClientBuilder(transport.getValue());
+            sdkBuilder.httpClientBuilder(transport.getValue());
         }
 
-        Executor configExecutor;
-
-        if (!config.getValue().advanced().useFutureCompletionThreadPool()) {
-            configExecutor = Runnable::run;
-        } else {
-            configExecutor = executor;
-        }
-
-        final Executor futureCompletionExecutor = new ClassLoaderExecutorWrapper(configExecutor);
-
-        builder.getValue().asyncConfiguration(asyncConfigBuilder -> asyncConfigBuilder
+        Executor futureCompletionExecutor = AsyncClientCompletion.futureCompletionExecutor(config.getValue(), executor);
+        sdkBuilder.asyncConfiguration(asyncConfigBuilder -> asyncConfigBuilder
                 .advancedOption(SdkAdvancedAsyncClientOption.FUTURE_COMPLETION_EXECUTOR, futureCompletionExecutor));
 
-        return new RuntimeValue<>((AwsClientBuilder) builder.getValue());
+        return new RuntimeValue<>((AwsClientBuilder) sdkBuilder);
+    }
+
+    /**
+     * Only recorded when the Vert.x extension is present, see {@link AsyncClientCompletion}.
+     */
+    public void propagateVertxContext(RuntimeValue<AwsClientBuilder> builder, RuntimeValue<AsyncHttpClientConfig> config) {
+        if (config.getValue().advanced().vertxContextPropagation()) {
+            // A plugin, unlike the override configuration, survives the application replacing the configuration
+            builder.getValue().addPlugin(new VertxContextPropagationPlugin(new VertxContextCapturingInterceptor(true)));
+        }
     }
 
     public RuntimeValue<SdkPresigner.Builder> createPresignerBuilder() {
         throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Capture the current ClassLoader and restore it to support dev and test mode, and threads without context ClassLoader
-     * such as the AWS CRT event loop threads
-     */
-    private static final class ClassLoaderExecutorWrapper implements Executor {
-
-        private Executor executor;
-        private ClassLoader contextClassLoader;
-
-        private ClassLoaderExecutorWrapper(Executor executor) {
-            this.executor = executor;
-            this.contextClassLoader = Thread.currentThread().getContextClassLoader();
-        }
-
-        @Override
-        public void execute(Runnable command) {
-            final ClassLoader old = Thread.currentThread().getContextClassLoader();
-            try {
-                Thread.currentThread().setContextClassLoader(contextClassLoader);
-                executor.execute(command);
-            } finally {
-                Thread.currentThread().setContextClassLoader(old);
-            }
-        }
     }
 }

@@ -49,6 +49,11 @@
             <artifactId>netty-nio-client</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-vertx-deployment</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- Imported manually because conditional dependencies
          are not automatically added to test scope -->
         <dependency>

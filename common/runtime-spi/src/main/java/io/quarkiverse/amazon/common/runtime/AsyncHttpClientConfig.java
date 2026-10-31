@@ -251,10 +251,25 @@ public interface AsyncHttpClientConfig {
          * Whether the default thread pool should be used to complete the futures
          * returned from the HTTP client request.
          * <p>
-         * When disabled, futures will be completed on the Netty event loop thread.
+         * When disabled, HTTP attempt completion is not offloaded to the Quarkus worker pool.
+         * Vert.x context propagation, when applicable, independently dispatches the final result to a Vert.x event loop.
          */
         @WithDefault("true")
         boolean useFutureCompletionThreadPool();
+
+        /**
+         * Whether the final results of async calls made from a Vert.x event loop are delivered on the caller's context.
+         * <p>
+         * When enabled, a call made from a Vert.x event loop is completed on the caller's context.
+         * Calls made from workers (including `@Blocking` endpoints), virtual threads or other threads keep the SDK's
+         * completion behavior, as configured by `use-future-completion-thread-pool`.
+         * <p>
+         * When disabled, the SDK completion behavior is kept, including the `use-future-completion-thread-pool` setting.
+         * <p>
+         * This only applies when the Quarkus Vert.x extension is present.
+         */
+        @WithDefault("true")
+        boolean vertxContextPropagation();
     }
 
     // TODO: additionalChannelOptions

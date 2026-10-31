@@ -201,8 +201,9 @@ public class DynamodbProducer {
     @Produces
     @ApplicationScoped
     public DynamoDbClient createDynamoDbClient(DynamoDbClientBuilder builder) {
-        builder.overrideConfiguration(
-                c -> c.addExecutionInterceptor(EXECUTION_INTERCEPTOR));
+        builder.overrideConfiguration(builder.overrideConfiguration().toBuilder()
+                .addExecutionInterceptor(EXECUTION_INTERCEPTOR)
+                .build());
 
         return builder.build();
     }
@@ -210,13 +211,131 @@ public class DynamodbProducer {
     @Produces
     @ApplicationScoped
     public DynamoDbAsyncClient createDynamoDbClient(DynamoDbAsyncClientBuilder builder) {
-        builder.overrideConfiguration(
-                c -> c.addExecutionInterceptor(EXECUTION_INTERCEPTOR));
+        builder.overrideConfiguration(builder.overrideConfiguration().toBuilder()
+                .addExecutionInterceptor(EXECUTION_INTERCEPTOR)
+                .build());
 
         return builder.build();
     }
 }
 ----
+
+NOTE: `overrideConfiguration(...)` and `asyncConfiguration(...)` replace the whole configuration object set on the builder.
+Extend the configuration of the extension with `builder.overrideConfiguration().toBuilder()`, as above, rather than replacing it.
+xref:#vertx-context-propagation[Vert.x context propagation] is kept either way, but replacing `asyncConfiguration` drops the
+configured completion executor.
+
+[[vertx-context-propagation]]
+== Vert.x context propagation
+
+NOTE: This feature is experimental. Please share your feedback on its behavior and compatibility with your applications.
+
+Without context propagation, the AWS SDK normally completes async results on the Quarkus worker pool, or the Netty/CRT event loop
+when `quarkus.<service>.async-client.advanced.use-future-completion-thread-pool` is `false`.
+These threads do not carry the Vert.x context of the caller. Libraries that rely on it, such as Hibernate Reactive, then fail with
+`No current Vertx context found`.
+
+When the Quarkus Vert.x extension is present (e.g. with Quarkus REST or Hibernate Reactive), calls started on an event loop
+complete on that same context by default. There is nothing to capture or switch manually:
+
+[source,java]
+----
+import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
+
+@Inject
+DynamoDbAsyncClient dynamoDb;
+
+@WithTransaction
+public Uni<Fruit> importFruit(String name) {
+    return Uni.createFrom().completionStage(() -> dynamoDb.getItem(request(name)))
+            // runs on the caller's Vert.x context, so the Hibernate Reactive session is available
+            .map(item -> toFruit(item))
+            .call(fruit -> fruit.persist());
+}
+----
+
+This example assumes that `Fruit` extends `io.quarkus.hibernate.reactive.panache.PanacheEntity`.
+`@WithTransaction` provides the reactive transaction, and `call` waits for persistence while retaining the `Fruit` result.
+See the https://quarkus.io/guides/hibernate-reactive-panache#transactions[Hibernate Reactive with Panache guide].
+
+The behavior is controlled with `quarkus.<service>.async-client.advanced.vertx-context-propagation`.
+
+For clients managed by the generic `quarkus-amazon-sdk` extension, use
+`quarkus.aws.async-client.advanced.vertx-context-propagation`. This setting applies to all generic services and named clients.
+Dedicated service extensions keep their own service-specific setting, even when both extension types are installed.
+
+The setting is a boolean:
+
+[cols="1,3"]
+|===
+|Value |Behavior
+
+|`true` (default)
+|A call made from a Vert.x event loop is completed on the caller's context.
+Calls made from workers (including `executeBlocking`, worker verticles and `@Blocking` endpoints), virtual threads or other threads
+keep the SDK completion behavior. This avoids deadlocking workers that wait for the result.
+
+|`false`
+|Futures are completed on the SDK threads, as in previous versions.
+|===
+
+`vertx-context-propagation` and `use-future-completion-thread-pool` control different aspects of completion:
+
+* `use-future-completion-thread-pool=true` (default) processes HTTP attempt completion on the Quarkus worker pool;
+  `false` does not offload that processing, which normally runs on the HTTP client's I/O thread.
+* When propagation applies, the final result is then delivered on the selected Vert.x event loop, regardless of the pool setting.
+* With `false`, without Vert.x, or for a call that is not made from an event loop, there is no additional context switch.
+  The result follows the SDK completion path. Timeouts can complete on the SDK scheduler.
+* An executor supplied through `FUTURE_COMPLETION_EXECUTOR` replaces the extension's pool selection, but does not disable
+  the configured Vert.x propagation of the final result.
+* The dedicated S3 CRT client follows `quarkus.s3.async-client.advanced.use-future-completion-thread-pool` too: when it is `false`,
+  its futures are completed on the AWS CRT event loop threads, which must not be blocked.
+
+Context propagation applies to both Netty and AWS CRT HTTP transports and to the dedicated S3 CRT client.
+It also applies to the final futures of `putObject`, `getObject` and `copyObject` when Java multipart support is enabled with
+`multipartEnabled(true)` on the provided standard S3 builder, including upload-source failures before an HTTP request is sent.
+
+Only the result returned to the application is meant to be delivered on the Vert.x context. The requests the SDK makes on its own
+behalf while starting a multipart operation, or chains once a previous response completed, keep the SDK completion threads.
+Requests issued from an event loop by other means, e.g. the parts of an upload whose body is produced on an event loop, may
+still be dispatched to it.
+Applications without the Vert.x extension keep the existing executor behavior, as do synchronous clients.
+
+To restore the previous behavior, set the property to `false` for each service:
+
+[source,properties]
+----
+quarkus.dynamodb.async-client.advanced.vertx-context-propagation=false
+# All clients managed by the generic SDK extension
+quarkus.aws.async-client.advanced.vertx-context-propagation=false
+# Applies to both the standard S3 async client and the dedicated S3 CRT client
+quarkus.s3.async-client.advanced.vertx-context-propagation=false
+----
+
+Context propagation does not apply to:
+
+* execution interceptor hooks, including `afterExecution` and `onExecutionFailure`, which run before final-result delivery,
+* the callbacks of streaming operations (`AsyncRequestBody`, `AsyncResponseTransformer`), whose execution context is not guaranteed,
+* the requests the SDK sends from its own threads, so it is not guaranteed for the `Publisher` returned by paginators, the futures returned by
+`waiter()` and the futures returned by the S3 Transfer Manager,
+* the futures returned by the `presignedUrlExtension()` of an S3 client with multipart support, whose parts may be processed on an
+event loop,
+* async clients built without the builder provided by the extension.
+
+Context propagation relies on transforming a few internal AWS SDK classes at build time. If the AWS SDK version used by the
+application changed them, the build logs a warning and the SDK completion behavior is kept.
+
+When completing on an event loop, application continuations and metric publishers must not block.
+Context propagation is not guaranteed if the target Vert.x context can no longer accept tasks, for example during shutdown.
+A continuation registered after a
+`CompletableFuture` has completed may run on the registering thread; `*Async` continuations use their own executor.
+
+A future shared by several requests, e.g. a cached value loaded asynchronously, completes on the context of the request that
+started the call: the continuations other requests chain to it then run on that context. Chain from a call made by the current
+request instead, or switch back to its own context.
+
+WARNING: Never block an event loop thread waiting for an async client future (e.g. with `join()`): its completion is dispatched
+to that same event loop, which leads to a deadlock.
 
 == Custom AWS credentials provider
 

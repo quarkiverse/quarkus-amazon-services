@@ -3,10 +3,14 @@ package io.quarkiverse.amazon.s3.runtime;
 import java.util.concurrent.Executor;
 import java.util.function.Function;
 
+import org.jboss.logging.Logger;
+
 import io.quarkiverse.amazon.common.runtime.AmazonClientCommonRecorder;
+import io.quarkiverse.amazon.common.runtime.AsyncClientCompletion;
 import io.quarkiverse.amazon.common.runtime.AwsConfig;
 import io.quarkiverse.amazon.common.runtime.ClientUtil;
 import io.quarkiverse.amazon.common.runtime.SdkConfig;
+import io.quarkiverse.amazon.common.runtime.VertxContextCapturingInterceptor;
 import io.quarkus.arc.SyntheticCreationalContext;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;
@@ -15,6 +19,7 @@ import software.amazon.awssdk.services.s3.S3CrtAsyncClientBuilder;
 
 @Recorder
 public class S3CrtRecorder {
+    private static final Logger LOG = Logger.getLogger(S3CrtRecorder.class);
 
     final RuntimeValue<S3Config> config;
 
@@ -54,7 +59,26 @@ public class S3CrtRecorder {
 
     public RuntimeValue<S3CrtAsyncClientBuilder> setExecutor(RuntimeValue<S3CrtAsyncClientBuilder> builder,
             Executor executor) {
-        return new RuntimeValue<>(builder.getValue().futureCompletionExecutor(new S3CrtExecutorWrapper(executor)));
+        S3CrtAsyncClientBuilder sdkBuilder = builder.getValue();
+        sdkBuilder.futureCompletionExecutor(
+                AsyncClientCompletion.futureCompletionExecutor(config.getValue().asyncClient(), executor));
+        return new RuntimeValue<>(sdkBuilder);
+    }
+
+    /**
+     * Only recorded when the Vert.x extension is present, so that native applications without it do not reference its
+     * classes.
+     */
+    public void propagateVertxContext(RuntimeValue<S3CrtAsyncClientBuilder> builder) {
+        if (!config.getValue().asyncClient().advanced().vertxContextPropagation()) {
+            return;
+        }
+        if (builder.getValue() instanceof S3CrtContextAwareBuilder contextAwareBuilder) {
+            contextAwareBuilder.addContextInterceptor(new VertxContextCapturingInterceptor(true));
+        } else {
+            // The build-time transformation was skipped, see S3CrtContextPropagationProcessor
+            LOG.warn("Vert.x context propagation is not supported by the S3 CRT client of this AWS SDK version");
+        }
     }
 
     public Function<SyntheticCreationalContext<S3AsyncClient>, S3AsyncClient> getS3CrtAsyncClient() {
@@ -64,31 +88,5 @@ public class S3CrtRecorder {
                 return context.getInjectedReference(S3CrtAsyncClientBuilder.class).build();
             }
         };
-    }
-
-    /**
-     * Capture the current ClassLoader and restore it to support dev and test mode, and threads without context ClassLoader
-     * such as the AWS CRT event loop threads
-     */
-    private static final class S3CrtExecutorWrapper implements Executor {
-
-        private Executor executor;
-        private ClassLoader contextClassLoader;
-
-        private S3CrtExecutorWrapper(Executor executor) {
-            this.executor = executor;
-            this.contextClassLoader = Thread.currentThread().getContextClassLoader();
-        }
-
-        @Override
-        public void execute(Runnable command) {
-            final ClassLoader old = Thread.currentThread().getContextClassLoader();
-            try {
-                Thread.currentThread().setContextClassLoader(contextClassLoader);
-                executor.execute(command);
-            } finally {
-                Thread.currentThread().setContextClassLoader(old);
-            }
-        }
     }
 }
