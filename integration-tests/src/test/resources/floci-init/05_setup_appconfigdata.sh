@@ -25,7 +25,7 @@ CONFIGURATION_PROFILE_ID=$(aws appconfig create-configuration-profile \
     --query 'Id' \
     --output text)
 
-CONTENT=$(echo '{"application": "my-appconfigdata-application"}' | base64)
+CONTENT=$(echo '{"application": "my-appconfigdata-application", "host": "localhost", "port": "5432"}' | base64)
 
 # Create hosted configuration version
 VERSION_NUMBER=$(aws appconfig create-hosted-configuration-version \

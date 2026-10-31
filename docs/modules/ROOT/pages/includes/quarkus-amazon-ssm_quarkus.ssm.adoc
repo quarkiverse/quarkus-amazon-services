@@ -273,7 +273,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Interval in minutes between reloads after the initial fetch. Set to `0` to fetch only once at startup.
+Interval in minutes between reloads after the initial fetch. Set greater than `0` to enable polling.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -284,7 +284,7 @@ Environment variable: `+++QUARKUS_SSM_CONFIG_UPDATE_INTERVAL_MINUTES+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`+++5+++`
+|`+++0+++`
 
 h|[[quarkus-amazon-ssm_section_quarkus-ssm]] [.section-name.section-level0]##link:#quarkus-amazon-ssm_section_quarkus-ssm[AWS SDK client configurations]##
 h|Type
