@@ -1,5 +1,6 @@
 package io.quarkiverse.amazon.ssm.runtime;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,8 +49,17 @@ public interface SsmConfigConfig {
     boolean withDecryption();
 
     /**
-     * Interval in minutes between reloads after the initial fetch. Set to {@code 0} to fetch only once at startup.
+     * Interval in minutes between reloads after the initial fetch. Set greater than {@code 0} to enable polling.
      */
-    @WithDefault("5")
+    @Deprecated(forRemoval = true)
+    @WithDefault("0")
     int updateIntervalMinutes();
+
+    /**
+     * Interval between polling for configuration updates after the initial fetch.
+     * <p>
+     * Set to or greater than {@code PT1S} to enable periodic polling.
+     */
+    @WithDefault("PT0S")
+    Duration updateInterval();
 }

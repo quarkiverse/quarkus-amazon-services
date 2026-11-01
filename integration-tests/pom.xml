@@ -46,6 +46,10 @@
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-appconfig</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-appconfigdata</artifactId>
         </dependency>
         <dependency>

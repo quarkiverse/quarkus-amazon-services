@@ -265,7 +265,30 @@ endif::add-copy-button-to-env-var[]
 |int
 |
 
-a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-update-interval-minutes]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-update-interval-minutes[`+++quarkus.appconfigdata.config.update-interval-minutes+++`]##
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-update-interval]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-update-interval[`+++quarkus.appconfigdata.config.update-interval+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.update-interval+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Interval between polling for configuration updates after the initial fetch.
+
+Set to or greater than `PT1S` to enable periodic polling.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_UPDATE_INTERVAL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_UPDATE_INTERVAL+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-appconfigdata_quarkus-appconfigdata[icon:question-circle[title=More information about the Duration format]]
+|`+++PT0S+++`
+
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-update-interval-minutes]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-update-interval-minutes[[.line-through]#`+++quarkus.appconfigdata.config.update-interval-minutes+++`#]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.appconfigdata.config.update-interval-minutes+++[]
 endif::add-copy-button-to-config-props[]
@@ -273,9 +296,11 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
+_This property is deprecated._
+
 Interval in minutes between polling for configuration updates after the initial fetch.
 
-Set to `0` to disable periodic polling (only the initial load runs).
+Set greater than `0` to enable periodic polling.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -286,7 +311,7 @@ Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_UPDATE_INTERVAL_MINUTES++
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`+++5+++`
+|`+++0+++`
 
 h|[[quarkus-amazon-appconfigdata_section_quarkus-appconfigdata]] [.section-name.section-level0]##link:#quarkus-amazon-appconfigdata_section_quarkus-appconfigdata[AWS SDK client configurations]##
 h|Type

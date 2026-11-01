@@ -3,6 +3,7 @@ package io.quarkiverse.amazon.appconfigdata.runtime;
 import static software.amazon.awssdk.utils.StringUtils.isBlank;
 
 import java.io.StringReader;
+import java.time.Duration;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -78,12 +79,12 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
      * @param environmentIdentifier AppConfig environment id or name
      * @param configurationProfileIdentifier AppConfig configuration profile id or name
      * @param requiredMinimumPollIntervalInSeconds optional minimum poll interval for the session (AWS)
-     * @param updateIntervalMinutes minutes between polls after the initial load; {@code 0} disables polling
+     * @param updateInterval interval between polls after the initial load; Greater than {@code 0s} enables polling
      * @param ordinal MicroProfile config source ordinal (precedence)
      */
     public AppConfigDataConfigSource(AppConfigDataClient client, String applicationIdentifier,
             String environmentIdentifier, String configurationProfileIdentifier, Integer requiredMinimumPollIntervalInSeconds,
-            int updateIntervalMinutes, int ordinal) {
+            Duration updateInterval, int ordinal) {
         super(CONFIG_SOURCE_NAME, ordinal);
         this.client = client;
 
@@ -98,16 +99,16 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
                 requiredMinimumPollIntervalInSeconds);
         fetchConfig();
 
-        if (updateIntervalMinutes > 0) {
-            LOG.debugf("Config update frequency set for %d minutes", updateIntervalMinutes);
+        if (updateInterval.toSeconds() > 0) {
+            LOG.debugf("Config update frequency set for %s", updateInterval);
             ThreadFactory threadFactory = runnable -> {
                 Thread thread = new Thread(runnable, POLL_THREAD_NAME);
                 thread.setDaemon(true);
                 return thread;
             };
             executorService = new ScheduledThreadPoolExecutor(1, threadFactory);
-            executorService.scheduleAtFixedRate(this::fetchConfig, updateIntervalMinutes, updateIntervalMinutes,
-                    TimeUnit.MINUTES);
+            executorService.scheduleAtFixedRate(this::fetchConfig, updateInterval.toSeconds(), updateInterval.toSeconds(),
+                    TimeUnit.SECONDS);
         } else {
             // nothing will use the client again
             close();

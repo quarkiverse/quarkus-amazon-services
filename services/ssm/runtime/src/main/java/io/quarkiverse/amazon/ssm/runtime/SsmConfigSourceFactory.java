@@ -2,6 +2,7 @@ package io.quarkiverse.amazon.ssm.runtime;
 
 import static software.amazon.awssdk.utils.StringUtils.isBlank;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,8 +51,12 @@ public class SsmConfigSourceFactory implements ConfigSourceFactory.ConfigurableC
 
         SsmConfig clientConfig = getClientConfig(configSourceContext);
         SsmClient client = build(clientConfig);
+
+        Duration interval = ssmConfig.updateIntervalMinutes() > 0 ? Duration.ofMinutes(ssmConfig.updateIntervalMinutes())
+                : ssmConfig.updateInterval();
+
         return Collections.singletonList(new SsmConfigSource(client, pathOpt.orElse(null), names, ssmConfig.recursive(),
-                ssmConfig.withDecryption(), ssmConfig.updateIntervalMinutes(), ORDINAL));
+                ssmConfig.withDecryption(), interval, ORDINAL));
     }
 
     private static List<String> sanitizeNames(List<String> names) {

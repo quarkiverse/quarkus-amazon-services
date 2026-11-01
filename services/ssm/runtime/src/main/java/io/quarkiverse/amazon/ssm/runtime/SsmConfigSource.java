@@ -3,6 +3,7 @@ package io.quarkiverse.amazon.ssm.runtime;
 import static software.amazon.awssdk.utils.StringUtils.isBlank;
 
 import java.io.StringReader;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -63,7 +64,7 @@ public class SsmConfigSource extends AbstractConfigSource implements AutoCloseab
     private ScheduledExecutorService executorService;
 
     public SsmConfigSource(SsmClient client, String path, List<String> names, boolean recursive, boolean withDecryption,
-            int updateIntervalMinutes, int ordinal) {
+            Duration updateInterval, int ordinal) {
         super(CONFIG_SOURCE_NAME, ordinal);
         this.client = client;
         this.path = path;
@@ -73,16 +74,16 @@ public class SsmConfigSource extends AbstractConfigSource implements AutoCloseab
 
         reload();
 
-        if (updateIntervalMinutes > 0) {
-            LOG.debugf("SSM ConfigSource update interval set to %d minutes", updateIntervalMinutes);
+        if (updateInterval.toSeconds() > 0L) {
+            LOG.debugf("SSM ConfigSource update interval set to %s", updateInterval);
             ThreadFactory threadFactory = runnable -> {
                 Thread thread = new Thread(runnable, POLL_THREAD_NAME);
                 thread.setDaemon(true);
                 return thread;
             };
             executorService = new ScheduledThreadPoolExecutor(1, threadFactory);
-            executorService.scheduleAtFixedRate(this::reload, updateIntervalMinutes, updateIntervalMinutes,
-                    TimeUnit.MINUTES);
+            executorService.scheduleAtFixedRate(this::reload, updateInterval.toSeconds(), updateInterval.toSeconds(),
+                    TimeUnit.SECONDS);
         } else {
             // nothing will use the client again
             close();

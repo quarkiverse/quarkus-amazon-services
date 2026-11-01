@@ -1,5 +1,6 @@
 package io.quarkiverse.amazon.appconfigdata.runtime;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,12 +40,17 @@ public class AppConfigDataConfigSourceFactory implements
         var clientConfig = getClientConfig(configSourceContext);
 
         AppConfigDataClient client = build(clientConfig);
+
+        Duration interval = appConfigDataConfig.updateIntervalMinutes() > 0
+                ? Duration.ofMinutes(appConfigDataConfig.updateIntervalMinutes())
+                : appConfigDataConfig.updateInterval();
+
         return Collections.singletonList(new AppConfigDataConfigSource(client,
                 appConfigDataConfig.application().orElse(null),
                 appConfigDataConfig.environment().orElse(null),
                 appConfigDataConfig.configurationProfile().orElse(null),
                 appConfigDataConfig.requiredMinimumPollIntervalInSeconds().orElse(null),
-                appConfigDataConfig.updateIntervalMinutes(),
+                interval,
                 ORDINAL));
     }
 

@@ -1,5 +1,6 @@
 package io.quarkiverse.amazon.appconfigdata.runtime;
 
+import java.time.Duration;
 import java.util.Optional;
 
 import io.quarkus.runtime.annotations.ConfigPhase;
@@ -44,9 +45,18 @@ public interface AppConfigDataConfigConfig {
     /**
      * Interval in minutes between polling for configuration updates after the initial fetch.
      * <p>
-     * Set to {@code 0} to disable periodic polling (only the initial load runs).
+     * Set greater than {@code 0} to enable periodic polling.
      */
-    @WithDefault("5")
+    @Deprecated(forRemoval = true)
+    @WithDefault("0")
     int updateIntervalMinutes();
+
+    /**
+     * Interval between polling for configuration updates after the initial fetch.
+     * <p>
+     * Set to or greater than {@code PT1S} to enable periodic polling.
+     */
+    @WithDefault("PT0S")
+    Duration updateInterval();
 
 }

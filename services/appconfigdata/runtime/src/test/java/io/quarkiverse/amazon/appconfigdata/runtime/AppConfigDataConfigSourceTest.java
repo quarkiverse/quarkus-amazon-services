@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -66,7 +67,7 @@ class AppConfigDataConfigSourceTest {
     void constructorLoadsConfigurationFromClient() {
         StubClient client = new StubClient(call -> json("{\"greeting\": {\"message\": \"hello\"}}", "next-token"));
 
-        try (var source = new AppConfigDataConfigSource(client, " app ", "env", "profile", 30, 0, 275)) {
+        try (var source = new AppConfigDataConfigSource(client, " app ", "env", "profile", 30, Duration.ZERO, 275)) {
             assertEquals("hello", source.getValue("greeting.message"));
             assertEquals(Set.of("greeting.message"), source.getPropertyNames());
             assertEquals(275, source.getOrdinal());
@@ -84,7 +85,7 @@ class AppConfigDataConfigSourceTest {
         StubClient client = new StubClient(
                 call -> GetLatestConfigurationResponse.builder().nextPollConfigurationToken("next-token").build());
 
-        try (var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, 0, 275)) {
+        try (var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, Duration.ZERO, 275)) {
             assertTrue(source.getPropertyNames().isEmpty());
             assertNull(source.getValue("anything"));
         }
@@ -94,7 +95,7 @@ class AppConfigDataConfigSourceTest {
     void missingIdentifiersSkipSession() {
         StubClient client = new StubClient(call -> null);
 
-        try (var source = new AppConfigDataConfigSource(client, "app", " ", "profile", null, 0, 275)) {
+        try (var source = new AppConfigDataConfigSource(client, "app", " ", "profile", null, Duration.ZERO, 275)) {
             assertTrue(source.getPropertyNames().isEmpty());
             assertNull(client.sessionRequest.get());
         }
@@ -110,7 +111,7 @@ class AppConfigDataConfigSourceTest {
         });
 
         // a poll interval keeps the client open; the poller does not fire during the test
-        try (var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, 60, 275)) {
+        try (var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, Duration.ofMinutes(60), 275)) {
             assertNull(source.getValue("a"));
 
             source.fetchConfig();
@@ -125,7 +126,7 @@ class AppConfigDataConfigSourceTest {
                 ? json("{\"a\":1}", "t1")
                 : GetLatestConfigurationResponse.builder().nextPollConfigurationToken("t2").build());
 
-        try (var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, 60, 275)) {
+        try (var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, Duration.ofMinutes(60), 275)) {
             source.fetchConfig();
 
             assertEquals("1", source.getValue("a"));
@@ -137,7 +138,7 @@ class AppConfigDataConfigSourceTest {
     void withoutPollingClientIsClosedAfterInitialLoad() {
         StubClient client = new StubClient(call -> json("{\"a\":1}", "t1"));
 
-        var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, 0, 275);
+        var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, Duration.ZERO, 275);
 
         assertTrue(client.closed.get());
         assertEquals("1", source.getValue("a"));
@@ -147,7 +148,7 @@ class AppConfigDataConfigSourceTest {
     void closeStopsPolling() {
         StubClient client = new StubClient(call -> json("{\"a\":" + call + "}", "t" + call));
 
-        var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, 60, 275);
+        var source = new AppConfigDataConfigSource(client, "app", "env", "profile", null, Duration.ofMinutes(60), 275);
         source.close();
         source.fetchConfig();
 

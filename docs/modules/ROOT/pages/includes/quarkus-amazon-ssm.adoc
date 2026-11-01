@@ -265,7 +265,30 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++true+++`
 
-a| [[quarkus-amazon-ssm_quarkus-ssm-config-update-interval-minutes]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-update-interval-minutes[`+++quarkus.ssm.config.update-interval-minutes+++`]##
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-update-interval]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-update-interval[`+++quarkus.ssm.config.update-interval+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.update-interval+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Interval between polling for configuration updates after the initial fetch.
+
+Set to or greater than `PT1S` to enable periodic polling.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_UPDATE_INTERVAL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_UPDATE_INTERVAL+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ssm_quarkus-ssm[icon:question-circle[title=More information about the Duration format]]
+|`+++PT0S+++`
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-update-interval-minutes]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-update-interval-minutes[[.line-through]#`+++quarkus.ssm.config.update-interval-minutes+++`#]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.ssm.config.update-interval-minutes+++[]
 endif::add-copy-button-to-config-props[]
@@ -273,7 +296,9 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Interval in minutes between reloads after the initial fetch. Set to `0` to fetch only once at startup.
+_This property is deprecated._
+
+Interval in minutes between reloads after the initial fetch. Set greater than `0` to enable polling.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -284,7 +309,7 @@ Environment variable: `+++QUARKUS_SSM_CONFIG_UPDATE_INTERVAL_MINUTES+++`
 endif::add-copy-button-to-env-var[]
 --
 |int
-|`+++5+++`
+|`+++0+++`
 
 h|[[quarkus-amazon-ssm_section_quarkus-ssm]] [.section-name.section-level0]##link:#quarkus-amazon-ssm_section_quarkus-ssm[AWS SDK client configurations]##
 h|Type

@@ -41,7 +41,49 @@ You can combine `quarkus.ssm.config.path` and `quarkus.ssm.config.names`; keys f
 
 === Optional polling
 
-`quarkus.ssm.config.update-interval-minutes` controls how often parameters are re-fetched after startup (default: `5`). Set to `0` to load only once at startup.
+`quarkus.ssm.config.update-interval` controls how often parameters are re-fetched after startup (default: `PT0S`). Set to or greater than `PT1S` to enable periodic polling.
+
+=== How to get updated configuration properties
+
+The following shows a resource implementation showing 2 ways for fetching a property which is updated through the SSM Config Source.
+
+[source,java]
+----
+import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
+
+import jakarta.inject.Provider;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+
+import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+@Path("/ssmresource")
+public class SsmResource {
+
+    @ConfigProperty(name = "propertyName", defaultValue = "N/A")
+    Provider<String> propertyName;  <1>
+
+    @GET
+    @Path("propertyName")
+    @Produces(TEXT_PLAIN)
+    public String getPropertyName() {
+        return "property: " + propertyName.get(); <2>
+    }
+
+    @GET
+    @Path("otherPropertyName")
+    @Produces(TEXT_PLAIN)
+    public String getOtherPropertyName() {
+        return "property: " + ConfigProvider.getConfig().getValue("otherPropertyName", String.class); <3>
+    }
+}
+----
+
+<1> Declare variable name using `Provider<>`.
+<2> Use the `Provider.get()` method to get the latest value of the property.
+<3> Or use the `ConfigProvider` to get the latest observed value of the property.
 
 === How configuration keys are exposed
 

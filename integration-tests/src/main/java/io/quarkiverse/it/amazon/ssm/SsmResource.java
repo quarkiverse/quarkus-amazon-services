@@ -6,9 +6,13 @@ import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 
 import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
@@ -50,10 +54,10 @@ public class SsmResource {
     String db1Port;
 
     @ConfigProperty(name = "app-db-config.db2.host", defaultValue = "N/A")
-    String db2Host;
+    Provider<String> db2Host;
 
     @ConfigProperty(name = "app-db-config.db2.port", defaultValue = "N/A")
-    String db2Port;
+    Provider<String> db2Port;
 
     @GET
     @Path("sync")
@@ -91,6 +95,22 @@ public class SsmResource {
     @Produces(TEXT_PLAIN)
     public String testConfigJson() {
         LOG.info("Testing Secrets Manager JSON config parsing");
-        return "db1.host: " + db1Host + ", db1.port: " + db1Port + ", db2.host: " + db2Host + ", db2.port: " + db2Port;
+        return "db1.host: " + db1Host + ", db1.port: " + db1Port;
+    }
+
+    @GET
+    @Path("other-config-json")
+    @Produces(TEXT_PLAIN)
+    public String testOtherConfigJson() {
+        LOG.info("Testing Secrets Manager JSON config parsing");
+        return "db2.host: " + db2Host.get() + ", db2.port: " + db2Port.get();
+    }
+
+    @PUT
+    @Path("other-config-json")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public void updateTestConfigJson(String newJson) {
+        ssmClient.putParameter(
+                r -> r.overwrite(true).name("/app-db-config/db2").type(ParameterType.SECURE_STRING).value(newJson));
     }
 }
