@@ -122,6 +122,12 @@ public enum AwsCredentialsProviderType {
         }
     };
 
-    /** Creates the provider; configKeyRoot is the full AWS group prefix, for example quarkus.s3.aws. */
+    /**
+     * Creates the credentials provider.
+     *
+     * @param config the credentials provider configuration
+     * @param configKeyRoot the full AWS group prefix, for example {@code quarkus.s3.aws}
+     * @return the configured credentials provider
+     */
     public abstract AwsCredentialsProvider create(AwsCredentialsProviderConfig config, String configKeyRoot);
 }

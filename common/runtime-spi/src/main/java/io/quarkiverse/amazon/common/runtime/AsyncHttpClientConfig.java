@@ -84,7 +84,7 @@ public interface AsyncHttpClientConfig {
      * while idle.
      * <p>
      * Currently has no effect if
-     * `quarkus.<amazon-service>.async-client.use-idle-connection-reaper` is false.
+     * {@code quarkus.<amazon-service>.async-client.use-idle-connection-reaper} is false.
      */
     @WithDefault("5S")
     @WithConverter(DurationConverter.class)
@@ -94,7 +94,7 @@ public interface AsyncHttpClientConfig {
      * Whether the idle connections in the connection pool should be closed.
      * <p>
      * When enabled, connections left idling for longer than
-     * `quarkus.<amazon-service>.async-client.connection-max-idle-time`
+     * {@code quarkus.<amazon-service>.async-client.connection-max-idle-time}
      * will be closed. This will not close connections currently in use.
      */
     @WithDefault("true")

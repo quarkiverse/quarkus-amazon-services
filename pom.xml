@@ -66,6 +66,18 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <configuration>
+            <tags>
+              <!-- Used by Quarkus config docs, not rendered by the standard Javadoc doclet. -->
+              <tag>
+                <name>asciidoclet</name>
+                <placement>X</placement>
+              </tag>
+            </tags>
+          </configuration>
+        </plugin>
+        <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <configuration>
             <skipTests>${skipNonMatrixTests}</skipTests>

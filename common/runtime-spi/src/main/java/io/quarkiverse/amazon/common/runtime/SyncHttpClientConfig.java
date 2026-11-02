@@ -89,7 +89,7 @@ public interface SyncHttpClientConfig {
         /**
          * Whether the idle connections in the connection pool should be closed asynchronously.
          * <p>
-         * When enabled, connections left idling for longer than `quarkus.<amazon-service>.sync-client.connection-max-idle-time`
+         * When enabled, connections left idling for longer than {@code quarkus.<amazon-service>.sync-client.connection-max-idle-time}
          * will be closed.
          * This will not close connections currently in use.
          */
