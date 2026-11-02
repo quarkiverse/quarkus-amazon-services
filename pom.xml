@@ -46,7 +46,7 @@
     <skipNonMatrixTests>${skipTests}</skipNonMatrixTests>
     <test.aws.devservices.container>true</test.aws.devservices.container>
     <!-- https://github.com/quarkusio/quarkus/releases -->
-    <quarkus.version>4.0.0.Beta1</quarkus.version>
+    <quarkus.version>4.0.0.Beta2</quarkus.version>
 
     <!-- https://github.com/aws/aws-sdk-java-v2/releases -->
     <awssdk.version>2.57.3</awssdk.version>
