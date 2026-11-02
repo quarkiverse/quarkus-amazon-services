@@ -38,7 +38,7 @@ class DevServicesClientConfigReloadTest {
         var config = new SmallRyeConfigBuilder().withMapping(DevServicesConfig.class)
                 .withMapping(GlobalDevServicesBuildTimeConfig.class).withMapping(FlociDevServicesBuildTimeConfig.class).build();
         var registry = new DevServicesRegistryBuildItem(UUID.randomUUID(), config.getConfigMapping(DevServicesConfig.class),
-                LaunchMode.DEVELOPMENT);
+                LaunchMode.DEVELOPMENT, config);
         AtomicInteger starts = new AtomicInteger();
         AtomicInteger closes = new AtomicInteger();
         Startable stack = new Startable() {
