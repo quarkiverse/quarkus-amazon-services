@@ -13,6 +13,14 @@
 
     <dependencies>
         <!-- Make sure the doc is built after the other artifacts -->
+        <!-- SDK tests pull in the test service runtime; include its deployment module
+             so extension-descriptor can validate it during a partial -pl docs -am build. -->
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-testservice-deployment</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-sdk-deployment</artifactId>
