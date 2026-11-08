@@ -38,6 +38,14 @@ public interface SecretsManagerConfigConfig {
     Duration updateInterval();
 
     /**
+     * Retrieve selected secrets with BatchGetSecretValue in groups of up to 20 instead of individual GetSecretValue calls.
+     * Requires secretsmanager:BatchGetSecretValue in addition to per-secret GetSecretValue permissions; no listing or
+     * automatic fallback is performed. Does not affect expressions or the credentials provider.
+     */
+    @WithDefault("false")
+    boolean batchRetrieval();
+
+    /**
      * Mapping from a Quarkus configuration property name to an AWS Secrets Manager secret name.
      * <p>
      * - The map key is the configuration property to expose (for example {@code my.service.password}).<br>
@@ -52,7 +60,7 @@ public interface SecretsManagerConfigConfig {
 
     @ConfigGroup
     interface SecretEntry {
-        /** Secret name or ARN passed to GetSecretValue. */
+        /** Secret name or ARN to retrieve. Prefer a full ARN over a partial ARN. */
         String secretId();
 
         /** Optional target property/prefix. Required for raw text and non-null JSON scalars. */

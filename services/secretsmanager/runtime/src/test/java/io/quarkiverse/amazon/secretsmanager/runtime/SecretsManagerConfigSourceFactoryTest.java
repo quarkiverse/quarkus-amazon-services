@@ -13,21 +13,27 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import io.smallrye.config.ConfigSourceContext;
 import io.smallrye.config.SmallRyeConfigBuilder;
 import io.smallrye.config.common.MapBackedConfigSource;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
+import software.amazon.awssdk.services.secretsmanager.model.BatchGetSecretValueRequest;
+import software.amazon.awssdk.services.secretsmanager.model.BatchGetSecretValueResponse;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse;
 import software.amazon.awssdk.services.secretsmanager.model.ResourceNotFoundException;
+import software.amazon.awssdk.services.secretsmanager.model.SecretValueEntry;
 
 class SecretsManagerConfigSourceFactoryTest {
-    @Test
-    void namedAndLegacyEntriesDecodeTheSameSecretIndependentlyWithOneRead() {
+    @ParameterizedTest
+    @ValueSource(booleans = { false, true })
+    void namedAndLegacyEntriesDecodeTheSameSecretIndependentlyWithOneRead(boolean batch) {
         var mapping = new SmallRyeConfigBuilder().withMapping(SecretsManagerConfigConfig.class)
                 .withDefaultValue("quarkus.secretsmanager.config.enabled", "true")
+                .withDefaultValue("quarkus.secretsmanager.config.batch-retrieval", Boolean.toString(batch))
                 .withSources(new MapBackedConfigSource("test", Map.of(
                         "quarkus.secretsmanager.config.format", "raw",
                         "quarkus.secretsmanager.config.secrets.opaque", "shared",
@@ -39,6 +45,9 @@ class SecretsManagerConfigSourceFactoryTest {
         var client = mock(SecretsManagerClient.class);
         when(client.getSecretValue(any(GetSecretValueRequest.class))).thenReturn(
                 GetSecretValueResponse.builder().secretString("{\"password\":\"value\"}").build());
+        when(client.batchGetSecretValue(any(BatchGetSecretValueRequest.class))).thenReturn(
+                BatchGetSecretValueResponse.builder().secretValues(
+                        SecretValueEntry.builder().name("shared").secretString("{\"password\":\"value\"}").build()).build());
         var factory = new SecretsManagerConfigSourceFactory() {
             SecretsManagerConfig getClientConfig(ConfigSourceContext context) {
                 return null;
@@ -51,7 +60,9 @@ class SecretsManagerConfigSourceFactoryTest {
         var source = factory.getConfigSources(null, mapping).iterator().next();
         assertEquals("{\"password\":\"value\"}", source.getValue("opaque"));
         assertEquals("value", source.getValue("db.password"));
-        verify(client, times(1)).getSecretValue(any(GetSecretValueRequest.class));
+        verify(client, times(batch ? 0 : 1)).getSecretValue(any(GetSecretValueRequest.class));
+        verify(client, times(batch ? 1 : 0)).batchGetSecretValue(any(BatchGetSecretValueRequest.class));
+        verify(client).close();
     }
 
     @ParameterizedTest
@@ -70,10 +81,11 @@ class SecretsManagerConfigSourceFactoryTest {
     }
 
     @ParameterizedTest
-    @ValueSource(booleans = { false, true })
-    void factoryAppliesStartupPolicyAndOrdinal(boolean required) {
+    @CsvSource({ "false, false", "false, true", "true, false", "true, true" })
+    void factoryAppliesStartupPolicyAndOrdinal(boolean required, boolean batch) {
         var mapping = new SmallRyeConfigBuilder().withMapping(SecretsManagerConfigConfig.class)
                 .withDefaultValue("quarkus.secretsmanager.config.enabled", "true")
+                .withDefaultValue("quarkus.secretsmanager.config.batch-retrieval", Boolean.toString(batch))
                 .withDefaultValue("quarkus.secretsmanager.config.secrets.password", "missing")
                 .withDefaultValue("quarkus.secretsmanager.config.ordinal", "301")
                 .withDefaultValue("quarkus.secretsmanager.config.fail-on-missing-config", Boolean.toString(required))
@@ -81,6 +93,10 @@ class SecretsManagerConfigSourceFactoryTest {
         var client = mock(SecretsManagerClient.class);
         when(client.getSecretValue(any(GetSecretValueRequest.class))).thenThrow(
                 ResourceNotFoundException.builder().statusCode(404).message("unsafe secret").build());
+        when(client.batchGetSecretValue(any(BatchGetSecretValueRequest.class))).thenReturn(
+                BatchGetSecretValueResponse.builder().errors(software.amazon.awssdk.services.secretsmanager.model.APIErrorType
+                        .builder().secretId("missing").errorCode("ResourceNotFoundException").message("unsafe secret").build())
+                        .build());
         var factory = new SecretsManagerConfigSourceFactory() {
             SecretsManagerConfig getClientConfig(ConfigSourceContext context) {
                 return null;
@@ -99,5 +115,13 @@ class SecretsManagerConfigSourceFactoryTest {
             assertTrue(source.getPropertyNames().isEmpty());
         }
         verify(client).close();
+    }
+
+    @Test
+    void batchingIsDisabledByDefaultAndDisabledSourceDoesNotRead() {
+        var config = new SmallRyeConfigBuilder().withMapping(SecretsManagerConfigConfig.class).build()
+                .getConfigMapping(SecretsManagerConfigConfig.class);
+        assertEquals(false, config.batchRetrieval());
+        assertTrue(!new SecretsManagerConfigSourceFactory().getConfigSources(null, config).iterator().hasNext());
     }
 }
