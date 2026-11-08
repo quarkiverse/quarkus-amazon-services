@@ -1,6 +1,6 @@
 = Configuration from AWS
 
-Use SSM, Secrets Manager or AppConfig Data to supply application properties or stored credentials.
+Use SSM, Secrets Manager, AppConfig Data or S3 to supply application properties or stored credentials.
 Start with the task you need, then follow the corresponding service guide to select resources and grant AWS permissions.
 
 [[choose-a-mode]]
@@ -23,36 +23,38 @@ Start with the task you need, then follow the corresponding service guide to sel
 [[providers]]
 == Choose a provider
 
-[cols="1,2,2,2",options="header"]
+[cols="1,2,2,2,2",options="header"]
 |===
-|Capability
-|xref:amazon-ssm.adoc#configuration[SSM Parameter Store]
-|xref:amazon-secretsmanager.adoc#configuration[Secrets Manager]
-|xref:amazon-appconfigdata.adoc#configuration[AppConfig Data]
+|Capability |xref:amazon-ssm.adoc#configuration[SSM Parameter Store] |xref:amazon-secretsmanager.adoc#configuration[Secrets Manager] |xref:amazon-appconfigdata.adoc#configuration[AppConfig Data] |xref:amazon-s3.adoc#configuration[S3]
 |Load properties from
 |Parameter names or hierarchies
 |Explicit secret names/ARNs
 |Deployed application/environment/configuration profiles
+|Explicit bucket/key selections, optionally pinned to a version
 |Default format selection
 |JSON objects/arrays, otherwise raw text under the parameter key
 |JSON objects/arrays, otherwise raw text under the target prefix
 |JSON objects/arrays, then YAML Content-Type, otherwise Java properties
+|Recognized Content-Type, then key extension
 |Refresh properties
 |Optional polling
 |Optional polling
 |Optional polling, subject to AWS minimum intervals
+|Optional polling for current objects; pinned versions do not follow updates
 |Read individual values
 |`${ssm::name}`, including version/label selectors
 |`${sm::secret-id}`, reading `AWSCURRENT`
+|Not provided
 |Not provided
 |Supply stored credentials
 |`ssm-credentials-provider`
 |`secretsmanager-credentials-provider`
 |Not provided
+|Not provided
 |===
 
 Choose SSM for parameter hierarchies, SSM or Secrets Manager for stored credentials, AppConfig Data for deployed
-configuration profiles. The service guides provide the exact selection properties and IAM actions.
+configuration profiles, and S3 for configuration files. The service guides provide the exact selection properties and IAM actions.
 
 [[config-sources]]
 == Load application properties
@@ -153,7 +155,7 @@ After changing the parameter and a successful refresh, `message()` returns the n
 existing `@ConfigMapping` keeps its initial value. Alternatively, call `ConfigProvider.getConfig().getValue("greeting", String.class)`.
 
 Polling waits at least the configured interval after each completed read. AppConfig may impose a longer delay; follow its
-xref:amazon-appconfigdata.adoc#configuration[polling settings]. For Secrets Manager, set `config.update-interval` under the corresponding service prefix instead.
+xref:amazon-appconfigdata.adoc#configuration[polling settings]. For Secrets Manager or S3, set `config.update-interval` under the corresponding service prefix instead.
 Refreshing properties does not restart the application, reconfigure existing consumers or recycle connection pools.
 
 [[failure-policy]]
@@ -185,8 +187,8 @@ other providers use the corresponding service prefix. Invalid AWS connection set
 == Choose document formats and property names
 
 Use UTF-8 content. Set `format=json`, `properties`, `yaml` or `raw` when you want an explicit interpretation instead of
-the defaults in the <<providers,provider table>>. SSM, Secrets Manager and AppConfig Data use `config.format` as the default
-for their entries; `entries.<name>.format` overrides it.
+the defaults in the <<providers,provider table>>. Each provider uses `config.format` as the default for its entries;
+`entries.<name>.format` overrides it, including an explicit `auto` override.
 For YAML, add `io.quarkus:quarkus-config-yaml`; selecting YAML without it fails.
 
 JSON/YAML documents expose nested keys with dots and arrays with indices. For example,
@@ -297,7 +299,7 @@ Configure their AWS access without depending on values they must load. Their rea
 transport: connection/socket timeouts and `sync-client.tls-*`
 settings apply, while `sync-client.type` and Apache/CRT-specific options do not. Configured execution interceptors and
 extension telemetry are not applied to these reads. Expressions default to a 10-second call timeout and a 3-second attempt
-timeout when those settings are absent.
+timeout when those settings are absent. For S3 body downloads, also bound idle reads with the socket timeout.
 ====
 
 Stored-credential providers use the default service client's usual credentials, transport, interceptor and telemetry settings.

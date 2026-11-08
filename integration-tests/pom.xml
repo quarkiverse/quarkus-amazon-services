@@ -249,6 +249,20 @@
 
     <profiles>
         <profile>
+            <id>configuration-yaml</id>
+            <activation>
+                <property>
+                    <name>!without-yaml</name>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>io.quarkus</groupId>
+                    <artifactId>quarkus-config-yaml</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
             <id>sync-client-type-apache</id>
             <activation>
                 <property>

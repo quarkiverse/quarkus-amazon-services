@@ -330,6 +330,237 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
+a| [[quarkus-amazon-s3_quarkus-s3-config-enabled]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-config-enabled[`+++quarkus.s3.config.enabled+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.config.enabled+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Enable loading configuration from explicitly selected S3 objects. No bucket listing is performed.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CONFIG_ENABLED+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CONFIG_ENABLED+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-config-fail-on-missing-config]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-config-fail-on-missing-config[`+++quarkus.s3.config.fail-on-missing-config+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.config.fail-on-missing-config+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Fail startup unless every selected object can be fetched and decoded into a complete, collision-free snapshot.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CONFIG_FAIL_ON_MISSING_CONFIG+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CONFIG_FAIL_ON_MISSING_CONFIG+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++true+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-config-ordinal]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-config-ordinal[`+++quarkus.s3.config.ordinal+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.config.ordinal+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Config source ordinal; defaults between application.properties and .env.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CONFIG_ORDINAL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CONFIG_ORDINAL+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++270+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-config-format]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-config-format[`+++quarkus.s3.config.format+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.config.format+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Default document format for entries. Auto uses a recognized Content-Type, then the object key's extension.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CONFIG_FORMAT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CONFIG_FORMAT+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`auto`, `raw`, `json`, `properties`, `yaml`
+|`+++auto+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-config-update-interval]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-config-update-interval[`+++quarkus.s3.config.update-interval+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.config.update-interval+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Polling interval for unpinned objects. Zero disables polling; positive values must be at least one second.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CONFIG_UPDATE_INTERVAL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CONFIG_UPDATE_INTERVAL+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the Duration format]]
+|`+++PT0S+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-config-max-object-size]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-config-max-object-size[`+++quarkus.s3.config.max-object-size+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.config.max-object-size+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Maximum bytes per object, enforced while reading. Must be positive and less than 2 GiB.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CONFIG_MAX_OBJECT_SIZE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CONFIG_MAX_OBJECT_SIZE+++`
+endif::add-copy-button-to-env-var[]
+--
+|MemorySize link:#memory-size-note-anchor-quarkus-amazon-s3_quarkus-s3[icon:question-circle[title=More information about the MemorySize format]]
+|`+++1M+++`
+
+a| [[quarkus-amazon-s3_quarkus-s3-config-entries-entries-bucket]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-config-entries-entries-bucket[`+++quarkus.s3.config.entries."entries".bucket+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.config.entries."entries".bucket+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Bucket name or access point identifier accepted by the S3 SDK.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CONFIG_ENTRIES__ENTRIES__BUCKET+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CONFIG_ENTRIES__ENTRIES__BUCKET+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a| [[quarkus-amazon-s3_quarkus-s3-config-entries-entries-key]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-config-entries-entries-key[`+++quarkus.s3.config.entries."entries".key+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.config.entries."entries".key+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Exact object key, without URL encoding or a leading slash unless it is part of the key.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CONFIG_ENTRIES__ENTRIES__KEY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CONFIG_ENTRIES__ENTRIES__KEY+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a| [[quarkus-amazon-s3_quarkus-s3-config-entries-entries-version-id]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-config-entries-entries-version-id[`+++quarkus.s3.config.entries."entries".version-id+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.config.entries."entries".version-id+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Optional immutable version to read. The mutable S3 null version is rejected. Successfully loaded pins are not polled.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CONFIG_ENTRIES__ENTRIES__VERSION_ID+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CONFIG_ENTRIES__ENTRIES__VERSION_ID+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-s3_quarkus-s3-config-entries-entries-prefix]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-config-entries-entries-prefix[`+++quarkus.s3.config.entries."entries".prefix+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.config.entries."entries".prefix+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Optional property prefix, joined to decoded document keys with a dot. Required for raw or scalar values.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CONFIG_ENTRIES__ENTRIES__PREFIX+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CONFIG_ENTRIES__ENTRIES__PREFIX+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-s3_quarkus-s3-config-entries-entries-format]] [.property-path]##link:#quarkus-amazon-s3_quarkus-s3-config-entries-entries-format[`+++quarkus.s3.config.entries."entries".format+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.s3.config.entries."entries".format+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Format override; defaults to the source-wide format. Auto uses a recognized Content-Type, then the object's extension; unknown formats fail. YAML requires quarkus-config-yaml.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_S3_CONFIG_ENTRIES__ENTRIES__FORMAT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_S3_CONFIG_ENTRIES__ENTRIES__FORMAT+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`auto`, `raw`, `json`, `properties`, `yaml`
+|
+
 h|[[quarkus-amazon-s3_section_quarkus-s3]] [.section-name.section-level0]##link:#quarkus-amazon-s3_section_quarkus-s3[AWS SDK client configurations]##
 h|Type
 h|Default
