@@ -273,7 +273,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Optional minimum interval between `GetLatestConfiguration` calls for the session.
+Minimum interval between `GetLatestConfiguration` calls for the session, from 15 to 86400 seconds. Defaults to 60 seconds when absent; the server may require a longer interval.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -294,7 +294,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Interval between polling for configuration updates after the initial fetch.
+Minimum delay after a completed read before polling again. The server's minimum may extend this delay.
 
 Set to or greater than `PT1S` to enable periodic polling.
 

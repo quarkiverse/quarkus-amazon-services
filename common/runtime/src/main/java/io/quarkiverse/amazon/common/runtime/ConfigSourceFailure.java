@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.nio.charset.CharacterCodingException;
 import java.util.concurrent.TimeoutException;
 
-import org.jboss.logging.Logger;
-
 import io.quarkiverse.amazon.common.config.FetchFailure;
 import software.amazon.awssdk.awscore.exception.AwsServiceException;
 import software.amazon.awssdk.core.exception.ApiCallAttemptTimeoutException;
@@ -52,11 +50,4 @@ public final class ConfigSourceFailure {
         return FetchFailure.OTHER;
     }
 
-    public static void log(FetchFailure failure, Logger logger, String operation) {
-        if (failure == FetchFailure.TRANSIENT || failure == FetchFailure.MISSING || failure == FetchFailure.PARTIAL_RESPONSE) {
-            logger.warnf("%s [%s]", operation, failure);
-        } else {
-            logger.errorf("%s [%s]", operation, failure);
-        }
-    }
 }

@@ -14,6 +14,11 @@ import io.restassured.RestAssured;
 public class AppConfigDataTest {
 
     @Test
+    void sharedSourceCloserIsRegisteredOnceForAllAwsExtensions() {
+        RestAssured.when().get("/test/configuration/closers").then().statusCode(200).body(is("1"));
+    }
+
+    @Test
     public void testAppNameConfig() {
         RestAssured.when().get("/test/appconfigdata/app-name").then()
                 .body(is("application: my-appconfigdata-application"));
@@ -25,7 +30,8 @@ public class AppConfigDataTest {
                 .body("{\"application\": \"my-appconfigdata-application\", \"host\": \"example.com\", \"port\": 1234}")
                 .put("/test/appconfigdata/config");
 
-        Awaitility.await().atMost(Duration.ofSeconds(15L))
+        // The session minimum is 15 seconds; leave headroom for slow CI.
+        Awaitility.await().atMost(Duration.ofSeconds(30L))
                 .untilAsserted(() -> RestAssured.when()
                         .get("/test/appconfigdata/db-config")
                         .then()

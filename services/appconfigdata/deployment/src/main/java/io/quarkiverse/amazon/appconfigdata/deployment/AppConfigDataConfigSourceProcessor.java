@@ -1,7 +1,7 @@
 package io.quarkiverse.amazon.appconfigdata.deployment;
 
 import io.quarkiverse.amazon.appconfigdata.runtime.AppConfigDataConfigSourceBuilder;
-import io.quarkiverse.amazon.appconfigdata.runtime.AppConfigDataConfigSourceCloser;
+import io.quarkiverse.amazon.common.config.AwsConfigSourceCloser;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -24,6 +24,6 @@ public class AppConfigDataConfigSourceProcessor {
 
     @BuildStep
     AdditionalBeanBuildItem appConfigDataConfigSourceCloser() {
-        return AdditionalBeanBuildItem.unremovableOf(AppConfigDataConfigSourceCloser.class);
+        return AdditionalBeanBuildItem.unremovableOf(AwsConfigSourceCloser.class);
     }
 }

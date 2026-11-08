@@ -1,14 +1,10 @@
 package io.quarkiverse.amazon.common.runtime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.charset.CharacterCodingException;
-import java.util.ArrayList;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -46,31 +42,4 @@ class ConfigSourceFailureTest {
         assertEquals(FetchFailure.OTHER, ConfigSourceFailure.classify(new NullPointerException("secret")));
     }
 
-    @Test
-    void logsOnlyCategoryAndCallerSuppliedOperation() {
-        var records = new ArrayList<LogRecord>();
-        var jul = java.util.logging.Logger.getLogger("aws-config-failure-test");
-        Handler handler = new Handler() {
-            public void publish(LogRecord record) {
-                records.add(record);
-            }
-
-            public void flush() {
-            }
-
-            public void close() {
-            }
-        };
-        jul.addHandler(handler);
-        try {
-            var unsafe = new IllegalArgumentException("unsafe-secret");
-            ConfigSourceFailure.log(ConfigSourceFailure.classify(unsafe), org.jboss.logging.Logger.getLogger(jul.getName()),
-                    "Unable to load config");
-            assertEquals(1, records.size());
-            assertEquals("Unable to load config [INVALID_CONTENT]", records.getFirst().getMessage());
-            assertNull(records.getFirst().getThrown());
-        } finally {
-            jul.removeHandler(handler);
-        }
-    }
 }

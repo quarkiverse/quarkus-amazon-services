@@ -47,7 +47,8 @@ public interface AppConfigDataConfigConfig {
     ConfigSourceFormat format();
 
     /**
-     * Optional minimum interval between {@code GetLatestConfiguration} calls for the session.
+     * Minimum interval between {@code GetLatestConfiguration} calls for the session, from 15 to 86400 seconds.
+     * Defaults to 60 seconds when absent; the server may require a longer interval.
      */
     Optional<Integer> requiredMinimumPollIntervalInSeconds();
 
@@ -61,7 +62,7 @@ public interface AppConfigDataConfigConfig {
     int updateIntervalMinutes();
 
     /**
-     * Interval between polling for configuration updates after the initial fetch.
+     * Minimum delay after a completed read before polling again. The server's minimum may extend this delay.
      * <p>
      * Set to or greater than {@code PT1S} to enable periodic polling.
      */
