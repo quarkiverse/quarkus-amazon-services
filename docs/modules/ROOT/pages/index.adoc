@@ -6,5 +6,5 @@ You can find the full set of supported services and documentation for each of th
 
 If a service does not yet have a dedicated extension, use the xref:amazon-sdk.adoc[generic AWS SDK integration] with the SDK dependencies you need.
 
-To load application properties, follow
+To load application properties, read individual secrets or connect a datasource using stored credentials, follow
 xref:common-config.adoc[Configuration from AWS] and compare SSM, Secrets Manager and AppConfig Data.

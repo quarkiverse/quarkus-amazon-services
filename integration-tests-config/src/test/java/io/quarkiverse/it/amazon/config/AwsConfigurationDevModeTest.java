@@ -57,6 +57,10 @@ public class AwsConfigurationDevModeTest {
                 expression.ssm=${ssm::/ssm}
                 quarkus.secretsmanager.expression.cache-ttl=PT1H
                 quarkus.ssm.expression.cache-ttl=PT1H
+                quarkus.secretsmanager.credentials-provider.reload.secret-id=sm
+                quarkus.secretsmanager.credentials-provider.reload.format=raw
+                quarkus.ssm.credentials-provider.reload.parameter-name=/ssm
+                quarkus.ssm.credentials-provider.reload.format=raw
                 """);
         for (String service : new String[] { "ssm", "secretsmanager", "appconfigdata" }) {
             properties.append("""
@@ -73,16 +77,16 @@ public class AwsConfigurationDevModeTest {
 
     @Test
     void resourceAndSourceRestartsReplaceSnapshotsCachesAndPollers() {
-        given().get("/reload").then().statusCode(200).body(is(snapshot(0, 0, 0)));
+        given().get("/reload").then().statusCode(200).body(is(snapshot(0, 0, 0, 0)));
         for (int next = 1; next <= 3; next++) {
             Set<Thread> previous = pollers();
             assertEquals(3, previous.size(), "Each AWS source must have exactly one poller");
             generation.set(next);
             int previousMarker = next == 3 ? 1 : next - 1;
             int previousSource = next == 3 ? 2 : 0;
-            // Loaded configuration stays unchanged until the application restarts.
+            // Long-lived expression caches/snapshots stay old, whereas credential reads are always fresh.
             given().get("/reload").then().statusCode(200)
-                    .body(is(snapshot(next - 1, previousMarker, previousSource)));
+                    .body(is(snapshot(next - 1, previousMarker, next, previousSource)));
             if (next == 2) {
                 app.modifySourceFile(ConfigurationReloadResource.class, source -> source.replace("source-0", "source-2"));
             } else {
@@ -92,15 +96,15 @@ public class AwsConfigurationDevModeTest {
             }
             int marker = next == 2 ? 1 : next;
             int source = next >= 2 ? 2 : 0;
-            given().get("/reload").then().statusCode(200).body(is(snapshot(next, marker, source)));
+            given().get("/reload").then().statusCode(200).body(is(snapshot(next, marker, next, source)));
             await().atMost(Duration.ofSeconds(10)).until(() -> previous.stream().noneMatch(Thread::isAlive));
             assertEquals(3, pollers().size(), "Reload must not accumulate polling threads");
         }
         assertTrue(unexpectedRequests.isEmpty(), unexpectedRequests::toString);
     }
 
-    private static String snapshot(int value, int marker, int source) {
-        return (value + "|").repeat(5) + marker + "|source-" + source;
+    private static String snapshot(int value, int marker, int credential, int source) {
+        return (value + "|").repeat(5) + marker + "|" + credential + "|" + credential + "|source-" + source;
     }
 
     private static Set<Thread> pollers() {

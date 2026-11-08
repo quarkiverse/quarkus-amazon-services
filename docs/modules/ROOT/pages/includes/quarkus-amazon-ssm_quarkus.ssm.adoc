@@ -498,6 +498,132 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |
 
+a| [[quarkus-amazon-ssm_quarkus-ssm-credentials-provider-credentials-provider-parameter-name]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-credentials-provider-credentials-provider-parameter-name[`+++quarkus.ssm.credentials-provider."credentials-provider".parameter-name+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.credentials-provider."credentials-provider".parameter-name+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Parameter name or ARN containing a credential document. Mutually exclusive with `parameters`.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__PARAMETER_NAME+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__PARAMETER_NAME+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-credentials-provider-credentials-provider-format]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-credentials-provider-credentials-provider-format[`+++quarkus.ssm.credentials-provider."credentials-provider".format+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.credentials-provider."credentials-provider".format+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Document format: json (default), properties, yaml (requires quarkus-config-yaml), or raw (password only). The auto format is not supported for credentials.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__FORMAT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__FORMAT+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`auto`, `raw`, `json`, `properties`, `yaml`
+|`+++json+++`
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-credentials-provider-credentials-provider-username-key]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-credentials-provider-credentials-provider-username-key[`+++quarkus.ssm.credentials-provider."credentials-provider".username-key+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.credentials-provider."credentials-provider".username-key+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Document field containing the username; an empty setting omits the username. Missing fields are also omitted.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__USERNAME_KEY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__USERNAME_KEY+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++username+++`
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-credentials-provider-credentials-provider-password-key]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-credentials-provider-credentials-provider-password-key[`+++quarkus.ssm.credentials-provider."credentials-provider".password-key+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.credentials-provider."credentials-provider".password-key+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Required password field in a JSON, properties or YAML document.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__PASSWORD_KEY+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__PASSWORD_KEY+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|`+++password+++`
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-credentials-provider-credentials-provider-parameters-parameters]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-credentials-provider-credentials-provider-parameters-parameters[`+++quarkus.ssm.credentials-provider."credentials-provider".parameters."parameters"+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.credentials-provider."credentials-provider".parameters."parameters"+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Individual raw parameters keyed by Quarkus credential name: password (required) and user (optional).
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__PARAMETERS__PARAMETERS_+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__PARAMETERS__PARAMETERS_+++`
+endif::add-copy-button-to-env-var[]
+--
+|Map<String,String>
+|
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-credentials-provider-credentials-provider-batch-retrieval]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-credentials-provider-credentials-provider-batch-retrieval[`+++quarkus.ssm.credentials-provider."credentials-provider".batch-retrieval+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.credentials-provider."credentials-provider".batch-retrieval+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Use GetParameters instead of individual GetParameter calls, requiring its IAM permission. No fallback.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__BATCH_RETRIEVAL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CREDENTIALS_PROVIDER__CREDENTIALS_PROVIDER__BATCH_RETRIEVAL+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++false+++`
+
 a| [[quarkus-amazon-ssm_quarkus-ssm-config-update-interval-minutes]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-update-interval-minutes[[.line-through]#`+++quarkus.ssm.config.update-interval-minutes+++`#]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.ssm.config.update-interval-minutes+++[]
