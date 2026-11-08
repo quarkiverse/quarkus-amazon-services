@@ -76,3 +76,19 @@ Set `quarkus.ssm.config.update-interval=30S` to re-fetch the selection after sta
 If a read fails or an explicitly selected name is missing, the previous values remain available.
 Deleting a parameter under a selected path removes its properties after a successful complete refresh of that path.
 Use xref:common-config.adoc#dynamic-reads[dynamic configuration lookups] to observe refreshed values.
+
+=== Resolve individual parameters with expressions
+
+[source,properties]
+----
+myapp.api-key=${ssm::/myapp/api-key}
+# SSM version/label selectors and full ARNs are supported
+myapp.previous-key=${ssm::/myapp/api-key:3}
+myapp.database.password=${ssm::/myapp/database#/password}
+quarkus.ssm.expression.cache-ttl=5M
+----
+
+If `/myapp/api-key` contains `example-key`, `myapp.api-key` returns `example-key`. The JSON example reads the `password`
+field of `/myapp/database`. Grant `ssm:GetParameter` and the appropriate KMS decrypt permission; values are decrypted.
+See xref:common-config.adoc#expressions[individual-value examples]
+for JSON Pointer syntax, caching and failure behavior; `config.enabled` is not required.

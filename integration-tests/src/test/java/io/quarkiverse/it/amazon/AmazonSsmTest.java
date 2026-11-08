@@ -13,6 +13,12 @@ import io.restassured.RestAssured;
 
 @QuarkusTest
 public class AmazonSsmTest {
+    @Test
+    public void expressionsAreRuntimeOnlyAndDynamicReadsSeeUpdatesUnlikeInitialInjection() {
+        RestAssured.when().get("/test/ssm/expressions").then().statusCode(200).body(is("initial|initial|localhost"));
+        RestAssured.given().contentType(TEXT_PLAIN).body("rotated").put("/test/ssm/expressions").then().statusCode(204);
+        RestAssured.when().get("/test/ssm/expressions").then().statusCode(200).body(is("initial|rotated|localhost"));
+    }
 
     @Test
     public void testSsmAsync() {

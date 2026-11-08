@@ -53,6 +53,10 @@ public class AwsConfigurationDevModeTest {
                 quarkus.appconfigdata.config.environment=environment
                 quarkus.appconfigdata.config.configuration-profile=profile
                 quarkus.appconfigdata.config.update-interval=1H
+                expression.sm=${sm::sm}
+                expression.ssm=${ssm::/ssm}
+                quarkus.secretsmanager.expression.cache-ttl=PT1H
+                quarkus.ssm.expression.cache-ttl=PT1H
                 """);
         for (String service : new String[] { "ssm", "secretsmanager", "appconfigdata" }) {
             properties.append("""
@@ -96,7 +100,7 @@ public class AwsConfigurationDevModeTest {
     }
 
     private static String snapshot(int value, int marker, int source) {
-        return (value + "|").repeat(3) + marker + "|source-" + source;
+        return (value + "|").repeat(5) + marker + "|source-" + source;
     }
 
     private static Set<Thread> pollers() {
