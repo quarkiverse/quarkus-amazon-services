@@ -6,52 +6,57 @@ import java.util.concurrent.TimeoutException;
 
 import org.jboss.logging.Logger;
 
+import io.quarkiverse.amazon.common.config.FetchFailure;
 import software.amazon.awssdk.awscore.exception.AwsServiceException;
 import software.amazon.awssdk.core.exception.ApiCallAttemptTimeoutException;
 import software.amazon.awssdk.core.exception.ApiCallTimeoutException;
 import software.amazon.awssdk.core.exception.SdkClientException;
 
-/** Safe diagnostics for config loading; SDK and parser messages can contain configuration values or tokens. */
-public enum ConfigSourceFailure {
-    MISSING,
-    ACCESS_DENIED,
-    TRANSIENT,
-    INVALID_CONTENT,
-    PARTIAL_RESPONSE,
-    OTHER;
+/**
+ * Classifies AWS SDK exceptions without exposing their messages, which may contain values or tokens.
+ * Kept in common/runtime because it depends on the SDK; common/config uses the SDK-independent FetchFailure.
+ */
+public final class ConfigSourceFailure {
+    private ConfigSourceFailure() {
+    }
 
-    public static ConfigSourceFailure classify(Exception failure) {
+    public static FetchFailure classify(Exception failure) {
         if (failure instanceof IllegalArgumentException || failure instanceof CharacterCodingException
                 || failure.getCause() instanceof CharacterCodingException) {
-            return INVALID_CONTENT;
+            return FetchFailure.INVALID_CONTENT;
         }
         if (failure instanceof AwsServiceException service) {
-            String code = service.awsErrorDetails() == null ? "" : service.awsErrorDetails().errorCode();
+            String code = service.awsErrorDetails() == null ? null : service.awsErrorDetails().errorCode();
+            if (code == null || code.isBlank()) {
+                code = service.getClass().getSimpleName();
+            }
             if (service.statusCode() == 403 || "AccessDeniedException".equals(code) || "AccessDenied".equals(code)
                     || "KMSAccessDeniedException".equals(code)) {
-                return ACCESS_DENIED;
+                return FetchFailure.ACCESS_DENIED;
             }
             if (service.statusCode() == 404 || "ResourceNotFoundException".equals(code)
                     || "ParameterNotFound".equals(code)) {
-                return MISSING;
+                return FetchFailure.MISSING;
             }
-            if (service.isThrottlingException() || service.statusCode() >= 500) {
-                return TRANSIENT;
+            if (service.isThrottlingException() || service.statusCode() == 429 || service.statusCode() >= 500
+                    || "ThrottlingException".equals(code) || "InternalServerException".equals(code)) {
+                return FetchFailure.TRANSIENT;
             }
         }
-        if (failure instanceof ApiCallTimeoutException || failure instanceof ApiCallAttemptTimeoutException
+        if (failure instanceof IOException || failure instanceof TimeoutException
+                || failure instanceof ApiCallTimeoutException || failure instanceof ApiCallAttemptTimeoutException
                 || failure instanceof SdkClientException client && client.retryable()
                 || failure.getCause() instanceof IOException || failure.getCause() instanceof TimeoutException) {
-            return TRANSIENT;
+            return FetchFailure.TRANSIENT;
         }
-        return OTHER;
+        return FetchFailure.OTHER;
     }
 
-    public void log(Logger logger, String operation) {
-        if (this == TRANSIENT || this == MISSING || this == PARTIAL_RESPONSE) {
-            logger.warnf("%s [%s]", operation, this);
+    public static void log(FetchFailure failure, Logger logger, String operation) {
+        if (failure == FetchFailure.TRANSIENT || failure == FetchFailure.MISSING || failure == FetchFailure.PARTIAL_RESPONSE) {
+            logger.warnf("%s [%s]", operation, failure);
         } else {
-            logger.errorf("%s [%s]", operation, this);
+            logger.errorf("%s [%s]", operation, failure);
         }
     }
 }

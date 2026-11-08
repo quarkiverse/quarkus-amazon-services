@@ -40,11 +40,10 @@ public class SecretsManagerConfigSourceFactory implements
         secretsManagerConfig.format().checkAvailable();
         var clientConfig = getClientConfig(configSourceContext);
 
-        try (SecretsManagerClient client = build(clientConfig)) {
-            Map<String, String> lookup = secretsManagerConfig.secrets();
-            return Collections
-                    .singletonList(new SecretsManagerConfigSource(client, lookup, ORDINAL, secretsManagerConfig.format()));
-        }
+        SecretsManagerClient client = build(clientConfig);
+        Map<String, String> lookup = secretsManagerConfig.secrets();
+        return Collections
+                .singletonList(new SecretsManagerConfigSource(client, lookup, ORDINAL, secretsManagerConfig.format()));
     }
 
     SecretsManagerClient build(SecretsManagerConfig config) throws RuntimeException {

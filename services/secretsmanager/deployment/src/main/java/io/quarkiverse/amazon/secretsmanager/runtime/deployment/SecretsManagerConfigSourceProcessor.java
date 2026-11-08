@@ -1,6 +1,8 @@
 package io.quarkiverse.amazon.secretsmanager.runtime.deployment;
 
+import io.quarkiverse.amazon.common.config.AwsConfigSourceCloser;
 import io.quarkiverse.amazon.secretsmanager.runtime.SecretsManagerConfigSourceBuilder;
+import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
@@ -18,5 +20,10 @@ public class SecretsManagerConfigSourceProcessor {
     @BuildStep
     void awsSecretsManagerConfigFactory(BuildProducer<RunTimeConfigBuilderBuildItem> runTimeConfigBuilder) {
         runTimeConfigBuilder.produce(new RunTimeConfigBuilderBuildItem(SecretsManagerConfigSourceBuilder.class.getName()));
+    }
+
+    @BuildStep
+    AdditionalBeanBuildItem secretsManagerConfigSourceCloser() {
+        return AdditionalBeanBuildItem.unremovableOf(AwsConfigSourceCloser.class);
     }
 }

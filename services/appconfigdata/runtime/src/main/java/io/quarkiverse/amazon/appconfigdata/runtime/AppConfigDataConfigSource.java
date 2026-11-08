@@ -140,7 +140,7 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
             String initialToken = session.initialConfigurationToken();
             return initialToken;
         } catch (Exception ex) {
-            ConfigSourceFailure.classify(ex).log(LOG, "Unable to start AppConfig configuration session");
+            ConfigSourceFailure.log(ConfigSourceFailure.classify(ex), LOG, "Unable to start AppConfig configuration session");
             return null;
         }
     }
@@ -186,7 +186,7 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
             entriesRef.set(Collections.unmodifiableMap(new LinkedHashMap<>(parsed)));
             LOG.debugf("ConfigSource now exposes %d entries from AWS AppConfig Data.", parsed.size());
         } catch (Exception ex) {
-            ConfigSourceFailure.classify(ex).log(LOG,
+            ConfigSourceFailure.log(ConfigSourceFailure.classify(ex), LOG,
                     "Unable to fetch or parse AppConfig configuration; keeping the previous snapshot");
         }
     }

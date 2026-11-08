@@ -12,6 +12,7 @@ import java.util.OptionalInt;
 import org.eclipse.microprofile.config.spi.ConfigSource;
 import org.jboss.logging.Logger;
 
+import io.quarkiverse.amazon.common.config.AbstractAwsConfigSource;
 import io.quarkiverse.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkiverse.amazon.common.runtime.AmazonClientConfig;
 import io.quarkiverse.amazon.common.runtime.ClientUtil;
@@ -40,6 +41,10 @@ public class SsmConfigSourceFactory implements ConfigSourceFactory.ConfigurableC
             return Collections.emptyList();
         }
 
+        Duration interval = ssmConfig.updateIntervalMinutes() != 0 ? Duration.ofMinutes(ssmConfig.updateIntervalMinutes())
+                : ssmConfig.updateInterval();
+        AbstractAwsConfigSource.validateUpdateInterval(interval);
+
         Optional<String> pathOpt = ssmConfig.path().filter(p -> !isBlank(p));
         List<String> names = sanitizeNames(ssmConfig.names().orElse(List.of()));
 
@@ -52,9 +57,6 @@ public class SsmConfigSourceFactory implements ConfigSourceFactory.ConfigurableC
         ssmConfig.format().checkAvailable();
         SsmConfig clientConfig = getClientConfig(configSourceContext);
         SsmClient client = build(clientConfig);
-
-        Duration interval = ssmConfig.updateIntervalMinutes() > 0 ? Duration.ofMinutes(ssmConfig.updateIntervalMinutes())
-                : ssmConfig.updateInterval();
 
         return Collections.singletonList(new SsmConfigSource(client, pathOpt.orElse(null), names, ssmConfig.recursive(),
                 ssmConfig.withDecryption(), interval, ORDINAL, ssmConfig.format()));
