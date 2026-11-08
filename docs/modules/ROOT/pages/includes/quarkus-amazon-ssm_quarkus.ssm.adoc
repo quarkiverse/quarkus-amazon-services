@@ -393,6 +393,27 @@ endif::add-copy-button-to-env-var[]
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ssm_quarkus-ssm[icon:question-circle[title=More information about the Duration format]]
 |`+++PT0S+++`
 
+a| [[quarkus-amazon-ssm_quarkus-ssm-expression-cache-ttl]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-expression-cache-ttl[`+++quarkus.ssm.expression.cache-ttl+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.expression.cache-ttl+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Successful expression reads are cached for this duration. Zero disables caching; negative durations are rejected.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_EXPRESSION_CACHE_TTL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_EXPRESSION_CACHE_TTL+++`
+endif::add-copy-button-to-env-var[]
+--
+|link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ssm_quarkus-ssm[icon:question-circle[title=More information about the Duration format]]
+|`+++5M+++`
+
 a| [[quarkus-amazon-ssm_quarkus-ssm-config-entries-entries-path]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-entries-entries-path[`+++quarkus.ssm.config.entries."entries".path+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.ssm.config.entries."entries".path+++[]

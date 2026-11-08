@@ -15,7 +15,7 @@ public class ConfigurationReloadResource {
     @Produces("text/plain")
     public String snapshot() {
         var config = ConfigProvider.getConfig();
-        return Stream.of("ssm", "sm", "appconfig", "reload.marker")
+        return Stream.of("ssm", "sm", "appconfig", "expression.sm", "expression.ssm", "reload.marker")
                 .map(key -> config.getValue(key, String.class)).collect(Collectors.joining("|"))
                 + "|source-0";
     }

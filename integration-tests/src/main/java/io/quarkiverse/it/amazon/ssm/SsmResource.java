@@ -59,6 +59,30 @@ public class SsmResource {
     @ConfigProperty(name = "db2.port", defaultValue = "N/A")
     Provider<String> db2Port;
 
+    @ConfigProperty(name = "test.ssm.expression")
+    String expressionInitial;
+
+    @ConfigProperty(name = "test.ssm.expression")
+    Provider<String> expressionDynamic;
+
+    @ConfigProperty(name = "test.ssm.expression-json")
+    String expressionJson;
+
+    @GET
+    @Path("expressions")
+    @Produces(TEXT_PLAIN)
+    public String expressions() {
+        return expressionInitial + "|" + expressionDynamic.get() + "|" + expressionJson;
+    }
+
+    @PUT
+    @Path("expressions")
+    @Consumes(TEXT_PLAIN)
+    public void updateExpression(String value) {
+        ssmClient.putParameter(request -> request.name("/expression/parameter").value(value).type(ParameterType.SECURE_STRING)
+                .overwrite(true));
+    }
+
     @GET
     @Path("sync")
     @Produces(TEXT_PLAIN)

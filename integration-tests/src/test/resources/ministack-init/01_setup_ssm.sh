@@ -1,5 +1,10 @@
 #!/bin/bash
 awslocal ssm put-parameter \
+    --name "/expression/parameter" \
+    --value "initial" \
+    --type SecureString
+
+awslocal ssm put-parameter \
     --name "/pgsql/user" \
     --value "quarkus" \
     --type String

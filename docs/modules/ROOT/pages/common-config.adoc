@@ -12,6 +12,9 @@ Start with the task you need, then follow the corresponding service guide to sel
 |<<config-sources,Load a set of application properties>>
 |ConfigSource
 |Values are available at startup; supported providers can refresh them periodically
+|<<expressions,Read one remote value or a JSON field>>
+|`${sm::...}` / `${ssm::...}` expressions
+|Assign the result to a local property; successful reads are cached for five minutes by default
 |===
 
 [[providers]]
@@ -35,6 +38,10 @@ Start with the task you need, then follow the corresponding service guide to sel
 |Optional polling
 |Optional polling
 |Optional polling, subject to AWS minimum intervals
+|Read individual values
+|`${ssm::name}`, including version/label selectors
+|`${sm::secret-id}`, reading `AWSCURRENT`
+|Not provided
 |===
 
 Choose SSM for parameter hierarchies, AppConfig Data for deployed
@@ -68,6 +75,48 @@ String greeting;
 `greeting` contains `Hello from AWS`. SSM removes the selected path from the property name.
 For documents, multiple selections or another provider, follow the <<providers,service examples>>.
 These values can configure runtime properties, not build-time settings or the AWS connection used to load them.
+
+[[expressions]]
+== Read an individual secret or parameter
+
+With the Secrets Manager extension installed and <<bootstrap-clients,AWS access configured>>, create:
+
+* Secret `prod/api-key` containing `example-key`.
+* Secret `prod/database` containing `{"username":"app_user","password":"database-password"}`.
+
+Assign the remote values to local application properties:
+
+[source,properties]
+----
+myapp.api-key=${sm::prod/api-key}
+myapp.database.password=${sm::prod/database#/password}
+----
+
+Reading `myapp.api-key` returns `example-key`; reading `myapp.database.password` returns `database-password`.
+You do not need to enable the Secrets Manager ConfigSource. Use `${ssm::/parameter/name}` for SSM instead.
+Unused expressions do not make AWS requests.
+Keep a local property name such as `myapp.api-key` so you can override it per profile or environment.
+
+Without `++#/...++`, the entire remote text is returned unchanged. Use a JSON Pointer such as `++#/users/0/password++` to select
+a string, number or boolean. Following https://www.rfc-editor.org/rfc/rfc6901.html[JSON Pointer (RFC 6901)],
+escape `/` in a key as `++~1++` and `++~++` as `++~0++`: `++#/a~1b++` selects the key `a/b`. Missing keys, JSON null, objects, arrays and invalid
+JSON fail resolution. Returned text is not expanded as another expression.
+
+To fetch on every resolution instead of using the default five-minute cache:
+
+[source,properties]
+----
+quarkus.secretsmanager.expression.cache-ttl=0S
+# For SSM expressions, use quarkus.ssm.expression.cache-ttl
+----
+
+Use <<dynamic-reads,dynamic lookups>> for later reads; disabling the cache does not update an already injected `String`.
+With caching enabled, a lookup can reuse an older value until its cache entry expires. The cache holds at most 256
+resources; using more can cause earlier re-fetches. Use consistent resource names/ARNs to avoid redundant reads.
+A failed resolution throws an error rather than returning an expired cached value; a later lookup can retry.
+`config.fail-on-missing-config=false` does not suppress expression errors. Expressions cannot supply build-time settings
+or the AWS connection settings needed to resolve them.
+Resolving a value that is not cached waits for an AWS response.
 
 [[dynamic-reads]]
 == Read updated values
@@ -146,7 +195,7 @@ Set an explicit format for properties or YAML documents: neither provider detect
 [[bootstrap-clients]]
 == Configure access to AWS
 
-For ConfigSources, use the default service's AWS settings, not named-client settings. For example:
+For ConfigSources and expressions, use the default service's AWS settings, not named-client settings. For example:
 
 [source,properties]
 ----
@@ -164,9 +213,10 @@ For another service, replace `quarkus.ssm` with its prefix.
 
 [IMPORTANT]
 ====
-ConfigSources do not support `aws.credentials.type=custom` (CDI-provided credentials).
+ConfigSources and expressions do not support `aws.credentials.type=custom` (CDI-provided credentials).
 Configure their AWS access without depending on values they must load. Their reads always use the bundled URL Connection
 transport: connection/socket timeouts and `sync-client.tls-*`
 settings apply, while `sync-client.type` and Apache/CRT-specific options do not. Configured execution interceptors and
-extension telemetry are not applied to these reads.
+extension telemetry are not applied to these reads. Expressions default to a 10-second call timeout and a 3-second attempt
+timeout when those settings are absent.
 ====

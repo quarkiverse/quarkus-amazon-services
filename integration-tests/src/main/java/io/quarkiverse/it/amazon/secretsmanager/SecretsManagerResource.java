@@ -6,7 +6,10 @@ import java.util.UUID;
 import java.util.concurrent.CompletionStage;
 
 import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 
@@ -46,6 +49,29 @@ public class SecretsManagerResource {
 
     @ConfigProperty(name = "db.port", defaultValue = "N/A")
     String dbPort;
+
+    @ConfigProperty(name = "test.sm.expression")
+    String expressionInitial;
+
+    @ConfigProperty(name = "test.sm.expression")
+    Provider<String> expressionDynamic;
+
+    @ConfigProperty(name = "test.sm.expression-json")
+    String expressionJson;
+
+    @GET
+    @Path("expressions")
+    @Produces(TEXT_PLAIN)
+    public String expressions() {
+        return expressionInitial + "|" + expressionDynamic.get() + "|" + expressionJson;
+    }
+
+    @PUT
+    @Path("expressions")
+    @Consumes(TEXT_PLAIN)
+    public void updateExpression(String value) {
+        secretsManagerClient.putSecretValue(request -> request.secretId("expression-secret").secretString(value));
+    }
 
     @GET
     @Path("sync")
