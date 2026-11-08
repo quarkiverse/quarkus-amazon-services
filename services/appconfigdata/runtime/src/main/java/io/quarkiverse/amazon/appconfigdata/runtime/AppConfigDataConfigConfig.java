@@ -1,12 +1,16 @@
 package io.quarkiverse.amazon.appconfigdata.runtime;
 
 import java.time.Duration;
+import java.util.Map;
 import java.util.Optional;
 
 import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
+import io.quarkus.runtime.annotations.ConfigGroup;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.quarkus.runtime.configuration.DurationConverter;
 import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithConverter;
 import io.smallrye.config.WithDefault;
 
 @ConfigMapping(prefix = "quarkus.appconfigdata.config")
@@ -19,6 +23,38 @@ public interface AppConfigDataConfigConfig {
      */
     @WithDefault("false")
     boolean enabled();
+
+    /** Fail startup if configuration cannot be loaded completely, including missing resources, access or decoding errors. */
+    @WithDefault("true")
+    boolean failOnMissingConfig();
+
+    /** Config source ordinal; higher values take precedence. Defaults between .env and application.properties. */
+    @WithDefault("270")
+    int ordinal();
+
+    /** Named profiles, combined with the legacy application/environment/configuration-profile selection. */
+    Map<String, ProfileEntry> entries();
+
+    @ConfigGroup
+    interface ProfileEntry {
+        /** AppConfig application ID or name. */
+        String application();
+
+        /** AppConfig environment ID or name. */
+        String environment();
+
+        /** AppConfig configuration profile ID or name. */
+        String configurationProfile();
+
+        /** Optional target property/prefix. Allows raw text and non-null JSON scalars when non-empty. */
+        Optional<String> prefix();
+
+        /** Document format; defaults to the source-wide format. */
+        Optional<ConfigSourceFormat> format();
+
+        /** Session minimum from 15 to 86400 seconds; defaults to the source-wide setting, or 60 seconds. */
+        Optional<Integer> requiredMinimumPollIntervalInSeconds();
+    }
 
     /**
      * AppConfig application ID or name for
@@ -41,7 +77,7 @@ public interface AppConfigDataConfigConfig {
     /**
      * Format of the configuration document. Auto detects JSON objects/arrays, then YAML by Content-Type,
      * otherwise using Java properties. YAML requires the quarkus-config-yaml extension.
-     * Raw values and non-null JSON scalars require a target name, which this document source does not provide.
+     * To use raw values or non-null JSON scalars, configure a named entry with a non-empty prefix.
      */
     @WithDefault("auto")
     ConfigSourceFormat format();
@@ -67,6 +103,7 @@ public interface AppConfigDataConfigConfig {
      * Set to or greater than {@code PT1S} to enable periodic polling.
      */
     @WithDefault("PT0S")
+    @WithConverter(DurationConverter.class)
     Duration updateInterval();
 
 }

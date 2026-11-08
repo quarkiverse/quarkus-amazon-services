@@ -16,10 +16,14 @@ import java.util.Set;
 import java.util.function.Function;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import io.quarkiverse.amazon.appconfigdata.runtime.AppConfigDataProvider.Profile;
 import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
+import io.smallrye.config.ConfigSourceContext;
 import io.smallrye.config.SmallRyeConfigBuilder;
+import io.smallrye.config.common.MapBackedConfigSource;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.services.appconfigdata.AppConfigDataClient;
@@ -29,6 +33,77 @@ import software.amazon.awssdk.services.appconfigdata.model.StartConfigurationSes
 import software.amazon.awssdk.services.appconfigdata.model.StartConfigurationSessionResponse;
 
 class AppConfigDataConfigSourceProtocolTest {
+    @ParameterizedTest
+    @ValueSource(strings = { "1H", "PT1H", "3600" })
+    void bootstrapMappingAcceptsQuarkusPollingDurations(String value) {
+        var config = new SmallRyeConfigBuilder().withMapping(AppConfigDataConfigConfig.class)
+                .withDefaultValue("quarkus.appconfigdata.config.update-interval", value).build();
+        assertEquals(Duration.ofHours(1), config.getConfigMapping(AppConfigDataConfigConfig.class).updateInterval());
+    }
+
+    @Test
+    void legacyAndNamedProfilesShareSessionsButKeepPrefixesFormatsAndMinima() {
+        var mapping = new SmallRyeConfigBuilder().withMapping(AppConfigDataConfigConfig.class)
+                .withDefaultValue("quarkus.appconfigdata.config.enabled", "true")
+                .withDefaultValue("quarkus.appconfigdata.config.application", "app")
+                .withDefaultValue("quarkus.appconfigdata.config.environment", "env")
+                .withDefaultValue("quarkus.appconfigdata.config.configuration-profile", "A")
+                .withDefaultValue("quarkus.appconfigdata.config.required-minimum-poll-interval-in-seconds", "15")
+                .withSources(new MapBackedConfigSource("test", Map.ofEntries(
+                        Map.entry("quarkus.appconfigdata.config.entries.copy.application", "app"),
+                        Map.entry("quarkus.appconfigdata.config.entries.copy.environment", "env"),
+                        Map.entry("quarkus.appconfigdata.config.entries.copy.configuration-profile", "A"),
+                        Map.entry("quarkus.appconfigdata.config.entries.copy.prefix", "opaque"),
+                        Map.entry("quarkus.appconfigdata.config.entries.copy.format", "raw"),
+                        Map.entry("quarkus.appconfigdata.config.entries.copy.required-minimum-poll-interval-in-seconds", "30"),
+                        Map.entry("quarkus.appconfigdata.config.entries.other.application", "app"),
+                        Map.entry("quarkus.appconfigdata.config.entries.other.environment", "env"),
+                        Map.entry("quarkus.appconfigdata.config.entries.other.configuration-profile", "B"),
+                        Map.entry("quarkus.appconfigdata.config.entries.other.prefix", "settings"),
+                        Map.entry("quarkus.appconfigdata.config.entries.other.format", "yaml"))) {
+                })
+                .build().getConfigMapping(AppConfigDataConfigConfig.class);
+        var client = new ProtocolClient();
+        var minima = new HashMap<String, Integer>();
+        client.start = request -> {
+            minima.put(request.configurationProfileIdentifier(), request.requiredMinimumPollIntervalInSeconds());
+            return StartConfigurationSessionResponse.builder()
+                    .initialConfigurationToken(request.configurationProfileIdentifier()).build();
+        };
+        client.latest = request -> response(request.configurationToken().equals("A") ? "{\"enabled\":true}" : "b: 1", "next");
+        var factory = new AppConfigDataConfigSourceFactory() {
+            AppConfigDataConfig getClientConfig(ConfigSourceContext context) {
+                return null;
+            }
+
+            AppConfigDataClient build(AppConfigDataConfig config) {
+                return client;
+            }
+        };
+        var source = factory.getConfigSources(null, mapping).iterator().next();
+        assertEquals("true", source.getValue("enabled"));
+        assertEquals("{\"enabled\":true}", source.getValue("opaque"));
+        assertEquals("1", source.getValue("settings.b"));
+        assertEquals(Map.of("A", 30, "B", 15), minima);
+        assertEquals(2, client.starts);
+        assertEquals(2, client.used.size());
+        assertEquals(1, client.closes);
+    }
+
+    @Test
+    void namedProfileDoesNotRequireLegacyIdentifiers() {
+        var mapping = new SmallRyeConfigBuilder().withMapping(AppConfigDataConfigConfig.class)
+                .withDefaultValue("quarkus.appconfigdata.config.entries.main.application", "app")
+                .withDefaultValue("quarkus.appconfigdata.config.entries.main.environment", "env")
+                .withDefaultValue("quarkus.appconfigdata.config.entries.main.configuration-profile", "A")
+                .build().getConfigMapping(AppConfigDataConfigConfig.class);
+        var selections = AppConfigDataConfigSourceFactory.selections(mapping);
+        assertEquals(1, selections.size());
+        assertEquals("A", selections.getFirst().profile().configurationProfile());
+        assertEquals("", selections.getFirst().prefix());
+        assertEquals(ConfigSourceFormat.AUTO, selections.getFirst().format());
+    }
+
     @Test
     void partialCycleRetainsChangedProfileWhenItsNextResponseIsUnchanged() {
         var client = new ProtocolClient();
@@ -96,7 +171,13 @@ class AppConfigDataConfigSourceProtocolTest {
         var builder = new SmallRyeConfigBuilder().withMapping(AppConfigDataConfigConfig.class)
                 .withDefaultValue("quarkus.appconfigdata.config.enabled", "true");
         var missing = builder.build().getConfigMapping(AppConfigDataConfigConfig.class);
-        assertFalse(new AppConfigDataConfigSourceFactory().getConfigSources(null, missing).iterator().hasNext());
+        assertThrows(IllegalArgumentException.class,
+                () -> new AppConfigDataConfigSourceFactory().getConfigSources(null, missing));
+        var optional = new SmallRyeConfigBuilder().withMapping(AppConfigDataConfigConfig.class)
+                .withDefaultValue("quarkus.appconfigdata.config.enabled", "true")
+                .withDefaultValue("quarkus.appconfigdata.config.fail-on-missing-config", "false")
+                .build().getConfigMapping(AppConfigDataConfigConfig.class);
+        assertFalse(new AppConfigDataConfigSourceFactory().getConfigSources(null, optional).iterator().hasNext());
         var invalid = new SmallRyeConfigBuilder().withMapping(AppConfigDataConfigConfig.class)
                 .withDefaultValue("quarkus.appconfigdata.config.enabled", "true")
                 .withDefaultValue("quarkus.appconfigdata.config.application", "app")
@@ -111,6 +192,42 @@ class AppConfigDataConfigSourceProtocolTest {
 
     private Profile profile(String name) {
         return new Profile("app", "env", name, null);
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = { false, true })
+    void factoryAppliesStartupPolicyAndOrdinal(boolean required) {
+        var mapping = new SmallRyeConfigBuilder().withMapping(AppConfigDataConfigConfig.class)
+                .withDefaultValue("quarkus.appconfigdata.config.enabled", "true")
+                .withDefaultValue("quarkus.appconfigdata.config.application", "app")
+                .withDefaultValue("quarkus.appconfigdata.config.environment", "env")
+                .withDefaultValue("quarkus.appconfigdata.config.configuration-profile", "profile")
+                .withDefaultValue("quarkus.appconfigdata.config.ordinal", "301")
+                .withDefaultValue("quarkus.appconfigdata.config.fail-on-missing-config", Boolean.toString(required))
+                .build().getConfigMapping(AppConfigDataConfigConfig.class);
+        var client = new ProtocolClient();
+        client.start = request -> {
+            throw software.amazon.awssdk.services.appconfigdata.model.ResourceNotFoundException.builder()
+                    .message("unsafe token").build();
+        };
+        var factory = new AppConfigDataConfigSourceFactory() {
+            AppConfigDataConfig getClientConfig(ConfigSourceContext context) {
+                return null;
+            }
+
+            AppConfigDataClient build(AppConfigDataConfig config) {
+                return client;
+            }
+        };
+        if (required) {
+            var failure = assertThrows(IllegalStateException.class, () -> factory.getConfigSources(null, mapping));
+            assertEquals("Unable to load quarkus.appconfigdata.config [MISSING]", failure.getMessage());
+        } else {
+            var source = factory.getConfigSources(null, mapping).iterator().next();
+            assertEquals(301, source.getOrdinal());
+            assertTrue(source.getPropertyNames().isEmpty());
+        }
+        assertEquals(1, client.closes);
     }
 
     private static GetLatestConfigurationResponse response(String body, String token) {

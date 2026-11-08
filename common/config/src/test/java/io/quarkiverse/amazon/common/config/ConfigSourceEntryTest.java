@@ -61,6 +61,17 @@ class ConfigSourceEntryTest {
         }
     }
 
+    @Test
+    void unprefixedAutoSecretDocumentsAreFlattenedRatherThanDiscarded() {
+        var entry = new ConfigSourceEntry("secret", id, "", ConfigSourceFormat.AUTO, false);
+        assertEquals(Map.of("feature.enabled", "true"),
+                entry.decode(RawDocument.text(id, "{\"feature\":{\"enabled\":true}}", null, null)));
+        assertEquals(Map.of("[0].name", "first"), entry.decode(RawDocument.text(id, "[{\"name\":\"first\"}]", null, null)));
+        assertEquals(Map.of(), entry.decode(RawDocument.text(id, "{}", null, null)));
+        assertThrows(IllegalArgumentException.class, () -> entry.decode(RawDocument.text(id, "raw secret", null, null)));
+        assertThrows(IllegalArgumentException.class, () -> entry.decode(RawDocument.text(id, "{invalid", null, null)));
+    }
+
     @ParameterizedTest
     @EnumSource(ConfigSourceFormat.class)
     void anInitiallyAbsentDocumentIsEmptyRegardlessOfDeclaredFormat(ConfigSourceFormat format) {

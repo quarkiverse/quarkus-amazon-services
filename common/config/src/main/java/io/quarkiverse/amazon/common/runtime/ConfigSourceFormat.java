@@ -40,7 +40,19 @@ public enum ConfigSourceFormat {
             return Map.of();
         }
         return switch (this) {
-            case AUTO -> JsonConfigFlattener.expandValue(prefix, content);
+            case AUTO -> {
+                if (prefix.isEmpty()) {
+                    String trimmed = content.trim();
+                    if (trimmed.isEmpty()) {
+                        yield Map.of();
+                    }
+                    if (!trimmed.startsWith("{") && !trimmed.startsWith("[")) {
+                        throw new IllegalArgumentException("Automatic scalar configuration requires a non-empty target name.");
+                    }
+                    yield JSON.decode("", content);
+                }
+                yield JsonConfigFlattener.expandValue(prefix, content);
+            }
             case RAW -> {
                 if (prefix.isEmpty()) {
                     throw new IllegalArgumentException("Raw configuration requires a non-empty target name.");

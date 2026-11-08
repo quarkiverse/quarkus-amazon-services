@@ -1,0 +1,158 @@
+= Configuration from AWS
+
+Use SSM, Secrets Manager or AppConfig Data to supply application properties.
+Start with the task you need, then follow the corresponding service guide to select resources and grant AWS permissions.
+
+[[choose-a-mode]]
+== Choose what you want to configure
+
+[cols="2,1,2",options="header"]
+|===
+|Your goal |Use |What to expect
+|<<config-sources,Load a set of application properties>>
+|ConfigSource
+|Values are available at startup; supported providers can refresh them periodically
+|===
+
+[[providers]]
+== Choose a provider
+
+[cols="1,2,2,2",options="header"]
+|===
+|Capability
+|xref:amazon-ssm.adoc#configuration[SSM Parameter Store]
+|xref:amazon-secretsmanager.adoc#configuration[Secrets Manager]
+|xref:amazon-appconfigdata.adoc#configuration[AppConfig Data]
+|Load properties from
+|Parameter names or hierarchies
+|Explicit secret names/ARNs
+|Deployed application/environment/configuration profiles
+|Default format selection
+|JSON objects/arrays, otherwise raw text under the parameter key
+|JSON objects/arrays, otherwise raw text under the target prefix
+|JSON objects/arrays, then YAML Content-Type, otherwise Java properties
+|Refresh properties
+|Optional polling
+|Optional polling
+|Optional polling, subject to AWS minimum intervals
+|===
+
+Choose SSM for parameter hierarchies, AppConfig Data for deployed
+configuration profiles. The service guides provide the exact selection properties and IAM actions.
+
+[[config-sources]]
+== Load application properties
+
+For example, load a greeting from SSM:
+
+. Add `io.quarkiverse.amazonservices:quarkus-amazon-ssm` to your application.
+. Create parameter `/myapp/prod/greeting` with value `Hello from AWS` and
+  <<bootstrap-clients,configure access to AWS>>.
+. Add the following to `application.properties`:
+
+[source,properties]
+----
+quarkus.ssm.config.enabled=true
+quarkus.ssm.config.path=/myapp/prod/
+----
+
+Inject the resulting property in a CDI bean:
+
+[source,java]
+----
+@Inject
+@ConfigProperty(name = "greeting")
+String greeting;
+----
+
+`greeting` contains `Hello from AWS`. SSM removes the selected path from the property name.
+For documents, multiple selections or another provider, follow the <<providers,service examples>>.
+These values can configure runtime properties, not build-time settings or the AWS connection used to load them.
+
+[[dynamic-reads]]
+== Read updated values
+
+Polling is off by default. To refresh the SSM greeting above, add:
+
+[source,properties]
+----
+quarkus.ssm.config.update-interval=30S
+----
+
+Read the property through `Provider<T>` rather than keeping an injected `String`:
+
+[source,java]
+----
+@Inject
+@ConfigProperty(name = "greeting")
+Provider<String> greeting;
+
+String message() {
+    return greeting.get();
+}
+----
+
+Use `jakarta.inject.Inject`, `jakarta.inject.Provider` and `org.eclipse.microprofile.config.inject.ConfigProperty`.
+After changing the parameter and a successful refresh, `message()` returns the new value. An injected `String` or an
+existing `@ConfigMapping` keeps its initial value. Alternatively, call `ConfigProvider.getConfig().getValue("greeting", String.class)`.
+
+Polling waits at least the configured interval after each completed read. AppConfig may impose a longer delay; follow its
+xref:amazon-appconfigdata.adoc#configuration[polling settings]. For Secrets Manager, set `config.update-interval` under the corresponding service prefix instead.
+Refreshing properties does not restart the application, reconfigure existing consumers or recycle connection pools.
+
+[[failure-policy]]
+== Choose startup and refresh behavior
+
+By default, a missing resource, denied access, invalid content or incomplete initial load prevents startup.
+To make the SSM source optional and provide a local fallback:
+
+[source,properties]
+----
+quarkus.ssm.config.fail-on-missing-config=false
+greeting=Hello locally
+----
+
+If the initial load fails, no remote properties from that source are used and `greeting` resolves to `Hello locally`.
+When loading succeeds, remote values take precedence over `application.properties` by default, but not environment
+variables or system properties. Adjust `quarkus.ssm.config.ordinal` (default `270`) to change that precedence;
+other providers use the corresponding service prefix. Invalid AWS connection settings still prevent startup.
+
+* A refresh failure leaves all previously loaded values from that source available; partial updates are not exposed.
+* Give entries distinct property names or prefixes. Duplicate keys within one source fail even when their values match.
+  Separate sources use normal configuration precedence.
+* Deleting an explicitly selected resource causes a load failure rather than removing its properties. Parameters removed
+  from an SSM path behave differently; see xref:amazon-ssm.adoc#path-polling[SSM polling].
+* Store related values in one document if they must come from the same version. Neither multiple reads nor batch APIs
+  guarantee a consistent version across different resources.
+
+[[formats]]
+== Choose document formats and property names
+
+Use UTF-8 content. Set `format=json`, `properties`, `yaml` or `raw` when you want an explicit interpretation instead of
+the defaults in the <<providers,provider table>>. SSM, Secrets Manager and AppConfig Data use `config.format` as the default
+for their entries; `entries.<name>.format` overrides it.
+For YAML, add `io.quarkus:quarkus-config-yaml`; selecting YAML without it fails.
+
+JSON/YAML documents expose nested keys with dots and arrays with indices. For example,
+`{"database":{"hosts":["db.example.com"]}}` with prefix `myapp` exposes `myapp.database.hosts[0]=db.example.com`.
+An entry name is not a prefix: configure `prefix` explicitly if needed. Properties documents expose their decoded keys.
+Use a non-empty target name/prefix for `raw` text or non-null JSON scalars. `raw` preserves the entire value without trimming;
+explicit JSON omits nulls and empty objects/arrays.
+
+With SSM/Secrets Manager `auto` and a target key, malformed or empty JSON objects/arrays are returned as raw text;
+JSON scalars keep their quotes and spaces. Without a target, non-empty raw or malformed content is rejected.
+Set an explicit format for properties or YAML documents: neither provider detects them automatically.
+
+[[bootstrap-clients]]
+== Configure access to AWS
+
+Use the default service's AWS settings, not named-client settings. For example:
+
+[source,properties]
+----
+quarkus.ssm.aws.region=eu-west-1
+----
+
+Use the application's AWS credentials provider chain. Grant access only to the selected resources, plus KMS decrypt
+permissions where needed; the service guides list the IAM actions. For a local emulator, also set the service's
+`endpoint-override`. For another service, replace `quarkus.ssm` with its prefix.

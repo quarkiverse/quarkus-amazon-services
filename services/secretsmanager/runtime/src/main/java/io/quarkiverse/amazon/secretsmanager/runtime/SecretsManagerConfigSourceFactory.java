@@ -3,11 +3,14 @@ package io.quarkiverse.amazon.secretsmanager.runtime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.OptionalInt;
 
 import org.eclipse.microprofile.config.spi.ConfigSource;
+import org.jboss.logging.Logger;
 
+import io.quarkiverse.amazon.common.config.AbstractAwsConfigSource;
+import io.quarkiverse.amazon.common.config.ConfigSourceEntry;
+import io.quarkiverse.amazon.common.config.ResourceId;
 import io.quarkiverse.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkiverse.amazon.common.runtime.AmazonClientConfig;
 import io.quarkiverse.amazon.common.runtime.ClientUtil;
@@ -37,13 +40,36 @@ public class SecretsManagerConfigSourceFactory implements
             return Collections.emptyList();
         }
 
+        var interval = secretsManagerConfig.updateInterval();
+        AbstractAwsConfigSource.validateUpdateInterval(interval);
+
         secretsManagerConfig.format().checkAvailable();
+        var entries = entries(secretsManagerConfig);
+        if (entries.isEmpty()) {
+            if (secretsManagerConfig.failOnMissingConfig()) {
+                throw new IllegalArgumentException(
+                        "Secrets Manager ConfigSource requires entries or secrets; implicit listing is not supported.");
+            }
+            Logger.getLogger(SecretsManagerConfigSourceFactory.class)
+                    .warn("Secrets Manager ConfigSource has no configured entries or secrets; skipping it.");
+            return Collections.emptyList();
+        }
+        entries.forEach(entry -> entry.format().checkAvailable());
         var clientConfig = getClientConfig(configSourceContext);
 
         SecretsManagerClient client = build(clientConfig);
-        Map<String, String> lookup = secretsManagerConfig.secrets();
         return Collections
-                .singletonList(new SecretsManagerConfigSource(client, lookup, ORDINAL, secretsManagerConfig.format()));
+                .singletonList(new SecretsManagerConfigSource(client, entries, secretsManagerConfig.ordinal(),
+                        secretsManagerConfig.failOnMissingConfig(), interval));
+    }
+
+    static List<ConfigSourceEntry> entries(SecretsManagerConfigConfig config) {
+        var entries = new ArrayList<ConfigSourceEntry>();
+        config.secrets().forEach((prefix, secret) -> entries.add(
+                new ConfigSourceEntry("secrets:" + prefix, new ResourceId(secret), prefix, config.format(), false)));
+        config.entries().forEach((name, entry) -> entries.add(new ConfigSourceEntry("entries:" + name,
+                new ResourceId(entry.secretId()), entry.prefix().orElse(""), entry.format().orElse(config.format()), false)));
+        return List.copyOf(entries);
     }
 
     SecretsManagerClient build(SecretsManagerConfig config) throws RuntimeException {

@@ -1,7 +1,6 @@
 package io.quarkiverse.amazon.secretsmanager.runtime;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -12,7 +11,7 @@ import io.quarkiverse.amazon.common.config.ResourceId;
 import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
 
-/** Loads a complete startup snapshot, fetching each mapped secret only once. Owns the supplied client. */
+/** Loads complete snapshots, fetching each mapped secret once per read. Owns the supplied client. */
 public class SecretsManagerConfigSource extends AbstractAwsConfigSource {
     public SecretsManagerConfigSource(SecretsManagerClient client, Map<String, String> lookup, int ordinal) {
         this(client, lookup, ordinal, ConfigSourceFormat.AUTO);
@@ -20,24 +19,30 @@ public class SecretsManagerConfigSource extends AbstractAwsConfigSource {
 
     public SecretsManagerConfigSource(SecretsManagerClient client, Map<String, String> lookup, int ordinal,
             ConfigSourceFormat format) {
-        super("quarkus.secretsmanager.config", ordinal, new SecretsManagerConfigProvider(client, List.copyOf(lookup.values())),
-                entries(lookup, format), Duration.ZERO, "quarkus-amazon-secretsmanager-config-poll");
+        this(client, lookup, ordinal, format, false);
     }
 
-    private static Function<ResourceId, List<ConfigSourceEntry>> entries(Map<String, String> lookup,
-            ConfigSourceFormat format) {
-        Map<String, String> mappings = Map.copyOf(lookup);
-        return id -> {
-            if (mappings.isEmpty()) {
-                return List.of(new ConfigSourceEntry(id.value(), id, id.value(), format, false));
-            }
-            List<ConfigSourceEntry> entries = new ArrayList<>();
-            mappings.forEach((prefix, secretId) -> {
-                if (secretId.equals(id.value())) {
-                    entries.add(new ConfigSourceEntry(prefix, id, prefix, format, false));
-                }
-            });
-            return entries;
-        };
+    public SecretsManagerConfigSource(SecretsManagerClient client, Map<String, String> lookup, int ordinal,
+            ConfigSourceFormat format, boolean failOnMissingConfig) {
+        this(client, lookup.entrySet().stream().map(entry -> new ConfigSourceEntry(entry.getKey(),
+                new ResourceId(entry.getValue()), entry.getKey(), format, false)).toList(), ordinal, failOnMissingConfig);
+    }
+
+    public SecretsManagerConfigSource(SecretsManagerClient client, List<ConfigSourceEntry> entries, int ordinal,
+            boolean failOnMissingConfig) {
+        this(client, entries, ordinal, failOnMissingConfig, Duration.ZERO);
+    }
+
+    public SecretsManagerConfigSource(SecretsManagerClient client, List<ConfigSourceEntry> entries, int ordinal,
+            boolean failOnMissingConfig, Duration updateInterval) {
+        super("quarkus.secretsmanager.config", ordinal,
+                new SecretsManagerConfigProvider(client, entries.stream().map(entry -> entry.resource().value()).toList()),
+                entries(entries), updateInterval,
+                "quarkus-amazon-secretsmanager-config-poll", failOnMissingConfig);
+    }
+
+    private static Function<ResourceId, List<ConfigSourceEntry>> entries(List<ConfigSourceEntry> entries) {
+        var configured = List.copyOf(entries);
+        return id -> configured.stream().filter(entry -> entry.resource().equals(id)).toList();
     }
 }

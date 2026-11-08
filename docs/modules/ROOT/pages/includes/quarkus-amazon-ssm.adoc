@@ -179,6 +179,48 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-fail-on-missing-config]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-fail-on-missing-config[`+++quarkus.ssm.config.fail-on-missing-config+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.fail-on-missing-config+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Fail startup if configuration cannot be loaded completely, including missing resources, access or decoding errors.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_FAIL_ON_MISSING_CONFIG+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_FAIL_ON_MISSING_CONFIG+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++true+++`
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-ordinal]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-ordinal[`+++quarkus.ssm.config.ordinal+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.ordinal+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Config source ordinal; higher values take precedence. Defaults between .env and application.properties.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_ORDINAL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_ORDINAL+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++270+++`
+
 a| [[quarkus-amazon-ssm_quarkus-ssm-config-path]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-path[`+++quarkus.ssm.config.path+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.ssm.config.path+++[]
@@ -199,6 +241,48 @@ endif::add-copy-button-to-env-var[]
 --
 |string
 |
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-path-prefixed-paths]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-path-prefixed-paths[`+++quarkus.ssm.config.path."prefixed-paths"+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.path."prefixed-paths"+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Additional paths keyed by their configuration prefix, alongside the legacy scalar path.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_PATH__PREFIXED_PATHS_+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_PATH__PREFIXED_PATHS_+++`
+endif::add-copy-button-to-env-var[]
+--
+|Map<String,String>
+|
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-key-naming]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-key-naming[`+++quarkus.ssm.config.key-naming+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.key-naming+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Path key naming. Relative is the default; full preserves the complete parameter name. Explicit names always use full names.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_KEY_NAMING+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_KEY_NAMING+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`relative`, `full`
+|`+++relative+++`
 
 a| [[quarkus-amazon-ssm_quarkus-ssm-config-names]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-names[`+++quarkus.ssm.config.names+++`]##
 ifdef::add-copy-button-to-config-props[]
@@ -308,6 +392,90 @@ endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-ssm_quarkus-ssm[icon:question-circle[title=More information about the Duration format]]
 |`+++PT0S+++`
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-entries-entries-path]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-entries-entries-path[`+++quarkus.ssm.config.entries."entries".path+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.entries."entries".path+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Parameter Store hierarchy to load.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_ENTRIES__ENTRIES__PATH+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_ENTRIES__ENTRIES__PATH+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-entries-entries-prefix]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-entries-entries-prefix[`+++quarkus.ssm.config.entries."entries".prefix+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.entries."entries".prefix+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Optional prefix prepended to the exposed keys.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_ENTRIES__ENTRIES__PREFIX+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_ENTRIES__ENTRIES__PREFIX+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-entries-entries-format]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-entries-entries-format[`+++quarkus.ssm.config.entries."entries".format+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.entries."entries".format+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Value format; defaults to the source-wide format.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_ENTRIES__ENTRIES__FORMAT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_ENTRIES__ENTRIES__FORMAT+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`auto`, `raw`, `json`, `properties`, `yaml`
+|
+
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-entries-entries-recursive]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-entries-entries-recursive[`+++quarkus.ssm.config.entries."entries".recursive+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.entries."entries".recursive+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Load nested parameters; defaults to the source-wide recursive setting.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_ENTRIES__ENTRIES__RECURSIVE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_ENTRIES__ENTRIES__RECURSIVE+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|
 
 a| [[quarkus-amazon-ssm_quarkus-ssm-config-update-interval-minutes]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-update-interval-minutes[[.line-through]#`+++quarkus.ssm.config.update-interval-minutes+++`#]##
 ifdef::add-copy-button-to-config-props[]

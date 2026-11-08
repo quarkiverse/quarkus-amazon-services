@@ -24,6 +24,7 @@ public class AppConfigDataConfigSourceCloserTest {
     static final QuarkusExtensionTest config = new QuarkusExtensionTest()
             .overrideConfigKey("quarkus.devservices.enabled", "false")
             .overrideConfigKey("quarkus.appconfigdata.config.enabled", "true")
+            .overrideConfigKey("quarkus.appconfigdata.config.fail-on-missing-config", "false")
             .overrideConfigKey("quarkus.appconfigdata.config.application", "app")
             .overrideConfigKey("quarkus.appconfigdata.config.environment", "env")
             .overrideConfigKey("quarkus.appconfigdata.config.configuration-profile", "profile")

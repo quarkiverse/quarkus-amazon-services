@@ -43,15 +43,16 @@ public class AwsConfigurationDevModeTest {
                 quarkus.ssm.config.enabled=true
                 quarkus.ssm.config.names[0]=/ssm
                 quarkus.ssm.config.format=raw
-                quarkus.ssm.config.update-interval=PT1H
+                quarkus.ssm.config.update-interval=1H
                 quarkus.secretsmanager.config.enabled=true
+                quarkus.secretsmanager.config.update-interval=1H
                 quarkus.secretsmanager.config.secrets.sm=sm
                 quarkus.secretsmanager.config.format=raw
                 quarkus.appconfigdata.config.enabled=true
                 quarkus.appconfigdata.config.application=application
                 quarkus.appconfigdata.config.environment=environment
                 quarkus.appconfigdata.config.configuration-profile=profile
-                quarkus.appconfigdata.config.update-interval=PT1H
+                quarkus.appconfigdata.config.update-interval=1H
                 """);
         for (String service : new String[] { "ssm", "secretsmanager", "appconfigdata" }) {
             properties.append("""
@@ -71,7 +72,7 @@ public class AwsConfigurationDevModeTest {
         given().get("/reload").then().statusCode(200).body(is(snapshot(0, 0, 0)));
         for (int next = 1; next <= 3; next++) {
             Set<Thread> previous = pollers();
-            assertEquals(2, previous.size(), "SSM and AppConfig must each have exactly one poller");
+            assertEquals(3, previous.size(), "Each AWS source must have exactly one poller");
             generation.set(next);
             int previousMarker = next == 3 ? 1 : next - 1;
             int previousSource = next == 3 ? 2 : 0;
@@ -89,7 +90,7 @@ public class AwsConfigurationDevModeTest {
             int source = next >= 2 ? 2 : 0;
             given().get("/reload").then().statusCode(200).body(is(snapshot(next, marker, source)));
             await().atMost(Duration.ofSeconds(10)).until(() -> previous.stream().noneMatch(Thread::isAlive));
-            assertEquals(2, pollers().size(), "Reload must not accumulate polling threads");
+            assertEquals(3, pollers().size(), "Reload must not accumulate polling threads");
         }
         assertTrue(unexpectedRequests.isEmpty(), unexpectedRequests::toString);
     }

@@ -20,6 +20,7 @@ import java.util.logging.LogRecord;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
 
@@ -73,6 +74,62 @@ class AbstractAwsConfigSourceTest {
         var document = RawDocument.text(id, "été", null, null);
         assertEquals(Map.of("target", "été"),
                 new ConfigSourceEntry("target", id, "target", ConfigSourceFormat.RAW, false).decode(document));
+    }
+
+    @ParameterizedTest
+    @EnumSource(FetchFailure.class)
+    void requiredStartupRejectsBothResourceAndBatchFailuresAndClosesProvider(FetchFailure failure) {
+        for (boolean batch : List.of(false, true)) {
+            var provider = new StubProvider(new FetchResult(Map.of(), Set.of(), Set.of(),
+                    batch ? Map.of() : Map.of(id, failure), batch ? failure : null, Duration.ZERO));
+            var error = assertThrows(IllegalStateException.class,
+                    () -> new Source(provider, Duration.ofHours(1), true));
+            assertEquals("Unable to load test [" + failure + "]", error.getMessage());
+            assertNull(error.getCause());
+            assertEquals(1, provider.calls);
+            assertEquals(1, provider.closed);
+        }
+    }
+
+    @Test
+    void optionalStartupCanRecoverAndRequiredRefreshStillPreservesSnapshot() {
+        var missing = new FetchResult(Map.of(), Set.of(), Set.of(), Map.of(id, FetchFailure.MISSING), null, Duration.ZERO);
+        try (var source = new Source(new StubProvider(missing, result("recovered", Duration.ZERO)), Duration.ofHours(1),
+                false)) {
+            assertTrue(source.getPropertyNames().isEmpty());
+            source.refresh();
+            assertEquals("recovered", source.getValue("target"));
+        }
+        try (var source = new Source(new StubProvider(result("old", Duration.ZERO), missing), Duration.ofHours(1), true)) {
+            source.refresh();
+            assertEquals("old", source.getValue("target"));
+        }
+    }
+
+    @Test
+    void invalidUtf8FailsRequiredStartupWithoutLeakingContent() {
+        var provider = new StubProvider(new FetchResult(Map.of(id, new RawDocument(id, new byte[] { (byte) 0xff }, null, null)),
+                Set.of(), Set.of(), Map.of(), null, Duration.ZERO));
+        var error = assertThrows(IllegalStateException.class, () -> new Source(provider, Duration.ZERO, true));
+        assertEquals("Unable to load test [INVALID_CONTENT]", error.getMessage());
+        assertNull(error.getCause());
+        assertEquals(1, provider.closed);
+    }
+
+    @Test
+    void unexpectedFetchAndCloseErrorsCannotLeakThroughStartupException() {
+        var error = assertThrows(IllegalStateException.class, () -> new Source(new AwsConfigProvider() {
+            public FetchResult fetchAll() {
+                throw new IllegalStateException("unsafe token");
+            }
+
+            public void close() {
+                throw new IllegalStateException("unsafe secret");
+            }
+        }, Duration.ZERO, true));
+        assertEquals("Unable to load test [OTHER]", error.getMessage());
+        assertNull(error.getCause());
+        assertEquals(0, error.getSuppressed().length);
     }
 
     @Test
@@ -149,9 +206,13 @@ class AbstractAwsConfigSourceTest {
 
     private final class Source extends AbstractAwsConfigSource {
         Source(AwsConfigProvider provider, Duration interval) {
+            this(provider, interval, false);
+        }
+
+        Source(AwsConfigProvider provider, Duration interval, boolean required) {
             super("test", 275, provider,
                     key -> List.of(new ConfigSourceEntry("target", key, "target", ConfigSourceFormat.RAW, false)),
-                    interval, "test-config-poll");
+                    interval, "test-config-poll", required);
         }
     }
 

@@ -6,7 +6,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.OptionalInt;
 
 import org.eclipse.microprofile.config.spi.ConfigSource;
@@ -16,6 +15,8 @@ import io.quarkiverse.amazon.common.config.AbstractAwsConfigSource;
 import io.quarkiverse.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkiverse.amazon.common.runtime.AmazonClientConfig;
 import io.quarkiverse.amazon.common.runtime.ClientUtil;
+import io.quarkiverse.amazon.ssm.runtime.SsmConfigProvider.Path;
+import io.quarkiverse.amazon.ssm.runtime.SsmConfigSource.Selection;
 import io.smallrye.config.ConfigSourceContext;
 import io.smallrye.config.ConfigSourceFactory;
 import io.smallrye.config.SmallRyeConfig;
@@ -45,21 +46,38 @@ public class SsmConfigSourceFactory implements ConfigSourceFactory.ConfigurableC
                 : ssmConfig.updateInterval();
         AbstractAwsConfigSource.validateUpdateInterval(interval);
 
-        Optional<String> pathOpt = ssmConfig.path().filter(p -> !isBlank(p));
+        var paths = selections(ssmConfig);
         List<String> names = sanitizeNames(ssmConfig.names().orElse(List.of()));
 
-        if (pathOpt.isEmpty() && names.isEmpty()) {
+        if (paths.isEmpty() && names.isEmpty()) {
+            if (ssmConfig.failOnMissingConfig()) {
+                throw new IllegalArgumentException(
+                        "SSM ConfigSource requires entries, path or names.");
+            }
             LOG.error(
-                    "SSM ConfigSource is enabled but neither quarkus.ssm.config.path nor quarkus.ssm.config.names is set.");
+                    "SSM ConfigSource is enabled but no entries, path or names are configured.");
             return Collections.emptyList();
         }
 
         ssmConfig.format().checkAvailable();
+        paths.forEach(selection -> selection.format().checkAvailable());
         SsmConfig clientConfig = getClientConfig(configSourceContext);
         SsmClient client = build(clientConfig);
 
-        return Collections.singletonList(new SsmConfigSource(client, pathOpt.orElse(null), names, ssmConfig.recursive(),
-                ssmConfig.withDecryption(), interval, ORDINAL, ssmConfig.format()));
+        return Collections.singletonList(new SsmConfigSource(client, paths, names, ssmConfig.withDecryption(), interval,
+                ssmConfig.ordinal(), ssmConfig.format(), ssmConfig.keyNaming(), ssmConfig.failOnMissingConfig()));
+    }
+
+    static List<Selection> selections(SsmConfigConfig config) {
+        var paths = new ArrayList<Selection>();
+        config.path().filter(p -> !isBlank(p)).ifPresent(path -> paths.add(
+                new Selection("path", new Path(path, config.recursive()), "", config.format())));
+        config.prefixedPaths().forEach((prefix, path) -> paths.add(
+                new Selection("path:" + prefix, new Path(path, config.recursive()), prefix, config.format())));
+        config.entries().forEach((name, entry) -> paths.add(new Selection("entries:" + name,
+                new Path(entry.path(), entry.recursive().orElse(config.recursive())), entry.prefix().orElse(""),
+                entry.format().orElse(config.format()))));
+        return List.copyOf(paths);
     }
 
     private static List<String> sanitizeNames(List<String> names) {

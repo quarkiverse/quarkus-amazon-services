@@ -47,16 +47,16 @@ public class SsmResource {
     String postgresUrl;
 
     // Injected values from JSON secrets (flattened) and fetched recursively
-    @ConfigProperty(name = "app-db-config.db1.host", defaultValue = "N/A")
+    @ConfigProperty(name = "db1.host", defaultValue = "N/A")
     String db1Host;
 
-    @ConfigProperty(name = "app-db-config.db1.port", defaultValue = "N/A")
+    @ConfigProperty(name = "db1.port", defaultValue = "N/A")
     String db1Port;
 
-    @ConfigProperty(name = "app-db-config.db2.host", defaultValue = "N/A")
+    @ConfigProperty(name = "db2.host", defaultValue = "N/A")
     Provider<String> db2Host;
 
-    @ConfigProperty(name = "app-db-config.db2.port", defaultValue = "N/A")
+    @ConfigProperty(name = "db2.port", defaultValue = "N/A")
     Provider<String> db2Port;
 
     @GET

@@ -181,6 +181,48 @@ endif::add-copy-button-to-env-var[]
 |boolean
 |`+++false+++`
 
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-fail-on-missing-config]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-fail-on-missing-config[`+++quarkus.appconfigdata.config.fail-on-missing-config+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.fail-on-missing-config+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Fail startup if configuration cannot be loaded completely, including missing resources, access or decoding errors.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_FAIL_ON_MISSING_CONFIG+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_FAIL_ON_MISSING_CONFIG+++`
+endif::add-copy-button-to-env-var[]
+--
+|boolean
+|`+++true+++`
+
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-ordinal]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-ordinal[`+++quarkus.appconfigdata.config.ordinal+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.ordinal+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Config source ordinal; higher values take precedence. Defaults between .env and application.properties.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_ORDINAL+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_ORDINAL+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|`+++270+++`
+
 a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-application]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-application[`+++quarkus.appconfigdata.config.application+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.appconfigdata.config.application+++[]
@@ -252,7 +294,7 @@ endif::add-copy-button-to-config-props[]
 
 [.description]
 --
-Format of the configuration document. Auto detects JSON objects/arrays, then YAML by Content-Type, otherwise using Java properties. YAML requires the quarkus-config-yaml extension. Raw values and non-null JSON scalars require a target name, which this document source does not provide.
+Format of the configuration document. Auto detects JSON objects/arrays, then YAML by Content-Type, otherwise using Java properties. YAML requires the quarkus-config-yaml extension. To use raw values or non-null JSON scalars, configure a named entry with a non-empty prefix.
 
 
 ifdef::add-copy-button-to-env-var[]
@@ -308,6 +350,132 @@ endif::add-copy-button-to-env-var[]
 --
 |link:https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html[Duration] link:#duration-note-anchor-quarkus-amazon-appconfigdata_quarkus-appconfigdata[icon:question-circle[title=More information about the Duration format]]
 |`+++PT0S+++`
+
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-entries-entries-application]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-entries-entries-application[`+++quarkus.appconfigdata.config.entries."entries".application+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.entries."entries".application+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+AppConfig application ID or name.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_ENTRIES__ENTRIES__APPLICATION+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_ENTRIES__ENTRIES__APPLICATION+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-entries-entries-environment]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-entries-entries-environment[`+++quarkus.appconfigdata.config.entries."entries".environment+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.entries."entries".environment+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+AppConfig environment ID or name.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_ENTRIES__ENTRIES__ENVIRONMENT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_ENTRIES__ENTRIES__ENVIRONMENT+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-entries-entries-configuration-profile]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-entries-entries-configuration-profile[`+++quarkus.appconfigdata.config.entries."entries".configuration-profile+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.entries."entries".configuration-profile+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+AppConfig configuration profile ID or name.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_ENTRIES__ENTRIES__CONFIGURATION_PROFILE+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_ENTRIES__ENTRIES__CONFIGURATION_PROFILE+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|required icon:exclamation-circle[title=Configuration property is required]
+
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-entries-entries-prefix]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-entries-entries-prefix[`+++quarkus.appconfigdata.config.entries."entries".prefix+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.entries."entries".prefix+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Optional target property/prefix. Allows raw text and non-null JSON scalars when non-empty.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_ENTRIES__ENTRIES__PREFIX+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_ENTRIES__ENTRIES__PREFIX+++`
+endif::add-copy-button-to-env-var[]
+--
+|string
+|
+
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-entries-entries-format]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-entries-entries-format[`+++quarkus.appconfigdata.config.entries."entries".format+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.entries."entries".format+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Document format; defaults to the source-wide format.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_ENTRIES__ENTRIES__FORMAT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_ENTRIES__ENTRIES__FORMAT+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`auto`, `raw`, `json`, `properties`, `yaml`
+|
+
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-entries-entries-required-minimum-poll-interval-in-seconds]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-entries-entries-required-minimum-poll-interval-in-seconds[`+++quarkus.appconfigdata.config.entries."entries".required-minimum-poll-interval-in-seconds+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.entries."entries".required-minimum-poll-interval-in-seconds+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Session minimum from 15 to 86400 seconds; defaults to the source-wide setting, or 60 seconds.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_ENTRIES__ENTRIES__REQUIRED_MINIMUM_POLL_INTERVAL_IN_SECONDS+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_ENTRIES__ENTRIES__REQUIRED_MINIMUM_POLL_INTERVAL_IN_SECONDS+++`
+endif::add-copy-button-to-env-var[]
+--
+|int
+|
 
 a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-update-interval-minutes]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-update-interval-minutes[[.line-through]#`+++quarkus.appconfigdata.config.update-interval-minutes+++`#]##
 ifdef::add-copy-button-to-config-props[]

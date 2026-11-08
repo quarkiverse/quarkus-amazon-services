@@ -1,7 +1,6 @@
 package io.quarkiverse.amazon.secretsmanager.runtime;
 
 import java.time.Duration;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -16,13 +15,11 @@ import io.quarkiverse.amazon.common.config.ResourceId;
 import io.quarkiverse.amazon.common.runtime.ConfigSourceFailure;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
-import software.amazon.awssdk.services.secretsmanager.model.ListSecretsRequest;
 
 /** One GetSecretValue per selected identity; no new batching permission is required. */
 public final class SecretsManagerConfigProvider implements AwsConfigProvider {
     private final SecretsManagerClient client;
     private final Set<String> secretIds;
-    private final Set<ResourceId> known = new HashSet<>();
 
     public SecretsManagerConfigProvider(SecretsManagerClient client, List<String> secretIds) {
         this.client = client;
@@ -33,41 +30,12 @@ public final class SecretsManagerConfigProvider implements AwsConfigProvider {
     public FetchResult fetchAll() {
         Map<ResourceId, RawDocument> updated = new LinkedHashMap<>();
         Map<ResourceId, FetchFailure> failed = new LinkedHashMap<>();
-        Set<ResourceId> selected = new HashSet<>();
-        FetchFailure batchFailure = null;
-        if (!secretIds.isEmpty()) {
-            secretIds.forEach(id -> fetch(id, updated, failed, selected));
-        } else {
-            // shortcut: legacy list-all selection remains until the explicit-selection migration in step 3.
-            try {
-                String nextToken = null;
-                do {
-                    var response = client.listSecrets(ListSecretsRequest.builder().nextToken(nextToken).build());
-                    for (var secret : response.secretList()) {
-                        if (!selected.contains(new ResourceId(secret.name()))) {
-                            fetch(secret.name(), updated, failed, selected);
-                        }
-                    }
-                    nextToken = response.nextToken();
-                } while (nextToken != null && !nextToken.isEmpty());
-            } catch (Exception e) {
-                batchFailure = classify(e);
-            }
-        }
-        Set<ResourceId> removed = new HashSet<>();
-        if (batchFailure == null) {
-            removed.addAll(known);
-            removed.removeAll(selected);
-            known.removeAll(removed);
-        }
-        known.addAll(selected);
-        return new FetchResult(updated, Set.of(), removed, failed, batchFailure, Duration.ZERO);
+        secretIds.forEach(id -> fetch(id, updated, failed));
+        return new FetchResult(updated, Set.of(), Set.of(), failed, null, Duration.ZERO);
     }
 
-    private void fetch(String secretId, Map<ResourceId, RawDocument> updated, Map<ResourceId, FetchFailure> failed,
-            Set<ResourceId> selected) {
+    private void fetch(String secretId, Map<ResourceId, RawDocument> updated, Map<ResourceId, FetchFailure> failed) {
         ResourceId id = new ResourceId(secretId);
-        selected.add(id);
         try {
             var response = client.getSecretValue(GetSecretValueRequest.builder().secretId(secretId).build());
             RawDocument raw = response.secretString() != null

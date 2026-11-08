@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 echo "#### Create Secrets Manager secrets ####"
+aws secretsmanager create-secret --name polling-secret --secret-string initial
 aws secretsmanager create-secret \
     --name pgsql/user \
     --secret-string "quarkus"
