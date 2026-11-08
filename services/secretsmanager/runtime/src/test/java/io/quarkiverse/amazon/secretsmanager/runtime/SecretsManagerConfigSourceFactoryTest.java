@@ -44,7 +44,7 @@ class SecretsManagerConfigSourceFactoryTest {
                 return null;
             }
 
-            SecretsManagerClient build(SecretsManagerConfig config) {
+            SecretsManagerClient build(SecretsManagerConfig config, ConfigSourceContext context) {
                 return client;
             }
         };
@@ -86,7 +86,7 @@ class SecretsManagerConfigSourceFactoryTest {
                 return null;
             }
 
-            SecretsManagerClient build(SecretsManagerConfig config) {
+            SecretsManagerClient build(SecretsManagerConfig config, ConfigSourceContext context) {
                 return client;
             }
         };

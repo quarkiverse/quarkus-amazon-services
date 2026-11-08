@@ -146,13 +146,27 @@ Set an explicit format for properties or YAML documents: neither provider detect
 [[bootstrap-clients]]
 == Configure access to AWS
 
-Use the default service's AWS settings, not named-client settings. For example:
+For ConfigSources, use the default service's AWS settings, not named-client settings. For example:
 
 [source,properties]
 ----
 quarkus.ssm.aws.region=eu-west-1
+quarkus.ssm.api-call-timeout=10S
+quarkus.ssm.api-call-attempt-timeout=3S
+quarkus.ssm.sync-client.connection-timeout=2S
+quarkus.ssm.sync-client.socket-timeout=3S
 ----
 
-Use the application's AWS credentials provider chain. Grant access only to the selected resources, plus KMS decrypt
-permissions where needed; the service guides list the IAM actions. For a local emulator, also set the service's
-`endpoint-override`. For another service, replace `quarkus.ssm` with its prefix.
+Use the application's AWS credentials provider chain or configure another supported `aws.credentials.type`.
+Grant access only to the selected resources, plus KMS decrypt permissions where needed; the service guides list the IAM actions.
+For a local emulator or a custom endpoint, also set the service's `endpoint-override`.
+For another service, replace `quarkus.ssm` with its prefix.
+
+[IMPORTANT]
+====
+ConfigSources do not support `aws.credentials.type=custom` (CDI-provided credentials).
+Configure their AWS access without depending on values they must load. Their reads always use the bundled URL Connection
+transport: connection/socket timeouts and `sync-client.tls-*`
+settings apply, while `sync-client.type` and Apache/CRT-specific options do not. Configured execution interceptors and
+extension telemetry are not applied to these reads.
+====

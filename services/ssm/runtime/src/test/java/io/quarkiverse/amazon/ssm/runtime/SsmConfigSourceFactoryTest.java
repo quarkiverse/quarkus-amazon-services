@@ -10,13 +10,17 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.Duration;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.microprofile.config.spi.ConfigSource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import io.smallrye.config.ConfigSourceContext;
+import io.smallrye.config.ConfigValue;
 import io.smallrye.config.SmallRyeConfigBuilder;
 import io.smallrye.config.common.MapBackedConfigSource;
 import software.amazon.awssdk.services.ssm.SsmClient;
@@ -33,6 +37,39 @@ class SsmConfigSourceFactoryTest {
         var config = new SmallRyeConfigBuilder().withMapping(SsmConfigConfig.class)
                 .withDefaultValue("quarkus.ssm.config.update-interval", value).build();
         assertEquals(Duration.ofHours(1), config.getConfigMapping(SsmConfigConfig.class).updateInterval());
+    }
+
+    @Test
+    void realBootstrapClientUsesSdkSettingsFromTheServiceConfiguration() {
+        var properties = new MapBackedConfigSource("test", Map.of(
+                "quarkus.ssm.aws.region", "us-east-1", "quarkus.ssm.aws.credentials.type", "anonymous",
+                "quarkus.ssm.api-call-timeout", "3S", "quarkus.ssm.api-call-attempt-timeout", "1S",
+                "quarkus.ssm.sync-client.type", "url", "quarkus.ssm.sync-client.socket-timeout", "2S")) {
+        };
+        var config = new SmallRyeConfigBuilder().withSources(properties).build();
+        var context = new ConfigSourceContext() {
+            public ConfigValue getValue(String name) {
+                return config.getConfigValue(name);
+            }
+
+            public Iterator<String> iterateNames() {
+                return config.getPropertyNames().iterator();
+            }
+
+            public List<ConfigSource> getConfigSources() {
+                return List.of(properties);
+            }
+
+            public List<String> getProfiles() {
+                return List.of();
+            }
+        };
+        var factory = new SsmConfigSourceFactory();
+        try (var client = factory.build(factory.getClientConfig(context), context)) {
+            var overrides = client.serviceClientConfiguration().overrideConfiguration();
+            assertEquals(Duration.ofSeconds(3), overrides.apiCallTimeout().orElseThrow());
+            assertEquals(Duration.ofSeconds(1), overrides.apiCallAttemptTimeout().orElseThrow());
+        }
     }
 
     @Test
@@ -158,7 +195,7 @@ class SsmConfigSourceFactoryTest {
                 return null;
             }
 
-            SsmClient build(SsmConfig config) {
+            SsmClient build(SsmConfig config, ConfigSourceContext context) {
                 return client;
             }
         };
@@ -181,7 +218,7 @@ class SsmConfigSourceFactoryTest {
                 return null;
             }
 
-            SsmClient build(SsmConfig config) {
+            SsmClient build(SsmConfig config, ConfigSourceContext context) {
                 return client;
             }
         };

@@ -58,7 +58,7 @@ class SecretsManagerConfigSourcePollingTest {
             }
 
             @Override
-            SecretsManagerClient build(SecretsManagerConfig config) {
+            SecretsManagerClient build(SecretsManagerConfig config, ConfigSourceContext context) {
                 return client;
             }
         };

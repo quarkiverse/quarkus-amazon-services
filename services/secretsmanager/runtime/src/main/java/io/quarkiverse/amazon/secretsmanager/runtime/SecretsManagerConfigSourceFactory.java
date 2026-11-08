@@ -11,14 +11,11 @@ import org.jboss.logging.Logger;
 import io.quarkiverse.amazon.common.config.AbstractAwsConfigSource;
 import io.quarkiverse.amazon.common.config.ConfigSourceEntry;
 import io.quarkiverse.amazon.common.config.ResourceId;
-import io.quarkiverse.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkiverse.amazon.common.runtime.AmazonClientConfig;
+import io.quarkiverse.amazon.common.runtime.AwsConfigSourceClient;
 import io.quarkiverse.amazon.common.runtime.ClientUtil;
 import io.smallrye.config.ConfigSourceContext;
 import io.smallrye.config.ConfigSourceFactory;
-import io.smallrye.config.SmallRyeConfig;
-import io.smallrye.config.SmallRyeConfigBuilder;
-import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClientBuilder;
 
@@ -57,7 +54,7 @@ public class SecretsManagerConfigSourceFactory implements
         entries.forEach(entry -> entry.format().checkAvailable());
         var clientConfig = getClientConfig(configSourceContext);
 
-        SecretsManagerClient client = build(clientConfig);
+        SecretsManagerClient client = build(clientConfig, configSourceContext);
         return Collections
                 .singletonList(new SecretsManagerConfigSource(client, entries, secretsManagerConfig.ordinal(),
                         secretsManagerConfig.failOnMissingConfig(), interval));
@@ -72,34 +69,20 @@ public class SecretsManagerConfigSourceFactory implements
         return List.copyOf(entries);
     }
 
-    SecretsManagerClient build(SecretsManagerConfig config) throws RuntimeException {
-        final SecretsManagerClientBuilder builder = SecretsManagerClient.builder()
-                .httpClientBuilder(UrlConnectionHttpClient.builder());
+    SecretsManagerClient build(SecretsManagerConfig config, ConfigSourceContext context) throws RuntimeException {
+        final SecretsManagerClientBuilder builder = SecretsManagerClient.builder();
 
         AmazonClientConfig defaultConfig = config.clients().get(ClientUtil.DEFAULT_CLIENT_NAME);
 
-        AmazonClientCommonRecorder.initAwsClient(builder, "secretsmanager", "secretsmanager", defaultConfig.aws(),
-                defaultConfig.aws());
-        AmazonClientCommonRecorder.initSdkClientEndpoint(builder, "secretsmanager", "secretsmanager", defaultConfig.sdk(),
-                defaultConfig.sdk());
+        AwsConfigSourceClient.configure(builder, "secretsmanager", defaultConfig, config.syncClient(), context);
 
         return builder.build();
     }
 
     SecretsManagerConfig getClientConfig(ConfigSourceContext context) {
 
-        List<String> profiles = new ArrayList<>(context.getProfiles());
-        Collections.reverse(profiles);
-
-        SmallRyeConfig config = new SmallRyeConfigBuilder()
-                .withProfiles(profiles)
-                .withSources(new ConfigSourceContext.ConfigSourceContextConfigSource(context))
-                .withSources(context.getConfigSources())
-                .withMapping(SecretsManagerConfig.class)
-                .withValidateUnknown(false)
-                .build();
-
-        return config.getConfigMapping(SecretsManagerConfig.class);
+        return AwsConfigSourceClient.configBuilder(context).withMapping(SecretsManagerConfig.class).build()
+                .getConfigMapping(SecretsManagerConfig.class);
     }
 
     @Override
