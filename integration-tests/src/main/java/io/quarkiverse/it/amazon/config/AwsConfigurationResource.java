@@ -2,6 +2,7 @@ package io.quarkiverse.it.amazon.config;
 
 import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import jakarta.inject.Inject;
@@ -12,7 +13,10 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 
+import org.eclipse.microprofile.config.ConfigProvider;
+
 import io.quarkiverse.amazon.common.config.AwsConfigSourceCloser;
+import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
 import io.quarkus.arc.Arc;
 import io.quarkus.credentials.CredentialsProvider;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
@@ -23,6 +27,27 @@ import software.amazon.awssdk.services.ssm.model.ParameterType;
 /** Test-only application endpoints; all credential values are synthetic fixtures. */
 @Path("/configuration")
 public class AwsConfigurationResource {
+    @GET
+    @Path("without-yaml")
+    public Map<String, String> withoutYaml() {
+        var values = new LinkedHashMap<String, String>();
+        values.put("raw", ConfigSourceFormat.RAW.decode("value", "raw").get("value"));
+        values.put("json", ConfigSourceFormat.JSON.decode("", "{\"value\":\"json\"}").get("value"));
+        values.put("properties", ConfigSourceFormat.PROPERTIES.decode("", "value=properties").get("value"));
+        try {
+            ConfigSourceFormat.YAML.checkAvailable();
+            values.put("yaml", "available");
+        } catch (IllegalArgumentException failure) {
+            values.put("yaml", failure.getMessage());
+        }
+        var config = ConfigProvider.getConfig();
+        values.put("s3", config.getValue("s3.test.properties.value", String.class));
+        values.put("ssm", config.getValue("db1.host", String.class));
+        values.put("secretsmanager", config.getValue("db.host", String.class));
+        values.put("appconfig", config.getValue("application", String.class));
+        return values;
+    }
+
     @Inject
     @Named("secretsmanager-credentials-provider")
     CredentialsProvider secrets;

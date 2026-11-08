@@ -11,10 +11,14 @@ import java.util.concurrent.CompletionStage;
 import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.UnsatisfiedResolutionException;
 import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 import io.quarkiverse.amazon.common.AmazonClient;
@@ -60,6 +64,41 @@ public class S3Resource {
 
     @Inject
     S3Presigner s3Presigner;
+
+    @Inject
+    @ConfigProperty(name = "s3.test.properties.value")
+    String initialConfig;
+
+    @Inject
+    @ConfigProperty(name = "s3.test.properties.value")
+    Provider<String> currentConfig;
+
+    @Inject
+    @ConfigProperty(name = "s3.test.json.port")
+    String jsonConfig;
+
+    @Inject
+    @ConfigProperty(name = "s3.test.yaml.value")
+    String yamlConfig;
+
+    @Inject
+    @ConfigProperty(name = "s3.test.explicit.value")
+    String explicitConfig;
+
+    @GET
+    @Path("config")
+    @Produces(TEXT_PLAIN)
+    public String config() {
+        return initialConfig + "|" + currentConfig.get() + "|" + jsonConfig + "|" + yamlConfig + "|" + explicitConfig;
+    }
+
+    @PUT
+    @Path("config")
+    @Consumes(TEXT_PLAIN)
+    public void updateConfig(String content) {
+        s3Client.putObject(request -> request.bucket("config-source-tests").key("application.properties")
+                .contentType("application/json"), RequestBody.fromString(content));
+    }
 
     /**
      * Dev Services creates the configured buckets again when it reuses a shared container: the second

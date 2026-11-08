@@ -1,3 +1,110 @@
+[[configuration]]
+== Load configuration from S3 objects
+
+Load application properties from objects in S3. See xref:common-config.adoc[Configuration from AWS] to compare
+providers, read properties in your application and configure AWS access.
+
+For example, upload this UTF-8 document as `config/application.json`:
+
+[source,json]
+----
+{"host":"database.example.com","port":5432}
+----
+
+Then configure a named entry in your local `application.properties`:
+
+[source,properties]
+----
+quarkus.s3.config.enabled=true
+quarkus.s3.config.entries.database.bucket=my-config-bucket
+quarkus.s3.config.entries.database.key=config/application.json
+quarkus.s3.config.entries.database.prefix=myapp.database
+
+# Explicit format overrides Content-Type and the key's extension
+quarkus.s3.config.entries.database.format=json
+
+# S3-specific defaults; polling is opt-in
+quarkus.s3.config.max-object-size=1M
+quarkus.s3.config.update-interval=PT0S
+----
+
+The document exposes `myapp.database.host` and `myapp.database.port`. Without a prefix it exposes `host` and `port`.
+Configure more entries under `quarkus.s3.config.entries.<name>` to combine objects, including objects in different buckets
+reachable with the same AWS credentials and region. Enter keys and version IDs exactly as stored: do not URL-encode
+spaces, `+`, `%`, `?` or `#`, and do not add a leading slash unless it belongs to the key.
+
+=== Formats and size limits
+
+For `auto` (the per-entry default), a recognized Content-Type takes precedence over the key's extension:
+
+* JSON: `application/json`, `text/json` or a media type ending in `+json`.
+* YAML: `application/yaml`, `application/x-yaml`, `text/yaml`, `text/x-yaml` or a media type ending in `+yaml`.
+* Properties: `text/x-java-properties`, `text/java-properties` or `application/x-java-properties`.
+* Otherwise, `.json`, `.properties`, `.yaml` or `.yml` selects the format (case-insensitive).
+
+Media type parameters such as `charset=utf-8` are ignored; the body must always be valid UTF-8.
+`text/plain` and `application/octet-stream` are ambiguous and fall back to the extension. Unrecognized formats fail rather
+than guessing from the body. If an upload tool sets an incorrect recognized Content-Type, use an explicit entry format.
+Set `quarkus.s3.config.format` to choose a default format for all entries; an entry can override it,
+including with `format=auto` to detect its format independently.
+For explicit formats, YAML dependencies and prefix requirements, see xref:common-config.adoc#formats[the shared format rules].
+A zero-byte object contributes no properties, removing its previous contribution after a successful refresh.
+Compressed files and arbitrary binary objects are not supported.
+
+Objects larger than 1 MiB are rejected by default. To allow objects up to 2 MiB, set `quarkus.s3.config.max-object-size=2M`.
+Choose a positive limit below 2 GiB. This limits each downloaded object, not the application's total memory usage;
+use a small number of configuration documents rather than large data files.
+
+=== Current objects, pinned versions and polling
+
+An entry without `version-id` reads the current object; bucket versioning is not required for this mode.
+To pin an immutable version:
+
+[source,properties]
+----
+quarkus.s3.config.entries.database.version-id=your-object-version-id
+----
+
+You can also supply the pin directly through an environment variable:
+
+[source,shell]
+----
+export QUARKUS_S3_CONFIG_ENTRIES__DATABASE__VERSION_ID=your-object-version-id
+----
+
+Use a real version ID from a versioned bucket. The literal `null` version ID is rejected because S3 can overwrite that
+version in an unversioned or versioning-suspended bucket; it is not an immutable pin. Omit `version-id` to follow such objects.
+
+After a pinned version loads successfully, the application keeps those values even if a newer version is uploaded.
+Polling only follows current objects, not successfully loaded pins. To use a different pinned version, change `version-id`
+and restart the application.
+
+Polling is disabled by default. Set `quarkus.s3.config.update-interval=30S` to enable it (minimum one second).
+Unchanged objects are not downloaded again, but update checks still make AWS requests and may incur charges.
+Use one document or coordinated version pins when a release must be consistent across files.
+See xref:common-config.adoc#failure-policy[startup and refresh behavior] and
+xref:common-config.adoc#dynamic-reads[dynamic reads] for publication and update behavior.
+
+=== Client settings and permissions
+
+Configure xref:common-config.adoc#bootstrap-clients[AWS access] with the default `quarkus.s3` settings.
+Set a socket timeout to stop a stalled object download:
+
+[source,properties]
+----
+quarkus.s3.aws.region=eu-west-1
+quarkus.s3.api-call-timeout=10S
+quarkus.s3.api-call-attempt-timeout=3S
+# Fail a body read that stalls for more than 3 seconds
+quarkus.s3.sync-client.socket-timeout=3S
+# For a local S3-compatible endpoint, also configure endpoint-override and path-style-access
+----
+
+Grant `s3:GetObject` for current reads and `s3:GetObjectVersion` for pinned versions, scoped to the selected objects,
+plus the appropriate KMS permissions for SSE-KMS. No `ListBucket` permission is required to fetch explicit objects, but
+without it S3 can return `403` rather than `404` for a missing key; diagnostics cannot reliably distinguish those cases.
+SSE-S3/SSE-KMS decryption is handled by S3; customer-provided SSE-C keys and automatic archive restoration are not supported.
+
 == S3 Transfer Manager
 
 The https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/transfer-manager.html[S3 Transfer Manager] is a high-level utility of the AWS SDK on top of the asynchronous S3 client.

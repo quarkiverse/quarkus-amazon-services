@@ -17,6 +17,11 @@
     <dependencies>
         <dependency>
             <groupId>io.quarkiverse.amazonservices</groupId>
+            <artifactId>quarkus-amazon-s3-deployment</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.amazonservices</groupId>
             <artifactId>quarkus-amazon-ssm-deployment</artifactId>
             <scope>test</scope>
         </dependency>

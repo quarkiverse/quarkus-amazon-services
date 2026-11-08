@@ -5,6 +5,9 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 
+import java.time.Duration;
+
+import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.common.DevServicesContext;
@@ -14,6 +17,16 @@ import io.restassured.RestAssured;
 @QuarkusTest
 public class AmazonS3Test {
     DevServicesContext context;
+
+    @Test
+    public void configurationLoadsFilesAndDynamicReadsObservePollingUnlikeInitialInjection() {
+        RestAssured.when().get("/test/s3/config").then().statusCode(200)
+                .body(is("initial|initial|5432|yaml|explicit"));
+        RestAssured.given().contentType("text/plain").body("{\"value\":\"rotated\"}")
+                .put("/test/s3/config").then().statusCode(204);
+        Awaitility.await().atMost(Duration.ofSeconds(15)).untilAsserted(() -> RestAssured.when().get("/test/s3/config")
+                .then().statusCode(200).body(is("initial|rotated|5432|yaml|explicit")));
+    }
 
     /**
      * Replays what the S3 Dev Services processor does when it reuses a shared container whose buckets already
