@@ -30,13 +30,24 @@ public class SecretsManagerConfigSource extends AbstractAwsConfigSource {
 
     public SecretsManagerConfigSource(SecretsManagerClient client, List<ConfigSourceEntry> entries, int ordinal,
             boolean failOnMissingConfig) {
-        this(client, entries, ordinal, failOnMissingConfig, Duration.ZERO);
+        this(client, entries, ordinal, failOnMissingConfig, false);
     }
 
     public SecretsManagerConfigSource(SecretsManagerClient client, List<ConfigSourceEntry> entries, int ordinal,
             boolean failOnMissingConfig, Duration updateInterval) {
+        this(client, entries, ordinal, failOnMissingConfig, false, updateInterval);
+    }
+
+    public SecretsManagerConfigSource(SecretsManagerClient client, List<ConfigSourceEntry> entries, int ordinal,
+            boolean failOnMissingConfig, boolean batchRetrieval) {
+        this(client, entries, ordinal, failOnMissingConfig, batchRetrieval, Duration.ZERO);
+    }
+
+    public SecretsManagerConfigSource(SecretsManagerClient client, List<ConfigSourceEntry> entries, int ordinal,
+            boolean failOnMissingConfig, boolean batchRetrieval, Duration updateInterval) {
         super("quarkus.secretsmanager.config", ordinal,
-                new SecretsManagerConfigProvider(client, entries.stream().map(entry -> entry.resource().value()).toList()),
+                new SecretsManagerConfigProvider(client, entries.stream().map(entry -> entry.resource().value()).toList(),
+                        batchRetrieval),
                 entries(entries), updateInterval,
                 "quarkus-amazon-secretsmanager-config-poll", failOnMissingConfig);
     }

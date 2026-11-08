@@ -57,7 +57,7 @@ public class SecretsManagerConfigSourceFactory implements
         SecretsManagerClient client = build(clientConfig, configSourceContext);
         return Collections
                 .singletonList(new SecretsManagerConfigSource(client, entries, secretsManagerConfig.ordinal(),
-                        secretsManagerConfig.failOnMissingConfig(), interval));
+                        secretsManagerConfig.failOnMissingConfig(), secretsManagerConfig.batchRetrieval(), interval));
     }
 
     static List<ConfigSourceEntry> entries(SecretsManagerConfigConfig config) {

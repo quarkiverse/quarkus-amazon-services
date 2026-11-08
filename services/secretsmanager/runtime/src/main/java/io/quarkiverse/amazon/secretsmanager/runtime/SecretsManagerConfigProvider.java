@@ -16,21 +16,34 @@ import io.quarkiverse.amazon.common.runtime.ConfigSourceFailure;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
 
-/** One GetSecretValue per selected identity; no new batching permission is required. */
+/** Explicit, deduplicated reads; batching is opt-in because it requires an additional IAM permission. */
 public final class SecretsManagerConfigProvider implements AwsConfigProvider {
     private final SecretsManagerClient client;
-    private final Set<String> secretIds;
+    private final List<String> secretIds;
+    private final boolean batchRetrieval;
 
     public SecretsManagerConfigProvider(SecretsManagerClient client, List<String> secretIds) {
+        this(client, secretIds, false);
+    }
+
+    public SecretsManagerConfigProvider(SecretsManagerClient client, List<String> secretIds, boolean batchRetrieval) {
         this.client = client;
-        this.secretIds = new LinkedHashSet<>(secretIds);
+        this.secretIds = List.copyOf(new LinkedHashSet<>(secretIds));
+        this.batchRetrieval = batchRetrieval;
     }
 
     @Override
     public FetchResult fetchAll() {
         Map<ResourceId, RawDocument> updated = new LinkedHashMap<>();
         Map<ResourceId, FetchFailure> failed = new LinkedHashMap<>();
-        secretIds.forEach(id -> fetch(id, updated, failed));
+        if (batchRetrieval) {
+            for (int start = 0; start < secretIds.size(); start += 20) {
+                SecretsManagerBatchReader.fetch(client, secretIds.subList(start, Math.min(start + 20, secretIds.size())),
+                        updated, failed);
+            }
+        } else {
+            secretIds.forEach(id -> fetch(id, updated, failed));
+        }
         return new FetchResult(updated, Set.of(), Set.of(), failed, null, Duration.ZERO);
     }
 
