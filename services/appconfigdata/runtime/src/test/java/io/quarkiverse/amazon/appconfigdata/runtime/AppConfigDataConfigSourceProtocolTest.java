@@ -76,7 +76,7 @@ class AppConfigDataConfigSourceProtocolTest {
                 return null;
             }
 
-            AppConfigDataClient build(AppConfigDataConfig config) {
+            AppConfigDataClient build(AppConfigDataConfig config, ConfigSourceContext context) {
                 return client;
             }
         };
@@ -215,7 +215,7 @@ class AppConfigDataConfigSourceProtocolTest {
                 return null;
             }
 
-            AppConfigDataClient build(AppConfigDataConfig config) {
+            AppConfigDataClient build(AppConfigDataConfig config, ConfigSourceContext context) {
                 return client;
             }
         };

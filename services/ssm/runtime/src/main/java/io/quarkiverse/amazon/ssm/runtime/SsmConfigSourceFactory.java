@@ -12,16 +12,13 @@ import org.eclipse.microprofile.config.spi.ConfigSource;
 import org.jboss.logging.Logger;
 
 import io.quarkiverse.amazon.common.config.AbstractAwsConfigSource;
-import io.quarkiverse.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkiverse.amazon.common.runtime.AmazonClientConfig;
+import io.quarkiverse.amazon.common.runtime.AwsConfigSourceClient;
 import io.quarkiverse.amazon.common.runtime.ClientUtil;
 import io.quarkiverse.amazon.ssm.runtime.SsmConfigProvider.Path;
 import io.quarkiverse.amazon.ssm.runtime.SsmConfigSource.Selection;
 import io.smallrye.config.ConfigSourceContext;
 import io.smallrye.config.ConfigSourceFactory;
-import io.smallrye.config.SmallRyeConfig;
-import io.smallrye.config.SmallRyeConfigBuilder;
-import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
 import software.amazon.awssdk.services.ssm.SsmClient;
 import software.amazon.awssdk.services.ssm.SsmClientBuilder;
 
@@ -62,7 +59,7 @@ public class SsmConfigSourceFactory implements ConfigSourceFactory.ConfigurableC
         ssmConfig.format().checkAvailable();
         paths.forEach(selection -> selection.format().checkAvailable());
         SsmConfig clientConfig = getClientConfig(configSourceContext);
-        SsmClient client = build(clientConfig);
+        SsmClient client = build(clientConfig, configSourceContext);
 
         return Collections.singletonList(new SsmConfigSource(client, paths, names, ssmConfig.withDecryption(), interval,
                 ssmConfig.ordinal(), ssmConfig.format(), ssmConfig.keyNaming(), ssmConfig.failOnMissingConfig()));
@@ -93,25 +90,16 @@ public class SsmConfigSourceFactory implements ConfigSourceFactory.ConfigurableC
         return List.copyOf(out);
     }
 
-    SsmClient build(SsmConfig config) {
-        SsmClientBuilder builder = SsmClient.builder().httpClientBuilder(UrlConnectionHttpClient.builder());
+    SsmClient build(SsmConfig config, ConfigSourceContext context) {
+        SsmClientBuilder builder = SsmClient.builder();
         AmazonClientConfig defaultConfig = config.clients().get(ClientUtil.DEFAULT_CLIENT_NAME);
-        AmazonClientCommonRecorder.initAwsClient(builder, "ssm", "ssm", defaultConfig.aws(), defaultConfig.aws());
-        AmazonClientCommonRecorder.initSdkClientEndpoint(builder, "ssm", "ssm", defaultConfig.sdk(), defaultConfig.sdk());
+        AwsConfigSourceClient.configure(builder, "ssm", defaultConfig, config.syncClient(), context);
         return builder.build();
     }
 
     SsmConfig getClientConfig(ConfigSourceContext context) {
-        List<String> profiles = new ArrayList<>(context.getProfiles());
-        Collections.reverse(profiles);
-        SmallRyeConfig config = new SmallRyeConfigBuilder()
-                .withProfiles(profiles)
-                .withSources(new ConfigSourceContext.ConfigSourceContextConfigSource(context))
-                .withSources(context.getConfigSources())
-                .withMapping(SsmConfig.class)
-                .withValidateUnknown(false)
-                .build();
-        return config.getConfigMapping(SsmConfig.class);
+        return AwsConfigSourceClient.configBuilder(context).withMapping(SsmConfig.class).build()
+                .getConfigMapping(SsmConfig.class);
     }
 
     @Override
