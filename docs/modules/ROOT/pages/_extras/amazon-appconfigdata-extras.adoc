@@ -2,7 +2,7 @@
 
 In addition to injecting `AppConfigDataClient` / `AppConfigDataAsyncClient`, you can use the AWS AppConfig *Data* API as a configuration source.
 When enabled, Quarkus starts a configuration session for your hosted configuration, loads the document, and exposes its entries as MicroProfile configuration properties.
-The source then polls for updates on a fixed interval (unless you disable polling).
+The source then polls for updates, respecting both the configured delay and the server's minimum interval (unless you disable polling).
 
 === Enable the Config Source
 
@@ -30,8 +30,8 @@ With these properties in place, you can read values like any other Quarkus confi
 
 === Optional polling settings
 
-* `quarkus.appconfigdata.config.required-minimum-poll-interval-in-seconds` -- optional; sets the minimum interval between `GetLatestConfiguration` calls for the session, when required by your configuration profile.
-* `quarkus.appconfigdata.config.update-interval` -- interval between polls after the initial load (default: `PT0S`). Set to or greater than `PT1S` to enable periodic polling.
+* `quarkus.appconfigdata.config.required-minimum-poll-interval-in-seconds` -- optional session minimum, from 15 to 86400 seconds (60 when absent).
+* `quarkus.appconfigdata.config.update-interval` -- minimum delay after a completed read (default: `PT0S`). Set to or greater than `PT1S` to enable periodic polling. The actual delay is the larger of this value and the provider/server minimum (`NextPollIntervalInSeconds`). This minimum is also kept after failures.
 
 === How to get updated configuration properties
 
@@ -208,6 +208,7 @@ The `greeting` property then resolves to `hello`.
 
 * The config source keeps an internal snapshot that is updated when polling succeeds; components that only read configuration at startup will not see later changes unless they observe configuration dynamically.
 * Invalid JSON or Java properties content is logged as an error and leaves the previous snapshot unchanged. Polling continues using the next token returned by AppConfig Data.
-* Invalid UTF-8 and invalid or recursive YAML also leave the previous snapshot unchanged. Logs classify failures without including SDK/parser messages, values or polling tokens. SDK retries run before a failed call is reported; no extra retry loop is added.
+* Invalid UTF-8 and invalid or recursive YAML also leave the previous snapshot unchanged. Logs classify failures without including SDK/parser messages, values or polling tokens.
+* `GetLatestConfiguration` uses a single-use token. Its SDK retries are disabled per request, without changing retries on the application client. After a lost response or an expired/corrupted token, the next scheduled read opens a new session instead of replaying the old token. A temporary session-opening failure keeps the snapshot and waits for the next poll; it never creates an immediate retry loop. Other bad-request errors do not trigger session replacement.
 * A zero-byte response means the configuration is unchanged. A valid empty document (such as `{}` or `[]`), or a whitespace-only properties document, replaces the snapshot with an empty configuration.
 * If identifiers are missing or AppConfig Data returns an error during session start or fetch, Quarkus logs the error and the config source may expose no entries from AppConfig for that attempt.

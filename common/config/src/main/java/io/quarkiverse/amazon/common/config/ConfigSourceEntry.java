@@ -23,9 +23,13 @@ public record ConfigSourceEntry(String name, ResourceId resource, String prefix,
         if (!resource.equals(raw.id())) {
             throw new IllegalArgumentException("The entry and document refer to different resources.");
         }
+        byte[] bytes = raw.content();
+        if (document && bytes.length == 0) {
+            return Map.of();
+        }
         String text;
         try {
-            text = StandardCharsets.UTF_8.newDecoder().decode(ByteBuffer.wrap(raw.content())).toString();
+            text = StandardCharsets.UTF_8.newDecoder().decode(ByteBuffer.wrap(bytes)).toString();
         } catch (CharacterCodingException e) {
             throw new IllegalArgumentException("Configuration content is not valid UTF-8.");
         }

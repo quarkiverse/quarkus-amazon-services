@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
@@ -58,6 +59,12 @@ class ConfigSourceEntryTest {
             assertEquals("Configuration content is not valid UTF-8.", error.getMessage());
             assertNull(error.getCause());
         }
+    }
+
+    @ParameterizedTest
+    @EnumSource(ConfigSourceFormat.class)
+    void anInitiallyAbsentDocumentIsEmptyRegardlessOfDeclaredFormat(ConfigSourceFormat format) {
+        assertEquals(Map.of(), decode("", "application/json", format));
     }
 
     private Map<String, String> decode(String content, String mime, ConfigSourceFormat format) {

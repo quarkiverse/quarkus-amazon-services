@@ -8,6 +8,7 @@ import java.util.OptionalInt;
 
 import org.eclipse.microprofile.config.spi.ConfigSource;
 
+import io.quarkiverse.amazon.common.config.AbstractAwsConfigSource;
 import io.quarkiverse.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkiverse.amazon.common.runtime.AmazonClientConfig;
 import io.quarkiverse.amazon.common.runtime.ClientUtil;
@@ -38,21 +39,23 @@ public class AppConfigDataConfigSourceFactory implements
         }
 
         appConfigDataConfig.format().checkAvailable();
+        Duration interval = appConfigDataConfig.updateIntervalMinutes() != 0
+                ? Duration.ofMinutes(appConfigDataConfig.updateIntervalMinutes())
+                : appConfigDataConfig.updateInterval();
+        AbstractAwsConfigSource.validateUpdateInterval(interval);
+
+        var profiles = AppConfigDataConfigSource.profiles(appConfigDataConfig.application().orElse(null),
+                appConfigDataConfig.environment().orElse(null), appConfigDataConfig.configurationProfile().orElse(null),
+                appConfigDataConfig.requiredMinimumPollIntervalInSeconds().orElse(null));
+        if (profiles.isEmpty()) {
+            return Collections.emptyList();
+        }
         var clientConfig = getClientConfig(configSourceContext);
 
         AppConfigDataClient client = build(clientConfig);
 
-        Duration interval = appConfigDataConfig.updateIntervalMinutes() > 0
-                ? Duration.ofMinutes(appConfigDataConfig.updateIntervalMinutes())
-                : appConfigDataConfig.updateInterval();
-
-        return Collections.singletonList(new AppConfigDataConfigSource(client,
-                appConfigDataConfig.application().orElse(null),
-                appConfigDataConfig.environment().orElse(null),
-                appConfigDataConfig.configurationProfile().orElse(null),
-                appConfigDataConfig.requiredMinimumPollIntervalInSeconds().orElse(null),
-                interval,
-                ORDINAL, appConfigDataConfig.format()));
+        return Collections.singletonList(
+                new AppConfigDataConfigSource(client, profiles, interval, ORDINAL, appConfigDataConfig.format()));
     }
 
     AppConfigDataClient build(AppConfigDataConfig config) throws RuntimeException {
