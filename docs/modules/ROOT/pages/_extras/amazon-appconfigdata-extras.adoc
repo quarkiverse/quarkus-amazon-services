@@ -85,6 +85,59 @@ The hosted configuration body is parsed into a flat map of string keys and strin
 
 Boolean and numeric JSON values are exposed as strings (`true`, `false`, and the number's string form).
 
+`quarkus.appconfigdata.config.format` accepts `auto` (default), `json`, `properties`, or `yaml` for this document source.
+An explicit format overrides detection; unknown format names fail startup.
+The shared `raw` format and non-null JSON scalars require a target property name, which this source does not provide, so they are rejected.
+JSON `null`, `{}` and `[]` produce an empty configuration with `format=json`.
+
+With `auto`, valid JSON objects and arrays take priority regardless of `Content-Type`.
+Otherwise, a YAML `Content-Type` (including `application/yaml` and `text/yaml`) selects YAML, including flow-style YAML such as `{feature: true}`.
+YAML decoding requires the optional `io.quarkus:quarkus-config-yaml` extension; explicit `format=yaml` fails startup without it.
+This dependency is required for YAML decoding in all three AWS config sources (AppConfig Data, SSM and Secrets Manager).
+With AppConfig Data `auto`, a YAML `Content-Type` still selects YAML when the extension is absent: decoding fails,
+the previous snapshot is kept (or the source remains empty on the initial load), and there is no properties fallback.
+Without a YAML `Content-Type`, `auto` does not detect nested YAML and reads it as properties instead.
+
+[IMPORTANT]
+====
+Migration: YAML documents were previously read as Java properties. Nested YAML now exposes dotted keys, for example `feature.enabled`, instead of the old `feature` and `enabled` keys.
+
+For this hosted document served with `Content-Type: application/yaml`:
+
+[source,yaml]
+----
+feature:
+  enabled: true
+----
+
+Before (Java properties interpretation):
+
+[source,properties]
+----
+feature=
+enabled=true
+----
+
+[source,java]
+----
+@ConfigProperty(name = "enabled")
+boolean enabled; // true
+----
+
+The `feature` entry has an empty value, not a nested object; it cannot satisfy a required non-empty configuration value.
+
+After (`format=auto` with the YAML extension installed, or explicit `format=yaml`):
+
+[source,java]
+----
+@ConfigProperty(name = "feature.enabled")
+boolean enabled; // true
+----
+
+The old `feature` and `enabled` keys are no longer exposed.
+Set `quarkus.appconfigdata.config.format=properties` to retain the old interpretation.
+====
+
 === Credentials, region, and endpoint
 
 The config source uses the same AppConfig Data client configuration as the rest of the extension (credentials provider chain, region, and optional endpoint override).
@@ -154,4 +207,7 @@ The `greeting` property then resolves to `hello`.
 === Notes and limitations
 
 * The config source keeps an internal snapshot that is updated when polling succeeds; components that only read configuration at startup will not see later changes unless they observe configuration dynamically.
+* Invalid JSON or Java properties content is logged as an error and leaves the previous snapshot unchanged. Polling continues using the next token returned by AppConfig Data.
+* Invalid UTF-8 and invalid or recursive YAML also leave the previous snapshot unchanged. Logs classify failures without including SDK/parser messages, values or polling tokens. SDK retries run before a failed call is reported; no extra retry loop is added.
+* A zero-byte response means the configuration is unchanged. A valid empty document (such as `{}` or `[]`), or a whitespace-only properties document, replaces the snapshot with an empty configuration.
 * If identifiers are missing or AppConfig Data returns an error during session start or fetch, Quarkus logs the error and the config source may expose no entries from AppConfig for that attempt.

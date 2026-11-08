@@ -1,10 +1,27 @@
 package io.quarkiverse.amazon.ssm.runtime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
+import io.smallrye.config.ConfigValidationException;
+import io.smallrye.config.SmallRyeConfigBuilder;
+import io.smallrye.config.common.MapBackedConfigSource;
+import software.amazon.awssdk.services.ssm.SsmClient;
+import software.amazon.awssdk.services.ssm.model.GetParametersRequest;
+import software.amazon.awssdk.services.ssm.model.GetParametersResponse;
+import software.amazon.awssdk.services.ssm.model.Parameter;
 
 /**
  * Regression tests for SsmConfigSource JSON parsing.
@@ -66,10 +83,10 @@ public class SsmConfigSourceJsonTest {
     }
 
     @Test
-    void testSsmPropertiesParameterExpandsToPrefixedKeys() {
+    void testSsmPropertiesAreNotGuessed() {
         var result = SsmConfigSource.expandParameterValue("/app/db", "url=x\nuser=y");
 
-        assertEquals(Map.of("app.db.url", "x", "app.db.user", "y"), result);
+        assertEquals(Map.of("app.db", "url=x\nuser=y"), result);
     }
 
     @Test
@@ -77,5 +94,35 @@ public class SsmConfigSourceJsonTest {
         var result = SsmConfigSource.expandParameterValue("/app/db", "plain value");
 
         assertEquals(Map.of("app.db", "plain value"), result);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "dGVzdA==", "jdbc:x://h/db?ssl=true", "null", "true", "123", "  \"abc\"  " })
+    void sourcePreservesRawAutoValues(String value) {
+        try (var source = source(value, ConfigSourceFormat.AUTO)) {
+            assertEquals(value, source.getValue("app.db"));
+        }
+    }
+
+    @Test
+    void sourceUsesDeclaredPropertiesFormat() {
+        try (var source = source("url=x\nuser=y", ConfigSourceFormat.PROPERTIES)) {
+            assertEquals("x", source.getValue("app.db.url"));
+            assertEquals("y", source.getValue("app.db.user"));
+        }
+    }
+
+    @Test
+    void unknownFormatFailsConfigurationMapping() {
+        assertThrows(ConfigValidationException.class, () -> new SmallRyeConfigBuilder().withMapping(SsmConfigConfig.class)
+                .withSources(new MapBackedConfigSource("test", Map.of("quarkus.ssm.config.format", "invalid")) {
+                }).build());
+    }
+
+    private SsmConfigSource source(String value, ConfigSourceFormat format) {
+        SsmClient client = mock(SsmClient.class);
+        when(client.getParameters(any(GetParametersRequest.class))).thenReturn(GetParametersResponse.builder()
+                .parameters(Parameter.builder().name("/app/db").value(value).build()).build());
+        return new SsmConfigSource(client, null, List.of("/app/db"), true, true, Duration.ZERO, 270, format);
     }
 }

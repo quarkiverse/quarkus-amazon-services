@@ -37,11 +37,13 @@ public class SecretsManagerConfigSourceFactory implements
             return Collections.emptyList();
         }
 
+        secretsManagerConfig.format().checkAvailable();
         var clientConfig = getClientConfig(configSourceContext);
 
         try (SecretsManagerClient client = build(clientConfig)) {
             Map<String, String> lookup = secretsManagerConfig.secrets();
-            return Collections.singletonList(new SecretsManagerConfigSource(client, lookup, ORDINAL));
+            return Collections
+                    .singletonList(new SecretsManagerConfigSource(client, lookup, ORDINAL, secretsManagerConfig.format()));
         }
     }
 

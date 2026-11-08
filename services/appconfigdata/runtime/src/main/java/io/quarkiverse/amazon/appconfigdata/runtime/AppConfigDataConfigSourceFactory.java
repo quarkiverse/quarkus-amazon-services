@@ -37,6 +37,7 @@ public class AppConfigDataConfigSourceFactory implements
             return Collections.emptyList();
         }
 
+        appConfigDataConfig.format().checkAvailable();
         var clientConfig = getClientConfig(configSourceContext);
 
         AppConfigDataClient client = build(clientConfig);
@@ -51,7 +52,7 @@ public class AppConfigDataConfigSourceFactory implements
                 appConfigDataConfig.configurationProfile().orElse(null),
                 appConfigDataConfig.requiredMinimumPollIntervalInSeconds().orElse(null),
                 interval,
-                ORDINAL));
+                ORDINAL, appConfigDataConfig.format()));
     }
 
     AppConfigDataClient build(AppConfigDataConfig config) throws RuntimeException {

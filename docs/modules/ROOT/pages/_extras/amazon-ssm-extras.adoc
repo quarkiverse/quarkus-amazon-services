@@ -89,7 +89,7 @@ public class SsmResource {
 
 * The Parameter Store name is normalized into a key prefix: a leading `/` is removed and remaining `/` characters become `.` (for example `/myapp/prod/url` → `myapp.prod.url`).
 * If the parameter **value** is JSON (object or array), it is automatically detected and flattened to dotted keys and prefixed (same idea as the AppConfig Data config source). JSON detection is automatic—no configuration needed.
-* If the value contains an **equals sign**, it is parsed as Java `Properties` text; each property key is appended under the normalized parameter prefix.
+* Equals signs never select a format. Base64 values and JDBC URLs remain intact.
 * Otherwise the whole value is exposed as a single property using the normalized parameter name as the key.
 
 ==== JSON Flattening Examples
@@ -128,6 +128,24 @@ myapp.servers[1].ip = 2.2.2.2
 
 If JSON parsing fails or the value is empty JSON (`{}` or `[]`), the raw string value is used as a fallback.
 
+==== Declared formats and migration
+
+`quarkus.ssm.config.format` applies to every selected parameter: `auto` (default), `raw`, `json`, `properties`, or `yaml`.
+Use `properties` for documents that previously relied on automatic equals-sign detection:
+
+[source,properties]
+----
+quarkus.ssm.config.format=properties
+----
+
+Properties keys are prefixed with the normalized parameter name. `raw` never parses or trims the value.
+Explicit `json` rejects malformed JSON, omits nulls and empty documents, and decodes JSON scalars under the parameter name.
+In `auto`, scalars keep their original text, including quotes and surrounding spaces. An unknown format fails startup.
+YAML requires the optional `io.quarkus:quarkus-config-yaml` extension; explicit `format=yaml` fails startup without it.
+This requirement applies to all three AWS config sources. For SSM and Secrets Manager, `auto` never detects YAML,
+even with the extension installed: non-JSON values remain raw text. Use `format=yaml` to parse them.
+Only AppConfig Data uses a YAML `Content-Type` in `auto`; without the extension, that decoding fails rather than falling back to properties.
+
 === Credentials, region, and endpoint
 
 The config source uses the same SSM client configuration as the rest of the extension (endpoint, region and credentials).
@@ -143,4 +161,5 @@ quarkus.ssm.config.path=/myapp/prod/
 
 * The config source keeps an internal snapshot that is updated when a scheduled reload succeeds; components that only bind configuration at startup may not observe later changes.
 * If a reload fails, Quarkus logs the error and the previous snapshot (if any) is left in place.
-* `GetParameters` returns an `invalidParameters` list for names that do not exist; those names are logged at warn level.
+* If `GetParameters` reports missing names in `invalidParameters`, the response is incomplete and the previous snapshot is kept. No partial configuration is published.
+* Failure logs distinguish missing resources, access denied, transient errors, invalid content, incomplete responses and other failures without logging SDK/parser messages or values. SDK retries run before a failed call is reported; no extra retry loop is added.

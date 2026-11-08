@@ -223,6 +223,27 @@ endif::add-copy-button-to-env-var[]
 |list of string
 |
 
+a| [[quarkus-amazon-ssm_quarkus-ssm-config-format]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-format[`+++quarkus.ssm.config.format+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.ssm.config.format+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Format of each parameter value. Auto detects JSON objects and arrays, otherwise preserving the raw value. Use properties for Java properties documents; equals signs alone never select a format. YAML requires the quarkus-config-yaml extension.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_SSM_CONFIG_FORMAT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_SSM_CONFIG_FORMAT+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`auto`, `raw`, `json`, `properties`, `yaml`
+|`+++auto+++`
+
 a| [[quarkus-amazon-ssm_quarkus-ssm-config-recursive]] [.property-path]##link:#quarkus-amazon-ssm_quarkus-ssm-config-recursive[`+++quarkus.ssm.config.recursive+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.ssm.config.recursive+++[]

@@ -49,6 +49,7 @@ public class SsmConfigSourceFactory implements ConfigSourceFactory.ConfigurableC
             return Collections.emptyList();
         }
 
+        ssmConfig.format().checkAvailable();
         SsmConfig clientConfig = getClientConfig(configSourceContext);
         SsmClient client = build(clientConfig);
 
@@ -56,7 +57,7 @@ public class SsmConfigSourceFactory implements ConfigSourceFactory.ConfigurableC
                 : ssmConfig.updateInterval();
 
         return Collections.singletonList(new SsmConfigSource(client, pathOpt.orElse(null), names, ssmConfig.recursive(),
-                ssmConfig.withDecryption(), interval, ORDINAL));
+                ssmConfig.withDecryption(), interval, ORDINAL, ssmConfig.format()));
     }
 
     private static List<String> sanitizeNames(List<String> names) {

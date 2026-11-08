@@ -2,12 +2,11 @@ package io.quarkiverse.amazon.appconfigdata.runtime;
 
 import static software.amazon.awssdk.utils.StringUtils.isBlank;
 
-import java.io.StringReader;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -16,12 +15,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import jakarta.json.Json;
-import jakarta.json.JsonReader;
-
 import org.jboss.logging.Logger;
 
-import io.quarkiverse.amazon.common.runtime.JsonConfigFlattener;
+import io.quarkiverse.amazon.common.runtime.ConfigSourceFailure;
+import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
 import io.smallrye.config.common.AbstractConfigSource;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.services.appconfigdata.AppConfigDataClient;
@@ -42,7 +39,7 @@ import software.amazon.awssdk.services.appconfigdata.model.StartConfigurationSes
  * </ul>
  * <p>
  * <strong>Parsing</strong> — The document body is interpreted as either JSON (objects and arrays are flattened to
- * dotted keys and {@code [index]} segments) or Java {@link Properties} format. All values are exposed as strings.
+ * dotted keys and {@code [index]} segments) or Java properties format. All values are exposed as strings.
  * <p>
  * <strong>Concurrency</strong> — The latest snapshot is published via {@link AtomicReference}; the poll token is
  * {@code volatile}. {@link #getValue(String)} and {@link #getPropertyNames()} read the current snapshot without
@@ -63,6 +60,7 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
 
     /** AWS client */
     private final AppConfigDataClient client;
+    private final ConfigSourceFormat format;
 
     /**
      * Session token for {@link GetLatestConfigurationRequest#configurationToken()}; updated from each response's
@@ -85,8 +83,16 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
     public AppConfigDataConfigSource(AppConfigDataClient client, String applicationIdentifier,
             String environmentIdentifier, String configurationProfileIdentifier, Integer requiredMinimumPollIntervalInSeconds,
             Duration updateInterval, int ordinal) {
+        this(client, applicationIdentifier, environmentIdentifier, configurationProfileIdentifier,
+                requiredMinimumPollIntervalInSeconds, updateInterval, ordinal, ConfigSourceFormat.AUTO);
+    }
+
+    public AppConfigDataConfigSource(AppConfigDataClient client, String applicationIdentifier,
+            String environmentIdentifier, String configurationProfileIdentifier, Integer requiredMinimumPollIntervalInSeconds,
+            Duration updateInterval, int ordinal, ConfigSourceFormat format) {
         super(CONFIG_SOURCE_NAME, ordinal);
         this.client = client;
+        this.format = format;
 
         if (isBlank(applicationIdentifier) || isBlank(environmentIdentifier) || isBlank(configurationProfileIdentifier)) {
             LOG.error(
@@ -132,10 +138,9 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
 
             var session = client.startConfigurationSession(sessionBuilder.build());
             String initialToken = session.initialConfigurationToken();
-            LOG.debugf("Got configuration token: %s", initialToken);
             return initialToken;
         } catch (Exception ex) {
-            LOG.errorf(ex, "Unable to start configuration session");
+            ConfigSourceFailure.classify(ex).log(LOG, "Unable to start AppConfig configuration session");
             return null;
         }
     }
@@ -153,8 +158,6 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
             LOG.warn("Config session token is null - skipping");
             return;
         }
-
-        LOG.debugf("Fetching configuration for token: %s", token);
 
         try {
             GetLatestConfigurationResponse res = client.getLatestConfiguration(
@@ -178,46 +181,46 @@ public class AppConfigDataConfigSource extends AbstractConfigSource implements A
                 return;
             }
 
-            Map<String, String> parsed = parseConfiguration(configString);
+            Map<String, String> parsed = format == ConfigSourceFormat.AUTO ? parseConfiguration(configString, res.contentType())
+                    : format.decode("", configString);
             entriesRef.set(Collections.unmodifiableMap(new LinkedHashMap<>(parsed)));
             LOG.debugf("ConfigSource now exposes %d entries from AWS AppConfig Data.", parsed.size());
         } catch (Exception ex) {
-            LOG.errorf(ex, "Unable to fetch the latest configuration");
+            ConfigSourceFailure.classify(ex).log(LOG,
+                    "Unable to fetch or parse AppConfig configuration; keeping the previous snapshot");
         }
     }
 
     /**
      * Parses the hosted configuration body into a flat {@code Map}. If the trimmed content looks like JSON (starts
-     * with an object or array), it is parsed as JSON; otherwise as Java {@link Properties}.
+     * with an object or array), it is parsed as JSON; otherwise as Java properties.
+     * Parser diagnostics are omitted because they may contain configuration values.
+     *
+     * @throws IllegalArgumentException if the content cannot be parsed
      */
     static Map<String, String> parseConfiguration(String content) {
+        return parseConfiguration(content, null);
+    }
+
+    static Map<String, String> parseConfiguration(String content, String contentType) {
         String trimmed = content.trim();
-        if (trimmed.isEmpty()) {
-            return Collections.emptyMap();
-        }
+        String mime = contentType == null ? "" : contentType.split(";", 2)[0].trim().toLowerCase(Locale.ROOT);
+        boolean yaml = mime.equals("application/yaml") || mime.equals("application/x-yaml")
+                || mime.equals("text/yaml") || mime.equals("text/x-yaml") || mime.endsWith("+yaml");
         if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
-            try (JsonReader reader = Json.createReader(new StringReader(trimmed))) {
-                Map<String, String> flat = new LinkedHashMap<>();
-                JsonConfigFlattener.flattenJson("", reader.readValue(), flat);
-                return flat;
-            } catch (Exception e) {
-                LOG.warnf(e, "Failed to parse configuration as JSON; treating as empty.");
-                return Collections.emptyMap();
+            try {
+                return ConfigSourceFormat.JSON.decode("", trimmed);
+            } catch (IllegalArgumentException e) {
+                if (!yaml) {
+                    throw e;
+                }
             }
         }
+        if (yaml) {
+            return ConfigSourceFormat.YAML.decode("", content);
+        }
         // Use original content so properties files with leading comments or line continuations behave as expected.
-        Properties p = new Properties();
-        try {
-            p.load(new StringReader(content));
-        } catch (Exception e) {
-            LOG.warnf(e, "Failed to parse configuration as Java properties; treating as empty.");
-            return Collections.emptyMap();
-        }
-        Map<String, String> map = new LinkedHashMap<>();
-        for (String name : p.stringPropertyNames()) {
-            map.put(name, p.getProperty(name));
-        }
-        return map;
+        return ConfigSourceFormat.PROPERTIES.decode("", content);
     }
 
     private Map<String, String> rawEntries() {
