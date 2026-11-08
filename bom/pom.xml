@@ -34,6 +34,11 @@
             </dependency>
             <!-- Common -->
             <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-common-config</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>software.amazon.awssdk.crt</groupId>
                 <artifactId>aws-crt</artifactId>
                 <version>${awscrt.version}</version>

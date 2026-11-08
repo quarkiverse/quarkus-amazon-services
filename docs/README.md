@@ -252,6 +252,24 @@ Real examples: [`amazon-sqs-configuration.adoc`](modules/ROOT/pages/_extras/amaz
 - When a command captures a value, add `--query <name> --output text` (the default JSON output cannot be parsed with `cut`), and `export` the variable if a later command or the application needs it.
 - Never edit `_metadata/`. A value that the code generator cannot take from the service model goes to `_description/`.
 
+## Regenerating configuration references
+
+Run the documentation module through the Maven lifecycle from the repository root.
+Select each changed runtime module as well, so its configuration metadata is rebuilt before rendering. For example:
+
+```shell
+./mvnw -B -pl docs,services/appconfigdata/runtime -am -DskipTests process-classes
+```
+
+Add other changed runtime modules to `-pl` as needed. `process-classes` also generates the code-generation plugin's descriptor,
+which a fresh build needs before compiling the service modules.
+Commit the generated files in `modules/ROOT/pages/includes/`; do not edit them by hand.
+
+Do not invoke `quarkus-config-doc:generate-config-doc` directly across service modules with `-am`.
+The goal scans the current module's parent directory. A service parent therefore scans `services/`, excluding the Javadoc in `common/`,
+and can fail with `configSection.formatTitle.escapeCellContent` because shared configuration section titles are missing.
+The `docs` lifecycle execution scans the repository root, including the shared metadata.
+
 ## Checking the result
 
 Render the pages with Asciidoctor from `docs/modules/ROOT/pages`, reporting missing attributes:

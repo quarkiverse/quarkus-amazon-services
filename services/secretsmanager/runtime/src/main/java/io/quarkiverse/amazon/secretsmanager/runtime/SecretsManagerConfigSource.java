@@ -1,16 +1,17 @@
 package io.quarkiverse.amazon.secretsmanager.runtime;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 
 import org.jboss.logging.Logger;
 
-import io.quarkiverse.amazon.common.runtime.JsonConfigFlattener;
+import io.quarkiverse.amazon.common.runtime.ConfigSourceFailure;
+import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
 import io.smallrye.config.common.AbstractConfigSource;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
@@ -33,10 +34,17 @@ public class SecretsManagerConfigSource extends AbstractConfigSource {
     private static final Logger LOG = Logger.getLogger(SecretsManagerConfigSource.class);
     private final Map<String, String> lookup;
     private final Map<String, String> secrets;
+    private final ConfigSourceFormat format;
 
     public SecretsManagerConfigSource(SecretsManagerClient secretsManagerClient, Map<String, String> lookup, int ordinal) {
+        this(secretsManagerClient, lookup, ordinal, ConfigSourceFormat.AUTO);
+    }
+
+    public SecretsManagerConfigSource(SecretsManagerClient secretsManagerClient, Map<String, String> lookup, int ordinal,
+            ConfigSourceFormat format) {
         super(CONFIG_SOURCE_NAME, ordinal);
         this.lookup = lookup;
+        this.format = format;
 
         // Load secrets once; ConfigSource lookups should be fast and side-effect free.
         this.secrets = loadAllSecrets(secretsManagerClient);
@@ -46,39 +54,27 @@ public class SecretsManagerConfigSource extends AbstractConfigSource {
         LOG.info("Loading config values from AWS Secrets Manager...");
         Map<String, String> result = new LinkedHashMap<>();
 
-        if (!this.lookup.isEmpty()) {
-            // Fetch each referenced secret once, even if several properties point to it.
-            Map<String, String> values = new HashMap<>();
-            for (Map.Entry<String, String> entry : this.lookup.entrySet()) {
-                mergeExpandedSecret(entry.getValue(), entry.getKey(), result,
-                        id -> values.computeIfAbsent(id, i -> getSecretValue(client, i)));
+        try {
+            if (!this.lookup.isEmpty()) {
+                // Fetch each referenced secret once, even if several properties point to it.
+                Map<String, String> values = new HashMap<>();
+                for (Map.Entry<String, String> entry : this.lookup.entrySet()) {
+                    String value = values.computeIfAbsent(entry.getValue(), id -> getSecretValue(client, id));
+                    result.putAll(format.decode(entry.getKey(), value));
+                }
+            } else {
+                for (SecretListEntry entry : listAllSecrets(client)) {
+                    result.putAll(format.decode(entry.name(), getSecretValue(client, entry.name())));
+                }
             }
-        } else {
-            List<SecretListEntry> secrets;
-            try {
-                secrets = listAllSecrets(client);
-            } catch (Exception e) {
-                LOG.errorf(e, "Failed to list secrets from AWS Secrets Manager.");
-                return result;
-            }
-            for (SecretListEntry entry : secrets) {
-                mergeExpandedSecret(entry.name(), entry.name(), result, id -> getSecretValue(client, id));
-            }
+        } catch (Exception e) {
+            ConfigSourceFailure.classify(e).log(LOG,
+                    "Unable to load all Secrets Manager configuration; publishing no partial configuration");
+            return Map.of();
         }
 
         LOG.infof("ConfigSource loaded %d config entries from AWS Secrets Manager.", result.size());
-        return result;
-    }
-
-    private void mergeExpandedSecret(String secretName, String prefix, Map<String, String> result,
-            Function<String, String> fetcher) {
-        try {
-            result.putAll(JsonConfigFlattener.expandValue(prefix, fetcher.apply(secretName)));
-        } catch (Exception e) {
-            // Handle access denied, deleted secrets, throttling, etc.
-            // Keep going so one bad secret doesn't prevent application startup.
-            LOG.errorf(e, "Failed to fetch secret '%s' from AWS Secrets Manager.", secretName);
-        }
+        return Collections.unmodifiableMap(result);
     }
 
     private List<SecretListEntry> listAllSecrets(SecretsManagerClient client) {

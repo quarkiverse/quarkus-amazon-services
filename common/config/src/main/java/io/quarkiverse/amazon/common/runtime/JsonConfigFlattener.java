@@ -7,9 +7,9 @@ import java.util.Map;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
-import jakarta.json.JsonReader;
 import jakarta.json.JsonString;
 import jakarta.json.JsonValue;
+import jakarta.json.stream.JsonParser;
 
 /**
  * Utility class for detecting and flattening JSON values from AWS config sources.
@@ -47,7 +47,6 @@ public final class JsonConfigFlattener {
      * Expands a parameter/secret value into zero or more configuration keys.
      * <p>
      * If the value is JSON (object or array), it is flattened with the prefix.
-     * If the value is properties-like (contains '='), each entry is prefixed.
      * Otherwise, a single key with the prefix and the raw value is returned.
      * If flattening fails (invalid JSON), the raw value is returned.
      *
@@ -70,9 +69,9 @@ public final class JsonConfigFlattener {
 
         // Try to parse as JSON
         if (isJsonValue(trimmed)) {
-            try (JsonReader reader = Json.createReader(new StringReader(trimmed))) {
+            try {
                 Map<String, String> flat = new LinkedHashMap<>();
-                flattenJson("", reader.readValue(), flat);
+                flattenJson("", parseJson(trimmed), flat);
                 if (flat.isEmpty()) {
                     // Empty JSON object/array (or only nulls); return raw value
                     return Map.of(prefix, value);
@@ -101,6 +100,20 @@ public final class JsonConfigFlattener {
 
         // Not JSON; return as-is with prefix
         return Map.of(prefix, value);
+    }
+
+    /** Parses one complete JSON value without exposing parser diagnostics containing configuration values. */
+    public static JsonValue parseJson(String content) {
+        try (JsonParser parser = Json.createParser(new StringReader(content))) {
+            parser.next();
+            JsonValue value = parser.getValue();
+            if (parser.hasNext()) {
+                throw new IllegalArgumentException();
+            }
+            return value;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid JSON configuration content.");
+        }
     }
 
     /**

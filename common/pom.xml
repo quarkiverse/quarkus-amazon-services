@@ -14,6 +14,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>config</module>
         <module>runtime-spi</module>
         <module>runtime-apache-client-internal</module>
         <module>runtime-apache5-client-internal</module>

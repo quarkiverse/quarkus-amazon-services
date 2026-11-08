@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
+import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
@@ -35,6 +36,14 @@ public interface SsmConfigConfig {
      * You can combine this with {@link #path()}; the merged result is exposed as configuration keys.
      */
     Optional<List<String>> names();
+
+    /**
+     * Format of each parameter value. Auto detects JSON objects and arrays, otherwise preserving the raw value.
+     * Use properties for Java properties documents; equals signs alone never select a format.
+     * YAML requires the quarkus-config-yaml extension.
+     */
+    @WithDefault("auto")
+    ConfigSourceFormat format();
 
     /**
      * When using {@link #path()}, whether to load parameters in sub-paths recursively.

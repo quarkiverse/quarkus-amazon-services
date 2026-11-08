@@ -1,6 +1,8 @@
 package io.quarkiverse.amazon.secretsmanager.runtime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -12,7 +14,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
+import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
+import io.smallrye.config.ConfigValidationException;
+import io.smallrye.config.SmallRyeConfigBuilder;
+import io.smallrye.config.common.MapBackedConfigSource;
+import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse;
@@ -60,5 +69,58 @@ public class SecretsManagerConfigSourceTest {
 
         assertEquals("localhost", source.getValue("db.host"));
         verify(client, never()).listSecrets(any(ListSecretsRequest.class));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = { "null", "true", "123", "  \"abc\"  ", "{}", "[]", "{\"a\":null}", "dGVzdA==" })
+    void sourcePreservesCompatibleAutoValues(String value) {
+        var source = new SecretsManagerConfigSource(clientWithSecret("secret", value), Map.of("target", "secret"), 270);
+        assertEquals(value, source.getValue("target"));
+    }
+
+    @Test
+    void sourceUsesDeclaredPropertiesFormat() {
+        var source = new SecretsManagerConfigSource(clientWithSecret("secret", "url=x\nuser=y"), Map.of("db", "secret"),
+                270, ConfigSourceFormat.PROPERTIES);
+        assertEquals("x", source.getValue("db.url"));
+        assertEquals("y", source.getValue("db.user"));
+    }
+
+    @Test
+    void unknownFormatFailsConfigurationMapping() {
+        assertThrows(ConfigValidationException.class,
+                () -> new SmallRyeConfigBuilder().withMapping(SecretsManagerConfigConfig.class)
+                        .withSources(
+                                new MapBackedConfigSource("test", Map.of("quarkus.secretsmanager.config.format", "invalid")) {
+                                })
+                        .build());
+    }
+
+    @Test
+    void failureAfterOneSecretPublishesNoPartialConfiguration() {
+        SecretsManagerClient client = clientWithSecret("good", "value");
+        Map<String, String> lookup = new LinkedHashMap<>();
+        lookup.put("a", "good");
+        lookup.put("b", "missing");
+        var source = new SecretsManagerConfigSource(client, lookup, 270);
+        assertTrue(source.getPropertyNames().isEmpty());
+    }
+
+    @Test
+    void binaryUtf8IsPreservedAndInvalidEncodingRejectsTheWholeLoad() {
+        SecretsManagerClient client = mock(SecretsManagerClient.class);
+        when(client.getSecretValue(any(GetSecretValueRequest.class))).thenReturn(
+                GetSecretValueResponse.builder().secretBinary(SdkBytes.fromUtf8String("été")).build(),
+                GetSecretValueResponse.builder().secretBinary(SdkBytes.fromByteArray(new byte[] { (byte) 0xff, (byte) 0xfe }))
+                        .build());
+        assertEquals("été", new SecretsManagerConfigSource(client, Map.of("text", "secret"), 270).getValue("text"));
+        assertTrue(new SecretsManagerConfigSource(client, Map.of("text", "secret"), 270).getPropertyNames().isEmpty());
+    }
+
+    @Test
+    void invalidDeclaredJsonPublishesNoPartialConfiguration() {
+        SecretsManagerClient client = clientWithSecret("secret", "{invalid json");
+        var source = new SecretsManagerConfigSource(client, Map.of("target", "secret"), 270, ConfigSourceFormat.JSON);
+        assertTrue(source.getPropertyNames().isEmpty());
     }
 }

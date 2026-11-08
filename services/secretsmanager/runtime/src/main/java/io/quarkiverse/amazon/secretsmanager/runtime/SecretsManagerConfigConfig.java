@@ -2,6 +2,7 @@ package io.quarkiverse.amazon.secretsmanager.runtime;
 
 import java.util.Map;
 
+import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
@@ -27,5 +28,12 @@ public interface SecretsManagerConfigConfig {
      * If empty, all accessible secrets are loaded and exposed using the secret name as the configuration property name.
      */
     Map<String, String> secrets();
+
+    /**
+     * Format of each secret value. Auto detects JSON objects and arrays, otherwise preserving the raw value.
+     * YAML requires the quarkus-config-yaml extension.
+     */
+    @WithDefault("auto")
+    ConfigSourceFormat format();
 
 }

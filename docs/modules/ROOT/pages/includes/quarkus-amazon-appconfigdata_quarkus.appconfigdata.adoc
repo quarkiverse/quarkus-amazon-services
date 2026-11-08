@@ -244,6 +244,27 @@ endif::add-copy-button-to-env-var[]
 |string
 |
 
+a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-format]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-format[`+++quarkus.appconfigdata.config.format+++`]##
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.appconfigdata.config.format+++[]
+endif::add-copy-button-to-config-props[]
+
+
+[.description]
+--
+Format of the configuration document. Auto detects JSON objects/arrays, then YAML by Content-Type, otherwise using Java properties. YAML requires the quarkus-config-yaml extension. Raw values and non-null JSON scalars require a target name, which this document source does not provide.
+
+
+ifdef::add-copy-button-to-env-var[]
+Environment variable: env_var_with_copy_button:+++QUARKUS_APPCONFIGDATA_CONFIG_FORMAT+++[]
+endif::add-copy-button-to-env-var[]
+ifndef::add-copy-button-to-env-var[]
+Environment variable: `+++QUARKUS_APPCONFIGDATA_CONFIG_FORMAT+++`
+endif::add-copy-button-to-env-var[]
+--
+a|`auto`, `raw`, `json`, `properties`, `yaml`
+|`+++auto+++`
+
 a| [[quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-required-minimum-poll-interval-in-seconds]] [.property-path]##link:#quarkus-amazon-appconfigdata_quarkus-appconfigdata-config-required-minimum-poll-interval-in-seconds[`+++quarkus.appconfigdata.config.required-minimum-poll-interval-in-seconds+++`]##
 ifdef::add-copy-button-to-config-props[]
 config_property_copy_button:+++quarkus.appconfigdata.config.required-minimum-poll-interval-in-seconds+++[]

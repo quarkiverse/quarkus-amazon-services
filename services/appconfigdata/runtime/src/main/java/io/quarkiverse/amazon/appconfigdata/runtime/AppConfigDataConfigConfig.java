@@ -3,6 +3,7 @@ package io.quarkiverse.amazon.appconfigdata.runtime;
 import java.time.Duration;
 import java.util.Optional;
 
+import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
@@ -36,6 +37,14 @@ public interface AppConfigDataConfigConfig {
      * {@link software.amazon.awssdk.services.appconfigdata.model.StartConfigurationSessionRequest}.
      */
     Optional<String> configurationProfile();
+
+    /**
+     * Format of the configuration document. Auto detects JSON objects/arrays, then YAML by Content-Type,
+     * otherwise using Java properties. YAML requires the quarkus-config-yaml extension.
+     * Raw values and non-null JSON scalars require a target name, which this document source does not provide.
+     */
+    @WithDefault("auto")
+    ConfigSourceFormat format();
 
     /**
      * Optional minimum interval between {@code GetLatestConfiguration} calls for the session.

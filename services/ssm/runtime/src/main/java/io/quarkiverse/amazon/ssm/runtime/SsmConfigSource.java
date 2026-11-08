@@ -2,14 +2,12 @@ package io.quarkiverse.amazon.ssm.runtime;
 
 import static software.amazon.awssdk.utils.StringUtils.isBlank;
 
-import java.io.StringReader;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -20,7 +18,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.jboss.logging.Logger;
 
-import io.quarkiverse.amazon.common.runtime.JsonConfigFlattener;
+import io.quarkiverse.amazon.common.runtime.ConfigSourceFailure;
+import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
 import io.smallrye.config.common.AbstractConfigSource;
 import software.amazon.awssdk.services.ssm.SsmClient;
 import software.amazon.awssdk.services.ssm.model.GetParametersByPathRequest;
@@ -37,8 +36,8 @@ import software.amazon.awssdk.services.ssm.model.Parameter;
  * remaining slashes with {@code '.'} (for example {@code /myapp/prod/url} becomes {@code myapp.prod.url}).
  * <p>
  * A parameter value that is JSON (object or array) is flattened like the AppConfig Data config source; inner keys are
- * prefixed with the normalized parameter name. Other values are exposed as a single key (the normalized name) unless
- * the value looks like Java properties text (contains an equals sign), in which case each entry is prefixed.
+ * prefixed with the normalized parameter name. Other values are exposed as a single key (the normalized name).
+ * Java properties documents require an explicit format.
  * <p>
  * The supplied {@link SsmClient} is owned by this source. Without polling, it is closed right after the initial load;
  * otherwise {@link #close()} closes it, which {@link SsmConfigSourceCloser} calls on shutdown.
@@ -60,17 +59,24 @@ public class SsmConfigSource extends AbstractConfigSource implements AutoCloseab
     private final List<String> names;
     private final boolean recursive;
     private final boolean withDecryption;
+    private final ConfigSourceFormat format;
 
     private ScheduledExecutorService executorService;
 
     public SsmConfigSource(SsmClient client, String path, List<String> names, boolean recursive, boolean withDecryption,
             Duration updateInterval, int ordinal) {
+        this(client, path, names, recursive, withDecryption, updateInterval, ordinal, ConfigSourceFormat.AUTO);
+    }
+
+    public SsmConfigSource(SsmClient client, String path, List<String> names, boolean recursive, boolean withDecryption,
+            Duration updateInterval, int ordinal, ConfigSourceFormat format) {
         super(CONFIG_SOURCE_NAME, ordinal);
         this.client = client;
         this.path = path;
         this.names = names != null ? List.copyOf(names) : List.of();
         this.recursive = recursive;
         this.withDecryption = withDecryption;
+        this.format = format;
 
         reload();
 
@@ -90,7 +96,7 @@ public class SsmConfigSource extends AbstractConfigSource implements AutoCloseab
         }
     }
 
-    private void reload() {
+    void reload() {
         if (closed.get()) {
             return;
         }
@@ -100,12 +106,14 @@ public class SsmConfigSource extends AbstractConfigSource implements AutoCloseab
                 mergeParametersByPath(merged, path.trim());
             }
             for (List<String> batch : partition(names, GET_PARAMETERS_BATCH_SIZE)) {
-                mergeParametersByName(merged, batch);
+                if (!mergeParametersByName(merged, batch)) {
+                    return;
+                }
             }
             entriesRef.set(Collections.unmodifiableMap(merged));
             LOG.debugf("SSM ConfigSource now exposes %d configuration entries.", merged.size());
         } catch (Exception e) {
-            LOG.errorf(e, "Failed to reload configuration from AWS Systems Manager Parameter Store.");
+            ConfigSourceFailure.classify(e).log(LOG, "Unable to reload SSM configuration; keeping the previous snapshot");
         }
     }
 
@@ -127,24 +135,27 @@ public class SsmConfigSource extends AbstractConfigSource implements AutoCloseab
         } while (nextToken != null && !nextToken.isEmpty());
     }
 
-    private void mergeParametersByName(Map<String, String> target, List<String> batch) {
+    private boolean mergeParametersByName(Map<String, String> target, List<String> batch) {
         if (batch.isEmpty()) {
-            return;
+            return true;
         }
         var response = client.getParameters(GetParametersRequest.builder()
                 .names(batch)
                 .withDecryption(withDecryption)
                 .build());
+        if (!response.invalidParameters().isEmpty()) {
+            ConfigSourceFailure.PARTIAL_RESPONSE.log(LOG,
+                    "Some configured SSM parameters are missing; keeping the previous snapshot");
+            return false;
+        }
         for (Parameter p : response.parameters()) {
             mergeParameter(target, p.name(), p.value());
         }
-        if (!response.invalidParameters().isEmpty()) {
-            LOG.warnf("SSM GetParameters reported invalid parameter names: %s", response.invalidParameters());
-        }
+        return true;
     }
 
-    private static void mergeParameter(Map<String, String> target, String awsName, String value) {
-        target.putAll(expandParameterValue(awsName, value));
+    private void mergeParameter(Map<String, String> target, String awsName, String value) {
+        target.putAll(format.decode(normalizeParameterName(awsName), value));
     }
 
     /**
@@ -172,40 +183,7 @@ public class SsmConfigSource extends AbstractConfigSource implements AutoCloseab
      * Maps one parameter's value to zero or more configuration keys under {@link #normalizeParameterName(String)}.
      */
     static Map<String, String> expandParameterValue(String awsName, String value) {
-        String prefix = normalizeParameterName(awsName);
-        if (prefix.isEmpty()) {
-            return Map.of();
-        }
-        if (value == null) {
-            return Map.of();
-        }
-        String trimmed = value.trim();
-        if (trimmed.isEmpty()) {
-            return Map.of();
-        }
-
-        // Use shared JsonConfigFlattener for JSON detection and flattening
-        if (JsonConfigFlattener.isJsonValue(trimmed)) {
-            return JsonConfigFlattener.expandValue(prefix, trimmed);
-        }
-
-        // Handle properties format: if contains '=', parse as Java properties
-        if (trimmed.contains("=")) {
-            Properties p = new Properties();
-            try {
-                p.load(new StringReader(value));
-            } catch (Exception e) {
-                return Map.of(prefix, value);
-            }
-            if (!p.stringPropertyNames().isEmpty()) {
-                Map<String, String> out = new LinkedHashMap<>();
-                for (String n : p.stringPropertyNames()) {
-                    out.put(prefix + "." + n, p.getProperty(n));
-                }
-                return out;
-            }
-        }
-        return Map.of(prefix, value);
+        return ConfigSourceFormat.AUTO.decode(normalizeParameterName(awsName), value);
     }
 
     private static <T> List<List<T>> partition(List<T> list, int size) {
