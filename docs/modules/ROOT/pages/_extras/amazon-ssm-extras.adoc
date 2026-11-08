@@ -92,3 +92,39 @@ If `/myapp/api-key` contains `example-key`, `myapp.api-key` returns `example-key
 field of `/myapp/database`. Grant `ssm:GetParameter` and the appropriate KMS decrypt permission; values are decrypted.
 See xref:common-config.adoc#expressions[individual-value examples]
 for JSON Pointer syntax, caching and failure behavior; `config.enabled` is not required.
+
+[[stored-credentials]]
+=== Supply credentials to a datasource
+
+Follow the xref:common-config.adoc#stored-credentials[datasource example], installing the SSM extension instead of
+Secrets Manager. Store `{"username":"app_user","password":"database-password"}` in parameter `/prod/database`,
+then use these settings with your datasource URL and JDBC driver:
+
+[source,properties]
+----
+quarkus.ssm.credentials-provider.db.parameter-name=/prod/database
+quarkus.ssm.credentials-provider.db.format=json
+
+quarkus.datasource.credentials-provider=db
+quarkus.datasource.credentials-provider-name=ssm-credentials-provider
+----
+
+New physical connections authenticate as `app_user` with the stored password, provided the database accepts those credentials.
+For a password-only document, set `quarkus.ssm.credentials-provider.db.format=raw` and keep `quarkus.datasource.username=app_user` locally.
+Alternatively, select individual raw parameters instead of `parameter-name`:
+
+[source,properties]
+----
+quarkus.ssm.credentials-provider.db.parameters.password=/prod/database-password
+# Optional; omit to use quarkus.datasource.username
+quarkus.ssm.credentials-provider.db.parameters.user=/prod/database-user
+# Optional, false by default, including for a single document
+quarkus.ssm.credentials-provider.db.batch-retrieval=true
+----
+
+Grant `ssm:GetParameter` by default, or `ssm:GetParameters` when enabling batching; there is no automatic fallback if
+batching is denied or unsupported. SecureString values also require the appropriate KMS decrypt permissions.
+Names, full ARNs and `:version`/`:label` selectors are supported; pinning a version prevents following later updates.
+
+See xref:common-config.adoc#credential-formats[credential formats and field selection] and
+xref:common-config.adoc#credential-lifecycle[connection recycling] when configuring rotation.

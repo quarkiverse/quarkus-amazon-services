@@ -1,6 +1,6 @@
 = Configuration from AWS
 
-Use SSM, Secrets Manager or AppConfig Data to supply application properties.
+Use SSM, Secrets Manager or AppConfig Data to supply application properties or stored credentials.
 Start with the task you need, then follow the corresponding service guide to select resources and grant AWS permissions.
 
 [[choose-a-mode]]
@@ -15,6 +15,9 @@ Start with the task you need, then follow the corresponding service guide to sel
 |<<expressions,Read one remote value or a JSON field>>
 |`${sm::...}` / `${ssm::...}` expressions
 |Assign the result to a local property; successful reads are cached for five minutes by default
+|<<stored-credentials,Connect a datasource using stored credentials>>
+|Quarkus `CredentialsProvider`
+|New physical connections can use freshly retrieved credentials; existing connections are not replaced automatically
 |===
 
 [[providers]]
@@ -42,9 +45,13 @@ Start with the task you need, then follow the corresponding service guide to sel
 |`${ssm::name}`, including version/label selectors
 |`${sm::secret-id}`, reading `AWSCURRENT`
 |Not provided
+|Supply stored credentials
+|`ssm-credentials-provider`
+|`secretsmanager-credentials-provider`
+|Not provided
 |===
 
-Choose SSM for parameter hierarchies, AppConfig Data for deployed
+Choose SSM for parameter hierarchies, SSM or Secrets Manager for stored credentials, AppConfig Data for deployed
 configuration profiles. The service guides provide the exact selection properties and IAM actions.
 
 [[config-sources]]
@@ -192,6 +199,78 @@ With SSM/Secrets Manager `auto` and a target key, malformed or empty JSON object
 JSON scalars keep their quotes and spaces. Without a target, non-empty raw or malformed content is rejected.
 Set an explicit format for properties or YAML documents: neither provider detects them automatically.
 
+[[stored-credentials]]
+== Connect a datasource using stored credentials
+
+Add `io.quarkiverse.amazonservices:quarkus-amazon-secretsmanager` and your Quarkus JDBC driver, for example
+`io.quarkus:quarkus-jdbc-postgresql`. Configure <<bootstrap-clients,AWS access>> and store
+`{"username":"app_user","password":"database-password"}` in secret `prod/database`.
+
+[source,properties]
+----
+quarkus.secretsmanager.credentials-provider.db.secret-id=prod/database
+
+quarkus.datasource.db-kind=postgresql
+quarkus.datasource.jdbc.url=jdbc:postgresql://database.example.com:5432/myapp
+quarkus.datasource.credentials-provider=db
+quarkus.datasource.credentials-provider-name=secretsmanager-credentials-provider
+----
+
+Replace the example JDBC URL with your database's URL. New physical connections authenticate as `app_user` with
+`database-password`, provided the database accepts those credentials. Each request for credentials reads the store again;
+existing connections keep their original authentication.
+See <<credential-lifecycle,connection recycling>> when configuring rotation.
+
+`db` selects the credential set. Always set `credentials-provider-name`, even when only one provider is installed.
+No `config.enabled` setting is required, and installing this extension does not replace an existing default provider.
+For SSM, use the xref:amazon-ssm.adoc#stored-credentials[SSM datasource settings]. To generate an RDS IAM token instead
+of reading a stored password, use xref:amazon-rds.adoc[RDS IAM credentials].
+
+[[credential-formats]]
+== Select credential fields or password-only values
+
+Choose one mode per credential set:
+
+* A document (`secret-id` or `parameter-name`): use `json` (default), `properties`, `yaml` or `raw`.
+  Select the password with `password-key` (default `password`) and the optional username with `username-key` (default `username`).
+  For JSON these are literal top-level field names; for properties/YAML they are decoded keys. Selected values must be
+  non-empty strings. An absent username is omitted; `username-key=` explicitly disables it. Extra fields are ignored.
+  `auto` and JSON Pointer selection are not supported for credentials. YAML needs the <<formats,YAML extension>>.
+* Individual raw values: select `secrets.password` / `secrets.user` for Secrets Manager or `parameters.password` /
+  `parameters.user` for SSM, instead of selecting a document. `password` is required and `user` is optional.
+  Document field selectors do not decode these values.
+
+For password-only rotation, select a password-only document with `format=raw` and keep the username local:
+
+[source,properties]
+----
+quarkus.datasource.username=app_user
+quarkus.secretsmanager.credentials-provider.db.secret-id=prod/database-password
+quarkus.secretsmanager.credentials-provider.db.format=raw
+----
+
+The datasource uses `app_user` and the entire secret text as its password.
+For separate values and optional batching, follow the xref:amazon-secretsmanager.adoc#stored-credentials[Secrets Manager]
+or xref:amazon-ssm.adoc#stored-credentials[SSM] examples. Their `credentials-provider.<name>.batch-retrieval` flags default
+to `false` and are independent of ConfigSource batching and expression cache settings.
+
+[[credential-lifecycle]]
+== Recycle connections when credentials rotate
+
+Configure a connection lifetime suitable for your database's rotation/overlap policy. For example:
+
+[source,properties]
+----
+# Illustrative only; choose a value appropriate for your rotation policy
+quarkus.datasource.jdbc.max-lifetime=30M
+----
+
+Agroal requests credentials for new physical connections, not on every pool borrow. Checked-out connections can outlive
+the configured lifetime until returned. Updating a secret/parameter does not change the database password for you;
+coordinate both updates and allow for propagation and transient failures. There is no guarantee of uninterrupted rotation.
+Credential reads fail rather than falling back to previously returned credentials.
+No expiration timestamp is supplied; consumers such as RabbitMQ that rely on it need their own reconnect policy.
+
 [[bootstrap-clients]]
 == Configure access to AWS
 
@@ -220,3 +299,6 @@ settings apply, while `sync-client.type` and Apache/CRT-specific options do not.
 extension telemetry are not applied to these reads. Expressions default to a 10-second call timeout and a 3-second attempt
 timeout when those settings are absent.
 ====
+
+Stored-credential providers use the default service client's usual credentials, transport, interceptor and telemetry settings.
+These AWS credentials authenticate access to the store; they are distinct from the stored username/password used by your datasource.
