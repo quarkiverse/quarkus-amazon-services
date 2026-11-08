@@ -26,13 +26,19 @@ public abstract class AbstractAwsConfigSource extends AbstractConfigSource imple
 
     protected AbstractAwsConfigSource(String name, int ordinal, AwsConfigProvider provider,
             Function<ResourceId, List<ConfigSourceEntry>> entries, Duration updateInterval, String threadName) {
+        this(name, ordinal, provider, entries, updateInterval, threadName, false);
+    }
+
+    protected AbstractAwsConfigSource(String name, int ordinal, AwsConfigProvider provider,
+            Function<ResourceId, List<ConfigSourceEntry>> entries, Duration updateInterval, String threadName,
+            boolean failOnMissingConfig) {
         super(name, ordinal);
         this.provider = provider;
         this.entries = entries;
         this.updateInterval = updateInterval;
         try {
             validateUpdateInterval(updateInterval);
-            refresh();
+            refresh(failOnMissingConfig);
             if (updateInterval.toSeconds() > 0) {
                 // Runtime configuration is built before Quarkus initializes its managed executor.
                 executor = new ScheduledThreadPoolExecutor(1, task -> {
@@ -46,9 +52,17 @@ public abstract class AbstractAwsConfigSource extends AbstractConfigSource imple
                 close();
             }
         } catch (RuntimeException e) {
-            close();
+            try {
+                close();
+            } catch (Exception closeFailure) {
+                LOG.errorf("Unable to close %s after startup failure [%s]", getName(), closeFailure.getClass().getSimpleName());
+            }
             throw e;
         }
+    }
+
+    protected final void refresh() {
+        refresh(false);
     }
 
     public static void validateUpdateInterval(Duration interval) {
@@ -57,24 +71,31 @@ public abstract class AbstractAwsConfigSource extends AbstractConfigSource imple
         }
     }
 
-    protected final synchronized void refresh() {
+    private synchronized void refresh(boolean failOnMissingConfig) {
         if (closed.get()) {
             return;
         }
+        FetchFailure failure = null;
         try {
             FetchResult result = provider.fetchAll();
             minDelay = result.minDelayBeforeNextFetch();
             if (!closed.get() && !snapshot.apply(result, entries)) {
-                FetchFailure reason = result.batchFailure() != null ? result.batchFailure()
+                failure = result.batchFailure() != null ? result.batchFailure()
                         : result.failed().values().iterator().next();
-                logFailure(reason);
             }
         } catch (ConfigSourceCollisionException e) {
             LOG.errorf("Unable to update %s; keeping the previous snapshot [INVALID_CONTENT]: %s", getName(), e.getMessage());
+            failure = FetchFailure.INVALID_CONTENT;
         } catch (IllegalArgumentException e) {
-            logFailure(FetchFailure.INVALID_CONTENT);
+            failure = FetchFailure.INVALID_CONTENT;
         } catch (Exception e) {
-            logFailure(FetchFailure.OTHER);
+            failure = FetchFailure.OTHER;
+        }
+        if (failure != null) {
+            logFailure(failure);
+            if (failOnMissingConfig) {
+                throw new IllegalStateException("Unable to load " + getName() + " [" + failure + "]");
+            }
         }
     }
 

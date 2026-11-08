@@ -8,6 +8,8 @@ import java.util.OptionalInt;
 
 import org.eclipse.microprofile.config.spi.ConfigSource;
 
+import io.quarkiverse.amazon.appconfigdata.runtime.AppConfigDataConfigSource.Selection;
+import io.quarkiverse.amazon.appconfigdata.runtime.AppConfigDataProvider.Profile;
 import io.quarkiverse.amazon.common.config.AbstractAwsConfigSource;
 import io.quarkiverse.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkiverse.amazon.common.runtime.AmazonClientConfig;
@@ -44,18 +46,40 @@ public class AppConfigDataConfigSourceFactory implements
                 : appConfigDataConfig.updateInterval();
         AbstractAwsConfigSource.validateUpdateInterval(interval);
 
-        var profiles = AppConfigDataConfigSource.profiles(appConfigDataConfig.application().orElse(null),
-                appConfigDataConfig.environment().orElse(null), appConfigDataConfig.configurationProfile().orElse(null),
-                appConfigDataConfig.requiredMinimumPollIntervalInSeconds().orElse(null));
-        if (profiles.isEmpty()) {
+        var selections = selections(appConfigDataConfig);
+        if (selections.isEmpty()) {
             return Collections.emptyList();
         }
+        selections.forEach(selection -> selection.format().checkAvailable());
         var clientConfig = getClientConfig(configSourceContext);
 
         AppConfigDataClient client = build(clientConfig);
 
         return Collections.singletonList(
-                new AppConfigDataConfigSource(client, profiles, interval, ORDINAL, appConfigDataConfig.format()));
+                new AppConfigDataConfigSource(client, selections, interval, appConfigDataConfig.ordinal(),
+                        appConfigDataConfig.failOnMissingConfig()));
+    }
+
+    static List<Selection> selections(AppConfigDataConfigConfig config) {
+        var selections = new ArrayList<Selection>();
+        boolean legacy = config.application().isPresent() || config.environment().isPresent()
+                || config.configurationProfile().isPresent();
+        if (legacy || config.entries().isEmpty()) {
+            var profiles = AppConfigDataConfigSource.profiles(config.application().orElse(null),
+                    config.environment().orElse(null),
+                    config.configurationProfile().orElse(null), config.requiredMinimumPollIntervalInSeconds().orElse(null));
+            if (profiles.isEmpty() && config.failOnMissingConfig()) {
+                throw new IllegalArgumentException(
+                        "AppConfig Data ConfigSource requires application, environment and configuration-profile.");
+            }
+            profiles.forEach(profile -> selections.add(new Selection("legacy", profile, "", config.format())));
+        }
+        config.entries().forEach((name, entry) -> selections.add(new Selection("entries:" + name,
+                new Profile(entry.application(), entry.environment(), entry.configurationProfile(),
+                        entry.requiredMinimumPollIntervalInSeconds().or(config::requiredMinimumPollIntervalInSeconds)
+                                .orElse(null)),
+                entry.prefix().orElse(""), entry.format().orElse(config.format()))));
+        return List.copyOf(selections);
     }
 
     AppConfigDataClient build(AppConfigDataConfig config) throws RuntimeException {

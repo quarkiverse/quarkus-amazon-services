@@ -2,13 +2,18 @@ package io.quarkiverse.amazon.ssm.runtime;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import io.quarkiverse.amazon.common.runtime.ConfigSourceFormat;
+import io.quarkus.runtime.annotations.ConfigGroup;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.quarkus.runtime.configuration.DurationConverter;
 import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithConverter;
 import io.smallrye.config.WithDefault;
+import io.smallrye.config.WithName;
 
 /**
  * Runtime configuration for the Parameter Store {@link SsmConfigSource}.
@@ -23,11 +28,54 @@ public interface SsmConfigConfig {
     @WithDefault("false")
     boolean enabled();
 
+    /** Fail startup if configuration cannot be loaded completely, including missing resources, access or decoding errors. */
+    @WithDefault("true")
+    boolean failOnMissingConfig();
+
+    /** Config source ordinal; higher values take precedence. Defaults between .env and application.properties. */
+    @WithDefault("270")
+    int ordinal();
+
     /**
      * Parameter Store path passed to {@link software.amazon.awssdk.services.ssm.model.GetParametersByPathRequest}.
      * When set, all parameters under this path are loaded (subject to {@link #recursive()}).
      */
     Optional<String> path();
+
+    /** Additional paths keyed by their configuration prefix, alongside the legacy scalar path. */
+    @WithName("path")
+    Map<String, String> prefixedPaths();
+
+    /** Named paths with independent prefixes and formats. */
+    Map<String, PathEntry> entries();
+
+    /**
+     * Path key naming. Relative is the default; full preserves the complete parameter name. Explicit names always use full
+     * names.
+     */
+    @WithDefault("relative")
+    KeyNaming keyNaming();
+
+    enum KeyNaming {
+        RELATIVE,
+        /** Preserve keys that include the loaded path. */
+        FULL
+    }
+
+    @ConfigGroup
+    interface PathEntry {
+        /** Parameter Store hierarchy to load. */
+        String path();
+
+        /** Optional prefix prepended to the exposed keys. */
+        Optional<String> prefix();
+
+        /** Value format; defaults to the source-wide format. */
+        Optional<ConfigSourceFormat> format();
+
+        /** Load nested parameters; defaults to the source-wide recursive setting. */
+        Optional<Boolean> recursive();
+    }
 
     /**
      * Individual parameter names (full paths, for example {@code /myapp/prod/db/url}) passed to
@@ -70,5 +118,6 @@ public interface SsmConfigConfig {
      * Set to or greater than {@code PT1S} to enable periodic polling.
      */
     @WithDefault("PT0S")
+    @WithConverter(DurationConverter.class)
     Duration updateInterval();
 }

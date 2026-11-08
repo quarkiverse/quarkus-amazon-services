@@ -51,4 +51,5 @@
 * xref:amazon-sdk.adoc[Generic AWS SDK]
 * xref:dev-services.adoc[Dev Services for Amazon Services]
 * xref:opentelemetry.adoc[OpenTelemetry for Amazon Services]
+* xref:common-config.adoc[Configuration from AWS]
 * xref:common-features.adoc[Common features]

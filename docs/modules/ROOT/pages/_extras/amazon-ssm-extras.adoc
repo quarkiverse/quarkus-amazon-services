@@ -1,165 +1,78 @@
+[[configuration]]
 == Using AWS Systems Manager Parameter Store as a Quarkus Config Source
 
-In addition to injecting `SsmClient` / `SsmAsyncClient`, you can load configuration values from Parameter Store as a MicroProfile config source.
-When enabled, Quarkus fetches parameters (by path and/or by explicit name), maps them to configuration keys, and optionally reloads on a fixed interval.
+Load application properties from SSM parameters. See xref:common-config.adoc[Configuration from AWS] to compare
+providers, read properties in your application and configure AWS access.
 
-=== Enable the Config Source
+=== Load parameters by path or name
 
-[source,properties]
-----
-quarkus.ssm.config.enabled=true
-----
-
-You must also configure at least one of **path** or **names** (see below). If both are unset, the config source is not registered.
-
-=== Load parameters by path
-
-Use `GetParametersByPath` for every parameter under a hierarchy (for example `/myapp/prod/`):
+Create parameter `/myapp/prod/db/url` with value `jdbc:postgresql://database.example.com:5432/myapp`.
+Enable the source and select its parent path:
 
 [source,properties]
 ----
 quarkus.ssm.config.enabled=true
 quarkus.ssm.config.path=/myapp/prod/
-
-# Optional (defaults shown)
-quarkus.ssm.config.recursive=true
-quarkus.ssm.config.with-decryption=true
 ----
 
-=== Load parameters by name
+The `db.url` property contains that JDBC URL. Nested parameters are included and SecureString values are decrypted by default;
+use `recursive=false` or `with-decryption=false` under `quarkus.ssm.config` to change those settings.
 
-List full parameter names (up to ten per AWS request; the extension batches larger lists automatically):
+To select only this parameter, replace `path` with an explicit name:
 
 [source,properties]
 ----
 quarkus.ssm.config.enabled=true
 quarkus.ssm.config.names[0]=/myapp/prod/db/url
-quarkus.ssm.config.names[1]=/myapp/prod/db/user
 ----
 
-You can combine `quarkus.ssm.config.path` and `quarkus.ssm.config.names`; keys from both are merged into one config source.
+The property is then `myapp.prod.db.url`, because explicit selections retain the full name.
+You can also combine paths and explicit names. Grant `ssm:GetParametersByPath` for path selections or
+`ssm:GetParameters` for explicit names, plus appropriate KMS decrypt permissions for SecureString values.
+An empty selection fails startup by default; `quarkus.ssm.config.fail-on-missing-config=false` skips the source instead.
 
-=== Optional polling
-
-`quarkus.ssm.config.update-interval` controls how often parameters are re-fetched after startup (default: `PT0S`). Set to or greater than `PT1S` to enable periodic polling.
-
-=== How to get updated configuration properties
-
-The following shows a resource implementation showing 2 ways for fetching a property which is updated through the SSM Config Source.
-
-[source,java]
-----
-import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
-
-import jakarta.inject.Provider;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-
-import org.eclipse.microprofile.config.ConfigProvider;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
-@Path("/ssmresource")
-public class SsmResource {
-
-    @ConfigProperty(name = "propertyName", defaultValue = "N/A")
-    Provider<String> propertyName;  <1>
-
-    @GET
-    @Path("propertyName")
-    @Produces(TEXT_PLAIN)
-    public String getPropertyName() {
-        return "property: " + propertyName.get(); <2>
-    }
-
-    @GET
-    @Path("otherPropertyName")
-    @Produces(TEXT_PLAIN)
-    public String getOtherPropertyName() {
-        return "property: " + ConfigProvider.getConfig().getValue("otherPropertyName", String.class); <3>
-    }
-}
-----
-
-<1> Declare variable name using `Provider<>`.
-<2> Use the `Provider.get()` method to get the latest value of the property.
-<3> Or use the `ConfigProvider` to get the latest observed value of the property.
-
-=== How configuration keys are exposed
-
-* The Parameter Store name is normalized into a key prefix: a leading `/` is removed and remaining `/` characters become `.` (for example `/myapp/prod/url` → `myapp.prod.url`).
-* If the parameter **value** is JSON (object or array), it is automatically detected and flattened to dotted keys and prefixed (same idea as the AppConfig Data config source). JSON detection is automatic—no configuration needed.
-* Equals signs never select a format. Base64 values and JDBC URLs remain intact.
-* Otherwise the whole value is exposed as a single property using the normalized parameter name as the key.
-
-==== JSON Flattening Examples
-
-When a parameter contains a JSON object like `{"host":"localhost","port":5432}`, it is automatically flattened into individual configuration keys:
-
-[source]
-----
-# Parameter: /myapp/config = {"host":"localhost","port":5432}
-# Exposed as:
-myapp.config.host = localhost
-myapp.config.port = 5432
-----
-
-Nested JSON objects are also flattened with dot notation:
-
-[source]
-----
-# Parameter: /myapp/db = {"connection":{"host":"db.example.com","port":5432}}
-# Exposed as:
-myapp.db.connection.host = db.example.com
-myapp.db.connection.port = 5432
-----
-
-JSON arrays use index notation:
-
-[source]
-----
-# Parameter: /myapp/servers = [{"name":"s1","ip":"1.1.1.1"},{"name":"s2","ip":"2.2.2.2"}]
-# Exposed as:
-myapp.servers[0].name = s1
-myapp.servers[0].ip = 1.1.1.1
-myapp.servers[1].name = s2
-myapp.servers[1].ip = 2.2.2.2
-----
-
-If JSON parsing fails or the value is empty JSON (`{}` or `[]`), the raw string value is used as a fallback.
-
-==== Declared formats and migration
-
-`quarkus.ssm.config.format` applies to every selected parameter: `auto` (default), `raw`, `json`, `properties`, or `yaml`.
-Use `properties` for documents that previously relied on automatic equals-sign detection:
-
-[source,properties]
-----
-quarkus.ssm.config.format=properties
-----
-
-Properties keys are prefixed with the normalized parameter name. `raw` never parses or trims the value.
-Explicit `json` rejects malformed JSON, omits nulls and empty documents, and decodes JSON scalars under the parameter name.
-In `auto`, scalars keep their original text, including quotes and surrounding spaces. An unknown format fails startup.
-YAML requires the optional `io.quarkus:quarkus-config-yaml` extension; explicit `format=yaml` fails startup without it.
-This requirement applies to all three AWS config sources. For SSM and Secrets Manager, `auto` never detects YAML,
-even with the extension installed: non-JSON values remain raw text. Use `format=yaml` to parse them.
-Only AppConfig Data uses a YAML `Content-Type` in `auto`; without the extension, that decoding fails rather than falling back to properties.
-
-=== Credentials, region, and endpoint
-
-The config source uses the same SSM client configuration as the rest of the extension (endpoint, region and credentials).
-You only need to enable it and select the parameters to load:
+=== Named paths and prefixes
 
 [source,properties]
 ----
 quarkus.ssm.config.enabled=true
-quarkus.ssm.config.path=/myapp/prod/
+quarkus.ssm.config.entries.database.path=/myapp/prod
+quarkus.ssm.config.entries.database.prefix=myapp
+quarkus.ssm.config.entries.database.format=auto
+quarkus.ssm.config.entries.database.recursive=true
+
+# Optional shorthand: prefix -> path, inheriting source-wide format/recursive settings
+quarkus.ssm.config.path."shared"=/common/prod
 ----
 
-=== Notes and limitations
+`/myapp/prod/db/url` exposes `myapp.db.url`; the entry name `database` is not a prefix.
+The scalar `path`, prefix shortcuts, named entries and explicit `names` can be combined.
 
-* The config source keeps an internal snapshot that is updated when a scheduled reload succeeds; components that only bind configuration at startup may not observe later changes.
-* If a reload fails, Quarkus logs the error and the previous snapshot (if any) is left in place.
-* If `GetParameters` reports missing names in `invalidParameters`, the response is incomplete and the previous snapshot is kept. No partial configuration is published.
-* Failure logs distinguish missing resources, access denied, transient errors, invalid content, incomplete responses and other failures without logging SDK/parser messages or values. SDK retries run before a failed call is reported; no extra retry loop is added.
+=== How configuration keys are exposed
+
+* Path selections use names relative to the loaded path: `/myapp/prod/db/url` loaded from `/myapp/prod` exposes `db.url`, plus any configured prefix.
+* Explicit `names` use the full name: `/myapp/prod/url` exposes `myapp.prod.url`.
+* `/` becomes `.`. For relative path naming only, complete index segments such as `_0_` become `[0]`: `/myapp/prod/servers/_0_/name` loaded from `/myapp/prod` exposes `servers[0].name`.
+* Document values are decoded under that parameter key. For example, explicit name `/myapp/db` containing
+  `{"connection":{"host":"db.example.com"}}` exposes `myapp.db.connection.host`.
+
+For format behavior, including JSON arrays/scalars, empty documents and raw fallback, see
+xref:common-config.adoc#formats[Formats, prefixes and property names].
+`quarkus.ssm.config.format` supplies the default; `entries.<name>.format` overrides it.
+
+[IMPORTANT]
+====
+Path-selected keys are now relative by default. For `/myapp/prod/db/url`, the key changes from `myapp.prod.db.url` to `db.url`.
+To preserve full parameter names, set `quarkus.ssm.config.key-naming=full`.
+Alternatively, replace `path=/myapp/prod` with `path."myapp.prod"=/myapp/prod` to restore the old prefix explicitly.
+Explicit `names` are unaffected.
+For values previously interpreted using equals-sign detection, explicitly set `quarkus.ssm.config.format=properties`.
+====
+
+[[path-polling]]
+=== Optional polling
+
+Set `quarkus.ssm.config.update-interval=30S` to re-fetch the selection after startup (default `PT0S`, minimum one second).
+If a read fails or an explicitly selected name is missing, the previous values remain available.
+Deleting a parameter under a selected path removes its properties after a successful complete refresh of that path.
+Use xref:common-config.adoc#dynamic-reads[dynamic configuration lookups] to observe refreshed values.

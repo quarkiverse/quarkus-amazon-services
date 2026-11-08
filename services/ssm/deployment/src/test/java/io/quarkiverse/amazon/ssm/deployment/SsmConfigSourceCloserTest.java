@@ -24,6 +24,7 @@ public class SsmConfigSourceCloserTest {
     static final QuarkusExtensionTest config = new QuarkusExtensionTest()
             .overrideConfigKey("quarkus.devservices.enabled", "false")
             .overrideConfigKey("quarkus.ssm.config.enabled", "true")
+            .overrideConfigKey("quarkus.ssm.config.fail-on-missing-config", "false")
             .overrideConfigKey("quarkus.ssm.config.path", "/app")
             .overrideConfigKey("quarkus.ssm.config.update-interval-minutes", "60")
             .overrideConfigKey("quarkus.ssm.endpoint-override", "http://localhost:1")

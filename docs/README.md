@@ -21,6 +21,8 @@ The cross-service guide `amazon-sdk.adoc` uses the same skeleton with `generic-e
 Its attributes select an example SDK service while keeping `service-name=aws` and `extension-name=sdk`.
 The skeleton shares project creation, client injection, transports, Dev Services and JVM/native packaging;
 named-client configuration is covered in `common-features.adoc`, and generic coexistence is an inline conditional section of the skeleton.
+Shared configuration-source, expression and stored-credential behavior belongs in `common-config.adoc`.
+Keep selection examples, permissions, migrations and provider-specific limits in the service's `extras`, linking to the shared guide.
 
 ```
 docs/
@@ -243,6 +245,9 @@ Real examples: [`amazon-sqs-configuration.adoc`](modules/ROOT/pages/_extras/amaz
 
 ## Writing rules
 
+- Write published guides for application users: start with the task, show the minimal configuration or command, and state the expected result.
+- Keep implementation details only when they explain a choice, limitation or troubleshooting action the user needs. Put architecture, algorithms and test-qualification reports in contributor/design documents instead.
+- Describe observable behavior before its mechanism. For example, explain when refreshed values become available and what happens on failure, rather than how tokens, caches or client lifecycles are managed.
 - Use the attributes rather than hard-coded values: `{service-name}`, `{service-name-uppercase}`, `{extension-name}`, `{java-package}`, `{main-class}`.
 - Add `subs="attributes+"` to source blocks that contain attributes: `[source,java,subs="attributes+"]`.
 - Do not repeat what the skeleton already renders: Dev Services, `docker run`, `aws configure`, HTTP client dependencies, local endpoint configuration, AWS credentials, configuration reference.

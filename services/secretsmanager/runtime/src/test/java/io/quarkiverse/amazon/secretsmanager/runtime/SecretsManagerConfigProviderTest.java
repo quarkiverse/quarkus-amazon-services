@@ -2,12 +2,12 @@ package io.quarkiverse.amazon.secretsmanager.runtime;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -15,15 +15,13 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import io.quarkiverse.amazon.common.config.FetchFailure;
 import io.quarkiverse.amazon.common.config.ResourceId;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse;
-import software.amazon.awssdk.services.secretsmanager.model.ListSecretsRequest;
-import software.amazon.awssdk.services.secretsmanager.model.ListSecretsResponse;
-import software.amazon.awssdk.services.secretsmanager.model.SecretListEntry;
 
 class SecretsManagerConfigProviderTest {
     @Test
@@ -42,22 +40,25 @@ class SecretsManagerConfigProviderTest {
     }
 
     @Test
-    void partialListingKeepsDocumentsAndNeverConfirmsDeletion() {
+    void failedExplicitReadRetainsSuccessfulDocumentsWithoutConfirmingDeletion() {
         SecretsManagerClient client = mock(SecretsManagerClient.class);
-        when(client.listSecrets(any(ListSecretsRequest.class))).thenReturn(
-                ListSecretsResponse.builder()
-                        .secretList(SecretListEntry.builder().name("a").build(), SecretListEntry.builder().name("b").build())
-                        .build(),
-                ListSecretsResponse.builder().secretList(SecretListEntry.builder().name("a").build()).nextToken("next").build())
-                .thenThrow(SdkClientException.create("network"));
         when(client.getSecretValue(any(GetSecretValueRequest.class)))
-                .thenReturn(GetSecretValueResponse.builder().secretString("value").build());
-        try (var provider = new SecretsManagerConfigProvider(client, List.of())) {
-            provider.fetchAll();
+                .thenReturn(GetSecretValueResponse.builder().secretString("value").build())
+                .thenThrow(SdkClientException.create("network"));
+        try (var provider = new SecretsManagerConfigProvider(client, List.of("a", "b"))) {
             var partial = provider.fetchAll();
-            assertNotNull(partial.batchFailure());
+            assertEquals(FetchFailure.OTHER, partial.failed().get(new ResourceId("b")));
             assertEquals(Set.of(new ResourceId("a")), partial.updated().keySet());
             assertTrue(partial.removed().isEmpty());
+        }
+    }
+
+    @Test
+    void emptySelectionDoesNotDiscoverOrReadSecrets() {
+        SecretsManagerClient client = mock(SecretsManagerClient.class);
+        try (var provider = new SecretsManagerConfigProvider(client, List.of())) {
+            assertTrue(provider.fetchAll().updated().isEmpty());
+            verifyNoInteractions(client);
         }
     }
 }

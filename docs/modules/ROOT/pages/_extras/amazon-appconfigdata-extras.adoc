@@ -1,108 +1,73 @@
+[[configuration]]
 == Using AWS AppConfig Data as a Quarkus Config Source
 
-In addition to injecting `AppConfigDataClient` / `AppConfigDataAsyncClient`, you can use the AWS AppConfig *Data* API as a configuration source.
-When enabled, Quarkus starts a configuration session for your hosted configuration, loads the document, and exposes its entries as MicroProfile configuration properties.
-The source then polls for updates, respecting both the configured delay and the server's minimum interval (unless you disable polling).
-
-=== Enable the Config Source
-
-Enable the config source by setting:
-
-[source,properties]
-----
-quarkus.appconfigdata.config.enabled=true
-----
+Load application properties from a deployed AppConfig profile. See xref:common-config.adoc[Configuration from AWS]
+to compare providers, read properties in your application and configure AWS access.
 
 === Application, environment, and configuration profile
 
-The config source calls `StartConfigurationSession` with the following identifiers (IDs or names, as accepted by AWS):
+Deploy a configuration such as `{"greeting":"hello"}`, then select its application, environment and profile:
 
 [source,properties]
 ----
 quarkus.appconfigdata.config.enabled=true
-
 quarkus.appconfigdata.config.application=my-application
 quarkus.appconfigdata.config.environment=production
 quarkus.appconfigdata.config.configuration-profile=my-profile
 ----
 
-With these properties in place, you can read values like any other Quarkus configuration (for example via `@ConfigProperty` or `@ConfigMapping`), using the keys described below.
+Reading the `greeting` property now returns `hello`. Use IDs or names for the selection. Grant `appconfig:StartConfigurationSession` and
+`appconfig:GetLatestConfiguration` for the selected configurations, plus KMS decrypt permission where required.
+Configure all three identifiers; missing identifiers prevent startup by default.
 
-=== Optional polling settings
+=== Named profiles and prefixes
 
-* `quarkus.appconfigdata.config.required-minimum-poll-interval-in-seconds` -- optional session minimum, from 15 to 86400 seconds (60 when absent).
-* `quarkus.appconfigdata.config.update-interval` -- minimum delay after a completed read (default: `PT0S`). Set to or greater than `PT1S` to enable periodic polling. The actual delay is the larger of this value and the provider/server minimum (`NextPollIntervalInSeconds`). This minimum is also kept after failures.
-
-=== How to get updated configuration properties
-
-The following shows a resource implementation showing 2 ways for fetching a property which is updated through the App Config Data Config Source.
-
-[source,java]
+[source,properties]
 ----
-import static jakarta.ws.rs.core.MediaType.TEXT_PLAIN;
-
-import jakarta.inject.Provider;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-
-import org.eclipse.microprofile.config.ConfigProvider;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
-@Path("/appconfigdata")
-public class AppConfigDataResource {
-
-    @ConfigProperty(name = "propertyName", defaultValue = "N/A")
-    Provider<String> propertyName;  <1>
-
-    @GET
-    @Path("propertyName")
-    @Produces(TEXT_PLAIN)
-    public String getPropertyName() {
-        return "property: " + propertyName.get(); <2>
-    }
-
-    @GET
-    @Path("otherPropertyName")
-    @Produces(TEXT_PLAIN)
-    public String getOtherPropertyName() {
-        return "property: " + ConfigProvider.getConfig().getValue("otherPropertyName", String.class); <3>
-    }
-}
+quarkus.appconfigdata.config.enabled=true
+quarkus.appconfigdata.config.entries.main.application=my-application
+quarkus.appconfigdata.config.entries.main.environment=production
+quarkus.appconfigdata.config.entries.main.configuration-profile=my-profile
+quarkus.appconfigdata.config.entries.main.prefix=myapp
+quarkus.appconfigdata.config.entries.main.format=auto
+quarkus.appconfigdata.config.entries.main.required-minimum-poll-interval-in-seconds=15
 ----
 
-<1> Declare variable name using `Provider<>`.
-<2> Use the `Provider.get()` method to get the latest value of the property.
-<3> Or use the `ConfigProvider` to get the latest observed value of the property.
+For `{"feature":{"enabled":true}}`, the exposed key is `myapp.feature.enabled`; `main` is not a prefix.
+Each entry inherits the source-wide format and session minimum unless overridden.
+You can combine this with the application/environment/configuration-profile selection above; that selection remains
+unprefixed. If you select the same profile more than once, the largest requested minimum polling interval applies.
 
-=== How configuration keys are exposed
+=== Refresh deployed values
 
-The hosted configuration body is parsed into a flat map of string keys and string values:
+Polling is off by default. To check for updates with a requested delay of 30 seconds:
 
-* If the document is **JSON**, nested objects are turned into dotted keys (for example `featureFlags.newCheckoutFlow` with value `true`).
-* JSON **arrays** use index segments (for example `items[0].name`).
-* If the document is **Java properties** format, standard `key=value` entries are exposed using those keys.
+[source,properties]
+----
+quarkus.appconfigdata.config.update-interval=30S
+quarkus.appconfigdata.config.required-minimum-poll-interval-in-seconds=15
+----
 
-Boolean and numeric JSON values are exposed as strings (`true`, `false`, and the number's string form).
+The wait after each read is at least 30 seconds and may be longer if AWS requires it.
+Without an explicit minimum, the minimum is 60 seconds. Accepted minimum values range from 15 to 86400 seconds;
+`update-interval` must be at least one second to enable polling.
 
-`quarkus.appconfigdata.config.format` accepts `auto` (default), `json`, `properties`, or `yaml` for this document source.
-An explicit format overrides detection; unknown format names fail startup.
-The shared `raw` format and non-null JSON scalars require a target property name, which this source does not provide, so they are rejected.
-JSON `null`, `{}` and `[]` produce an empty configuration with `format=json`.
+After deploying a changed profile, xref:common-config.adoc#dynamic-reads[dynamic lookups] return the new values once
+a refresh succeeds. A failed read keeps the last valid values and later polling can recover automatically.
+For `auto`/`json` configuration, deploying `{}` or `[]` removes that profile's properties after a successful refresh;
+a whitespace-only properties document also clears its properties.
 
-With `auto`, valid JSON objects and arrays take priority regardless of `Content-Type`.
-Otherwise, a YAML `Content-Type` (including `application/yaml` and `text/yaml`) selects YAML, including flow-style YAML such as `{feature: true}`.
-YAML decoding requires the optional `io.quarkus:quarkus-config-yaml` extension; explicit `format=yaml` fails startup without it.
-This dependency is required for YAML decoding in all three AWS config sources (AppConfig Data, SSM and Secrets Manager).
-With AppConfig Data `auto`, a YAML `Content-Type` still selects YAML when the extension is absent: decoding fails,
-the previous snapshot is kept (or the source remains empty on the initial load), and there is no properties fallback.
-Without a YAML `Content-Type`, `auto` does not detect nested YAML and reads it as properties instead.
+=== Formats and YAML migration
+
+`quarkus.appconfigdata.config.format` defaults to `auto`: valid JSON objects/arrays take priority over Content-Type;
+otherwise a YAML Content-Type selects YAML, and other content is read as Java properties. Without a YAML Content-Type,
+nested YAML is not automatically detected. A named entry with a non-empty prefix also permits `raw` and non-null JSON scalars.
+See xref:common-config.adoc#formats[Formats, prefixes and property names] for explicit formats and the YAML dependency.
 
 [IMPORTANT]
 ====
-Migration: YAML documents were previously read as Java properties. Nested YAML now exposes dotted keys, for example `feature.enabled`, instead of the old `feature` and `enabled` keys.
-
-For this hosted document served with `Content-Type: application/yaml`:
+YAML documents were previously read as Java properties. For `Content-Type: application/yaml`, this document now exposes
+`feature.enabled=true` instead of the old separate `feature` (empty value) and `enabled` keys:
 
 [source,yaml]
 ----
@@ -110,57 +75,16 @@ feature:
   enabled: true
 ----
 
-Before (Java properties interpretation):
-
-[source,properties]
-----
-feature=
-enabled=true
-----
-
-[source,java]
-----
-@ConfigProperty(name = "enabled")
-boolean enabled; // true
-----
-
-The `feature` entry has an empty value, not a nested object; it cannot satisfy a required non-empty configuration value.
-
-After (`format=auto` with the YAML extension installed, or explicit `format=yaml`):
-
-[source,java]
-----
-@ConfigProperty(name = "feature.enabled")
-boolean enabled; // true
-----
-
-The old `feature` and `enabled` keys are no longer exposed.
-Set `quarkus.appconfigdata.config.format=properties` to retain the old interpretation.
+Update consumers to use `feature.enabled` and install `io.quarkus:quarkus-config-yaml`, or set
+`quarkus.appconfigdata.config.format=properties` to retain the old interpretation.
+When YAML is selected but its extension is missing, decoding fails; there is no properties fallback.
 ====
-
-=== Credentials, region, and endpoint
-
-The config source uses the same AppConfig Data client configuration as the rest of the extension (credentials provider chain, region, and optional endpoint override).
-This is useful for a local stack such as Floci, or for custom endpoints:
-
-[source,properties]
-----
-quarkus.appconfigdata.endpoint-override=http://localhost:4566
-quarkus.appconfigdata.aws.region=us-east-1
-quarkus.appconfigdata.aws.credentials.type=static
-quarkus.appconfigdata.aws.credentials.static-provider.access-key-id=test-key
-quarkus.appconfigdata.aws.credentials.static-provider.secret-access-key=test-secret
-
-quarkus.appconfigdata.config.enabled=true
-quarkus.appconfigdata.config.application=my-application
-quarkus.appconfigdata.config.environment=production
-quarkus.appconfigdata.config.configuration-profile=my-profile
-----
 
 === Load a configuration in the local stack
 
-AppConfig Data only serves configurations that are deployed: a hosted configuration version alone is returned as an empty document, and the config source exposes no entries.
-To try the config source with Dev Services, create the configuration and deploy it with an xref:dev-services.adoc#_init_scripts[init script], for example `src/test/resources/floci-init/01_setup_appconfigdata.sh`:
+AppConfig Data only serves configurations that are deployed: a hosted version alone is returned as an empty document.
+To try the source with Dev Services, create and deploy a configuration with an
+xref:dev-services.adoc#_init_scripts[init script], for example `src/test/resources/floci-init/01_setup_appconfigdata.sh`:
 
 [source,bash]
 ----
@@ -187,8 +111,7 @@ aws appconfig start-deployment --application-id "${APPLICATION_ID}" --environmen
 echo "#### Init completed"
 ----
 
-The script uses the AWS CLI, so select the Floci image that ships it.
-The config source loads the configuration when the application starts, so also make Dev Services wait for the script to complete:
+Select the Floci image with the AWS CLI and wait for initialization before loading the source:
 
 [source,properties]
 ----
@@ -203,12 +126,3 @@ quarkus.appconfigdata.config.configuration-profile=my-profile
 ----
 
 The `greeting` property then resolves to `hello`.
-
-=== Notes and limitations
-
-* The config source keeps an internal snapshot that is updated when polling succeeds; components that only read configuration at startup will not see later changes unless they observe configuration dynamically.
-* Invalid JSON or Java properties content is logged as an error and leaves the previous snapshot unchanged. Polling continues using the next token returned by AppConfig Data.
-* Invalid UTF-8 and invalid or recursive YAML also leave the previous snapshot unchanged. Logs classify failures without including SDK/parser messages, values or polling tokens.
-* `GetLatestConfiguration` uses a single-use token. Its SDK retries are disabled per request, without changing retries on the application client. After a lost response or an expired/corrupted token, the next scheduled read opens a new session instead of replaying the old token. A temporary session-opening failure keeps the snapshot and waits for the next poll; it never creates an immediate retry loop. Other bad-request errors do not trigger session replacement.
-* A zero-byte response means the configuration is unchanged. A valid empty document (such as `{}` or `[]`), or a whitespace-only properties document, replaces the snapshot with an empty configuration.
-* If identifiers are missing or AppConfig Data returns an error during session start or fetch, Quarkus logs the error and the config source may expose no entries from AppConfig for that attempt.

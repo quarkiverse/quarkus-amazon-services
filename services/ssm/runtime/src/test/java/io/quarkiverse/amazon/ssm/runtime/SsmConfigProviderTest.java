@@ -2,13 +2,20 @@ package io.quarkiverse.amazon.ssm.runtime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,6 +32,45 @@ import software.amazon.awssdk.services.ssm.model.Parameter;
 class SsmConfigProviderTest {
     private final ResourceId a = new ResourceId("/app/a");
     private final ResourceId b = new ResourceId("/app/b");
+
+    @Test
+    void closeStopsTraversalBeforeTheNextConfiguredPath() throws Exception {
+        var entered = new CountDownLatch(1);
+        var release = new CountDownLatch(1);
+        var client = mock(SsmClient.class);
+        when(client.getParametersByPath(any(GetParametersByPathRequest.class))).thenAnswer(invocation -> {
+            entered.countDown();
+            assertTrue(release.await(5, TimeUnit.SECONDS));
+            return GetParametersByPathResponse.builder().build();
+        });
+        var executor = Executors.newSingleThreadExecutor();
+        try (var provider = new SsmConfigProvider(client,
+                List.of(new SsmConfigProvider.Path("/a", true), new SsmConfigProvider.Path("/b", true)), List.of(), true)) {
+            var fetch = executor.submit(provider::fetchAll);
+            assertTrue(entered.await(5, TimeUnit.SECONDS));
+            provider.close();
+            release.countDown();
+            var error = assertThrows(ExecutionException.class, () -> fetch.get(5, TimeUnit.SECONDS));
+            assertEquals(IllegalStateException.class, error.getCause().getClass());
+            verify(client, times(1)).getParametersByPath(any(GetParametersByPathRequest.class));
+            verify(client, times(1)).close();
+        } finally {
+            release.countDown();
+            executor.shutdownNow();
+            assertTrue(executor.awaitTermination(5, TimeUnit.SECONDS));
+        }
+    }
+
+    @Test
+    void aFlatParameterRequestedByArnRetainsItsFullNameKey() {
+        var client = mock(SsmClient.class);
+        String arn = "arn:aws:ssm:us-east-1:123456789012:parameter/flat";
+        when(client.getParameters(any(GetParametersRequest.class))).thenReturn(GetParametersResponse.builder()
+                .parameters(Parameter.builder().name("flat").arn(arn).value("value").build()).build());
+        try (var source = new SsmConfigSource(client, null, List.of(arn), true, true, java.time.Duration.ZERO, 270)) {
+            assertEquals("value", source.getValue("flat"));
+        }
+    }
 
     @Test
     void secondPageFailureRetainsReceivedDocumentsWithoutInferringRemoval() {
