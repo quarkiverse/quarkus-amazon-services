@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import io.quarkiverse.amazon.common.config.FetchFailure;
 import software.amazon.awssdk.awscore.exception.AwsErrorDetails;
 import software.amazon.awssdk.awscore.exception.AwsServiceException;
 import software.amazon.awssdk.core.exception.ApiCallTimeoutException;
@@ -24,8 +25,9 @@ class ConfigSourceFailureTest {
     @CsvSource({ "404,Unknown,MISSING", "400,ResourceNotFoundException,MISSING", "400,ParameterNotFound,MISSING",
             "403,Unknown,ACCESS_DENIED", "400,AccessDeniedException,ACCESS_DENIED",
             "400,KMSAccessDeniedException,ACCESS_DENIED",
-            "429,ThrottlingException,TRANSIENT", "503,Unavailable,TRANSIENT", "400,ValidationException,OTHER" })
-    void classifiesAwsResponses(int status, String code, ConfigSourceFailure expected) {
+            "429,ThrottlingException,TRANSIENT", "429,Unknown,TRANSIENT", "503,Unavailable,TRANSIENT",
+            "400,ValidationException,OTHER" })
+    void classifiesAwsResponses(int status, String code, FetchFailure expected) {
         var failure = AwsServiceException.builder().statusCode(status)
                 .awsErrorDetails(AwsErrorDetails.builder().errorCode(code).build()).message("unsafe-secret").build();
         assertEquals(expected, ConfigSourceFailure.classify(failure));
@@ -33,13 +35,15 @@ class ConfigSourceFailureTest {
 
     @Test
     void distinguishesEncodingAndTransportFailures() {
-        assertEquals(ConfigSourceFailure.INVALID_CONTENT, ConfigSourceFailure.classify(new IllegalArgumentException("secret")));
-        assertEquals(ConfigSourceFailure.INVALID_CONTENT,
+        assertEquals(FetchFailure.TRANSIENT, ConfigSourceFailure.classify(new IOException()));
+        assertEquals(FetchFailure.OTHER, ConfigSourceFailure.classify(SdkClientException.create("invalid client settings")));
+        assertEquals(FetchFailure.INVALID_CONTENT, ConfigSourceFailure.classify(new IllegalArgumentException("secret")));
+        assertEquals(FetchFailure.INVALID_CONTENT,
                 ConfigSourceFailure.classify(new UncheckedIOException(new CharacterCodingException())));
-        assertEquals(ConfigSourceFailure.TRANSIENT, ConfigSourceFailure.classify(ApiCallTimeoutException.create(1)));
-        assertEquals(ConfigSourceFailure.TRANSIENT,
+        assertEquals(FetchFailure.TRANSIENT, ConfigSourceFailure.classify(ApiCallTimeoutException.create(1)));
+        assertEquals(FetchFailure.TRANSIENT,
                 ConfigSourceFailure.classify(SdkClientException.create("secret", new IOException())));
-        assertEquals(ConfigSourceFailure.OTHER, ConfigSourceFailure.classify(new NullPointerException("secret")));
+        assertEquals(FetchFailure.OTHER, ConfigSourceFailure.classify(new NullPointerException("secret")));
     }
 
     @Test
@@ -60,7 +64,7 @@ class ConfigSourceFailureTest {
         jul.addHandler(handler);
         try {
             var unsafe = new IllegalArgumentException("unsafe-secret");
-            ConfigSourceFailure.classify(unsafe).log(org.jboss.logging.Logger.getLogger(jul.getName()),
+            ConfigSourceFailure.log(ConfigSourceFailure.classify(unsafe), org.jboss.logging.Logger.getLogger(jul.getName()),
                     "Unable to load config");
             assertEquals(1, records.size());
             assertEquals("Unable to load config [INVALID_CONTENT]", records.getFirst().getMessage());

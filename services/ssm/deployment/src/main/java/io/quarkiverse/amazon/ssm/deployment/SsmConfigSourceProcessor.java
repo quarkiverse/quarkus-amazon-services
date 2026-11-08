@@ -1,7 +1,7 @@
 package io.quarkiverse.amazon.ssm.deployment;
 
+import io.quarkiverse.amazon.common.config.AwsConfigSourceCloser;
 import io.quarkiverse.amazon.ssm.runtime.SsmConfigSourceBuilder;
-import io.quarkiverse.amazon.ssm.runtime.SsmConfigSourceCloser;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -24,6 +24,6 @@ public class SsmConfigSourceProcessor {
 
     @BuildStep
     AdditionalBeanBuildItem ssmConfigSourceCloser() {
-        return AdditionalBeanBuildItem.unremovableOf(SsmConfigSourceCloser.class);
+        return AdditionalBeanBuildItem.unremovableOf(AwsConfigSourceCloser.class);
     }
 }
