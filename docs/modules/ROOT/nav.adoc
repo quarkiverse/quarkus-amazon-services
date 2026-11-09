@@ -53,3 +53,5 @@
 * xref:opentelemetry.adoc[OpenTelemetry for Amazon Services]
 * xref:common-config.adoc[Configuration from AWS]
 * xref:common-features.adoc[Common features]
+* Migration Guides
+** xref:migration-guide-3-to-4.adoc[3.x to 4.0.0]

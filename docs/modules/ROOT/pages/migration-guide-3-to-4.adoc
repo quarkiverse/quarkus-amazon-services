@@ -1,0 +1,154 @@
+= Migrating from Amazon Services 3.x to 4.0.0
+
+This guide describes changes that may require updates when migrating from Amazon Services 3.x to 4.0.0.
+For platform-level changes, also consult the https://github.com/quarkusio/quarkus/wiki/Migration-Guide-4.0[Quarkus 4.0 migration guide].
+
+== AWS configuration
+
+These changes affect applications that enable an SSM, Secrets Manager or AppConfig Data ConfigSource.
+Applications that only use the regular AWS clients are not affected by the configuration behaviour changes below.
+See xref:common-config.adoc[Configuration from AWS] for the current configuration model.
+
+=== SSM path selections expose relative property names
+
+Previously, a parameter named `/myapp/prod/db/url` was exposed as `myapp.prod.db.url`, including when loaded through
+`quarkus.ssm.config.path=/myapp/prod`. Path selections now expose `db.url` by default.
+As with the other providers, selecting a remote location does not implicitly add that location to application property names.
+
+Either update consumers to use the relative keys, or preserve the previous keys:
+
+[source,properties]
+----
+quarkus.ssm.config.path=/myapp/prod
+quarkus.ssm.config.key-naming=full
+----
+
+`full` remains supported. Alternatively, use an explicit prefix with relative naming:
+
+[source,properties]
+----
+quarkus.ssm.config.entries.application.path=/myapp/prod
+quarkus.ssm.config.entries.application.prefix=myapp.prod
+----
+
+Only relative path naming converts complete index segments such as `++_0_++` to `[0]`.
+Explicit `names` and `key-naming=full` retain literal index segments and full normalized names.
+
+For parameter `++/myapp/prod/servers/_0_/name++`, the exposed key depends on the selection:
+
+[cols="1,1",options="header"]
+|===
+|Selection |Exposed key
+
+|`path=/myapp/prod` (default relative naming)
+|`servers[0].name`
+
+|`path=/myapp/prod` with `key-naming=full`
+|`++myapp.prod.servers._0_.name++`
+
+|Explicit `++names[0]=/myapp/prod/servers/_0_/name++`
+|`++myapp.prod.servers._0_.name++`
+|===
+
+=== AppConfig Data respects YAML content types
+
+Previously, AppConfig Data parsed non-JSON documents as Java properties, even when AWS returned a YAML content type.
+Automatic decoding now uses a YAML decoder for YAML documents, including `application/x-yaml`.
+
+If the document is YAML, add `io.quarkus:quarkus-config-yaml` to your application.
+If it intentionally relies on the previous Java properties interpretation, preserve that interpretation explicitly:
+
+[source,properties]
+----
+quarkus.appconfigdata.config.format=properties
+----
+
+An entry-specific `format` can override this default. Missing YAML support is a load failure, not a reason to silently
+reinterpret a document as another format.
+
+=== Secrets Manager requires explicit selection
+
+Previously, enabling the ConfigSource without a `secrets` mapping listed all accessible secrets and loaded them under their names.
+Implicit listing is no longer supported. It made the loaded configuration depend on every accessible secret rather than an explicit selection.
+
+Declare the required secrets and their target property prefixes:
+
+[source,properties]
+----
+quarkus.secretsmanager.config.enabled=true
+quarkus.secretsmanager.config.secrets."database"=prod/database
+----
+
+For a JSON secret containing `{"username":"app","password":"example"}`, this exposes `database.username` and `database.password`.
+Choose the mapping prefix to match the keys your application expects. Named `entries` are also supported.
+Setting `fail-on-missing-config=false` does not restore discovery; an empty selection skips the source instead.
+
+=== Startup failures and complete snapshots
+
+Configuration sources now fail startup by default if the selected configuration cannot be loaded completely, including
+missing resources, access failures and invalid content. Previously, failures could leave an application running with
+missing or partial remote configuration.
+
+If the remote source is optional and local configuration is sufficient, opt out explicitly under the relevant service prefix:
+
+[source,properties]
+----
+quarkus.ssm.config.fail-on-missing-config=false
+----
+
+This setting makes the entire source optional; it does not enable partial publication.
+If any selected resource fails during the initial load, none of that source's remote properties are published.
+If polling is disabled, retry requires an application restart. To allow later recovery, configure polling explicitly,
+for example `quarkus.ssm.config.update-interval=30S`.
+
+During polling, a failed refresh keeps the previous complete snapshot. Publication is atomic per provider, not across AWS services.
+This prevents publishing incompatible subsets of related configuration values.
+
+=== Resolve overlapping property keys
+
+Distinct selections in the same provider that expose the same property key are rejected rather than silently overwriting
+one another, even when the values match. Give them separate prefixes or remove the overlapping selections.
+This does not change precedence between separate ConfigSources.
+
+==== SSM paths with the same relative keys
+
+Suppose `/services/orders/db/url` and `/services/billing/db/url` are selected by these paths:
+
+[source,properties]
+----
+quarkus.ssm.config.entries.orders.path=/services/orders
+quarkus.ssm.config.entries.billing.path=/services/billing
+----
+
+Both parameters expose `db.url`, so loading the source fails by default. Add distinct prefixes:
+
+[source,properties]
+----
+quarkus.ssm.config.entries.orders.prefix=orders
+quarkus.ssm.config.entries.billing.prefix=billing
+----
+
+The keys are now `orders.db.url` and `billing.db.url`.
+Selecting the same parameter through both a path and `names` is allowed when both selections have the same prefix and format.
+For example, `path=/services/orders` with `key-naming=full` and `names[0]=/services/orders/db/url` exposes
+`services.orders.db.url` once, without a collision.
+
+==== Secrets Manager documents with the same fields
+
+Suppose secrets `prod/orders` and `prod/billing` each contain `{"url":"..."}`:
+
+[source,properties]
+----
+quarkus.secretsmanager.config.entries.orders.secret-id=prod/orders
+quarkus.secretsmanager.config.entries.billing.secret-id=prod/billing
+----
+
+Without prefixes, both documents expose `url`. Keep those selections and add:
+
+[source,properties]
+----
+quarkus.secretsmanager.config.entries.orders.prefix=orders
+quarkus.secretsmanager.config.entries.billing.prefix=billing
+----
+
+The keys are now `orders.url` and `billing.url`.
