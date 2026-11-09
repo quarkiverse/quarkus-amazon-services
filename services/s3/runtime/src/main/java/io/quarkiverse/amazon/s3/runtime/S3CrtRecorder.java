@@ -1,10 +1,12 @@
 package io.quarkiverse.amazon.s3.runtime;
 
+import java.lang.annotation.Annotation;
 import java.util.concurrent.Executor;
 import java.util.function.Function;
 
 import org.jboss.logging.Logger;
 
+import io.quarkiverse.amazon.common.AmazonClientBuilder;
 import io.quarkiverse.amazon.common.runtime.AmazonClientCommonRecorder;
 import io.quarkiverse.amazon.common.runtime.AsyncClientCompletion;
 import io.quarkiverse.amazon.common.runtime.AwsConfig;
@@ -27,34 +29,42 @@ public class S3CrtRecorder {
         this.config = config;
     }
 
-    public RuntimeValue<S3CrtAsyncClientBuilder> getCrtAsyncClientBuilder(String awsServiceName) {
+    public RuntimeValue<S3CrtAsyncClientBuilder> getCrtAsyncClientBuilder(String awsServiceName, String clientName) {
         S3CrtAsyncClientBuilder builder = S3AsyncClient.crtBuilder();
-        configureS3Client(builder, awsServiceName);
+        configureS3Client(builder, awsServiceName, clientName);
 
         return new RuntimeValue<>(builder);
     }
 
-    private void configureS3Client(S3CrtAsyncClientBuilder builder, String awsServiceName) {
+    private void configureS3Client(S3CrtAsyncClientBuilder builder, String awsServiceName, String clientName) {
         S3Config.S3ClientConfig defaults = config.getValue().s3ConfigFor(ClientUtil.DEFAULT_CLIENT_NAME);
+        S3Config.S3ClientConfig client = config.getValue().s3ConfigFor(clientName);
         builder
-                .accelerate(defaults.accelerateMode().orElse(false))
-                .checksumValidationEnabled(defaults.checksumValidation().orElse(true))
-                .crossRegionAccessEnabled(defaults.useArnRegionEnabled().orElse(false))
-                .forcePathStyle(defaults.pathStyleAccess().orElse(false));
+                .accelerate(client.accelerateMode().or(defaults::accelerateMode).orElse(false))
+                .checksumValidationEnabled(client.checksumValidation().or(defaults::checksumValidation).orElse(true))
+                .crossRegionAccessEnabled(client.useArnRegionEnabled().or(defaults::useArnRegionEnabled).orElse(false))
+                .forcePathStyle(client.pathStyleAccess().or(defaults::pathStyleAccess).orElse(false));
 
-        config.getValue().crtClient().initialReadBufferSizeInBytes().ifPresent(builder::initialReadBufferSizeInBytes);
-        config.getValue().crtClient().maxConcurrency().ifPresent(builder::maxConcurrency);
-        config.getValue().crtClient().minimumPartSizeInBytes().ifPresent(builder::minimumPartSizeInBytes);
-        config.getValue().crtClient().targetThroughputInGbps().ifPresent(builder::targetThroughputInGbps);
-        config.getValue().crtClient().maxNativeMemoryLimitInBytes().ifPresent(builder::maxNativeMemoryLimitInBytes);
+        S3CrtConfig crt = client.crtClient();
+        S3CrtConfig crtDefaults = defaults.crtClient();
+        crt.initialReadBufferSizeInBytes().or(crtDefaults::initialReadBufferSizeInBytes)
+                .ifPresent(builder::initialReadBufferSizeInBytes);
+        crt.maxConcurrency().or(crtDefaults::maxConcurrency).ifPresent(builder::maxConcurrency);
+        crt.minimumPartSizeInBytes().or(crtDefaults::minimumPartSizeInBytes).ifPresent(builder::minimumPartSizeInBytes);
+        crt.targetThroughputInGbps().or(crtDefaults::targetThroughputInGbps).ifPresent(builder::targetThroughputInGbps);
+        crt.maxNativeMemoryLimitInBytes().or(crtDefaults::maxNativeMemoryLimitInBytes)
+                .ifPresent(builder::maxNativeMemoryLimitInBytes);
 
-        AwsConfig awsConfig = config.getValue().clients().get(ClientUtil.DEFAULT_CLIENT_NAME).aws();
-        SdkConfig sdkConfig = config.getValue().clients().get(ClientUtil.DEFAULT_CLIENT_NAME).sdk();
+        AwsConfig awsDefaults = config.getValue().defaultsFor(clientName).aws();
+        AwsConfig awsConfig = config.getValue().clients().get(clientName).aws();
+        SdkConfig sdkConfig = config.getValue().clients().get(clientName).sdk();
+        String prefix = config.getValue().configPrefix("s3", clientName);
 
-        awsConfig.region().ifPresent(builder::region);
+        awsConfig.region().or(awsDefaults::region).ifPresent(builder::region);
         builder.credentialsProvider(
-                AmazonClientCommonRecorder.resolveCredentialsProvider(awsServiceName, awsServiceName, awsConfig, awsConfig));
-        AmazonClientCommonRecorder.resolveEndpointOverride(awsServiceName, awsServiceName, sdkConfig, sdkConfig)
+                AmazonClientCommonRecorder.resolveCredentialsProvider(awsServiceName, prefix, awsConfig, awsDefaults));
+        AmazonClientCommonRecorder
+                .resolveEndpointOverride(awsServiceName, prefix, sdkConfig, config.getValue().defaultsFor(clientName).sdk())
                 .ifPresent(builder::endpointOverride);
     }
 
@@ -82,11 +92,14 @@ public class S3CrtRecorder {
         }
     }
 
-    public Function<SyntheticCreationalContext<S3AsyncClient>, S3AsyncClient> getS3CrtAsyncClient() {
+    public Function<SyntheticCreationalContext<S3AsyncClient>, S3AsyncClient> getS3CrtAsyncClient(String clientName) {
         return new Function<SyntheticCreationalContext<S3AsyncClient>, S3AsyncClient>() {
             @Override
             public S3AsyncClient apply(SyntheticCreationalContext<S3AsyncClient> context) {
-                return context.getInjectedReference(S3CrtAsyncClientBuilder.class).build();
+                return context.getInjectedReference(S3CrtAsyncClientBuilder.class,
+                        ClientUtil.isDefaultClient(clientName) ? new Annotation[0]
+                                : new Annotation[] { new AmazonClientBuilder.AmazonClientBuilderLiteral(clientName) })
+                        .build();
             }
         };
     }
