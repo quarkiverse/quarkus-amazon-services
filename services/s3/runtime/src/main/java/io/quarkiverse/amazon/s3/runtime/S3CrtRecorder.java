@@ -35,11 +35,12 @@ public class S3CrtRecorder {
     }
 
     private void configureS3Client(S3CrtAsyncClientBuilder builder, String awsServiceName) {
+        S3Config.S3ClientConfig defaults = config.getValue().s3ConfigFor(ClientUtil.DEFAULT_CLIENT_NAME);
         builder
-                .accelerate(config.getValue().accelerateMode())
-                .checksumValidationEnabled(config.getValue().checksumValidation())
-                .crossRegionAccessEnabled(config.getValue().useArnRegionEnabled())
-                .forcePathStyle(config.getValue().pathStyleAccess());
+                .accelerate(defaults.accelerateMode().orElse(false))
+                .checksumValidationEnabled(defaults.checksumValidation().orElse(true))
+                .crossRegionAccessEnabled(defaults.useArnRegionEnabled().orElse(false))
+                .forcePathStyle(defaults.pathStyleAccess().orElse(false));
 
         config.getValue().crtClient().initialReadBufferSizeInBytes().ifPresent(builder::initialReadBufferSizeInBytes);
         config.getValue().crtClient().maxConcurrency().ifPresent(builder::maxConcurrency);

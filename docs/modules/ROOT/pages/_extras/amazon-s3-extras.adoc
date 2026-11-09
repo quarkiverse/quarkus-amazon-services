@@ -38,7 +38,8 @@ quarkus.s3.multipart.threshold-in-bytes=100000000
 quarkus.s3.multipart.minimum-part-size-in-bytes=8M
 ----
 
-These settings apply to all standard S3 asynchronous clients (default and named), with either HTTP transport.
+These settings apply to standard S3 asynchronous clients with either HTTP transport.
+Named clients inherit them unless overridden with `+quarkus.s3."client-name".multipart.*+`.
 They also affect direct calls to those clients, not just Transfer Manager operations.
 They do not apply to synchronous clients or the dedicated `@S3Crt` client, which uses `quarkus.s3.crt-client.*` settings.
 The Transfer Manager reuses the configured client without overriding its multipart settings.

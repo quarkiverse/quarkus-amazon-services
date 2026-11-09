@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import io.quarkiverse.amazon.common.runtime.ClientUtil;
 import io.quarkiverse.amazon.s3.runtime.S3Config;
 import io.quarkiverse.amazon.s3.runtime.S3Recorder;
 import io.quarkus.runtime.RuntimeValue;
@@ -19,9 +20,9 @@ class S3MultipartConfigTest {
     @Test
     void multipartIsDisabledByDefaultAndSizesAreLeftToTheSdk() {
         S3Config config = config(Map.of());
-        assertFalse(config.multipart().enabled());
-        assertTrue(config.multipart().thresholdInBytes().isEmpty());
-        assertTrue(config.multipart().minimumPartSizeInBytes().isEmpty());
+        assertFalse(config.s3ConfigFor(ClientUtil.DEFAULT_CLIENT_NAME).multipart().enabled().orElse(false));
+        assertTrue(config.s3ConfigFor(ClientUtil.DEFAULT_CLIENT_NAME).multipart().thresholdInBytes().isEmpty());
+        assertTrue(config.s3ConfigFor(ClientUtil.DEFAULT_CLIENT_NAME).multipart().minimumPartSizeInBytes().isEmpty());
         new S3Recorder(new RuntimeValue<>(config)).getAsyncClientBuilder();
     }
 
@@ -37,8 +38,10 @@ class S3MultipartConfigTest {
                 "quarkus.s3.multipart.enabled", "true",
                 "quarkus.s3.multipart.threshold-in-bytes", "100000000",
                 "quarkus.s3.multipart.minimum-part-size-in-bytes", "8M"));
-        assertEquals(100000000L, config.multipart().thresholdInBytes().orElseThrow().asLongValue());
-        assertEquals(8388608L, config.multipart().minimumPartSizeInBytes().orElseThrow().asLongValue());
+        assertEquals(100000000L,
+                config.s3ConfigFor(ClientUtil.DEFAULT_CLIENT_NAME).multipart().thresholdInBytes().orElseThrow().asLongValue());
+        assertEquals(8388608L, config.s3ConfigFor(ClientUtil.DEFAULT_CLIENT_NAME).multipart().minimumPartSizeInBytes()
+                .orElseThrow().asLongValue());
         new S3Recorder(new RuntimeValue<>(config)).getAsyncClientBuilder();
     }
 
@@ -68,7 +71,7 @@ class S3MultipartConfigTest {
     @Test
     void sizesAloneDoNotEnableMultipart() {
         S3Config config = config(Map.of("quarkus.s3.multipart.threshold-in-bytes", "100000000"));
-        assertFalse(config.multipart().enabled());
+        assertFalse(config.s3ConfigFor(ClientUtil.DEFAULT_CLIENT_NAME).multipart().enabled().orElse(false));
         new S3Recorder(new RuntimeValue<>(config)).getAsyncClientBuilder();
     }
 
