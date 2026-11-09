@@ -14,7 +14,23 @@ Add the following dependency to the application `pom.xml`:
 </dependency>
 ----
 
-The Transfer Manager uses the default asynchronous S3 client, so configure it as described in <<Going asynchronous>>. Named clients are not supported.
+The Transfer Manager uses the corresponding asynchronous S3 client, so configure it as described in <<Going asynchronous>>.
+Use `@AmazonClient("archive")` to select a named client, with or without `@S3Crt`:
+
+[source,java]
+----
+@Inject
+@AmazonClient("archive")
+S3TransferManager archiveTransfers;
+
+@Inject
+@S3Crt
+@AmazonClient("archive")
+S3TransferManager archiveCrtTransfers;
+----
+
+Injecting a named Transfer Manager is sufficient to create its underlying client; injecting that client separately is not required.
+The native CRT client uses `+quarkus.s3."archive".crt-client.*+`, falling back to `+quarkus.s3.crt-client.*+` for absent settings.
 
 The parallel transfers require an asynchronous S3 client with multipart support.
 The recommended one is the https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/crt-based-s3-client.html[AWS CRT-based S3 client]: add the `aws-crt-client` dependency, as described in <<Going asynchronous>>, and inject the Transfer Manager with the `@S3Crt` qualifier:
@@ -41,7 +57,7 @@ quarkus.s3.multipart.minimum-part-size-in-bytes=8M
 These settings apply to standard S3 asynchronous clients with either HTTP transport.
 Named clients inherit them unless overridden with `+quarkus.s3."client-name".multipart.*+`.
 They also affect direct calls to those clients, not just Transfer Manager operations.
-They do not apply to synchronous clients or the dedicated `@S3Crt` client, which uses `quarkus.s3.crt-client.*` settings.
+They do not apply to synchronous clients or the dedicated `@S3Crt` client, which uses `+crt-client.*+` settings.
 The Transfer Manager reuses the configured client without overriding its multipart settings.
 For other settings not exposed as configuration properties, you can still
 xref:common-features.adoc#_overriding_the_client_configuration[override the client configuration with a producer].

@@ -66,6 +66,8 @@ public class S3ClientRoutingProcessor {
         types.add(MANAGER);
         index.getIndex().getAllKnownImplementors(CLIENT).forEach(c -> types.add(c.name()));
         index.getIndex().getAllKnownImplementors(MANAGER).forEach(c -> types.add(c.name()));
+        index.getIndex().getAllKnownSubinterfaces(CLIENT).forEach(c -> types.add(c.name()));
+        index.getIndex().getAllKnownSubinterfaces(MANAGER).forEach(c -> types.add(c.name()));
         return new AnnotationsTransformerBuildItem(new AnnotationsTransformer() {
             public void transform(TransformationContext context) {
                 DotName type = switch (context.getTarget().kind()) {
@@ -74,16 +76,20 @@ public class S3ClientRoutingProcessor {
                     case FIELD -> context.getTarget().asField().type().name();
                     default -> null;
                 };
-                if (!types.contains(type) || (!context.isClass() && context.getAnnotations().stream()
-                        .noneMatch(a -> a.name().equals(DotNames.PRODUCES)))) {
+                if (!types.contains(type)) {
                     return;
                 }
-                var transformation = context.transform().add(route(context.getAnnotations()));
-                boolean hasQualifier = context.getAnnotations().stream().anyMatch(a -> {
+                var annotations = context.getAnnotations().stream()
+                        .filter(a -> context.getTarget().equals(a.target())).toList();
+                if (!context.isClass() && annotations.stream().noneMatch(a -> a.name().equals(DotNames.PRODUCES))) {
+                    return;
+                }
+                boolean hasQualifier = annotations.stream().anyMatch(a -> {
                     var annotation = index.getIndex().getClassByName(a.name());
                     return annotation != null && annotation.hasDeclaredAnnotation(DotNames.QUALIFIER)
                             && !a.name().equals(DotNames.NAMED) && !a.name().equals(DotNames.ANY);
                 });
+                var transformation = context.transform().add(route(annotations));
                 if (!hasQualifier) {
                     transformation.add(jakarta.enterprise.inject.Default.class);
                 }
