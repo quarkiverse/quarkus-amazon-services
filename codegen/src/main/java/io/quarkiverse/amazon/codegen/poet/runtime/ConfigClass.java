@@ -1,8 +1,11 @@
 package io.quarkiverse.amazon.codegen.poet.runtime;
 
 import static javax.lang.model.element.Modifier.ABSTRACT;
+import static javax.lang.model.element.Modifier.DEFAULT;
 import static javax.lang.model.element.Modifier.PUBLIC;
+import static javax.lang.model.element.Modifier.STATIC;
 
+import java.util.Map;
 import java.util.Optional;
 
 import com.squareup.javapoet.AnnotationSpec;
@@ -14,10 +17,15 @@ import com.squareup.javapoet.TypeSpec;
 import io.quarkiverse.amazon.codegen.model.QuarkusServiceModel;
 import io.quarkiverse.amazon.codegen.poet.PoetUtils;
 import io.quarkus.runtime.annotations.ConfigDocDefault;
+import io.quarkus.runtime.annotations.ConfigDocMapKey;
 import io.quarkus.runtime.annotations.ConfigDocSection;
+import io.quarkus.runtime.annotations.ConfigGroup;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithDefaults;
+import io.smallrye.config.WithParentName;
+import io.smallrye.config.WithUnnamedKey;
 import software.amazon.awssdk.codegen.model.intermediate.IntermediateModel;
 import software.amazon.awssdk.codegen.poet.ClassSpec;
 
@@ -32,6 +40,7 @@ public class ConfigClass implements ClassSpec {
             "AsyncHttpClientConfig");
     private final static ClassName SYNC_HTTP_CLIENT_CONFIG = ClassName.get("io.quarkiverse.amazon.common.runtime",
             "SyncHttpClientConfig");
+    private final static ClassName CLIENT_UTIL = ClassName.get("io.quarkiverse.amazon.common.runtime", "ClientUtil");
 
     public ConfigClass(QuarkusServiceModel quarkusModel) {
         this.model = quarkusModel.intermediateModel();
@@ -57,7 +66,36 @@ public class ConfigClass implements ClassSpec {
         builder.addMethod(asyncClientMethod());
 
         if (model.getEndpointOperation().isPresent()) {
-            builder.addMethod(enableEndpointDiscoveryMethod());
+            ClassName endpointConfig = configClassName.nestedClass("EndpointDiscoveryConfig");
+            builder.addType(TypeSpec.interfaceBuilder("EndpointDiscoveryConfig")
+                    .addModifiers(PUBLIC, STATIC)
+                    .addAnnotation(ConfigGroup.class)
+                    .addMethod(enableEndpointDiscoveryMethod())
+                    .build());
+            builder.addMethod(MethodSpec.methodBuilder("endpointDiscoveryClients")
+                    .addModifiers(PUBLIC, ABSTRACT)
+                    .addAnnotation(
+                            AnnotationSpec.builder(ConfigDocMapKey.class).addMember("value", "$S", "client-name").build())
+                    .addAnnotation(WithParentName.class)
+                    .addAnnotation(WithDefaults.class)
+                    .addAnnotation(AnnotationSpec.builder(WithUnnamedKey.class)
+                            .addMember("value", "$T.DEFAULT_CLIENT_NAME", CLIENT_UTIL).build())
+                    .addJavadoc("Endpoint discovery settings. Named clients inherit absent settings from the default client.")
+                    .returns(ParameterizedTypeName.get(ClassName.get(Map.class), ClassName.get(String.class), endpointConfig))
+                    .build());
+            builder.addMethod(MethodSpec.methodBuilder("enableEndpointDiscovery")
+                    .addModifiers(PUBLIC, DEFAULT)
+                    .returns(ParameterizedTypeName.get(Optional.class, Boolean.class))
+                    .addStatement("return enableEndpointDiscovery($T.DEFAULT_CLIENT_NAME)", CLIENT_UTIL)
+                    .build());
+            builder.addMethod(MethodSpec.methodBuilder("enableEndpointDiscovery")
+                    .addModifiers(PUBLIC, DEFAULT)
+                    .addParameter(String.class, "clientName")
+                    .returns(ParameterizedTypeName.get(Optional.class, Boolean.class))
+                    .addStatement("var defaults = endpointDiscoveryClients().get($T.DEFAULT_CLIENT_NAME)", CLIENT_UTIL)
+                    .addStatement("var client = endpointDiscoveryClients().getOrDefault(clientName, defaults)")
+                    .addStatement("return client.enableEndpointDiscovery().or(defaults::enableEndpointDiscovery)")
+                    .build());
         }
 
         return builder.build();
