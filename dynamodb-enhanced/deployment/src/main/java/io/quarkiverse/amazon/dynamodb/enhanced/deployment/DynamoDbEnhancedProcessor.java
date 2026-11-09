@@ -5,8 +5,10 @@ import static io.quarkiverse.amazon.common.deployment.ClientDeploymentUtil.injec
 import static io.quarkiverse.amazon.common.deployment.ClientDeploymentUtil.namedClient;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -27,6 +29,7 @@ import org.objectweb.asm.Type;
 import io.quarkiverse.amazon.common.deployment.AmazonClientAsyncResultBuildItem;
 import io.quarkiverse.amazon.common.deployment.AmazonClientSyncResultBuildItem;
 import io.quarkiverse.amazon.common.deployment.RequireAmazonClientInjectionBuildItem;
+import io.quarkiverse.amazon.common.runtime.ClientUtil;
 import io.quarkiverse.amazon.dynamodb.enhanced.runtime.BeanTableSchemaSubstitutionImplementation;
 import io.quarkiverse.amazon.dynamodb.enhanced.runtime.DynamoDbEnhancedBuildTimeConfig;
 import io.quarkiverse.amazon.dynamodb.enhanced.runtime.DynamoDbEnhancedClientRecorder;
@@ -85,12 +88,13 @@ public class DynamoDbEnhancedProcessor {
         }
 
         // Validate configurations
-        Optional<List<String>> extensions = buildTimeConfig.clientExtensions();
-        if (extensions != null && extensions.isPresent()) {
-            for (var extension : extensions.get()) {
+        for (var client : buildTimeConfig.clients().entrySet()) {
+            String prefix = ClientUtil.isDefaultClient(client.getKey()) ? "quarkus.dynamodbenhanced"
+                    : "quarkus.dynamodbenhanced.\"" + client.getKey() + "\"";
+            for (var extension : client.getValue().clientExtensions().orElse(Collections.emptyList())) {
                 if (!knownDynamodbEnhancedClientExtensionImpls.contains(extension)) {
                     throw new ConfigurationException(
-                            "quarkus.dynamodbenhanced.client-extensions - must list only existing implementations of software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClientExtension ('"
+                            prefix + ".client-extensions - must list only existing implementations of software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClientExtension ('"
                                     + extension + "')");
                 }
             }
@@ -132,7 +136,7 @@ public class DynamoDbEnhancedProcessor {
                 .collect(Collectors.toList());
 
         if (!syncClientRuntime.isEmpty() || !asyncClientRuntime.isEmpty()) {
-            RuntimeValue<DynamoDbEnhancedClientExtension> extensions = recorder.createExtensionList();
+            Map<String, RuntimeValue<DynamoDbEnhancedClientExtension>> extensions = new HashMap<>();
 
             for (AmazonClientSyncResultBuildItem amazonClientSyncResultBuildItem : syncClientRuntime) {
 
@@ -143,7 +147,9 @@ public class DynamoDbEnhancedProcessor {
                         .priority(0)
                         .scope(ApplicationScoped.class)
                         .setRuntimeInit()
-                        .createWith(recorder.createDynamoDbEnhancedClient(extensions,
+                        .createWith(recorder.createDynamoDbEnhancedClient(
+                                extensions.computeIfAbsent(amazonClientSyncResultBuildItem.getClientName(),
+                                        recorder::createExtensionList),
                                 amazonClientSyncResultBuildItem.getClientName()))
                         .addInjectionPoint(ClassType.create(DynamoDbClient.class),
                                 injectionPointAnnotationsClient(amazonClientSyncResultBuildItem.getClientName()))
@@ -158,7 +164,9 @@ public class DynamoDbEnhancedProcessor {
                         .priority(0)
                         .scope(ApplicationScoped.class)
                         .setRuntimeInit()
-                        .createWith(recorder.createDynamoDbEnhancedAsyncClient(extensions,
+                        .createWith(recorder.createDynamoDbEnhancedAsyncClient(
+                                extensions.computeIfAbsent(amazonClientAsyncResultBuildItem.getClientName(),
+                                        recorder::createExtensionList),
                                 amazonClientAsyncResultBuildItem.getClientName()))
                         .addInjectionPoint(ClassType.create(DynamoDbAsyncClient.class),
                                 injectionPointAnnotationsClient(amazonClientAsyncResultBuildItem.getClientName()))
