@@ -66,6 +66,10 @@ public class RecorderClass implements ClassSpec {
         builder.addMethod(getSyncClientConfigMethod());
         builder.addMethod(getSyncClientBuilderMethod());
         builder.addMethod(getAsyncClientBuilderMethod());
+        if (model.getEndpointOperation().isPresent()) {
+            builder.addMethod(getNamedClientBuilderMethod(false));
+            builder.addMethod(getNamedClientBuilderMethod(true));
+        }
 
         return builder.build();
     }
@@ -131,6 +135,22 @@ public class RecorderClass implements ClassSpec {
 
         return builder
                 .addStatement("return builder")
+                .build();
+    }
+
+    private MethodSpec getNamedClientBuilderMethod(boolean async) {
+        ParameterizedTypeName builderType = ParameterizedTypeName.get(
+                ClassName.get(async ? AwsAsyncClientBuilder.class : AwsSyncClientBuilder.class),
+                WildcardTypeName.subtypeOf(Object.class), WildcardTypeName.subtypeOf(Object.class));
+        return MethodSpec.methodBuilder(async ? "getAsyncBuilder" : "getSyncBuilder")
+                .addAnnotation(Override.class)
+                .addModifiers(PUBLIC)
+                .addParameter(String.class, "clientName")
+                .returns(ParameterizedTypeName.get(ClassName.get(RuntimeValue.class), builderType))
+                .addStatement("var builder = $T.builder()", async ? asyncClientClassName : syncClientClassName)
+                .addStatement(
+                        "config.getValue().enableEndpointDiscovery(clientName).ifPresent(builder::endpointDiscoveryEnabled)")
+                .addStatement("return new $T<>(builder)", RuntimeValue.class)
                 .build();
     }
 

@@ -27,26 +27,6 @@ quarkus.dynamodb."custom".aws.credentials.static-provider.access-key-id=xxx
 quarkus.dynamodb."custom".aws.credentials.static-provider.secret-access-key=yyy
 ----
 
-The S3 extension also supports named overrides for its service-specific settings, including multipart transfers:
-
-[source,properties]
-----
-quarkus.s3.path-style-access=true
-quarkus.s3.multipart.enabled=true
-quarkus.s3.multipart.minimum-part-size-in-bytes=8M
-quarkus.s3."archive".path-style-access=false
-quarkus.s3."archive".multipart.threshold-in-bytes=100M
-quarkus.s3."small-files".multipart.enabled=false
-----
-
-Each absent S3 setting falls back to the unnamed client's setting, then to the extension or AWS SDK default.
-Here, `archive` inherits multipart support and the 8 MiB minimum part size, but overrides the threshold and path-style access.
-An explicit `false`, as for `small-files`, overrides an inherited `true`.
-These overrides apply to standard synchronous and asynchronous S3 clients and presigners where supported;
-multipart applies only to standard asynchronous clients.
-HTTP transport settings (`sync-client.*`, `async-client.*`) remain shared, and the dedicated `@S3Crt` client
-continues to use the unnamed client's S3 settings and `quarkus.s3.crt-client.*`.
-
 For clients managed by the xref:amazon-sdk.adoc[generic AWS SDK extension], use `quarkus.aws."client-name"` instead:
 
 [source,properties]
