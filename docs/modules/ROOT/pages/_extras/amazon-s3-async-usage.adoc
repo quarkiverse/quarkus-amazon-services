@@ -111,6 +111,22 @@ If you want to use the https://docs.aws.amazon.com/sdk-for-java/latest/developer
 S3AsyncClient s3;
 ----
 
+For a named native CRT client, combine `@S3Crt` with `@AmazonClient`:
+
+[source,java]
+----
+@Inject
+@S3Crt
+@AmazonClient("archive")
+S3AsyncClient archive;
+----
+
+Use `+quarkus.s3."archive".*+` for its S3 settings, AWS region, credentials and endpoint,
+and `+quarkus.s3."archive".crt-client.*+` for native CRT settings.
+Unset settings fall back to the corresponding `+quarkus.s3.*+` settings.
+The native S3 CRT client is different from a standard S3 asynchronous client using the CRT HTTP transport;
+the latter does not use `@S3Crt` or `+crt-client.*+` settings.
+
 And add the following dependency to the application `pom.xml`:
 [source,xml]
 ----

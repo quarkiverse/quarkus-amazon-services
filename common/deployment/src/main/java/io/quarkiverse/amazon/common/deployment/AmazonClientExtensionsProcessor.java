@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
+import org.jboss.jandex.AnnotationInstance;
 import org.jboss.jandex.ClassType;
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.ParameterizedType;
@@ -412,18 +413,22 @@ public class AmazonClientExtensionsProcessor {
                 clientBuilders.produce(new AmazonClientBuilderBuildItem(configuredAsyncClientBuilder, asyncClientBuilderClass,
                         clientName, addOpenTelemetry));
 
-                syntheticBeans.produce(
-                        namedClient(SyntheticBeanBuildItem.configure(asyncClientName), clientName)
-                                .unremovable()
-                                .reserve(true)
-                                .priority(0)
-                                .setRuntimeInit()
-                                .scope(ApplicationScoped.class)
-                                .createWith(recorder.build(asyncClientBuilderClass, clientName))
-                                .addInjectionPoint(ClassType.create(asyncClientBuilderClass),
-                                        injectionPointAnnotationsBuilder(clientName))
-                                .destroyer(SdkAutoCloseableDestroyer.class)
-                                .done());
+                var asyncBean = namedClient(SyntheticBeanBuildItem.configure(asyncClientName), clientName)
+                        .unremovable()
+                        .reserve(true)
+                        .priority(0)
+                        .setRuntimeInit()
+                        .scope(ApplicationScoped.class)
+                        .createWith(recorder.build(asyncClientBuilderClass, clientName))
+                        .addInjectionPoint(ClassType.create(asyncClientBuilderClass),
+                                injectionPointAnnotationsBuilder(clientName))
+                        .destroyer(SdkAutoCloseableDestroyer.class);
+                if (configName.equals("s3")) {
+                    asyncBean.addQualifier(AnnotationInstance.builder(DotName.createSimple(
+                            "io.quarkiverse.amazon.s3.runtime.S3ClientRoute"))
+                            .add("value", clientName).add("crt", false).build());
+                }
+                syntheticBeans.produce(asyncBean.done());
 
                 clientAsync.produce(new AmazonClientAsyncResultBuildItem(configName, clientName));
             }

@@ -1,5 +1,10 @@
 package io.quarkiverse.amazon.s3.deployment;
 
+import static io.quarkiverse.amazon.common.deployment.ClientDeploymentUtil.getNamedClientInjection;
+import static io.quarkiverse.amazon.common.deployment.ClientDeploymentUtil.injectionPointAnnotationsBuilder;
+import static io.quarkiverse.amazon.common.deployment.ClientDeploymentUtil.namedBuilder;
+import static io.quarkiverse.amazon.common.deployment.ClientDeploymentUtil.namedClient;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
@@ -63,8 +68,6 @@ public class S3CrtProcessor {
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
     void discover(BeanRegistrationPhaseBuildItem beanRegistrationPhase,
             BuildProducer<RequireAmazonClientInjectionBuildItem> requireClientInjectionProducer) {
-        Optional<DotName> asyncClassName = Optional.empty();
-
         // Discover all clients injections in order to determine if s3 crt async client
         // is required
         for (InjectionPointInfo injectionPoint : beanRegistrationPhase.getInjectionPoints()) {
@@ -76,7 +79,8 @@ public class S3CrtProcessor {
             Type injectedType = getInjectedType(injectionPoint);
 
             if (S3_ASYNC_CLIENT.equals(injectedType.name())) {
-                asyncClassName = Optional.of(asyncClientName());
+                requireClientInjectionProducer.produce(new RequireAmazonClientInjectionBuildItem(
+                        asyncClientName(), getNamedClientInjection(injectionPoint)));
             }
 
             if (S3_CLIENT.equals(injectedType.name())) {
@@ -84,10 +88,6 @@ public class S3CrtProcessor {
             }
         }
 
-        if (asyncClassName.isPresent()) {
-            requireClientInjectionProducer
-                    .produce(new RequireAmazonClientInjectionBuildItem(asyncClassName.get(), ClientUtil.DEFAULT_CLIENT_NAME));
-        }
     }
 
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
@@ -112,6 +112,7 @@ public class S3CrtProcessor {
     @BuildStep(onlyIf = IsAmazonCrtS3ClientPresent.class)
     @Record(ExecutionTime.RUNTIME_INIT)
     void createS3CrtAsyncClient(List<RequireAmazonClientTransportBuilderBuildItem> amazonClients,
+            List<RequireAmazonClientInjectionBuildItem> requirements,
             S3CrtRecorder recorder,
             BuildProducer<SyntheticBeanBuildItem> syntheticBeans,
             ExecutorBuildItem executorBuildItem,
@@ -125,31 +126,40 @@ public class S3CrtProcessor {
                 return;
             }
 
-            RuntimeValue<S3CrtAsyncClientBuilder> asyncClientBuilder = recorder.getCrtAsyncClientBuilder(configName());
+            for (String clientName : requirements.stream().filter(r -> r.getClassName().equals(asyncClientName()))
+                    .map(RequireAmazonClientInjectionBuildItem::getName).distinct().toList()) {
+                RuntimeValue<S3CrtAsyncClientBuilder> asyncClientBuilder = recorder.getCrtAsyncClientBuilder(configName(),
+                        clientName);
 
-            asyncClientBuilder = recorder.setExecutor(asyncClientBuilder, executorBuildItem.getExecutorProxy());
-            if (capabilities.isPresent(Capability.VERTX)) {
-                recorder.propagateVertxContext(asyncClientBuilder);
+                asyncClientBuilder = recorder.setExecutor(asyncClientBuilder, executorBuildItem.getExecutorProxy());
+                if (capabilities.isPresent(Capability.VERTX)) {
+                    recorder.propagateVertxContext(asyncClientBuilder);
+                }
+
+                syntheticBeans.produce(namedBuilder(SyntheticBeanBuildItem.configure(S3CrtAsyncClientBuilder.class), clientName)
+                        .unremovable()
+                        .setRuntimeInit()
+                        .reserve(true)
+                        .priority(0)
+                        .scope(ApplicationScoped.class)
+                        .runtimeValue(asyncClientBuilder)
+                        .done());
+
+                syntheticBeans.produce(namedClient(SyntheticBeanBuildItem.configure(S3AsyncClient.class), clientName)
+                        .unremovable()
+                        .setRuntimeInit()
+                        .scope(ApplicationScoped.class)
+                        .reserve(true)
+                        // Keep legacy programmatic lookups working; injection uses the exact route qualifier.
+                        .priority(ClientUtil.isDefaultClient(clientName) ? -1 : -2)
+                        .addQualifier(S3ClientRoutingProcessor.route(clientName, true))
+                        .addQualifier(S3Crt.class)
+                        .createWith(recorder.getS3CrtAsyncClient(clientName))
+                        .destroyer(SdkAutoCloseableDestroyer.class)
+                        .addInjectionPoint(ClassType.create(S3CrtAsyncClientBuilder.class),
+                                injectionPointAnnotationsBuilder(clientName))
+                        .done());
             }
-
-            syntheticBeans.produce(SyntheticBeanBuildItem.configure(S3CrtAsyncClientBuilder.class)
-                    .unremovable()
-                    .setRuntimeInit()
-                    .reserve(true)
-                    .priority(0)
-                    .scope(ApplicationScoped.class)
-                    .runtimeValue(asyncClientBuilder)
-                    .done());
-
-            syntheticBeans.produce(SyntheticBeanBuildItem.configure(S3AsyncClient.class)
-                    .unremovable()
-                    .setRuntimeInit()
-                    .scope(ApplicationScoped.class)
-                    .addQualifier(S3Crt.class)
-                    .createWith(recorder.getS3CrtAsyncClient())
-                    .destroyer(SdkAutoCloseableDestroyer.class)
-                    .addInjectionPoint(ClassType.create(S3CrtAsyncClientBuilder.class))
-                    .done());
         });
     }
 

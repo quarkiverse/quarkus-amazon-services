@@ -99,6 +99,10 @@ public interface S3Config extends HasAmazonClientRuntimeConfig {
          */
         @ConfigDocSection
         MultipartConfig multipart();
+
+        /** AWS CRT-based S3 client configuration. */
+        @ConfigDocSection
+        S3CrtConfig crtClient();
     }
 
     /**
@@ -112,12 +116,6 @@ public interface S3Config extends HasAmazonClientRuntimeConfig {
      */
     @ConfigDocSection
     AsyncHttpClientConfig asyncClient();
-
-    /**
-     * AWS CRT-based S3 client configurations
-     */
-    @ConfigDocSection
-    S3CrtConfig crtClient();
 
     @ConfigGroup
     interface MultipartConfig {
