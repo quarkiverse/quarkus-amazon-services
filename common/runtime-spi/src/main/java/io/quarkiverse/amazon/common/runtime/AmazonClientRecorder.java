@@ -29,8 +29,20 @@ public abstract class AmazonClientRecorder {
         return new RuntimeValue<>(getSyncClientBuilder());
     }
 
+    public RuntimeValue<AwsSyncClientBuilder<?, ?>> getSyncBuilder(String clientName) {
+        return getSyncBuilder();
+    }
+
     public RuntimeValue<AwsAsyncClientBuilder<?, ?>> getAsyncBuilder() {
         return new RuntimeValue<>(getAsyncClientBuilder());
+    }
+
+    public RuntimeValue<AwsAsyncClientBuilder<?, ?>> getAsyncBuilder(String clientName) {
+        return getAsyncBuilder();
+    }
+
+    public RuntimeValue<SdkPresigner.Builder> createPresignerBuilder(String clientName) {
+        return createPresignerBuilder();
     }
 
     public RuntimeValue<SdkPresigner.Builder> createPresignerBuilder() {

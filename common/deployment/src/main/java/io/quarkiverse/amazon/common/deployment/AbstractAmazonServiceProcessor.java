@@ -69,17 +69,17 @@ abstract public class AbstractAmazonServiceProcessor {
 
         for (String clientName : syncClientNames) {
             builderIstances.produce(new AmazonClientExtensionBuilderInstanceBuildItem(clientName,
-                    syncClientBuilderClass(), recorder.getSyncBuilder()));
+                    syncClientBuilderClass(), recorder.getSyncBuilder(clientName)));
         }
 
         for (String clientName : asyncClientNames) {
             builderIstances.produce(new AmazonClientExtensionBuilderInstanceBuildItem(clientName,
-                    asyncClientBuilderClass(), recorder.getAsyncBuilder()));
+                    asyncClientBuilderClass(), recorder.getAsyncBuilder(clientName)));
         }
 
         for (String clientName : presignerClientNames) {
             builderIstances.produce(new AmazonClientExtensionBuilderInstanceBuildItem(clientName,
-                    presignerBuilderClass(), recorder.createPresignerBuilder()));
+                    presignerBuilderClass(), recorder.createPresignerBuilder(clientName)));
         }
     }
 
