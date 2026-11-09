@@ -28,20 +28,22 @@ S3TransferManager transferManager;
 
 Without the qualifier, the Transfer Manager uses the asynchronous client based on the Netty HTTP client or the AWS CRT-based HTTP client.
 That client has no multipart support by default, so the Transfer Manager logs a warning and transfers each object in a single request.
-To enable it, xref:common-features.adoc#_overriding_the_client_configuration[override the client configuration]:
+To enable it, configure multipart support on the underlying client; no custom producer is needed:
 
-[source,java]
+[source,properties]
 ----
-@ApplicationScoped
-public class S3AsyncClientProducer {
+quarkus.s3.multipart.enabled=true
+# Optional: sizes accept byte counts or binary unit suffixes such as M
+quarkus.s3.multipart.threshold-in-bytes=100000000
+quarkus.s3.multipart.minimum-part-size-in-bytes=8M
+----
 
-    @Produces
-    @ApplicationScoped
-    S3AsyncClient s3AsyncClient(S3AsyncClientBuilder builder) {
-        return builder.multipartEnabled(true).build();
-    }
-}
-----
+These settings apply to all standard S3 asynchronous clients (default and named), with either HTTP transport.
+They also affect direct calls to those clients, not just Transfer Manager operations.
+They do not apply to synchronous clients or the dedicated `@S3Crt` client, which uses `quarkus.s3.crt-client.*` settings.
+The Transfer Manager reuses the configured client without overriding its multipart settings.
+For other settings not exposed as configuration properties, you can still
+xref:common-features.adoc#_overriding_the_client_configuration[override the client configuration with a producer].
 
 Then upload a file:
 

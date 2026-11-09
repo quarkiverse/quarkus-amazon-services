@@ -56,6 +56,9 @@ public abstract class AbstractS3MultipartVertxContextTest {
                 .overrideConfigKey("quarkus.s3.aws.credentials.type", "anonymous")
                 .overrideConfigKey("quarkus.s3.path-style-access", "true")
                 .overrideConfigKey("quarkus.s3.async-client.type", "netty")
+                .overrideConfigKey("quarkus.s3.multipart.enabled", "true")
+                .overrideConfigKey("quarkus.s3.multipart.threshold-in-bytes", Long.toString(MultipartClient.PART_SIZE))
+                .overrideConfigKey("quarkus.s3.multipart.minimum-part-size-in-bytes", Long.toString(MultipartClient.PART_SIZE))
                 .overrideConfigKey("quarkus.s3.async-client.advanced.vertx-context-propagation", Boolean.toString(enabled));
     }
 
@@ -287,9 +290,7 @@ public abstract class AbstractS3MultipartVertxContextTest {
             });
             server.start();
             builder.overrideConfiguration(builder.overrideConfiguration().toBuilder().addExecutionInterceptor(probe).build());
-            client = builder.multipartEnabled(true)
-                    .multipartConfiguration(c -> c.thresholdInBytes(PART_SIZE).minimumPartSizeInBytes(PART_SIZE))
-                    .endpointOverride(URI.create("http://localhost:" + server.getAddress().getPort()))
+            client = builder.endpointOverride(URI.create("http://localhost:" + server.getAddress().getPort()))
                     .build();
         }
 

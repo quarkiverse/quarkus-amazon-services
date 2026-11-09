@@ -14,7 +14,9 @@ import software.amazon.awssdk.services.s3.S3BaseClientBuilder;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3ClientBuilder;
 import software.amazon.awssdk.services.s3.S3Configuration;
+import software.amazon.awssdk.services.s3.multipart.MultipartConfiguration;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.utils.Validate;
 
 @Recorder
 public class S3Recorder extends AmazonClientRecorder {
@@ -51,6 +53,18 @@ public class S3Recorder extends AmazonClientRecorder {
     public AwsAsyncClientBuilder<?, ?> getAsyncClientBuilder() {
         S3AsyncClientBuilder builder = S3AsyncClient.builder();
         configureS3Client(builder);
+
+        S3Config.MultipartConfig multipart = config.getValue().multipart();
+        if (multipart.enabled()) {
+            builder.multipartEnabled(true);
+            MultipartConfiguration.Builder multipartBuilder = MultipartConfiguration.builder();
+            multipart.thresholdInBytes().ifPresent(value -> multipartBuilder
+                    .thresholdInBytes(Validate.isPositive(value.asLongValue(), "quarkus.s3.multipart.threshold-in-bytes")));
+            multipart.minimumPartSizeInBytes().ifPresent(value -> multipartBuilder
+                    .minimumPartSizeInBytes(
+                            Validate.isPositive(value.asLongValue(), "quarkus.s3.multipart.minimum-part-size-in-bytes")));
+            builder.multipartConfiguration(multipartBuilder.build());
+        }
 
         return builder;
     }
