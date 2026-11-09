@@ -5,9 +5,12 @@ import java.util.Optional;
 import io.quarkiverse.amazon.common.runtime.AsyncHttpClientConfig;
 import io.quarkiverse.amazon.common.runtime.HasAmazonClientRuntimeConfig;
 import io.quarkiverse.amazon.common.runtime.SyncHttpClientConfig;
+import io.quarkus.runtime.annotations.ConfigDocDefault;
 import io.quarkus.runtime.annotations.ConfigDocSection;
+import io.quarkus.runtime.annotations.ConfigGroup;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.quarkus.runtime.configuration.MemorySize;
 import io.smallrye.config.ConfigMapping;
 import io.smallrye.config.WithDefault;
 
@@ -82,8 +85,41 @@ public interface S3Config extends HasAmazonClientRuntimeConfig {
     AsyncHttpClientConfig asyncClient();
 
     /**
+     * Multipart transfer configuration for the standard S3 asynchronous client
+     */
+    @ConfigDocSection
+    MultipartConfig multipart();
+
+    /**
      * AWS CRT-based S3 client configurations
      */
     @ConfigDocSection
     S3CrtConfig crtClient();
+
+    @ConfigGroup
+    interface MultipartConfig {
+
+        /**
+         * Enable automatic multipart transfers for the standard S3 asynchronous client, with either Netty or the AWS CRT HTTP
+         * transport. Applies to the default and named clients, including direct calls and transfers through the Transfer
+         * Manager.
+         * Does not apply to the synchronous client or the dedicated {@code @S3Crt} client.
+         */
+        @WithDefault("false")
+        boolean enabled();
+
+        /**
+         * Size above which a transfer uses multipart when enabled. Must be greater than zero.
+         * If not set, the AWS SDK default is used.
+         */
+        @ConfigDocDefault("Same as minimum-part-size-in-bytes")
+        Optional<MemorySize> thresholdInBytes();
+
+        /**
+         * Minimum part size for multipart transfers when enabled. Must be greater than zero.
+         * If not set, the AWS SDK default is used.
+         */
+        @ConfigDocDefault("8M")
+        Optional<MemorySize> minimumPartSizeInBytes();
+    }
 }
