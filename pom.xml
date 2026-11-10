@@ -49,7 +49,7 @@
     <quarkus.version>4.0.0.Beta2</quarkus.version>
 
     <!-- https://github.com/aws/aws-sdk-java-v2/releases -->
-    <awssdk.version>2.57.3</awssdk.version>
+    <awssdk.version>2.57.11</awssdk.version>
     
     <!-- https://github.com/awslabs/aws-crt-java/releases -->
     <awscrt.version>0.49.0</awscrt.version>
