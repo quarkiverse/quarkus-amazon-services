@@ -3,17 +3,239 @@
 This guide describes changes that may require updates when migrating from Amazon Services 3.x to 4.0.0.
 For platform-level changes, also consult the https://github.com/quarkusio/quarkus/wiki/Migration-Guide-4.0[Quarkus 4.0 migration guide].
 
+== Java, Quarkus and dependencies
+
+=== Java 21 and Quarkus 4
+
+Amazon Services 4 requires *Java 21 or later*, instead of Java 17, and targets *Quarkus 4*.
+Update your build and runtime JDKs, and set the compiler release to at least 21:
+
+[source,xml]
+----
+<maven.compiler.release>21</maven.compiler.release>
+----
+
+Update the Quarkus BOM and Maven plugin to Quarkus 4, and the Amazon Services BOM or explicitly versioned extensions to 4.0.
+For native builds, use the builder image recommended by the selected Quarkus release.
+
+=== Cost Explorer artifact relocation removed
+
+The relocation-only `quarkus-amazon-ce` artifact is no longer published.
+Replace it with `io.quarkiverse.amazonservices:quarkus-amazon-costexplorer` in your dependencies.
+The AWS SDK `CostExplorerClient` API is unchanged by this artifact replacement; use `quarkus.costexplorer.*` for configuration.
+
+== Dev Services
+
+=== Floci as the default stack provider
+
+The default provider changes from LocalStack to *Floci*.
+To keep using LocalStack, set the provider explicitly:
+
+[source,properties]
+----
+quarkus.aws.devservices.provider=localstack
+# Or select it only for one service:
+# quarkus.s3.devservices.provider=localstack
+----
+
+If you switch to Floci, check that it supports the AWS operations your tests use.
+
+See xref:dev-services.adoc[Dev Services] for the available providers.
+
+=== Initialization scripts with Floci
+
+The default Floci image does not include the AWS CLI. To reuse AWS CLI-based initialization scripts, select the compatibility
+image and move their configuration under the Floci prefix. For example, with scripts in `src/test/resources/localstack-init`:
+
+[source,properties]
+----
+quarkus.aws.devservices.floci.image-name=floci/floci:latest-compat
+quarkus.aws.devservices.floci.init-scripts-folder=src/test/resources/localstack-init
+quarkus.aws.devservices.floci.init-completion-msg=Tests init completed
+----
+
+The compatibility image includes `awslocal`, so existing scripts can keep using it.
+
+=== Dev Services available for all service extensions
+
+All dedicated service extensions now supply Dev Services, including services without an emulator implementation.
+
+Applications that connect directly to AWS in dev/test mode without an endpoint override must now disable Dev Services
+for newly supported services. For example:
+
+[source,properties]
+----
+quarkus.textract.devservices.enabled=false
+----
+
+=== Legacy LocalStack isolation removed
+
+Legacy LocalStack mode and its per-service isolation settings have been removed. Services selecting the same provider
+now use its stack container; `devservices.isolated` is no longer a way to create one container per service.
+Remove `quarkus.aws.devservices.localstack.legacy-mode` and migrate the old settings as follows:
+
+[cols="2,3",options="header"]
+|===
+|Old setting |Action in 4.0
+
+|`quarkus.<service>.devservices.isolated`
+|Remove it. There is no equivalent per-service isolation switch.
+
+|`quarkus.<service>.devservices.shared`
+|Use `quarkus.aws.devservices.shared` globally, or `quarkus.aws.devservices.<provider>.shared` for one stack.
+
+|`quarkus.<service>.devservices.service-name`
+|Use `quarkus.aws.devservices.<provider>.service-name` to identify a shared stack container.
+|===
+
+== AWS clients
+
+=== OpenTelemetry is enabled when the extension is present
+
+Previously, AWS client instrumentation was opt-in. With `quarkus-opentelemetry` installed, it is now enabled by default.
+Applications using OpenTelemetry will therefore emit AWS client spans without additional configuration.
+
+To retain the previous behavior, disable instrumentation for each service you use:
+
+[source,properties]
+----
+quarkus.s3.telemetry.enabled=false
+quarkus.sqs.telemetry.enabled=false
+# For clients managed by the generic AWS SDK extension:
+quarkus.aws.telemetry.enabled=false
+----
+
+These are build-time settings: rebuild after changing them. See xref:opentelemetry.adoc[OpenTelemetry].
+
+=== Async results return to the caller's Vert.x context
+
+When Quarkus Vert.x is present, asynchronous AWS calls started on an event loop now deliver their final result on that
+same Vert.x context. Previously, continuations normally ran on SDK/HTTP completion threads or the Quarkus worker pool.
+This allows continuations to use context-dependent libraries such as Hibernate Reactive without a manual context switch.
+Calls from worker threads, virtual threads or applications without Vert.x keep the previous completion behavior.
+
+Blocking work in `thenApply`, `thenAccept`, `whenComplete` or Mutiny callbacks will now block the event loop.
+Move that work to a worker thread. In REST resources, return the asynchronous result instead of waiting for it:
+
+.Before
+[source,java]
+----
+return s3.listBuckets().join().buckets();
+----
+
+.After (returning `Uni<List<Bucket>>`)
+[source,java]
+----
+return Uni.createFrom().completionStage(() -> s3.listBuckets())
+        .map(response -> response.buckets());
+----
+
+Never call `join()` or `get()` on an event loop waiting for an AWS future: its completion may need that same event loop.
+
+Alternatively, keep a blocking REST method by annotating it with `io.smallrye.common.annotation.Blocking`.
+The method runs on a worker thread, so an AWS call started inside it can be awaited with `join()` or `get()`
+without blocking the event loop.
+
+To temporarily retain the old completion behavior, disable propagation per service and restart the application:
+
+[source,properties]
+----
+quarkus.s3.async-client.advanced.vertx-context-propagation=false
+quarkus.dynamodb.async-client.advanced.vertx-context-propagation=false
+# For clients managed by the generic AWS SDK extension:
+quarkus.aws.async-client.advanced.vertx-context-propagation=false
+----
+
+`use-future-completion-thread-pool=false` is *not* an alternative way to disable context propagation.
+
+The dedicated `@S3Crt` client now honors that pool setting too; when it is false, SDK completion work may run on CRT I/O threads,
+which must not be blocked.
+
+This feature is experimental. See xref:common-features.adoc#vertx-context-propagation[Vert.x context propagation] for its scope and limitations.
+
+=== Netty event-loop configuration
+
+With Quarkus 4 / Netty 4.2, the SDK cannot reuse the Quarkus Netty event-loop group.
+Remove `quarkus.<service>.async-client.event-loop.override=false` if you set it to force reuse: it is ignored with a warning.
+
+SDK clients with identical `event-loop.number-of-threads` and `event-loop.thread-name-prefix` settings now share one SDK
+event-loop group instead of creating one per client. Thread counts previously sized for one client are therefore shared
+by all clients with those settings. Adjust `number-of-threads` if necessary; it must be positive.
+
+=== RDS IAM authentication always uses a managed client
+
+The RDS credentials provider no longer creates a separate, unconfigured `RdsClient`.
+Remove `quarkus.rds.credentials-provider.<provider>.use-quarkus-client`, whether it was set to `true` or `false`.
+Token signing now always uses the region and AWS credentials of the selected Quarkus-managed client.
+
+If you previously left the setting unset or false, check `quarkus.rds.aws.*`: those settings now affect token generation.
+To isolate signing from another RDS client's settings, select a named client at build time:
+
+[source,properties]
+----
+quarkus.rds.credentials-provider.mydatabase.name=iam
+quarkus.rds."iam".aws.region=eu-west-1
+quarkus.rds."iam".aws.credentials.type=default
+----
+
+Without `name`, signing uses the default RDS client.
+The provider's `username`, `hostname`, `port` and datasource settings do not need to change.
+
+A synchronous HTTP transport dependency is now required *even for JDBC-only applications*. If you do not already provide one,
+add the default transport:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>url-connection-client</artifactId>
+</dependency>
+----
+
+If you choose another transport, set `quarkus.rds.sync-client.type` to match it.
+See xref:amazon-rds.adoc#iam-database-authentication[RDS IAM database authentication] for a complete datasource example.
+
 == AWS configuration
 
 These changes affect applications that enable an SSM, Secrets Manager or AppConfig Data ConfigSource.
-Applications that only use the regular AWS clients are not affected by the configuration behaviour changes below.
 See xref:common-config.adoc[Configuration from AWS] for the current configuration model.
+
+=== Remote values now override application.properties
+
+The default ordinal of the SSM, Secrets Manager and AppConfig Data sources changes from `50` to `270`.
+Remote values now override matching values in `application.properties`, rather than acting only as fallbacks.
+Environment variables, `.env` and JVM system properties still take precedence with their standard ordinals.
+
+If you rely on a local value overriding a remote value, set the source's ordinal back to `50`:
+
+[source,properties]
+----
+quarkus.ssm.config.ordinal=50
+quarkus.secretsmanager.config.ordinal=50
+quarkus.appconfigdata.config.ordinal=50
+----
+
+=== Enable periodic refresh explicitly
+
+SSM and AppConfig Data previously polled every five minutes by default. They now load once at startup unless polling is configured.
+To retain five-minute refreshes, set:
+
+[source,properties]
+----
+quarkus.ssm.config.update-interval=5M
+quarkus.appconfigdata.config.update-interval=5M
+----
+
+Replace existing `update-interval-minutes=5` settings with `update-interval=5M` under the same service prefix.
+The deprecated minutes setting still works, but a non-zero value takes precedence over `update-interval`: remove it rather
+than leaving both settings. Use `update-interval=0S` for startup-only loading; a positive interval must be at least one second.
 
 === SSM path selections expose relative property names
 
 Previously, a parameter named `/myapp/prod/db/url` was exposed as `myapp.prod.db.url`, including when loaded through
 `quarkus.ssm.config.path=/myapp/prod`. Path selections now expose `db.url` by default.
-As with the other providers, selecting a remote location does not implicitly add that location to application property names.
+
+Existing injections of `myapp.prod.db.url` will no longer resolve that remote value.
 
 Either update consumers to use the relative keys, or preserve the previous keys:
 
@@ -23,7 +245,7 @@ quarkus.ssm.config.path=/myapp/prod
 quarkus.ssm.config.key-naming=full
 ----
 
-`full` remains supported. Alternatively, use an explicit prefix with relative naming:
+Alternatively, use an explicit prefix with relative naming:
 
 [source,properties]
 ----
@@ -63,13 +285,83 @@ If it intentionally relies on the previous Java properties interpretation, prese
 quarkus.appconfigdata.config.format=properties
 ----
 
-An entry-specific `format` can override this default. Missing YAML support is a load failure, not a reason to silently
-reinterpret a document as another format.
+Without the YAML extension or an explicit `format=properties`, loading a YAML document fails.
+
+=== SSM Java properties decoding
+
+In 3.23.0, SSM values containing Java properties were exposed as raw text, despite the documented automatic detection.
+Version 4 supports explicit properties decoding. With `/myapp/prod/database` containing `host=db.example.com`
+and `quarkus.ssm.config.path=/myapp/prod`, the exposed property is:
+
+[cols="2,2,2",options="header"]
+|===
+|3.23.0 |4.0 default |4.0 with `format=properties`
+|`myapp.prod.database=host=db.example.com`
+|`database=host=db.example.com`
+|`database.host=db.example.com`
+|===
+
+To keep the 3.23.0 property unchanged, retain raw values and restore full key names:
+
+[source,properties]
+----
+quarkus.ssm.config.path=/myapp/prod
+quarkus.ssm.config.key-naming=full
+----
+
+To decode the document instead, set the format and update consumers to use `database.host`:
+
+[source,properties]
+----
+quarkus.ssm.config.path=/myapp/prod
+quarkus.ssm.config.format=properties
+----
+
+=== JSON null values
+
+Previously, a JSON field containing `null` could supply the string `"null"`. Null fields are now omitted.
+A lower-priority local value can therefore become visible, or a required property can fail to resolve.
+
+If the application needs the literal text `null`, store a JSON string (`{"value":"null"}`), not JSON null (`{"value":null}`).
+
+=== Timeouts and TLS settings now apply to configuration loading
+
+Previously, API timeouts and `sync-client` timeout/TLS settings applied to the regular clients but were ignored by
+SSM, Secrets Manager and AppConfig Data configuration loading. They now apply to configuration reads too:
+
+[cols="2,3",options="header"]
+|===
+|Setting under `quarkus.<service>` |Impact on configuration loading
+|`api-call-timeout`, `api-call-attempt-timeout`
+|Reads now fail when they exceed the configured API timeout.
+|`sync-client.connection-timeout`, `sync-client.socket-timeout`
+|Configured values replace the URL Connection transport defaults.
+|`sync-client.tls-key-managers-provider.*`, `sync-client.tls-trust-managers-provider.*`
+|Configured key and trust stores are now used and validated; invalid settings or untrusted certificates can prevent loading.
+|===
+
+If existing timeouts were tuned only for regular client calls, allow enough time for the initial configuration load as well.
+For example, replace an overly short SSM timeout with:
+
+[source,properties]
+----
+quarkus.ssm.api-call-timeout=10S
+quarkus.ssm.api-call-attempt-timeout=3S
+quarkus.ssm.sync-client.connection-timeout=2S
+quarkus.ssm.sync-client.socket-timeout=3S
+----
+
+There is no separate ConfigSource override: these settings are shared with the regular default client.
+If you configure TLS stores, ensure they are accessible at startup and trust the configuration service's endpoint.
+
+Applications using the default timeout and TLS settings need no configuration change.
+
+See xref:common-config.adoc#bootstrap-clients[Configure access to AWS] for the supported settings.
 
 === Secrets Manager requires explicit selection
 
 Previously, enabling the ConfigSource without a `secrets` mapping listed all accessible secrets and loaded them under their names.
-Implicit listing is no longer supported. It made the loaded configuration depend on every accessible secret rather than an explicit selection.
+Implicit listing is no longer supported. Enabling the source without selecting secrets now fails startup.
 
 Declare the required secrets and their target property prefixes:
 
@@ -80,8 +372,15 @@ quarkus.secretsmanager.config.secrets."database"=prod/database
 ----
 
 For a JSON secret containing `{"username":"app","password":"example"}`, this exposes `database.username` and `database.password`.
-Choose the mapping prefix to match the keys your application expects. Named `entries` are also supported.
+Choose the mapping prefix to match the keys your application expects.
 Setting `fail-on-missing-config=false` does not restore discovery; an empty selection skips the source instead.
+
+Explicit selections use `GetSecretValue` directly; they no longer need `ListSecrets` permission.
+Once no other code relies on secret discovery, remove that permission from the application's policy.
+
+Batch retrieval remains an independent opt-in: if enabling `quarkus.secretsmanager.config.batch-retrieval=true`, grant
+`secretsmanager:BatchGetSecretValue` in addition to per-secret `GetSecretValue` and required KMS permissions.
+If the batch API is denied or unsupported by your emulator, disable the flag; there is no automatic fallback to individual reads.
 
 === Startup failures and complete snapshots
 
@@ -96,13 +395,11 @@ If the remote source is optional and local configuration is sufficient, opt out 
 quarkus.ssm.config.fail-on-missing-config=false
 ----
 
-This setting makes the entire source optional; it does not enable partial publication.
-If any selected resource fails during the initial load, none of that source's remote properties are published.
-If polling is disabled, retry requires an application restart. To allow later recovery, configure polling explicitly,
-for example `quarkus.ssm.config.update-interval=30S`.
+With this setting, a failed initial load leaves the source empty, rather than publishing the successfully loaded subset.
+Local fallbacks must cover the whole selection. Enable polling if the source should retry without an application restart,
+for example with `quarkus.ssm.config.update-interval=30S`.
 
-During polling, a failed refresh keeps the previous complete snapshot. Publication is atomic per provider, not across AWS services.
-This prevents publishing incompatible subsets of related configuration values.
+During polling, a failed refresh now keeps the previous complete set of values instead of publishing a partial update.
 
 === Resolve overlapping property keys
 
@@ -129,9 +426,6 @@ quarkus.ssm.config.entries.billing.prefix=billing
 ----
 
 The keys are now `orders.db.url` and `billing.db.url`.
-Selecting the same parameter through both a path and `names` is allowed when both selections have the same prefix and format.
-For example, `path=/services/orders` with `key-naming=full` and `names[0]=/services/orders/db/url` exposes
-`services.orders.db.url` once, without a collision.
 
 ==== Secrets Manager documents with the same fields
 
@@ -152,3 +446,144 @@ quarkus.secretsmanager.config.entries.billing.prefix=billing
 ----
 
 The keys are now `orders.url` and `billing.url`.
+
+== Configuration improvements
+
+=== Replace the deprecated Apache HTTP transport
+
+The SDK's Apache 4 transport is deprecated, but still supported. Builds now warn when it is selected.
+Replace `software.amazon.awssdk:apache-client` with:
+
+[source,xml]
+----
+<dependency>
+    <groupId>software.amazon.awssdk</groupId>
+    <artifactId>apache5-client</artifactId>
+</dependency>
+----
+
+Then change the type for every affected service, for example:
+
+[source,properties]
+----
+quarkus.s3.sync-client.type=apache5
+----
+
+Keep existing `quarkus.s3.sync-client.apache.*` settings: the configuration group is still `apache`, not `apache5`.
+Update any custom producer using Apache-specific SDK classes as well.
+If migration must wait, `quarkus.aws.sync-client.apache-deprecation-warning=false` suppresses the warning, not the deprecation.
+See xref:common-features.adoc#deprecated-apache-http-client[Apache transport migration].
+
+=== Replace simple test initialization scripts with properties
+
+If your scripts only create SNS topics, KMS key aliases or verify SES sender addresses, Dev Services can now perform
+those steps from configuration:
+
+[source,properties]
+----
+quarkus.sns.devservices.topics=notifications
+quarkus.kms.devservices.key-aliases=alias/application-key
+quarkus.ses.devservices.verified-emails=sender@example.com
+quarkus.sesv2.devservices.verified-emails=sender@example.com
+----
+
+These properties can replace the corresponding initialization script steps in dev and test mode.
+
+=== Replace custom named-client producers with configuration
+
+S3 service settings can now be overridden per named client, replacing custom producers for these settings.
+For example, to override path-style access for `archive` while inheriting other defaults:
+
+[source,properties]
+----
+quarkus.s3.path-style-access=true
+quarkus.s3."archive".path-style-access=false
+quarkus.s3."archive".aws.region=eu-west-1
+----
+
+These S3 settings also apply to the corresponding presigner.
+
+Native CRT clients and Transfer Managers also support names:
+
+[source,java]
+----
+@Inject
+@AmazonClient("archive")
+S3TransferManager archiveTransfers;
+
+@Inject
+@S3Crt
+@AmazonClient("archive")
+S3TransferManager archiveCrtTransfers;
+----
+
+Injecting a named Transfer Manager creates its underlying client without requiring a separate client injection.
+
+Other new per-name settings include:
+
+* `quarkus.dynamodb."archive".enable-endpoint-discovery` for DynamoDB endpoint discovery.
+* `quarkus.dynamodbenhanced."archive".client-extensions` for enhanced-client extension class names.
+  A named list replaces the default list, so include all extensions that the named client needs.
+
+See xref:common-features.adoc#_named_clients[Named clients] and the relevant service's configuration reference.
+
+=== Enable standard S3 multipart transfers without a producer
+
+If you customize a standard `S3AsyncClientBuilder` only to enable multipart transfers, replace that customization with:
+
+[source,properties]
+----
+quarkus.s3.multipart.enabled=true
+quarkus.s3.multipart.threshold-in-bytes=100000000
+quarkus.s3.multipart.minimum-part-size-in-bytes=8M
+----
+
+Named clients can override these settings under `quarkus.s3."archive".multipart.*`.
+See xref:amazon-s3.adoc[S3] for client and Transfer Manager examples.
+
+=== Generic AWS SDK extension
+
+The new `quarkus-amazon-sdk` extension can replace hand-written producers for standard AWS SDK clients, including services
+without a dedicated extension. Add it together with the required `software.amazon.awssdk:<service>` dependency and HTTP transport.
+Configure such clients under `quarkus.aws`, not `quarkus.<service>.aws`:
+
+[source,properties]
+----
+quarkus.aws.region=eu-west-1
+quarkus.aws.api-call-timeout=10S
+quarkus.aws."archive".region=us-west-2
+----
+
+If replacing a dedicated extension, move its configuration to the generic prefixes too.
+Keep dedicated extensions for service-specific features such as enhanced clients, presigners, Transfer Managers or AWS ConfigSources.
+When both extension types are installed, the dedicated extension's configuration takes precedence for its service.
+See xref:amazon-sdk.adoc[Generic AWS SDK] for setup and coexistence.
+
+=== Remote expressions and stored credentials
+
+If you load an entire secret only to reference one property, a runtime expression can replace the ConfigSource selection:
+
+[source,properties]
+----
+myapp.database.password=${sm::prod/database#/password}
+# Or read an SSM parameter:
+myapp.api-key=${ssm::/myapp/prod/api-key}
+----
+
+The expression does not require an enabled ConfigSource. Remove that source's selection if it is no longer used elsewhere.
+See xref:common-config.adoc#expressions[Remote expressions] for caching and runtime-only restrictions.
+
+For datasource passwords that rotate, use the new `secretsmanager-credentials-provider` or `ssm-credentials-provider`
+instead of copying the password into a startup-only datasource property. Configure connection recycling too: only new
+physical connections request fresh credentials. This is different from RDS IAM token generation.
+See xref:common-config.adoc#stored-credentials[Stored credentials] for the complete configuration and rotation limitations.
+
+For configuration files already stored in S3, the new xref:amazon-s3.adoc#configuration[S3 ConfigSource] can replace a
+custom downloader. Select bucket/key entries explicitly and optionally pin object versions for reproducible deployments.
+
+=== Inspector Classic deprecation
+
+`quarkus-amazon-inspector` is now marked deprecated because AWS retired Inspector Classic.
+Migrate to `quarkus-amazon-inspector2`, adapting SDK imports, API calls, IAM permissions
+and `quarkus.inspector.*` settings to Inspector2 and `quarkus.inspector2.*`.
+See xref:amazon-inspector2.adoc[Amazon Inspector].
