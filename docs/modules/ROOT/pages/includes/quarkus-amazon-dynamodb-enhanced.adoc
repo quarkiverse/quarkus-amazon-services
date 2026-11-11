@@ -13,6 +13,11 @@ config_property_copy_button:+++quarkus.dynamodbenhanced.client-extensions+++[]
 endif::add-copy-button-to-config-props[]
 
 
+`+++quarkus.dynamodbenhanced."client-name".client-extensions+++`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodbenhanced."client-name".client-extensions+++[]
+endif::add-copy-button-to-config-props[]
+
 [.description]
 --
 List of extensions to load with the enhanced client

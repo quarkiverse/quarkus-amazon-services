@@ -164,6 +164,11 @@ config_property_copy_button:+++quarkus.dynamodb.enable-endpoint-discovery+++[]
 endif::add-copy-button-to-config-props[]
 
 
+`+++quarkus.dynamodb."client-name".enable-endpoint-discovery+++`
+ifdef::add-copy-button-to-config-props[]
+config_property_copy_button:+++quarkus.dynamodb."client-name".enable-endpoint-discovery+++[]
+endif::add-copy-button-to-config-props[]
+
 [.description]
 --
 Enable service endpoint discovery.
