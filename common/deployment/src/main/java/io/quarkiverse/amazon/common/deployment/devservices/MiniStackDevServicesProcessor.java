@@ -95,7 +95,7 @@ public class MiniStackDevServicesProcessor extends AbstractDevServicesAwsStackPr
     protected Startable createContainer(DevServicesComposeProjectBuildItem composeProjectBuildItem,
             AwsStackDevServicesBuildTimeConfig config, boolean useSharedNetwork,
             LaunchModeBuildItem launchMode, List<DevServicesAwsStackProviderBuildItem> requestedServices) {
-        MiniStackContainer miniStack = new MiniStackContainer(DockerImageName.parse(config.imageName()));
+        MiniStackContainer miniStack = new MiniStackContainer(DockerImageName.parse(config.resolvedImageName()));
 
         config.initScriptsFolder().ifPresentOrElse(initScriptsFolder -> {
             miniStack.withFileSystemBind(initScriptsFolder, "/etc/localstack/init/ready.d", BindMode.READ_ONLY);

@@ -96,7 +96,7 @@ public class LocalStackDevServiceProcessor extends AbstractDevServicesAwsStackPr
     protected Startable createContainer(DevServicesComposeProjectBuildItem composeProjectBuildItem,
             AwsStackDevServicesBuildTimeConfig config, boolean useSharedNetwork,
             LaunchModeBuildItem launchMode, List<DevServicesAwsStackProviderBuildItem> requestedServices) {
-        LocalStackContainer localStack = new LocalStackContainer(DockerImageName.parse(config.imageName()));
+        LocalStackContainer localStack = new LocalStackContainer(DockerImageName.parse(config.resolvedImageName()));
 
         config.initScriptsFolder().ifPresentOrElse(initScriptsFolder -> {
             localStack.withFileSystemBind(initScriptsFolder, "/etc/localstack/init/ready.d", BindMode.READ_ONLY);

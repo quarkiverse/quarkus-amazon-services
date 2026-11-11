@@ -95,7 +95,7 @@ public class FlociDevServicesProcessor extends AbstractDevServicesAwsStackProces
     protected Startable createContainer(DevServicesComposeProjectBuildItem composeProjectBuildItem,
             AwsStackDevServicesBuildTimeConfig config, boolean useSharedNetwork,
             LaunchModeBuildItem launchMode, List<DevServicesAwsStackProviderBuildItem> requestedServices) {
-        FlociContainer floci = new FlociContainer(DockerImageName.parse(config.imageName()));
+        FlociContainer floci = new FlociContainer(DockerImageName.parse(config.resolvedImageName()));
 
         config.initScriptsFolder().ifPresentOrElse(initScriptsFolder -> {
             floci.withFileSystemBind(initScriptsFolder, "/etc/floci/init/ready.d", BindMode.READ_ONLY);

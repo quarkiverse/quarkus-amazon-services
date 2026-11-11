@@ -263,11 +263,11 @@ quarkus.aws.devservices.floci.init-completion-msg=Init completed
 === Floci init scripts
 
 Floci runs the init scripts from the `/etc/floci/init/ready.d` folder of the container, where Dev Services mounts the configured scripts.
-The default `floci/floci` image does not ship the AWS CLI. If your scripts use it, switch to the `latest-compat` image, which includes the AWS CLI and boto3:
+When `init-scripts-folder` or `init-scripts-classpath` is configured, Dev Services automatically selects `floci/floci:latest-compat`, which includes the AWS CLI, `awslocal` and boto3.
+Without init scripts, the default image remains `floci/floci:latest`. An explicitly configured `image-name` always takes precedence.
 
 [source,properties]
 ----
-quarkus.aws.devservices.floci.image-name=floci/floci:latest-compat
 quarkus.aws.devservices.floci.init-scripts-classpath=floci-init
 quarkus.aws.devservices.floci.init-completion-msg=#### Tests init completed
 ----

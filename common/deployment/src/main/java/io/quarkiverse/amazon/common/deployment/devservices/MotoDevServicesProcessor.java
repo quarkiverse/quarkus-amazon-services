@@ -91,7 +91,7 @@ public class MotoDevServicesProcessor extends AbstractDevServicesAwsStackProcess
     protected Startable createContainer(DevServicesComposeProjectBuildItem composeProjectBuildItem,
             AwsStackDevServicesBuildTimeConfig config, boolean useSharedNetwork,
             LaunchModeBuildItem launchMode, List<DevServicesAwsStackProviderBuildItem> requestedServices) {
-        MotoContainer moto = new MotoContainer(DockerImageName.parse(config.imageName()));
+        MotoContainer moto = new MotoContainer(DockerImageName.parse(config.resolvedImageName()));
 
         configureHostAccess(moto);
 

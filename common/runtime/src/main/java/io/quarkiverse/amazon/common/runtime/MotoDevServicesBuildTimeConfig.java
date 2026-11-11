@@ -1,5 +1,7 @@
 package io.quarkiverse.amazon.common.runtime;
 
+import java.util.Optional;
+
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
@@ -13,7 +15,7 @@ public interface MotoDevServicesBuildTimeConfig extends AwsStackDevServicesBuild
      */
     @WithDefault(value = "motoserver/moto:latest")
     @Override
-    String imageName();
+    Optional<String> imageName();
 
     /**
      * The value of the {@code quarkus-dev-service-moto} label attached to the started container.

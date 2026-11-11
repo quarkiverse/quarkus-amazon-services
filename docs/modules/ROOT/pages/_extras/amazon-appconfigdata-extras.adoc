@@ -111,11 +111,11 @@ aws appconfig start-deployment --application-id "${APPLICATION_ID}" --environmen
 echo "#### Init completed"
 ----
 
-Select the Floci image with the AWS CLI and wait for initialization before loading the source:
+Configure init scripts and wait for initialization before loading the source.
+Dev Services automatically selects the Floci image with the AWS CLI unless `image-name` is explicitly configured:
 
 [source,properties]
 ----
-quarkus.aws.devservices.floci.image-name=floci/floci:latest-compat
 quarkus.aws.devservices.floci.init-scripts-folder=src/test/resources/floci-init
 quarkus.aws.devservices.floci.init-completion-msg=#### Init completed
 
