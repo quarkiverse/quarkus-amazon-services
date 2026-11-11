@@ -1,5 +1,7 @@
 package io.quarkiverse.amazon.common.runtime;
 
+import java.util.Optional;
+
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
@@ -21,6 +23,6 @@ public interface LocalStackDevServicesBuildTimeConfig extends AwsStackDevService
      */
     @WithDefault(value = "localstack/localstack:4.13")
     @Override
-    String imageName();
+    Optional<String> imageName();
 
 }

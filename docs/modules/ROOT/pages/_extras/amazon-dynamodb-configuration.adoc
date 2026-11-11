@@ -3,12 +3,11 @@
 All the fruits are stored under the same `partitionKey` value and sorted by their name with the `fruitName` sort key, so they can be listed in alphabetical order with a query.
 
 .With Dev Services
-Dev Services starts Floci with the `floci/floci:latest` image by default, which does not ship the AWS CLI.
-To create the `QuarkusFruits` table automatically at startup, use the `latest-compat` image and provide init scripts:
+To create the `QuarkusFruits` table automatically at startup, provide init scripts.
+Dev Services automatically selects the `latest-compat` image with the AWS CLI unless `image-name` is explicitly configured:
 
 [source,properties]
 ----
-quarkus.aws.devservices.floci.image-name=floci/floci:latest-compat
 quarkus.aws.devservices.floci.init-scripts-classpath=floci-init
 quarkus.aws.devservices.floci.init-completion-msg=#### Init completed
 ----

@@ -72,7 +72,7 @@ public class ReloadTestStackProcessor extends AbstractDevServicesAwsStackProcess
     @Override
     protected Startable createContainer(DevServicesComposeProjectBuildItem compose, AwsStackDevServicesBuildTimeConfig config,
             boolean useSharedNetwork, LaunchModeBuildItem launchMode, List<DevServicesAwsStackProviderBuildItem> requests) {
-        var container = new GenericContainer<>(config.imageName())
+        var container = new GenericContainer<>(config.resolvedImageName())
                 .withExposedPorts(PORT)
                 .withLabel(LABEL, config.serviceName())
                 .withCopyToContainer(Transferable.of("""
@@ -110,7 +110,7 @@ public class ReloadTestStackProcessor extends AbstractDevServicesAwsStackProcess
         public boolean equals(Object other) {
             return other instanceof AwsStackDevServicesBuildTimeConfig config
                     && getClass().getName().equals(other.getClass().getName())
-                    && imageName().equals(config.imageName()) && serviceName().equals(config.serviceName())
+                    && resolvedImageName().equals(config.resolvedImageName()) && serviceName().equals(config.serviceName())
                     && enabled().equals(config.enabled()) && shared().equals(config.shared())
                     && initScriptsFolder().equals(config.initScriptsFolder())
                     && initScriptsClasspath().equals(config.initScriptsClasspath())
@@ -121,13 +121,14 @@ public class ReloadTestStackProcessor extends AbstractDevServicesAwsStackProcess
 
         @Override
         public int hashCode() {
-            return Objects.hash(imageName(), serviceName(), enabled(), shared(), initScriptsFolder(), initScriptsClasspath(),
+            return Objects.hash(resolvedImageName(), serviceName(), enabled(), shared(), initScriptsFolder(),
+                    initScriptsClasspath(),
                     initCompletionMsg(), additionalServices(), containerProperties(), port());
         }
 
         @Override
-        public String imageName() {
-            return "nginx:1.28-alpine";
+        public Optional<String> imageName() {
+            return Optional.of("nginx:1.28-alpine");
         }
 
         @Override

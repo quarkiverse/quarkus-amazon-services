@@ -97,7 +97,7 @@ public abstract class AbstractDevServicesAwsStackProcessor {
         // Try to locate an existing shared container
         ContainerLocator containerLocator = getContainerLocator();
         return containerLocator.locateContainer(config.serviceName(), shared, launchMode.getLaunchMode())
-                .or(() -> ComposeLocator.locateContainer(compose, List.of(config.imageName()), getStackPort(),
+                .or(() -> ComposeLocator.locateContainer(compose, List.of(config.resolvedImageName()), getStackPort(),
                         launchMode.getLaunchMode(), useSharedNetwork))
                 .map(containerAddress -> {
                     // Found existing container - reuse it

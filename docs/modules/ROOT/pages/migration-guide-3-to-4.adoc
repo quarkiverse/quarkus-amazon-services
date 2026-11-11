@@ -44,17 +44,19 @@ See xref:dev-services.adoc[Dev Services] for the available providers.
 
 === Initialization scripts with Floci
 
-The default Floci image does not include the AWS CLI. To reuse AWS CLI-based initialization scripts, select the compatibility
-image and move their configuration under the Floci prefix. For example, with scripts in `src/test/resources/localstack-init`:
+To reuse AWS CLI-based initialization scripts, move their configuration under the Floci prefix.
+When `init-scripts-folder` or `init-scripts-classpath` is configured, Dev Services automatically selects `floci/floci:latest-compat`,
+unless `quarkus.aws.devservices.floci.image-name` is explicitly configured.
+For example, with scripts in `src/test/resources/localstack-init`:
 
 [source,properties]
 ----
-quarkus.aws.devservices.floci.image-name=floci/floci:latest-compat
 quarkus.aws.devservices.floci.init-scripts-folder=src/test/resources/localstack-init
 quarkus.aws.devservices.floci.init-completion-msg=Tests init completed
 ----
 
-The compatibility image includes `awslocal`, so existing scripts can keep using it.
+The compatibility image includes the AWS CLI and `awslocal`, so existing scripts can keep using them.
+Without init scripts, the default image remains `floci/floci:latest`.
 
 === Dev Services available for all service extensions
 

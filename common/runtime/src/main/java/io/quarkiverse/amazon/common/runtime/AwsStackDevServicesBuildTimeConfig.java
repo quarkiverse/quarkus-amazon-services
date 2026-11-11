@@ -3,6 +3,7 @@ package io.quarkiverse.amazon.common.runtime;
 import java.util.Map;
 import java.util.Optional;
 
+import io.quarkus.runtime.annotations.ConfigDocIgnore;
 import io.quarkus.runtime.annotations.ConfigDocMapKey;
 
 /**
@@ -14,7 +15,15 @@ public interface AwsStackDevServicesBuildTimeConfig {
     /**
      * The container image to use.
      */
-    String imageName();
+    Optional<String> imageName();
+
+    /**
+     * The resolved container image to use.
+     */
+    @ConfigDocIgnore
+    default String resolvedImageName() {
+        return imageName().orElseThrow(() -> new IllegalStateException("No container image configured"));
+    }
 
     /**
      * If Dev Services for Amazon Services has been explicitly enabled or disabled. Dev Services are generally enabled

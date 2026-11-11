@@ -1,5 +1,8 @@
 package io.quarkiverse.amazon.common.runtime;
 
+import java.util.Optional;
+
+import io.quarkus.runtime.annotations.ConfigDocDefault;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 import io.smallrye.config.ConfigMapping;
@@ -10,10 +13,19 @@ import io.smallrye.config.WithDefault;
 public interface FlociDevServicesBuildTimeConfig extends AwsStackDevServicesBuildTimeConfig {
     /**
      * The Floci container image to use.
+     * Defaults to {@code floci/floci:latest-compat} when init scripts are configured, otherwise {@code floci/floci:latest}.
+     * An explicitly configured image always takes precedence.
      */
-    @WithDefault(value = "floci/floci:latest")
+    @ConfigDocDefault("floci/floci:latest")
     @Override
-    String imageName();
+    Optional<String> imageName();
+
+    @Override
+    default String resolvedImageName() {
+        return imageName().orElseGet(() -> initScriptsFolder().isPresent() || initScriptsClasspath().isPresent()
+                ? "floci/floci:latest-compat"
+                : "floci/floci:latest");
+    }
 
     /**
      * The value of the {@code quarkus-dev-service-floci} label attached to the started container.
