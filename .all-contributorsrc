@@ -477,6 +477,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "amaechler",
+      "name": "Andreas Maechler",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1240238?v=4",
+      "profile": "https://amaechler.com",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
