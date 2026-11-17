@@ -39,7 +39,7 @@
         </dependency>
         <dependency>
             <groupId>io.floci</groupId>
-            <artifactId>testcontainers-floci</artifactId>
+            <artifactId>testcontainers-floci-aws</artifactId>
         </dependency>
     </dependencies>
 
