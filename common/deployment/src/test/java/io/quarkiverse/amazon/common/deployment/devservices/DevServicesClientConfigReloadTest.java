@@ -3,7 +3,6 @@ package io.quarkiverse.amazon.common.deployment.devservices;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -81,8 +80,8 @@ class DevServicesClientConfigReloadTest {
                                 config.getConfigMapping(FlociDevServicesBuildTimeConfig.class), requests))
                         .startable(() -> stack).configProvider(s -> Map.of("stack.endpoint", s.getConnectionInfo())).build();
                 var additional = new FlociDevServicesProcessor().clientConfig("stack.endpoint", requests);
-                Map<String, String> actual = new HashMap<>();
-                registry.start(request, List.of(), List.of(additional), actual);
+                Map<String, String> actual = registry
+                        .startAll(List.of(request), List.of(), List.of(additional), null).configs();
                 assertEquals("http://localhost:4566", actual.get(prefix + "." + name + ".endpoint-override"));
                 assertEquals(name.equals("first") ? "us-east-1" : "eu-west-1", actual.get(prefix + "." + name + ".region"));
                 if (name.equals("second")) {
